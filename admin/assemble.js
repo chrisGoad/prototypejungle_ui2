@@ -122,7 +122,7 @@ async function mkModule(which,version,contents) {
     minified = contents;
   } else {
     console.log('MINIFY');
-     minified = await minify(path,{ecma:262}).code;
+     minified = await minify(path,{ecma:8}).code;
     /* minified = babel.transformFileSync(path, {
   minified: true,
   sourceType: "module",

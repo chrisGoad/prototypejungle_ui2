@@ -85,7 +85,7 @@ var fs = require('fs');
        let ext = afterLastChar(fln,'.');
        console.log('fln',fln,'ext',ext);
     //  if ((ext === fln) || (!['js','css','html','png','svg','jpg','ico','md'].includes(ext))) {
-      if  (!['mjs','js','css','html','svg','jpg','ico','md','mp3'].includes(ext)) {
+      if  (!['mjs','js','css','html','svg','jpg','ico','md','mp3','json'].includes(ext)) {
          console.log('wrong kind of file/dir',fln);
          return;
       }
@@ -114,8 +114,8 @@ var fs = require('fs');
 //xferDir(0,'www','doc');
 xferDir('admin');
 xferDir('server');
-xferFiles('www',['draw.html','topdefs.js','style.css','spectrum.css']);
-xferDirs(['www/generators','www/line','www/shape','www/mlib']);
+xferFiles('www',['draw.html','topdefs.js','style.css','spectrum.css','grids.html']);
+xferDirs(['www/generators','www/line','www/shape','www/mlib','www/json']);
 return;
 //xferDir(0,'www','');
  xferDir('top','','server');

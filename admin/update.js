@@ -19,7 +19,11 @@ var boilerplate0 =
 <body style="background-color:white;font-size:14pt"> <!-- from 12 6/8/19 -->
 `;
 
- 
+ let mainImports =
+`import * as core from "/js/core-1.1.0.min.js";
+import * as geom from "/js/geom-1.1.0.min.js";
+import * as dom from "/js/dom-1.1.0.min.js";
+`;
 
 var endplate =
 `  </div>
@@ -38,7 +42,8 @@ function doSubstitution(s,what,value,withDoubleBracket) {
   function insertBoilerplate(s,scripts) {
  
   var irs = doSubstitution(s,'boilerplate0',boilerplate0,1);
- 
+   irs = doSubstitution(irs,'mainImports',mainImports,1);
+
  
   return doSubstitution(irs,'endplate',endplate,1);
 }
@@ -109,7 +114,8 @@ var fs = require('fs');
 //xferDir(0,'www','doc');
 xferDir('admin');
 xferDir('server');
-xferFiles('www',['draw.html']);
+xferFiles('www',['draw.html','topdefs.js','style.css','spectrum.css']);
+xferDirs(['www/generators','www/line','www/shape','www/mlib']);
 return;
 //xferDir(0,'www','');
  xferDir('top','','server');

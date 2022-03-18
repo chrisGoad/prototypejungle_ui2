@@ -1,0 +1,57 @@
+# initial setup cd c:\prototypejungle_ui
+git init
+git config --global user.name "Chris Goad"
+git config --global user.email "cagoad@gmail.com"
+git remote add origin https://github.com/chrisGoad/prototypejungle_ui.git
+
+#next relevant only if the repo already exists remotely
+# ow create the remote repo over at github
+git branch -a
+git branch -r
+
+git pull origin master
+git fetch origin masterh
+
+#git checkout master
+#git merge origin/master
+
+
+# end initial setup
+# each time
+cd c:\prototypejungle_ui
+
+
+git add admin js server wwwsrc draw.html zoom.html
+
+git commit -m "misc"
+
+
+git push origin master
+
+git commit -m "first commit"
+
+git commit -a -m "undo"
+
+
+
+
+
+==========================
+git rm -rf wwwsrc/ace/container
+git rm -rf wwwsrc/arrow/data
+
+
+git rm -rf wwwsrc/animation
+
+
+git rm www/shape/*WithText.js
+git rm www/text/containedText.js
+git rm www/text/textContainer.js
+git rm www/diagram/*
+git rm -f www/arrow/arrowless.js
+git rm -f www/arrow/multiArrow.js
+git rm www/border/b*
+git rm www/border/d*
+git rm www/border/r*
+
+

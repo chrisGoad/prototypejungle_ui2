@@ -1,8 +1,9 @@
-# initial setup cd c:\prototypejungle_ui
+# initial setup 
+cd c:\prototypejungle_ui2
 git init
 git config --global user.name "Chris Goad"
 git config --global user.email "cagoad@gmail.com"
-git remote add origin https://github.com/chrisGoad/prototypejungle_ui.git
+git remote add origin https://github.com/chrisGoad/prototypejungle_ui2.git
 
 #next relevant only if the repo already exists remotely
 # ow create the remote repo over at github
@@ -18,10 +19,11 @@ git fetch origin masterh
 
 # end initial setup
 # each time
-cd c:\prototypejungle_ui
+cd c:\prototypejungle_ui2
 
 
 git add admin js server wwwsrc draw.html zoom.html
+git add admin 
 
 git commit -m "misc"
 

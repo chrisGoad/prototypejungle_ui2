@@ -22,6 +22,7 @@ cd c:\prototypejungle_ui
 
 
 git add admin js server wwwsrc draw.html zoom.html
+git add admin server www
 
 git commit -m "misc"
 

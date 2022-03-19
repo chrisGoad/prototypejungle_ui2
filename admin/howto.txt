@@ -1,1 +1,2 @@
-npm install uglify-js
+npm install uglify-js-es6
+npm install terser 

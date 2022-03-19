@@ -9,7 +9,7 @@ import {rs as rectPP} from '/shape/rectangle.mjs';
 import {rs as circlePP} from '/shape/circle.mjs';
 import {rs as basicsP} from '/generators/basics.mjs';
 import {rs as addGridMethods} from '/mlib/grid.mjs';
-import {rs as addRandomMethods} from '/mlib/topRandomMethods.mjs';
+import {rs as addRandomMethods} from '/mlib/boundedRandomGrids.mjs';
 let rs = basicsP.instantiate();
 
 
@@ -125,18 +125,20 @@ rs.initialize = function () {
 
 	//rnds.length  = rm.genRandomGrid(rParams);
 	let  dimParams = {step:2,min:1,max:4,numRows,numCols};
-	this.setupShapeRandomizer('dimension', dimParams);
+//	this.setupShapeRandomizer('dimension', dimParams);
+	this.setupRandomGridForShapes('dimension', dimParams);
 
 	//rnds.dimension  = rm.genRandomGrid(dimParams);
 	let  dParams = {step:0.05* Math.PI,min:0.95*Math.PI,max:2*Math.PI,numRows,numCols};
-	this.setupShapeRandomizer('direction', dParams);
+	//this.setupShapeRandomizer('direction', dParams);
 	//rnds.direction  = rm.genRandomGrid(dParams);
 	let  cParams = {step:30,min:50,max:250,numRows,numCols};
-	this.setupShapeRandomizer('red', dimParams);
+	//this.setupShapeRandomizer('red', dimParams);
 
 	//rnds.red  = rm.genRandomGrid(cParams);
  	let  wParams = {step:80,min:0,max:100,numRows,numCols};
-	this.setupShapeRandomizer('which', wParams);
+	//this.setupShapeRandomizer('which', wParams);
+	this.setupRandomGridForShapes('which', wParams);
 	//rnds.which  = rm.genRandomGrid(wParams);
 
  

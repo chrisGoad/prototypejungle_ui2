@@ -71,6 +71,7 @@ sections: [
 	 [0,'grid_3','generators','square','Grid 3'],
 	 [0,'grid_atlas','generators','wide2','Atlas',10],
 	 [0,'grid_book','generators','wide2','Book'],
+	 [0,'grid_decos','generators','wide2','Deco'],
 
 	// [0,'grid_smoke_2','generators','square','Smoke 2'],
 	 [0,'grid_signals','generators','square','Signals',18],

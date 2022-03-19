@@ -1,5 +1,5 @@
 
-//core.require('/line/line.js','/shape/rectangle.js','/generators/basics.js','/mlib/spatter.js','/mlib/topRandomMethods.js',
+//core.require('/line/line.js','/shape/rectangle.js','/generators/basics.js','/mlib/spatter.js','/mlib/boundeddRandomGrids.js',
 //function (linePP,rectPP,basicP,addSpatterMethods,addRandomMethods) {
 	
   
@@ -8,7 +8,7 @@ import {rs as linePP} from '/line/line.mjs';
 import {rs as rectPP} from '/shape/rectangle.mjs';
 import {rs as basicP} from '/generators/basics.mjs';
 import {rs as addSpatterMethods} from '/mlib/spatter.mjs';
-import {rs as addRandomMethods} from '/mlib/topRandomMethods.mjs';
+import {rs as addRandomMethods} from '/mlib/boundeddRandomGrids.mjs';
   let rs = basicP.instantiate();
 	
 	rs.setName('spatter_variants');

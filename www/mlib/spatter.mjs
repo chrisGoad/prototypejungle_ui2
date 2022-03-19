@@ -1,7 +1,7 @@
 
 //active
 //core.require('/shape/rectangle.js',function (rectPP) {
-//core.require('/shape/rectangle.js','/gen0/basics.js','/gen0/topRandomMethods.js','/gen0/animation.js',function (rectPP,addBasicMethods,addTopRandomMethods,addAnimationMethods) {
+//core.require('/shape/rectangle.js','/gen0/basics.js','/gen0/boundeddRandomGrids.js','/gen0/animation.js',function (rectPP,addBasicMethods,addboundeddRandomGrids,addAnimationMethods) {
 //core.require('/shape/rectangle.js','/gen0/dim2dWalker.js','/gen0/animation.js',function (rectPP,addRandomMethods,addAnimationMethods) {
 //core.require('/gen0/test.js',function (addRandomMethods) {
 	//debugger;

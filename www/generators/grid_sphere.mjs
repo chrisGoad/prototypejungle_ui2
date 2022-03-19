@@ -7,7 +7,7 @@ import {rs as polygonPP} from '/shape/polygon.mjs';
 import {rs as basicsP} from '/generators/basics.mjs';
 import {rs as addGridMethods} from '/mlib/grid.mjs';
 import {rs as addSphereMethods} from '/mlib/sphere.mjs';
-//import {rs as addRandomMethods} from '/mlib/topRandomMethods.mjs';
+//import {rs as addRandomMethods} from '/mlib/boundeddRandomGrids.mjs';
 import {rs as addParamsByCellMethods} from '/mlib/ParamsByCell.mjs';
 let rs = basicsP.instantiate();
 

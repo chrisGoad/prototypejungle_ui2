@@ -1,11 +1,11 @@
 
-//core.require('/shape/circle.js','/generators/basics.js','/mlib/grid0.js','/mlib/topRandomMethods.js','/mlib/ParamsByCell.js',
+//core.require('/shape/circle.js','/generators/basics.js','/mlib/grid0.js','/mlib/boundeddRandomGrids.js','/mlib/ParamsByCell.js',
 //function (circlePP,rs,addGridMethods,addRandomMethods,addParamsByCellMethods) {
 
 import {rs as circlePP} from '/shape/circle.mjs';
 import {rs as basicsP} from '/generators/basics.mjs';
 import {rs as addGridMethods} from '/mlib/grid.mjs';
-import {rs as addRandomMethods} from '/mlib/topRandomMethods.mjs';
+import {rs as addRandomMethods} from '/mlib/boundeddRandomGrids.mjs';
 import {rs as addParamsByCellMethods} from '/mlib/ParamsByCell.mjs';
 
 let rs = basicsP.instantiate();

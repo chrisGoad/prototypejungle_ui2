@@ -3,7 +3,7 @@ import {rs as rectPP} from '/shape/rectangle.mjs';
 import {rs as basicsP} from '/generators/basics.mjs';
 import {rs as addGridMethods} from '/mlib/grid.mjs';
 import {rs as addLinesMethods} from '/mlib/lines.mjs';
-//import {rs as addRandomMethods} from '/mlib/topRandomMethods.mjs';
+//import {rs as addRandomMethods} from '/mlib/boundeddRandomGrids.mjs';
 let rs = basicsP.instantiate();
 rs.setName('grid_message');
 

@@ -1,4 +1,4 @@
-//core.require('/shape/rectangle.js','/gen0/Basics.js','/mlib/grid.js','/mlib/topRandomMethods.js',
+//core.require('/shape/rectangle.js','/gen0/Basics.js','/mlib/grid.js','/mlib/boundeddRandomGrids.js',
 
 //core.require(,'/grid/grid24cons.js','/grid/dim2dWalker2.js',
 //function (rectPP,rs,addGridMethods,addRandomMethods) {
@@ -6,7 +6,7 @@
 import {rs as rectPP} from '/shape/rectangle.mjs';
 import {rs as basicsP} from '/generators/basics.mjs';
 import {rs as addGridMethods} from '/mlib/grid.mjs';
-import {rs as addRandomMethods} from '/mlib/topRandomMethods.mjs';
+import {rs as addRandomMethods} from '/mlib/boundeddRandomGrids.mjs';
 let rs = basicsP.instantiate();
 addGridMethods(rs);
 addRandomMethods(rs);

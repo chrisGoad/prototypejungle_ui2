@@ -1,6 +1,6 @@
 
 //core.require('/gen0/DropSeedsRandom.js','/line/line.js',function (rs,linePP) {
-//core.require('/line/line.js','/gen0/Basics.js','/mlib/drop.js','/mlib/topRandomMethods.js','/mlib/drop_seeds.js',function (linePP,rs,addDropMethods,addRandomMethods,addSeedMethods) {
+//core.require('/line/line.js','/gen0/Basics.js','/mlib/drop.js','/mlib/boundeddRandomGrids.js','/mlib/drop_seeds.js',function (linePP,rs,addDropMethods,addRandomMethods,addSeedMethods) {
 
 
 
@@ -8,7 +8,7 @@ import {rs as linePP} from '/line/line.mjs';
 import {rs as basicP} from '/generators/basics.mjs';
 import {rs as addDropMethods} from '/mlib/drop.mjs';
 import {rs as addSegsetMethods} from '/mlib/segsets.mjs';
-import {rs as addRandomMethods} from '/mlib/topRandomMethods.mjs';
+import {rs as addRandomMethods} from '/mlib/boundeddRandomGrids.mjs';
 
 let rs = basicP.instantiate();
 addDropMethods(rs);

@@ -1,20 +1,4 @@
 //activeMe
-/* The principal methods of this module create grids of random numbers, which are constrained to vary by only so much per step in the x or y directions, and to lie within given bounds. That is, they create  smooth, bounded surfaces, as it were. The details:
-There are two principal routines:
-
-this.setupRandomGridForShapes(nm,params) where
-nm is of type string - the name of the grid
-and  params has the form {step:<number>,min:<number>,max:<number>)
-
-step is the maximum amount that the random value can vary in one step of x or y on the grid. It is assumed that this has properties numRows and numCols; a bounded random grid of this size is produced.
-
-this.setupRandomGridForBoundaries(nm,params) is the same, except that a random grid of dimensions this.numRows+1 and this.numCols+1 is produced 
-
-When several such grids, named, say a,b,c  have been setup by setupRandomGridForShapes , they are used to produce the rvs  argument  to shapeGenerator in the grid module. Specifically, shapeGenerator will be called, for each grid cell, with rvs set to {a:<va>,b:<vb>,c:<vc>} where va,vb, and vc are the values at the given cell in the grids that have been setup by the calls
-this.setupRandomGridForShapes('a',params); 
-this.setupRandomGridForShapes('b',params); 
-this.setupRandomGridForShapes('c',params); 
-
 
 
 import {rs as addRandomMethods} from '/mlib/dim2dWalker.mjs';
@@ -169,6 +153,10 @@ item.setupShapeRandomizer = function (nm,params) {
   return this.setupRandomizer('randomGridsForShapes',nm,params);
 }
 
+item.setupRandomGridForShapes = function (nm,params) {
+  return this.setupRandomizer('randomGridsForShapes',nm,params);
+}
+
 
 
 item.setupColorRandomizer = function (params) {
@@ -178,6 +166,10 @@ item.setupColorRandomizer = function (params) {
 }
 
 item.setupBoundaryRandomizer = function (nm,params) {
+  return this.setupRandomizer('randomGridsForBoundaries',nm,params);
+}        		
+
+item.setupRandomGridForBoundaries = function (nm,params) {
   return this.setupRandomizer('randomGridsForBoundaries',nm,params);
 }        		
 

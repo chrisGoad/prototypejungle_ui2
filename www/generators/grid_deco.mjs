@@ -3,7 +3,7 @@
 //core.require('/shape/rectangle.js','/line/line.js','/shape/circle.js','/shape/polygon.js','/gen0/GridLinesRandom.js',
 //function (rs)	{ 
 //function (rectPP,linePP,circlePP,polygonPP,GridLinesRandomP)	{ 
-//core.require('/line/line.js','/shape/circle.js','/shape/rectangle.js','/gen0/basics.js','/mlib/grid.js','/mlib/topRandomMethods.js','/mlib/ParamsByCell.js',
+//core.require('/line/line.js','/shape/circle.js','/shape/rectangle.js','/gen0/basics.js','/mlib/grid.js','/mlib/boundeddRandomGrids.js','/mlib/ParamsByCell.js',
 
 
 import {rs as rectPP} from '/shape/rectangle.mjs';

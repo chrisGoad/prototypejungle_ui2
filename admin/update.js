@@ -42,6 +42,10 @@ function doSubstitution(s,what,value,withDoubleBracket) {
   function insertBoilerplate(s,scripts) {
  
   var irs = doSubstitution(s,'boilerplate0',boilerplate0,1);
+    //var irs = doSubstitution(irs,'<precode>','<p style="padding:5px"></p><hr/><pre style="padding-left:20px;font-size:10pt;font-weight:bold" class="code">');
+    var irs = doSubstitution(irs,'<precode>','<pre style="padding-left:20px;font-size:10pt;font-weight:bold" class="code">');
+    var irs = doSubstitution(irs,'</precode>','</pre>');
+
    irs = doSubstitution(irs,'mainImports',mainImports,1);
 
  
@@ -114,7 +118,7 @@ var fs = require('fs');
 //xferDir(0,'www','doc');
 xferDir('admin');
 xferDir('server');
-xferFiles('www',['draw.html','topdefs.js','style.css','spectrum.css']);
+xferFiles('www',['draw.html','topdefs.js','style.css','spectrum.css','page.html']);
 xferFiles('admin',['genGrids.js','gridSections.js','imageOrder.js']);
 xferDirs(['www/generators','www/line','www/shape','www/mlib','www/json','www/doc']);
 return;

@@ -61,7 +61,7 @@ const shapeGenerator = function (grid,rvs,cell) {
 	//	let v = rvs.v;
 		let shape = rectP.instantiate().show();
 		shapes.push(shape);
-    debugger;
+   // debugger;
 		return shape;
 }
 
@@ -95,7 +95,7 @@ grid2.boundaryLineGenerator = function (end0,end1,rvs,cell) {
   boundaryLineGenerator(this,end0,end1,rvs,cell);
 }
 rs.initialize = function () {
-  debugger;
+ // debugger;
  // core.root.backgroundColor = 'blue';
   let {focalPoint,focalLength,cameraScaling} = this.grid1;
   this.addBackStripe();

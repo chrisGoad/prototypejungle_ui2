@@ -18,6 +18,30 @@ var boilerplate0 =
 </head>
 <body style="background-color:white;font-size:14pt"> <!-- from 12 6/8/19 -->
 `;
+var boilerplate1 = 
+`<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="description" content="Diagramming basedd on an open repository of prototype structures.">
+<title>PrototypeJungle</title>
+<link rel="stylesheet" type="text/css"  href="style.css"/>
+<link rel="stylesheet" type="text/css"  href="spectrum.css"/>
+<link rel="icon" href="/images/favicon.ico" />
+
+<style>
+	.theGrid {
+		display:grid;
+		padding-top:10px;
+		grid-template-columns:1fr 2fr 1fr;
+	}
+</style>
+</head>
+<body style="background-color:white;font-size:14pt"> 
+<div class="theGrid">
+<div></div>
+<div>
+`;
 
  let mainImports =
 `import * as core from "/js/core-1.1.0.min.js";
@@ -26,7 +50,8 @@ import * as dom from "/js/dom-1.1.0.min.js";
 `;
 
 var endplate =
-`  </div>
+`
+</div>
 </div>
 </body>
 </html>
@@ -41,10 +66,11 @@ function doSubstitution(s,what,value,withDoubleBracket) {
   
   function insertBoilerplate(s,scripts) {
  
-  var irs = doSubstitution(s,'boilerplate0',boilerplate0,1);
+  let irs = doSubstitution(s,'boilerplate0',boilerplate0,1);
+  irs = doSubstitution(irs,'boilerplate1',boilerplate1,1);
     //var irs = doSubstitution(irs,'<precode>','<p style="padding:5px"></p><hr/><pre style="padding-left:20px;font-size:10pt;font-weight:bold" class="code">');
-    var irs = doSubstitution(irs,'<precode>','<pre style="padding-left:20px;font-size:10pt;font-weight:bold" class="code">');
-    var irs = doSubstitution(irs,'</precode>','</pre>');
+    irs = doSubstitution(irs,'<precode>','<pre style="padding-left:20px;font-size:10pt;font-weight:bold" class="code">');
+    irs = doSubstitution(irs,'</precode>','</pre>');
 
    irs = doSubstitution(irs,'mainImports',mainImports,1);
 
@@ -118,7 +144,7 @@ var fs = require('fs');
 //xferDir(0,'www','doc');
 xferDir('admin');
 xferDir('server');
-xferFiles('www',['draw.html','topdefs.js','style.css','spectrum.css','page.html']);
+xferFiles('www',['draw.html','topdefs.js','style.css','spectrum.css','page.html','pageSupport.js']);
 xferFiles('admin',['genGrids.js','gridSections.js','imageOrder.js']);
 xferDirs(['www/generators','www/line','www/shape','www/mlib','www/json','www/doc']);
 return;

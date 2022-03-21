@@ -3,7 +3,7 @@ let kind = process.argv[2];
 //let signedstr = process.argv[3]
 let forKOPstr = process.argv[3];
 let sortByOrderstr = "1";
-if (process.argv[3]==="0") {
+if (process.argv[4]==="0") {
   sortByOrderstr = "0";
 }
 /*let alternateStr = process.argv[3];
@@ -241,9 +241,11 @@ document.addEventListener('DOMContentLoaded', () => {
 `;
 let pageNumber = 0;
 let numPages = 0;
-const thingString = function (order,ix,variant,dir,useThumb,ititle,likes) {
+const thingString = function (order,ix,dir,useThumb,ititle,props) {
 	//console.log('thingString order',order,'ix',ix,'variant',variant,'dir',dir,'useThumb',useThumb,'title',ititle,'likes',likes);
 	debugger;
+  let {variant,likes,posted} = props;
+  console.log('POSTED',posted);
 	let spix = ix.split('.');
 	let path = spix[0];
 	let ext = (spix.length === 1)?'jpg':spix[1];
@@ -251,7 +253,7 @@ const thingString = function (order,ix,variant,dir,useThumb,ititle,likes) {
 	thePages.push(x);
   let title=ititle?ititle:pageNumber+'';
   theTitles.push(ititle?ititle:pageNumber+'');
-  let vpath = (variant?path+'_v_'+variant:path)+(signed?'_s':'');
+  let vpath = (variant?path+'_v_'+variant:path);
   //console.log('variant',variant);
   //console.log('vpath',vpath);
   let vx = vpath+'.'+ext;
@@ -267,7 +269,7 @@ const thingString = function (order,ix,variant,dir,useThumb,ititle,likes) {
 	let rs;
 	let astart = `<a style="color:white" href="page.html?image=${vx}&${pageArg}&${kindArg}">`;
  // let likesStr = likes?`<span style="font-size:10pt">Likes ${likes}</span><br/>`:'';
-  let likesStr = `<span style="font-size:10pt">Likes ${likes?likes:'none'} Order ${order}</span><br/>`;
+  let propsStr = `<span style="font-size:10pt">Likes ${likes?likes:'none'} Order ${order}${posted?"":" NOT POSTED"}</span><br/>`;
 	if (forKOP) {
 		let titleLink = title?`${astart}${title}</a></p>`:'';
 		console.log('forKOP');
@@ -278,7 +280,7 @@ rs = `<div><p class="centered">${titleLink}
 		console.log('not for KOP');
 rs = `<div><p style="text-align:center"><a href="http://localhost:8081/draw.html?source=/${dir}/${path}.${fileExt}${theImageArg}">${title}</a><br/>
 <a href="${dir}/${path}.${fileExt}">source</a><br/>
-${likesStr}
+${propsStr}
 ${astart}<img width="200" src="${thumbsrc}"></a></p></div>
 `;
 	}
@@ -389,27 +391,14 @@ let sectionString = function (things) {
    //  rs += `</div>${startLine}<div>${txt}</div></div>`;
       rs += `</div><br/><div style="text-align:center">${txt}</div><br/><div>`;
     } else {
-      let [order,file,variant,idirectory,iuseThumb,ititle,ilikes] = thing;
-      let directory,useThumb,title,likes;
+      let [order,file,directory,useThumb,title,props] = thing;
+      console.log('PROPS',props);
     //  console.log('Order',order,'file',file);
-      let tov = typeof variant;
+     // let tov = typeof variant;
     //  console.log('is variant',tov);
 
-      if (tov === "number") {
-     //   console.log('VARIANT');
-        directory = idirectory;
-        useThumb = iuseThumb;
-        title = ititle;
-        likes = ilikes;
-      } else {
-        directory = variant;
-        useThumb = idirectory;
-        title = iuseThumb;
-        likes = ititle;
-        variant = undefined;
-      }
       let ord = getOrder(thing);
-      rs += thingString(ord,file,variant,directory,useThumb,title,likes);
+      rs += thingString(ord,file,directory,useThumb,title,props);
       //rs += thingString(file,directory,useThumb,title,image);
       numThingsThisLine++;
     }

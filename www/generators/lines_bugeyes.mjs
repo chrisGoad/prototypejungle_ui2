@@ -8,7 +8,7 @@ import {rs as basicP} from '/generators/basics.mjs';
 let item = basicP.instantiate();
 item.setName('lines_bugeyes');
 let ht= 235;
-let topParams = {width:ht*1.5,height:ht,backStripeColor:'rgb(2,2,2)',backStripeWidth:1.5*1.12*ht,backStripeHeight:1.12*ht,backStripeVisible:0,sigX:0.4,sigY:0.35};
+let topParams = {width:ht*1.5,height:ht,frameStroke:'rgb(2,2,2)',frameWidth:1.5*1.12*ht,frameHeight:1.12*ht,frameVisible:0,sigX:0.4,sigY:0.35};
 Object.assign(item,topParams);
 
 item.initialize = function () {
@@ -20,7 +20,7 @@ item.initialize = function () {
 	right.initialize();
   left.moveto(Point.mk(-90,0));
   right.moveto(Point.mk(90,0));
-  this.addBackStripe();
+  this.addFrame();
  
 }	
 

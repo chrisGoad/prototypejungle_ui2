@@ -1,6 +1,6 @@
 
 //core.require('/gen1/grid0_6.js',
-//core.require('/shape/circle.js','/generators/basics.js','/mlib/grid.js','/mlib/boundeddRandomGrids.js',
+//core.require('/shape/circle.js','/generators/basics.js','/mlib/grid.js','/mlib/boundedRandomGrids.js',
 //function (circlePP,rs,addGridMethods,addRandomMethods)	{ 
 
 
@@ -29,16 +29,16 @@ rs.shapeGenerator = function (rvs,cell) {
   let opacity = level/255;
   let {shapes,circleP} = this;
   let shape = circleP.instantiate().show();
-  shapes.push(shape);
+  // shapes.push(shape);
   shape.fill = `rgba(${level},${level},${level},${opacity})`;
   return shape;
 }
 
 rs.initialize = function () {
   this.initProtos();
-  this.addBackStripe();
+  this.addFrame();
   this.addBackground();
-  this.setupShapeRandomizer('level', {step:30,min:0,max:255});
+  this.setupRandomGridForShapes('level', {step:30,min:0,max:255});
   this.initializeGrid(); 
 }
 

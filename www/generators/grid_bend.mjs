@@ -36,7 +36,7 @@ const pointAlongL = function (startPnt,turningPnt,x,up,ts,lineP,llines) {
   }
 //  let line = lineP.instantiate().show();
  // line.setEnds(startPnt,turningPnt);
- // llines.push(line);
+ // l// lines.push(line);
   /*if (ts) {
     return turningPnt;
   } else {
@@ -93,7 +93,7 @@ rs.shapeGenerator = function (rvs,cell) {
   let {shapes,circleP} = this;
   let shape = this.circleP.instantiate().show();
   shape.dimension = scale*cdist;//+ 5;
-  this.shapes.push(shape);
+  // shapes.push(shape);
   //shape.fill = `rgba(${level},${level},${level},${opacity})`;
   return shape;
 }
@@ -101,7 +101,7 @@ rs.shapeGenerator = function (rvs,cell) {
 rs.initialize = function () {
   this.initProtos();
   this.addBackground();
-  this.setupShapeRandomizer('level', {step:30,min:0,max:255});
+  this.setupRandomGridForShapes('level', {step:30,min:0,max:255});
   this.set('llines',core.ArrayNode.mk());
   this.initializeGrid(); 
 }

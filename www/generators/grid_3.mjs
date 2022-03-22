@@ -2,7 +2,7 @@ import {rs as rectPP} from '/shape/rectangle.mjs';
 import {rs as circlePP} from '/shape/circle.mjs';
 import {rs as basicsP} from '/generators/basics.mjs';
 import {rs as addGridMethods} from '/mlib/grid.mjs';
-import {rs as addRandomMethods} from '/mlib/topRandomMethods.mjs';
+import {rs as addRandomMethods} from '/mlib/boundedRandomGrids.mjs';
 let rs = basicsP.instantiate();
 
 addGridMethods(rs);
@@ -36,7 +36,7 @@ innerProto.initProtos = function (clr) {
 innerProto.shapeGenerator = function () {
 	let {circleP,shapes,rectP} = this;
   let ishape = rectP.instantiate();
-	shapes.push(ishape);
+	// shapes.push(ishape);
 	return ishape;
 }
 
@@ -52,14 +52,14 @@ rs.shapeGenerator = function (rvs,cell) {
 		  shape.initProtos(clr);
 			shape.initializeGrid();	
 		}
-		shapes.push(shape);
+		// shapes.push(shape);
 		shape.show();
 		return shape;
 	}
 		
 rs.initialize = function () {
 	core.root.backgroundColor = 'black';
-  this.addBackStripe();	
+  this.addFrame();	
 	this.initProtos();
 	this.initializeGrid();
 }

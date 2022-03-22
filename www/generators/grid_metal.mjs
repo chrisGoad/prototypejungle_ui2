@@ -1,13 +1,13 @@
 
 
-//core.require('/line/line.js','/gen0/Basics.js','/mlib/grid.js','/mlib/topRandomMethods.js',
+//core.require('/line/line.js','/gen0/Basics.js','/mlib/grid.js','/mlib/boundedRandomGrids.js',
 //function (linePP,rs,addGridMethods,addRandomMethods)	{ 
 
 
 import {rs as linePP} from '/line/line.mjs';
 import {rs as basicsP} from '/generators/basics.mjs';
 import {rs as addGridMethods} from '/mlib/grid.mjs';
-import {rs as addRandomMethods} from '/mlib/topRandomMethods.mjs';
+import {rs as addRandomMethods} from '/mlib/boundedRandomGrids.mjs';
 let rs = basicsP.instantiate();
 
  // let rs = svg.Element.mk('<g/>');
@@ -36,7 +36,7 @@ rs.shapeGenerator = function (rvs) {
 	debugger;
 	let shapes = this.shapes;
 	let shape = svg.Element.mk('<g/>');
-	shapes.push(shape);
+	// shapes.push(shape);
 	let line0 = this.lineP.instantiate();
 	let line1 = this.lineP.instantiate();
 	shape.set('line0',line0);
@@ -69,7 +69,7 @@ rs.shapeGenerator = function (rvs) {
 		debugger;
 		let lines = this.lines;
 		let line = this.bLineP.instantiate();
-		lines.push(line);
+		// lines.push(line);
 		line.setEnds(end0,end1);
 		//line.stroke = `rgb(100,100,0})`;
 		line.update();
@@ -81,10 +81,10 @@ rs.backgroundColor = 'black';
 rs.initialize = function () {
 	this.initProtos();
 	core.root.backgroundColor = 'black';
-  this.addBackStripe();
-	this.setupShapeRandomizer('shade', {step:30,min:50,max:250});
-	this.setupShapeRandomizer('direction', {step:0.05* Math.PI,min:0.95*Math.PI,max:2*Math.PI});
-	this.setupShapeRandomizer('length',  {step:0.1,min:1.5,max:2});
+  this.addFrame();
+	this.setupRandomGridForShapes('shade', {step:30,min:50,max:250});
+	this.setupRandomGridForShapes('direction', {step:0.05* Math.PI,min:0.95*Math.PI,max:2*Math.PI});
+	this.setupRandomGridForShapes('length',  {step:0.1,min:1.5,max:2});
   this.initializeGrid();
 }
 

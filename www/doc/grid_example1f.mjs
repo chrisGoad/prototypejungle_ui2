@@ -44,7 +44,7 @@ rs.shapeGenerator = function (rvs,cell) {
    return;
   }
 	let shape = rectP.instantiate().show();
-	shapes.push(shape);
+	//shapes.push(shape);
 	return shape;
 }
 
@@ -57,7 +57,7 @@ rs.boundaryLineGenerator= function (end0,end1,rvs,cell) {
    return;
   }
 	let line = blineP.instantiate().show();
-	lines.push(line);
+	//lines.push(line);
   line.setEnds(end0,end1);
   let vi = Math.floor(rvs.v);
 	line.stroke = `rgb(${vi},${vi},${vi})`;

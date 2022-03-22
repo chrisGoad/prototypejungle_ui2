@@ -2,7 +2,7 @@
 //core.require('/gen1/grid0_10.js','/line/line.js',
 //function (rs,linePP)	{ 
 //addSetName(rs);
-//core.require('/line/line.js','/shape/rectangle.js','/gen0/Basics.js','/mlib/grid.js','/mlib/topRandomMethods.js','/mlib/sphere.js',
+//core.require('/line/line.js','/shape/rectangle.js','/gen0/Basics.js','/mlib/grid.js','/mlib/boundedRandomGrids.js','/mlib/sphere.js',
 //function (linePP,rectPP,rs,addGridMethods,addRandomMethods,addSphereMethods) {
 
 
@@ -11,7 +11,7 @@ import {rs as linePP} from '/line/line.mjs';
 import {rs as basicsP} from '/generators/basics.mjs';
 import {rs as addGridMethods} from '/mlib/grid.mjs';
 import {rs as addSphereMethods} from '/mlib/sphere.mjs';
-import {rs as addRandomMethods} from '/mlib/topRandomMethods.mjs';
+import {rs as addRandomMethods} from '/mlib/boundedRandomGrids.mjs';
 //import {rs as addParamsByCellMethods} from '/mlib/ParamsByCell.mjs';
 let rs = basicsP.instantiate();
 addGridMethods(rs);
@@ -74,7 +74,7 @@ rs.shapeGenerator = function (rvs,cell,cnt) {
 		shape = this.shapeP3.instantiate();
 	} 
 	shape.show();
-	shapes.push(shape);
+	// shapes.push(shape);
 	return shape;
 }
 
@@ -82,7 +82,7 @@ rs.shapeGenerator = function (rvs,cell,cnt) {
 rs.initialize = function (cb) {
 	let {focalPoint,focalLength,cameraScaling} = this;
 	let {width,height,numRows,numCols} = this;
-  this.addBackStripe();
+  this.addFrame();
 	this.deltaX = width/numCols;
   this.deltaY = height/numRows;
 	this.initProtos();

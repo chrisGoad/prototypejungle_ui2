@@ -1,6 +1,6 @@
 
 //core.require('/ngen1/grid_0.js','/line/line.js',
-//core.require('/generators/basics.js','/line/line.js','/mlib/grid.js','/mlib/boundeddRandomGrids.js',
+//core.require('/generators/basics.js','/line/line.js','/mlib/grid.js','/mlib/boundedRandomGrids.js',
 //function (rs,linePP,addGridMethods,addRandomMethods) {
 
 import {rs as linePP} from '/line/line.mjs';
@@ -48,7 +48,7 @@ rs.initProtos = function () {
   rs.shapeGenerator = function (rvs) {
     let shapes = this.shapes;
 		let rs = svg.Element.mk('<g/>');
-		shapes.push(rs);
+		// shapes.push(rs);
 		let factor2 = 1;
     const setup = (nm,shp,idx,count) => {
       rs.set(nm,shp);
@@ -100,7 +100,7 @@ rs.boundaryLineGenerator = function (end0,end1,rvs,cell) {
 	let {blineP,showMissing,lines,updating,lineIndex} = this;
 	let line = this.genLine({end0:end0,end1:end1},blineP);
 	let c = rvs.color
-	lines.push(line);
+	// lines.push(line);
   line.setEnds(end0,end1);
 	line.stroke = `rgb(0,${Math.floor(c)},${Math.floor(c)})`;
 	line.show();
@@ -110,9 +110,9 @@ rs.boundaryLineGenerator = function (end0,end1,rvs,cell) {
 rs.initialize = function () {
   let {numRows,numCols} = this;
   core.root.backgroundColor = 'black';
-  this.addBackStripe();
+  this.addFrame();
   this.initProtos();
-	this.setupBoundaryRandomizer('color', {step:35,min:150,max:250,biasFun,numRows,numCols});
+	this.setupRandomGridForBoundaries('color', {step:35,min:150,max:250,biasFun,numRows,numCols});
   this.initializeGrid();
 }
 

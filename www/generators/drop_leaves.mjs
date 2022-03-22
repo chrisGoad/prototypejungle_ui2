@@ -1,5 +1,5 @@
 
-//core.require('/shape/rectangle.js','/line/line.js','/generators/basics.js','/mlib/drop.js','/mlib/segsets.js','/mlib/boundeddRandomGrids.js','/mlib/drop_seeds.js',
+//core.require('/shape/rectangle.js','/line/line.js','/generators/basics.js','/mlib/drop.js','/mlib/segsets.js','/mlib/boundedRandomGrids.js','/mlib/drop_seeds.js',
 //function (rectPP,linePP,rs,addDropMethods,addRandomMethods,addSegsetMethods,addSeedMethods) {
 
 import {rs as rectPP} from '/shape/rectangle.mjs';
@@ -17,7 +17,7 @@ rs.setName('drop_leaves');
 let ht = 300;
 let wd = 1.5 * ht;
 
-let topParams = {width:wd,height:ht,numSeedRows:0,numSeedCols:0,dropTries:500,lineLength:5,backStripeColor:'rgb(2,2,2)',backStripePadding:0.17*ht,backStripeVisible:0,minSeparation:0,rectangleDim:0.2,gridPadding:60,fromEnds:1,sepNext:0.01,onlyFromSeeds:1,extendWhich:'first',numSeeds:60,splitChance:.10,splitAmount:0.005 * Math.PI,endLoops:3000,seedDirections:[0*Math.PI],directionChange:0.0*Math.PI,randomDirectionChange:0.051*Math.PI,lineExt:0}
+let topParams = {width:wd,height:ht,numSeedRows:0,numSeedCols:0,dropTries:500,lineLength:5,frameStroke:'rgb(2,2,2)',framePadding:0.17*ht,frameVisible:0,minSeparation:0,rectangleDim:0.2,gridPadding:60,fromEnds:1,sepNext:0.01,onlyFromSeeds:1,extendWhich:'first',numSeeds:60,splitChance:.10,splitAmount:0.005 * Math.PI,endLoops:3000,seedDirections:[0*Math.PI],directionChange:0.0*Math.PI,randomDirectionChange:0.051*Math.PI,lineExt:0}
 
 Object.assign(rs,topParams);
 
@@ -37,14 +37,14 @@ rs.genSeeds = function () {
 	let LL = Point.mk(dc - hw,hh-dc);
 	let LLS = this.genSingletonUnit(LL,-0.5*Math.PI,'white');
 	segs.push(LLS[0][0]);
-	lines.push(LLS[1][0]);
+	// lines.push(LLS[1][0]);
 	let UL = Point.mk(dc - hw,dc-hh);
 	let ULS = this.genSingletonUnit(UL,0,'white');
 	segs.push(ULS[0][0]);
 	let LR = Point.mk(hw-dc,hh-dc);
 	let LRS = this.genSingletonUnit(LR,Math.PI,'white');
 	segs.push(LRS[0][0]);
-	lines.push(LRS[1][0]);	lines.push(ULS[1][0]);
+	// lines.push(LRS[1][0]);	// lines.push(ULS[1][0]);
 	return [segs,lines];
 }
 
@@ -64,7 +64,7 @@ rs.initialSegments = function () {
 
 rs.initialize = function () {
   core.root.backgroundColor = 'black';
-  this.addBackStripe();
+  this.addFrame();
   this.initProtos();
 	this.initializeDrop();
 }

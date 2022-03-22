@@ -1,7 +1,7 @@
 import {rs as rectPP} from '/shape/rectangle.mjs';
 import {rs as basicsP} from '/generators/basics.mjs';
 import {rs as addGridMethods} from '/mlib/grid.mjs';
-import {rs as addRandomMethods} from '/mlib/boundeddRandomGrids.mjs';
+import {rs as addRandomMethods} from '/mlib/boundedRandomGrids.mjs';
 let rs = basicsP.instantiate();
 
 addGridMethods(rs);
@@ -38,7 +38,7 @@ rs.shapeGenerator = function (rvs,cell) {
   shape.width = 1 * dim;
   shape.height = dim;
   shape.height = 1*dim;
-  shapes.push(shape);
+  // shapes.push(shape);
   let lev = 100 + bOw*50;
   let scolor = Math.max(baseColor,clr - 50);
   shape.fill = (bOw < 1)?`rgba(${scolor-50},${scolor-50},${clr},1)`:`rgba(${clr},${clr},${clr})`;
@@ -49,8 +49,8 @@ rs.shapeGenerator = function (rvs,cell) {
 rs.initialize = function () {
 	core.root.backgroundColor = 'black';
 	this.initProtos();
-  this.addBackStripe();
-  this.setupShapeRandomizer('blueOrWhite',{step:0.5,min:0,max:2});
+  this.addFrame();
+  this.setupRandomGridForShapes('blueOrWhite',{step:0.5,min:0,max:2});
 	this.initializeGrid();
 }
 

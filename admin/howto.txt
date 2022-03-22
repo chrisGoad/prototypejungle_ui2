@@ -4,7 +4,7 @@ npm install terser
 
 cd c:\prototypejungle_ui2
 
-git add admin js server www 
+git add admin server js www 
 
 git commit -m "misc"
 

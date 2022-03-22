@@ -57,7 +57,7 @@ rs.shapeGenerator = function (rvs,cell) {
 	let shape = rectP.instantiate();
 	shape.width = wdf * deltaX;
 	shape.height= htf * deltaY;
-	shapes.push(shape);
+	// shapes.push(shape);
 	let fc = this.sizeFactor(cell);
 	colorSetter(shape,fc);
 	shape.show();

@@ -21,7 +21,7 @@ rs.initializeProto = function () {
 }  
 let ht = 200;
 let wd = 1.5*ht
-let topParams = {delta:10,center:Point.mk(0,0),width:wd,height:ht, backStripeWidth:1.17*wd,backStripeHeight:1.17*ht,backStripeColorr:'rgb(2,2,2)',dimension:120,numLines:1000,angleMin:-90,angleMax:90}
+let topParams = {delta:10,center:Point.mk(0,0),width:wd,height:ht, frameWidth:1.17*wd,frameHeight:1.17*ht,frameStroker:'rgb(2,2,2)',dimension:120,numLines:1000,angleMin:-90,angleMax:90}
 
 rs.drawGrid = function () {
   debugger;
@@ -38,7 +38,7 @@ rs.drawGrid = function () {
   let hht = height/2;
   const addLine =  (e0,e1) => {
     let line = lineP.instantiate();
-    this.gridLines.push(line);
+    this.grid// lines.push(line);
     line.setEnds(e0,e1);
     line.update();
     line.show();
@@ -62,7 +62,7 @@ rs.initialize = function () {
   this.initializeProto();
   core.root.backgroundColor = 'black';
   debugger;
-  this.addBackStripe();
+  this.addFrame();
   this.drawGrid();
   let circle =  this.set('visCircle',this.circleP.instantiate().show());
   circle.dimension = this.dimension;

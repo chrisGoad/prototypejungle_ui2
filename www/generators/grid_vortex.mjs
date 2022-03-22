@@ -1,4 +1,4 @@
-//core.require('/shape/rectangle.js','/shape/circle.js','/gen0/Basics.js','/mlib/grid.js','/mlib/boundeddRandomGrids.js','/mlib/ParamsByCell.js',
+//core.require('/shape/rectangle.js','/shape/circle.js','/gen0/Basics.js','/mlib/grid.js','/mlib/boundedRandomGrids.js','/mlib/ParamsByCell.js',
 //function (rectPP,circlePP,rs,addGridMethods,addRandomMethods,addParamsByCellMethods) {
 import {rs as linePP} from '/line/line.mjs';
 import {rs as circlePP} from '/shape/circle.mjs';
@@ -39,9 +39,9 @@ let outer = 200;
 let topParams = {
   width:wd,
 	height:wd,
-	backStripeColor:'rgb(2,2,2)',
-	backStripeWidth:1.1*wd,
-	backStripeHeight:1.1*wd,
+	frameStroke:'rgb(2,2,2)',
+	frameWidth:1.1*wd,
+	frameHeight:1.1*wd,
 	ordinalMap : {0:0,1:1,2:2,3:3,4:4,5:4,6:6,7:7},
 	orderByOrdinal : 0,
 	randomizeOrder : 0,
@@ -86,7 +86,7 @@ rs.initialize = function () {
 	core.root.backgroundColor = 'black';
   this.initProtos();
 	this.initializeGrid();
-  this.addBackStripe();
+  this.addFrame();
 }
 
 export {rs};

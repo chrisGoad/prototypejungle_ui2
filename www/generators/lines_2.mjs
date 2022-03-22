@@ -4,7 +4,7 @@ import {rs} from '/generators/lines_cobweb.mjs';
 
 rs.setName('lines_2');
 let ht = 200;
-let topParams = {width:ht*1.5,height:ht,numLines:3000,angleMin:-90,angleMax:90,backStripeColor:'rgb(2,2,2)',backStripePadding:0.17*ht,lineColor:'white'};
+let topParams = {width:ht*1.5,height:ht,numLines:3000,angleMin:-90,angleMax:90,frameStroke:'rgb(2,2,2)',framePadding:0.17*ht,lineColor:'white'};
 Object.assign(rs,topParams);
 
 export {rs}

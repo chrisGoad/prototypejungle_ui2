@@ -11,7 +11,7 @@ addDropMethods(rs);
 addSegsetMethods(rs);
 rs.setName('drop_metal_2');
 let wd = 400;
-let topParams = {width:wd,height:wd,dropTries:40,backStripeColor:'rgb(2,2,2)',backStripePadding:0.1*wd,backStripeVisible:0}
+let topParams = {width:wd,height:wd,dropTries:40,frameStroke:'rgb(2,2,2)',framePadding:0.1*wd,frameVisible:0}
 
 Object.assign(rs,topParams);
 
@@ -61,7 +61,7 @@ rs.initialSegments = function () {
 rs.initialize = function () {
   core.root.backgroundColor = 'black';
 	this.initProtos();
-	this.addBackStripe();
+	this.addFrame();
 	this.initializeDrop();
 }
 

@@ -1,6 +1,6 @@
 
 //core.require('/gen1/grid0_6.js',
-//core.require('/line/line.js','/shape/circle.js','/generators/basics.js','/mlib/grid.js','/mlib/boundeddRandomGrids.js',
+//core.require('/line/line.js','/shape/circle.js','/generators/basics.js','/mlib/grid.js','/mlib/boundedRandomGrids.js',
 import {rs as linePP} from '/line/line.mjs';
 import {rs as circlePP} from '/shape/circle.mjs';
 import {rs as basicsP} from '/generators/basics.mjs';
@@ -74,7 +74,7 @@ rs.shapeGenerator = function (rvs,cell) {
   let {shapes,circleP} = this;
   let shape = this.circleP.instantiate().show();
   shape.dimension = scale*cdist;//+ 5;
-  this.shapes.push(shape);
+  // shapes.push(shape);
   //shape.fill = `rgba(${level},${level},${level},${opacity})`;
   return shape;
 }
@@ -83,7 +83,7 @@ rs.initialize = function () {
 debugger;
   this.initProtos();
   this.addBackground();
-  this.setupShapeRandomizer('level', {step:30,min:0,max:255});
+  this.setupRandomGridForShapes('level', {step:30,min:0,max:255});
   this.set('llines',core.ArrayNode.mk());
   this.initializeGrid(); 
 }

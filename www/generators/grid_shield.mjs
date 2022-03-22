@@ -1,11 +1,11 @@
-//core.require('/shape/rectangle.js','/shape/circle.js','/gen0/Basics.js','/mlib/grid.js','/mlib/topRandomMethods.js','/mlib/ParamsByCell.js',
+//core.require('/shape/rectangle.js','/shape/circle.js','/gen0/Basics.js','/mlib/grid.js','/mlib/boundedRandomGrids.js','/mlib/ParamsByCell.js',
 //function (rectPP,circlePP,rs,addGridMethods,addRandomMethods,addParamsByCellMethods) {
 import {rs as linePP} from '/line/line.mjs';
 import {rs as circlePP} from '/shape/circle.mjs';
 import {rs as rectPP} from '/shape/rectangle.mjs';
 import {rs as basicsP} from '/generators/basics.mjs';
 import {rs as addGridMethods} from '/mlib/grid.mjs';
-import {rs as addRandomMethods} from '/mlib/topRandomMethods.mjs';
+import {rs as addRandomMethods} from '/mlib/boundedRandomGrids.mjs';
 import {rs as addParamsByCellMethods} from '/mlib/ParamsByCell.mjs';
 let rs = basicsP.instantiate();
 addGridMethods(rs);
@@ -84,7 +84,7 @@ rs.positionFunction = rs.radialPositionFunction;
 rs.shapeGenerator = function () {
   debugger;
   let shape =this.circleP.instantiate().show();
-    this.shapes.push(shape);
+    // shapes.push(shape);
     shape.dimension = 2;
     //debugger;
     return shape;
@@ -107,7 +107,7 @@ rs.boundaryLineGeneratorr = function (p11,p21,rvs) {
 rs.initialize = function () {
 	debugger;
 	core.root.backgroundColor = 'black';
-  this.addBackStripe();
+  this.addFrame();
   this.initProtos();
 	this.initializeGrid();
 }

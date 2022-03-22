@@ -1,4 +1,4 @@
-//core.require('/shape/rectangle.js','/gen0/Basics.js','/mlib/grid.js','/mlib/boundeddRandomGrids.js',
+//core.require('/shape/rectangle.js','/gen0/Basics.js','/mlib/grid.js','/mlib/boundedRandomGrids.js',
 
 //core.require(,'/grid/grid24cons.js','/grid/dim2dWalker2.js',
 //function (rectPP,rs,addGridMethods,addRandomMethods) {
@@ -6,7 +6,7 @@
 import {rs as rectPP} from '/shape/rectangle.mjs';
 import {rs as basicsP} from '/generators/basics.mjs';
 import {rs as addGridMethods} from '/mlib/grid.mjs';
-import {rs as addRandomMethods} from '/mlib/boundeddRandomGrids.mjs';
+import {rs as addRandomMethods} from '/mlib/boundedRandomGrids.mjs';
 let rs = basicsP.instantiate();
 addGridMethods(rs);
 addRandomMethods(rs);
@@ -18,7 +18,7 @@ addRandomMethods(rs);
 
 	let wd = 400;
   let nr = 100;
-	let topParams = {width:wd,height:wd,numRows:nr,numCols:nr,backStripeColor:'rgb(2,2,2)',backStripePadding:0.2*wd,backStripeVisible:0};
+	let topParams = {width:wd,height:wd,numRows:nr,numCols:nr,frameStroke:'rgb(2,2,2)',framePadding:0.2*wd,frameVisible:0};
 	Object.assign(rs,topParams);
 	//rs.initProtos();
 	/* 
@@ -61,7 +61,7 @@ rs.shapeGenerator = function (rvs,cell) {
 			inner.width = 4;
 			inner.height = 1;
 		}
-		shapes.push(shape);
+		// shapes.push(shape);
 		let jogx = rvs.jogx;
 		let jogy = rvs.jogy;
 		//let r = Math.max(0,rvs.red);
@@ -88,7 +88,7 @@ rs.shapeGenerator = function (rvs,cell) {
 rs.initialize = function () {
 	core.root.backgroundColor = 'black';
 	this.initProtos();
-  this.addBackStripe();
+  this.addFrame();
 	let rnp = {min:0,max:0,step:0}
 	let numCols = this.numCols;
 	let numRows = this.numRows;
@@ -117,10 +117,10 @@ rs.initialize = function () {
 	const walkParamsRed = function (i,j) {
 		return walkParams(i,j,1);
 	}
-  this.setupShapeRandomizer('jogx', {walkParams:walkParams});
-  this.setupShapeRandomizer('jogy', {walkParams:walkParams});
-	//this.setupShapeRandomizer('red', {numRows,numCols,step:30,min:150,max:250});//walkParams:walkParamsRed});
-	//this.setupShapeRandomizer('red', {step:30,min:100,max:250});//walkParams:walkParamsRed});
+  this.setupRandomGridForShapes('jogx', {walkParams:walkParams});
+  this.setupRandomGridForShapes('jogy', {walkParams:walkParams});
+	//this.setupRandomGridForShapes('red', {numRows,numCols,step:30,min:150,max:250});//walkParams:walkParamsRed});
+	//this.setupRandomGridForShapes('red', {step:30,min:100,max:250});//walkParams:walkParamsRed});
 	this.setupColorRandomizer({step:30,min:50,max:240});
 
 	this.initializeGrid();

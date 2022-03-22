@@ -1,5 +1,5 @@
 
-//core.require('/line/line.js','/shape/rectangle.js','/generators/basics.js','/mlib/spatter.js','/mlib/boundeddRandomGrids.js',
+//core.require('/line/line.js','/shape/rectangle.js','/generators/basics.js','/mlib/spatter.js','/mlib/boundedRandomGrids.js',
 //function (linePP,rectPP,basicP,addSpatterMethods,addRandomMethods) {
 	
   
@@ -8,7 +8,7 @@ import {rs as linePP} from '/line/line.mjs';
 import {rs as rectPP} from '/shape/rectangle.mjs';
 import {rs as basicP} from '/generators/basics.mjs';
 import {rs as addSpatterMethods} from '/mlib/spatter.mjs';
-import {rs as addRandomMethods} from '/mlib/boundeddRandomGrids.mjs';
+import {rs as addRandomMethods} from '/mlib/boundedRandomGrids.mjs';
   let rs = basicP.instantiate();
 	
 	rs.setName('spatter_variants');
@@ -37,7 +37,7 @@ import {rs as addRandomMethods} from '/mlib/boundeddRandomGrids.mjs';
 		
 	let gParams = {numRows:20,numCols:20,width:400,height:400,numDrops:3000,pointJiggle:0,spatter:1};
 	let wd = 1000;
-  let topParams = {width:wd,height:wd,backStripeColor:'rgb(2,2,2)',backStripePadding:0.1*wd,backStripeVisible:0};
+  let topParams = {width:wd,height:wd,frameStroke:'rgb(2,2,2)',framePadding:0.1*wd,frameVisible:0};
   
   Object.assign(rs,topParams);
 	
@@ -99,7 +99,7 @@ const shapeGenerator = function (grid,which,rvs,cell,pnt,idx) {
 //item.setLenDir = function (shape,len,dir) {
 	let {shapes,lineP,yg} = grid;
   let shape = grid.lineP.instantiate();
-  shapes.push(shape);
+  // shapes.push(shape);
 	let dir = rvs.direction;
 	let {x,y} = cell;
 	let {numRows,numCols} = grid;
@@ -182,27 +182,27 @@ const initialize = function (grid,which,cb) {
  // grid.initProtos();
   if (which === 1) {
 		debugger;
-		grid.setupShapeRandomizer('length', {step:5,min:2,max:5});
+		grid.setupRandomGridForShapes('length', {step:5,min:2,max:5});
 	}
 	if (which === 2) {
 		debugger;
-		grid.setupShapeRandomizer('length', {step:5,min:5,max:15});
+		grid.setupRandomGridForShapes('length', {step:5,min:5,max:15});
 	}
 	if (which === 3) {
 		debugger;
-		grid.setupShapeRandomizer('length', {step:5,min:15,max:25});
+		grid.setupRandomGridForShapes('length', {step:5,min:15,max:25});
 	}
 	if (which === 4) {
 		debugger;
-		grid.setupShapeRandomizer('length', {step:5,min:50,max:85});
+		grid.setupRandomGridForShapes('length', {step:5,min:50,max:85});
 	}
 	if (!grid.loadFromPath) {
 	  if (which === 1) {
-			grid.setupShapeRandomizer('length', {step:5,min:5,max:15});
+			grid.setupRandomGridForShapes('length', {step:5,min:5,max:15});
 		}
-	  //grid.setupShapeRandomizer('direction', {step:0.2* Math.PI,min:0,max:2*Math.PI});
-	  grid.setupShapeRandomizer('direction', {step:0.2* Math.PI,stept:0.1*Math.PI,min:0,max:2*Math.PI});
-	  grid.setupShapeRandomizer('shade', {step:30,min:50,max:250});
+	  //grid.setupRandomGridForShapes('direction', {step:0.2* Math.PI,min:0,max:2*Math.PI});
+	  grid.setupRandomGridForShapes('direction', {step:0.2* Math.PI,stept:0.1*Math.PI,min:0,max:2*Math.PI});
+	  grid.setupRandomGridForShapes('shade', {step:30,min:50,max:250});
 	}
   //this.initializeGrid();
   grid.addSpatter();
@@ -259,7 +259,7 @@ rs.initialize = function () {
     grid2.moveto(Point.mk(mv,-mv));
     grid3.moveto(Point.mk(-mv,mv));
     grid4.moveto(Point.mk(mv,mv));
-    this.addBackStripe();
+    this.addFrame();
 }
 
 	

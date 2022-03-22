@@ -1,4 +1,4 @@
-//core.require('/line/line.js','/shape/circle.js','/shape/rectangle.js','/gen0/basics.js','/mlib/grid.js','/mlib/boundeddRandomGrids.js',
+//core.require('/line/line.js','/shape/circle.js','/shape/rectangle.js','/gen0/basics.js','/mlib/grid.js','/mlib/boundedRandomGrids.js',
 let radial = 0;
 //function (linePP,circlePP,rectPP,rs,addGridMethods,addRandomMethods) {
 import {rs as linePP} from '/line/line.mjs';
@@ -46,9 +46,9 @@ nr= 48;
 let wd = 200;
 let topParams;
 if (radial) {
-  topParams = {numRows:0.5*nr,numCols:nr,width:wd,height:wd,outerRadius:wd,innerRadius:0.2*wd,angleMin:-180,angleMax:180,center: Point.mk(0,0),rotation:30,backStripeColor:'rgb(2,2,2)',pointJiggle:4,backStripePadding:0.15*wd};
+  topParams = {numRows:0.5*nr,numCols:nr,width:wd,height:wd,outerRadius:wd,innerRadius:0.2*wd,angleMin:-180,angleMax:180,center: Point.mk(0,0),rotation:30,frameStroke:'rgb(2,2,2)',pointJiggle:4,framePadding:0.15*wd};
 } else {
-  topParams = {numRows:nr,numCols:nr,width:wd,height:wd,backStripeColor:'rgb(2,2,2)',pointJiggle:8,backStripePadding:0.25*wd,backStripeVisible:0};
+  topParams = {numRows:nr,numCols:nr,width:wd,height:wd,frameStroke:'rgb(2,2,2)',pointJiggle:8,framePadding:0.25*wd,frameVisible:0};
 }
 rs.computeJiggleParams = function (jiggle) {
   let hj = 0.5*jiggle;
@@ -70,7 +70,7 @@ const shapeGenerator = function (grid,rvs,cell) {
 		let {rectP,shapes} = grid;
 	//	let v = rvs.v;
 		let shape = rectP.instantiate().show();
-		shapes.push(shape);
+		// shapes.push(shape);
  //    let {r,g,b} = rvs;
 	//let rgb = `rgb(${Math.floor(r)},${Math.floor(r)},${Math.floor(r)})`;
 //	shape.fill = rgb;
@@ -97,21 +97,22 @@ const boundaryLineGenerator= function (grid,end0,end1,rvs,cell) {
   }
 	//let line = this.nextLine(blineP);
 	let line = blineP.instantiate().show();
-	lines.push(line);
+	// lines.push(line);
   line.setEnds(end0,end1);
   let {r,g,b} = rvs;
 	let rgb = `rgb(${Math.floor(r)},${Math.floor(r)},${Math.floor(r)})`;
 //	line.stroke = rgb;
+debugger;
 	return line;
 }
 
 grid1.boundaryLineGenerator = function (end0,end1,rvs,cell) {
-  boundaryLineGenerator(this,end0,end1,rvs,cell);
+  return boundaryLineGenerator(this,end0,end1,rvs,cell);
 }
 
 
 grid2.boundaryLineGenerator = function (end0,end1,rvs,cell) {
-  boundaryLineGenerator(this,end0,end1,rvs,cell);
+  return boundaryLineGenerator(this,end0,end1,rvs,cell);
 }
 
 if (radial) {
@@ -122,23 +123,23 @@ if (radial) {
 rs.initialize = function () {
   debugger;
 /*   let rparams = {step:30,min:0,max:250}
- 	this.grid1.setupShapeRandomizer('r', rparams);
- 	this.grid1.setupShapeRandomizer('g', rparams);
- 	this.grid1.setupShapeRandomizer('b', rparams);
- 	this.grid1.setupBoundaryRandomizer('r', rparams);
- 	this.grid1.setupBoundaryRandomizer('g', rparams);
- 	this.grid1.setupBoundaryRandomizer('b', rparams);this.grid1.setupShapeRandomizer('r', rparams);
- 	this.grid2.setupShapeRandomizer('g', rparams);
- 	this.grid2.setupShapeRandomizer('b', rparams);
- 	this.grid2.setupBoundaryRandomizer('r', rparams);
- 	this.grid2.setupBoundaryRandomizer('g', rparams);
- 	this.grid2.setupBoundaryRandomizer('b', rparams);*/
+ 	this.grid1.setupRandomGridForShapes('r', rparams);
+ 	this.grid1.setupRandomGridForShapes('g', rparams);
+ 	this.grid1.setupRandomGridForShapes('b', rparams);
+ 	this.grid1.setupRandomGridForBoundaries('r', rparams);
+ 	this.grid1.setupRandomGridForBoundaries('g', rparams);
+ 	this.grid1.setupRandomGridForBoundaries('b', rparams);this.grid1.setupRandomGridForShapes('r', rparams);
+ 	this.grid2.setupRandomGridForShapes('g', rparams);
+ 	this.grid2.setupRandomGridForShapes('b', rparams);
+ 	this.grid2.setupRandomGridForBoundaries('r', rparams);
+ 	this.grid2.setupRandomGridForBoundaries('g', rparams);
+ 	this.grid2.setupRandomGridForBoundaries('b', rparams);*/
  // core.root.backgroundColor = 'blue';
   this.grid1.initProtos();
   this.grid1.initializeGrid();
   this.grid2.initProtos();
   this.grid2.initializeGrid();  
-  this.addBackStripe();
+  this.addFrame();
 }
 export {rs};
 

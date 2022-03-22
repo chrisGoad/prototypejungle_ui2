@@ -251,7 +251,8 @@ item.addCellBoundaries = function (frame,fraction) {
       if (p12) {
 				rs = this.boundaryLineGenerator(p11,p12,rvs,cell,'vertical');
 				if (rs) {
-					//lines.push(rs);  //1/22
+          lines.push(rs);  // added 3/22/22
+          rs.update();// added 3/22/22
 					if (this.boundaryLineUpdater) {
 					  this.boundaryLineUpdater(rs,p11,p12,rvs,cell,'vertical');
 					}
@@ -263,7 +264,8 @@ item.addCellBoundaries = function (frame,fraction) {
       if (p21) {
  				rs = this.boundaryLineGenerator(p11,p21,rvs,cell,'horizontal');
 		   if (rs) {
-				// lines.push(rs);
+				 lines.push(rs); // added 3/22/22
+         rs.update(); // added 3/22/22
 				 if (this.boundaryLineUpdater) {
             this.boundaryLineUpdater(rs,p11,p21,rvs,cell,'horizontal');
 				 }
@@ -550,6 +552,12 @@ item.addShapes = function () {
    // debugger;
 		if (this.shapeGenerator) {
 			shp = this.shapeGenerator(rvs,cell,cnt,idx);
+      if (shp) {
+        shapes.push(shp); // added 3/22/22
+        if (shp.update) {
+          shp.update(); // added 3/22/22
+        }
+      }
 			if (shp && this.shapeUpdater) {
 				this.shapeUpdater(shp, rvs,cell,cnt);
 			}

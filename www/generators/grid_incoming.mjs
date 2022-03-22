@@ -1,4 +1,4 @@
-//core.require('/line/line.js','/shape/circle.js','/shape/rectangle.js','/gen0/basics.js','/mlib/grid.js','/mlib/boundeddRandomGrids.js',
+//core.require('/line/line.js','/shape/circle.js','/shape/rectangle.js','/gen0/basics.js','/mlib/grid.js','/mlib/boundedRandomGrids.js',
 
 //function (linePP,circlePP,rectPP,rs,addGridMethods,addRandomMethods) {
 import {rs as linePP} from '/line/line.mjs';
@@ -46,7 +46,7 @@ grid2.initProtos = function () {
 
 let nr = 64;
 let wd = 50;
-let topParams = {numRows:nr,numCols:nr,width:wd,height:wd,backStripeColor:'rgb(2,2,2)',pointJiggle:50,backStripePadding:0.15*wd,
+let topParams = {numRows:nr,numCols:nr,width:wd,height:wd,frameStroke:'rgb(2,2,2)',pointJiggle:50,framePadding:0.15*wd,
 sphereCenter:Point3d.mk(0,0,-20),sphereDiameter:35,focalPoint:Point3d.mk(0,0,50),focalLength:10,cameraScaling:100};
 
 Object.assign(grid1,topParams);
@@ -60,7 +60,7 @@ const shapeGenerator = function (grid,rvs,cell) {
 		let {rectP,shapes} = grid;
 	//	let v = rvs.v;
 		let shape = rectP.instantiate().show();
-		shapes.push(shape);
+		// shapes.push(shape);
    // debugger;
 		return shape;
 }
@@ -80,7 +80,7 @@ const boundaryLineGenerator= function (grid,end0,end1,rvs,cell) {
 	let {blineP,showMissing,lines,updating,lineIndex} =grid;
 	//let line = this.nextLine(blineP);
 	let line = blineP.instantiate().show();
-	lines.push(line);
+	// lines.push(line);
   line.setEnds(end0,end1);
 	return line;
 }
@@ -98,7 +98,7 @@ rs.initialize = function () {
  // debugger;
  // core.root.backgroundColor = 'blue';
   let {focalPoint,focalLength,cameraScaling} = this.grid1;
-  this.addBackStripe();
+  this.addFrame();
 
   this.grid1.camera = geom.Camera.mk(focalPoint,focalLength,cameraScaling,'z');
   this.grid2.camera = geom.Camera.mk(focalPoint,focalLength,cameraScaling,'z');

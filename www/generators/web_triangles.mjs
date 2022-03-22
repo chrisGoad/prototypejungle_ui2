@@ -27,7 +27,7 @@ const mkWebParams = (min,max) => {
 
 let  webParams = [mkWebParams(3,4),mkWebParams(1,2),mkWebParams(3,4),mkWebParams(1,2),mkWebParams(1,2),mkWebParams(3,4)];
 								
-let  topParams = {width:wd,height:wd,backStripeColor:'rgb(2,2,2)',backStripeWidth:3.2*wd,backStripeHeight:3.2*wd,backStripeVisible:0};
+let  topParams = {width:wd,height:wd,frameStroke:'rgb(2,2,2)',frameWidth:3.2*wd,frameHeight:3.2*wd,frameVisible:0};
 
 let  gridParams = {numRows:nr,rowSep:sep};
 let toRadians = Math.PI/180;
@@ -65,7 +65,7 @@ let disp = wd;
 rs.initialize = function () {
   core.root.backgroundColor = 'black';
 	this.initProtos();
-	this.addBackStripe();
+	this.addFrame();
 	let {circleP,rectP,polygonP} = this;
 	let rws = [];
 	for (let i=0;i<numWalks;i++) {

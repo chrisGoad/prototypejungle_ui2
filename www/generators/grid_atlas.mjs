@@ -12,7 +12,7 @@ let rs = basicsP.instantiate();
   let sqd = 50;
   let ht=0.8*sqd*sqd;
 
-let topParams = {numCols:1.5*sqd,numRows:sqd,height:ht,width:1.5*ht,backStripeColor:'rgb(2,2,2)',backStripePadding:0.17*ht};
+let topParams = {numCols:1.5*sqd,numRows:sqd,height:ht,width:1.5*ht,frameStroke:'rgb(2,2,2)',framePadding:0.17*ht};
 Object.assign(rs,topParams);
 
 rs.initProtos = function () {
@@ -36,7 +36,7 @@ rs.shapeGenerator = function (rvs,cell) {
     let dim = fc * 2 * sqd;
     shape.width = dim;
     shape.height = dim;
-		shapes.push(shape);
+		// shapes.push(shape);
     let lev = 100 + rOw*50;
     shape.fill = (rOw < 1)?'rgba(255,255,255,0.6)':'rgba(255,25,25,0.6)';
   
@@ -45,9 +45,9 @@ rs.shapeGenerator = function (rvs,cell) {
 	}
 
 rs.initialize = function () {
-  this.addBackStripe();
+  this.addFrame();
 	this.initProtos();
- this.setupShapeRandomizer('redOrWhite',{step:0.5,min:0,max:2});
+ this.setupRandomGridForShapes('redOrWhite',{step:0.5,min:0,max:2});
 	this.initializeGrid();
 }
 		

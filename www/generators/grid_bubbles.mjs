@@ -1,11 +1,11 @@
 
-//core.require('/shape/circle.js','/generators/basics.js','/mlib/grid0.js','/mlib/boundeddRandomGrids.js','/mlib/ParamsByCell.js',
+//core.require('/shape/circle.js','/generators/basics.js','/mlib/grid0.js','/mlib/boundedRandomGrids.js','/mlib/ParamsByCell.js',
 //function (circlePP,rs,addGridMethods,addRandomMethods,addParamsByCellMethods) {
 
 import {rs as circlePP} from '/shape/circle.mjs';
 import {rs as basicsP} from '/generators/basics.mjs';
 import {rs as addGridMethods} from '/mlib/grid.mjs';
-import {rs as addRandomMethods} from '/mlib/boundeddRandomGrids.mjs';
+import {rs as addRandomMethods} from '/mlib/boundedRandomGrids.mjs';
 import {rs as addParamsByCellMethods} from '/mlib/ParamsByCell.mjs';
 
 let rs = basicsP.instantiate();
@@ -18,7 +18,7 @@ rs.setName('grid_bubbles');
 	let ht = 1000;
 	
 	//let topParams = {numRows:numRows,numCols:numRows,width:1.5*ht,height:ht,randomizeOrder:1,orderByOrdinal:0,backgroundColor:'blue',backgroundPadding:0.05*ht};
-	let topParams = {numRows:numRows,numCols:numRows,width:1.5*ht,height:ht,randomizeOrder:1,orderByOrdinal:0,backgroundColor:'blue',backgroundPadding:0.05*ht,backStripePadding:0.2*ht};
+	let topParams = {numRows:numRows,numCols:numRows,width:1.5*ht,height:ht,randomizeOrder:1,orderByOrdinal:0,backgroundColor:'blue',backgroundPadding:0.05*ht,framePadding:0.2*ht};
 	Object.assign(rs,topParams);
 	rs.paramsByRow = [];
 	
@@ -76,7 +76,7 @@ rs.animate = function (resume)  {
 rs.initialize = function () {
 	this.initProtos();
   this.addBackground(	);
-  this.addBackStripe();
+  this.addFrame();
 	this.initializeGrid();
 }
 

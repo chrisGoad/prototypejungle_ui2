@@ -24,7 +24,7 @@ rs.initProtos = function () {
 
 let nr = 64;
 let wd = 200;
-let topParams = {numRows:nr,numCols:nr,width:wd,height:wd,frameColor:'rgb(2,2,2)',pointJiggle:4,framePadding:0.15*wd,frameVisible:1};
+let topParams = {numRows:nr,numCols:nr,width:wd,height:wd,frameStroke:'rgb(2,2,2)',pointJiggle:4,framePadding:0.15*wd,frameVisible:1};
 Object.assign(rs,topParams);
 
 rs.shapeGenerator = function (rvs,cell) {
@@ -35,7 +35,7 @@ rs.shapeGenerator = function (rvs,cell) {
    return;
   }
 	let shape = rectP.instantiate().show();
-	shapes.push(shape);
+	// shapes.push(shape);
   let {r,g,b} = rvs;
 	let rgb = `rgb(${Math.floor(r)},${Math.floor(r)},${Math.floor(r)})`;
 	return shape;
@@ -53,7 +53,7 @@ rs.boundaryLineGenerator= function (end0,end1,rvs,cell) {
    return;
   }
 	let line = blineP.instantiate().show();
-	lines.push(line);
+	// lines.push(line);
   line.setEnds(end0,end1);
   let {r,g,b} = rvs;
 	let rgb = `rgb(${Math.floor(r)},${Math.floor(r)},${Math.floor(r)})`;
@@ -65,9 +65,9 @@ rs.boundaryLineGenerator= function (end0,end1,rvs,cell) {
 rs.initialize = function () {
   debugger;
    let rparams = {step:30,min:100,max:250}
-   this.setupBoundaryRandomizer('r',rparams); 
-   this.setupBoundaryRandomizer('g',rparams); 
-   this.setupBoundaryRandomizer('b',rparams); 
+   this.setupRandomGridForBoundaries('r',rparams); 
+   this.setupRandomGridForBoundaries('g',rparams); 
+   this.setupRandomGridForBoundaries('b',rparams); 
    this.initProtos();
    this.addFrame();
   this.initializeGrid();

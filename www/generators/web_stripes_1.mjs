@@ -41,7 +41,7 @@ for (let i=0;i<numStripes;i++) {
 	 stripe.moveto(Point.mk(0,(i-2)*ht));
 }
 
-let  topParams = {width:wd,height:ht,numRows:2,numCols:100,backStripeColor:'rgb(2,2,2)',backStripeWidth:1.2*wd,backStripeHeight:1.2*wd,backStripeVisible:0,minConnectorLength:0.5*ht,maxConnectorLength:1.2*ht}
+let  topParams = {width:wd,height:ht,numRows:2,numCols:100,frameStroke:'rgb(2,2,2)',frameWidth:1.2*wd,frameHeight:1.2*wd,frameVisible:0,minConnectorLength:0.5*ht,maxConnectorLength:1.2*ht}
 let  gridParams = {width:wd,height:ht,numRows:nr,numCols:200}
 
 
@@ -50,7 +50,7 @@ Object.assign(rs,topParams);
 rs.initialize = function () {
  // core.root.backgroundColor = 'rgb(100,20,20)';
   core.root.backgroundColor = 'black';
-  this.addBackStripe();
+  this.addFrame();
 	this.initBasis();
 	let pnts = this.genGrid(gridParams);
 	stripes[0].addWeb(pnts,this.lineP);

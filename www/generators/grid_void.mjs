@@ -1,4 +1,4 @@
-//core.require('/shape/rectangle.js','/gen0/Basics.js','/mlib/grid0.js','/mlib/boundeddRandomGrids.js','/mlib/ParamsByCell.js',
+//core.require('/shape/rectangle.js','/gen0/Basics.js','/mlib/grid0.js','/mlib/boundedRandomGrids.js','/mlib/ParamsByCell.js',
 //function (rectPP,rs,addGridMethods,addRandomMethods,addParamsByCellMethods) {
 //core.require('/gen1/grid0_8.js',
 //core.require('/gen1/grid0_8.js',
@@ -8,7 +8,7 @@
 import {rs as rectPP} from '/shape/rectangle.mjs';
 import {rs as basicsP} from '/generators/basics.mjs';
 import {rs as addGridMethods} from '/mlib/grid.mjs';
-import {rs as addRandomMethods} from '/mlib/boundeddRandomGrids.mjs';
+import {rs as addRandomMethods} from '/mlib/boundedRandomGrids.mjs';
 import {rs as addParamsByCellMethods} from '/mlib/ParamsByCell.mjs';
 let rs = basicsP.instantiate();
 
@@ -82,9 +82,9 @@ let newTopParams = {
   width:wd,
   height:wd,
 	backgroundColor : 'red',
-	backStripeColor: 'rgb(2,2,2)',
-	backStripePadding:15,
-	backStripeVisible:0
+	frameStroke: 'rgb(2,2,2)',
+	framePadding:15,
+	frameVisible:0
 }
 Object.assign(rs,newTopParams);
 
@@ -106,7 +106,7 @@ rs.initialize = function () {
 	rect.width = rdim;
 	rect.height = rdim;
 	rect.fill = 'black';
-  this.addBackStripe();
+  this.addFrame();
 }
 
 export {rs};

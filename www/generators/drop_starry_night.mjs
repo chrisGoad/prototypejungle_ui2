@@ -8,7 +8,7 @@ addDropMethods(rs);
 addSegsetMethods(rs);
 rs.setName('drop_starry_night');
 let ht = 200;
-let topParams = {width:1.5*ht,height:ht,dropTries:50,lineLength:2,backStripeColor:'rgb(2,2,2)',backStripePadding:0.17*ht,minSeparation:0,}
+let topParams = {width:1.5*ht,height:ht,dropTries:50,lineLength:2,frameStroke:'rgb(2,2,2)',framePadding:0.17*ht,minSeparation:0,}
 
 Object.assign(rs,topParams);
 
@@ -57,7 +57,7 @@ rs.initialSegments = function () {
 
 rs.initialize = function () {
   core.root.backgroundColor = 'black';
-  this.addBackStripe();
+  this.addFrame();
 	this.initProtos();
 	this.initializeDrop();
 }

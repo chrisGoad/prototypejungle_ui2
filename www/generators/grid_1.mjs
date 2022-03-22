@@ -1,7 +1,7 @@
 
 //core.require('/line/line.js','/shape/circle.js','/grid/grid24cons.js','/grid/dim2dWalker2.js',
 
-//core.require('/line/line.js','/shape/circle.js','/gen0/basics.js','/mlib/grid.js','/mlib/topRandomMethods.js',
+//core.require('/line/line.js','/shape/circle.js','/gen0/basics.js','/mlib/grid.js','/mlib/boundedRandomGrids.js',
 
 //function (linePP,circlePP,rs,addGridMethods,addRandomMethods) {
  // debugger;	//this.initProtos();
@@ -11,7 +11,7 @@ import {rs as circlePP} from '/shape/circle.mjs';
 import {rs as rectPP} from '/shape/rectangle.mjs';
 import {rs as basicsP} from '/generators/basics.mjs';
 import {rs as addGridMethods} from '/mlib/grid.mjs';
-import {rs as addRandomMethods} from '/mlib/topRandomMethods.mjs';
+import {rs as addRandomMethods} from '/mlib/boundedRandomGrids.mjs';
 let rs = basicsP.instantiate();
 
   addGridMethods(rs);
@@ -65,14 +65,14 @@ rs.shapeGenerator = function (rvs) {
 		trueCount++;
 		shape = this.circleP.instantiate();
 		shape.dimension = rvs.dimension;
-		shapes.push(shape);
+		// shapes.push(shape);
 		shape.update();
 		shape.show();
 		return shape;
 	}
   falseCount++;
 	shape = svg.Element.mk('<g/>');
-	shapes.push(shape);
+	// shapes.push(shape);
 	let line0 = this.lineP.instantiate();
 	let line1 = this.lineP.instantiate();
 	shape.set('line0',line0);
@@ -102,7 +102,7 @@ rs.shapeGenerator = function (rvs) {
 rs.boundaryLineGenerator = function (end0,end1,rvs,cell) {
 	let lines = this.lines;
 	let line = this.boundaryLineP.instantiate();
-	lines.push(line);
+	// lines.push(line);
 	line.setEnds(end0,end1);
 	let r = rvs.red;
 	line.stroke = `rgb(${Math.floor(r)},${Math.floor(r)},0)`;
@@ -112,7 +112,7 @@ rs.boundaryLineGenerator = function (end0,end1,rvs,cell) {
 
 rs.initialize = function () {
 	core.root.backgroundColor = 'black';
-  this.addBackStripe();
+  this.addFrame();
 	draw.vars.jpgPadFactor = 1.1;
 	this.initProtos();
 	let endA0 = Point.mk(-100,-10);
@@ -124,18 +124,18 @@ rs.initialize = function () {
 	this.sideA = (fr) => arcA.pointAlong(fr);
 	this.sideB = (fr) => arcB.pointAlong(fr);
 	this.positionFunction = this.sidesPositionFunction;
-	this.setupBoundaryRandomizer('red', {step:30,min:50,max:250});
-	this.setupShapeRandomizer('red', {step:30,min:50,max:250}); 
+	this.setupRandomGridForBoundaries('red', {step:30,min:50,max:250});
+	this.setupRandomGridForShapes('red', {step:30,min:50,max:250}); 
 	let  dParams = {step:0.1* Math.PI,min:0.95*Math.PI,max:2*Math.PI};
-	this.setupShapeRandomizer('direction',dParams); 
+	this.setupRandomGridForShapes('direction',dParams); 
 	let  lenParams = {step:0.2,min:1.5,max:2};
-	this.setupShapeRandomizer('length',lenParams); 
+	this.setupRandomGridForShapes('length',lenParams); 
 	let  cParams = {step:30,min:50,max:250};
-	this.setupShapeRandomizer('red',cParams); 
+	this.setupRandomGridForShapes('red',cParams); 
 	let  wParams = {step:80,min:0,max:100};
-	this.setupShapeRandomizer('which',wParams); 
+	this.setupRandomGridForShapes('which',wParams); 
 	let  dimParams = {step:2,min:1,max:4};
-	this.setupShapeRandomizer('dimension',dimParams); 
+	this.setupRandomGridForShapes('dimension',dimParams); 
 	this.initializeGrid();
 }
 

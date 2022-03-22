@@ -6,7 +6,7 @@ import {rs as linePP} from '/line/line.mjs';
 import {rs as basicsP} from '/generators/basics.mjs';
 import {rs as addDropMethods} from '/mlib/drop.mjs';
 import {rs as addSegsetMethods} from '/mlib/segsets.mjs';
-import {rs as addRandomMethods} from '/mlib/boundeddRandomGrids.mjs';
+import {rs as addRandomMethods} from '/mlib/boundedRandomGrids.mjs';
 
 let rs = basicsP.instantiate();
 
@@ -16,7 +16,7 @@ addSegsetMethods(rs);
 
 rs.setName('drop_whorls');
 let ht  = 400;
-let topParams = {width:1.5*ht,height:ht,numRows:20,numCols:30,numSeedRows:4,numSeedCols:4,maxDrops:10000,maxTries:10,lineLength:10,backStripeColor:'rgb(2,2,2)',backStripePadding:0.1*ht,backStripeVisible:0,separation:0,fromEnds:1,sepNext:1,onlyFromSeeds:1,extendWhich:'last',numSegStarts:16,splitChance:1,splitAmount:0.02 * Math.PI,fanAngles:[0.5*Math.PI,-0.5*Math.PI],randomDirectionChange:0.1*Math.PI}
+let topParams = {width:1.5*ht,height:ht,numRows:20,numCols:30,numSeedRows:4,numSeedCols:4,maxDrops:10000,maxTries:10,lineLength:10,frameStroke:'rgb(2,2,2)',framePadding:0.1*ht,frameVisible:0,separation:0,fromEnds:1,sepNext:1,onlyFromSeeds:1,extendWhich:'last',numSegStarts:16,splitChance:1,splitAmount:0.02 * Math.PI,fanAngles:[0.5*Math.PI,-0.5*Math.PI],randomDirectionChange:0.1*Math.PI}
 
 Object.assign(rs,topParams);
 
@@ -143,15 +143,15 @@ rs.initialize = function () {
   debugger;
   core.root.backgroundColor = 'black';
   this.initProtos();
-  this.addBackStripe();
+  this.addFrame();
 	 this.setupColorRandomizer({step:10,min:100,max:240});
 /*
- this.setupShapeRandomizer('r',{step:10,min:50,max:240});
- this.setupShapeRandomizer('g',{step:10,min:50,max:240});
- this.setupShapeRandomizer('b',{step:10,min:50,max:240});
+ this.setupRandomGridForShapes('r',{step:10,min:50,max:240});
+ this.setupRandomGridForShapes('g',{step:10,min:50,max:240});
+ this.setupRandomGridForShapes('b',{step:10,min:50,max:240});
 */
 	this.initializeDrop();
-  this.addBackStripe();
+  this.addFrame();
 }
 
 export {rs};

@@ -1,5 +1,5 @@
 
-//core.require('/line/line.js','/shape/rectangle.js','/gen0/Basics.js','/mlib/grid.js','/mlib/boundeddRandomGrids.js','/mlib/ParamsByCell.js',
+//core.require('/line/line.js','/shape/rectangle.js','/gen0/Basics.js','/mlib/grid.js','/mlib/boundedRandomGrids.js','/mlib/ParamsByCell.js',
 //function (linePP,rectPP,rs,addGridMethods,addRandomMethods,addParamsByCellMethods) {
 //core.require('/gen1/grid0_8.js',
 //core.require('/shape/rectangle.js','/line/line.js','/shape/circle.js','/gen0/grid0.js','/gen0/lines0.js',
@@ -67,7 +67,7 @@ rs.initProtos = function () {
 
 rs.initialize = function () {
 debugger;
-   this.addBackStripe();
+   this.addFrame();
   this.initProtos();
   core.root.backgroundColor = 'black';
   this.initializeGrid();

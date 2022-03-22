@@ -1,5 +1,5 @@
 
-//core.require('/shape/rectangle.js','/gen0/Basics.js','/mlib/grid.js','/mlib/topRandomMethods.js',
+//core.require('/shape/rectangle.js','/gen0/Basics.js','/mlib/grid.js','/mlib/boundedRandomGrids.js',
 
 //core.require(,'/grid/grid24cons.js','/grid/dim2dWalker2.js',
 //function (rectPP,rs,addGridMethods,addRandomMethods) {
@@ -8,7 +8,7 @@
 import {rs as rectPP} from '/shape/rectangle.mjs';
 import {rs as basicsP} from '/generators/basics.mjs';
 import {rs as addGridMethods} from '/mlib/grid.mjs';
-import {rs as addRandomMethods} from '/mlib/topRandomMethods.mjs';
+import {rs as addRandomMethods} from '/mlib/boundedRandomGrids.mjs';
 let rs = basicsP.instantiate();
 
 let wd = 300;
@@ -37,7 +37,7 @@ rs.shapeGenerator = function (rvs) {
 	debugger;
 	let {rectP,deltaX,deltaY,shapes} = this;
 	let shape = rectP.instantiate();
-	shapes.push(shape);
+	// shapes.push(shape);
 	let fc = 1.1;
 	shape.width = fc*deltaX;
 	shape.height = fc*deltaY;
@@ -51,7 +51,7 @@ rs.shapeGenerator = function (rvs) {
 
 rs.initialize = function () {
   let {numRows,numCols } = this;
-  this.addBackStripe();
+  this.addFrame();
 	this.initProtos();
 	let rnp = {correlated:true};
 	const walkParams = function (i,j) {
@@ -73,7 +73,7 @@ rs.initialize = function () {
 		}
 		return rnp;
 	}
-	this.setupShapeRandomizer('red', {walkParams,numRows,numCols});
+	this.setupRandomGridForShapes('red', {walkParams,numRows,numCols});
   this.initializeGrid();
 }
 export {rs};

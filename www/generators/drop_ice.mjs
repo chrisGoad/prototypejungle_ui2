@@ -11,7 +11,7 @@ addSegsetMethods(rs);
 rs.setName('drop_ice');
 let wd = 200;
 
-let topParams = {width:wd,height:wd,dropTries:100,lineLength:2,backStripeColor:'rgb(2,2,2)',backStripePadding:20,backStripeVisible:0,minSeparation:10}
+let topParams = {width:wd,height:wd,dropTries:100,lineLength:2,frameStroke:'rgb(2,2,2)',framePadding:20,frameVisible:0,minSeparation:10}
 
 Object.assign(rs,topParams);
 
@@ -51,7 +51,7 @@ rs.initialize = function () {
   core.root.backgroundColor = 'black';
 	this.initProtos();
 	this.initializeDrop();
-  	this.addBackStripe();
+  	this.addFrame();
 
 }
 

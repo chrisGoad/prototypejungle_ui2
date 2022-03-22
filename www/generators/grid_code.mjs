@@ -1,14 +1,14 @@
 import {rs as polylinePP} from '/shape/polyline.mjs';
 import {rs as basicsP} from '/generators/basics.mjs';
 import {rs as addGridMethods} from '/mlib/grid.mjs';
-import {rs as addRandomMethods} from '/mlib/topRandomMethods.mjs';
+import {rs as addRandomMethods} from '/mlib/boundedRandomGrids.mjs';
 
 let rs = basicsP.instantiate();
 addGridMethods(rs);
 addRandomMethods(rs);
 rs.setName('grid_code');
 let ht = 400;
-let topParams = {width:1.5*ht,height:ht,numRows:100,numCols:100,pointJiggle:0,factorX:0.25,factorY:0.05,crossColor:'yellow',backStripeColor:'rgb(2,2,2)',backStripePadding:0.17*ht,backStripeVisible:0};
+let topParams = {width:1.5*ht,height:ht,numRows:100,numCols:100,pointJiggle:0,factorX:0.25,factorY:0.05,crossColor:'yellow',frameStroke:'rgb(2,2,2)',framePadding:0.17*ht,frameVisible:0};
 
 Object.assign(rs,topParams);
 	
@@ -43,7 +43,7 @@ rs.shapeGenerator = function (rvs,cell) {
 	let p3  = Point.mk(deltaX*fcx,p3y*fcy);
 	debugger;
   let shape = polylineP.instantiate();
-  shapes.push(shape);
+  // shapes.push(shape);
 	if (((mr0<y) && (y<mr1)) || ((mc0 < x) && (x < mc1))) {
 		shape.stroke = crossColor;
 	}
@@ -60,13 +60,13 @@ rs.initialize = function () {
 	let rmin = -100;
 	let rmax = 100;
 	let rstep = 45;
-	this.setupShapeRandomizer('p0y',  {step:rstep,min:rmin,max:rmax});
-	this.setupShapeRandomizer('p1y',  {step:rstep,min:rmin,max:rmax});
-	this.setupShapeRandomizer('p2y',  {step:rstep,min:rmin,max:rmax});
-	this.setupShapeRandomizer('p3y',  {step:rstep,min:rmin,max:rmax});
+	this.setupRandomGridForShapes('p0y',  {step:rstep,min:rmin,max:rmax});
+	this.setupRandomGridForShapes('p1y',  {step:rstep,min:rmin,max:rmax});
+	this.setupRandomGridForShapes('p2y',  {step:rstep,min:rmin,max:rmax});
+	this.setupRandomGridForShapes('p3y',  {step:rstep,min:rmin,max:rmax});
 	
   this.initializeGrid();
-  this.addBackStripe();
+  this.addFrame();
 }	
 export {rs};
  

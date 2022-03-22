@@ -1,10 +1,10 @@
 
-//core.require('/shape/polygon.js','/gen0/Basics.js','/mlib/grid.js','/mlib/topRandomMethods.js',
+//core.require('/shape/polygon.js','/gen0/Basics.js','/mlib/grid.js','/mlib/boundedRandomGrids.js',
 //function (polygonPP,rs,addGridMethods,addRandomMethods) {
 import {rs as polygonPP} from '/shape/polygon.mjs';
 import {rs as basicsP} from '/generators/basics.mjs';
 import {rs as addGridMethods} from '/mlib/grid.mjs';
-import {rs as addRandomMethods} from '/mlib/topRandomMethods.mjs';
+import {rs as addRandomMethods} from '/mlib/boundedRandomGrids.mjs';
 
 let rs = basicsP.instantiate();
 addGridMethods(rs);
@@ -43,7 +43,7 @@ rs.shapeGenerator = function (rvs,cell) {
 	let ll = Point.mk(-llx,lly).times(deltaX/200);
 	let col = cell.x;
   let shape = polygonP.instantiate();
-  shapes.push(shape);
+  // shapes.push(shape);
 	//shape.corners = [ul,ur,lr,ll,ul];
 	shape.corners = [ul,ur,lr,ll];
 	shape.update();
@@ -59,19 +59,19 @@ rs.initialize = function () {
   debugger;
   this.initProtos();
   core.root.backgroundColor = 'black';
-  this.addBackStripe();
+  this.addFrame();
 	let rmin = 0;
 	let rmax = 50;
 	let rstep = 15;
-	this.setupShapeRandomizer('ulx',  {step:rstep,min:rmin,max:rmax});
-	this.setupShapeRandomizer('uly',  {step:rstep,min:rmin,max:rmax});
-  this.setupShapeRandomizer('urx',  {step:rstep,min:rmin,max:rmax});
-	this.setupShapeRandomizer('ury',  {step:rstep,min:rmin,max:rmax});
-	this.setupShapeRandomizer('lrx',  {step:rstep,min:rmin,max:rmax});
-	this.setupShapeRandomizer('lry',  {step:rstep,min:rmin,max:rmax});
-	this.setupShapeRandomizer('llx',  {step:rstep,min:rmin,max:rmax});
-	this.setupShapeRandomizer('lly',  {step:rstep,min:rmin,max:rmax});
-	this.setupShapeRandomizer('interior',  {step:0.1,min:0,max:1});
+	this.setupRandomGridForShapes('ulx',  {step:rstep,min:rmin,max:rmax});
+	this.setupRandomGridForShapes('uly',  {step:rstep,min:rmin,max:rmax});
+  this.setupRandomGridForShapes('urx',  {step:rstep,min:rmin,max:rmax});
+	this.setupRandomGridForShapes('ury',  {step:rstep,min:rmin,max:rmax});
+	this.setupRandomGridForShapes('lrx',  {step:rstep,min:rmin,max:rmax});
+	this.setupRandomGridForShapes('lry',  {step:rstep,min:rmin,max:rmax});
+	this.setupRandomGridForShapes('llx',  {step:rstep,min:rmin,max:rmax});
+	this.setupRandomGridForShapes('lly',  {step:rstep,min:rmin,max:rmax});
+	this.setupRandomGridForShapes('interior',  {step:0.1,min:0,max:1});
   this.initializeGrid();
 }	
 export {rs};

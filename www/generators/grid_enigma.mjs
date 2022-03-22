@@ -18,7 +18,7 @@ let nr = 140;
 let wd = 1000;
 let topWd = 8000;
 let partParams = {width:wd,height:wd,numRows:nr,numCols:nr,pointJiggle:10,delta:(wd*0.8)/nr,backgroundColor:'blue',randomizeOrder:1,fromLeft:1,up:0};
-let topParams = {width:topWd,height:topWd,backStripeColor:'rgb(2,2,2)'};
+let topParams = {width:topWd,height:topWd,frameStroke:'rgb(2,2,2)'};
 Object.assign(rs,topParams);
 rs.addGrid = function (nm,fromLeft,turnUp) {
   debugger;
@@ -102,7 +102,7 @@ const bothShapeGenerator = function (grid,rvs,cell) {
   let {shapes,circleP} = grid;
   let shape = grid.circleP.instantiate().show();
   shape.dimension = scale*cdist;//+ 5;
-  grid.shapes.push(shape);
+  grid.// shapes.push(shape);
   return shape;
 }
 
@@ -110,7 +110,7 @@ const bothShapeGenerator = function (grid,rvs,cell) {
 const bothInitialize = function (grid) {
   grid.initProtos();
   grid.addBackground();
-  grid.setupShapeRandomizer('level', {step:30,min:0,max:255});
+  grid.setupRandomGridForShapes('level', {step:30,min:0,max:255});
   grid.set('llines',core.ArrayNode.mk());
   grid.initializeGrid(); 
 }
@@ -155,7 +155,7 @@ rs.initialize = function () {
   core.root.backgroundColor = 'black';
   this.initProtos();
     //this.addBackground();
-  this.addBackStripe();
+  this.addFrame();
 //return;
   let fwd  = partParams.width;
   let rwd = fwd*1.1;
@@ -190,7 +190,7 @@ rs.initialize = function () {
   */
  //return;
   let mv = 0.4*fwd;
-//  Object.assign(this,{'width':1.80*fwd,'height':1.80*fwd,backStripeColor:'rgb(2,2,255)',backStripeVisible:0});
+//  Object.assign(this,{'width':1.80*fwd,'height':1.80*fwd,frameStroke:'rgb(2,2,255)',frameVisible:0});
   Object.assign(this,{'width':2.0*fwd,'height':2.0*fwd,backgroundColor:'rgb(255,255,255)'});
   let g00 = this.addGrid('g00',0,0);
   g00.moveto(Point.mk(-mv,-mv));
@@ -207,7 +207,7 @@ rs.initialize = function () {
     let r2wd = 100;
     rect2.width = r2wd;
     rect2.height= r2wd;*/
-//  this.addBackStripe();
+//  this.addFrame();
 
 
 

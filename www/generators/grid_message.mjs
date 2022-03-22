@@ -3,7 +3,7 @@ import {rs as rectPP} from '/shape/rectangle.mjs';
 import {rs as basicsP} from '/generators/basics.mjs';
 import {rs as addGridMethods} from '/mlib/grid.mjs';
 import {rs as addLinesMethods} from '/mlib/lines.mjs';
-//import {rs as addRandomMethods} from '/mlib/boundeddRandomGrids.mjs';
+//import {rs as addRandomMethods} from '/mlib/boundedRandomGrids.mjs';
 let rs = basicsP.instantiate();
 rs.setName('grid_message');
 
@@ -23,7 +23,7 @@ const initializeLinesProtos = function (lines) {
   lines.lineP['stroke-width'] = .075; 	
 }  
 let ht = 200;
-let topParams = {width:1.5*ht,height:ht,backStripeColor:'rgb(2,2,2)',backStripePadding:0.17*ht};
+let topParams = {width:1.5*ht,height:ht,frameStroke:'rgb(2,2,2)',framePadding:0.17*ht};
 Object.assign(rs,topParams);
 
 
@@ -37,7 +37,7 @@ let gridParams ={numRows:base,numCols:base*rfac,width:150*wfac,height:100*wfac,i
 
 rs.initialize = function () {
   core.root.backgroundColor = 'black';
-  this.addBackStripe();
+  this.addFrame();
   let lines = this.set('lines',basicsP.instantiate());
   addLinesMethods(lines);
   initializeLinesProtos(lines);

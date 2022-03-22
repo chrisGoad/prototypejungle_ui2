@@ -1,6 +1,6 @@
 //core.require('/line/line.js','/shape/circle.js','/shape/rectangle.js','/gen0/grid0.js',
 //function (linePP,circlePP,rectPP,addGridMethods) {
-//core.require('/line/line.js','/shape/circle.js','/shape/rectangle.js','/gen0/basics.js','/mlib/grid.js','/mlib/boundeddRandomGrids.js',
+//core.require('/line/line.js','/shape/circle.js','/shape/rectangle.js','/gen0/basics.js','/mlib/grid.js','/mlib/boundedRandomGrids.js',
 
 //function (linePP,circlePP,rectPP,rs,addGridMethods,addRandomMethods) {
 
@@ -59,7 +59,7 @@ rs.shapeGenerator = function (rvs) {
 		trueCount++;
 		shape = this.circleP.instantiate();
 		shape.dimension = rvs.dimension;
-		shapes.push(shape);
+		// shapes.push(shape);
 		shape.update();
 		shape.show();
 		return shape;
@@ -68,7 +68,7 @@ rs.shapeGenerator = function (rvs) {
 	shape = this.rectP.instantiate();
 	shape.width = rvs.dimension;
 	shape.height = rvs.dimension;
-	shapes.push(shape);
+	// shapes.push(shape);
 	shape.update();
 	shape.show();
 	return shape;
@@ -80,7 +80,7 @@ rs.boundaryLineGenerator = function (end0,end1,rvs,cell) {
 	debugger;
 	let lines = this.lines;
 	let line = this.lineP.instantiate();
-	lines.push(line);
+	// lines.push(line);
 	line.setEnds(end0,end1);
 	let r = rvs.red;
 	line.stroke = `rgb(${Math.floor(r)},${Math.floor(r)},0)`;
@@ -90,7 +90,7 @@ rs.boundaryLineGenerator = function (end0,end1,rvs,cell) {
 
 rs.initialize = function () {
 	this.initProtos();
-    this.addBackStripe();
+    this.addFrame();
     this.addBackground();
   core.root.backgroundColor = 'black';
   let {numRows,numCols} = this;
@@ -121,23 +121,23 @@ rs.initialize = function () {
 //	let  rParams = {step:5,min:5,max:10,numRows:this.numRows,numCols};
 
 	let  rParams = {step:30,min:50,max:200,numRows,numCols};
-	this.setupBoundaryRandomizer('red', rParams);
+	this.setupRandomGridForBoundaries('red', rParams);
 
 	//rnds.length  = rm.genRandomGrid(rParams);
 	let  dimParams = {step:2,min:1,max:4,numRows,numCols};
-//	this.setupShapeRandomizer('dimension', dimParams);
+//	this.setupRandomGridForShapes('dimension', dimParams);
 	this.setupRandomGridForShapes('dimension', dimParams);
 
 	//rnds.dimension  = rm.genRandomGrid(dimParams);
 	let  dParams = {step:0.05* Math.PI,min:0.95*Math.PI,max:2*Math.PI,numRows,numCols};
-	//this.setupShapeRandomizer('direction', dParams);
+	//this.setupRandomGridForShapes('direction', dParams);
 	//rnds.direction  = rm.genRandomGrid(dParams);
 	let  cParams = {step:30,min:50,max:250,numRows,numCols};
-	//this.setupShapeRandomizer('red', dimParams);
+	//this.setupRandomGridForShapes('red', dimParams);
 
 	//rnds.red  = rm.genRandomGrid(cParams);
  	let  wParams = {step:80,min:0,max:100,numRows,numCols};
-	//this.setupShapeRandomizer('which', wParams);
+	//this.setupRandomGridForShapes('which', wParams);
 	this.setupRandomGridForShapes('which', wParams);
 	//rnds.which  = rm.genRandomGrid(wParams);
 

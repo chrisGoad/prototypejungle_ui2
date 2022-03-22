@@ -66,51 +66,42 @@ item.addSignature = function() {
 }
 
 // add a stripe around the image, to control the size of the jpg when saved
-item.addBackStripe = function () {
+item.addFrame = function () {
 	debugger;
-	let {backStripeColor:bkc,backStripePadding:bkp,backStripePaddingX:bkpx,backStripePaddingy:bkpy, 
-	backStripeWidth,backStripeHeight,width,height,backStripeVisible,backStripePos:pos,signIt} =  this;
-	if ((!bkc) && (!bkp) && (!backStripeWidth)) {
+	let {frameStroke:frs,frameFill:frf,framePadding:frp,framePaddingX:frpx,framePaddingy:frpy, 
+	frameWidth,frameHeight,width,height,frameVisible,framePos:pos,signIt} =  this;
+	if ((!frs) && (!frp) && (!frameWidth)) {
 		return;
 	}
-  if (!bkc) {
-    bkc = 'rgb(2,2,2)';
+  if (!frs) {
+    frs = 'rgb(2,2,2)';
   }
-	//core.assignPrototypes(this,'backStripeRectP',rectPP);
-	/*this.backStripeRectP = rectPP.instantiate();
-	this.backStripeRectP['stroke-width'] = 1;
-	this.backStripeRectP.fill = 'transparent';*/
-  //let bkr = this.set('brect',this.backStripeRectP.instantiate());
-  let bkr = this.set('brect',rectPP.instantiate());
-  bkr.fill = 'transparent';
-	if (backStripeVisible) {
-		bkr['stroke-width'] = backStripeVisible;
-		bkr.stroke = 'white';
+  let frr = this.set('brect',rectPP.instantiate());
+ 
+  frr.fill = frf?frd:'transparent';
+	if (frameVisible) {
+		frr['stroke-width'] = frameVisible;
+		frr.stroke = 'white';
 	} else {
-	  bkr.stroke = bkc;
+	  frr.stroke = frs;
 	}
-	if (backStripeWidth) {
-		bkr.width = backStripeWidth;
-		bkr.height = backStripeHeight;
+	if (frameWidth) {
+		frr.width = frameWidth;
+		frr.height = frameHeight;
 	} else {
-		let bkPx = bkpx?bkpx:(bkp?bkp:0.1*width);
-		let bkPy = bkpy?bkpy:(bkp?bkp:0.1*height);
-		bkr.width = width + bkPx;
-		//bkr.width = 20;
-		bkr.height = height + bkPy;
-		//bkr.height = 10;
+		let frPx = frpx?frpx:(frp?frp:0.1*width);
+		let frPy = frpy?frpy:(frp?frp:0.1*height);
+		frr.width = width + frPx;
+		//frr.width = 20;
+		frr.height = height + frPy;
+		//frr.height = 10;
 	}
 	if (pos) {
     console.log('Stripe Pos',pos.x,pos.y);
-		bkr.moveto(pos);
+		frr.moveto(pos);
 	}
-  //bkr.width = backStripeWidth?backStripeWidth:width + backStripePadding;
-//	bkr.height = backgroundHeight?backgroundHeight:height + backgroundPadding;
-  bkr.update();
-	bkr.show();
-  if (signIt) {
-     this.addSignature();
-  }
+  frr.update();
+	frr.show();
 }
 
 

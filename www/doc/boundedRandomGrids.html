@@ -1,4 +1,4 @@
-{{boilerplate0}}
+{{boilerplate1}}
  <p>The principal methods of <a href="/mlib/boundedRandomGrids.mjs">this module<a> create grids of random numbers, which are constrained to vary by only so much per step in the x or y directions, and to lie within given bounds. That is, they create  smooth, bounded surfaces, as it were. The details:
 There are two principal routines:</p>
 
@@ -8,7 +8,7 @@ There are two principal routines:</p>
 <p>step is the maximum amount that the random value can vary in one step of x or y on the grid. 
 It is assumed that this has properties numRows and numCols; a bounded random grid of this size is produced.</p>
 
-<p>this.setupRandomGridForBoundaries(nm,params) is the same, except that a random grid of dimensions this.numRows+1 and this.numCols+1 is produced 
+<p>this.setupRandomGridForBoundaries(nm,params) is the same, except that a random grid of dimensions this.numRows+1 and this.numCols+1 is produced (thus one for each boundary line in a grid).</p> 
 
 <p>When several such grids, named, say a,b,c  have been setup by setupRandomGridForShapes , 
 they are used to produce the rvs  argument  to shapeGenerator in the grid module. Specifically, shapeGenerator will be called, for each grid cell, with rvs set to {a:<va>,b:<vb>,c:<vc>} where va,vb, and vc are the values at the given cell in the grids that have been setup by the calls</p>
@@ -18,5 +18,10 @@ they are used to produce the rvs  argument  to shapeGenerator in the grid module
 
 <p>Similarly, this.setupRandomGridForBoundaris(nm,params) sets up grids which are used to produce the rvs argument to boundaryLineGenerator.</p>
 
+<p> This is how the methods in this module are added to an item:</p>
+<precode>
+import {rs as addRandomMethods} from '/mlib/boundedRandomGrids.mjs';
+addRandomMethods(item);
+</precode>	
 </body>
 </html>

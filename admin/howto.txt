@@ -1,2 +1,11 @@
 npm install uglify-js-es6
 npm install terser 
+
+
+cd c:\prototypejungle_ui2
+
+git add admin js server www 
+
+git commit -m "misc"
+
+git push origin master

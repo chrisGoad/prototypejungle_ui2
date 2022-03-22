@@ -8,7 +8,7 @@ import {rs as addRandomMethods} from '/mlib/boundedRandomGrids.mjs';
 let rs = basicsP.instantiate();
 addGridMethods(rs);
 addRandomMethods(rs);	
-rs.setName('grid_fade');
+rs.setName('grid_example1');
 	
 rs.initProtos = function () {
 	rs.rectP  = rectPP.instantiate();
@@ -16,15 +16,24 @@ rs.initProtos = function () {
 	rs.rectP['stroke-width'] = 0;
 	rs.rectP.width = .5;
 	rs.rectP.height = .5;
+  rs.frectP  = rectPP.instantiate();
+  rs.frectP.stroke = 'white';
+	rs.frectP.fill = 'transparent';
+	rs.frectP['stroke-width'] = 2;
+	rs.rectP.width = .5;
+	rs.rectP.height = .5;
+//	rs.rectP.height = 1;
   rs.blineP  = linePP.instantiate();
   rs.blineP['stroke-width'] = 0.4;
+ // rs.blineP['stroke-width'] = 1;
   rs.blineP.stroke = 'white';
 
 }  
 
 let nr = 64;
-let wd = 200;
-let topParams = {numRows:nr,numCols:nr,width:wd,height:wd,frameColor:'rgb(2,2,2)',pointJiggle:4,framePadding:0.15*wd,frameVisible:1};
+let ht = 100;
+let wd = 1.5*ht;
+let topParams = {numRows:nr,numCols:nr,width:wd,height:ht,frameColor:'rgb(2,2,2)',pointJiggle:2,framePadding:0.15*wd,frameVisible:1};
 Object.assign(rs,topParams);
 
 rs.shapeGenerator = function (rvs,cell) {
@@ -36,13 +45,8 @@ rs.shapeGenerator = function (rvs,cell) {
   }
 	let shape = rectP.instantiate().show();
 	shapes.push(shape);
-  let {r,g,b} = rvs;
-	let rgb = `rgb(${Math.floor(r)},${Math.floor(r)},${Math.floor(r)})`;
 	return shape;
 }
-
-
-
 
 rs.boundaryLineGenerator= function (end0,end1,rvs,cell) {
 	let {blineP,numRows,showMissing,lines,updating,lineIndex} =this;
@@ -55,25 +59,23 @@ rs.boundaryLineGenerator= function (end0,end1,rvs,cell) {
 	let line = blineP.instantiate().show();
 	lines.push(line);
   line.setEnds(end0,end1);
-  let {r,g,b} = rvs;
-	let rgb = `rgb(${Math.floor(r)},${Math.floor(r)},${Math.floor(r)})`;
-	line.stroke = rgb;
+  let vi = Math.floor(rvs.v);
+	line.stroke = `rgb(${vi},${vi},${vi})`;
 	return line;
 }
 
-
 rs.initialize = function () {
-  debugger;
    let rparams = {step:30,min:100,max:250}
-   this.setupBoundaryRandomizer('r',rparams); 
-   this.setupBoundaryRandomizer('g',rparams); 
-   this.setupBoundaryRandomizer('b',rparams); 
+   this.setupBoundaryRandomizer('v',rparams); 
    this.initProtos();
    this.addFrame();
-  this.initializeGrid();
+   let frect = this.frectP.instantiate();
+   frect.width = 1.5*wd;
+   frect.height = 1.5*ht;
+   frect.show();
+   this.set('frect',frect);
+   this.initializeGrid();
 }
-
-
 
 export {rs};
 

@@ -1,5 +1,5 @@
 //active
-//core.require('/line/line.js','/shape/polygon.js','/gen0/Basics.js','/mlib/grid0.js','/mlib/topRandomMethods.js',
+//core.require('/line/line.js','/shape/polygon.js','/gen0/Basics.js','/mlib/grid0.js','/mlib/boundedRandomGrids.js',
 //function (linePP,polygonPP,rs,addGridMethods,addRandomMethods) {
 import {rs as polygonPP} from '/shape/polygon.mjs';
 import {rs as linePP} from '/line/line.mjs';
@@ -13,8 +13,8 @@ addRandomMethods(rs);
 rs.setName('grid_distortion_field');
 let nr = 40;
 let dim = 400;
-let params = {numRows:nr,numCols:nr,width:dim,height:dim,lowJiggle:0,highJiggle:20,lowJiggleStep:0,highJiggleStep:5,backStripeColor:'rgb(2,2,2)',backStripePadding:100,backStripeVisible:0,
- backStripePos:Point.mk(-17,-20)};
+let params = {numRows:nr,numCols:nr,width:dim,height:dim,lowJiggle:0,highJiggle:20,lowJiggleStep:0,highJiggleStep:5,frameColor:'rgb(2,2,2)',framePadding:100,frameVisible:0,
+ framePos:Point.mk(-17,-20)};
 
 Object.assign(rs,params);
 

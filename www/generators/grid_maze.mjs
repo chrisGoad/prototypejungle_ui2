@@ -1,4 +1,4 @@
-//core.require('/line/line.js','/shape/circle.js','/shape/rectangle.js','/gen0/basics.js','/mlib/grid.js','/mlib/topRandomMethods.js',
+//core.require('/line/line.js','/shape/circle.js','/shape/rectangle.js','/gen0/basics.js','/mlib/grid.js','/mlib/boundedRandomGrids.js',
 
 //function (linePP,circlePP,rectPP,rs,addGridMethods,addRandomMethods) {
 import {rs as linePP} from '/line/line.mjs';
@@ -23,7 +23,7 @@ rs.initProtos = function () {
 
 let nr = 50;
 let wd = 200;
-let topParams = {numRows:nr,numCols:nr,width:wd,height:wd,backStripeColor:'rgb(2,2,2)',backStripePadding:0.15*wd};
+let topParams = {numRows:nr,numCols:nr,width:wd,height:wd,frameColor:'rgb(2,2,2)',framePadding:0.15*wd};
 
 Object.assign(rs,topParams);
 

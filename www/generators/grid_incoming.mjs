@@ -87,12 +87,12 @@ const boundaryLineGenerator= function (grid,end0,end1,rvs,cell) {
 
 
 grid1.boundaryLineGenerator = function (end0,end1,rvs,cell) {
-  boundaryLineGenerator(this,end0,end1,rvs,cell);
+  return boundaryLineGenerator(this,end0,end1,rvs,cell);
 }
 
 
 grid2.boundaryLineGenerator = function (end0,end1,rvs,cell) {
-  boundaryLineGenerator(this,end0,end1,rvs,cell);
+  return boundaryLineGenerator(this,end0,end1,rvs,cell);
 }
 rs.initialize = function () {
  // debugger;

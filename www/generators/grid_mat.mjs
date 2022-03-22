@@ -1,5 +1,5 @@
 //active
-//core.require('/line/line.js','/gen0/Basics.js','/mlib/grid.js','/mlib/topRandomMethods.js',
+//core.require('/line/line.js','/gen0/Basics.js','/mlib/grid.js','/mlib/boundedRandomGrids.js',
 //function (linePP,rs,addGridMethods,addRandomMethods) {
 //core.require('/line/line.js','/gen0/GridRandom.js',
 
@@ -15,7 +15,7 @@ let rs = basicsP.instantiate();
  addRandomMethods(rs);
 
 let wd = 400;
-let topParams ={numDrops:5000,width:wd,height:wd,backStripeColor:'rgb(2,2,2)',backStripePadding:0.5*wd};
+let topParams ={numDrops:5000,width:wd,height:wd,frameColor:'rgb(2,2,2)',framePadding:0.5*wd};
 Object.assign(rs,topParams);
 rs.setName('grid_mat');
 

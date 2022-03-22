@@ -106,8 +106,8 @@ rs.boundaryLineGenerator = function (end0,end1,rvs,cell) {
 	line.setEnds(end0,end1);
 	let r = rvs.red;
 	line.stroke = `rgb(${Math.floor(r)},${Math.floor(r)},0)`;
-	line.update();
 	line.show();
+  return line;
 }
 
 rs.initialize = function () {

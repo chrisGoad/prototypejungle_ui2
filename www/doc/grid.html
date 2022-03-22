@@ -85,9 +85,9 @@ export {rs};
 <precode>
 let topParams = {numRows:nr,numCols:nr,width:wd,height:wd,frameColor:'rgb(2,2,2)',pointJiggle:4,framePadding:0.15*wd,frameVisible:1};
 </precode>
-First, pointJiggle , if defined and non-zero, causes two bounded grids to be setup via setupRandomGridForBoundaries,named xJiggle and yJiggle. Then the points in the grid are jiggled by the amounts specified in those bounded grids. The maximum amount of jiggle is given by the pointJiggle parameter.</p>
+First, pointJiggle , if defined and non-zero, causes two bounded grids to be setup via setupRandomGridForBoundaries,named xJiggle and yJiggle. Then the points in the grid are jiggled by the amounts specified in those bounded grids. The maximum amount of jiggle is given by the pointJiggle parameter. Since the grids are bounded, the amount of jiggle varies smoothly across the grid.</p>
 <p>
-Next, the frame parameters need explanation. The frame facility, which draws the white rectangle around the grid, is documented separately in /doc/frame.html, since the frame facility is implemented in the basics module, not the grid module, and can be used with any of the image generation modules in prototypejungle.</p>
+Next, the frame parameters need explanation. The frame facility, which draws the white rectangle around the grid, is <a href="/doc/frame.html">documented separately</a>, since the frame facility is implemented in the basics module, not the grid module, and can be used with any of the image generation modules in prototypejungle.</p>
 {{endplate}}
 
 

@@ -1,4 +1,4 @@
-//core.require('/line/line.js','/shape/circle.js','/shape/rectangle.js','/gen0/basics.js','/mlib/grid.js','/mlib/topRandomMethods.js',
+//core.require('/line/line.js','/shape/circle.js','/shape/rectangle.js','/gen0/basics.js','/mlib/grid.js','/mlib/boundedRandomGrids.js',
 let radial = 0;
 //function (linePP,circlePP,rectPP,rs,addGridMethods,addRandomMethods) {
 import {rs as linePP} from '/line/line.mjs';
@@ -47,9 +47,9 @@ let wd = 200;
 let ht = 150;
 let topParams;
 if (radial) {
-  topParams = {numRows:0.5*nr,numCols:nr,width:wd,height:wd,outerRadius:wd,innerRadius:0.2*wd,angleMin:-180,angleMax:180,center: Point.mk(0,0),rotation:30,backStripeColor:'rgb(2,2,2)',pointJiggle:4,backStripePadding:0.15*wd};
+  topParams = {numRows:0.5*nr,numCols:nr,width:wd,height:wd,outerRadius:wd,innerRadius:0.2*wd,angleMin:-180,angleMax:180,center: Point.mk(0,0),rotation:30,frameColor:'rgb(2,2,2)',pointJiggle:4,framePadding:0.15*wd};
 } else {
-  topParams = {numRows:nr,numCols:nr,width:wd,height:ht,backStripeColor:'rgb(2,2,2)',pointJiggle:0,backStripePadding:0.20*wd,backStripeVisible:0,sideA:function(fr) {return this.leftSide.pointAlong(fr)},sideB:function(fr) {return this.rightSide.pointAlong(fr)},positionFunction:grid1.sidesPositionFunction};
+  topParams = {numRows:nr,numCols:nr,width:wd,height:ht,frameColor:'rgb(2,2,2)',pointJiggle:0,framePadding:0.20*wd,frameVisible:0,sideA:function(fr) {return this.leftSide.pointAlong(fr)},sideB:function(fr) {return this.rightSide.pointAlong(fr)},positionFunction:grid1.sidesPositionFunction};
 }
 
 let genLeft = (wd,ht) => {

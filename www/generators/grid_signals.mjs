@@ -10,7 +10,7 @@ let grid3 = signalP.instantiate();
 let grid4 = signalP.instantiate();
 //let wd = 2.0*grid1.width;
 let wd = 2000;
-let topParams = {width:wd,height:wd,backStripeColor:'rgb(2,2,2)',backStripeWidth:1.1*wd,backStripeHeight:1.1*wd,backStripeVisible:wd/100};
+let topParams = {width:wd,height:wd,frameColor:'rgb(2,2,2)',frameWidth:1.1*wd,frameHeight:1.1*wd,frameVisible:wd/100};
 grid1.globalParams.width = wd/2;
 Object.assign(rs,topParams);
 grid1.globalParams = Object.assign({},grid1.globalParams);

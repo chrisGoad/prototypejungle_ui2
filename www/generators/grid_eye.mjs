@@ -12,7 +12,7 @@ rs.setName('grid_eye');
 
 let wd = 100;
 let nr = 50;
-let params = {numRows:nr,numCols:nr,width:wd,height:wd,lineLength:wd/nr,backStripeColor:'rgb(152,45,45)',backStripePadding:0.1*wd,backStripeVisible:0};
+let params = {numRows:nr,numCols:nr,width:wd,height:wd,lineLength:wd/nr,frameColor:'rgb(152,45,45)',framePadding:0.1*wd,frameVisible:0};
 Object.assign(rs,params);
 
 rs.initProtos = function () {

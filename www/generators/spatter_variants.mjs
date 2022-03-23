@@ -37,7 +37,7 @@ import {rs as addRandomMethods} from '/mlib/boundedRandomGrids.mjs';
 		
 	let gParams = {numRows:20,numCols:20,width:400,height:400,numDrops:3000,pointJiggle:0,spatter:1};
 	let wd = 1000;
-  let topParams = {width:wd,height:wd,frameStroke:'rgb(2,2,2)',framePadding:0.1*wd,frameVisible:0};
+  let topParams = {width:wd,height:wd,framePadding:0.1*wd,frameVisible:0};
   
   Object.assign(rs,topParams);
 	
@@ -99,6 +99,7 @@ const shapeGenerator = function (grid,which,rvs,cell,pnt,idx) {
 //item.setLenDir = function (shape,len,dir) {
 	let {shapes,lineP,yg} = grid;
   let shape = grid.lineP.instantiate();
+  shape.show();
   // shapes.push(shape);
 	let dir = rvs.direction;
 	let {x,y} = cell;
@@ -128,6 +129,7 @@ const shapeGenerator = function (grid,which,rvs,cell,pnt,idx) {
 	} else {
 		shape.stroke = Math.random()<0.5?'green':'yellow';
 	}
+  debugger;
   shape.update();
   return shape;
 }

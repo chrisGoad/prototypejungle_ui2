@@ -12,7 +12,7 @@ let rs = basicsP.instantiate();
   let sqd = 50;
   let ht=0.8*sqd*sqd;
 
-let topParams = {numCols:1.5*sqd,numRows:sqd,height:ht,width:1.5*ht,frameStroke:'rgb(2,2,2)',framePadding:0.17*ht};
+let topParams = {numCols:1.5*sqd,numRows:sqd,height:ht,width:1.5*ht,framePadding:0.17*ht};
 Object.assign(rs,topParams);
 
 rs.initProtos = function () {

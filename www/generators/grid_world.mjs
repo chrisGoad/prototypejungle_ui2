@@ -10,7 +10,8 @@ rs.setName('grid_world');
 let sqsz= 50;
 let sqd = 50;
 let wd = 0.8 * sqd * sqsz;
-let topParams = {numCols:sqd,numRows:sqd,width:wd,height:wd,backgroundColor:'rgb(100,100,100)',backgroundPadding:0.1*wd,randomizeOrder:1};
+//let topParams = {numCols:sqd,numRows:sqd,width:wd,height:wd,backgroundColor:'rgb(100,100,100)',backgroundPadding:0.1*wd,randomizeOrder:1};
+let topParams = {numCols:sqd,numRows:sqd,width:wd,height:wd,framePadding:0.1*wd,randomizeOrder:1};
 Object.assign(rs,topParams);
 
 rs.initProtos = function () {

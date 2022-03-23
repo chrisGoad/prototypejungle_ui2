@@ -227,22 +227,23 @@ item.wigglySegments = function (params) {
 
 item.genOneSegment = function (p,direction) {
   let {sepNext,lineLength:len,lineExt=0} = this;
+  debugger;
 	let seg = this.genSegment(p,len,direction,sepNext);
   return seg;
 }
 // a "unit" has the form [[segs],[lines]] Seeds are starter units
-item.genSingletonUnit =  function (p,direction,clr) {
+item.genSingletonUnit =  function (lineP,p,direction,clr) {
   let {lineExt=0} = this;
 	let seg = this.genOneSegment(p,direction);
 	//let ln = this.genLine(seg.end0,seg.end1,sepNext);
-	let ln = this.genLine(seg.end0,seg.end1,lineExt);
+	let ln = this.genLine(seg,lineP,lineExt);
   if (clr) {
 		ln.stroke = clr;//'white';//clr;
   }
 	return [[seg],[ln]];
 }
 
-item.genSegmentsFan = function (p,clr,params) {
+item.genSegmentsFan = function (lineP,p,clr,params) {
 	let thisCopy;
 	if (params) {
 		thisCopy = {};
@@ -277,8 +278,8 @@ item.genSegmentsFan = function (p,clr,params) {
 	  let seg0 = this.genSegment(p,len,a0,sepNext);
 	  let seg1 = this.genSegment(p,len,a1,sepNext);
     p.isEnd = 1;
-		let ln0 = this.genLine(seg0.end0,seg0.end1,lineExt);
-		let ln1 = this.genLine(seg1.end0,seg1.end1,lineExt);
+		let ln0 = this.genLine(seg0,lineP,lineExt);
+		let ln1 = this.genLine(seg1,lineP,lineExt);
 	  if (clr) {
 		  ln0.stroke = clr;//'white';//clr;
 		  ln1.stroke = clr;//'white';//clr;
@@ -287,7 +288,7 @@ item.genSegmentsFan = function (p,clr,params) {
   } else {
 	  let seg = this.genSegment(p,len,angle,sepNext);
     p.isEnd = 1;
-		let ln = this.genLine(seg.end0,seg.end1,lineExt);
+		let ln = this.genLine(seg,lineP,lineExt);
 	//	let clr = `rgb(${r},${r},${r})`;
     if (clr) {
 		  ln.stroke = clr;//'white';//clr;
@@ -299,8 +300,8 @@ item.genSegmentsFan = function (p,clr,params) {
 
 
  // the following methods generate segsLines, which are used as the seeds of the drop operation. 
-//item.ringSeeds = function (clr,icenter,outward=1,divergence=0) {
-item.ringSeeds = function (clr,icenter,divergence=0,data) {
+//item.ringSeeds = function (lineP,clr,icenter,outward=1,divergence=0) {
+item.ringSeeds = function (lineP,clr,icenter,divergence=0,data) {
   //let {width,height,sepNext,numSeeds,ringRadius:radius,lineLength:len,lineExt=0} = this;
   let {sepNext,numSeeds,ringRadius:radius,lineLength:len,lineExt=0} = this;
 	let center = icenter?icenter:Point.mk(0,0);
@@ -327,13 +328,14 @@ item.ringSeeds = function (clr,icenter,divergence=0,data) {
 		segs.push(seg); 
     cangle += delta;
   }
-  let lines = segs.map((sg) => this.genLine(sg.end0,sg.end1,lineExt)); 
+ // let lines = segs.map((sg) => this.genLine(sg.end0,sg.end1,lineExt)); 
+  let lines = segs.map((sg) => this.genLine(sg,lineP,lineExt)); 
   if (clr) {
     lines.forEach((ln) => ln.stroke = clr);
   }
   return [segs,lines];
 }
-item.sideSeeds = function (clr,data,right) {
+item.sideSeeds = function (lineP,clr,data,right) {
   let {width,height,sepNext,numSeeds,ringRadius:radius,lineLength:len,lineExt=0} = this;
   let segs = [];
 //  let numStarts = 16;
@@ -352,7 +354,7 @@ item.sideSeeds = function (clr,data,right) {
 		segs.push(seg); 
     cy += delta;
   }
-  let lines = segs.map((sg) => this.genLine(sg.end0,sg.end1,lineExt)); 
+  let lines = segs.map((sg) => this.genLine(sg,lineP,lineExt)); 
   if (clr) {
     lines.forEach((ln) => ln.stroke = clr);
   }
@@ -386,7 +388,7 @@ item.randomSeeds = function (clr) {
 		let seg =  this.genSegment(ip,len,angle,sepNext);
 		segs.push(seg); 
   }
-  let lines = segs.map((sg) => this.genLine(sg.end0,sg.end1,lineExt)); 
+  let lines = segs.map((sg) => this.genLine(sg,lineP,lineExt)); 
   if (clr) {
     lines.forEach((ln) => ln.stroke = clr);
   }
@@ -397,7 +399,7 @@ item.randomSeeds = function (clr) {
 
 
 
-item.gridSeeds = function (clr) {
+item.gridSeeds = function (lineP,clr) {
   let {width,height,sepNext,fanAngles,numSeedRows:numRows,numSeedCols:numCols,gridPadding:padding=0,lineExt=0} = this;
   let segs = [];//this.rectangleSegments(width,height);
 	let lines = [];
@@ -435,7 +437,7 @@ item.gridSeeds = function (clr) {
 				fanAngles.forEach( (angle) => {
 					let seg = this.genSegment(ip,len,angle,sepNext);
 					segs.push(seg);
-					lines.push(this.genLine(seg.end0,seg.end1,lineExt));
+					lines.push(this.genLine(seg,lineP,lineExt));
 				});
 			}
 			//ix += invx;

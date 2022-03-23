@@ -46,8 +46,7 @@ let wd = 400;
 let topParams = {
   width:wd,
 	height:wd,
-	backgroundColor:'rgb(2,2,2)',
-	backgroundPadding:0.1*wd,
+  framePadding:0.15*wd,
 	ordinalMap : {0:0,1:1,2:2,3:3,4:4,5:4,6:6,7:7},
 	orderByOrdinal : 0,
 	randomizeOrder : 0,

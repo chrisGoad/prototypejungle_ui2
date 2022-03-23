@@ -13,7 +13,8 @@ let rs = basicsP.instantiate();
   addGridMethods(rs);
   addRandomMethods(rs);
 let nr = 140;
-let topParams = {width:1400,height:1400,numRows:nr,numCols:nr,pointJiggle:20,backgroundColor:'rgb(0,150,255)'};
+let wd = 1400;
+let topParams = {width:wd,height:wd,numRows:nr,numCols:nr,pointJiggle:20,framePadding:0.17*wd,backgroundColor:'rgb(0,150,255)'};
 Object.assign(rs,topParams);
 
 

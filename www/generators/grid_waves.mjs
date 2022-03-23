@@ -12,7 +12,7 @@ addRandomMethods(rs);
   
 rs.setName('grid_waves');
 let wd = 400;
-let topParams = {width:400,height:400,numRows:100,numCols:100,pointJiggle:10};
+let topParams = {width:wd,height:wd,numRows:100,numCols:100,framePadding:0.15*wd,pointJiggle:10};
 
 Object.assign(rs,topParams);
 	

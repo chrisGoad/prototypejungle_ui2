@@ -10,7 +10,7 @@ addInterpolateMethods(rs);
 addSegsetMethods(rs);
 rs.setName('drop_clouds');
 let ht = 400;
-let topParams = {width:1.5*ht,height:ht,maxDrops:100000,dropTries:50,lineLength:2,frameStroke:'rgb(2,2,2)',framePadding:0.17*ht,minSeparation:0}
+let topParams = {width:1.5*ht,height:ht,maxDrops:100000,dropTries:50,lineLength:2,framePadding:0.17*ht,minSeparation:0}
 
 
 Object.assign(rs,topParams);
@@ -23,7 +23,7 @@ rs.initProtos = function () {
 }  
 
 rs.genSegments = function (p) {
-  let {width,height} = this;
+  let {width,height,lineP} = this;
   let params = {direction:0.75*Math.PI,zigzag:1,randomness:0,vertical:0,widths:[10],heightRatio:0.05,numSegs:4,pos:p};
   let which = this.computeWhichByCornerInterpolation(p);
   let rgb0 = [250,0,0];
@@ -42,15 +42,15 @@ rs.genSegments = function (p) {
   } else if (which === 3) {
      segs = this.wigglySegments(params); //  lower right
   }
-  let lines = segs.map((sg) => this.genLine(sg));
+  let lines = segs.map((sg) => this.genLine(sg,lineP));
   lines.forEach( (line) => line.stroke = clr);
   return [segs,lines];
 }
 
 rs.initialSegments = function () {
-  let {width,height} = this; 
+  let {width,height,lineP} = this; 
   let segs = this.rectangleSegments(width,height);
-  let lines = segs.map((sg) => this.genLine(sg)); 
+  let lines = segs.map((sg) => this.genLine(sg,lineP)); 
   return [segs,lines];
 }
 

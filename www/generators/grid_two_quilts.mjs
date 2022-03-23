@@ -3,7 +3,7 @@ import {rs as quiltP} from '/generators/grid_one_quilt.mjs';
 let rs = basicsP.instantiate();
 
 let ht = 450;
-let topParams = {width:1.5*ht,height:ht,frameStroke:'rgb(2,2,2)',framePadding:0.1*ht,frameVisible:0};
+let topParams = {width:1.5*ht,height:ht,framePadding:0.1*ht,frameVisible:0};
 Object.assign(rs,topParams);
 rs.setName('grid_two_quilts');
 rs.initialize = function() {

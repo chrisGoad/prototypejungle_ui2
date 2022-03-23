@@ -14,7 +14,9 @@ rs.setName('grid_beacons');
 addGridMethods(rs);
 addRandomMethods(rs);
 let nr = 30;
-let topParams = {width:1000,height:1000,numRows:nr,numCols:nr,pointJiggle:20};
+let wd=1000;
+
+let topParams = {width:wd,height:wd,numRows:nr,numCols:nr,pointJiggle:20,framePadding:0.15*wd};
 Object.assign(rs,topParams);
 
 

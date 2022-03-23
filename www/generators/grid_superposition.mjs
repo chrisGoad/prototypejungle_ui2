@@ -46,9 +46,9 @@ nr= 48;
 let wd = 200;
 let topParams;
 if (radial) {
-  topParams = {numRows:0.5*nr,numCols:nr,width:wd,height:wd,outerRadius:wd,innerRadius:0.2*wd,angleMin:-180,angleMax:180,center: Point.mk(0,0),rotation:30,frameStroke:'rgb(2,2,2)',pointJiggle:4,framePadding:0.15*wd};
+  topParams = {numRows:0.5*nr,numCols:nr,width:wd,height:wd,outerRadius:wd,innerRadius:0.2*wd,angleMin:-180,angleMax:180,center: Point.mk(0,0),rotation:30,pointJiggle:4,framePadding:0.15*wd};
 } else {
-  topParams = {numRows:nr,numCols:nr,width:wd,height:wd,frameStroke:'rgb(2,2,2)',pointJiggle:8,framePadding:0.25*wd,frameVisible:0};
+  topParams = {numRows:nr,numCols:nr,width:wd,height:wd,pointJiggle:8,framePadding:0.25*wd,frameVisible:0};
 }
 rs.computeJiggleParams = function (jiggle) {
   let hj = 0.5*jiggle;

@@ -11,7 +11,7 @@ addSegsetMethods(rs);
 rs.setName('drop_ice');
 let wd = 200;
 
-let topParams = {width:wd,height:wd,dropTries:100,lineLength:2,frameStroke:'rgb(2,2,2)',framePadding:20,frameVisible:0,minSeparation:10}
+let topParams = {width:wd,height:wd,dropTries:100,lineLength:2,framePadding:20,frameVisible:0,minSeparation:10}
 
 Object.assign(rs,topParams);
 
@@ -23,9 +23,9 @@ rs.initProtos = function () {
 }  
 
 rs.initialSegments = function () {
-  let {width,height} = this; 
+  let {width,height,lineP} = this; 
   let segs = this.rectangleSegments(width,height);
-  let lines = segs.map((sg) => this.genLine(sg));  
+  let lines = segs.map((sg) => this.genLine(sg,lineP));  
   return [segs,lines];
 }
 
@@ -38,10 +38,10 @@ rs.segParams = function () {
 } 
 
 rs.genSegments = function (p) {
-  let {minSeparation:sep} = this;
+  let {minSeparation:sep,lineP} = this;
   let {length,angle} = this.segParams();
   let seg = this.genSegment(p,length,angle);
-  let ln = this.genLine(seg);
+  let ln = this.genLine(seg,lineP);
   let eseg = this.genSegment(p,length+sep,angle);
   return [[eseg],[ln]];
 }

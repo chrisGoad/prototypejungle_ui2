@@ -39,14 +39,14 @@ rs.globalParams = {randomizingFactor:0,sizePower:2,widthFactor:1,heightFactor:1,
 		sizeMap: {0:1,1:1,2:2,3:2,4:4,5:1,6:1},
     genCircles:1
 };
-		
+let wd =300;
 let topParams = {
   pointJiggle:2,	
   numRows : 96,
   numCols : 96,
-	width:300,
-	height:300,
-	backgroundColor : 'black',
+	width:wd,
+	height:wd,
+	framePadding  : 0.15*wd,
   orderByOrdinal:1,
   ordinalMap:[0,1,2,3,4,5]
 }

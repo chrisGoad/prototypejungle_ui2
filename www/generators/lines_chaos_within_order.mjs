@@ -21,14 +21,15 @@ rs.initializeProto = function () {
 }  
 let ht = 200;
 let wd = 1.5*ht
-let topParams = {delta:10,center:Point.mk(0,0),width:wd,height:ht, frameWidth:1.17*wd,frameHeight:1.17*ht,frameStroker:'rgb(2,2,2)',dimension:120,numLines:1000,angleMin:-90,angleMax:90}
+let topParams = {delta:10,center:Point.mk(0,0),width:wd,height:ht, frameWidth:1.17*wd,frameHeight:1.17*ht,dimension:120,numLines:1000,angleMin:-90,angleMax:90}
 
 rs.drawGrid = function () {
   debugger;
-  if (this.gridLines) {
-    this.gridLines.length = 0;
+  let {gridLines,gridLineP} = this;
+  if (gridLines) {
+    gridLines.length = 0;
   } else {
-    this.set('gridLines',core.ArrayNode.mk());
+    gridLines = this.set('gridLines',core.ArrayNode.mk());
   }
   let {delta,width,height} = this;
   let lineP = this.gridLineP;
@@ -37,9 +38,10 @@ rs.drawGrid = function () {
   let hwd = width/2;
   let hht = height/2;
   const addLine =  (e0,e1) => {
-    let line = lineP.instantiate();
+    let line = gridLineP.instantiate();
     this.grid// lines.push(line);
     line.setEnds(e0,e1);
+    gridLines.push(line);
     line.update();
     line.show();
   }

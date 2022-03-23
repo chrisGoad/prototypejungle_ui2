@@ -12,7 +12,7 @@ addGridMethods(innerProto);
 
 let onr = 10;
 let owd = 1200;
-let outerParams = {numRows:onr,numCols:onr,width:owd,height:owd}
+let outerParams = {numRows:onr,numCols:onr,width:owd,height:owd,framePadding:0.15*owd}
 Object.assign(rs,outerParams);
 let inr = 3;
 let iwd = 40;

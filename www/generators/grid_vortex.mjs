@@ -39,7 +39,7 @@ let outer = 200;
 let topParams = {
   width:wd,
 	height:wd,
-	frameStroke:'rgb(2,2,2)',
+	
 	frameWidth:1.1*wd,
 	frameHeight:1.1*wd,
 	ordinalMap : {0:0,1:1,2:2,3:3,4:4,5:4,6:6,7:7},

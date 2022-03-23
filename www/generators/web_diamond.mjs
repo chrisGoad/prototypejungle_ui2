@@ -137,7 +137,7 @@ rs.initialize = function () {
 	this.placeShapesAtPoints(pnts,this.circleP);
 	this.initWeb(pnts);
 	this.addWeb();
-	this.addSegs();
+	this.addSegs(this.lineP);
 	//this.set('cc',this.circleP2.instantiate()).show();
 	//this.addSignature();
 }

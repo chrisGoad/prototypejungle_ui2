@@ -13,7 +13,7 @@ let rs = basicsP.instantiate();
 
 let wd = 300;
 let nmc  = 200;
-let topParams = {width:wd,height:wd,numRows:nmc,numCols:nmc,backgroundColor:'rgb(2,2,2)',backgroundPadding:0.1*wd}
+let topParams = {width:wd,height:wd,numRows:nmc,numCols:nmc,framePadding:0.1*wd}
 
 addGridMethods(rs);
 addRandomMethods(rs);

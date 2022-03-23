@@ -36,7 +36,8 @@ rs.genSegments = function (p) {
 }
  
  
-rs.toPoint3d = function (p) {
+//rs.toPoint3d = function (p) {
+rs.genPoint3d = function (p) {
 	let {sphereCenter,sphereDiameter} = this;
 	if (!p.to3d) {
 	  debugger;
@@ -76,20 +77,22 @@ rs.genPoint3d = function (i,j) {
 	}
 }
 */
+/*
 rs.genPoint3d = function (i,j) {
 	let {numRows,numCols,sphereCenter,sphereDiameter,deltaX,deltaY} = this;
 	let p = Point.mk(deltaX*(i-numCols/2),deltaY*(j-numRows/2));
 	let p3d = this.toPoint3d(p);
 	return p3d;
 }
-
+*/
 
 
 
 rs.to3dAndBack = function (cell,p) {
 	let {camera} = this;
 	//let p3d = this.toPoint3d(cell,p);
-	let p3d = this.toPoint3d(p);
+//	let p3d = this.toPoint3d(p);
+	let p3d = this.genPoint3d(p);
 	if (p3d) {
 		let rs = camera.project(p3d);
 		return rs;
@@ -100,7 +103,8 @@ rs.to3dAndBack = function (cell,p) {
 rs.pointsTo3dAndBack = function (pnts) {
 	let rs = [];
 	pnts.forEach((p) => {
-		let p3d = this.toPoint3d(p);
+		let p3d = this.genPoint3d(p);
+		//let p3d = this.toPoint3d(p);
 		if (p3d && (p3d.category === 'onSphere')) {
 			let ppnt = this.camera.project(p3d);
 			rs.push(ppnt);

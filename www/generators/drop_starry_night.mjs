@@ -8,7 +8,7 @@ addDropMethods(rs);
 addSegsetMethods(rs);
 rs.setName('drop_starry_night');
 let ht = 200;
-let topParams = {width:1.5*ht,height:ht,dropTries:50,lineLength:2,frameStroke:'rgb(2,2,2)',framePadding:0.17*ht,minSeparation:0,}
+let topParams = {width:1.5*ht,height:ht,dropTries:50,lineLength:2,framePadding:0.17*ht,minSeparation:0,}
 
 Object.assign(rs,topParams);
 
@@ -34,7 +34,7 @@ rs.genSegments = function (p) {
   let wd = sz;
   let ht = sz;
   let segs = this.rectangleSegments(wd,ht,p);
-  let lines = segs.map((sg) => this.genLine(sg));
+  let lines = segs.map((sg) => this.genLine(sg,this.lineP));
 
   const genRGBval = function () {
     return 50 + Math.floor(Math.random()*202);
@@ -49,9 +49,9 @@ rs.genSegments = function (p) {
 
 
 rs.initialSegments = function () {
-  let {width,height} = this; 
+  let {width,height,lineP} = this; 
   let segs = this.rectangleSegments(width,height);
-  let lines = segs.map((sg) => this.genLine(sg)); 
+  let lines = segs.map((sg) => this.genLine(sg,lineP)); 
   return [segs,lines];
 }
 

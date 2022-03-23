@@ -8,7 +8,7 @@ addGridMethods(rs);
 addRandomMethods(rs);
 rs.setName('grid_code');
 let ht = 400;
-let topParams = {width:1.5*ht,height:ht,numRows:100,numCols:100,pointJiggle:0,factorX:0.25,factorY:0.05,crossColor:'yellow',frameStroke:'rgb(2,2,2)',framePadding:0.17*ht,frameVisible:0};
+let topParams = {width:1.5*ht,height:ht,numRows:100,numCols:100,pointJiggle:0,factorX:0.25,factorY:0.05,crossColor:'yellow',framePadding:0.17*ht,frameVisible:0};
 
 Object.assign(rs,topParams);
 	

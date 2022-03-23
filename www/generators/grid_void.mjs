@@ -82,7 +82,6 @@ let newTopParams = {
   width:wd,
   height:wd,
 	backgroundColor : 'red',
-	frameStroke: 'rgb(2,2,2)',
 	framePadding:15,
 	frameVisible:0
 }

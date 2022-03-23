@@ -23,7 +23,7 @@ const initializeLinesProtos = function (lines) {
   lines.lineP['stroke-width'] = .075; 	
 }  
 let ht = 200;
-let topParams = {width:1.5*ht,height:ht,frameStroke:'rgb(2,2,2)',framePadding:0.17*ht};
+let topParams = {width:1.5*ht,height:ht,framePadding:0.17*ht};
 Object.assign(rs,topParams);
 
 

@@ -125,6 +125,9 @@ item.genRandomPoint = function (rect) {
 // normally sepNext is an invisible distance which prevents the detection of an intersection with the segment which is being continued.
 
 item.genSegment = function (p,ln,angle,sepNext=0) {
+  if (!p) {
+    debugger;
+  }
 //item.genSegment = function (p,ln,angle,sep=0,sepNext=0,centered=1) {
   let vec = Point.mk(Math.cos(angle),Math.sin(angle));
   let e0,e1,end,rs;
@@ -426,7 +429,7 @@ item.addRandomSegments = function () {
       }
 			return; //added return 11/21
     }
-		let ifnd = this.addRandomSegment();
+	//	let ifnd = this.addRandomSegment();
 		let segsAdded = this.addRandomSegment();
 		if (segsAdded) {
       tries = 0;
@@ -444,7 +447,7 @@ item.addRandomSegments = function () {
 }
 
 
-
+/*
 item.genLine = function (lsgOrP0,p1,ext) {
   let end0,end1;
   if (p1) {
@@ -469,7 +472,7 @@ item.genLine = function (lsgOrP0,p1,ext) {
 	}
   return line;
 }
- 
+
  
 item.via3d = function (p) {
 	if (this.genPoint3d) {
@@ -480,7 +483,7 @@ item.via3d = function (p) {
   return p;
   
 }
- 
+*/
 item.installLine = function (line) {
 	if (line.period) {
 	  debugger;

@@ -11,7 +11,7 @@ addDropMethods(rs);
 addSegsetMethods(rs);
 rs.setName('drop_metal_2');
 let wd = 400;
-let topParams = {width:wd,height:wd,dropTries:40,frameStroke:'rgb(2,2,2)',framePadding:0.1*wd,frameVisible:0}
+let topParams = {width:wd,height:wd,dropTries:40,framePadding:0.1*wd,frameVisible:0}
 
 Object.assign(rs,topParams);
 
@@ -31,14 +31,14 @@ rs.segParams = function () {
 
 
 rs.genSegments = function (p) {
-  let {width,height} = this;
+  let {width,height,lineP} = this;
   let hh = height/2;
   let fr = (p.y+hh)/height;
   let params = {direction:Math.PI/4,zigzag:1,randomness:0,vertical:1,widths:[10],heightRatio:0.05,numSegs:4,pos:p};
   let params2 = Object.assign({},params);
   params2.direction = 0;
   let segs = (Math.random() < 0.5)?this.wigglySegments(params):this.wigglySegments(params2);
-  let lines = segs.map((sg) => this.genLine(sg));
+  let lines = segs.map((sg) => this.genLine(sg,lineP));
   const genRGBval = function () {
     return 155 + Math.floor(Math.random()*100);
   }
@@ -51,9 +51,9 @@ rs.genSegments = function (p) {
 }
 
 rs.initialSegments = function () {
-  let {width,height} = this; 
+  let {width,height,lineP} = this; 
   let segs = this.rectangleSegments(width,height);
-  let lines = segs.map((sg) => this.genLine(sg)); 
+  let lines = segs.map((sg) => this.genLine(sg,lineP)); 
   return [segs,lines];
 }
 

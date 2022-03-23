@@ -70,27 +70,30 @@ item.addFrame = function () {
 	debugger;
 	let {frameStroke:frs,frameFill:frf,framePadding:frp,framePaddingX:frpx,framePaddingy:frpy, 
 	frameWidth,frameHeight,width,height,frameVisible,framePos:pos,signIt} =  this;
-	if ((!frs) && (!frp) && (!frameWidth)) {
+  let frpd = frp!==undefined;
+	if ( (!frpd) && (!frameWidth)) {
 		return;
 	}
   if (!frs) {
     frs = 'rgb(2,2,2)';
+    frs = 'white';
   }
   let frr = this.set('brect',rectPP.instantiate());
  
-  frr.fill = frf?frd:'transparent';
-	if (frameVisible) {
+  frr.fill = frf?frf:'transparent';
+	/*if (frameVisible) {
 		frr['stroke-width'] = frameVisible;
 		frr.stroke = 'white';
-	} else {
-	  frr.stroke = frs;
-	}
+	} else {*/
+	frr.stroke = frs;
+  frr['stroke-width'] = 10;
+
 	if (frameWidth) {
 		frr.width = frameWidth;
 		frr.height = frameHeight;
 	} else {
-		let frPx = frpx?frpx:(frp?frp:0.1*width);
-		let frPy = frpy?frpy:(frp?frp:0.1*height);
+		let frPx = frpx?frpx:(frpd?frp:0.1*width);
+		let frPy = frpy?frpy:(frpd?frp:0.1*height);
 		frr.width = width + frPx;
 		//frr.width = 20;
 		frr.height = height + frPy;
@@ -136,17 +139,30 @@ item.installLine = function (line) {
 }
 
 
+
 item.genLine = function (sg,lineP,ext=0) {
   let {end0,end1} = sg;
+  if (!lineP) {
+    debugger;
+  }
   if (ext) {
     let vec = end1.difference(end0);
     let nvec = vec.normalize();
     end1 = end1.plus(nvec.times(ext));
   }
-	let theLineP = lineP?lineP:this.lineP;
-	
+	//let theLineP = lineP?lineP:this.lineP;
+	let theLineP = lineP;
   let line = theLineP.instantiate();
-  line.setEnds(end0,end1);
+  if (!line.setEnds) {
+    debugger;
+  }
+  if (this.genPoint3d) {
+		let e03d = this.via3d(end0);
+		let e13d = this.via3d(end1);
+    line.setEnds(e03d,e13d);
+	} else {
+    line.setEnds(end0,end1);
+	}
   return line;
 }
 
@@ -168,7 +184,7 @@ item.initBasis = function () {
 	  this.initProtos();
 	}
 	this.addBackground();
-	this.addBackStripe();
+	this.addFrame();
 //  this.set('shapes',core.ArrayNode.mk());
 
 }

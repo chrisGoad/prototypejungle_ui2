@@ -88,6 +88,7 @@ item.addAtPoint = function (cell,pnt,idx) {
 			shape.cell = cell
 		}
 		shape.show();
+    shapes.push(shape);
 		return shape;
 	}
 }

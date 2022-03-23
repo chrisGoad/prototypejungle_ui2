@@ -30,9 +30,9 @@ rs.segParams = function () {
 }
 
 rs.initialSegments = function () {
-  let {width,height} = this; 
+  let {width,height,lineP} = this; 
   let segs = this.rectangleSegments(width,height);
-  let lines = segs.map((sg) => this.genLine(sg)); 
+  let lines = segs.map((sg) => this.genLine(sg,lineP)); 
   return [segs,lines];
 }
 
@@ -50,7 +50,7 @@ rs.genRectSegments = function (p) {
 rs.genSegments = function (p) {
   let wparams = {direction:0,zigzag:1,randomness:0,vertical:0,widths:[10,20,50],heightRatio:0.05,numSegs:15,pos:p};
   let segs = (p.y < 0)?this.genRectSegments(p):this.wigglySegments(wparams);
-  let lines = segs.map((sg) => this.genLine(sg));
+  let lines = segs.map((sg) => this.genLine(sg,this.lineP));
   const genRGBval = function () {
     return 155 + Math.floor(Math.random()*100);
   }

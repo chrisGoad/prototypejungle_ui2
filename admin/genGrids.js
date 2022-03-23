@@ -244,7 +244,7 @@ let numPages = 0;
 const thingString = function (order,ix,dir,useThumb,ititle,props) {
 	//console.log('thingString order',order,'ix',ix,'variant',variant,'dir',dir,'useThumb',useThumb,'title',ititle,'likes',likes);
 	debugger;
-  let {variant,likes,posted} = props;
+  let {variant,likes,posted,category} = props;
   console.log('POSTED',posted);
 	let spix = ix.split('.');
 	let path = spix[0];
@@ -268,8 +268,9 @@ const thingString = function (order,ix,dir,useThumb,ititle,props) {
 	let lastPageArg = (pageNumber === numPages)?'&lastPage=1':'';
 	let rs;
 	let astart = `<a style="color:white" href="page.html?image=${vx}&${pageArg}&${kindArg}">`;
- // let likesStr = likes?`<span style="font-size:10pt">Likes ${likes}</span><br/>`:'';
-  let propsStr = `<span style="font-size:10pt">Likes ${likes?likes:'none'} Order ${order}${posted?"":" NOT POSTED"}</span><br/>`;
+ // let likesStr = likes?`<span style="font-size:10pt">Likes ${likes} ${category}</span><br/>`:'';
+  //let propsStr = `<span style="font-size:10pt">Likes ${likes?likes:'none'} Order ${order}${posted?"":" NOT POSTED"} ${category}</span><br/>`;
+  let propsStr = `<span style="font-size:10pt">${likes?'Likes '+likes:''} ${posted?"":" NOT POSTED"} ${category}</span><br/>`;
 	if (forKOP) {
 		let titleLink = title?`${astart}${title}</a></p>`:'';
 		console.log('forKOP');

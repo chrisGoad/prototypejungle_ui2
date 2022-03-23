@@ -16,9 +16,9 @@ rs.setName('grid_enigma');
 let nr = 140;
 //nr = 20;
 let wd = 1000;
-let topWd = 8000;
+let topWd = 2000;
 let partParams = {width:wd,height:wd,numRows:nr,numCols:nr,pointJiggle:10,delta:(wd*0.8)/nr,backgroundColor:'blue',randomizeOrder:1,fromLeft:1,up:0};
-let topParams = {width:topWd,height:topWd,frameStroke:'rgb(2,2,2)'};
+let topParams = {width:topWd,height:topWd,framePadding:0.15*topWd};
 Object.assign(rs,topParams);
 rs.addGrid = function (nm,fromLeft,turnUp) {
   debugger;

@@ -16,7 +16,7 @@ addSegsetMethods(rs);
 rs.setName('drop_iris');
 let ht = 160;
  ht = 700;
-let topParams = {saveState:1,width:ht,height:ht,numRows:20,numCols:30,dropTries:20,endLoopss:1000,lineLength:10,frameStroke:'rgb(2,2,2)',framePadding:0.1*ht,frameVisible:0,separation:0,randomDirectionChange:0.3*Math.PI,fromEnds:1,sepNext:.1,lineExt:.2,onlyFromSeeds:1,extendWhich:'random',numSeeds:100,splitChance:0.5,splitAmount:0.08 * Math.PI,directionChange:0.025 * Math.PI}
+let topParams = {saveState:1,width:ht,height:ht,numRows:20,numCols:30,dropTries:20,endLoopss:1000,lineLength:10,framePadding:0.1*ht,frameVisible:0,separation:0,randomDirectionChange:0.3*Math.PI,fromEnds:1,sepNext:.1,lineExt:.2,onlyFromSeeds:1,extendWhich:'random',numSeeds:100,splitChance:0.5,splitAmount:0.08 * Math.PI,directionChange:0.025 * Math.PI}
 	
 Object.assign(rs,topParams);
 
@@ -29,7 +29,7 @@ rs.initProtos = function () {
 rs.genSegments = function (p,rvs) {
   let {r,g,b} = rvs;
 	let clr = `rgb(${r},${g},${b})`;
-  return this.genSegmentsFan(p,clr);
+  return this.genSegmentsFan(this.lineP,p,clr);
 }
 
 
@@ -40,7 +40,7 @@ rs.genSeeds = function () {
 	this.exclusionZones = [exc];
 	let dnc = geom.Circle.mk(Point.mk(0,0),3* this.ringRadius);
 	this.doNotExit= [dnc];
-  let seeds =this.ringSeeds('white');
+  let seeds =this.ringSeeds(this.lineP,'white');
 	return seeds;
 }
 

@@ -18,7 +18,7 @@ addRandomMethods(rs);
 
 	let wd = 400;
   let nr = 100;
-	let topParams = {width:wd,height:wd,numRows:nr,numCols:nr,frameStroke:'rgb(2,2,2)',framePadding:0.2*wd,frameVisible:0};
+	let topParams = {width:wd,height:wd,numRows:nr,numCols:nr,framePadding:0.2*wd,frameVisible:0};
 	Object.assign(rs,topParams);
 	//rs.initProtos();
 	/* 

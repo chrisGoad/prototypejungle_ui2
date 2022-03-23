@@ -123,13 +123,15 @@ item.genPointsFunction0 = function () {
 
 
 item.genPoints3d = function () {
-	let {numRows,numCols} = this;
+	let {numRows,numCols,deltaX,deltaY} = this;
 	//debugger;
 	let points3d = this.set("points3d",[]);
 	for (let i = 0;i<=numCols;i++) {
 		for (let j=0;j<=numRows;j++) {
-			let p = this.genPoint3d(i,j);
-			points3d.push(p);
+	    let p = Point.mk(deltaX*(i-numCols/2),deltaY*(j-numRows/2));
+			let p3d = this.genPoint3d(p);
+//			let p3d = this.genPoint3d(i,j);
+			points3d.push(p3d);
 		}
 	}
 }

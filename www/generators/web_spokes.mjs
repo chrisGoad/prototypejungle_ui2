@@ -23,7 +23,7 @@ let ht = 0.02*wd; // height  of stripes
 let sep = 0.4*wd; // separation between stripes
 
 let  webParams = {minConnectorLength:0.5*ht,maxConnectorLength:2.2*ht,maxRingConnectorLength:3.2*sep,webTries:100};
-let  topParams = {width:wd,height:ht,frameStroke:'rgb(2,2,2)',frameWidth:1.5*wd,frameHeight:1.5*wd,frameVisible:0};
+let  topParams = {width:wd,height:ht,frameWidth:1.5*wd,frameHeight:1.5*wd,frameVisible:0};
 let  gridParams = {initialPos:Point.mk(-0.0*wd,0),initialDirection:0,width:ht,step:0.007*wd,delta:0.02*Math.PI,numSteps:70};
 
 

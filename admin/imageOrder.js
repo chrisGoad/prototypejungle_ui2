@@ -8,7 +8,7 @@ module.exports = [
 [50,'grid_void'],
  [60,'drop_dandelion'],
  [70,'spatter_variants'],
-   [75,'grid_2'],
+   [75,'grid_droplets'],
  [80,'grid_world'],
    [90,'grid_cloth'],
    [100,'drop_starry_night'],

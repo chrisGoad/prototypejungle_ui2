@@ -21,7 +21,7 @@ rs.setName('drop_dandelion');
 let ht = 360;
 let wd = 1* ht;
 
-let topParams = {width:wd,height:ht,dropTries:10,lineLength:5,frameStroke:'rgb(2,2,2)',framePadding:0.15*ht,frameVisible:0,minSeparation:0,rectangleDim:0.2,gridPadding:60,fromEnds:1,sepNext:0.01,extendWhich:'first',splitChance:.40,splitAmount:0.05 * Math.PI,seedDirections:[0*Math.PI],directionChange:0.0*Math.PI,randomDirectionChange:0.025*Math.PI,lineExt:0,numSeeds:15,fromEnds:1,doNotExit:[geom.Circle.mk(Point.mk(0,0),0.5*ht)]};
+let topParams = {width:wd,height:ht,dropTries:10,lineLength:5,framePadding:0.15*ht,frameVisible:0,minSeparation:0,rectangleDim:0.2,gridPadding:60,fromEnds:1,sepNext:0.01,extendWhich:'first',splitChance:.40,splitAmount:0.05 * Math.PI,seedDirections:[0*Math.PI],directionChange:0.0*Math.PI,randomDirectionChange:0.025*Math.PI,lineExt:0,numSeeds:15,fromEnds:1,doNotExit:[geom.Circle.mk(Point.mk(0,0),0.5*ht)]};
 
 Object.assign(rs,topParams);
 
@@ -41,13 +41,13 @@ rs.segParams = function () {
 
 rs.genSeeds = function () {
   debugger;
-  let {width} = this;
+  let {width,lineP} = this;
   this.ringRadius = 0.15 * 0.5 * width;
-  return this.ringSeeds('transparent');
+  return this.ringSeeds(lineP,'transparent');
 }
 
 rs.genSegments = function (p) {
-  return this.genSegmentsFan(p,'white',topParams);
+  return this.genSegmentsFan(this.lineP,p,'white',topParams);
 }
 
 /*

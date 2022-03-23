@@ -22,12 +22,12 @@ let rs = basicsP.instantiate();
   rs.loadFromPath = 0;
 
  
-//let numRows = 
-rs.numRows= 41;
-//let numCols =
-rs.numCols = 41;
-rs.width = 100;
-rs.height = 100;
+
+let nr = 41
+let wd = 100;
+let awd = 1600;
+let topParams ={numRows:nr,numCols:nr,width:wd,height:wd,framePadding:0.15*awd,framePos:Point.mk(0,50)};
+Object.assign(rs,topParams);
 
  
 rs.initProtos = function () {

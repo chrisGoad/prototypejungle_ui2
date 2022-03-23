@@ -26,11 +26,11 @@ rs.initProtos = function () {
 	this.bLineP.stroke = 'rgb(100,100,0)';
 	this.bLineP['stroke-width'] = 1;
 }  
+let nr = 41
+let wd = 300;
+let topParams ={numRows:nr,numCols:nr,width:wd,height:wd,framePadding:0.15*wd};
+Object.assign(rs,topParams);
 
-rs.numRows = 41;
-rs.numCols  = 41;
-rs.width = 300;
-rs.height = 300;
 
 rs.shapeGenerator = function (rvs) {
 	debugger;

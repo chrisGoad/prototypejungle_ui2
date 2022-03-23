@@ -24,7 +24,7 @@ rs.initProtos = function () {
 
 let nr = 64;
 let wd = 200;
-let topParams = {numRows:nr,numCols:nr,width:wd,height:wd,frameStroke:'rgb(2,2,2)',pointJiggle:4,framePadding:0.15*wd,frameVisible:1};
+let topParams = {numRows:nr,numCols:nr,width:wd,height:wd,pointJiggle:4,framePadding:0.15*wd,frameVisible:1};
 Object.assign(rs,topParams);
 
 rs.shapeGenerator = function (rvs,cell) {

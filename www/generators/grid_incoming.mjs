@@ -46,7 +46,7 @@ grid2.initProtos = function () {
 
 let nr = 64;
 let wd = 50;
-let topParams = {numRows:nr,numCols:nr,width:wd,height:wd,frameStroke:'rgb(2,2,2)',pointJiggle:50,framePadding:0.15*wd,
+let topParams = {numRows:nr,numCols:nr,width:wd,height:wd,pointJiggle:50,framePadding:0.15*wd,
 sphereCenter:Point3d.mk(0,0,-20),sphereDiameter:35,focalPoint:Point3d.mk(0,0,50),focalLength:10,cameraScaling:100};
 
 Object.assign(grid1,topParams);

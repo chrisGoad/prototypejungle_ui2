@@ -16,7 +16,8 @@ rs.setName('grid_4');
 //core.require('/line/line.js','/grid/addGrid8.js',function (linePP,addGridMethods) {
   debugger;
   let nr = 40;
-  let topParams = {numRows:nr,numCols:nr,width:200,height:200,pointJiggle:9};
+  let wd = 200;
+  let topParams = {numRows:nr,numCols:nr,width:wd,height:wd,pointJiggle:9,framePadding:0.15*wd};
   Object.assign(rs,topParams);
 
 rs.initProtos = function () {

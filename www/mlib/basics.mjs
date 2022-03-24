@@ -69,15 +69,16 @@ item.addSignature = function() {
 item.addFrame = function () {
 	debugger;
 	let {frameStroke:frs,frameFill:frf,framePadding:frp,framePaddingX:frpx,framePaddingy:frpy, 
-	frameWidth,frameHeight,width,height,frameVisible,framePos:pos,signIt} =  this;
+	frameWidth,frameHeight,frameStrokeWidth:fswd, width,height,frameVisible,framePos:pos,signIt} =  this;
   let frpd = frp!==undefined;
 	if ( (!frpd) && (!frameWidth)) {
 		return;
 	}
   if (!frs) {
     frs = 'rgb(2,2,2)';
-    frs = 'white';
+   // frs = 'white';
   }
+  fswd = fswd?fswd:10;
   let frr = this.set('brect',rectPP.instantiate());
  
   frr.fill = frf?frf:'transparent';
@@ -86,7 +87,7 @@ item.addFrame = function () {
 		frr.stroke = 'white';
 	} else {*/
 	frr.stroke = frs;
-  frr['stroke-width'] = 10;
+  frr['stroke-width'] = fswd;
 
 	if (frameWidth) {
 		frr.width = frameWidth;

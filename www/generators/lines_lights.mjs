@@ -14,7 +14,7 @@ addLinesMethods(rs);
 rs.setName('lines_lights');
 let wd = 130;
 let ht = 1.5*wd;
-let topParams = {width:wd,height:ht,numLines:3000,angleMin:-90,angleMax:90,framePadding:0.17*wd,frameVisible:0}
+let topParams = {width:wd,height:ht,numLines:3000,angleMin:-90,angleMax:90,framePadding:0.1*wd,frameStroke:'white',frameStrokeWidth:2}
 Object.assign(rs,topParams);
 
 rs.shapePairs = 

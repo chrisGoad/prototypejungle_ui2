@@ -87,6 +87,7 @@ rs.initialize = function (cb) {
   this.deltaY = height/numRows;
 	this.initProtos();
 	this.camera = geom.Camera.mk(focalPoint,focalLength,cameraScaling,'z');
+  debugger;
 	this.initializeGrid();
 }
  

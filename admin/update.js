@@ -33,7 +33,18 @@ var boilerplate1 =
 	.theGrid {
 		display:grid;
 		padding-top:10px;
-		grid-template-columns:1fr 2fr 1fr;
+		grid-template-columns:1fr 4fr 1fr;
+	}
+  .indent {
+		padding-left:20px;
+	}
+  .codeVar {
+		font-style:italic;
+	}  
+  
+  .textVar {
+		font-weight:bold;
+    font-size:12pt
 	}
 </style>
 </head>
@@ -115,7 +126,7 @@ var fs = require('fs');
        let ext = afterLastChar(fln,'.');
        console.log('fln',fln,'ext',ext);
     //  if ((ext === fln) || (!['js','css','html','png','svg','jpg','ico','md'].includes(ext))) {
-      if  (!['mjs','js','css','html','svg','jpg','ico','md','mp3','json'].includes(ext)) {
+      if  (!['mjs','js','css','html','svg','ico','md','mp3','json'].includes(ext)) {
          console.log('wrong kind of file/dir',fln);
          return;
       }

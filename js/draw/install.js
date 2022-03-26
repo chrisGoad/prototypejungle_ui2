@@ -3,7 +3,7 @@ let loadingItem = undefined;
 let mainUrl;
 let oldway = false;
 const installMainItem = function (source,settings)  {
-  mainUrl = source;
+  debugger;
   if (settings) {
     settings = settings;
   }

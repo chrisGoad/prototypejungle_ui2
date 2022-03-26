@@ -101,6 +101,7 @@ rs.to3dAndBack = function (cell,p) {
 }
 
 rs.pointsTo3dAndBack = function (pnts) {
+  debugger;
 	let rs = [];
 	pnts.forEach((p) => {
 		let p3d = this.genPoint3d(p);

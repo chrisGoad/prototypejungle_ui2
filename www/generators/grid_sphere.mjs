@@ -52,8 +52,11 @@ let newTopParams = {
 	height:50,
 		frameWidth:bkdim,
    frameHeight:bkdim,
+	//sphereCenter:Point3d.mk(0,0,-20),
 	sphereCenter:Point3d.mk(0,0,-20),
+	//sphereDiameter:35,
 	sphereDiameter:35,
+	//focalPoint:Point3d.mk(0,0,50),
 	focalPoint:Point3d.mk(0,0,50),
 	focalLength:10,
 	cameraScaling:100

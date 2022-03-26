@@ -49,7 +49,8 @@ let topParams;
 if (radial) {
   topParams = {numRows:0.5*nr,numCols:nr,width:wd,height:wd,outerRadius:wd,innerRadius:0.2*wd,angleMin:-180,angleMax:180,center: Point.mk(0,0),rotation:30,frameColor:'rgb(2,2,2)',pointJiggle:4,framePadding:0.15*wd};
 } else {
-  topParams = {numRows:nr,numCols:nr,width:wd,height:ht,frameColor:'rgb(2,2,2)',pointJiggle:0,framePadding:0.20*wd,frameVisible:0,sideA:function(fr) {return this.leftSide.pointAlong(fr)},sideB:function(fr) {return this.rightSide.pointAlong(fr)},positionFunction:grid1.sidesPositionFunction};
+ // topParams = {numRows:nr,numCols:nr,width:wd,height:ht,frameColor:'rgb(2,2,2)',pointJiggle:0,framePadding:0.20*wd,frameVisible:0,sideA:function(fr) {return this.leftSide.pointAlong(fr)},sideB:function(fr) {return this.rightSide.pointAlong(fr)},positionFunction:grid1.sidesPositionFunction};
+  topParams = {numRows:nr,numCols:nr,width:wd,height:ht,frameColor:'rgb(2,2,2)',pointJiggle:0,framePadding:0.20*wd,frameVisible:0,sideA:geom.LineSegment.mk(Point.mk(0,-0.5*ht),Point.mk(-0.5*wd,0.5*ht)),sideB:geom.LineSegment.mk(Point.mk(0,-0.5*ht),Point.mk(0.5*wd,0.5*ht)),positionFunction:grid1.sidesPositionFunction};
 }
 
 let genLeft = (wd,ht) => {
@@ -68,6 +69,8 @@ Object.assign(grid2,{width:1.1*wd,height:0.9*wd});
 Object.assign(grid2,{width:wd2,height:ht2});
 //let sides = {sideA:function(fr) {return this.leftSide.pointAlong(fr)},sideB:function(fr) {return this.rightSide.pointAlong(fr)}}
 Object.assign(grid1,{leftSide:genLeft(wd,ht),rightSide:genRight(wd,ht)});
+Object.assign(grid1,{leftSide:genLeft(wd,ht),rightSide:genRight(wd,ht)});
+Object.assign(grid2,{leftSide:genLeft(wd2,ht2),rightSide:genRight(wd2,ht2)});
 Object.assign(grid2,{leftSide:genLeft(wd2,ht2),rightSide:genRight(wd2,ht2)});
 
 //Object.assign(grid2,{width:1.05*wd,height:0.95*wd});

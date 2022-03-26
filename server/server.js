@@ -53,6 +53,7 @@ const requestListener = function (req, res) {
 
 	let body,missing;
 	//if (ctype && fs.existsSynch(path)) {
+  console.log('EXISTS ',path);
 	if (fs.existsSync(path)) {
     //body	= fs.readFileSync(path).toString();
     body	= fs.readFileSync(path);

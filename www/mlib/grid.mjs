@@ -14,14 +14,14 @@ let points = [];
 
 item.defaultPositionFunction = function (i,j) {
   let {deltaX,deltaY,numRows,numCols,width,height,points3d,camera} = this;
-	if (points3d) {
+/*	if (points3d) { // cg 3/26/22
 		let idx = this.pcoordsToIndex(i,j);
 		let p3d = points3d[idx];
 		//debugger;
 		let rs = camera.project(p3d);
 		rs.category = p3d.category;
 		return rs;
-	}
+	}*/
   let botx = -0.5 * width;
   let boty = -0.5 * height;
   return Point.mk(botx + deltaX*i,boty + deltaY*j);
@@ -41,12 +41,15 @@ item.linearInterpolator = function (a,b,fr) {
 }
 	
 item.sidesPositionFunction = function (i,j) {
+  debugger;
 	//let {numRows,numCols,sideA,sideB,Interpolator} = grid;
-	let {numRows,numCols,sideA,sideB,Interpolator} = this;
+	let {numRows,numCols,sideA:sideAi,sideB:sideBi,Interpolator} = this;
+  let sideA = (typeof sideAi === 'function')?sideAi:function(fr) {return sideAi.pointAlong(fr);}
+  let sideB = (typeof sideBi === 'function')?sideBi:function(fr) {return sideBi.pointAlong(fr);}
 	//let I = Interpolator?Interpolator:grid.linearInterpolator;
 	let I = Interpolator?Interpolator:this.linearInterpolator;
-	let a = this.sideA(i/(numCols - 1));
-	let b = this.sideB(i/(numCols - 1));
+	let a = sideA.call(this,(i/(numCols - 1)));
+	let b = sideB.call(this,(i/(numCols - 1)));
 	let rs = I(a,b,j/(numRows - 1));
 	return rs;
 }
@@ -111,6 +114,18 @@ item.genPointsFunction0 = function () {
       points.push(p);
       rpoints.push(Point.mk(0,0));
     }
+  }
+  this.thePoints = points;
+  if (this.pointJiggle) {
+    this.jigglePoints();
+    this.thePoints = rpoints;
+  }
+  if (this.genPoint3d) {
+  debugger;
+    this.thePoints = this.thePoints.map((p) => this.camera.project(this.genPoint3d(p)));
+    //let points3d = this.thePoints.map((p) => this.camera.project(this.genPoint3d(p)));
+    //let points3d = this.thePoints.map((p) => p.times(1));
+    //this.thePoints = points3d;
   }
 	this.lowX = lx;
 	this.lowY = ly;
@@ -209,8 +224,8 @@ item.coordToPoint = function (p) {
 
 // i, j are cell coords
 item.centerPnt = function (i,j) {
-	let {isPointJiggle} = this;
-  let points = isPointJiggle  ?this.rpoints:this.points;
+	let {isPointJiggle,thePoints:points} = this; // cg 3/26/22
+  //let points = isPointJiggle  ?this.rpoints:this.points;
   let pnt00 =  this.pointAt(points,i,j);
   let pnt11 = this.pointAt(points,i+1,j+1);
   if (pnt00 && pnt11) {
@@ -222,9 +237,10 @@ item.centerPnt = function (i,j) {
   }
 }
 
-item.addCellBoundaries = function (frame,fraction) { 
+item.addCellBoundaries = function (frame,fraction) {
   let hcontainer = this.hcontainer;
-  let points = this.rpoints;
+  //let points = this.rpoints;
+  let points = this.thePoints; // cg  3/26/22
 	let lines = this.lines;
 	this.updating = !!lines;
 	//this.prevLines = this.lines;
@@ -243,7 +259,8 @@ item.addCellBoundaries = function (frame,fraction) {
   for (let i = 0;i <= numCols; i++) {
     for (let j = 0;j <=  numRows; j++) {
 		 	let rvs = (this.randomValuesAtCell)?this.randomValuesAtCell(randomGridsForBoundaries,i,j):{};
-      let points = isPointJiggle?this.rpoints:this.points;
+      //let points = isPointJiggle?this.rpoints:this.points;
+      let points = this.thePoints; // cg 3/26/22
       let cell = {x:i,y:j};
       let p11 = this.pointAt(points,i,j);
       let p12 =  this.pointAt(points,i,j+1);
@@ -282,7 +299,8 @@ item.addCellBoundaries = function (frame,fraction) {
 }
 
 item.hideThisCell = function (cell) {
-	let {points:pnts} = this;
+	//let {points:pnts} = this;
+	let {thePoints:pnts} = this; // cg 3/26/22
 	let {x,y} = cell;
 	let rs = (this.pointAt(pnts,x,y).hideMe)||(this.pointAt(pnts,x,y+1).hideMe)||(this.pointAt(pnts,x+1,y).hideMe)||(this.pointAt(pnts,x+1,y+1).hideMe);
 	return rs;
@@ -290,8 +308,8 @@ item.hideThisCell = function (cell) {
 	
 	
 item.cellCorners = function (cell) {
-	let {rpoints,points,isPointJiggle} = this;
-	let pnts = isPointJiggle?rpoints:points;
+	let {rpoints,thePoints:pnts,isPointJiggle} = this;
+	//let pnts = isPointJiggle?rpoints:points;// cg 3/26/22
 	let {x,y} = cell;
 	let p11 = this.pointAt(pnts,x,y);
 	let p12 =  this.pointAt(pnts,x,y+1);
@@ -334,7 +352,8 @@ item.updateCellBoundaries = function (frame,fraction) {
 			let boundaryLine; 
 		 	//let rvs = this.randomValuesAtCell(randomGridsForBoundaries,i,j);
 			let rvs = (this.randomValuesAtCell)?this.randomValuesAtCell(randomGridsForBoundaries,i,j):{};
-      let points = this.pointJiggle?this.rpoints:this.points;
+    //  let points = this.pointJiggle?this.rpoints:this.points;
+      let points = this.thePoints; // cg 3/26/22
       let cell = {x:i,y:j};
       let p11 = this.pointAt(points,i,j);
       let p12 =  this.pointAt(points,i,j+1);
@@ -744,15 +763,15 @@ item.initializeGrid = function () {
   this.deltaX = this.width/numCols;
   this.deltaY = this.height/numRows;
   core.tlog('initialize');
-	if (this.genPoint3d) {
+	/*if (this.genPoint3d) {
 		this.genPoints3d();
-	}
+	} cg 3/26/22 */
   this.genPoints();
     core.tlog('genPoints');
-	if (this.isPointJiggle) {
+	/*if (this.isPointJiggle) {
     this.jigglePoints();
     core.tlog('randomizePoints');
-	}
+	} cg 3/26/22 */
   //if (this.boundaryLineGenerator) {
  //   this.addCellBoundaries();
 //  }

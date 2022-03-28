@@ -1,5 +1,5 @@
 {{boilerplate1}}
-<p>Let's start with an example. Consider the following code:</p>
+<p>In PrototypeJungle, the fundamental unit of code is the <i>image generator</i> Let's start with an example. Consider the following code:</p>
 
 <precode>
 import {rs as rectPP} from '/shape/rectangle.mjs';
@@ -33,10 +33,13 @@ rs.initialize = function () {
 
 export {rs};
 </precode>
-<p>This code appears in the file <a href="/doc/example1.mjs">/doc/example1.mjs</a>, and assuming you have installed and activated protopatt on this device, can be run via the following link</p>
+<p>This code appears in the file <a href="/doc/example1.mjs">/doc/example1.mjs</a>, and assuming you have installed and activated PrototypeJungle on this device, it can be run via the following link</p>
 <precode>
 <a href = "http://localhost:8081/draw.html?source=/doc/example1.mjs">http://localhost:8081/draw.html?source=/doc/example1.mjs</a>
 </precode>
+<p> Then, you will see the following image on your screen:</p>
+ <p><img  src="/images/example1.jpg?alt=media" style="bborder:thin black solid;cursor:pointer"  width="600" height="300" max-height="500"/></p>
+
 <p>Now, let's walk through the code, which already illustrates the main aspects of the system.  First of all example1.mjs defines a JavaScript <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules">module</a>, as indicated by the mjs extension. The first two lines import other modules, first the one that defines the rectangle element, and second one that defines some basic capabilites needed by most pattern-defining code (more on that later). Then we have the line</p>
 <precode>
 let rs = basicsP.instantiate();

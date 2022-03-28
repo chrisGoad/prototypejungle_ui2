@@ -21,14 +21,16 @@ debugger;
 rs.setName('drop_aphelion');
 let ht= 2000;
 ht = 6000;
-
-//let topParams = {width:ht,height:ht,maxDrops:60000,maxTries:100,lineLength:2,frameColor:'rgb(2,2,2)',framePadding:0.2*ht,frameVisible:0,minSeparation:20,minConnectorLength:0,maxConnectorLength:300,shortenBy:20}
-//let topParams = {width:ht,height:ht,maxDrops:60000,maxTries:100,lineLength:2,frameColor:'rgb(2,2,2)',framePadding:0.16*ht,frameVisible:0,minSeparation:20,minConnectorLength:300,maxConnectorLength:600,shortenBy:20}
+let wd = ht;
+//let topParams = {width:wd,height:ht,maxDrops:60000,maxTries:100,lineLength:2,frameColor:'rgb(2,2,2)',framePadding:0.2*ht,frameVisible:0,minSeparation:20,minConnectorLength:0,maxConnectorLength:300,shortenBy:20}
+//let topParams = {width:wd,height:ht,maxDrops:60000,maxTries:100,lineLength:2,frameColor:'rgb(2,2,2)',framePadding:0.16*ht,frameVisible:0,minSeparation:20,minConnectorLength:300,maxConnectorLength:600,shortenBy:20}
 
 let topParams = {width:ht,height:ht,maxDrops:60000,dropTries:50,webTries:1000,lineLength:2,frameColor:'rgb(2,2,2)',framePadding:0.1*ht,frameVisible:0,minSeparation:0,minConnectorLength:300,maxConnectorLength:600,shortenBy:20,maxLoopss:10000}
 
 Object.assign(rs,topParams);
-Object.assign(rs,rs.mkSphereParams());
+
+//Object.assign(rs,rs.mkSphereParams());
+Object.assign(rs,{sphereCenter:Point3d.mk(0,0,-0.3*wd),sphereDiameter:0.5*wd,focalPoint:Point3d.mk(0,0,wd),focalLength:10,cameraScaling:1000});
 rs.sphereCenter = Point3d.mk(0,0,-0.4*ht)
 
 rs.initProtos = function () {

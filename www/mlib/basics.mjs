@@ -78,7 +78,7 @@ item.addFrame = function () {
     frs = 'rgb(2,2,2)';
    // frs = 'white';
   }
-  fswd = fswd?fswd:10;
+  fswd = fswd?fswd:2;
   let frr = this.set('brect',rectPP.instantiate());
  
   frr.fill = frf?frf:'transparent';
@@ -288,6 +288,20 @@ item.horizontalize = function (p,noFrame) {
   }
   debugger;
 }
+item.pointsTo3dAndBack = function (pnts) {
+  debugger;
+	let rs = [];
+	pnts.forEach((p) => {
+		let p3d = this.genPoint3d(p);
+		//let p3d = this.toPoint3d(p);
+		if (p3d && (p3d.category !== 'notOnSurface')) {
+			let ppnt = this.camera.project(p3d);
+			rs.push(ppnt);
+		} 
+	});
+	return rs;
+}
+
 
 }
 export {rs};

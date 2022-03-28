@@ -4,6 +4,10 @@ let rs = basicsP.instantiate();
 
 rs.setName('example1');
 
+rs.width = 140;
+rs.height = 60;
+rs.frameStroke = 'white';
+rs.framePadding = 1;
 
 rs.initProtos = function () {
   let rectP = this.rectP = rectPP.instantiate();
@@ -15,6 +19,7 @@ rs.initProtos = function () {
 }  
 
 rs.initialize = function () {
+  debugger;
   this.initProtos();
   let {rectP} = this;
   let rect1 = rectP.instantiate();
@@ -25,6 +30,7 @@ rs.initialize = function () {
   this.set('rect2',rect2);
   rect1.moveto(Point.mk(-40,0));
   rect2.moveto(Point.mk(40,0));
+  this.addFrame();
  }
 
 export {rs};

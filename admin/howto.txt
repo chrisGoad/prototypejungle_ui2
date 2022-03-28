@@ -2,10 +2,27 @@ npm install uglify-js-es6
 npm install terser 
 
 
+ initial setup cd c:\prototypejungle
+git init
+git commit -m "first commit"
+git branch -M main
+git config --global user.name "Chris Goad"
+git config --global user.email "cagoad@gmail.com"
+git remote add origin https://github.com/chrisGoad/prototypejungle.git
+git remote add origin https://github.com/chrisGoad/prototypejungle_ui2.git
+git checkout -b main (maybe)
+
+every time
 cd c:\prototypejungle_ui2
+or 
+cd c:\prototypejungle
 
 git add admin server js www 
+git add admin server www .gitignore
 
 git commit -m "misc"
 
-git push origin master
+for prototypejungle:
+git push origin main
+for prototypejungle_ui2
+git push origin main

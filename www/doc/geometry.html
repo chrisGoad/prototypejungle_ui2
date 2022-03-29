@@ -1,0 +1,53 @@
+{{boilerplate1}}
+<p class="title">Geometry</p>
+<p>PrototypeJungle defines geometric types (implemented as prototypes) and methods that are directly accessible in any context.
+These types and methods are specified below.</p>
+
+<p class="textVar">Point</p>
+</p>
+<p>Constructor:</p>
+<precode>
+Point.mk(x:&lt;number&gt;,y:&lt;number&gt;)
+</precode>
+<p> Properties of Point <span class="textVar">p</span>,</p>
+<precode>
+p.x
+p.y
+</precode>
+<p>Methods for Point <span class="textVar">p</span>,</p>
+<precode>
+p.plus(q:&lt;Point&gt;); // returns the vector sum p and q
+p.difference(q:&lt;Point&gt;); // returns the vector subtraction of q from p
+p.distance(q:&lt;Point&gt;); // returns distance from p to q
+p.normalize(); // returns p shrunk or extended to a unit vector with the same direction
+p.normal(); // returns a vector which is orthogonal to p
+p.times(s:&lt;number&gt;); // return p scaled by s
+</precode>
+<hr/>
+<p class="textVar">LineSegment</p>
+<precode>
+LineSegment.mk(end0:&lt;Point&gt;,end1:&lt;Point&gt;)
+</precode>
+<p> Properties of LineSegment <span class="textVar">s</span>,</p>
+<precode>
+s.end0
+s.end1
+</precode>
+<p>Methods for LineSegment <span class="textVar">s</span>,</p>
+<precode>
+s.length();
+s.pointAlong(n:&lt;number&gt;) // for 0&lt;=n&lt;=1, returns the point fraction n of the way from end0 to end1
+</precode>
+<hr/>
+<p class="textVar">Circle</p>
+<precode>
+Circle.mk(center:&lt;Point&gt;,radius:&lt;number&gt;)
+</precode>
+<p> Properties of Circle <span class="textVar">c</span>,</p>
+<precode>
+c.center
+c.radius
+</precode>
+
+
+{{endplate}}

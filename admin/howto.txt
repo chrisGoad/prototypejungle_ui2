@@ -25,4 +25,4 @@ git commit -m "misc"
 for prototypejungle:
 git push origin main
 for prototypejungle_ui2
-git push origin main
+git push origin master

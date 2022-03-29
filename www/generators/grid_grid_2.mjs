@@ -16,34 +16,37 @@ innerGridP.genCount = 0;
 innerGridP.innerWhich = [];
 let wd = 400;
 let nr = 20;
-let inr = 5;
-let fc = 0.8;
+let inr = 3;
+let fc = 0.95;;
+ let ofc = 1;
+
 let inrinrwd = (wd/(nr*inr));
-let saveState = 0;
-let topParams = {width:wd,height:wd,numRows:nr,numCols:nr,pointJiggle:10,innerRows:5};
+let saveState = 1;
+let topParams = {width:wd,height:1*wd,numRows:nr,numCols:nr,pointJiggle:0,innerRows:inr};
 Object.assign(rs,topParams);
 
 let rectP1 = rectP.instantiate();
 rectP1.width = fc*inrinrwd;
 rectP1.height = fc*inrinrwd;
-rectP1.fill = 'blue';
+rectP1.fill = 'rgb(250,250,250)';
 rectP1['stroke-width'] =0;
 let rectP2 = rectP.instantiate();
 rectP2.width = fc*inrinrwd;
 rectP2.height = fc*inrinrwd;
-rectP2.fill = 'white';
+rectP2.fill = 'rgb(10,10,100)';
 rectP2['stroke-width'] =0;
 //rs.innerWhich = [];
 innerGridP.shapeGenerator = function () {
+  
   let {genCount,innerWhich} = this;
   let which;
   if (saveState) {
-    which = Math.random() < 0.5;
+    which = Math.random() < 0.2;
     innerWhich.push(which?1:0);
     //this.within.innerWhich.push(which?1:0);
   }  else {
     //which = this.within.innerWhich[genCount];
-    innerWhich[genCount];
+    which = innerWhich[genCount];
     this.genCount = genCount+1;
   }
   let rect = which?rectP2:rectP1;
@@ -76,7 +79,7 @@ rs.genEltDescription = function (n) {
    return {shapePs:innerShapePs,positions:positions,eltDState:[whichShape,innerPresent]}
  }
 rs.genInnerGrid = function (iw) {
-   let {innerRows,numRows,width,rectP1,rectP2} = this;
+   let {innerRows,numRows,numCols,width,rectP1,rectP2} = this;
    let rs = innerGridP.instantiate();
    if (saveState) {
      rs.innerWhich = [];
@@ -84,7 +87,7 @@ rs.genInnerGrid = function (iw) {
      rs.innerWhich = iw;
    }
    rs.within = this;
-   let innerWidth = width/numRows;
+   let innerWidth = ofc*width/numRows;
    rs.width = innerWidth;
    rs.height = innerWidth;
    rs.numRows = innerRows;
@@ -95,6 +98,11 @@ rs.genInnerGrid = function (iw) {
 
 
 rs.decider = function (rvs,cell) {
+  let {numRows} = this;
+  let hnr =numRows/2;
+  let {x,y} = cell;
+  let fr = Math.abs(x-hnr)/hnr;
+  return Math.random() < fr;
   return Math.random() < 0.5;
 }
 
@@ -102,8 +110,9 @@ rs.decider = function (rvs,cell) {
 rs.shapeGenerator = function (rvs,cell) {
 	let {innerGrid1,innerGrid2,whichInners,genCount} = this;
   let which;
+  debugger;
   if (saveState) {
-    which  = this.decider();
+    which  = this.decider(rvs,cell);
     whichInners.push(which?1:0);
   } else {
     which = whichInners[genCount];
@@ -143,6 +152,7 @@ rs.initialize = function () {
       debugger;
       this.innerGrid1 = rs.genInnerGrid(this.innerWhich1);
       this.innerGrid2 = rs.genInnerGrid(this.innerWhich2);
+      this.genCount = 0;
       this.initializeGrid();
     });
   }

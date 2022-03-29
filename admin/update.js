@@ -124,11 +124,11 @@ var fs = require('fs');
   
   var xferDir = function (dir) {
      let ipath = '../prototypejungle_ui2/'+dir;
-		 console.log('ipath',ipath);
+		 console.log('Transfering dir with ipath',ipath);
      let files = fs.readdirSync(ipath);
      files.forEach( function (fln) {
        let ext = afterLastChar(fln,'.');
-       console.log('fln',fln,'ext',ext);
+      // console.log('fln',fln,'ext',ext);
     //  if ((ext === fln) || (!['js','css','html','png','svg','jpg','ico','md'].includes(ext))) {
       if  (!['mjs','js','css','html','svg','ico','md','mp3','json'].includes(ext)) {
          console.log('wrong kind of file/dir',fln);
@@ -162,6 +162,7 @@ xferDir('server');
 xferFiles('www',['draw.html','topdefs.js','style.css','spectrum.css','page.html','pageSupport.js','grids.html']);
 xferFiles('admin',['genGrids.js','gridSections.js','imageOrder.js']);
 xferDirs(['www/generators','www/instances','www/line','www/shape','www/mlib','www/json','www/doc']);
+xferDirs(['js/core','js/dom','js/geom','js/draw']);
 return;
 //xferDir(0,'www','');
  xferDir('top','','server');

@@ -3,7 +3,7 @@
 <p>PrototypeJungle defines geometric types (implemented as prototypes) and methods that are directly accessible in any context.
 These types and methods are specified below.</p>
 
-<p class="textVar">Point</p>
+<p class="textVar" id="Point">Point</p>
 </p>
 <p>Constructor:</p>
 <precode>
@@ -47,6 +47,48 @@ Circle.mk(center:&lt;Point&gt;,radius:&lt;number&gt;)
 <precode>
 c.center
 c.radius
+</precode>
+<hr/>
+<p class="textVar" id="Point3d">Point3d</p>
+
+</p>
+<p>Constructor:</p>
+<precode>
+Point3d.mk(x:&lt;number&gt;,y:&lt;number&gt;,z:&lt;number&gt;)
+</precode>
+<p> Properties of Point3d <span class="textVar">p</span>,</p>
+<precode>
+p.x
+p.y
+p.z
+</precode>
+<p>Methods for Point3d <span class="textVar">p</span>,</p>
+<precode>
+p.plus(q:&lt;Point&gt;); // returns the vector sum p and q
+p.difference(q:&lt;Point&gt;); // returns the vector subtraction of q from p
+p.distance(q:&lt;Point&gt;); // returns distance from p to q
+p.times(s:&lt;number&gt;); // return p scaled by s
+</precode>
+<hr/>
+<p class="textVar" id="Camera">Camera</p>
+</p>
+
+
+<p>Constructor:</p>
+<precode>
+Camera.mk(focalPoint:&lt;Point3d&gt;,focalLength:&lt;number&gt;,scaling:&lt;number&gt;,axis:&lt;string&gt;)
+</precode>
+<p><span class="textVar">axis</span> should be one of "x", "y", "z"
+<p> Properties of Camera <span class="textVar">c</span>,</p>
+<precode>
+c.focalPoint
+c.focalLength
+p.scaling
+p.axis
+</precode>
+<p>Methods for Camera <span class="textVar">c</span>,</p>
+<precode>
+c.project(p:&lt;Point3d&gt;); // returns the projection of p onto the focal plane
 </precode>
 
 

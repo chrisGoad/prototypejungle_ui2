@@ -79,7 +79,8 @@ function doGzip(file,cb) {
 
 let isPublic = false;
 function fullName(f) {
-  return isPublic?`../prototypetrees/src/${f}.js`:`../prototypejungle_ui/js/${f}.js`;
+ //return `../prototypejungle/js/${f}.js`;
+  return `js/${f}.js`;
 }
 
 function getContents(fl) {
@@ -100,7 +101,7 @@ function mextract(fls) {
 
 
 function mkPath(which,version,mini) {
-  if (mini) {
+  if (1 ||mini) {
     return `www/js/${which}-${version}.js`;
   } else {
     return `staging/${which}-${version}.js`;

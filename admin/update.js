@@ -159,7 +159,7 @@ var fs = require('fs');
 //xferDir(0,'www','doc');
 xferDir('admin');
 xferDir('server');
-xferFiles('www',['draw.html','topdefs.js','style.css','spectrum.css','page.html','pageSupport.js','grids.html']);
+xferFiles('www',['draw.html','topdefs.js','style.css','spectrum.css','page.html','pageSupport.js']);
 xferFiles('admin',['genGrids.js','gridSections.js','imageOrder.js']);
 xferDirs(['www/generators','www/instances','www/line','www/shape','www/mlib','www/json','www/doc']);
 xferDirs(['js/core','js/dom','js/geom','js/draw']);

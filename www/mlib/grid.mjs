@@ -116,7 +116,7 @@ item.genPointsFunction0 = function () {
     }
   }
   this.thePoints = points;
-  if (this.pointJiggle) {
+  if (this.isPointJiggle) {
     this.jigglePoints();
     this.thePoints = rpoints;
   }

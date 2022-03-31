@@ -45,22 +45,7 @@ export {rs};
 let rs = basicsP.instantiate();
 </precode>
 <p>
-<b>instantiate</b> is the core operation of prototypejungle. </p>
-
-<precode>
-let x = y.instantiate();
-</precode>
-
-<p>has an effect similar to </p>
-
-<precode>
-let x = <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/create">Object.create</a>(y);
-</precode>
-
-<p>in both cases <b>x</b> is a new object that inherits, prototype-style, from <b>y</b>.  The difference is that while <b>Object.create</b> operates at only one level, <b>y.instantiate()</b> does a deep copy of <b>y</b> as a tree, and returns a structure in which all of the copied nodes inherit prototype-wise from the nodes from which they were copied. </p>
-
-<p> I mentioned <i>tree</i> in  the above paragraph. It is a little more complicated than that. Prototypejungle's objects (called prototype trees) do have tree structure over their <a  href="https://www.javascripttutorial.net/javascript-own-properties/">own-property</a> edges , but they also admit prototype chains, and cross-tree links. The details can be found <a href="/doc/tech.html">here</a>. </p>
-
+<b>instantiate</b> is the core operation of prototypejungle, and combines the effects of a deep tree copy with Object.create. More detail can be found <a href="/doc/prototypetree.html">here</a></p>
 
 
 <p>The method <b>initProtos</b> takes the externally defined objects (here rectangles) and constructs internal variants which inherit from those external objects. 

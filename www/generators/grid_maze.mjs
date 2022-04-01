@@ -21,16 +21,22 @@ rs.initProtos = function () {
 	this.rectP.height = 4;
 }  
 
-let nr = 50;
-let wd = 200;
-let topParams = {numRows:nr,numCols:nr,width:wd,height:wd,frameColor:'rgb(2,2,2)',framePadding:0.15*wd};
+//let nr = 50;
+let nr = 25;
+//let ht = 200;
+let ht = 20;
+let ar = 6;
+let wd = ar*ht
+let nc = ar*nr;
+
+let topParams = {numRows:nr,numCols:nc,width:wd,height:ht,frameStroke:'white',framePadding:0.01*wd,frameStrokeWidth:1,backgroundColorr:'black'};
 
 Object.assign(rs,topParams);
 
 	
 	rs.shapeGenerator = function (rvs,cell) {
 	 debugger;
-		let {rectP,shapes} = this;
+		let {rectP,shapes,height} = this;
 		let v = rvs.v;
 		let shape  = svg.Element.mk('<g/>');
 		let inner = this.rectP.instantiate();
@@ -38,12 +44,18 @@ Object.assign(rs,topParams);
 		let r = rvs.red;
 		if (v<0.5) {
 			inner.width = 4;
+			inner.width = 0.04*height;
 			inner.height = 3;
+			inner.height = 0.03*height;
 			inner.fill = 'rgb(100,50,50)';
 			inner.fill = `rgb(${Math.floor(r)},${Math.floor(r)},${Math.floor(r)},1)`;
 		} else {
 			inner.width = 3;
+      inner.width = 0.03*height;
+
 			inner.height = 4;
+      			inner.height = 0.04*height;
+
 			inner.fill = 'rgb(50,50,100)';
 			inner.fill = `rgb(${Math.floor(r)},${Math.floor(r)},${Math.floor(r)},1)`;
 		}
@@ -61,7 +73,7 @@ rs.initialize = function () {
 
 	core.root.backgroundColor = 'black';
 	this.initProtos();
-	
+	this.addFrame();
 	//let convergenceValue = 0
 	let rnp = {min:0,max:0,step:0}
 	const walkParams = function (i,j) {
@@ -93,7 +105,7 @@ rs.initialize = function () {
 		
 this.setupRandomGridForShapes('v', {walkParams});
 //this.setupShapeRandomizer('v', {step:0.3,min:0,max:1});
-this.setupRandomGridForShapes('red', {step:30,min:100,max:200});
+this.setupRandomGridForShapes('red', {step:30,min:150,max:250});
 
 
 		

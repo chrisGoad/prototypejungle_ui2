@@ -43,7 +43,7 @@ const buildPage = function () {
 	//debugger;
 saveBut = document.getElementById('saveButton');
 saveMpixBut = document.getElementById('saveMpixButton');
-runBut = document.getElementById('runButton');
+/*runBut = document.getElementById('runButton');
 resumeBut = document.getElementById('resumeButton');
 saveAnimationBut = document.getElementById('saveAnimationButton');
 pauseBut = document.getElementById('pauseButton');
@@ -51,8 +51,10 @@ stepBut = document.getElementById('stepButton');
 stepNoSaveBut = document.getElementById('stepNoSaveButton');
 repeatFrameBut = document.getElementById('repeatFrameButton');
 //saveBut.addEventListener("click", () => {alert(23);});
+*/
 saveBut.addEventListener("click", () => saveTheImage(0));
 saveMpixBut.addEventListener("click", () => saveTheImage(1));
+/*
 runBut.addEventListener("click", runAnimation);
 resumeBut.addEventListener("click", resumeAnimation);
 saveAnimationBut.addEventListener("click", saveAnimation);
@@ -61,26 +63,12 @@ stepBut.addEventListener("click", stepAnimation);
 stepNoSaveBut.addEventListener("click", turnOnAudio);
 //stepNoSaveBut.addEventListener("click", stepNoSaveAnimation);
 repeatFrameBut.addEventListener("click", repeatFrame);
+*/
 
 mpg =  html.wrap("main",'div',{style:{position:"absolute","margin":"0px",padding:"0px",display:"none"}}).
 __addChildren([
   topbarDiv = html.wrap('topbar','div',{style:{position:"absolute",height:"10px",left:"0px","background-color":bkColor,margin:"0px",padding:"0px"}}).
   __addChildren([
- /* actionDiv =  html.Element.mk('<div id="action" style="position:absolute;margin:0px;overflow:none;padding:5px;height:20px"/>').
-  __addChildren([
-      fileBut = html.Element.mk('<div class="ubutton">File</div>'),
-      undoBut = html.Element.mk('<div  class="ubutton">Undo</div>'),
-      redoBut = swapMachine?null:html.Element.mk('<div class="ubutton">Redo</div>'),
-      unwrapBut = html.Element.mk('<div class="ubutton">Unwrap</div>'),
-      testBut = includeTest?html.Element.mk('<div class="ubutton">Test</div>'):null, 
-    //  replaceBut = html.Element.mk('<div class="ubutton">Swap</div>'),
-    //  replaceProtoBut = html.Element.mk('<div class="ubutton">Swap Prototype</div>'),
-      dataBut = swapMachine?null:html.Element.mk('<div style="display:nonee" class="ubutton">Data</div>'),
-      gridBut = swapMachine?null:html.Element.mk('<div style="display:none" class="ubutton">Activate Grid</div>'),
-      fileDisplay = html.Element.mk('<span style="font-size:11pt;padding-left:40px"></span>'),
-      messageElement = html.Element.mk('<span id="messageElement" style="overflow:none;padding:5px;height:20px"></span>'),
-      ui.vars.imageElement = html.Element.mk('<img style="display:none;"/>')
-    ])*/
     ctopDiv = html.wrap('topbarInner','div',{style:{float:"right"}})
   ]),
 
@@ -90,31 +78,6 @@ __addChildren([
     
     
     docDiv,
-    /* actionPanel = actionPanel = html.Element.mk('<div id="actionPanel"  draggable="true" style="background-color:white;border:solid thin black;position:absolute;height:400px;width:600px;display:inline-block"></div>').__addChildren([
-        html.Element.mk('<div style="border:solid thin black;"></div>').__addChildren([
-        actionPanelMessage = html.Element.mk('<div style="margin:10px;width:80%;padding-right:10px">Nothing is selected</div>'),
-        actionPanelButton = html.Element.mk('<div class="colUbutton"></div>')
-       ]),
-       actionPanelCommon = html.Element.mk('<div style="margin:0;width:100%"></div>').__addChildren([
-          kitRootBut = html.Element.mk('<div class="colUbutton left">Select Kit Root</div>'),
-          deleteBut = html.Element.mk('<div class="colUbutton left">Delete</div>'),
-          editTextBut = html.Element.mk('<div class="colUbutton left">Edit Text</div>'),
-          addImageBut = html.Element.mk('<div class="colUbutton left">Add Image</div>'),
-         cloneBut= html.Element.mk('<div class="colUbutton left">Copy</div>'),
-          showCohortBut = html.Element.mk('<div  class="colUbutton left">Show Cohort</div>'),
-          separateBut= html.Element.mk('<div class="colUbutton left">Separate</div>'),
-          moveToBackBut= html.Element.mk('<div class="colUbutton left">Move to Back</div>'),
-          plusDimBut= html.Element.mk('<div class="colUbutton left">+big Dim</div>'),
-          minusDimBut= html.Element.mk('<div class="colUbutton left">-big Dim</div>'),
-          plusdimBut= html.Element.mk('<div class="colUbutton left">+small Dim</div>'),
-          minusdimBut= html.Element.mk('<div class="colUbutton left">-small Dim</div>'),
-         // animateBut= html.Element.mk('<div class="colUbutton left">Animate</div>'),
-       
-          toggleConnectBut= html.Element.mk('<div class="colUbutton left">Disable Connections</div>'),
-
-           ]),
-       actionPanelCustom= html.Element.mk('<div style="float:left;margin:0;width:100%"></div>')
-     ]),*/
    
     svgDiv = html.Element.mk('<div id="svgDiv" draggable="true" style="position:absolute;height:400px;width:600px;background-color:white;border:solid thin black;display:inline-block"/>').
     __addChildren([
@@ -127,54 +90,7 @@ __addChildren([
         ]),
         svgMessageDiv = html.Element.mk('<div style="display:none;margin-left:auto;padding:40px;margin-right:auto;width:50%;margin-top:20px;border:solid thin black">AAAAUUUU</div>')
      ]),
- /* treeVars.objectContainer = uiDiv = html.Element.mk('<div id="uiDiv" cgstub720 style="position:absolute;margin:0px;padding:0px"></div>').
-    __addChildren([
-      dragButtons = html.Element.mk('<div id="dragButtons" style="height:30px;width:100%;background-color:white;border:solid thin black;"></div>').__addChildren([
-        insertBut = swapMachine?null:html.Element.mk('<div class="ubutton">Insert</div>'),
-        replaceBut = html.Element.mk('<div class="ubutton">Swap</div>'),
-        replaceProtoBut = html.Element.mk('<div class="ubutton">Swap Prototype</div>')
-      ]),     
-      treeVars.obDivRest =treeVars.obDiv = html.Element.mk('<div id="obDiv" style="position:absolute;background-color:white;border:solid thin black;overflow:auto;vertical-align:top;margin:0px;padding:'+treePadding+'px">TREE</div>'),
-      insertContainer =  html.Element.mk('<div id="insertContainer" style="background-color:white;border:solid thin black;position:absolute;"></div>').
-      __addChildren([
-        dragMessage = html.Element.mk('<div id="dragMessage" style="font-size:10pt;padding-bottom:5px;padding-left:45px;">Drag to  insert</div>'),
-        tabContainer = html.Element.mk(
-          `<div id="tabContainer" style="font-size:10pt;vertical-align:top;border-bottom:thin solid black;height:${numCatalogHeaderLines*30}px;"></div>`).
-        __addChildren([
-            insertTab = html.Element.mk('<div id="tab" style="width:80%;vertical-align:bottom;borderr:thin solid green;display:inline-block;height:30px;"></div>')
-        ]),  
-        insertDiv = html.Element.mk('<div id="insertDiv" style="overflow:auto;positionn:absolute;ttop:60px;height:400px;width:600px;background-color:white;bborder:solid thin black;"/>').
-        __addChildren([  
-          insertButs =html.Element.mk('<div/>').__addChildren([
-               moveUpBut = html.Element.mk('<div id="moveUp" class="ubutton">Up</div>'),
-               moveDownBut = html.Element.mk('<div id="moveDown" class="ubutton">Down</div>'),
-               saveOrderBut = html.Element.mk('<div id="saveOrder" class="ubutton">Save</div>')
-          ]),
-          insertCols = html.Element.mk('<div/>').__addChildren([
-            insertDivCol1 = html.Element.mk('<div id="col1" style="display:inline-block;bborder:thin solid black;width:49%;"></div>'),
-            insertDivCol2 = html.Element.mk('<div id="col2" style="vertical-align:top;display:inline-block;bborder:thin solid black;width:49%;"></div>')
-          ])
-        ]),
-      
-    
-    ]),
-    dataContainer =  html.Element.mk('<div id="dataContainer" style="background-color:white;border:solid thin green;position:absolute;margin:0px;padding:0px"></div>').
-      __addChildren([
-      dataMessage =html.Element.mk('<div style="margin-left:10px;margin-bottom:5px;color:red;font-size:10pt">Data</div>'),
-      JSONMessage =html.Element.mk('<div style="margin-left:10px;margin-bottom:5px;color:red;font-size:10pt"></div>'),
-      dataButtons = html.Element.mk('<div id="codeButtons" style="bborder:solid thin red;"></div>').__addChildren([
-         rebuildFromDataBut =html.Element.mk('<div style = "font-size:9pt" class="roundButton">Rebuild from Data</div>'),
-         changeDataSourceBut =html.Element.mk('<div style = "font-size:9pt" class="roundButton">Change source</div>'),
-         saveDataBut =html.Element.mk('<div style = "font-size:9pt;" class="roundButton">Save</div>'),// @todo put back
-         saveDataAsBut =html.Element.mk('<div style = "font-size:9pt;" class="roundButton">Save As</div>'),// @todo put back
-         checkJSONBut =html.Element.mk('<div style = "font-size:9pt;" class="roundButton">Check JSON</div>'),// @todo put back
-        openDataInTextEditorBut =html.Element.mk('<div style = "font-size:9pt;" class="roundButton">Open Data in Text Editor</div>'),// @todo put back
-       runningSpan = html.Element.mk('<span style="display:none;padding-left:15px;font-size:10pt">...running...</span>')
-      ]),
-       dataDiv = html.Element.mk('<div id="dataDiv" style="border:solid thin green;positionn:absolute;">Code Div</div>')
-    ])
-
- ])*/
+ 
 ])
 ]);
 advancedButs =  

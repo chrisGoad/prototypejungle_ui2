@@ -243,9 +243,9 @@ const saveTheImage = function (forMpix) {
   }
   //dialog('Variant',setTheVariant);
 
-	let dst = forMpix?`www/images/${wts}.mpix.jpg`:`www/images/${wts}.jpg`;
+	let dst = forMpix?`www/images/${wts}.high_res.jpg`:`www/images/${wts}.jpg`;
 	convertToJpeg(dst,function () {
-		alert((forMpix?'saved the Mpix image at ':'saved the image at ')+dst);
+		alert((forMpix?'saved the image in high res at ':'saved the image at ')+dst);
 		if (!forMpix) {
 			saveTheThumb();	
 		}

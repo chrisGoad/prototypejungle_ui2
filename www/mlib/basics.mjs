@@ -167,17 +167,19 @@ item.genLine = function (sg,lineP,ext=0) {
   return line;
 }
 
-
-item.installLine = function (line) {
-  let lines =  this.lines;
+//item.installLine = function (lines,a0,a1,a2)  {
+item.addLine = function (params)  {
+  debugger;
+  let {lines,line,lineP,end0,end1,segment} =params;
 	if (!lines) {
 		lines = this.lines =this.set('lines',core.ArrayNode.mk());
 	}
-  lines.push(line);
-  line.show();
-  line.update();
-	this.numDropped++;
-  return line;
+  let oline=line?line:(end0?this.genLine(LineSegment.mk(end0,end1),lineP):this.genLine(segment,lineP));
+//  let line = a2?this.genLine(LineSegment.mk(a0,a1),a2):(a1?this.genLine(a0,a1):a0);
+  oline.show();
+  lines.push(oline);
+  oline.update();
+  return oline;
 }
 
 item.initBasis = function () {

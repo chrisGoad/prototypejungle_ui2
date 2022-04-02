@@ -28,24 +28,20 @@ let topParams = {numRows:nr,numCols:nr,width:wd,height:wd,pointJiggle:4,framePad
 Object.assign(rs,topParams);
 
 rs.shapeGenerator = function (rvs,cell) {
-	let {rectP,shapes,numRows} = this;
+	let {rectP,numRows} = this;
   let {x,y} = cell;
   let fwd = (x)/(numRows);// fraction of the way across (i.e. to max x)
   if (Math.random()<fwd) {
    return;
   }
 	let shape = rectP.instantiate().show();
-	// shapes.push(shape);
   let {r,g,b} = rvs;
 	let rgb = `rgb(${Math.floor(r)},${Math.floor(r)},${Math.floor(r)})`;
 	return shape;
 }
 
-
-
-
 rs.boundaryLineGenerator= function (end0,end1,rvs,cell) {
-	let {blineP,numRows,showMissing,lines,updating,lineIndex} =this;
+	let {blineP,numRows} =this;
   let {x,y} = cell;
   let fwd = x/numRows;// fraction of the way across (i.e. to max x)
   let ra = Math.random();
@@ -53,21 +49,16 @@ rs.boundaryLineGenerator= function (end0,end1,rvs,cell) {
    return;
   }
 	let line = blineP.instantiate().show();
-	// lines.push(line);
   line.setEnds(end0,end1);
-  let {r,g,b} = rvs;
-	let rgb = `rgb(${Math.floor(r)},${Math.floor(r)},${Math.floor(r)})`;
+  let {v} = rvs;
+	let rgb = `rgb(${Math.floor(v)},${Math.floor(v)},${Math.floor(v)})`;
 	line.stroke = rgb;
 	return line;
 }
 
 
 rs.initialize = function () {
-  debugger;
-   let rparams = {step:30,min:100,max:250}
-   this.setupRandomGridForBoundaries('r',rparams); 
-   this.setupRandomGridForBoundaries('g',rparams); 
-   this.setupRandomGridForBoundaries('b',rparams); 
+   this.setupRandomGridForBoundaries('v',{step:30,min:100,max:250}); 
    this.initProtos();
    this.addFrame();
   this.initializeGrid();

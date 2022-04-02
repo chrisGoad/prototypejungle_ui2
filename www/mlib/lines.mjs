@@ -581,6 +581,7 @@ item.intersectUnitSegment = function(usg,rect) {
 }
     
 item.addRandomSegment = function (segments,src,dst,shape) {
+  debugger;
   let srcP;
   let onCircle = false;
   if (src) {
@@ -800,7 +801,7 @@ item.genSides = function () {
 }      
     
   
-
+/*
 item.addLine = function (i,lsg,update) {
  // let line = this.lineP.instantiate();
 //  this.lines.push(line);
@@ -893,6 +894,7 @@ item.computeIntersections = function () {
     }
   }
 }
+*/
   
 item.showPoints = function () {
   let points = this.points
@@ -1201,24 +1203,30 @@ item.preliminaries = function (irect) {
 }
 	
 	
-item.initializeLines = function (irect,segmentsOnly) {
+//item.initializeLines = function (lineP,irect,segmentsOnly) {
+item.initializeLines = function (params) {
  // debugger;
-  let {width,height,backgroundPadding,rectP,dimension,includeRect,boardRows,numLines,backgroundColor} = this;
-	let circle;
-	if (!segmentsOnly) {
+  let {width,height,backgroundPadding,rectP,includeRect,boardRows,numLines,backgroundColor} = this;
+  let {lineP,rect,lines,circle} = params;
+  if (!circle) {
+    circle = this.circle;
+  }
+	/*if (!segmentsOnly) {
 		this.preliminaries();
-	}
-	let rect = this.rect;
-	this.set('segments',core.ArrayNode.mk());
+	}*/
+//	let rect = this.rect;
+	let segs = this.set('segments',core.ArrayNode.mk());
 	
-	if (dimension) {
-		circle = geom.Circle.mk(Point.mk(0,0),0.5*dimension);
-		circle.onCircle = true;
+	if (circle) {
+		//circle = geom.Circle.mk(Point.mk(0,0),0.5*dimension);
+		//circle = geom.Circle.mk(Point.mk(0,0),circleR);
+		//circle.onCircle = true;
 		for (let j=0;j<numLines;j++) {
-			this.addRandomSegment(this.segments,circle,circle);
+			this.addRandomSegment(segs,circle,circle);
 		}
-		this.addLines();
-		return this.segments;
+		//this.addLines();
+    segs.forEach((sg) => this.addLine({lines:lines,segment:sg,lineP:lineP}));
+		return segs;
 	}
 	if (!this.lines) {
     this.set('lines',core.ArrayNode.mk());
@@ -1248,18 +1256,14 @@ item.initializeLines = function (irect,segmentsOnly) {
 
   let n=this.numLines;
   let i=0;
-  let segments = segmentsOnly?[]:this.segments;
+  let segments = this.segments;
  // debugger;
   for (let i=0;i<numLines;i++) {
   //  let which = Math.min(Math.floor(Math.random() * noc),noc-1)+1;
     this.addRandomSegment(segments,null,null,rect)
   }
-  if (segmentsOnly){
-		return segments;
-	} else {
-    this.addLines();
-		return this.segments;
-	}
+  this.addLines();
+	return this.segments;
 }
 
 

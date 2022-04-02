@@ -45,10 +45,15 @@ var boilerplate1 =
   .textVar {
 		font-weight:bold;
     font-size:12pt
-	}.title {
+	}
+  .title {
 		font-weight:bold;
     font-size:16pt;
     text-align:center;
+	}
+ .section {
+		font-weight:bold;
+    font-size:14pt;
 	}
 </style>
 </head>

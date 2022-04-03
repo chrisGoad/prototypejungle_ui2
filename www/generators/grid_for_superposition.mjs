@@ -46,7 +46,7 @@ rs.boundaryLineGenerator= function (end0,end1,rvs,cell) {
 
 rs.initialize = function () {
   this.initProtos();
-  this.initializeGrid();
+  this.generateGrid();
 }
 
 export {rs};

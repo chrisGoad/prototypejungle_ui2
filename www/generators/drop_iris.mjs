@@ -22,7 +22,7 @@ rs.initProtos = function () {
 	this.lineP['stroke-width'] = 2;
 }  
 
-rs.genSegments = function (p,rvs) {
+rs.genDropStruct = function (p,rvs) {
   let {r,g,b} = rvs;
 	let clr = `rgb(${r},${g},${b})`;
   return this.genSegmentsFan(this.lineP,p,clr);
@@ -52,11 +52,11 @@ rs.initialize = function () {
   if (this.saveState) {
     this.setupColorRandomizer({step:10,min:100,max:240});
     this.saveTheState();
-    this.initializeDrop();
+    this.generateDrop();
   } else {
     this.getTheState(() => {
       debugger;
-      this.initializeDrop();
+      this.generateDrop();
     });
   }
 }

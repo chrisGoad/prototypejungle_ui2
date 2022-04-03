@@ -74,7 +74,7 @@ rs.initialize = function () {
 		return rnp;
 	}
 	this.setupRandomGridForShapes('red', {walkParams,numRows,numCols});
-  this.initializeGrid();
+  this.generateGrid();
 }
 export {rs};
 

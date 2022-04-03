@@ -22,7 +22,7 @@ rs.initProtos = function () {
 	this.lineP['stroke-width'] = .6;
 }  
 
-rs.genSegments = function (p) {
+rs.genDropStruct = function (p) {
   return this.genSegmentsFan(this.lineP,p,'white');
 }
 
@@ -38,7 +38,7 @@ rs.initialize = function () {
   core.root.backgroundColor = 'black';
   this.initProtos();
   this.addFrame();
-	this.initializeDrop();
+	this.generateDrop();
 }
 
 export {rs};

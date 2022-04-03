@@ -85,7 +85,7 @@ rs.boundaryLineGenerator = function (p11,p21,rvs) {
 rs.initialize = function () {
 	core.root.backgroundColor = 'black';
   this.initProtos();
-	this.initializeGrid();
+	this.generateGrid();
   this.addFrame();
 }
 

@@ -157,13 +157,13 @@ rs.initialize = function () {
     this.grid2.setupRandomGridForBoundaries('g', rparams);
     this.grid2.setupRandomGridForBoundaries('b', rparams);
     this.saveTheState();
-    this.grid1.initializeGrid();
-    this.grid2.initializeGrid();  
+    this.grid1.generateGrid();
+    this.grid2.generateGrid();  
   } else { 
     this.getTheState(() => {
       debugger;
-      this.grid1.initializeGrid();
-      this.grid2.initializeGrid();  
+      this.grid1.generateGrid();
+      this.grid2.generateGrid();  
     });
   }
 }

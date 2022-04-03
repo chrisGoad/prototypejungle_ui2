@@ -112,7 +112,7 @@ const bothInitialize = function (grid) {
   grid.addBackground();
   grid.setupRandomGridForShapes('level', {step:30,min:0,max:255});
   grid.set('llines',core.ArrayNode.mk());
-  grid.initializeGrid(); 
+  grid.generateGrid(); 
 }
  */
  

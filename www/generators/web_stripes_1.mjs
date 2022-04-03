@@ -54,11 +54,11 @@ rs.initialize = function () {
   this.addFrame();
 	//this.initBasis();
 	let pnts = this.genGrid(gridParams);
-	stripes[0].addWeb(pnts,this.lineP);
-	stripes[1].addWeb(pnts,this.lineP2);
-	stripes[2].addWeb(pnts,this.lineP);
-	stripes[3].addWeb(pnts,this.lineP2);
-	stripes[4].addWeb(pnts,this.lineP);
+	stripes[0].generateWeb(pnts,this.lineP);
+	stripes[1].generateWeb(pnts,this.lineP2);
+	stripes[2].generateWeb(pnts,this.lineP);
+	stripes[3].generateWeb(pnts,this.lineP2);
+	stripes[4].generateWeb(pnts,this.lineP);
 	}
 
 

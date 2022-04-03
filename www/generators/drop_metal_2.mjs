@@ -30,7 +30,7 @@ rs.segParams = function () {
 }
 
 
-rs.genSegments = function (p) {
+rs.genDropStruct = function (p) {
   let {width,height,lineP} = this;
   let hh = height/2;
   let fr = (p.y+hh)/height;
@@ -62,7 +62,7 @@ rs.initialize = function () {
   core.root.backgroundColor = 'black';
 	this.initProtos();
 	this.addFrame();
-	this.initializeDrop();
+	this.generateDrop();
 }
 
 export {rs};

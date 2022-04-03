@@ -750,7 +750,7 @@ item.setupPointJiggle = function () {
 }
 //item.initializeGrid = function (randomizer) {
 item.backgroundPadding = 0;
-item.initializeGrid = function () {
+item.generateGrid = function () {
   let {numRows,numCols,pointJiggle,pointJiggleParams,spatter,outerRadius} = this;
 	//,backgroundColor,backgroundPadding,backgroundPos,width,height,
 	//backgroundWidth,backgroundHeight} = this;

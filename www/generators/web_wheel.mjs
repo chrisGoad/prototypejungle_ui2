@@ -40,7 +40,7 @@ rs.initialize = function () {
     let {lineP} = this;
 
 	let pnts = this.genRings(this);
-	this.addWeb(pnts,lineP);
+	this.generateWeb(pnts,lineP);
 	this.addSegs(lineP);
   this.addFrame();
 }

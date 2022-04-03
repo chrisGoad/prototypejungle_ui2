@@ -40,7 +40,7 @@ rs.initialize = function () {
   this.addFrame();
   this.addBackground();
   this.setupRandomGridForShapes('level', {step:30,min:0,max:255});
-  this.initializeGrid(); 
+  this.generateGrid(); 
 }
 
 export {rs};

@@ -1,0 +1,127 @@
+{{boilerplate1}}
+<p class="title">Shapes</p>
+<p>At any given time the content that is displayed by PrototypeJungle is called the "shape tree". When an image generator is loaded via
+
+the object which it exports (conventionally named "rs") is loaded into shape tree. The shape tree's internal nodes are created by the operation:</p>
+<precode>
+mkContainer();
+</precode>
+<p>while its leaf nodes are elementary shapes like circles and lines. The shape tree is converted into SVG for display, and its leaf nodes correspond to SVG elements. The prototypes for these elementary shapes are found in /shape/&lt;shapeName&gt;. </p>
+
+A basic operation that applies to any node nd in the tree is
+
+
+nd.moveto(pnt:Point)
+
+Another applies to any internal node, including the root.
+
+nd.set(name:string,shp:shape)
+
+This adds shp into the shape tree under the given name. After this operation
+
+nd.&lt;name&gt; will evaluate to the newly added shape.
+Here are the elementary shapes supported by PrototypeJungle, and their properties;</p>
+
+
+
+
+<p class="textVar" id="Point">line</p>
+</p>
+
+<p> Properties of line <span class="textVar">ln</span>,</p>
+<precode>
+ln.stroke a color string such as 'blue','rgb(10,20,30)', 'rgba(200,100,50,.5)
+ln.fill a color string
+ln['stroke-width'} a number
+ln.end0 a Point
+ln.end1 a Point
+</precode>
+
+<p>Operations:</p>
+<precode>
+ln.setEnds(end0:Point,end1:Point) => null
+</precode>
+<p>
+This corresponds to the SVG <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Element/line">line</a> element.
+</p>
+
+</precode>
+<p>Methods for Point <span class="textVar">p</span>,</p>
+<precode>
+p.plus(q:&lt;Point&gt;); // returns the vector sum p and q
+p.difference(q:&lt;Point&gt;); // returns the vector subtraction of q from p
+p.distance(q:&lt;Point&gt;); // returns distance from p to q
+p.normalize(); // returns p shrunk or extended to a unit vector with the same direction
+p.normal(); // returns a vector which is orthogonal to p
+p.times(s:&lt;number&gt;); // return p scaled by s
+</precode>
+<hr/>
+<p class="textVar">LineSegment</p>
+<precode>
+LineSegment.mk(end0:&lt;Point&gt;,end1:&lt;Point&gt;)
+</precode>
+<p> Properties of LineSegment <span class="textVar">s</span>,</p>
+<precode>
+s.end0
+s.end1
+</precode>
+<p>Methods for LineSegment <span class="textVar">s</span>,</p>
+<precode>
+s.length();
+s.pointAlong(n:&lt;number&gt;) // for 0&lt;=n&lt;=1, returns the point fraction n of the way from end0 to end1
+</precode>
+<hr/>
+<p class="textVar">Circle</p>
+<precode>
+Circle.mk(center:&lt;Point&gt;,radius:&lt;number&gt;)
+</precode>
+<p> Properties of Circle <span class="textVar">c</span>,</p>
+<precode>
+c.center
+c.radius
+</precode>
+<hr/>
+<p class="textVar" id="Point3d">Point3d</p>
+
+</p>
+<p>Constructor:</p>
+<precode>
+Point3d.mk(x:&lt;number&gt;,y:&lt;number&gt;,z:&lt;number&gt;)
+</precode>
+<p> Properties of Point3d <span class="textVar">p</span>,</p>
+<precode>
+p.x
+p.y
+p.z
+</precode>
+<p>Methods for Point3d <span class="textVar">p</span>,</p>
+<precode>
+p.plus(q:&lt;Point&gt;); // returns the vector sum p and q
+p.difference(q:&lt;Point&gt;); // returns the vector subtraction of q from p
+p.distance(q:&lt;Point&gt;); // returns distance from p to q
+p.times(s:&lt;number&gt;); // return p scaled by s
+</precode>
+<hr/>
+<p class="textVar" id="Camera">Camera</p>
+</p>
+
+
+<p>Constructor:</p>
+<precode>
+Camera.mk(focalPoint:&lt;Point3d&gt;,focalLength:&lt;number&gt;,scaling:&lt;number&gt;,axis:&lt;string&gt;)
+</precode>
+<p><span class="textVar">axis</span> should be one of "x", "y", "z"
+<p> Properties of Camera <span class="textVar">c</span>,</p>
+<precode>
+c.focalPoint
+c.focalLength
+p.scaling
+p.axis
+</precode>
+<p>Methods for Camera <span class="textVar">c</span>,</p>
+<precode>
+c.project(p:&lt;Point3d&gt;); // returns the projection of p onto the focal plane
+</precode>
+
+
+{{endplate}}

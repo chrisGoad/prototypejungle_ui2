@@ -61,7 +61,7 @@ rs.initialize = function () {
    this.setupRandomGridForBoundaries('v',{step:30,min:100,max:250}); 
    this.initProtos();
    this.addFrame();
-  this.initializeGrid();
+  this.generateGrid();
 }
 
 

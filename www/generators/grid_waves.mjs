@@ -72,7 +72,7 @@ rs.initialize = function () {
 	this.setupRandomGridForShapes('llx',  {step:rstep,min:rmin,max:rmax});
 	this.setupRandomGridForShapes('lly',  {step:rstep,min:rmin,max:rmax});
 	this.setupRandomGridForShapes('interior',  {step:0.1,min:0,max:1});
-  this.initializeGrid();
+  this.generateGrid();
 }	
 export {rs};
 

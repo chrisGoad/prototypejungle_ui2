@@ -1204,7 +1204,7 @@ item.preliminaries = function (irect) {
 	
 	
 //item.initializeLines = function (lineP,irect,segmentsOnly) {
-item.initializeLines = function (params) {
+item.generateLines = function (params) {
  // debugger;
   let {width,height,backgroundPadding,rectP,includeRect,boardRows,numLines,backgroundColor} = this;
   let {lineP,rect,lines,circle} = params;

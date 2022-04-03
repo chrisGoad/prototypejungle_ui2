@@ -31,7 +31,7 @@ rs.initialize = function () {
   this.initProtos();
   this.addFrame();
  // this.addBackground();
-  this.initializeLines();
+  this.generateLines();
 }
 
 export {rs}

@@ -91,7 +91,7 @@ rs.initialize = function () {
   this.setupRandomGridForShapes('which', {walkParams:walkParams});
   this.setupRandomGridForShapes('v', {step:30,min:150,max:250});
   this.addFrame();
-  this.initializeGrid();
+  this.generateGrid();
 }
 
 export {rs};

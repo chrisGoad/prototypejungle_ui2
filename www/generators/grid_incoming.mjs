@@ -104,9 +104,9 @@ rs.initialize = function () {
   this.grid2.camera = geom.Camera.mk(focalPoint,focalLength,cameraScaling,'z');
 
   this.grid1.initProtos();
-  this.grid1.initializeGrid();
+  this.grid1.generateGrid();
   this.grid2.initProtos();
-  this.grid2.initializeGrid();  
+  this.grid2.generateGrid();  
 }
 export {rs};
 

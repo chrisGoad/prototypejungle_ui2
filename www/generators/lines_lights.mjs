@@ -34,7 +34,7 @@ debugger;
   core.root.backgroundColor = 'black';
   this.addFrame();
   this.initProtos();
-  this.initializeLines();
+  this.generateLines();
 }	
 export {rs};
 

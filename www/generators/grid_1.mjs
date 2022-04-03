@@ -136,7 +136,7 @@ rs.initialize = function () {
 	this.setupRandomGridForShapes('which',wParams); 
 	let  dimParams = {step:2,min:1,max:4};
 	this.setupRandomGridForShapes('dimension',dimParams); 
-	this.initializeGrid();
+	this.generateGrid();
 }
 
 export {rs};

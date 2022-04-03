@@ -60,7 +60,7 @@ rs.initialize = function () {
 	this.camera = geom.Camera.mk(focalPoint,focalLength,cameraScaling,'z');
   let pnts3d = this.pointsTo3dAndBack(pnts);
   debugger;
-	this.addWeb(pnts3d,lineP);
+	this.generateWeb(pnts3d,lineP);
   this.addFrame();
 }
 

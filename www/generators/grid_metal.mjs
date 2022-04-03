@@ -85,7 +85,7 @@ rs.initialize = function () {
 	this.setupRandomGridForShapes('shade', {step:30,min:50,max:250});
 	this.setupRandomGridForShapes('direction', {step:0.05* Math.PI,min:0.95*Math.PI,max:2*Math.PI});
 	this.setupRandomGridForShapes('length',  {step:0.1,min:1.5,max:2});
-  this.initializeGrid();
+  this.generateGrid();
 }
 
 export {rs};

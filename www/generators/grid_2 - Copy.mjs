@@ -144,7 +144,7 @@ rs.initialize = function () {
  
 
 	
-this.initializeGrid();
+this.generateGrid();
 }
 export {rs};
 

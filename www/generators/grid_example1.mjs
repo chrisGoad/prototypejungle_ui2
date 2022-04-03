@@ -63,7 +63,7 @@ rs.initialize = function () {
    this.setupBoundaryRandomizer('v',rparams); 
    this.initProtos();
    this.addFrame();
-   this.initializeGrid();
+   this.generateGrid();
 }
 
 export {rs};

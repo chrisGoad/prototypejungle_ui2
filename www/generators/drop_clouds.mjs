@@ -22,7 +22,7 @@ rs.initProtos = function () {
 	this.lineP['stroke-width'] = .6;
 }  
 
-rs.genSegments = function (p) {
+rs.genDropStruct = function (p) {
   let {width,height,lineP} = this;
   let params = {direction:0.75*Math.PI,zigzag:1,randomness:0,vertical:0,widths:[10],heightRatio:0.05,numSegs:4,pos:p};
   let which = this.computeWhichByCornerInterpolation(p);
@@ -59,7 +59,7 @@ rs.initialize = function () {
   core.root.backgroundColor = 'black';
   this.addFrame();
 	this.initProtos();
-	this.initializeDrop();
+	this.generateDrop();
 }
 
 export {rs};

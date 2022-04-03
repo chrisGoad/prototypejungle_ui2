@@ -1,14 +1,15 @@
 //active
 
+var root;
 import {rs as rectPP} from '/shape/rectangle.mjs';
 //import {rs as rectPP} from '/shape/rectangle.js','/shape/textOneLine.js',function (rectPP,textPP) {
 import {rs as textPP} from '/shape/textOneLine.mjs';
 //core.require('/gen0/test.js',function (addRandomMethods) {
 	//debugger;a
 const rs = function (item) {
-
+window.root = core.root;
+root = 3;
 item.setName = function (name,variant,jsonName) {
-  debugger;
   let nameWithV = name+(variant?'_v_'+variant:'');
   let nameWithoutV= name;
 	let theName = this.name = nameWithV+(this.signIt?'_s':'');

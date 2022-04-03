@@ -72,7 +72,7 @@ rs.initialize = function () {
 	}
 	for (let i=0;i<numSpokes;i++) {
 		let w = webs[i];
-		w.addWeb(rws[i],this.lineP);
+		w.generateWeb(rws[i],this.lineP);
 	}
 	
 }

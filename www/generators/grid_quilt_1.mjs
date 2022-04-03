@@ -70,7 +70,7 @@ debugger;
    this.addFrame();
   this.initProtos();
   core.root.backgroundColor = 'black';
-  this.initializeGrid();
+  this.generateGrid();
 }	
 
 export {rs};

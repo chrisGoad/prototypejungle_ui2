@@ -103,7 +103,7 @@ rs.initialize = function () {
   this.addBackground();
   this.setupRandomGridForShapes('level', {step:30,min:0,max:255});
   this.set('llines',core.ArrayNode.mk());
-  this.initializeGrid(); 
+  this.generateGrid(); 
 }
 
 export {rs}

@@ -66,7 +66,7 @@ rs.initialize = function () {
     return {step:jiggleStep,min:0,max:jiggleMax};
 	}
 	this.pointJiggleParams = {walkParams:walkParams}
-  this.initializeGrid();
+  this.generateGrid();
 }
 
 export {rs};

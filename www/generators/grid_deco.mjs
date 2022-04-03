@@ -65,7 +65,7 @@ rs.initProtos = function () {
 rs.initialize = function () {
 	debugger;
 	this.initProtos();
-  this.initializeGrid();
+  this.generateGrid();
 }
 
 export {rs};
@@ -370,7 +370,7 @@ rs.initialize = function () {
 	debugger;
 	this.initProtos();
 //	this.finishProtos();
-	  this.initializeGrid();
+	  this.generateGrid();
 }
 
 

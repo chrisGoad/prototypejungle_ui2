@@ -41,7 +41,7 @@ rs.initialize = function () {
   debugger;
   this.initProtos();
  this.addFrame();
-  this.initializeGrid();
+  this.generateGrid();
 }
 
 

@@ -36,7 +36,7 @@ rs.initProtos = function () {
 	circleP.stroke = 'transparent';
 }  
 
-rs.genSegments = function (p) {
+rs.genDropStruct = function (p) {
 	//console.log('px',p.x);
 	let rd = 30;
 	let gcrc = geom.Circle.mk(p,rd);
@@ -91,17 +91,17 @@ rs.initialize = function () {
  // this.zone = geom.Circle.mk(Point.mk(0,0),0.5*this.width);
  	debugger;
   this.addFrame();
-	this.initializeDrop();
+	this.generateDrop();
 	let pnts = this.pointsFromCircleDrops();
 	let p = pnts[0];
 	p.onFringe = 1
 	//this.camera = geom.Camera.mk(focalPoint,focalLength,cameraScaling,'z');
-  this.initWeb(pnts);
-	this.addWeb();
+ // this.initWeb(pnts);
+	this.generateWeb();
 	this.addSegs(lineP);
 	//this.loopFringeAddition(100);
   //let pnts3d = this.pointsTo3dAndBack(pnts);
-	//this.addWeb(pnts);
+	//this.generateWeb(pnts);
 }
 
 export {rs};

@@ -97,14 +97,14 @@ rs.initialize = function () {
     this.innerPresent2 = eltD2.innerPresent;
     this.whichShape1  = eltD2.whichShape1;
     this.whichShape2  = eltD2.whichShape2;*/
-    this.initializeGrid();
+    this.generateGrid();
     this.saveTheState();
   } else {
     this.getTheState(() => {
       debugger;
       this.eltDescription1 = this.genEltDescription(1);
       this.eltDescription2 = this.genEltDescription(2);
-      this.initializeGrid();
+      this.generateGrid();
     });
   }
 }

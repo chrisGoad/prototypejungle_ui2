@@ -748,7 +748,7 @@ item.initProtos = function () {
 }  
 */
 
-item.initializeDrop = function (doDrop=1) {
+item.generateDrop = function (doDrop=1) {
   let {rectangles,initialSegments,genSeeds} = this;
  /* this.initProtos();
   this.addBackStripe();

@@ -45,7 +45,7 @@ this.addFrame();
   this.initProtos();
   this.setupRandomGridForShapes('wd',{step:.1,min:0.7,max:1.3});
   this.setupRandomGridForShapes('ht',{step:.1,min:0.7,max:1.3});
-  this.initializeGrid();
+  this.generateGrid();
 }
 
 export {rs};

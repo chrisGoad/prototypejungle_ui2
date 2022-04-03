@@ -81,7 +81,7 @@ item.initialize = function () {
   return;*/
  
  //this.lineCenterDistance = 40;
-  this.initializeLines();
+  this.generateLines();
  
 }	
 export {item as rs};

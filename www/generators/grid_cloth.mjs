@@ -73,7 +73,7 @@ rs.initialize = function () {
   this.setupRandomGridForShapes('jogx', {walkParams:walkParams});
   this.setupRandomGridForShapes('jogy', {walkParams:walkParams});
   this.setupRandomGridForShapes('v', {step:30,min:50,max:240});
-	this.initializeGrid();
+	this.generateGrid();
 }
 		
 

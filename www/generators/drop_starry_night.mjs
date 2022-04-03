@@ -27,7 +27,7 @@ rs.segParams = function () {
   return {angle,length};
 }
 
-rs.genSegments = function (p) {
+rs.genDropStruct = function (p) {
   let sizes = [2,5,10,20,40];
   let which = Math.floor(Math.random()*5);
   let sz = sizes[which];
@@ -56,7 +56,7 @@ rs.initialize = function () {
   core.root.backgroundColor = 'black';
   this.addFrame();
 	this.initProtos();
-	this.initializeDrop();
+	this.generateDrop();
 }
 
 export {rs};

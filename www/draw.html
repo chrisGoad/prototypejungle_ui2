@@ -9,7 +9,6 @@
 </script>
  
 <script type="module">
-debugger;	
   {{mainImports}}
 //import * as tree from "/js/tree-1.1.0.min.js";
 //import * as catalog from "/js/catalog-1.1.0.min.js";
@@ -29,9 +28,10 @@ fcont.xxxx = {};
 ui.vars = {};
 ui.hide = () => {};
 Window.ui = ui;
-let graph = {}
+let graph = {};
 graph.installCirclePeripheryOps = () => {}
 Window.graph = graph;
+let troort = 3;
 
 
 let aaaa,ctx,img,natWidth,natHeight,canvas;
@@ -48,7 +48,6 @@ const drawImage = function () {
 	  draw.initPage();
 	  return;
 	}
-	debugger;
 	let scale  = qs.scale?Number(qs.scale):0.1;
 	let mnim = `inputImages/${image}`;
 	let imageIn = `${mnim}.jpg`;

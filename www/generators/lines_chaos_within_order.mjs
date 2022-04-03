@@ -59,7 +59,7 @@ rs.initialize = function () {
   let circle = geom.Circle.mk(Point.mk(0,0),circleRadius);
   circle.onCircle=1;
   let lines = this.set('lines',core.ArrayNode.mk());
-  this.initializeLines({lines:lines,circle:circle,lineP:lineP});
+  this.generateLines({lines:lines,circle:circle,lineP:lineP});
 }	
 
 export {rs};

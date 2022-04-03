@@ -48,7 +48,7 @@ rs.initialize = function () {
   this.addFrame();
 	this.initProtos();
  this.setupRandomGridForShapes('redOrWhite',{step:0.5,min:0,max:2});
-	this.initializeGrid();
+	this.generateGrid();
 }
 		
 

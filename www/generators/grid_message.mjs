@@ -43,7 +43,7 @@ rs.initialize = function () {
   initializeLinesProtos(lines);
   Object.assign(lines,linesParams)
   lines.originatingShapes = [geom.Circle.mk(Point.mk(-100,-200),100),geom.Circle.mk(Point.mk(100,-200),100)];
-  lines.initializeLines();
+  lines.generateLines();
   let grid = this.set('grid',basicsP.instantiate());
   addGridMethods(grid);
   initializeGridProtos(grid);
@@ -52,7 +52,7 @@ rs.initialize = function () {
   rect.width = grid.width+20;
   rect.height = grid.height+20;
   rect.moveto(Point.mk(0,5));
-  grid.initializeGrid();
+  grid.generateGrid();
 }	
 export {rs};
 

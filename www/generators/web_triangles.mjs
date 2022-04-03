@@ -97,7 +97,7 @@ rs.initialize = function () {
 	const mkTriWeb = (i,clr,ps) => {
 		let w = webs[i];
 		let tr = mkTriangle(triangleColors[i]);
-		w.addWeb(rws[i],this.lineP);
+		w.generateWeb(rws[i],this.lineP);
 		w.moveto(ps);
 		tr.moveto(ps);
 	}

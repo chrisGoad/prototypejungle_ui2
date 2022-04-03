@@ -3,12 +3,12 @@ let loadingItem = undefined;
 let mainUrl;
 let oldway = false;
 const installMainItem = function (source,settings)  {
-  debugger;
   if (settings) {
     settings = settings;
   }
   if (source) {
     core.setRoot(dom.SvgElement.mk('<g/>'));
+    root = core.root;
     let ext = core.afterLastChar(source,'.',true);
     if (ext === 'history') {
       core.installHistory(source,afterMainInstall);

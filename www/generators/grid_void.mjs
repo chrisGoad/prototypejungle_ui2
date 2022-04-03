@@ -93,7 +93,7 @@ rs.initProtos = function () {
 rs.initialize = function () {
   this.initProtos();
   this.addBackground();
-	this.initializeGrid();
+	this.generateGrid();
 	  let rect = this.set('rect',this.rectP.instantiate()).show();
   let rdim = 10;
 	rect.width = rdim;

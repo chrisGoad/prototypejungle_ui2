@@ -77,7 +77,7 @@ rs.initialize = function () {
  this.addFrame();
  core.root.backgroundColor = 'black';
  this.camera = geom.Camera.mk(focalPoint,focalLength,cameraScaling,'z');
-  this.initializeGrid();
+  this.generateGrid();
 }
 
 

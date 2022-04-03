@@ -114,7 +114,7 @@ rs.initialize = function () {
   this.addFrame();
   this.initProtos();
 	this.setupRandomGridForBoundaries('color', {step:35,min:150,max:250,biasFun,numRows,numCols});
-  this.initializeGrid();
+  this.generateGrid();
 }
 
 export {rs};

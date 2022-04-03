@@ -50,7 +50,7 @@ rs.shapeGenerator = function (rvs,cell) {
 		  shape = innerProto.instantiate();
       let clr = (rn === 1)?'red':'white';
 		  shape.initProtos(clr);
-			shape.initializeGrid();	
+			shape.generateGrid();	
 		}
 		// shapes.push(shape);
 		shape.show();
@@ -61,7 +61,7 @@ rs.initialize = function () {
 	core.root.backgroundColor = 'black';
   this.addFrame();	
 	this.initProtos();
-	this.initializeGrid();
+	this.generateGrid();
 }
 		
 export {rs};

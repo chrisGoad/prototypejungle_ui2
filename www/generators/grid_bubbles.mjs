@@ -56,7 +56,7 @@ rs.initialize = function () {
 	this.initProtos();
   this.addBackground(	);
   this.addFrame();
-	this.initializeGrid();
+	this.generateGrid();
 }
 
 export {rs};

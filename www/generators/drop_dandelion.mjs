@@ -48,7 +48,7 @@ rs.genSeeds = function () {
   debugger;
   let {width,lineP} = this;
   this.ringRadius = 0.15 * 0.5 * width;
-  return this.ringSeeds(lineP,'transparent');
+  return this.ringSeeds(lineP,'transparent');	
 }
 
 rs.genDropStruct = function (p) {
@@ -67,7 +67,7 @@ rs.initialize = function () {
   core.root.backgroundColor = 'black';
   this.initProtos();
 	this.addFrame();
-	this.initializeDrop();
+	this.generateDrop();
 }
 
 export {rs};

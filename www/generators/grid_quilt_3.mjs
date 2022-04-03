@@ -65,7 +65,7 @@ rs.initialize = function () {
   core.root.backgroundColor = 'black';
   this.addFrame();
 	this.initProtos();
-	this.initializeGrid();
+	this.generateGrid();
 }
 
 export {rs};

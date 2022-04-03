@@ -50,7 +50,7 @@ rs.genSeeds = function () {
 
 
 
-rs.genSegments = function (p) {
+rs.genDropStruct = function (p) {
   return this.genSegmentsFan(this.lineP,p,'white');//,params);
 }
 
@@ -66,7 +66,7 @@ rs.initialize = function () {
   core.root.backgroundColor = 'black';
   this.addFrame();
   this.initProtos();
-	this.initializeDrop();
+	this.generateDrop();
 }
 
 export {rs};

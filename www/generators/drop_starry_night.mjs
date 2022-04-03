@@ -35,14 +35,11 @@ rs.genSegments = function (p) {
   let ht = sz;
   let segs = this.rectangleSegments(wd,ht,p);
   let lines = segs.map((sg) => this.genLine(sg,this.lineP));
-
   const genRGBval = function () {
     return 50 + Math.floor(Math.random()*202);
   }
-  let r = genRGBval();
-  let g = genRGBval();
-  let b = genRGBval();
-  let clr = `rgb(${r},${r},${r})`;
+  let v = genRGBval();
+  let clr = `rgb(${v},${v},${v})`;
   lines.forEach( (line) => line.stroke = clr);
   return [segs,lines];
 }

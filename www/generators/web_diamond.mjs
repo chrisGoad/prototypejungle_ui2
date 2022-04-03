@@ -17,7 +17,6 @@ let mcl = 1.6*(ht/nrc);
 mcl = 50
 let minc = 20;
 
-//let  topParams = {sigScalee:ht/500,frameStroke:'rgb(52,52,52)',framePadding:0.1*ht,frameVisible:0	,width:ht,height:ht,maxFringeTries:100,numRings:nrc,numRows:nrc,numCols:nrc,minConnectorLength:mcl,maxConnectorLength:mcl+minc,webTries:100};
 let  topParams = {frameStroke:'rgb(52,52,52)',framePadding:0.1*ht,width:ht,height:ht,maxFringeTries:100,numRings:nrc, numRows:nrc, numCols:nrc, minConnectorLength:mcl, maxConnectorLength:mcl+minc, webTries:100};
 
 Object.assign(rs,topParams);

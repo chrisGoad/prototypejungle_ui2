@@ -1,9 +1,3 @@
-//core.require('/shape/rectangle.js','/gen0/Basics.js','/mlib/grid0.js','/mlib/boundedRandomGrids.js','/mlib/ParamsByCell.js',
-//function (rectPP,rs,addGridMethods,addRandomMethods,addParamsByCellMethods) {
-//core.require('/gen1/grid0_8.js',
-//core.require('/gen1/grid0_8.js',
-//core.require('/shape/rectangle.js','/line/line.js','/shape/circle.js','/gen0/grid0.js','/gen0/lines0.js',
-//function (rs)	{ 
 
 import {rs as rectPP} from '/shape/rectangle.mjs';
 import {rs as basicsP} from '/generators/basics.mjs';

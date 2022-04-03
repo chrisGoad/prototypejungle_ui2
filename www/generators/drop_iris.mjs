@@ -1,7 +1,4 @@
 
-//core.require('/line/line.js','/generators/basics.js','/mlib/drop.js','/mlib/segsets.js','/mlib/boundedRandomGrids.js','/mlib/drop_seeds.js',
-//function (linePP,rs,addDropMethods,addSegsetMethods,addRandomMethods,addSeedMethods) {
-
 import {rs as linePP} from '/line/line.mjs';
 import {rs as basicsP} from '/generators/basics.mjs';
 import {rs as addDropMethods} from '/mlib/drop.mjs';
@@ -11,7 +8,6 @@ let rs = basicsP.instantiate();
 addDropMethods(rs);
 addRandomMethods(rs);
 addSegsetMethods(rs);
-//addSeedMethods(rs);
 
 rs.setName('drop_iris');
 let ht = 160;
@@ -49,7 +45,6 @@ rs.computeState  = function () {
    return [["randomGridsForShapes",this.randomGridsForShapes]];
 }
 
-  
 rs.initialize = function () {
   core.root.backgroundColor = 'black';
 	this.initProtos();

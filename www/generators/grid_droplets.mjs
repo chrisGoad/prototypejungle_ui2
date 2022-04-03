@@ -18,14 +18,10 @@ rs.setName('grid_2');
 
 let wd = 300;
 let nr= 40;
-//let topParams = {width:wd,height:wd,numRows:nr,numCols:nr,pointJiggle:5,framePadding:0.15*wd,frameStroke:'green',frameStrokeWidth:10,backgroundColor:'rgb(200,0,0)'};
-let topParams = {width:wd,height:wd,numRows:nr,numCols:nr,pointJiggle:5,framePadding:0.15*wd,frameStroke:'white',backgroundColor:'rgb(200,0,0)'};
+let topParams = {width:wd,height:wd,numRows:nr,numCols:nr,pointJiggle:5,framePadding:0.15*wd,backgroundColor:'rgb(200,0,0)'};
 
-
-//let topParams = {width:wd,height:wd,numRows:nr,numCols:nr,pointJiggle:5,framePadding:0.15*this.width,frameStroke:'white',backgroundColor:'rgb(200,0,0)'};
 Object.assign(rs,topParams);
 
-  
 rs.initProtos = function () {
   let lineP = this.lineP = linePP.instantiate();
   lineP.stroke = 'rgb(255,255,255,1)';
@@ -35,7 +31,6 @@ rs.initProtos = function () {
   let rectP = this.rectP = rectPP.instantiate()
   this.rectP.fill = 'rgb(200,0,0)';
 }  
-
 
 rs.shapeGenerator = function (rvs) {
   let shapes = this.shapes;
@@ -67,7 +62,7 @@ rs.boundaryLineGenerator = function (end0,end1,rvs,cell) {
 rs.initialize = function () {
   this.initProtos();
   this.addFrame();
-  this.addFrame({framePadding:0.3*this.width,frameStroke:'white'});
+  //this.addFrame({framePadding:0.3*this.width,frameStroke:'white'});
   this.addBackground();
   this.setupRandomGridForBoundaries('yellow',{step:30,min:50,max:200});
   this.setupRandomGridForShapes('dimension',{step:2,min:1,max:4});

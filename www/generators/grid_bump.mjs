@@ -7,7 +7,7 @@
 
 
 import {rs as rectPP} from '/shape/rectangle.mjs';
-import {rs as linePP} from '/line/line.mjs';
+import {rs as linePP} from '/shape/line.mjs';
 import {rs as basicsP} from '/generators/basics.mjs';
 import {rs as addGridMethods} from '/mlib/grid.mjs';
 import {rs as addSphereMethods} from '/mlib/sphere.mjs';

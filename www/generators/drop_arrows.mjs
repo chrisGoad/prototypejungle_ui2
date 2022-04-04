@@ -2,7 +2,7 @@
 //core.require('/gen0/drop0.js',function (addDropMethods) {
 //core.require('/gen1/drop0_0.js',function (rs) {
 
-import {rs as linePP} from '/line/line.mjs';
+import {rs as linePP} from '/shape/line.mjs';
 import {rs as basicsP} from '/generators/basics.mjs';
 import {rs as addDropMethods} from '/mlib/drop.mjs';
 import {rs as addSegsetMethods} from '/mlib/segsets.mjs';

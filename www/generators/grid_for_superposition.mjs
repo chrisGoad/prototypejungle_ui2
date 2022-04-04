@@ -1,5 +1,5 @@
 //  this is used as a component in /generators/grid_superposition.mjs. width and height are set in the parent generator
-import {rs as linePP} from '/line/line.mjs';
+import {rs as linePP} from '/shape/line.mjs';
 import {rs as circlePP} from '/shape/circle.mjs';
 import {rs as rectPP} from '/shape/rectangle.mjs';
 import {rs as basicsP} from '/generators/basics.mjs';

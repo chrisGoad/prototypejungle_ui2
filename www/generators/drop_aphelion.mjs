@@ -3,7 +3,7 @@
 //core.require('/line/line.js','/shape/circle.js','/gen0/Basics.js','/mlib/dropCircles.js','/mlib/web.js','/mlib/sphere.js',function (linePP,circlePP,rs,addDropMethods,addWebMethods,//addSphereMethods) {//function (linePP,circlePP,rs) {
 
 
-import {rs as linePP} from '/line/line.mjs';
+import {rs as linePP} from '/shape/line.mjs';
 import {rs as circlePP} from '/shape/circle.mjs';
 import {rs as basicP} from '/generators/basics.mjs';
 import {rs as addDropMethods} from '/mlib/dropCircles.mjs';

@@ -1,4 +1,4 @@
-import {rs as linePP} from '/line/line.mjs';
+import {rs as linePP} from '/shape/line.mjs';
 import {rs as circlePP} from '/shape/circle.mjs';
 
 import {rs as basicP} from '/generators/basics.mjs';

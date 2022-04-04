@@ -2,7 +2,7 @@
 //core.require('/line/line.js','/shape/polygon.js','/gen0/Basics.js','/mlib/grid0.js','/mlib/boundedRandomGrids.js',
 //function (linePP,polygonPP,rs,addGridMethods,addRandomMethods) {
 import {rs as polygonPP} from '/shape/polygon.mjs';
-import {rs as linePP} from '/line/line.mjs';
+import {rs as linePP} from '/shape/line.mjs';
 import {rs as basicsP} from '/generators/basics.mjs';
 import {rs as addGridMethods} from '/mlib/grid.mjs';
 import {rs as addRandomMethods} from '/mlib/boundedRandomGrids.mjs';

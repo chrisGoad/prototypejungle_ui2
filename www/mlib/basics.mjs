@@ -170,7 +170,6 @@ item.genLine = function (sg,lineP,ext=0) {
 
 //item.installLine = function (lines,a0,a1,a2)  {
 item.addLine = function (params)  {
-  debugger;
   let {lines,line,lineP,end0,end1,segment} =params;
 	if (!lines) {
 		lines = this.lines =this.set('lines',core.ArrayNode.mk());
@@ -304,7 +303,18 @@ item.pointsTo3dAndBack = function (pnts) {
 	});
 	return rs;
 }
+item.toRGB = (r,g,b) => `rgb(${Math.floor(r)},${Math.floor(g)},${Math.floor(b)})`;
 
+item.toGray = (v) => {
+  let vi = Math.floor(v);
+  return `rgb(${vi},${v},${vi})`;
+}
+item.canvasToRectangle = function () {
+ let {width:wd,height:ht} = this;
+ let corner = Point.mk(-0.5*wd,-0.5*ht);
+ let extent = Point.mk(wd,ht);
+ return Rectangle.mk(corner,extent);
+}
 
 }
 export {rs};

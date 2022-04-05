@@ -17,14 +17,14 @@ let topParams = {saveState:1,width:ht,height:ht,numRows:20,numCols:30,dropTries:
 Object.assign(rs,topParams);
 
 rs.initProtos = function () {
-	core.assignPrototypes(this,'lineP',linePP);
-	this.lineP.stroke = 'white';
-	this.lineP['stroke-width'] = 2;
+  core.assignPrototypes(this,'lineP',linePP);
+  this.lineP.stroke = 'white';
+  this.lineP['stroke-width'] = 2;
 }  
 
 rs.genDropStruct = function (p,rvs) {
   let {r,g,b} = rvs;
-	let clr = `rgb(${r},${g},${b})`;
+  let clr = `rgb(${r},${g},${b})`;
   return this.genSegmentsFan(this.lineP,p,clr);
 }
 
@@ -32,12 +32,12 @@ rs.genDropStruct = function (p,rvs) {
 rs.genSeeds = function () {
   let {width,height,ringRadius} = this;
   this.ringRadius = 0.3 * 0.5 * width;
-	let exc = geom.Circle.mk(Point.mk(0,0),this.ringRadius - 1);
-	this.exclusionZones = [exc];
-	let dnc = geom.Circle.mk(Point.mk(0,0),3* this.ringRadius);
-	this.doNotExit= [dnc];
+  let exc = geom.Circle.mk(Point.mk(0,0),this.ringRadius - 1);
+  this.exclusionZones = [exc];
+  let dnc = geom.Circle.mk(Point.mk(0,0),3* this.ringRadius);
+  this.doNotExit= [dnc];
   let seeds =this.ringSeeds(this.lineP,'white');
-	return seeds;
+  return seeds;
 }
 
 
@@ -47,7 +47,7 @@ rs.computeState  = function () {
 
 rs.initialize = function () {
   core.root.backgroundColor = 'black';
-	this.initProtos();
+  this.initProtos();
   this.addFrame();
   if (this.saveState) {
     this.setupColorRandomizer({step:10,min:100,max:240});
@@ -55,7 +55,6 @@ rs.initialize = function () {
     this.generateDrop();
   } else {
     this.getTheState(() => {
-      debugger;
       this.generateDrop();
     });
   }

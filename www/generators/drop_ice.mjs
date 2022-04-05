@@ -17,9 +17,9 @@ Object.assign(rs,topParams);
 
 
 rs.initProtos = function () {
-	this.lineP = linePP.instantiate();
-	this.lineP.stroke = 'yellow';
-	this.lineP['stroke-width'] = .3;
+  this.lineP = linePP.instantiate();
+  this.lineP.stroke = 'yellow';
+  this.lineP['stroke-width'] = .3;
 }  
 
 rs.initialSegments = function () {
@@ -50,9 +50,9 @@ rs.genDropStruct = function (p) {
 
 rs.initialize = function () {
   core.root.backgroundColor = 'black';
-	this.initProtos();
-	this.generateDrop();
-  	this.addFrame();
+  this.initProtos();
+  this.generateDrop();
+  this.addFrame();
 
 }
 

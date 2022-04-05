@@ -1,5 +1,3 @@
-//core.require('/shape/line.js','/shape/circle.js','/shape/rectangle.js','/gen0/basics.js','/mlib/grid.js','/mlib/boundedRandomGrids.js',
-
 
 import {rs as rectPP} from '/shape/rectangle.mjs';
 import {rs as basicsP} from '/generators/basics.mjs';
@@ -12,11 +10,11 @@ addRandomMethods(rs);
 rs.setName('grid_maze');
 	
 rs.initProtos = function () {
-	core.assignPrototypes(this,'rectP',rectPP);
-	this.rectP.fill = 'white';
-	this.rectP['stroke-width'] = 0;
-	this.rectP.width = 1;
-	this.rectP.height = 4;
+  core.assignPrototypes(this,'rectP',rectPP);
+  this.rectP.fill = 'white';
+  this.rectP['stroke-width'] = 0;
+  this.rectP.width = 1;
+  this.rectP.height = 4;
 }  
 
 let nr = 25;
@@ -29,7 +27,7 @@ let topParams = {numRows:nr,numCols:nc,width:wd,height:ht,frameStrokeWidth:0.5,f
 
 Object.assign(rs,topParams);
 
-	
+  
 rs.shapeGenerator = function (rvs,cell) {
   let {rectP,shapes,height} = this;
   let w = rvs.which;
@@ -61,33 +59,33 @@ rs.shapeGenerator = function (rvs,cell) {
 
 rs.initialize = function () { 
   let {numRows,numCols} = this;
-	core.root.backgroundColor = 'black';
-	this.initProtos();
-	this.addFrame();
-	let rnp = {};
-	const walkParams = function (i,j) {
-		let t0 = 0.1*numCols;
-		let t1 = 0.5*numCols;
-		let t2 = 0.9*numCols;
-		let step = 0.3;
-		let max,min;
-	  if (i < t0) {
-			min = 0;
-			max = i/t0;
-			max = 0;
-		} else if (i < t2) {
-			min = 0;
-			max = 1;
-		} else {
-			min  = (i-t2)/(1-t2);
-			min  = 1;
-			max = 1;
-		}
-		rnp.min = min;
-		rnp.max = max;
- 		rnp.step = step;
-		return rnp;
-	}	
+  core.root.backgroundColor = 'black';
+  this.initProtos();
+  this.addFrame();
+  let rnp = {};
+  const walkParams = function (i,j) {
+    let t0 = 0.1*numCols;
+    let t1 = 0.5*numCols;
+    let t2 = 0.9*numCols;
+    let step = 0.3;
+    let max,min;
+    if (i < t0) {
+      min = 0;
+      max = i/t0;
+      max = 0;
+    } else if (i < t2) {
+      min = 0;
+      max = 1;
+    } else {
+      min  = (i-t2)/(1-t2);
+      min  = 1;
+      max = 1;
+    }
+    rnp.min = min;
+    rnp.max = max;
+    rnp.step = step;
+    return rnp;
+  }  
   this.setupRandomGridForShapes('which', {walkParams:walkParams});
   this.setupRandomGridForShapes('v', {step:30,min:150,max:250});
   this.addFrame();

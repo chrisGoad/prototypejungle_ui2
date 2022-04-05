@@ -38,6 +38,9 @@ var boilerplate1 =
   .indent {
 		padding-left:20px;
 	}
+  .indent2 {
+		padding-left:40px;
+	}
   .codeVar {
 		font-style:italic;
 	}  
@@ -46,15 +49,29 @@ var boilerplate1 =
 		font-weight:bold;
     font-size:12pt
 	}
+  .plainText {
+		font-weight:normal;
+    font-size:12pt
+	}
   .title {
 		font-weight:bold;
     font-size:16pt;
     text-align:center;
 	}
  .section {
+   padding-top:30px;
 		font-weight:bold;
-    font-size:14pt;
+    font-size:15pt;
 	}
+  .blank_row
+{
+    height: 10px !important; /* overwrites any other rules */
+    background-color: #FFFFFF;
+}
+td {
+  borderr: 1px solid rgb(190,190,190);
+  padding-left: 20px;
+}
 </style>
 </head>
 <body style="background-color:white;font-size:14pt"> 

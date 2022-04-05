@@ -1,8 +1,8 @@
 //active
-//core.require('/line/line.js','/gen0/min0.js','/mlib/pgen0.js','/mlib/web0.js',function (linePP,addBasis,addPointGenMethods,addWebMethods) {
-//core.require('/line/line.js','/mlib/basics.js','/mlib/pgen0.js','/mlib/web0.js',function (linePP,addBasis,addPointGenMethods,addWebMethods) {
-//core.require('/line/line.js','/gen0/PgenWeb.js',function (linePP,PgenWeb) {
-//core.require('/line/line.js','/gen0/Basics.js','/mlib/pointGen.js','/mlib/web.js',function (linePP,rs,addPointMethods,addWebMethods) {
+//core.require('/shape/line.js','/gen0/min0.js','/mlib/pgen0.js','/mlib/web0.js',function (linePP,addBasis,addPointGenMethods,addWebMethods) {
+//core.require('/shape/line.js','/mlib/basics.js','/mlib/pgen0.js','/mlib/web0.js',function (linePP,addBasis,addPointGenMethods,addWebMethods) {
+//core.require('/shape/line.js','/gen0/PgenWeb.js',function (linePP,PgenWeb) {
+//core.require('/shape/line.js','/gen0/Basics.js','/mlib/pointGen.js','/mlib/web.js',function (linePP,rs,addPointMethods,addWebMethods) {
 
 
 

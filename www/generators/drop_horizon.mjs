@@ -1,5 +1,5 @@
 
-//core.require('/line/line.js','/generators/basics.js','/mlib/drop.js','/mlib/segsets.js',
+//core.require('/shape/line.js','/generators/basics.js','/mlib/drop.js','/mlib/segsets.js',
 //function (linePP,rs,addDropMethods,addSegsetMethods) {
 import {rs as linePP} from '/shape/line.mjs';
 import {rs as basicsP} from '/generators/basics.mjs';

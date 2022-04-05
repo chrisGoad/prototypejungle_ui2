@@ -1,4 +1,4 @@
-//polygon
+//polyline
 
 
 let rs =  svg.Element.mk('<polyline/>');

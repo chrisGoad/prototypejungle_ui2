@@ -1,6 +1,6 @@
 //active
-//core.require('/line/line.js','/shape/circle.js','/gen0/DropWebSphere.js',function (linePP,circlePP,rs) {
-//core.require('/line/line.js','/shape/circle.js','/gen0/Basics.js','/mlib/dropCircles.js','/mlib/web.js','/mlib/sphere.js',function (linePP,circlePP,rs,addDropMethods,addWebMethods,//addSphereMethods) {//function (linePP,circlePP,rs) {
+//core.require('/shape/line.js','/shape/circle.js','/gen0/DropWebSphere.js',function (linePP,circlePP,rs) {
+//core.require('/shape/line.js','/shape/circle.js','/gen0/Basics.js','/mlib/dropCircles.js','/mlib/web.js','/mlib/sphere.js',function (linePP,circlePP,rs,addDropMethods,addWebMethods,//addSphereMethods) {//function (linePP,circlePP,rs) {
 
 
 import {rs as linePP} from '/shape/line.mjs';

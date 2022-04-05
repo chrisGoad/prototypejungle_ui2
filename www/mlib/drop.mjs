@@ -659,7 +659,7 @@ item.installDropStruct = function (dropStruct) {
 	if (!Array.isArray(segs)) {
     debugger;
 		let rect = segs;
-		let rectShape = lines;
+		let rectShape = shapes;
 		segments.push(rect);
 		this.installShape(rectShape);
 		return;

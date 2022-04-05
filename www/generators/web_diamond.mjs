@@ -88,8 +88,8 @@ rs.initialize = function () {
 	this.initProtos();
 	this.addFrame();
 	let pnts = this.genGrid(this);
-	this.generateWeb();
-	this.addSegs(this.lineP);
+	this.generateWeb(pnts,this.lineP);
+	//this.addSegs(this.lineP);
 }
 
 export {rs};

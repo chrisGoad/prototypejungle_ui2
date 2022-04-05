@@ -1,6 +1,6 @@
 
-//core.require('/ngen1/grid_0.js','/line/line.js',
-//core.require('/generators/basics.js','/line/line.js','/mlib/grid.js','/mlib/boundedRandomGrids.js',
+//core.require('/ngen1/grid_0.js','/shape/line.js',
+//core.require('/generators/basics.js','/shape/line.js','/mlib/grid.js','/mlib/boundedRandomGrids.js',
 //function (rs,linePP,addGridMethods,addRandomMethods) {
 
 import {rs as linePP} from '/shape/line.mjs';
@@ -13,7 +13,7 @@ addGridMethods(rs);
 addRandomMethods(rs);
 rs.setName('grid_4');
  // let rs = constructor();
-//core.require('/line/line.js','/grid/addGrid8.js',function (linePP,addGridMethods) {
+//core.require('/shape/line.js','/grid/addGrid8.js',function (linePP,addGridMethods) {
   debugger;
   let nr = 40;
   let wd = 200;

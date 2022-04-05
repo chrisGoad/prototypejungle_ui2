@@ -1,4 +1,4 @@
-//core.require('/line/line.js','/shape/circle.js','/shape/rectangle.js','/gen0/basics.js','/mlib/grid.js','/mlib/topRandomMethods.js',
+//core.require('/shape/line.js','/shape/circle.js','/shape/rectangle.js','/gen0/basics.js','/mlib/grid.js','/mlib/topRandomMethods.js',
 let radial = 0;
 //function (linePP,circlePP,rectPP,rs,addGridMethods,addRandomMethods) {
 //import {rs as addAnimateMethods} from '/mlib/animate.mjs';

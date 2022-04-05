@@ -1,9 +1,9 @@
 //active
 //core.require('/gen0/GridLinesRandom.js',
-//core.require('/shape/rectangle.js','/line/line.js','/shape/circle.js','/shape/polygon.js','/gen0/GridLinesRandom.js',
+//core.require('/shape/rectangle.js','/shape/line.js','/shape/circle.js','/shape/polygon.js','/gen0/GridLinesRandom.js',
 //function (rs)	{ 
 //function (rectPP,linePP,circlePP,polygonPP,GridLinesRandomP)	{ 
-//core.require('/line/line.js','/shape/circle.js','/shape/rectangle.js','/gen0/basics.js','/mlib/grid.js','/mlib/boundedRandomGrids.js','/mlib/ParamsByCell.js',
+//core.require('/shape/line.js','/shape/circle.js','/shape/rectangle.js','/gen0/basics.js','/mlib/grid.js','/mlib/boundedRandomGrids.js','/mlib/ParamsByCell.js',
 
 
 import {rs as rectPP} from '/shape/rectangle.mjs';

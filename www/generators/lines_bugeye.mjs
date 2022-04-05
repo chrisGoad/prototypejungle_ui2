@@ -1,12 +1,12 @@
 
-//core.require('/line/wavyLine.js','/shape/circle.js','/random/addIntersectingLines4.js',function (linePP,circlePP,addMethods) {
-//core.require('/line/wavyLine.js','/shape/circle.js','/mlib/lines.js','/gen0/Basics.js',function (linePP,circlePP,addMethods,item) {
+//core.require('/shape/wavyLine.js','/shape/circle.js','/random/addIntersectingLines4.js',function (linePP,circlePP,addMethods) {
+//core.require('/shape/wavyLine.js','/shape/circle.js','/mlib/lines.js','/gen0/Basics.js',function (linePP,circlePP,addMethods,item) {
 //debugger;
 
 
 let topParams = {left:0,dimension:200,numLines:2000,angleMin:-10,angleMax:10};
   
-import {rs as linePP} from '/line/wavyLine.mjs';
+import {rs as linePP} from '/shape/wavyLine.mjs';
 import {rs as basicP} from '/generators/basics.mjs';
 import {rs as addLinesMethods} from '/mlib/lines.mjs';	
 

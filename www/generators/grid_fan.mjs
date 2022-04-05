@@ -1,6 +1,6 @@
 
 //core.require('/gen1/grid0_6.js',
-//core.require('/line/line.js','/shape/circle.js','/generators/basics.js','/mlib/grid.js','/mlib/boundedRandomGrids.js',
+//core.require('/shape/line.js','/shape/circle.js','/generators/basics.js','/mlib/grid.js','/mlib/boundedRandomGrids.js',
 import {rs as linePP} from '/shape/line.mjs';
 import {rs as circlePP} from '/shape/circle.mjs';
 import {rs as basicsP} from '/generators/basics.mjs';

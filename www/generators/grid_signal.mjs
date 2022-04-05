@@ -1,5 +1,5 @@
 
-//core.require('/shape/rectangle.js','/line/line.js','/shape/circle.js','/gen0/Basics.js','/mlib/grid.js','/mlib/lines.js','/mlib/boundedRandomGrids.js','/mlib/ParamsByCell.js',
+//core.require('/shape/rectangle.js','/shape/line.js','/shape/circle.js','/gen0/Basics.js','/mlib/grid.js','/mlib/lines.js','/mlib/boundedRandomGrids.js','/mlib/ParamsByCell.js',
 //function (rectPP,linePP,circlePP,rs,addGridMethods,addLineMethods,addRandomMethods,addParamsByCellMethods)	{ 
 //let rs = svg.Element.mk('<g/>');
 

@@ -24,7 +24,7 @@ rs.initProtos = function () {
 	let circleP = this.set('circleP',circlePP.instantiate()).hide();
 	circleP.fill = 'red';
 	circleP['stroke-width'] = 0;
-  circleP.dimension = 13;
+  circleP.radius= 7;
 }
 
 rs.shapeGenerator = function (rvs,cell) {

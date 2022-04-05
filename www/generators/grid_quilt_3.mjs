@@ -11,14 +11,14 @@ import {rs as addParamsByCellMethods} from '/mlib/ParamsByCell.mjs';
 
 let rs = basicsP.instantiate();
 
-//core.require('/shape/rectangle.js','/line/line.js','/shape/circle.js','/gen0/grid0.js','/gen0/lines0.js',
+//core.require('/shape/rectangle.js','/shape/line.js','/shape/circle.js','/gen0/grid0.js','/gen0/lines0.js',
 //function (rectPP,rs)	{ 
 addRandomMethods(rs);
 addGridMethods(rs);
 addParamsByCellMethods(rs);
 
 //core.require('/gen1/grid0_8.js','/gen1/layeredGrid1.js',
-//core.require('/shape/rectangle.js','/line/line.js','/shape/circle.js','/gen0/grid0.js','/gen0/lines0.js',
+//core.require('/shape/rectangle.js','/shape/line.js','/shape/circle.js','/gen0/grid0.js','/gen0/lines0.js',
 //function (rs,layeredSetup)	{ 
 
 	

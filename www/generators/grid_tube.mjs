@@ -1,6 +1,6 @@
 
-//core.require('/line/line.js','/grid/grid24cons.js',function (linePP,constructor) {
-//core.require('/line/line.js','/gen0/Basics.js','/mlib/grid.js','/mlib/boundedRandomGrids.js',
+//core.require('/shape/line.js','/grid/grid24cons.js',function (linePP,constructor) {
+//core.require('/shape/line.js','/gen0/Basics.js','/mlib/grid.js','/mlib/boundedRandomGrids.js',
 //function (linePP,rs,addGridMethods,addRandomMethods)	{ 
 
 

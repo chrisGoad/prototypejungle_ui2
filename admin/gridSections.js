@@ -14,7 +14,7 @@ sections: [
  [0,'drop_whorls','generators',1,'Whorls',{likes:45,posted:1,category:'drop'}], 
  [0,'random_stripes','generators',1,'Stripes 3',{likes:26,posted:1,category:'grid'}], 
  [0,'grid_fade','generators',1,'Fade',{likes:532,posted:1,category:'grid'}], 
- [0,'grid_incoming','generators',1,'Incoming',{likes:0,posted:0,category:'grid'}], 
+ [0,'grid_incoming','generators',1,'Incoming',{likes:57,posted:1,category:'grid'}], 
  [0,'grid_ramp','generators',1,'Ramp',{likes:14,posted:1,category:'grid'}], 
  [0,'grid_superposition','generators',1,'Superposition',{likes:103,posted:1,category:'grid'}], 
  [0,'grid_vortex','generators',1,'Vortex',{likes:10,posted:1,category:'grid'}], 

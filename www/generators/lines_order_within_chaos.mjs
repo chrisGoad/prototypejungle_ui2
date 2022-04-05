@@ -1,6 +1,6 @@
 
-//core.require('/shape/circleWithGrid.js','/shape/rectangle.js','/line/line.js','/random/addLinesShapes0.js',//'/random/addSpacedPoints3.js',
-core.require('/shape/circleWithGrid.js','/shape/rectangle.js','/line/line.js','/gen0/Basics.js','/mlib/lines.js',//'/random/addSpacedPoints3.js',
+//core.require('/shape/circleWithGrid.js','/shape/rectangle.js','/shape/line.js','/random/addLinesShapes0.js',//'/random/addSpacedPoints3.js',
+core.require('/shape/circleWithGrid.js','/shape/rectangle.js','/shape/line.js','/gen0/Basics.js','/mlib/lines.js',//'/random/addSpacedPoints3.js',
   function (elementPP1,elementPP2,elementPP3,item,addMethods) {
 debugger;
 //let item = svg.Element.mk('<g/>');

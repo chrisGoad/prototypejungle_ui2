@@ -1,5 +1,5 @@
 
-/*ore.require('/line/line.js','/shape/circle.js','/generators/basics.js','/mlib/lines.js',
+/*ore.require('/shape/line.js','/shape/circle.js','/generators/basics.js','/mlib/lines.js',
 function (linePP,circlePP,item,addMethods) {
 debugger;
 

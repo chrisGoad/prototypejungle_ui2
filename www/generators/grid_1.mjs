@@ -1,7 +1,7 @@
 
-//core.require('/line/line.js','/shape/circle.js','/grid/grid24cons.js','/grid/dim2dWalker2.js',
+//core.require('/shape/line.js','/shape/circle.js','/grid/grid24cons.js','/grid/dim2dWalker2.js',
 
-//core.require('/line/line.js','/shape/circle.js','/gen0/basics.js','/mlib/grid.js','/mlib/boundedRandomGrids.js',
+//core.require('/shape/line.js','/shape/circle.js','/gen0/basics.js','/mlib/grid.js','/mlib/boundedRandomGrids.js',
 
 //function (linePP,circlePP,rs,addGridMethods,addRandomMethods) {
  // debugger;	//this.initProtos();

@@ -9,7 +9,7 @@ let rs = basicsP.instantiate();
 addGridMethods(rs);
 addRandomMethods(rs);
 addParamsByCellMethods(rs);
-rs.setName('grid_void');
+rs.setName('grid_void_variant');
 
 
 let pbc  = {
@@ -27,36 +27,13 @@ let pbc  = {
     }
 };
 rs.paramsByCell = function (cell) {
-  let {numRows,numCols,rectP} = this;
-  let {x,y} = cell;
-  let cx = numCols/2;
-  let cy = numRows/2;
-  // {x:cx,y:cy} are coordinates of center
-  let maxd = Math.sqrt(cx*cx + cy*cy);
-  let xdc = x - cx;
-  let ydc = y - cy;
-  let cd = Math.sqrt(xdc*xdc + ydc*ydc); // distande from center
-  let df = cd/maxd; //fractional distance from center; 1 = far as possible; 0 = at center
-  let yf = y/numRows;
-  let wf =  1.3* df;
-  pbc.widthFactor = wf;
-  pbc.heightFactor = wf;
-  pbc.shapeProto = rectP;
+  pbc.shapeProto = this.rectP;
   return pbc;
 }
 	
-rs.globalParams = {genCircles:0,genPolygons:0,randomizingFactor:0};
 let wd = 100;
-
-let topParams = {
-  pointJiggle:1,	
-  numRows : 96,
-  numCols : 96,
-  width:wd,
-  height:wd,
-  backgroundColor : 'red',
-  framePadding:15,
-}
+let nr = 96;
+let topParams = {pointJiggle:1,numRows:nr,numCols:nr,width:wd,height:wd,backgroundColor:'red',framePadding:0.15*wd};
 Object.assign(rs,topParams);
 
 rs.initProtos = function () {
@@ -70,11 +47,6 @@ rs.initialize = function () {
   this.initProtos();
   this.addBackground();
   this.generateGrid();
-  let rect = this.set('rect',this.rectP.instantiate()).show();
-  let rdim = 10;
-  rect.width = rdim;
-  rect.height = rdim;
-  rect.fill = 'black';
   this.addFrame();
 }
 

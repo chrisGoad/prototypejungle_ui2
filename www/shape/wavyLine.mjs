@@ -1,8 +1,6 @@
 //Wavy line
 
-//core.require('/line/line0.js',function (lineP) {
-
-import {rs as lineP} from '/line/path.mjs';
+import {rs as lineP} from '/shape/path.mjs';
 
 let item = lineP.instantiate();
 

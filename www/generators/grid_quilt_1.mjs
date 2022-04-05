@@ -1,8 +1,8 @@
 
-//core.require('/line/line.js','/shape/rectangle.js','/gen0/Basics.js','/mlib/grid.js','/mlib/boundedRandomGrids.js','/mlib/ParamsByCell.js',
+//core.require('/shape/line.js','/shape/rectangle.js','/gen0/Basics.js','/mlib/grid.js','/mlib/boundedRandomGrids.js','/mlib/ParamsByCell.js',
 //function (linePP,rectPP,rs,addGridMethods,addRandomMethods,addParamsByCellMethods) {
 //core.require('/gen1/grid0_8.js',
-//core.require('/shape/rectangle.js','/line/line.js','/shape/circle.js','/gen0/grid0.js','/gen0/lines0.js',
+//core.require('/shape/rectangle.js','/shape/line.js','/shape/circle.js','/gen0/grid0.js','/gen0/lines0.js',
 //function (rs)	{ 
 
 import {rs as rectPP} from '/shape/rectangle.mjs';

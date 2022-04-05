@@ -1,5 +1,5 @@
 //active
-//core.require('/line/line.js','/shape/rectangle.js','/shape/circle.js','/gen0/Basics.js','/mlib/pointGen.js','/mlib/web.js',
+//core.require('/shape/line.js','/shape/rectangle.js','/shape/circle.js','/gen0/Basics.js','/mlib/pointGen.js','/mlib/web.js',
 //function (linePP,rectPP,circlePP,Basics,addPointGenMethods,addWebMethods) {
 
 

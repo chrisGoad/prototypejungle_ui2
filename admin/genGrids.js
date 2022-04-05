@@ -272,6 +272,9 @@ const thingString = function (order,ix,dir,useThumb,ititle,props) {
 	let thumbsrc = `thumbs/${vpath}.jpg`;
   let localSrc =`www/thumbs/${vpath}.jpg`;
   let localim = fs.existsSync(localSrc);
+  if (ix === 'drift_web') {
+    console.log('IIIIIXXXX',ix);
+  }
   theLocals.push(localim?1:0);
 
   if (!localim) {
@@ -287,7 +290,7 @@ const thingString = function (order,ix,dir,useThumb,ititle,props) {
 	let lastPageArg = (pageNumber === numPages)?'&lastPage=1':'';
 	let rs;
 	//let astart = `<a style="color:white" href="page.html?image=${vx}&${pageArg}&${kindArg}&${localArg}">`;
-	let astart = `<a style="color:white" href="page.html?image=${vx}&${pageArg}&${kindArg}">`;
+	let astart = `<a style="color:white" href="/page.html?image=${vx}&${pageArg}&${kindArg}">`;
  // let likesStr = likes?`<span style="font-size:10pt">Likes ${likes} ${category}</span><br/>`:'';
   //let propsStr = `<span style="font-size:10pt">Likes ${likes?likes:'none'} Order ${order}${posted?"":" NOT POSTED"} ${category}</span><br/>`;
   let propsStr = `<span style="font-size:10pt">${likes?'Likes '+likes:''} ${posted?"":" NOT POSTED"} ${localim?'Local':''} ${category}</span><br/>`;
@@ -305,6 +308,7 @@ ${propsStr}
 ${astart}<img width="200" src="${thumbsrc}"></a></p></div>
 `;
 	}
+  console.log ('rs = ',rs);
 	return rs;
 }
 
@@ -491,7 +495,7 @@ const order2dict = function (order) {
 
 let orderDict = order2dict(imageOrder);
 
-console.log('orderDict',orderDict);
+//console.log('orderDict',orderDict);
 
 const countPages = function (sections) {
 	let rs = 0;

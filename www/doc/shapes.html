@@ -8,18 +8,19 @@ mkContainer();
 </precode>
 <p>while its leaf nodes are elementary shapes like circles and lines. The shape tree is converted into SVG for display, and its leaf nodes correspond to SVG elements. The prototypes for these elementary shapes are found in /shape/&lt;shapeName&gt;. </p>
 
-A basic operation that applies to any node nd in the tree is
+<p>A basic operation that applies to any node nd in the tree is</p>
 
-
+<precode>
 nd.moveto(pnt:Point)
-
-Another applies to any internal node, including the root.
-
+</precode>
+<p>Another applies to any internal node, including the root.</p>
+<precode>
 nd.set(name:string,shp:shape)
+</precode>
 
-This adds shp into the shape tree under the given name. After this operation
+<p>This adds shp into the shape tree under the given name. After this operation
 
-nd.&lt;name&gt; will evaluate to the newly added shape.
+<span class="textVar">nd.&lt;name&gt;</span> will evaluate to the newly added shape.
 Here are the elementary shapes supported by PrototypeJungle, and their properties;</p>
 
 
@@ -29,13 +30,18 @@ Here are the elementary shapes supported by PrototypeJungle, and their propertie
 </p>
 
 <p> Properties of line <span class="textVar">ln</span>,</p>
-<precode>
-ln.stroke a color string such as 'blue','rgb(10,20,30)', 'rgba(200,100,50,.5)
-ln.fill a color string
-ln['stroke-width'} a number
-ln.end0 a Point
-ln.end1 a Point
-</precode>
+<table>
+
+<tbody>
+<tr class="pbot"><td>Property</td><td>Type</td></tr>
+<tr><td colspan="3">----------------------------------------</td></tr>
+<tr><td><span class="textVar">ln.stroke</td><td>color string such as 'blue', 'rgb(10,20,30)', or 'rgba(200,100,50,.5)'</td></tr>
+<tr><td><span class="textVar">ln.fill</span></td><td>color string</td></tr>
+<tr><td><span class="textVar">ln['stroke-width']</span></td><td>number</td></tr>
+<tr><td><span class="textVar">ln.end0</span></td><td>Point</td></tr>
+<tr><td><span class="textVar">ln.end1</span></td><td>Point</td></tr>
+</tbody>
+</table>
 
 <p>Operations:</p>
 <precode>
@@ -43,6 +49,49 @@ ln.setEnds(end0:Point,end1:Point) => null
 </precode>
 <p>
 This corresponds to the SVG <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Element/line">line</a> element.
+</p>
+
+
+<p class="textVar" id="Point">rectangle</p>
+</p>
+
+<p> Properties of rectangle <span class="textVar">r</span>,</p>
+<table>
+
+<tbody>
+<tr class="pbot"><td>Property</td><td>Type</td></tr>
+<tr><td colspan="3">----------------------------------------</td></tr>
+<tr><td><span class="textVar">r.stroke</td><td>color string such as 'blue', 'rgb(10,20,30)', or 'rgba(200,100,50,.5)'</td></tr>
+<tr><td><span class="textVar">r.fill</span></td><td>color string</td></tr>
+<tr><td><span class="textVar">r['stroke-width']</span></td><td>number</td></tr>
+<tr><td><span class="textVar">r.width</span></td><td>number</td></tr>
+<tr><td><span class="textVar">r.height</span></td><td>number</td></tr>
+</tbody>
+</table>
+
+
+<p>This corresponds to the SVG <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Element/rect">rect</a> element.
+</p>
+
+
+<p class="section" id="Point">circle</p>
+</p>
+
+<p> Properties of circle <span class="textVar">c</span>,</p>
+<table>
+
+<tbody>
+<tr class="pbot"><td>Property</td><td>Type</td></tr>
+<tr><td colspan="3">----------------------------------------</td></tr>
+<tr><td><span class="textVar">c.stroke</td><td>color string</td></tr>
+<tr><td><span class="textVar">c.fill</span></td><td>color string</td></tr>
+<tr><td><span class="textVar">c['stroke-width']</span></td><td>number</td></tr>
+<tr><td><span class="textVar">c.radius</span></td><td>number</td></tr>
+</tbody>
+</table>
+
+
+<p>This corresponds to the SVG <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Element/circle">circle</a> element.
 </p>
 
 </precode>

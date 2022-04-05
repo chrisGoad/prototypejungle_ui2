@@ -97,8 +97,8 @@ rs.initialize = function () {
 	p.onFringe = 1
 	//this.camera = geom.Camera.mk(focalPoint,focalLength,cameraScaling,'z');
  // this.initWeb(pnts);
-	this.generateWeb();
-	this.addSegs(lineP);
+	this.generateWeb(pnts,lineP);
+	//this.addSegs(lineP);
 	//this.loopFringeAddition(100);
   //let pnts3d = this.pointsTo3dAndBack(pnts);
 	//this.generateWeb(pnts);

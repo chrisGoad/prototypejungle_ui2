@@ -1,5 +1,5 @@
 
-//core.require('/line/line.js','/mlib/lines.js','/gen0/Basics.js',
+//core.require('/shape/line.js','/mlib/lines.js','/gen0/Basics.js',
 //function (linePP,addMethods,linesP) {
 
 

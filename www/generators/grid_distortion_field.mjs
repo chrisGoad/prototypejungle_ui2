@@ -1,5 +1,5 @@
 //active
-//core.require('/line/line.js','/shape/polygon.js','/gen0/Basics.js','/mlib/grid0.js','/mlib/boundedRandomGrids.js',
+//core.require('/shape/line.js','/shape/polygon.js','/gen0/Basics.js','/mlib/grid0.js','/mlib/boundedRandomGrids.js',
 //function (linePP,polygonPP,rs,addGridMethods,addRandomMethods) {
 import {rs as polygonPP} from '/shape/polygon.mjs';
 import {rs as linePP} from '/shape/line.mjs';

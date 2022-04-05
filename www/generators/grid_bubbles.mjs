@@ -17,19 +17,20 @@ rs.setName('grid_bubbles');
 	let topParams = {numRows:numRows,numCols:numRows,width:1.5*ht,height:ht,randomizeOrder:1,orderByOrdinal:0,backgroundColor:'blue',backgroundPadding:0.05*ht,framePadding:0.2*ht};
 	Object.assign(rs,topParams);
 	
-rs.paramsByRow = [];
 	
-const setParamsByRow = function () {
+rs.setParams = function () {
 	let hr = numRows/2;
-	let pbr = rs.paramsByRow;
+	let pbr = this.paramsByRow=[];
 	for (let i=0;i<numRows;i++)  {
 		if	(i%8 === 4) {
 			pbr[i] = {'sizePower':3};
 		}
 	}
+  this.paramsByCell=()=>{return {shapeProto:this.circleP}};
+ 
 }
 
-setParamsByRow();
+//setParamsByRow();
 			
 			
 
@@ -53,7 +54,9 @@ colorMap:{0:'white',1:'white',2:'white',3:'white',4:`rgba(0,0,255,${oo})`,5:`rgb
 rs.globalParams = globalValues;
 
 rs.initialize = function () {
+  debugger;
 	this.initProtos();
+  this.setParams();
   this.addBackground(	);
   this.addFrame();
 	this.generateGrid();

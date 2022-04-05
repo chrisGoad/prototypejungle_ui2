@@ -1,6 +1,6 @@
 
 //core.require('/ngen1/grid0_deco.js','/gen0/Basics.js',
-//core.require('/shape/rectangle.js','/line/line.js','/shape/circle.js','/gen0/grid0.js','/gen0/lines0.js',
+//core.require('/shape/rectangle.js','/shape/line.js','/shape/circle.js','/gen0/grid0.js','/gen0/lines0.js',
 //function (template,basicP)	{ 
 
 

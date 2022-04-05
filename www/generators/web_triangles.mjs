@@ -1,5 +1,5 @@
 //active
-//.require('/line/line.js','/shape/rectangle.js','/shape/circle.js','/shape/polygon.js','/gen0/Basics.js','/mlib/pgen.js','/mlib/web.js',
+//.require('/shape/line.js','/shape/rectangle.js','/shape/circle.js','/shape/polygon.js','/gen0/Basics.js','/mlib/pgen.js','/mlib/web.js',
 //function (linePP,rectPP,circlePP,polygonPP,Basics,addPointGenMethods,addWebMethods) {
 
 

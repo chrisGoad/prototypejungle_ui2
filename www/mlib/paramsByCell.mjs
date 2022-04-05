@@ -12,25 +12,30 @@ rs.paramsByRow = null;
 rs.paramsByCol = null;
 
 rs.getParam = function (cell,prop) {
+  debugger;
 	let {paramsByCell,paramsByRow,paramsByCol,globalParams,numRows} = this;
 	let {x,y} = cell;
-	let params,propv;
+	let cellParams,rowParams,propv;
 	//debugger;
 	if (paramsByCell) {
-		params = this.paramsByCell(cell);
-	} else if (paramsByRow) {
-		 let ln = paramsByRow.length;
-		 if (y < ln) {
-			 params = paramsByRow[y];
-		 }
+		cellParams = this.paramsByCell(cell);
 	}
-	if (params) {
-		propv = params[prop]
+  if (paramsByRow) {
+   let ln = paramsByRow.length;
+   if (y < ln) {
+     rowParams = paramsByRow[y];
+   }
 	}
-	if (propv) {
+	if (cellParams) {
+		propv = cellParams[prop]
+	}
+	if (propv !== undefined) {
 		return propv;
 	}
-	return globalParams[prop]
+  if (rowParams) {
+    propv == rowParams[prop]
+  }
+	return propv!==undefined?propv:globalParams[prop]
 }
 
 rs.getParams = function (cell,props) {
@@ -51,13 +56,11 @@ rs.sizeFactor = function ( cell) {
 	let {x,y} = cell;
 	let szPower = this.getParam(cell,'sizePower');
 	let maxSizeFactor = this.getParam(cell,'maxSizeFactor');
-	//let px = numPowers(x+1,szPower);
 	let px = this.numPowers(x,szPower);
 	let sf;
 	if (numRows === 1) {
 		sf = Math.min(px,maxSizeFactor);
 	} else {
-  	//let py = numPowers(y+1,szPower);
   	let py = this.numPowers(y,szPower);
 	  sf =  Math.min(px,py,maxSizeFactor);
 	}
@@ -154,19 +157,6 @@ rs.computeSize = function (cell) {
 	}
 	let wf = widthFactor;
 	let hf = heightFactor;
-	/*if (widthFactorLeft) {
-		let fr = cell.x/(numCols-1);
-		wf = interpolate(widthFactorLeft,widthFactorRight,fr);
-	} else {
-		wf = widthFactor;
-	} 
-	if (heightFactorTop) {
-		let fr = cell.y/(numRows-1);
-		hf = interpolate(heightFactorTop,heightFactorBottom,fr);
-	} else {
-		hf = heightFactor;
-	} */
-	//return {x:szf * wf * deltaX,y:szf*hf*deltaY,fc:fc};
 	return {x:szf * wf,y:szf*hf,fc:fc};
 }
 
@@ -218,7 +208,7 @@ rs.shapeUpdater = function (shape,rvs,cell,center) {
 	let {shapes,rectP,circleP,deltaX,deltaY,numRows,numCols,sizeValues,width,height} = this;
 	debugger;
 	let propVs = this.getParams(cell,['randomizingFactor','genCircles','sizeMap','widthFactor','heightFactor','genCircles','genPolygons']);
-	let {randomizingFactor,sizeMap,widthFactor,heightFactor,genCircles,genPolygons} = propVs;
+	let {randomizingFactor,sizeMap,widthFactor,heightFactor,genCircles,genPolygons,shapeProto} = propVs;
 	let sz;
 	if (!shape) {
 		degbugger;
@@ -307,19 +297,22 @@ rs.shapeUpdater = function (shape,rvs,cell,center) {
 }
 
 rs.shapeGenerator = function (rvs,cell,center) {
-// debugger;
-	let {shapes,rectP,circleP,polygonP} = this;
+ debugger;
+	//let {shapes,rectP,circleP,polygonP,shapeProto} = this;
+  let propVs = this.getParams(cell,['shapeProto']);
+	let {shapeProto} = propVs;
 	if (this.hideThisCell(cell)) {
 	  let {x,y} = cell;
 		console.log('hideCell',x,y);
 		return;
 	}
-	let genCircles = this.getParam(cell,'genCircles');
-	let genPolygons = this.getParam(cell,'genPolygons');
-	let shape = genCircles?circleP.instantiate():
-	    (genPolygons?polygonP.instantiate():rectP.instantiate());
-	shapes.push(shape);
-	shape.show();
+	//let genCircles = this.getParam(cell,'genCircles');
+	//let genPolygons = this.getParam(cell,'genPolygons');
+	let shape = shapeProto.instantiate().show();
+	//let shape = genCircles?circleP.instantiate():
+	//    (genPolygons?polygonP.instantiate():rectP.instantiate());
+	//shapes.push(shape);
+	//shape.show();
 	//this.shapeUpdater(shape,rvs,cell,center);
 	return shape;
 }

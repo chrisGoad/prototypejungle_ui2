@@ -1,7 +1,7 @@
 //active
-//core.require('/line/line.js','/gen0/Basics.js','/mlib/grid.js','/mlib/boundedRandomGrids.js',
+//core.require('/shape/line.js','/gen0/Basics.js','/mlib/grid.js','/mlib/boundedRandomGrids.js',
 //function (linePP,rs,addGridMethods,addRandomMethods) {
-//core.require('/line/line.js','/gen0/GridRandom.js',
+//core.require('/shape/line.js','/gen0/GridRandom.js',
 
 import {rs as linePP} from '/shape/line.mjs';
 import {rs as basicsP} from '/generators/basics.mjs';

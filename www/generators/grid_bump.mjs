@@ -1,8 +1,8 @@
 
-//core.require('/gen1/grid0_10.js','/line/line.js',
+//core.require('/gen1/grid0_10.js','/shape/line.js',
 //function (rs,linePP)	{ 
 //addSetName(rs);
-//core.require('/line/line.js','/shape/rectangle.js','/gen0/Basics.js','/mlib/grid.js','/mlib/boundedRandomGrids.js','/mlib/sphere.js',
+//core.require('/shape/line.js','/shape/rectangle.js','/gen0/Basics.js','/mlib/grid.js','/mlib/boundedRandomGrids.js','/mlib/sphere.js',
 //function (linePP,rectPP,rs,addGridMethods,addRandomMethods,addSphereMethods) {
 
 

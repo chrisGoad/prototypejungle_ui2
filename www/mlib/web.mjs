@@ -112,7 +112,7 @@ rs.rnearsIndex2NearsIndexViaIndexOf = function (nears,rnears,ri) {
 		
 	
 	
-rs.addWeb = function (pnts,lineP) {	
+rs.generateWeb = function (pnts,lineP) {	
 	if (pnts) {
 		this.initWeb(pnts);
 	}

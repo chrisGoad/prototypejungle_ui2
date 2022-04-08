@@ -14,15 +14,16 @@ git checkout -b main (maybe)
 
 every time
 cd c:\prototypejungle_ui2
-or 
-cd c:\prototypejungle
-
 git add admin server js www 
-git add admin server www .gitignore
-
 git commit -m "misc"
-
-for prototypejungle:
-git push origin main
-for prototypejungle_ui2
 git push origin master
+
+
+or 
+
+
+cd c:\prototypejungle
+git add admin server www .gitignore
+git commit -m "misc"
+git push origin main
+

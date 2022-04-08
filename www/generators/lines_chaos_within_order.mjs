@@ -49,7 +49,7 @@ rs.drawGrid = function () {
 
 rs.initialize = function () {
   this.initProtos();
-  let {lineP,circleP,circleRadius} = this;
+  let {lineP,circleP,circleRadius,numLines} = this;
   core.root.backgroundColor = 'black';
   this.addFrame();
   this.drawGrid();
@@ -59,7 +59,7 @@ rs.initialize = function () {
   let circle = geom.Circle.mk(Point.mk(0,0),circleRadius);
   circle.onCircle=1;
   let lines = this.set('lines',core.ArrayNode.mk());
-  this.generateLines({lines:lines,circle:circle,lineP:lineP});
+  this.generateLines({src:circle,srcOn:1,dst:circle,dstOn:1,numLines,lineP:lineP});
 }	
 
 export {rs};

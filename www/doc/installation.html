@@ -2,14 +2,17 @@
 <p class="title">Installation</a></p>
 
 
-<p>First download this zip, or clone from github.  You can place the prototypejungle directory anywhere you like. Install <a href="https://nodejs.org/node">node</a>, if it is not already present on your machine. In a shell, rev up the server:</p>
+<p>First download this zip, or clone from github.  You can place the PrototypeJungle directory anywhere you like. Install <a href="https://nodejs.org/node">node</a>, if it is not already present on your machine. In a shell, rev up the server:</p>
 
 <precode>
 cd &lt;prototypejungle&gt;
 node server/server.js
 </precode>
 
-<p>Then direct your browser to <a href="http://localhost:8081/images.html">http://localhost:8081/images.html</a>. You can edit and rebuild any of the images already present, or create new ones of your own.</p>
+<p>Then you can run an image generator by, for example, directing your browser to </p>
+<p class="txtVar"><a href="http://localhost:8081/draw.html?source=/generators/lines_chaos_within_order.mjs">http://localhost:8081/draw.html?source=/generators/lines_chaos_within_order.mjs</a>. </p>
+<!-- <p>The source file for this generator is at <span class="textVar">&lt;prototypejungle&gt;/www/generators/lines_chaos_within_order.mjs--></p>
+<p> <span class="typeVar"><a href="http://localhost:8081/index.html">http://localhost:8081/index.html</a></span> gets you to this documentation served from the local server you just started. Then <a href="http://localhost:8081/images.html">http://localhost:8081/images.html</a> yields a page from which you can access all of the image generators that come with this installation. You can modify the generators, or write new ones, by editing or creating files in the directory <span class="textVar">&lt;prototypejungle&gt;/www/generators/</span>. </p>
 
  
 

@@ -11,18 +11,13 @@ import {rs as cobwebP} from '/generators/lines_cobweb.mjs';
 
 let rs = basicP.instantiate();
 
-
-debugger;	//this.initProtos();
-//core.vars.whereToSave = 'images/grid_1_1.jpg';
 rs.setName('lines_1');
 let wd = 600;
-//let topParams = {width:wd,height:wd,backStripeColor:'rgb(2,2,2)',backStripePadding:0.1*wd,backStripeVisible:0};
-let topParams = {width:wd,height:wd,frameColor:'rgb(2,2,2)',backgroundColorr:'rgb(2,2,2)',backgroundPadding:0.1*wd};
+let topParams = {width:wd,height:wd,framePadding:0.1*wd};
 Object.assign(rs,topParams);
 
 rs.initialize = function () {
   let {width} = this;
-  debugger;
   let mv = 0.25*width;
   this.addFrame();
   let quad00 = this.set('quad00',fromCenterP.instantiate().show());

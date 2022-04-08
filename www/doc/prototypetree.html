@@ -4,7 +4,7 @@
 <p>The objects manipulated by PrototypeJungle, for the most part, possess  a structure called a "prototype tree". By this I mean a JavaScript object  that is a tree from the standpoint of the <a  href="https://www.javascripttutorial.net/javascript-own-properties/">object-to-own-property-value</a> relation, but in which <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Inheritance_and_the_prototype_chain">prototype chains</a> and functions may appear. Here is an example of such a structure:</p>
  <img id="diagram" src="/doc/prototypeDiagram1_withText.svg?alt=media" style="bborder:thin black solid;cursor:pointer"  width="550" height="250"/>
 
-<p><b>instantiate</b> is the core method of this structure. For a prototype tree y, </p>
+<p><span class="textVar">instantiate</span> is the core method of this structure. For a prototype tree y, </p>
 
 <precode>
 let x = y.instantiate();
@@ -16,7 +16,7 @@ let x = y.instantiate();
 let x = <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/create">Object.create</a>(y);
 </precode>
 
-<p>In both cases <b>x</b> is a new object that inherits, prototype-style, from <b>y</b>.  The difference is that while <b>Object.create</b> operates at only one level, <b>y.instantiate()</b> does a deep copy of <b>y</b> as a tree, and returns a structure in which all of the copied nodes inherit prototype-wise from the nodes from which they were copied, and in which the prototype chains of y have also been copied into x. Full detail can be found <a href="/doc/tech.html">here.<a></p>
+<p>In both cases <span class="textVar">x</span> is a new object that inherits, prototype-style, from <span class="textVar">y</span>.  The difference is that while <span class="textVar">Object.create</span> operates at only one level, <span class="textVar">y.instantiate()</span> does a deep copy of <span class="textVar">y</span> as a tree, and returns a structure in which all of the copied nodes inherit prototype-wise from the nodes from which they were copied, and in which the prototype chains of <span class="textVar">y</span> have also been copied into <span class="textVar">x</span>. Full detail can be found <a href="/doc/tech.html">here.<a></p>
 
 
 {{endplate}}

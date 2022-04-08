@@ -85,13 +85,13 @@ item.randomPointOnRect = function (rect,on) {
 
  item.randomPoint = function (shape,on) {
    if (geom.Rectangle.isPrototypeOf(shape)) {
-     return this.randomPointRect(shape,on);
+     return on?this.randomPointOnRect(shape):this.randomPointInRect(shape);
    }
    if (geom.LineSegment.isPrototypeOf(shape)) {
      return this.randomPointOnSegment(shape);
    }
    if (geom.Circle.isPrototypeOf(shape)) {
-     return on?this.randomPointOnCircle(shape):randomPointInCircle(shape);
+     return on?this.randomPointOnCircle(shape):this.randomPointInCircle(shape);
    }
    
  }
@@ -782,6 +782,7 @@ item.generateLines = function (params) {
 	for (let j=0;j<numLines;j++) {
     let seg = this.randomSegment(src,srcOn,dst,dstOn);
     if (!exf(seg)) {
+    debugger;
       this.addLine({lines:lines,segment:seg,lineP:lineP});
     }
   }

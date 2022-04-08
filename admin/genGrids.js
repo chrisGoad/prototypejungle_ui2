@@ -290,7 +290,8 @@ const thingString = function (order,ix,dir,useThumb,ititle,props) {
 	let lastPageArg = (pageNumber === numPages)?'&lastPage=1':'';
 	let rs;
 	//let astart = `<a style="color:white" href="page.html?image=${vx}&${pageArg}&${kindArg}&${localArg}">`;
-	let astart = `<a style="color:white" href="/page.html?image=${vx}&${pageArg}&${kindArg}">`;
+	let astart = `<a style="color:white" href="page.html?image=${vx}&${pageArg}&${kindArg}">`;
+  console.log('ASTART',astart);
  // let likesStr = likes?`<span style="font-size:10pt">Likes ${likes} ${category}</span><br/>`:'';
   //let propsStr = `<span style="font-size:10pt">Likes ${likes?likes:'none'} Order ${order}${posted?"":" NOT POSTED"} ${category}</span><br/>`;
   let propsStr = `<span style="font-size:10pt">${likes?'Likes '+likes:''} ${posted?"":" NOT POSTED"} ${localim?'Local':''} ${category}</span><br/>`;

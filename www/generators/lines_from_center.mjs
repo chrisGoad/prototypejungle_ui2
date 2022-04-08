@@ -1,9 +1,4 @@
 
-//core.require('/line/line.js','/mlib/lines.js','/gen0/Basics.js',
-//function (linePP,addMethods,linesP) {
-
-
-
 import {rs as linePP} from '/line/line.mjs';
 import {rs as basicP} from '/generators/basics.mjs';
 import {rs as addLinesMethods} from '/mlib/lines.mjs';	
@@ -11,21 +6,20 @@ import {rs as addLinesMethods} from '/mlib/lines.mjs';
 let rs = basicP.instantiate();
 addLinesMethods(rs);
 
-
-debugger;	//this.initProtos();
-//core.vars.whereToSave = 'images/grid_1_1.jpg';
 rs.setName('lines_from_center');
 let wd = 200;
-let topParams = {width:wd,height:wd,numLines:5000,angleMin:-90,angleMax:90,backgroundColor:'black',lineColor:'white'};
+let topParams = {width:wd,height:wd,numLines:5000,lineColor:'white'};
 Object.assign(rs,topParams);
 
-
-	
- rs.excludeLineFunction = function (sg) {
+rs.mkExcludeSegFunction = function () {
+  let wd = this.width;
+  return  (sg) => {
     let md = sg.middle();
-		let ln = md.length();
+    let ln = md.length();
+    return ln > 0.2*wd;
     return ln > 40;
   }
+}
 		
 	
 rs.initProtos = function () {
@@ -37,8 +31,8 @@ rs.initProtos = function () {
 rs.initialize = function () {
   this.initProtos();
   this.addBackground();
-  this.generateLines({lineP:this.lineP});
-  //this.generateLines({lineP:this.lineP,rect:this.canvasToRectangle()});
+  let rect = this.canvasToRectangle();
+  this.generateLines({src:rect,srcOn:1,dst:rect,dstOn:1,numLines:this.numLines,lineP:this.lineP,excludeSegFunction:this.mkExcludeSegFunction()});
 }
 
 export {rs}

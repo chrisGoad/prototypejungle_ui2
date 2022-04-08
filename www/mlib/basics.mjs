@@ -316,6 +316,25 @@ item.canvasToRectangle = function () {
  return Rectangle.mk(corner,extent);
 }
 
+item.rectSides = function (rect) {
+	let hw,hh;
+	let {corner,extent} = rect;
+	hw = (extent.x)/2;
+	hh = (extent.y)/2;
+	let {x:cx,y:cy} = corner;
+	let {x:ex,y:ey} = extent;
+  let UL = Point.mk(cx,cy)
+  let UR = Point.mk(cx+ex,cy)
+  let LL = Point.mk(cx,cy+ey)
+  let LR  = Point.mk(cx+ex,cy+ey)
+	/* let UL = Point.mk(-hw,hh)
+  let UR = Point.mk(hw,hh)
+  let LL = Point.mk(-hw,-hh)
+  let LR  = Point.mk(hw,-hh)*/
+  return [LineSegment.mk(UL,UR),LineSegment.mk(UR,LR),LineSegment.mk(LR,LL),LineSegment.mk(LL,UL)];
+}
+
+
 }
 export {rs};
  

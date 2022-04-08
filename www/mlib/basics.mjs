@@ -334,6 +334,18 @@ item.rectSides = function (rect) {
   return [LineSegment.mk(UL,UR),LineSegment.mk(UR,LR),LineSegment.mk(LR,LL),LineSegment.mk(LL,UL)];
 }
 
+item.circleToCircleShape = function (nm,c,circleP) {
+  let {center,radius} = c;
+  let crc = circleP.instantiate().show();
+  crc.dimension = 2*radius;
+  this.set(nm,crc);
+  crc.moveto(center);
+  return crc;
+}
+ 
+ 
+
+
 
 }
 export {rs};

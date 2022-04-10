@@ -96,7 +96,10 @@ export {rs};
 let topParams = {width:wd,height:wd,numRows:nr,numCols:nr,pointJiggle:5,framePadding:0.15*wd,frameStroke:'white',backgroundColor:'rgb(200,0,0)'};
 </precode>
 need explanation. First, <span class="textVar">pointJiggle</span> , if defined and non-zero, causes
- two bounded grids to be setup via <span class="textVar">setupRandomGridForBoundaries</span>, named <span class="textVar">xJiggle</span> and <span class="textVar">yJiggle</span>. Then the points in the grid are jiggled by the amounts specified in those bounded grids. The maximum amount of jiggle is given by the <span class="textVar">pointJiggle</span> parameter. Since the grids are bounded, the amount of jiggle varies smoothly across the grid.</p>
+ two bounded grids to be setup via <span class="textVar">setupRandomGridForBoundaries</span>, named <span class="textVar">xJiggle</span> and <span class="textVar">yJiggle</span>. Then the points in the grid are jiggled by the amounts specified in those bounded grids. The maximum amount of jiggle is given by the <span class="textVar">pointJiggle</span> parameter. Since the grids are bounded, the amount of jiggle varies smoothly across the grid. Instead of pointJiggle, jiggleParams may be specified instead as in</p>
+ <precode>
+ let topParams = {...jiggleParams:{step:1,min:-5,max:5}...};
+</precode>
 <p>
 Next, the frame parameters:  The frame facility, which draws the white rectangle around the grid, is <a href="/doc/frame.html">documented separately</a>, since the frame facility is implemented in the basics module, not the grid module, and can be used with any of the image generation modules in prototypejungle.</p>
 <p> It is possible to modify the placement of grid points by defining <span class="textVar">positionFunction(i,j)</span> where <span class="textVar">i</span> is the index of the current cell in the x (width) direction,

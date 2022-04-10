@@ -11,7 +11,7 @@ addRandomMethods(rs);
 rs.setName('grid_distortion_field2');
 let nr = 40;
 let dim = 400;
-let topParams = {numRows:nr,numCols:nr,width:dim,height:dim,lowJiggle:0,highJiggle:20,lowJiggleStep:0,highJiggleStep:5};
+let topParams = {numRows:nr,numCols:nr,width:dim,height:dim,highJiggle:10,highJiggleStep:5};
 
 Object.assign(rs,topParams);
 
@@ -48,21 +48,23 @@ rs.shapeGenerator = function (rvs,cell,cnt) {
   return pgon;
 }
 
-let root2 = Math.sqrt(2);
 
 rs.initialize = function () {
   core.root.backgroundColor = 'black';
   this.initProtos();
   let {numRows,numCols,lowJiggle,highJiggle,lowJiggleStep,highJiggleStep} = this;
   this.addFrame();
+  let root2 = Math.sqrt(2);
   let hnr = numRows/2;
   const computeParams =  (i,j) => {
     let di = i - hnr;
     let dj = j - hnr;
-    let fromSides = root2*hnr - Math.sqrt(di*di + dj*dj);
-    let jiggleMax = this.interpolate(fromSides,0,root2*numRows/2,lowJiggle,highJiggle);
-    let jiggleStep = this.interpolate(fromSides,0,root2*numRows/2,lowJiggleStep,highJiggleStep);
-    return {step:jiggleStep,min:0,max:jiggleMax,bias:i};
+    let maxFromCenter = root2*hnr;
+    let fromCenter = Math.sqrt(di*di + dj*dj);
+    let factor = 1 - fromCenter/maxFromCenter;// 0 at corners, up to 1 at center
+    let jiggleMax = factor * highJiggle;
+    let jiggleStep = factor * highJiggleStep;
+    return {step:jiggleStep,min:-jiggleMax,max:jiggleMax,bias:i};
   }
   this.pointJiggleParams = computeParams;
   this.generateGrid();

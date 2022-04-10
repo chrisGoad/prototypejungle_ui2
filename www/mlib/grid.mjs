@@ -740,14 +740,12 @@ item.jigglePoints = function () {
 item.setupPointJiggle = function () {     
   let {numRows,numCols,pointJiggle,pointJiggleParams} = this;
   if (pointJiggle || pointJiggleParams) {
-		//let hj = 0.5*this.pointJiggle;
-		//let jiggleStep = 0.3 * hj;
 		let jParams = pointJiggleParams?pointJiggleParams:this.computeJiggleParams(pointJiggle);
-     //		{step:jiggleStep,min:-hj,max:hj};
     this.setupBoundaryRandomizer('jiggleX',jParams);
     this.setupBoundaryRandomizer('jiggleY',jParams);
 	}
 }
+
 //item.initializeGrid = function (randomizer) {
 item.backgroundPadding = 0;
 item.generateGrid = function () {

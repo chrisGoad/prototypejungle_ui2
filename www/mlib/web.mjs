@@ -31,6 +31,7 @@ rs.beforeAddSeg = function (seg) {
 }
 rs.initWeb = function (pnts) {
 	let {cPoints,nearbyPoints,connectSegs,shapes} = this;
+  debugger;
   this.cPoints = pnts;
 	if (!nearbyPoints) {
 		this.nearbyPoints = [];
@@ -301,10 +302,10 @@ const removeFromNears = function (i,ni) {
 			}
 		});
 	}
-	debugger;
 	if (pnts) {
 	  this.addSegs(lineP);
 	}
+  debugger;
 }	
 }
 

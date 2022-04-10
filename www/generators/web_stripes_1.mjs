@@ -1,9 +1,3 @@
-//active
-//active
-//core.require('/shape/line.js','/gen0/Basics.js','/mlib/pointGen.js','/mlib/web.js',
-//function (linePP,Basics,addPointGenMethods,addWebMethods) {
-
-
 
 import {rs as linePP} from '/shape/line.mjs';
 import {rs as circlePP} from '/shape/circle.mjs';

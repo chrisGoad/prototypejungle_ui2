@@ -26,5 +26,17 @@ they are used to produce the <span class="textVar">rvs</span>  argument  to <a h
 import {rs as addRandomMethods} from '/mlib/boundedRandomGrids.mjs';
 addRandomMethods(item);
 </precode>	
+<p> Sometimes, instead of fyixing bounding parameters for the entire grid, it is desirable to have them vary with grid coordinates. For this case, the params can be formulated as a function of type
+<span class="textVar">(x:number,j:number) => {step:&lt;number&gt;,min:&lt;number&gt;,max:&lt;number&gt;}</span>. Here is an example
+<precode>
+ const computeParams =  (i,j) => {
+    let di = i - hnr;
+    let dj = j - hnr;
+    let fromMiddle = Math.sqrt(di*di + dj*dj);
+    let jiggleMax = this.interpolate(fromMiddle,numRows/2,0,lowJiggle,highJiggle);
+    let jiggleStep = this.interpolate(fromMiddle,numRows/2,0,lowJiggleStep,highJiggleStep);
+    return {step:jiggleStep,min:0,max:jiggleMax};
+  }
+  this.pointJiggleParams = computeParams;
 </body>
 </html>

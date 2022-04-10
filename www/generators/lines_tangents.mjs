@@ -10,7 +10,7 @@ addLinesMethods(rs);
 rs.setName('lines_tangents');
 let wd = 14.14;
 let ht = wd;
-let topParams = {width:wd,height:ht,numLines:1000,frameFilll:'black',framePadding:2.7*wd,frameStroke:'rgb(255,255,200)'}
+let topParams = {width:wd,height:ht,numLines:1000,frameFilll:'black',framePadding:2.7*wd,frameStroke:'gray'}
 Object.assign(rs,topParams);
 
 rs.initProtos = function () {
@@ -26,7 +26,7 @@ rs.initProtos = function () {
 
 rs.circleWithBackground= function(nm,pnt,radius,circleP) {
   let circ = Circle.mk(pnt,radius);
-  let circShape = circleP.instantiate().show();
+  let circShape = circleP.instantiate().show();f
   this.set(nm,circShape);
   circShape.dimension = 2*radius;
   circShape.moveto(pnt);
@@ -36,7 +36,7 @@ rs.circleWithBackground= function(nm,pnt,radius,circleP) {
 
 
 rs.initialize = function () {
-  core.root.backgroundColor = 'white';
+  core.root.backgroundColor = 'gray';
   debugger;
   this.initProtos();
   this.addFrame();

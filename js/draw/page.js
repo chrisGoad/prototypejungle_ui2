@@ -52,7 +52,7 @@ const layout = function(noDraw) { // in the initialization phase, it is not yet 
   }
   pageHeight = pwinht;
   pageWidth = pwinwid;
-  let svgwd = pageWidth  - 20;
+  svgwd = pageWidth  - 20;
   Object.assign(mpg.__element.style,{left:lrs+"px",width:pageWidth+"px",height:(pageHeight-0)+"px",display:"block"});
   topHt = -15 + topbarDiv.__element.offsetHeight;
   cols.$css({left:"5px",width:pageWidth+"px",top:topHt+"px"});

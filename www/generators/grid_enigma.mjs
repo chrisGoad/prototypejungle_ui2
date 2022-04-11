@@ -6,7 +6,6 @@ import {rs as bendP} from '/generators/grid_bend.mjs';
 import {rs as fanP} from '/generators/grid_fan.mjs';
 
 let rs = basicP.instantiate();
-//let rs = svg.Element.mk('<g/>');
 rs.setName('grid_enigma');
 
 let nr = 140;
@@ -17,7 +16,6 @@ let topParams = {width:topWd,height:topWd,framePadding:0.15*topWd};
 Object.assign(rs,topParams);
 
 rs.addGrid = function (nm,fromLeft,turnUp) {
-  debugger;
   let g = bendP.instantiate();
   Object.assign(g,partParams);
   g.backgroundColor = 'black';
@@ -58,10 +56,6 @@ rs.initialize = function () {
   this.initProtos();
   this.addFrame();
   let fwd  = partParams.width;
- /* let rwd = fwd*1.1;
-  let rwd2 = 0.8*rwd;
-  let rmv = 0.5*0.88*fwd;
-  let rmv2 = 1.22*rmv;*/
   let mv = 0.4*fwd;
   Object.assign(this,{'width':2.0*fwd,'height':2.0*fwd,backgroundColor:'rgb(255,255,255)'});
   let g00 = this.addGrid('g00',0,0);

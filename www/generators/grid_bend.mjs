@@ -18,7 +18,6 @@ let wd = 1000;
 let topParams = {width:wd,height:wd,numRows:nr,numCols:nr,pointJiggle:10,delta:(wd*0.8)/nr,backgroundColor:'black',randomizeOrder:1,fromLeft:1,turnUp:1};
 Object.assign(rs,topParams);
 
-//const pointAlongL = function (startPnt,turningPnt,x,up,ts,lineP,llines) {
 const pointAlongL = function (startPnt,turningPnt,x,up) {
   let {x:tx,y:ty} = turningPnt;
   let sx = startPnt.x;
@@ -46,19 +45,15 @@ rs.positionFunction = function (i,j) {
   let tpy = turnUp?hw-i*delta:i*delta - hw;
   let tp = Point.mk(tpx,tpy);
   let x = j/(numRows-1)
-  let p = pointAlongL (sp,tp,x,turnUp,(i+j)%2,this.lineP,this.llines);
+  let p = pointAlongL (sp,tp,x,turnUp);
   return p;
 }
  
 rs.initProtos = function () {	
   let circleP = this.set('circleP',circlePP.instantiate()).hide();
   circleP['stroke-width'] = 0;
-  circlePP.stroke = 'blue';
   circleP.dimension = 30;
   circleP.fill = 'rgba(255,255,0,0.4)';
-  let lineP = this.set('lineP',linePP.instantiate()).hide();
-  lineP['stroke-width'] = 1;
-  lineP.stroke = 'blue';
 }
 let scale = 15;
 
@@ -72,7 +67,6 @@ rs.shapeGenerator = function (rvs,cell) {
   let cdist =  Math.sqrt(cdx*cdx+cdy*cdy);
   let level = Math.floor(rvs.level);
   let opacity = level/255;
-  let {shapes,circleP} = this;
   let shape = this.circleP.instantiate().show();
   shape.dimension = scale*cdist;//+ 5;
   return shape;

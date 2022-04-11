@@ -26,7 +26,7 @@ rs.initProtos = function () {
 
 rs.circleWithBackground= function(nm,pnt,radius,circleP) {
   let circ = Circle.mk(pnt,radius);
-  let circShape = circleP.instantiate().show();f
+  let circShape = circleP.instantiate().show();
   this.set(nm,circShape);
   circShape.dimension = 2*radius;
   circShape.moveto(pnt);

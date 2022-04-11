@@ -26,7 +26,11 @@ item.shortenBy = 10;
 /* end */
 
 
-
+item.segmentToLineFunction = function (seg,lineP) {
+  let line = this.genLine(seg,lineP);
+  line.show();
+  return line;
+}
  
  const chooseSides = function () {
    let sd0 = Math.floor(4*Math.random());
@@ -783,7 +787,9 @@ item.generateLines = function (params) {
     let seg = this.randomSegment(src,srcOn,dst,dstOn);
     if (!exf(seg)) {
     debugger;
-      this.addLine({lines:lines,segment:seg,lineP:lineP});
+    let line = this.segmentToLineFunction(seg,lineP);
+    lines.push(line);
+    //  this.addLine({lines:lines,segment:seg,lineP:lineP});
     }
   }
 }

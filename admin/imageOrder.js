@@ -33,6 +33,7 @@ module.exports = [
       [272,'grid_ramp'],
         [273,'lines_lights'],
         [274,'web_stripes_1'],
+        [274,'web_stripes'],
 
     [275,'grid_atlas'],
     [277,'grid_enigma'],

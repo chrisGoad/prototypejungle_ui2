@@ -199,9 +199,6 @@ const afterPageGenerated = function (doNotInstall) {
     return;
   }
   afterPageGeneratedBeenCalled = true;
-  if (sourceFile  && fileDisplay) {
-    fileDisplay.$html(sourceFile);
-  }
   if (doNotInstall) {
      return;
   }

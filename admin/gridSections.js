@@ -23,7 +23,7 @@ sections: [
  [0,'web_triangles','generators',1,'Triangles',{likes:5,posted:1,category:'web'}],
  [0,'web_spokes','generators',1,'Spokes',{likes:4,posted:1,category:'web'}],
   //[0,'web_stripes_2','generators',1,'Stripes 2',posted:1,category:'grid'}],
-  [0,'web_stripes_1','generators',1,'Stripes 1',{likes:10,posted:1,category:'web'}],
+  [0,'web_stripes','instances',1,'Stripes 1',{likes:10,posted:1,category:'web'}],
   [0,'web_diamond','generators',1,'Diamond',{likes:137,posted:1,category:'web'}],
    [0,'drop_iris','generators',1,'Iris',{likes:45,posted:1,category:'drop'}], //was [0,'drop0_1_27','final',1,'Iris',posted:1,category:'grid'}],
   [0,'drop_aphelion','generators',1,'Aphelion',{likes:31,posted:1,category:'drop'}],

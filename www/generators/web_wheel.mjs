@@ -8,16 +8,11 @@ let rs = basicP.instantiate();
 addPointMethods(rs);
 addWebMethods(rs);
 rs.setName('web_wheel');
-let ht= 2000;
-ht = 3000;
-let nrc=20;
-let toRadians = Math.PI/180;
+let rd= 3000;
 
-
-let  topParams = {webTries:1000,numRings:nrc,radius:ht,ringSeparationn:0.01*ht,numPointsPerRing:20,framePadding:1.2*ht,minConnectorLength:0,maxConnectorLength:2000}
+let  topParams = {webTries:1000,numRings:20,radius:rd,numPointsPerRing:20,framePadding:1.2*rd,minConnectorLength:0,maxConnectorLength:2000}
 
 Object.assign(rs,topParams);
-
 
 rs.initProtos = function () {	
   let lineP = this.set('lineP',linePP.instantiate()).hide();
@@ -27,16 +22,11 @@ rs.initProtos = function () {
 }  
 
 rs.initialize = function () {
-  core.root.backgroundColor = 'black';
+  root.backgroundColor = 'black';
   this.initProtos();
-  let {lineP} = this;
   let pnts = this.genRings(this);
-  this.generateWeb(pnts,lineP);
-  this.addSegs(lineP);
+  this.generateWeb(pnts,this.lineP);
   this.addFrame();
 }
 
-
 export {rs};
-
-

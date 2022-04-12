@@ -186,7 +186,8 @@ rs.computeValuesToSave = function () {
 	return vls;
 }
 
-rs.setDims = function (cell,shape,wdf,htf) { // scale the shape to fit the cell, then scale it by wdf, htr 
+let centerLengths = [0,0,0,0,0,0]
+rs.setDims = function (cell,shape,wdf,htf,fc) { // scale the shape to fit the cell, then scale it by wdf, htr 
   debugger;  
   let corners = this.cellCorners(cell);
   let c0 = corners[0];
@@ -201,7 +202,7 @@ rs.setDims = function (cell,shape,wdf,htf) { // scale the shape to fit the cell,
 */
   let xd = c0.distance(c1);
   let yd = c0.distance(c3);
-  console.log('xd',xd,'yd',yd,'wdf',wdf,'htf',htf);
+ // console.log('x',cell.x,'y',cell.y,'fc',fc,'xd',xd,'yd',yd,'wdf',wdf,'htf',htf);
   if (xd > 10) {
     debugger;
   }
@@ -212,9 +213,14 @@ rs.setDims = function (cell,shape,wdf,htf) { // scale the shape to fit the cell,
   } else if (nm === 'circle') {
     shape.dimension = wdf * Math.min(xd,yd);
   } else if (nm === 'polygon') {
-    let center = c0.plus(c3).times(0.5);
-    let rCorners = this.displaceArray(corners,center);
-		let sCorners = this.scaleArray(rCorners,sz.x,sz.y);
+    let center = c0.plus(c2).times(0.5);
+    let cl = center.length();
+    let clsf = centerLengths[fc];
+    centerLengths[fc] = Math.max(cl,clsf);
+    console.log('fc',fc,'center length',centerLengths[fc]);
+    let rCorners = this.displaceArray(corners,center.times(-1));
+		let sCorners = this.scaleArray(rCorners,wdf,htf);
+		//let sCorners = this.scaleArray(rCorners,sz.x,sz.y);
 		shape.corners = sCorners;
   }
 	shape.show();
@@ -242,6 +248,7 @@ rs.shapeUpdater = function (shape,rvs,cell,center) {
     //debugger;
 		sz = this.computeSize(cell);
 	}
+  
 	if (sz.x === 0) {
 		shape.hide();
 		return;
@@ -289,7 +296,7 @@ rs.shapeUpdater = function (shape,rvs,cell,center) {
 //		shape.dimension = deltaX * (sz.x);
 //	} else {
 		//this.setDims(cell,shape,fszx,deltaY*(sz.y));
-	this.setDims(cell,shape,fszx,(sz.y));
+	this.setDims(cell,shape,fszx,sz.y,sz.fc);
 		//this.setDims(shape,fszx,(sz.y));
 //	}
 	this.colorSetter(shape,sz.fc,cell);

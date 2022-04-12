@@ -54,7 +54,7 @@ sections: [
 		[0,'grid_smoke_1','generators','square','Smoke 1',{likes:7,posted:1,category:'grid'}],
 	[0,'grid_cloth','generators','square','Cloth',{likes:54,posted:1,category:'grid'}],
 	// [0,'grid_quilt_2','generators','square','Quilt 2',19,posted:1,category:'grid'}],
-	 [0,'grid_two_quilts','generators','square','Two Quilts',{likes:0,posted:0,category:'grid'}],
+	 [0,'grid_two_quilts','generators','square','Two Quilts',{likes:0,posted:0,category:'grid',sources:1}],
 	 [0,'grid_quilt_3','generators','square','Quilt 3',{likes:45,posted:1,category:'grid'}],
 	 	[0,'grid_metal','generators','square','Metal',{likes:0,posted:0,category:'grid'}],
 	//	[0,'grid_tube','generators','square','Tube',{likes:10,posted:1,category:'grid'}],

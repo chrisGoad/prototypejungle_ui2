@@ -59,8 +59,9 @@ item.sidesPositionFunction = function (i,j) {
 	
 
  item.radialPositionFunction = function (i,j) {
+   debugger;
  //item.radialPositionFunction = function (grid,i,j) {
-    let {numRows,numCols,angleMin,angleMax,
+    let {numRows,numCols,angleMin=-180,angleMax=180,
 	       innerRadius,outerRadius,center,rotation=0} = this;
 	    //   innerRadius,outerRadius,center} = grid;
   if (i>10) {

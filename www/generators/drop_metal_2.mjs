@@ -1,5 +1,3 @@
-// A simple drop of wiggly sets of segments. Metal_2
-//core.require('/shape/line.js','/generators/basics.js','/mlib/drop.js','/mlib/segsets.js',function (linePP,rs,addDropMethods,addSegsetMethods) {
 
 import {rs as linePP} from '/shape/line.mjs';
 import {rs as basicsP} from '/generators/basics.mjs';
@@ -17,8 +15,8 @@ Object.assign(rs,topParams);
 
 
 rs.initProtos = function () {
-	this.lineP = linePP.instantiate();
-	this.lineP['stroke-width'] = .3;
+  this.lineP = linePP.instantiate();
+  this.lineP['stroke-width'] = .3;
 }  
 
 rs.segParams = function () {
@@ -60,9 +58,9 @@ rs.initialSegments = function () {
   
 rs.initialize = function () {
   core.root.backgroundColor = 'black';
-	this.initProtos();
-	this.addFrame();
-	this.generateDrop();
+  this.initProtos();
+  this.addFrame();
+  this.generateDrop();
 }
 
 export {rs};

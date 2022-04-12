@@ -316,6 +316,7 @@ rs.shapeGenerator = function (rvs,cell,center) {
 	}
 	//let genCircles = this.getParam(cell,'genCircles');
 	//let genPolygons = this.getParam(cell,'genPolygons');
+  debugger;
 	let shape = shapeProto.instantiate().show();
 	//let shape = genCircles?circleP.instantiate():
 	//    (genPolygons?polygonP.instantiate():rectP.instantiate());

@@ -1,6 +1,4 @@
 
-//core.require('/shape/line.js','/generators/basics.js','/mlib/drop.js','/mlib/segsets.js',
-//function (linePP,rs,addDropMethods,addSegsetMethods) {
 import {rs as linePP} from '/shape/line.mjs';
 import {rs as basicsP} from '/generators/basics.mjs';
 import {rs as addDropMethods} from '/mlib/drop.mjs';
@@ -16,9 +14,9 @@ Object.assign(rs,topParams);
 
 
 rs.initProtos = function () {
- this.lineP = linePP.instantiate();
-	this.lineP.stroke = 'yellow';
-	this.lineP['stroke-width'] = .3;
+  this.lineP = linePP.instantiate();
+  this.lineP.stroke = 'yellow';
+  this.lineP['stroke-width'] = .3;
 }  
 
 rs.segParams = function () {
@@ -65,8 +63,8 @@ rs.genDropStruct = function (p) {
 rs.initialize = function () {
   core.root.backgroundColor = 'black';
   this.addFrame();
-	this.initProtos();
-	this.generateDrop();
+  this.initProtos();
+  this.generateDrop();
 }
 
 export {rs};

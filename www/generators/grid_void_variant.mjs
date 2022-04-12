@@ -17,14 +17,13 @@ rs.pByC  = {
   heightFactor:1,
   maxSizeFactor:3,
   sizePower:2,
-  //sizeMap:  {0:1,1:1,2:2,3:4},
-  sizeMap:  {0:1,1:1,2:1,3:1},
+  sizeMap:  {0:0.5,1:0.5,2:1,3:1},
   colorMap: 
     {
-      0:`red`,
-      1:`yellow`,
-      2:`blue`,
-      3:`black`,
+      0:'red',
+      1:'yellow',
+      2:'blue',
+      3:'white',
     }
 };
 rs.paramsByCell = function (cell) {
@@ -33,7 +32,7 @@ rs.paramsByCell = function (cell) {
 	
 let wd = 100;
 let nr = 32;
-let topParams = {pointJiggle:1,numRows:nr,numCols:nr,width:wd,height:wd,backgroundColor:'red',framePadding:0.15*wd};
+let topParams = {pointJiggle:1,numRows:nr,numCols:nr,width:wd,height:wd,backgroundColorr:'red',framePadding:0.15*wd};
 Object.assign(rs,topParams);
 
 rs.initProtos = function () {

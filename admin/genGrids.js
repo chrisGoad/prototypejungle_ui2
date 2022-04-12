@@ -254,7 +254,7 @@ let numPages = 0;
 const thingString = function (order,ix,dir,useThumb,ititle,props) {
 	//console.log('thingString order',order,'ix',ix,'variant',variant,'dir',dir,'useThumb',useThumb,'title',ititle,'likes',likes);
 	debugger;
-  let {variant,likes,posted,category} = props;
+  let {variant,likes,posted,category,sources} = props;
   console.log('POSTED',posted);
 	let spix = ix.split('.');
 	let path = spix[0];
@@ -302,12 +302,21 @@ rs = `<div><p class="centered">${titleLink}
 <p class="centered">${astart}<img width="200" src="${thumbsrc}" alt="Image Missing"></a></p></div>
 	`; 
 	} else {
+    let srcUrl = (sources)?`doc/${path}_sources.html`:`${dir}/${path}.${fileExt}`;
+    let sourcenm = `source${sources?'s':''}`;
+
 		console.log('not for KOP');
 rs = `<div><p style="text-align:center"><a href="http://localhost:8081/draw.html?source=/${dir}/${path}.${fileExt}${theImageArg}">${title}</a><br/>
-<a href="${dir}/${path}.${fileExt}">source</a><br/>
+<a href="${srcUrl}">${sourcenm}</a><br/>
 ${propsStr}
 ${astart}<img width="200" src="${thumbsrc}"></a></p></div>
 `;
+/*
+rs = `<div><p style="text-align:center"><a href="http://localhost:8081/draw.html?source=/${dir}/${path}.${fileExt}${theImageArg}">${title}</a><br/>
+<a href="${srcUrl}">${sourcenm}</a><br/>
+${propsStr}
+${astart}<img width="200" src="${thumbsrc}"></a></p></div>
+`;*/
 	}
   console.log ('rs = ',rs);
 	return rs;

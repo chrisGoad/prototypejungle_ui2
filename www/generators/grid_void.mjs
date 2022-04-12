@@ -28,7 +28,6 @@ rs.pByC  = {
 };
 
 rs.paramsByCell = function (cell) {
- // let {numRows,numCols,rectP,pByC} = this;
   let {numRows,numCols,pByC} = this;
   let {x,y} = cell;
   let cx = numCols/2;

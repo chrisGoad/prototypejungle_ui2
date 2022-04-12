@@ -10,7 +10,7 @@ addRandomMethods(rs);
 rs.setName('grid_maze');
 	
 rs.initProtos = function () {
-  core.assignPrototypes(this,'rectP',rectPP);
+  this.rectP = rectPP.instantiate();
   this.rectP.fill = 'white';
   this.rectP['stroke-width'] = 0;
   this.rectP.width = 1;

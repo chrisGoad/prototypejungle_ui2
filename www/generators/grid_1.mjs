@@ -31,15 +31,15 @@ Object.assign(rs,topParams);
 
  
 rs.initProtos = function () {
-	core.assignPrototypes(this,'lineP',linePP);
+	this.lineP = linePP.instantiate();
 	this.lineP.stroke = 'rgb(255,255,255,1)';
 	this.lineP['stroke-width'] = 0.5;
 	this.lineP.dimension = 4;
-	core.assignPrototypes(this,'circleP',circlePP);
+	this.circleP = circlePP.instantiate();
 	this.circleP.fill = 'rgb(00,200,200)';
 //	this.circleP['stroke-width'] = 0.5;
 	this.circleP.dimension = 4;
-	core.assignPrototypes(this,'boundaryLineP',linePP);
+	this.boundaryLineP',linePP);
   this.boundaryLineP.stroke = 'rgb(255,255,0)';
 	this.boundaryLineP['stroke-width'] = 0.5;
 	

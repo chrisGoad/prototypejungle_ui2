@@ -17,7 +17,7 @@ let topParams = {saveState:1,width:ht,height:ht,numRows:20,numCols:30,dropTries:
 Object.assign(rs,topParams);
 
 rs.initProtos = function () {
-  core.assignPrototypes(this,'lineP',linePP);
+  this.lineP = linePP.instantiate();
   this.lineP.stroke = 'white';
   this.lineP['stroke-width'] = 2;
 }  

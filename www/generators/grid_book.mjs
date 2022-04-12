@@ -16,7 +16,7 @@ let topParams = {randomizeOrder:1,numCols:1.5*sqd,numRows:sqd,height:ht,width:1.
 Object.assign(rs,topParams);
 
 rs.initProtos = function () {
-	core.assignPrototypes(this,'rectP',rectPP);
+	this.rectP = rectPP.instantiate();
 	this.rectP.stroke = 'black';
 	this.rectP.fill = 'blue';
 	this.rectP['stroke-width'] = 2;

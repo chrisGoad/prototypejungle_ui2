@@ -12,7 +12,7 @@ addParamsByCellMethods(rs);
 rs.setName('grid_void');
 
 
-let pbc  = {
+rs.pByC  = {
   widthFactor:1,
   heightFactor:1,
   maxSizeFactor:3,
@@ -26,8 +26,10 @@ let pbc  = {
       3:`rgba(0,0,0,1)`,
     }
 };
+
 rs.paramsByCell = function (cell) {
-  let {numRows,numCols,rectP} = this;
+ // let {numRows,numCols,rectP,pByC} = this;
+  let {numRows,numCols,pByC} = this;
   let {x,y} = cell;
   let cx = numCols/2;
   let cy = numRows/2;
@@ -39,14 +41,13 @@ rs.paramsByCell = function (cell) {
   let df = cd/maxd; //fractional distance from center; 1 = far as possible; 0 = at center
   let yf = y/numRows;
   let wf =  1.3* df;
-  pbc.widthFactor = wf;
-  pbc.heightFactor = wf;
-  pbc.shapeProto = rectP;
-  return pbc;
+  pByC.widthFactor = wf;
+  pByC.heightFactor = wf;
+  return pByC;
 }
 	
 rs.globalParams = {genCircles:0,genPolygons:0,randomizingFactor:0};
-let wd = 100;
+let wd = 96;
 
 let topParams = {
   pointJiggle:1,	
@@ -68,6 +69,7 @@ rs.initProtos = function () {
 
 rs.initialize = function () {
   this.initProtos();
+  this.pByC.shapeProto = this.rectP;
   this.addBackground();
   this.generateGrid();
   let rect = this.set('rect',this.rectP.instantiate()).show();

@@ -63,7 +63,7 @@ Object.assign(rs,topParams);
 	
 rs.initProtos = function () {
    this.circleP = circlePP.instantiate().show();
-	// core.assignPrototypes(this,'circleP',circlePP);
+	// this.circleP = circlePP.instantiate();
 
 	//this.rectP.stroke = 'rgba(0,0,0,.8)';
 	this.circleP['stroke-width'] = 0.4;

@@ -12,7 +12,7 @@ rs.paramsByRow = null;
 rs.paramsByCol = null;
 
 rs.getParam = function (cell,prop) {
- // debugger;
+  debugger;
 	let {paramsByCell,paramsByRow,paramsByCol,globalParams,numRows} = this;
 	let {x,y} = cell;
 	let cellParams,rowParams,propv;
@@ -107,7 +107,7 @@ rs.globalParams = {randomizingFactor:0,sizePower:2,widthFactor:1,heightFactor:1,
 		};
 
 rs.colorSetter = function (shape,fc,cell) {
-  //debugger;
+  debugger;
 	let colorMap = this.getParam(cell,'colorMap');
 	if (!colorMap) {
 		debugger;
@@ -134,7 +134,7 @@ const interpolate = function (low,high,fr) {
 //let ranRows = undefined;//[8,16];
 rs.computeSize = function (cell) {
 	let {numCols,numRows,deltaX,deltaY} = this;
-	//debugger;
+	debugger;
 	let {x,y} = cell;
 	if ((x===40) && (y===2000)) {
 //		debugger;
@@ -186,50 +186,37 @@ rs.computeValuesToSave = function () {
 	return vls;
 }
 
-rs.setDims = function (cell,shape,wdf,htf) { // scale the shape to fit the cell, then scale it by wdf, htr 
-  debugger;  
+rs.setDims = function (cell,shape,wdf,htf) { // scale the shape to fit the cell, then scale it by wdf, htr
+//rs.setDims = function (shape,wdf,htf) { // scale the shape to fit the cell, then scale it by wdf, htr
+   
   let corners = this.cellCorners(cell);
   let c0 = corners[0];
   let c1 = corners[1];
   let c2 = corners[2];
   let c3= corners[3];
-  /*let p11 = this.pointAt(pnts,x,y);
-	let p12 =  this.pointAt(pnts,x,y+1);
-	let p21 =  this.pointAt(pnts,x+1,y);
-	let p22 =  this.pointAt(pnts,x+1,y+1);
-  	let corners = [p11,p21,p22,p12];
-*/
-  let xd = c0.distance(c1);
-  let yd = c0.distance(c3);
-  console.log('xd',xd,'yd',yd,'wdf',wdf,'htf',htf);
-  if (xd > 10) {
-    debugger;
-  }
-  let nm = shape.shape_name;
-  if (nm === 'rectangle') {
-    shape.width = wdf * xd;
-    shape.height = htf * yd;
-  } else if (nm === 'circle') {
-    shape.dimension = wdf * Math.min(xd,yd);
-  } else if (nm === 'polygon') {
-    let center = c0.plus(c3).times(0.5);
-    let rCorners = this.displaceArray(corners,center);
-		let sCorners = this.scaleArray(rCorners,sz.x,sz.y);
-		shape.corners = sCorners;
-  }
-	shape.show();
-  shape.update();
-  return shape;
+  let d0 = c0.distance(c1);
+  let d1 = c0.distance(c1);
 }
-
+/*	if (width < 0) {
+		debugger;
+		shape.hide();
+		return;
+	}
+	if (shape.setDims) {
+		shape.setDims(width,height);
+	} else {
+		shape.width = width;
+		shape.height = height;
+	}*/
+	shape.show();
+}
 
 rs.shapeUpdater = function (shape,rvs,cell,center) {
 	let {shapes,rectP,circleP,deltaX,deltaY,numRows,numCols,sizeValues,width,height} = this;
-	//debugger;
+	debugger;
 	let propVs = this.getParams(cell,['randomizingFactor','genCircles','sizeMap','widthFactor','heightFactor','genCircles','genPolygons']);
 	let {randomizingFactor,sizeMap,widthFactor,heightFactor,genCircles,genPolygons,shapeProto} = propVs;
 	let sz;
-  debugger;
 	if (!shape) {
 		degbugger;
 	}
@@ -246,7 +233,7 @@ rs.shapeUpdater = function (shape,rvs,cell,center) {
 		shape.hide();
 		return;
 	}
-	/*if (genPolygons) {
+	if (genPolygons) {
 		let corners = this.cellCorners(cell);
 		let mcnt = center.minus();
 		let rCorners = this.displaceArray(corners,mcnt);
@@ -267,10 +254,10 @@ rs.shapeUpdater = function (shape,rvs,cell,center) {
 		this.colorSetter(shape,sz.fc,cell);
    	shape.dimension = Math.min(d0,d1)* (sz.x);
 		return shape;
-	}*/
+	}
 
-	//let fszx = deltaX * (sz.x);
-	let fszx = (sz.x);
+	let fszx = deltaX * (sz.x);
+	//let fszx = (sz.x);
 	/*let cellCenterX = (-0.5*width) + (cell.x +0.5)* deltaX;
 	let cellLeftX = cellCenterX - 0.5*sz.x;
 	let gridLeftX= -0.5*width;
@@ -285,13 +272,12 @@ rs.shapeUpdater = function (shape,rvs,cell,center) {
 		let chopX = cellRightX - gridRightX;
 		fszx = deltaX*(sz.x) - 2*chopX;
 	}*/
-//	if (genCircles) {
-//		shape.dimension = deltaX * (sz.x);
-//	} else {
-		//this.setDims(cell,shape,fszx,deltaY*(sz.y));
-	this.setDims(cell,shape,fszx,(sz.y));
+	if (genCircles) {
+		shape.dimension = deltaX * (sz.x);
+	} else {
+		this.setDims(shape,fszx,deltaY*(sz.y));
 		//this.setDims(shape,fszx,(sz.y));
-//	}
+	}
 	this.colorSetter(shape,sz.fc,cell);
 	shape.update();
 	return shape;

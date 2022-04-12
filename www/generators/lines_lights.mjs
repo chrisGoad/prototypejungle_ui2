@@ -13,7 +13,7 @@ let topParams = {width:wd,height:ht,numLines:3000,framePadding:0.1*wd}
 Object.assign(rs,topParams);
 
 rs.initProtos = function () {
-  core.assignPrototypes(this,'lineP',linePP);
+  this.lineP = linePP.instantiate();
   this.lineP.stroke = 'white';
   this.lineP['stroke-width'] = .015; 	
 }  

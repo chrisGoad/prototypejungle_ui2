@@ -14,7 +14,7 @@ let topParams = {width:1.5*ht,height:ht,backgroundColor:'rgb(200,2,2)', backgrou
 Object.assign(item,topParams);
 
 item.initializeProtos= function () {
-  core.assignPrototypes(this,'elementP1',elementPP1);
+  this.elementP1',elementPP1);
     this.elementP1.fill = 'rgb(140,140,140)';
     this.elementP1.fill = 'red';
     this.elementP1.delta =20;
@@ -22,9 +22,9 @@ item.initializeProtos= function () {
     this.elementP1.circleP.fill = 'black';
     this.elementP1.lineP.stroke = 'red';
     this.elementP1.lineP.stroke = 'white';
-   core.assignPrototypes(this,'elementP2',elementPP2);
+   this.elementP2',elementPP2);
   this.elementP2.fill = 'red';
-  core.assignPrototypes(this,'elementP3',elementPP3);
+  this.elementP3',elementPP3);
   this.elementP3.stroke = 'white';  
   //this.elementP3.stroke = 'black';  
  // this.elementP3.stroke = 'magenta';  

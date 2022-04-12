@@ -14,6 +14,7 @@ sections: [
  [0,'lines_tangents','generators',1,'tangents',{likes:0,posted:0,category:'lines'}], 
  [0,'web_stripes','instances',1,'stripes',{likes:0,posted:0,category:'lines'}], 
  [0,'web_stripe','generators',1,'stripe',{likes:0,posted:0,category:'lines'}], 
+ [0,'grid_void_variant','generators',1,'void variant',{likes:0,posted:0,category:'lines'}], 
 // [0,'grid_decos','generators','square','Deco',{likes:0,posted:0,category:'drop'}],
  /*     				[0,'grid_star_maps','generators','wide2','Star Maps',2],  // HH
 

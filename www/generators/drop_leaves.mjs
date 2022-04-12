@@ -23,7 +23,7 @@ Object.assign(rs,topParams);
 
 
 rs.initProtos = function () {
-	core.assignPrototypes(this,'lineP',linePP);
+	this.lineP = linePP.instantiate();
 	this.lineP.stroke = 'white';
 	this.lineP['stroke-width'] = .5;
 }  

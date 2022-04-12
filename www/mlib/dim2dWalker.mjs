@@ -124,7 +124,7 @@ item.valueAt = function (grid,i,j) {
   if (!grid) {
     debugger;
   }
-  debugger;
+ // debugger;
 	//let params = grid.params;
 	let {numRows,numCols,values,params} = grid;
   let rv =  grid.values[this.indexFor(numRows,i,j)];
@@ -154,7 +154,7 @@ item.genRandomGrid = function (tp,predecessor) {
     numCols++;
   }
   let walkParams;
-	debugger;
+	//debugger;
    //let kind,biasUp,numCols,numRows,step,stepx,stepy,stept,min,max,biasFun,constantFirstRow,
 	  //   backwards,convergenceFactor,convergenceValue,walkParams,correlated;
   //  let walkParams;
@@ -225,7 +225,7 @@ item.genRandomGrid = function (tp,predecessor) {
 		}*/
 	}
   let values = [];
-  debugger;
+  //debugger;
   let rs = {timeStep,values,numRows,numCols,params};
  // let rs = {timeStep,values,params};
   let n = numCols * numRows;
@@ -287,7 +287,7 @@ item.genRandomGrid = function (tp,predecessor) {
 			}
     i++;
   }
-  debugger;
+ // debugger;
   //return values;
   return rs;
 }
@@ -309,7 +309,7 @@ item.initRandomizer = function () {
 }
 item.setupRandomizer = function (tp,nm,params) {
 	if (nm === 'pattern') {
-		debugger;
+	//	debugger;
 	}
 	let kind = params.kind =  (tp === 'randomGridsForBoundaries')?'boundaries':'cells';
 	if (!params.numRows) {

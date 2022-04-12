@@ -56,7 +56,7 @@ sizeMap:{0:2,1:2,2:2,3:3,4:4,5:0,6:0}};
 
 rs.initProtos = function () {
 	
-	core.assignPrototypes(this,'rectP',rectPP);
+	this.rectP = rectPP.instantiate();
 	this.rectP.fill = 'blue';
   this.rectP['stroke-width'] = 0;
 	
@@ -361,7 +361,7 @@ rs.shapeGenerator = function (rvs,cell,center) {
 
 rs.initProtos = function () {
 	
-	core.assignPrototypes(this,'rectP',rectPP);
+	this.rectP = rectPP.instantiate();
 	this.rectP.fill = 'blue';
 	
 }  

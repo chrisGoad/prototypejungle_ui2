@@ -2,6 +2,7 @@
 
 
 let rs =  svg.Element.mk('<polyline/>');
+rs.shape_name = 'polyline';
 
 rs.stroke = "black";
 rs['stroke-width'] = 1;

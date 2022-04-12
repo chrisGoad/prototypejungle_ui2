@@ -14,7 +14,7 @@ let topParams = {width:wd,height:wd,numRows:nr,numCols:nr,framePadding:0.2*wd,fr
 Object.assign(rs,topParams);
 	
 rs.initProtos = function () {
-  core.assignPrototypes(this,'rectP',rectPP);
+  this.rectP = rectPP.instantiate();
   this.rectP.fill = 'white';
   this.rectP['stroke-width'] = 0;
 }  

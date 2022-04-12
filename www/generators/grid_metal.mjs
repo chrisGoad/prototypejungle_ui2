@@ -19,10 +19,10 @@ let rs = basicsP.instantiate();
   rs.loadFromPath = 0;
   
 rs.initProtos = function () {
-	core.assignPrototypes(this,'lineP',linePP);
+	this.lineP = linePP.instantiate();
 	this.lineP.stroke = 'rgb(255,255,255,1)';
 	this.lineP['stroke-width'] = 1;
-	core.assignPrototypes(this,'bLineP',linePP);
+	this.bLineP',linePP);
 	this.bLineP.stroke = 'rgb(100,100,0)';
 	this.bLineP['stroke-width'] = 1;
 }  

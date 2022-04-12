@@ -2,6 +2,7 @@
 
 
 let rs =  svg.Element.mk('<polygon/>');
+rs.shape_name = 'polygon';
 
 /* adjustable parameters */
 rs.fill = "transparent";

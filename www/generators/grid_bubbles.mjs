@@ -35,7 +35,7 @@ rs.setParams = function () {
 			
 
 rs.initProtos = function () {	
-	core.assignPrototypes(this,'circleP',circlePP);
+	this.circleP = circlePP.instantiate();
   this.circleP.fill = 'white';
   this.circleP.stroke = 'rgba(0,0,0,.8)';
 	this.circleP['stroke-width'] = 2;  

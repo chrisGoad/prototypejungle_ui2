@@ -12,34 +12,38 @@ addParamsByCellMethods(rs);
 rs.setName('grid_void_variant');
 
 
+let wd = 400;
+let nr = 64;
+//let topParams = {pointJiggle:1,numRows:nr,numCols:nr,width:wd,height:wd,backgroundColor:'red',framePadding:0.15*wd};
+let topParams = {pointJiggle:0,numRows:nr,numCols:nr,width:wd,height:wd,backgroundColor:'black',framePadding:0.15*wd};
+Object.assign(rs,topParams);
+//let baseSize = wd/(2*nr);
+let baseSize = 0.5;
+
 rs.pByC  = {
   widthFactor:1,
   heightFactor:1,
-  maxSizeFactor:3,
+  maxSizeFactor:4,
   sizePower:2,
-  //sizeMap:  {0:1,1:1,2:2,3:4},
-  sizeMap:  {0:1,1:1,2:1,3:1},
+  sizeMap:  {0:baseSize,1:baseSize,2:baseSize,3:baseSize,4:baseSize},
   colorMap: 
     {
-      0:`red`,
-      1:`yellow`,
-      2:`blue`,
-      3:`black`,
+      0:`cyan`,
+      1:`magenta`,
+      2:`green`,
+      3:`blue`,
+      4:`yellow`,
     }
 };
 rs.paramsByCell = function (cell) {
   return this.pByC;
 }
 	
-let wd = 100;
-let nr = 32;
-let topParams = {pointJiggle:1,numRows:nr,numCols:nr,width:wd,height:wd,backgroundColor:'red',framePadding:0.15*wd};
-Object.assign(rs,topParams);
 
 rs.initProtos = function () {
   let rectP = this.set('rectP',rectPP.instantiate()).hide();
   this.rectP.stroke = 'rgba(0,0,0,.8)';
-  this.rectP['stroke-width'] = 0.2;
+  this.rectP['stroke-width'] = 0;
 }
 
 

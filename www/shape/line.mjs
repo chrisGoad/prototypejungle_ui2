@@ -1,6 +1,7 @@
 import {rs as utils} from '/shape/utils.mjs';
 
 let item = svg.Element.mk('<line/>');
+item.shape_name = 'line';
 
 utils.setup(item);
 

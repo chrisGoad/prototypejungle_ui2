@@ -7,6 +7,7 @@ rs.dimension = 30;
 rs.fill = 'transparent';
 rs.stroke = 'black';
 rs['stroke-width']  = 1;
+rs.shape_name = 'circle';
 /* end adjustable parameters */
 
 // r can also be used for radius

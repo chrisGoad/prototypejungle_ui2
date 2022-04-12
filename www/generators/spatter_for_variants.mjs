@@ -12,11 +12,11 @@ rs.setName('spatter_for_variants');
 rs.which = 1;
 
 rs.initProtos = function () {
-  core.assignPrototypes(this,'lineP',linePP);
+  this.lineP = linePP.instantiate();
   this.lineP.stroke = 'rgb(255,255,255)';
   this.lineP['stroke-width'] = 1;
   this.lineP.dimension = 4;
-  core.assignPrototypes(this,'boundaryLineP',linePP);
+  this.boundaryLineP',linePP);
   this.boundaryLineP.stroke = 'rgb(255,255,0)';
   this.boundaryLineP['stroke-width'] = 1;
 }  

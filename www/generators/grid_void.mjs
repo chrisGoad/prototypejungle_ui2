@@ -45,18 +45,11 @@ rs.paramsByCell = function (cell) {
   return pByC;
 }
 	
-rs.globalParams = {genCircles:0,genPolygons:0,randomizingFactor:0};
+//rs.globalParams = {genCircles:0,genPolygons:0,randomizingFactor:0};
 let wd = 96;
 
-let topParams = {
-  pointJiggle:1,	
-  numRows : 96,
-  numCols : 96,
-  width:wd,
-  height:wd,
-  backgroundColor : 'red',
-  framePadding:15,
-}
+let topParams = {pointJiggle:1,numRows:96,numCols:96,width:wd,height:wd,backgroundColor:'red',framePadding:15};
+
 Object.assign(rs,topParams);
 
 rs.initProtos = function () {
@@ -65,11 +58,10 @@ rs.initProtos = function () {
   this.rectP['stroke-width'] = 0.2;
 }
 
-
 rs.initialize = function () {
   this.initProtos();
   this.pByC.shapeProto = this.rectP;
-  this.addBackground();
+  this.addRectangle(this.backgroundColor);
   this.generateGrid();
   let rect = this.set('rect',this.rectP.instantiate()).show();
   let rdim = 10;

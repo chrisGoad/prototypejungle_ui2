@@ -10,7 +10,7 @@ let rs = basicsP.instantiate();
 
 addGridMethods(rs);
 addRandomMethods(rs);
-rs.setName('grid_2');
+rs.setName('grid_droplets');
 
 
 let wd = 300;

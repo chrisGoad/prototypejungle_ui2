@@ -48,6 +48,7 @@ module.exports = [
         [330,'grid_cloudy_sky'],
         [340,'grid_two_quilts'],
         [350,'grid_incoming'],
+        [350,'grid_comet'],
         [360,'drop_leaves'],
         [370,'drop_metal_2'],
         [380,'grid_bump'],

@@ -1,0 +1,51 @@
+{{boilerplate1}}
+<p class = 'title'>basics</p>
+
+<p>This module is present in every image generator. The methods defined by this module are as follows:</p>
+<precode>
+setName(nm:string);
+</precode>
+<p><span class='textVar'>nm</span> This determines where the image will be placed when the <span class='textVar'>Save Image</span>  and <span class='textVar'>Save Image (High Res)</span> buttons are pressed. For example,</p>
+<precode>
+rs.setName('grid_droplets');
+</precode>
+<p> means that, when the image generator containing this call is loaded into PrototypeJungle, and the <span class='textVar'>Save Image</span>   button is pressed, the image will be saved at  <span class='textVar'>&lt;prototypejungle&gt;/images/grid_droplets.jpg</span> . The <span class='textVar'>Save Image (High Res)</span> button saves a higher resolution variant of the same image at 
+ <span class='textVar'>&lt;prototypejungle&gt;/images/grid_droplets.high_res.jpg</span>. The lower resolution variant is adequate for web display, but the higher resolution variant is needed for some image printing purposes (e.g. by <a href="https://mpix.com">mpix.com</a>.</p>
+ <hr/>
+<precode>
+this.addFrame();
+</precode>
+<p> is called from within the <span class='textVar'>initialize</span> method of an image generator, and takes its parameters from the image generation object (the <span class='textVar'>this</span> of <span class='textVar'>initialize</span>). The image generator may set the frame parameters <span class='textVar'>frameStroke</span>, <span class='textVar'>frameFill</span>, and  <span class='textVar'>framePadding</span>.  Then the method <span class='textVar'>addFrame()</span> will generate a rectangular  frame around the image as determined by these parameters. Here is their meaning:</p>
+<p><span class='textVar'>frameStroke</span> and <span class='textVar'>frameFill</span> are the stroke and fill respectively of the frame. The default value for <span class='textVar'>frameFill</span> is "transparent", and for <span class='textVar'>frameStroke</span>, "rgb(2,2,2)" These defaults produce a frame which is  undetectable by the human eye against a black background. However, it is detectable by software which automatically adjusts image scaling for fit in the process of display or printing. Hence the frame facility can be used to control this scaling. I use it in this way for printing at <a href="https://mpix.com">mpix.com</a>.  </p>
+<p> <span class='textVar'>framePadding determines the amount of excess width and height of the frame relative to the image. This utilizes the  <span class='textVar'>width and  <span class='textVar'>height parameters of the image, so they must be defined for this to work.</p>
+<precode>
+this.addRectangle({width:number,height:number,position:Point,stroke:number,fill:number});
+</precode>
+<p>
+Here are the relevant lines of code from the <a href="grid.html">grid example</a></p>
+
+<precode>
+
+import {rs as basicsP} from '/generators/basics.mjs';
+
+let rs = basicsP.instantiate();
+
+let nr = 64;
+let wd = 200;
+let topParams = {numRows:nr,numCols:nr,width:wd,height:wd,pointJiggle:4,framePadding:0.15*wd,frameStroke:'white'};
+Object.assign(rs,topParams);
+
+....
+
+rs.initialize = function () {
+   this.setupRandomGridForBoundaries('v',{step:30,min:100,max:250}); 
+   this.initProtos();
+   this.addFrame();
+  this.initializeGrid();
+}
+
+</precode>
+
+{{endplate}}
+
+

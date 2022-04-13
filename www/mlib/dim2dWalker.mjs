@@ -175,7 +175,7 @@ item.genRandomGrid = function (tp,predecessor) {
     let theParams = walkParams?walkParams(i,j,timeStep):params;
     if (theParams.numRows) {
       numRows = theParams.numRows;
-      numCols = theParams.Cols;
+      numCols = theParams.numCols;
 		}
 	  let pcor = theParams.correlation;
 		correlated = pcor || (pcor === undefined);		

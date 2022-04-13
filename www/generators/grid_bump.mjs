@@ -15,7 +15,7 @@ rs.setName('grid_bump');
 let nR = 60;
 let aR = 1;
 let pwd = 1300; // width after projection
-let topParams = {saveImage:1,saveJson:1,loadFromPath:0,numRows:nR,numCols:aR*nR,width:nR,height:nR,frameWidth:pwd,frameHeight:pwd,pointJiggle:1,
+let topParams = {numRows:nR,numCols:aR*nR,width:nR,height:nR,frameWidth:pwd,frameHeight:pwd,pointJiggle:1,
 lineLength:15,sphereCenter:Point3d.mk(0,0,-30),sphereDiameter:35,focalPoint:Point3d.mk(0,0,50),focalLength:10,cameraScaling:100} ;
 
 Object.assign(rs,topParams);

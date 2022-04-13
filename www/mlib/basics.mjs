@@ -67,8 +67,71 @@ item.addSignature = function() {
 }
 
 item.numFrames = 0;
+item.numRects =0;
+item.addRectangle  = function (iparams) {
+	debugger;
+  let params;
+  if (typeof iparams === 'string') {
+    params = {fill:iparams}
+  } else {
+    params = iparams;
+  } 
+  let {width,height,position,fill,stroke,stroke_width=0} = params;
+  if (!width) {
+    width = this.width;
+   }
+   if (!height) {
+    height = this.height;
+   }
+   if (!width || !fill) {
+    return;
+   }
+  let rect  = this.set('brect'+this.numRects,rectPP.instantiate());
+  this.numRects = this.numRects + 1;
+  rect.fill = fill;
+  if (stroke) {
+    rect.stroke = stroke;
+  }
+  if (stroke_width) {
+    rect['stroke-width'] = stroke_width;
+  } 
+  rect.width = width;
+  rect.height = height;
+	
+  rect.update();
+	rect.show();
+  return rect;
+}
+
 // add a stripe around the image, to control the size of the jpg when saved
 item.addFrame = function (params) {
+	debugger;
+  let {width,height} = this;
+  let fparams = params?params:this;
+	let {frameStroke:frs,frameFill:frf,framePadding:frp,
+	frameWidth,frameHeight,frameStrokeWidth:fswd,framePos:pos,signIt} =  fparams;
+  let frpd = frp!==undefined;
+  if (!(frpd || frameWidth)) {
+    return;
+  }
+  if (!frs) {
+    frs = 'rgb(2,2,2)';
+  }
+  fswd = fswd?fswd:2;
+  frf = frf?frf:'transparent';
+	if (frameWidth) {
+		width = frameWidth;
+	  height = frameHeight;
+	} else {
+		width = width + frp;
+		height = height + frp;
+	}
+  let rect =  this.addRectangle({width,height,fill:frf,stroke:frs,strokeWidth:fswd,position:pos});
+	return rect;
+}
+
+// add a stripe around the image, to control the size of the jpg when saved
+item.addFramee = function (params) {
 	debugger;
   let {width,height} = this;
   let fparams = params?params:this;
@@ -88,7 +151,6 @@ item.addFrame = function (params) {
   frr.fill = frf?frf:'transparent';
 	frr.stroke = frs;
   frr['stroke-width'] = fswd;
-
 	if (frameWidth) {
 		frr.width = frameWidth;
 		frr.height = frameHeight;

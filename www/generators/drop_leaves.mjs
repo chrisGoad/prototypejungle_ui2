@@ -43,12 +43,9 @@ rs.genSeeds = function () {
   return [segs,lines];
 }
 
-
-
 rs.genDropStruct = function (p) {
   return this.genSegmentsFan(this.lineP,p,'white');//,params);
 }
-
 
 rs.initialSegments = function () {
   let {width,height,lineP} = this; 

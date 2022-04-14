@@ -27,7 +27,7 @@ let  webParams = {width:wd,height:ht,numRows:2,numCols:1000,framePadding:0.15*wd
 
 Object.assign(WebP,webParams);
 
-let stripes = rs.set('stripes',ArrayShape.mk());
+let stripes = rs.set('stripes',arrayShape.mk());
 let numStripes = 5;
 for (let i=0;i<numStripes;i++) {
 	 let stripe = WebP.instantiate();
@@ -43,7 +43,7 @@ Object.assign(rs,topParams);
 
 rs.initialize = function () {
  // core.root.backgroundColor = 'rgb(100,20,20)';
-  core.root.backgroundColor = 'black';
+  
   this.initProtos();
   this.addFrame();
 	//this.initBasis();

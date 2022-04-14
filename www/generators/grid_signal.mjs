@@ -18,7 +18,7 @@ let wd = 1000;
  
 
 rs.pByC  = {saveImage:true,numRows:ar*sqd,numCols:ar*sqd,width:wd,height:wd,pointJiggle:3,sizePower:2,maxSizeFactor:3,genCircles:1,
-opacity1:0.4,opacity2:0.4,opacity3:0.4,opacity4:0.4,randomizeOrder:1,widthFactor:3,heightFactor:.7,backgroundColor:'yellow',randomizingFactor:0.5,sizePower:3,
+opacity1:0.4,opacity2:0.4,opacity3:0.4,opacity4:0.4,randomizeOrder:1,widthFactor:3,heightFactor:.7,backFill:'yellow',randomizingFactor:0.5,sizePower:3,
 colorMap:{0: 'white',
           1:'white',
           2:'white',
@@ -34,7 +34,7 @@ rs.paramsByCell = function (cell) {
 
 rs.ordinalMap = {0:0,1:1,2:2,3:3,4:4,5:4,6:6,7:7};
 
-let topParams = {saveJson:0,loadFromPath:0,randomizeOrder:0,orderByOrdinal:1,widthFactor:.4,heightFactor:.4,numRows:32,numCols:64,width:wd,height:wd,backgroundColor:'black',randomizingFactor:0.5}
+let topParams = {saveJson:0,loadFromPath:0,randomizeOrder:0,orderByOrdinal:1,widthFactor:.4,heightFactor:.4,numRows:32,numCols:64,width:wd,height:wd,backFill:'black',randomizingFactor:0.5}
 
 Object.assign(rs,topParams);
 rs.initProtos = function () {

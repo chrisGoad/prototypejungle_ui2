@@ -22,7 +22,7 @@ rs.shapeGenerator = function (rvs,cell) {
   let {shapes,lineP} = this;
   let col = cell.x;
   let inmiddle = (col > .333* this.numCols) && (col < 0.666* this.numCols);
-  let shape = ContainerShape.mk();
+  let shape = containerShape.mk();
   shapes.push(shape);
   let line0 = this.lineP.instantiate();
   let line1 = this.lineP.instantiate();
@@ -54,7 +54,7 @@ rs.shapeGenerator = function (rvs,cell) {
 	
 rs.initialize = function () {
   this.initProtos();
-  core.root.backgroundColor = 'black';
+  
   this.addFrame();
 	this.setupRandomGridForShapes('length',  {step:5,min:20,max:30});
 	this.setupRandomGridForShapes('direction', {step:0.2* Math.PI,min:1.95*Math.PI,max:2*Math.PI});

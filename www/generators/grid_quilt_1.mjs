@@ -59,7 +59,7 @@ rs.initialize = function () {
   this.addFrame();
   this.initProtos();
   this.globalParams.shapeProto = this.rectP;
-  core.root.backgroundColor = 'black';
+  
   this.generateGrid();
 }  
 

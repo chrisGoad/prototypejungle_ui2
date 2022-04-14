@@ -48,7 +48,7 @@ rs.paramsByCell = function (cell) {
 //rs.globalParams = {genCircles:0,genPolygons:0,randomizingFactor:0};
 let wd = 96;
 
-let topParams = {pointJiggle:1,numRows:96,numCols:96,width:wd,height:wd,backgroundColor:'red',framePadding:15};
+let topParams = {pointJiggle:1,numRows:96,numCols:96,width:wd,height:wd,backFill:'red',framePadding:15};
 
 Object.assign(rs,topParams);
 

@@ -58,7 +58,7 @@ rs.genEltDescription = function (n) {
   // let {innerRows,deltaX,rectP1,rectP2,innerPresent1,innerPresent2,saveState,whichElts,whichShape1,whichShape2} = this;
    let {innerRows,deltaX,rectP1,rectP2,eltDState1,eltDState2,saveState} = this;
    let eltDState = n===1?eltDState1:eltDState2;
-   let innerShapePs = [];// ArrayShape.mk();
+   let innerShapePs = [];// arrayShape.mk();
    let positions = this.genInnerGridPositions();
    let innerPresent = saveState?[]:eltDState[1];
    let whichShape;   

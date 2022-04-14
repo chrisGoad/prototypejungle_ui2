@@ -10,7 +10,7 @@ let bsz = 250;
 let ht = 450;
 let sqd = 32;
 let ar = 2;
-let topParams = {saveImage:true,numRows:ar*sqd,numCols:ar*sqd,width:300,height:300,pointJiggle:3,randomizeOrder:1,backgroundColor:'rgb(255,100,0)'};
+let topParams = {saveImage:true,numRows:ar*sqd,numCols:ar*sqd,width:300,height:300,pointJiggle:3,randomizeOrder:1,backFill:'rgb(255,100,0)'};
 Object.assign(rs,topParams);
 	
 rs.setName('grid_one_quilt');
@@ -62,7 +62,7 @@ rs.shapeGenerator = function (rvs,cell) {
 
 rs.initialize = function () {
   this.initProtos();
-  this.addBackground();
+  this.addRectangle(this.backFill)();
   this.generateGrid();
 }
 

@@ -11,7 +11,7 @@ rs.setName('grid_enigma');
 let nr = 140;
 let wd = 1000;
 let topWd = 2000;
-let partParams = {width:wd,height:wd,numRows:nr,numCols:nr,pointJiggle:10,delta:(wd*0.8)/nr,backgroundColor:'blue',randomizeOrder:1,fromLeft:1,up:0};
+let partParams = {width:wd,height:wd,numRows:nr,numCols:nr,pointJiggle:10,delta:(wd*0.8)/nr,backFill:'blue',randomizeOrder:1,fromLeft:1,up:0};
 let topParams = {width:topWd,height:topWd,framePadding:0.15*topWd};
 Object.assign(rs,topParams);
 
@@ -52,12 +52,12 @@ rs.addFan = function (nm,fromLeft,up) {
 
 
 rs.initialize = function () {
-  core.root.backgroundColor = 'black';
+  
   this.initProtos();
   this.addFrame();
   let fwd  = partParams.width;
   let mv = 0.4*fwd;
-  Object.assign(this,{'width':2.0*fwd,'height':2.0*fwd,backgroundColor:'rgb(255,255,255)'});
+  Object.assign(this,{'width':2.0*fwd,'height':2.0*fwd,backFill:'rgb(255,255,255)'});
   let g00 = this.addGrid('g00',0,0);
   g00.moveto(Point.mk(-mv,-mv));
   let g01 = this.addGrid('g01',1,1);

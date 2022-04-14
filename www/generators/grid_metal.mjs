@@ -26,7 +26,7 @@ Object.assign(rs,topParams);
 rs.shapeGenerator = function (rvs) {
   debugger;
   let shapes = this.shapes;
-  let shape = ContainerShape.mk();
+  let shape = containerShape.mk();
   // shapes.push(shape);
   let line0 = this.lineP.instantiate();
   let line1 = this.lineP.instantiate();
@@ -65,7 +65,7 @@ rs.boundaryLineGenerator = function (end0,end1,rvs,cell) {
 
 rs.initialize = function () {
   this.initProtos();
-  core.root.backgroundColor = 'black';
+  
   this.addFrame();
   this.setupRandomGridForShapes('shade', {step:30,min:50,max:250});
   this.setupRandomGridForShapes('direction', {step:0.05* Math.PI,min:0.95*Math.PI,max:2*Math.PI});

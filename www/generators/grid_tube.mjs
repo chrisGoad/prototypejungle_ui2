@@ -34,7 +34,7 @@ rs.initProtos = function () {
 }
 
 rs.boundaryLineGenerator = function (end0,end1,rvs,cell) {
-  core.root.backgroundColor = 'black';
+  
   let lines = this.lines;
   let line = this.bLineP.instantiate();
   // lines.push(line);
@@ -47,7 +47,7 @@ rs.boundaryLineGenerator = function (end0,end1,rvs,cell) {
 }
 
 rs.regionLineGenerator =   function (end0,end1,rvs,cell) {
-  core.root.backgroundColor = 'black';
+  
   let rlines = this.rlines;
   let line = this.rLineP.instantiate();
   r// lines.push(line);

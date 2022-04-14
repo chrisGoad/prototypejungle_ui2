@@ -79,7 +79,7 @@ rs.boundaryLineGenerator = function (p11,p21,rvs) {
 }
 
 rs.initialize = function () {
-  core.root.backgroundColor = 'black';
+  
   this.initProtos();
   this.globalParams.shapeProto = this.circleP;
   this.generateGrid();

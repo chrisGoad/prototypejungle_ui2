@@ -15,9 +15,9 @@ Object.assign(rs,topParams);
 let numStripes = 5;
 
 rs.initialize = function () {
-  core.root.backgroundColor = 'black';
+  
   this.addFrame();
-  let stripes = this.set('stripes',ArrayShape.mk());
+  let stripes = this.set('stripes',arrayShape.mk());
   for (let i = 0;i<numStripes;i++) {
    let stripe = stripeP.instantiate().show();
 	 stripes.push(stripe);

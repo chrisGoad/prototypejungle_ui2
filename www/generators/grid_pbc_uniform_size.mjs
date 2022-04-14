@@ -14,8 +14,8 @@ rs.setName('grid_void_variant');
 
 let wd = 400;
 let nr = 64;
-//let topParams = {pointJiggle:1,numRows:nr,numCols:nr,width:wd,height:wd,backgroundColor:'red',framePadding:0.15*wd};
-let topParams = {pointJiggle:0,numRows:nr,numCols:nr,width:wd,height:wd,backgroundColor:'black',framePadding:0.15*wd};
+//let topParams = {pointJiggle:1,numRows:nr,numCols:nr,width:wd,height:wd,backFill:'red',framePadding:0.15*wd};
+let topParams = {pointJiggle:0,numRows:nr,numCols:nr,width:wd,height:wd,backFill:'black',framePadding:0.15*wd};
 Object.assign(rs,topParams);
 //let baseSize = wd/(2*nr);
 let baseSize = 0.5;
@@ -50,7 +50,7 @@ rs.initProtos = function () {
 rs.initialize = function () {
   this.initProtos();
   this.pByC.shapeProto = this.rectP;
-  this.addBackground();
+  this.addRectangle(this.backFill)();
   this.generateGrid();
   this.addFrame();
 }

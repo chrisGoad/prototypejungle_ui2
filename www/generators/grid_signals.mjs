@@ -40,7 +40,7 @@ rs.initialize = function () {
   grid4.pByC.randomizingFactor = 2;
   let {width} = grid1;
   let {height} = grid1;
-  this.addBackground();
+  this.addRectangle(this.backFill)();
   this.set('grid1',grid1);
   this.set('grid2',grid2);
   this.set('grid3',grid3);

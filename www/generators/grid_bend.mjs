@@ -15,7 +15,7 @@ addRandomMethods(rs);
 let nr = 140;
 nr = 100;
 let wd = 1000;
-let topParams = {width:wd,height:wd,numRows:nr,numCols:nr,pointJiggle:10,delta:(wd*0.8)/nr,backgroundColor:'black',randomizeOrder:1,fromLeft:1,turnUp:1};
+let topParams = {width:wd,height:wd,numRows:nr,numCols:nr,pointJiggle:10,delta:(wd*0.8)/nr,backFill:'black',randomizeOrder:1,fromLeft:1,turnUp:1};
 Object.assign(rs,topParams);
 
 const pointAlongL = function (startPnt,turningPnt,x,up) {
@@ -74,9 +74,9 @@ rs.shapeGenerator = function (rvs,cell) {
 
 rs.initialize = function () {
   this.initProtos();
-  this.addBackground();
+  this.addRectangle(this.backFill)();
   this.setupRandomGridForShapes('level', {step:30,min:0,max:255});
-  this.set('llines',ArrayShape.mk());
+  this.set('llines',arrayShape.mk());
   this.generateGrid(); 
 }
 

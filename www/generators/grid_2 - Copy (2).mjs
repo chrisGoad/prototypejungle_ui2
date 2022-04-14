@@ -23,7 +23,7 @@ let rs = basicsP.instantiate();
 
 let wd = 300;
 let nr= 40
-let topParams = {width:wd,height:wd,numRows:nr,numCols:nr,backgroundColor:'rgb(200,0,0)'};
+let topParams = {width:wd,height:wd,numRows:nr,numCols:nr,backFill:'rgb(200,0,0)'};
 Object.assign(rs,topParams);
 
   
@@ -91,8 +91,8 @@ rs.boundaryLineGenerator = function (end0,end1,rvs,cell) {
 rs.initialize = function () {
 	this.initProtos();
     this.addFrame();
-    this.addBackground();
-  core.root.backgroundColor = 'black';
+    this.addRectangle(this.backFill)();
+  
   let {numRows,numCols} = this;
 	/*let numRows = this.numRows= 41;
 	let numCols = this.numCols = 41;

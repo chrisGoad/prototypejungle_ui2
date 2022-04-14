@@ -35,7 +35,7 @@ rs.genSeeds = function () {
   
 rs.initialize = function () {
   debugger;
-  core.root.backgroundColor = 'black';
+  
   this.initProtos();
   this.addFrame();
 	this.generateDrop();

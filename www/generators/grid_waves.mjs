@@ -52,7 +52,7 @@ rs.shapeGenerator = function (rvs,cell) {
 rs.initialize = function () {
   debugger;
   this.initProtos();
-  core.root.backgroundColor = 'black';
+  
   this.addFrame();
   let rmin = 0;
   let rmax = 50;

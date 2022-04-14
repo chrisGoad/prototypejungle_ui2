@@ -36,7 +36,7 @@ let base =20;
 let gridParams ={numRows:base,numCols:base*rfac,width:150*wfac,height:100*wfac,includeLetters:1,letterWidth:3,letterHeight:3,fractionInked:0.4,lettersPerWord:5};
 
 rs.initialize = function () {
-  core.root.backgroundColor = 'black';
+  
   this.addFrame();
   let lines = this.set('lines',basicsP.instantiate());
   addLinesMethods(lines);

@@ -57,7 +57,7 @@ rs.initialSegments = function () {
 
   
 rs.initialize = function () {
-  core.root.backgroundColor = 'black';
+  
   this.initProtos();
   this.addFrame();
   this.generateDrop();

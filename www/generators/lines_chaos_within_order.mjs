@@ -27,7 +27,7 @@ Object.assign(rs,topParams);
 
 rs.drawGrid = function () {
   let {gridLineP} = this;
-  let gridLines = this.set('gridLines',ArrayShape.mk());
+  let gridLines = this.set('gridLines',arrayShape.mk());
   let {delta,width,height} = this;
   let numHlines = Math.ceil(height/delta);
   let numVlines = Math.ceil(width/delta);
@@ -50,7 +50,7 @@ rs.drawGrid = function () {
 rs.initialize = function () {
   this.initProtos();
   let {lineP,circleP,circleRadius,numLines} = this;
-  core.root.backgroundColor = 'black';
+  
   this.addFrame();
   this.drawGrid();
   let circleShape =  this.set('visCircle',this.circleP.instantiate().show());
@@ -58,7 +58,7 @@ rs.initialize = function () {
   circleShape.update();
   let circle = geom.Circle.mk(Point.mk(0,0),circleRadius);
   circle.onCircle=1;
-  let lines = this.set('lines',ArrayShape.mk());
+  let lines = this.set('lines',arrayShape.mk());
   this.generateLines({src:circle,srcOn:1,dst:circle,dstOn:1,numLines,lineP:lineP});
 }	
 

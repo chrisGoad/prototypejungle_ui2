@@ -50,7 +50,7 @@ rs.shapeGenerator = function (rvs,cell,cnt) {
 
 
 rs.initialize = function () {
-  core.root.backgroundColor = 'black';
+  
   this.initProtos();
   let {numRows,numCols,lowJiggle,highJiggle,lowJiggleStep,highJiggleStep} = this;
   this.addFrame();

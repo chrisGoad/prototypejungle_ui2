@@ -27,7 +27,7 @@ rs.initProtos = function () {
 }
 
 rs.initialize = function () {
-  core.root.backgroundColor = 'black';
+  
 	this.initProtos();
   let pnts =this.genRandomWalk(gridParams);
 	rs.generateWeb(pnts,this.lineP);

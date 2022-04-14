@@ -45,7 +45,7 @@ rs.initProtos = function () {
 rs.initialize = function () {
   this.initProtos();
   this.pByC.shapeProto = this.rectP;
-  this.addBackground();
+  this.addRectangle(this.backFill)();
   this.generateGrid();
   this.addFrame();
 }

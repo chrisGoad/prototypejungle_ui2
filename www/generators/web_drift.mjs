@@ -67,7 +67,7 @@ rs.pairFilter = function (i,j) {
 rs.initialize = function () {
   this.initProtos();
   let {maxConnectorLength:mxCln,minConnectorLength:mnCln=0,width,lineP} = this;
-  core.root.backgroundColor = 'black';
+  
   this.setupShapeRandomizer('connectorLn',{step:80,stept:0.5,min:50,max:500});
   this.addFrame();
   this.generateDrop();

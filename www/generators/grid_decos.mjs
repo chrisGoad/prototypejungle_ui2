@@ -16,7 +16,7 @@ let grid2= rs.set('grid2',gridDecoP.instantiate());
 
 rs.setName('grid_decos');
 
-let topParams = {randomizeOrder:0,orderByOrdinal:1,width:300,height:300,pointJiggle:0,backgroundColor:'black',numRows:64,numCols:64,ordinalMap:[0,1,2,3,4,5,6]};
+let topParams = {randomizeOrder:0,orderByOrdinal:1,width:300,height:300,pointJiggle:0,backFill:'black',numRows:64,numCols:64,ordinalMap:[0,1,2,3,4,5,6]};
 
 Object.assign(grid0,topParams);
 Object.assign(grid1,topParams);
@@ -81,7 +81,7 @@ setPbr(0,pbr1);
 setPbr(0,pbr2);
 debugger;
 rs.initialize = function () {
-	core.root.backgroundColor = 'black';
+	
 	let wd = this.grid0.width;
 	this.grid0.initialize();
   this.grid1.theShapeOrder = this.grid0.theShapeOrder;

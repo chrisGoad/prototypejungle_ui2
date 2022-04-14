@@ -45,7 +45,7 @@ rs.shapeGenerator = function (rvs) {
     shape.show();
     return shape;
   }
-  shape = ContainerShape.mk();
+  shape = containerShape.mk();
   let line0 = this.lineP.instantiate();
   let line1 = this.lineP.instantiate();
   shape.set('line0',line0);
@@ -81,7 +81,7 @@ rs.boundaryLineGenerator = function (end0,end1,rvs,cell) {
 }
 
 rs.initialize = function () {
-  core.root.backgroundColor = 'black';
+  
   this.addFrame();
   draw.vars.jpgPadFactor = 1.1;
   this.initProtos();

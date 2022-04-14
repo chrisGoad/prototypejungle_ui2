@@ -7,7 +7,7 @@ let rs = basicsP.instantiate();
 
 addGridMethods(rs);
 rs.setName('grid_3');
-let innerProto = ContainerShape.mk();
+let innerProto = containerShape.mk();
 addGridMethods(innerProto);
 
 let onr = 10;
@@ -58,7 +58,7 @@ rs.shapeGenerator = function (rvs,cell) {
 	}
 		
 rs.initialize = function () {
-	core.root.backgroundColor = 'black';
+	
   this.addFrame();	
 	this.initProtos();
 	this.generateGrid();

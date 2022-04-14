@@ -3,13 +3,13 @@
 core.require('/shape/circleWithGrid.js','/shape/rectangle.js','/shape/line.js','/gen0/Basics.js','/mlib/lines.js',//'/random/addSpacedPoints3.js',
   function (elementPP1,elementPP2,elementPP3,item,addMethods) {
 debugger;
-//let item = ContainerShape.mk();
+//let item = containerShape.mk();
 
 addMethods(item);
 item.setName('lines0_20');
 
 let ht = 400;
-let topParams = {width:1.5*ht,height:ht,backgroundColor:'rgb(200,2,2)', backgroundPadding:0.1*ht};
+let topParams = {width:1.5*ht,height:ht,backFill:'rgb(200,2,2)', backgroundPadding:0.1*ht};
 
 Object.assign(item,topParams);
 
@@ -56,11 +56,11 @@ item.initialize = function () {
   this.initializeProtos();
   //core.root.backgroundColor = 'blue';
  // core.root.backgroundColor = 'rgb(10,10,125)';
-  //core.root.backgroundColor = 'black';
+  //
   //this.width = 600;
  // this.width = 1200;
   //this.height = 400;
-  this.addBackground();
+  this.addRectangle(this.backFill)();
   this.numPoints = 300;//0;
   this.numPoints = 100;
   this.minRadius = 2;
@@ -70,8 +70,8 @@ item.initialize = function () {
   this.shortenBy = 0;
   this.numLines = 1000;
   this.shapeExpansionFactor = 1;
-  let points = this.set("points",ArrayShape.mk());
-  let radii = this.set("radii",ArrayShape.mk());
+  let points = this.set("points",arrayShape.mk());
+  let radii = this.set("radii",arrayShape.mk());
   this.points.push(Point.mk(0,0));
   this.radii.push(120);
   //this.generatePoints();

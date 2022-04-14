@@ -8,7 +8,7 @@ let rs = basicP.instantiate();
 
 addPointGenMethods(rs);
 
-let spokes = rs.set('spokes',ArrayShape.mk());
+let spokes = rs.set('spokes',arrayShape.mk());
 
 rs.setName('web_spokes');
 
@@ -29,7 +29,7 @@ rs.initProtos = function () {
 }  
 
 rs.initialize = function () {
-  core.root.backgroundColor = 'black';
+  
 	this.initProtos();
   let {numSpokes,lineP} = this;
 

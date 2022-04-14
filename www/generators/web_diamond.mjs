@@ -84,7 +84,7 @@ rs.pairFilter = function (i,j) {
 
 
 rs.initialize = function () {
-  core.root.backgroundColor = 'black';
+  
 	this.initProtos();
 	this.addFrame();
 	let pnts = this.genGrid(this);

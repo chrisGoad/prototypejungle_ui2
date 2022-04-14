@@ -8,7 +8,7 @@ let rs = basicsP.instantiate();
 addDropMethods(rs);
 addSegsetMethods(rs);
 rs.setName('drop_horizon');
-let topParams = {width:200,height:200,maxDrops:100000,dropTries:50,lineLength:2,backgroundColor:undefined,minSeparation:0}
+let topParams = {width:200,height:200,maxDrops:100000,dropTries:50,lineLength:2,backFill:undefined,minSeparation:0}
 
 Object.assign(rs,topParams);
 
@@ -61,7 +61,7 @@ rs.genDropStruct = function (p) {
 }
   
 rs.initialize = function () {
-  core.root.backgroundColor = 'black';
+  
   this.addFrame();
   this.initProtos();
   this.generateDrop();

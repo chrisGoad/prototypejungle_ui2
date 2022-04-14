@@ -46,7 +46,7 @@ rs.computeState  = function () {
 }
 
 rs.initialize = function () {
-  core.root.backgroundColor = 'black';
+  
   this.initProtos();
   this.addFrame();
   if (this.saveState) {

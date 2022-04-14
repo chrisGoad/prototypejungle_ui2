@@ -24,7 +24,7 @@ rs.shapeGenerator = function (rvs,cell) {
   let {rectP,deltaX,deltaY} = this;
   let rb = Math.random() > 0.5;
   debugger;
-  let shape  = ContainerShape.mk();
+  let shape  = containerShape.mk();
   let inner = this.rectP.instantiate();
   shape.set('i',inner);
   if (rb) {
@@ -46,7 +46,7 @@ rs.shapeGenerator = function (rvs,cell) {
 }
 		
 rs.initialize = function () {
-  core.root.backgroundColor = 'black';
+  
   this.initProtos();
   this.addFrame();
   let rnp = {min:0,max:0,step:0}

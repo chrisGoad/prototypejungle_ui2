@@ -24,7 +24,7 @@ rs.initProtos = function () {
 
 rs.shapeGenerator = function (rvs) {
   let shapes = this.shapes;
-  let rs = ContainerShape.mk();
+  let rs = containerShape.mk();
   let factor2 = 1;
   const setup = (nm,shp,idx,count) => {
     rs.set(nm,shp);
@@ -61,7 +61,7 @@ rs.boundaryLineGenerator = function (end0,end1,rvs,cell) {
 
 rs.initialize = function () {
   let {numRows,numCols} = this;
-  core.root.backgroundColor = 'black';
+  
   this.addFrame();
   this.initProtos();
   this.setupRandomGridForBoundaries('color', {step:35,min:150,max:250});

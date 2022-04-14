@@ -35,7 +35,6 @@ rs.initProtos = function () {
 rs.initialize = function () {
   this.initProtos();
   let {focalPoint,focalLength,cameraScaling,lineP} = this;
-  core.root.backgroundColor = 'black';
   this.zone = geom.Circle.mk(Point.mk(0,0),0.5*this.width);
   var pnts = this.doDrops(30);
   this.camera = geom.Camera.mk(focalPoint,focalLength,cameraScaling,'z');

@@ -31,7 +31,7 @@ Object.assign(rs,topParams);
 rs.shapeGenerator = function (rvs,cell) {
   let {rectP,shapes,height} = this;
   let w = rvs.which;
-  let shape  = ContainerShape.mk();
+  let shape  = containerShape.mk();
   let inner = this.rectP.instantiate();
   shape.set('i',inner);
   let v = rvs.v;
@@ -59,7 +59,7 @@ rs.shapeGenerator = function (rvs,cell) {
 
 rs.initialize = function () { 
   let {numRows,numCols} = this;
-  core.root.backgroundColor = 'black';
+  
   this.initProtos();
   this.addFrame();
   let rnp = {};

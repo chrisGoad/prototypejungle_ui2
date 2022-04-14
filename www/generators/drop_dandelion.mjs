@@ -55,7 +55,7 @@ rs.genDropStruct = function (p) {
 }
 
 rs.initialize = function () {
-  core.root.backgroundColor = 'black';
+  
   this.initProtos();
 	this.addFrame();
 	this.generateDrop();

@@ -19,7 +19,7 @@ rs.initProtos = function () {
 }  
 
 rs.initialize = function () {
-  core.root.backgroundColor = 'black';
+  
   let {numLines,lineP} = this;
   this.addFrame();
   this.initProtos();

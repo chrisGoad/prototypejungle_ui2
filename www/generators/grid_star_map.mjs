@@ -7,7 +7,7 @@ addGridMethods(rs);
 
 let nr = 64;
 let wd = 200;
-let topParams = {numRows:nr,numCols:nr,width:wd,height:wd,chance:0.02,spacing:5,phase:0,backgroundColor:'rgb(0,0,100)'};
+let topParams = {numRows:nr,numCols:nr,width:wd,height:wd,chance:0.02,spacing:5,phase:0,backFill:'rgb(0,0,100)'};
 
 Object.assign(rs,topParams);
 
@@ -37,7 +37,7 @@ rs.shapeGenerator = function (rvs,cell) {
 
 rs.initialize = function () {
 	this.initProtos();
-	this.addBackground();
+	this.addRectangle(this.backFill)();
 	this.generateGrid();
 }
 		

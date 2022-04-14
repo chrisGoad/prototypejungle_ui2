@@ -71,7 +71,7 @@ rs.initialize = function () {
  this.initProtos();
  this.pByC.shapeProto = this.polygonP;
  this.addFrame();
- core.root.backgroundColor = 'black';
+ 
  this.camera = geom.Camera.mk(focalPoint,focalLength,cameraScaling,'z');
   this.generateGrid();
 }

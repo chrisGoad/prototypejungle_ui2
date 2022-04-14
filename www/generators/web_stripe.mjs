@@ -29,7 +29,7 @@ Object.assign(rs,topParams);
 let  gridParams = {width:wd,height:ht,numRows:nr,numCols:200}
 
 rs.initialize = function (clr) {
-  core.root.backgroundColor = 'black';
+  
   this.initProtos(clr);
 	let pnts = this.genGrid(gridParams);
   this.generateWeb(pnts,this.lineP);

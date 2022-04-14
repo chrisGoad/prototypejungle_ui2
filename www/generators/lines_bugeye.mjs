@@ -58,7 +58,7 @@ item.initialize = function () {
  // this.angleMax = 10;
  // this.angleMin = -10;
  // core.root.backgroundColor = 'rgb(24, 24, 69)';
- core.root.backgroundColor = 'black';
+ 
  
  
  //this.lineCenterDistance = 40;

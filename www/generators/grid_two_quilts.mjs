@@ -7,7 +7,7 @@ let topParams = {width:1.5*ht,height:ht,framePadding:0.1*ht,frameVisible:0};
 Object.assign(rs,topParams);
 rs.setName('grid_two_quilts');
 rs.initialize = function() {
-  this.addBackground();
+  this.addRectangle(this.backFill)();
   let grid0 = rs.set('grid0',quiltP.instantiate());
   let grid1 = rs.set('grid1',quiltP.instantiate());
   grid0.initialize();

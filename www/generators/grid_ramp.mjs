@@ -58,7 +58,7 @@ rs.computeState  = function () {
 rs.initialize = function () {
   debugger;
   let {saveState} = this;
-  core.root.backgroundColor = 'black';
+  
   this.initProtos();
   this.addFrame();
   if (saveState) {

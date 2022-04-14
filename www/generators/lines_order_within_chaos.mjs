@@ -3,7 +3,7 @@
 core.require('/shape/circleWithGrid.js','/shape/rectangle.js','/shape/line.js','/gen0/Basics.js','/mlib/lines.js',//'/random/addSpacedPoints3.js',
   function (elementPP1,elementPP2,elementPP3,item,addMethods) {
 debugger;
-//let item = svg.Element.mk('<g/>');
+//let item = ContainerShape.mk();
 
 addMethods(item);
 item.setName('lines0_20');
@@ -70,8 +70,8 @@ item.initialize = function () {
   this.shortenBy = 0;
   this.numLines = 1000;
   this.shapeExpansionFactor = 1;
-  let points = this.set("points",core.ArrayNode.mk());
-  let radii = this.set("radii",core.ArrayNode.mk());
+  let points = this.set("points",ArrayShape.mk());
+  let radii = this.set("radii",ArrayShape.mk());
   this.points.push(Point.mk(0,0));
   this.radii.push(120);
   //this.generatePoints();

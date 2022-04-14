@@ -65,6 +65,12 @@ item.addSignature = function() {
 	//sig['font-size'] = "30"	;
 	sig.setScale(vertical?vSigScale:sigScale);
 }
+item.mkContainerShape = function () {
+  return  svg.Element.mk('<g/>');
+}
+item.mkArrayShape = function () {
+  return core.ArrayNode.mk();
+}
 
 item.numFrames = 0;
 item.numRects =0;

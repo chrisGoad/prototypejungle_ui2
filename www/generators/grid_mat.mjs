@@ -22,7 +22,7 @@ rs.shapeGenerator = function (rvs,cell) {
   let {shapes,lineP} = this;
   let col = cell.x;
   let inmiddle = (col > .333* this.numCols) && (col < 0.666* this.numCols);
-  let shape = svg.Element.mk('<g/>');
+  let shape = ContainerShape.mk();
   shapes.push(shape);
   let line0 = this.lineP.instantiate();
   let line1 = this.lineP.instantiate();

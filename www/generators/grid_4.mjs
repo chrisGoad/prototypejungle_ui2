@@ -24,7 +24,7 @@ rs.initProtos = function () {
 
 rs.shapeGenerator = function (rvs) {
   let shapes = this.shapes;
-  let rs = svg.Element.mk('<g/>');
+  let rs = ContainerShape.mk();
   let factor2 = 1;
   const setup = (nm,shp,idx,count) => {
     rs.set(nm,shp);

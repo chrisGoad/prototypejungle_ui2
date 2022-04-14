@@ -45,7 +45,7 @@ rs.shapeGenerator = function (rvs) {
     shape.show();
     return shape;
   }
-  shape = svg.Element.mk('<g/>');
+  shape = ContainerShape.mk();
   let line0 = this.lineP.instantiate();
   let line1 = this.lineP.instantiate();
   shape.set('line0',line0);

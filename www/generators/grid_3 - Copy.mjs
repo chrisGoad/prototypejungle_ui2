@@ -7,7 +7,7 @@ let rs = basicsP.instantiate();
 
 addGridMethods(rs);
 rs.setName('grid_3');
-let innerProto = svg.Element.mk('<g/>');
+let innerProto = ContainerShape.mk();
 addGridMethods(innerProto);
 
 let onr = 10;

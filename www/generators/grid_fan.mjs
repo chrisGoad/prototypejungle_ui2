@@ -67,7 +67,7 @@ rs.initialize = function () {
   this.initProtos();
   this.addBackground();
   this.setupRandomGridForShapes('level', {step:30,min:0,max:255});
-  this.set('llines',core.ArrayNode.mk());
+  this.set('llines',ArrayShape.mk());
   this.generateGrid(); 
 }
 

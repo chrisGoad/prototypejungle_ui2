@@ -23,7 +23,8 @@ rs.shapeGenerator = function (rvs,cell) {
   let shapes = this.shapes;
   let {rectP,deltaX,deltaY} = this;
   let rb = Math.random() > 0.5;
-  let shape  = svg.Element.mk('<g/>');
+  debugger;
+  let shape  = ContainerShape.mk();
   let inner = this.rectP.instantiate();
   shape.set('i',inner);
   if (rb) {

@@ -8,7 +8,7 @@ let rs = basicP.instantiate();
 
 addPointGenMethods(rs);
 
-let spokes = rs.set('spokes',core.ArrayNode.mk());
+let spokes = rs.set('spokes',ArrayShape.mk());
 
 rs.setName('web_spokes');
 

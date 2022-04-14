@@ -26,7 +26,7 @@ Object.assign(rs,topParams);
 rs.shapeGenerator = function (rvs) {
   debugger;
   let shapes = this.shapes;
-  let shape = svg.Element.mk('<g/>');
+  let shape = ContainerShape.mk();
   // shapes.push(shape);
   let line0 = this.lineP.instantiate();
   let line1 = this.lineP.instantiate();

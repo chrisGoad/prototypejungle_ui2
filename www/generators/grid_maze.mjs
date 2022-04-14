@@ -31,7 +31,7 @@ Object.assign(rs,topParams);
 rs.shapeGenerator = function (rvs,cell) {
   let {rectP,shapes,height} = this;
   let w = rvs.which;
-  let shape  = svg.Element.mk('<g/>');
+  let shape  = ContainerShape.mk();
   let inner = this.rectP.instantiate();
   shape.set('i',inner);
   let v = rvs.v;

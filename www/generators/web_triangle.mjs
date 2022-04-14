@@ -13,7 +13,7 @@ import {rs as addWebMethods} from '/mlib/web.mjs';
 let rs = basicP.instantiate();
 addPointGenMethods(rs);
 
-let stripes = rs.set('stripes',svg.Element.mk('<g/>'));
+let stripes = rs.set('stripes',ContainerShape.mk());
 
 rs.setName('web_triangle');
 
@@ -36,9 +36,9 @@ Object.assign(rs,topParams);
 Object.assign(rs,gridParams);
 	
 let numWalks = 6;
-let polygons = rs.set('polygons',core.ArrayNode.mk());
+let polygons = rs.set('polygons',ArrayShape.mk());
 
-let webs = rs.set('webs',core.ArrayNode.mk());
+let webs = rs.set('webs',ArrayShape.mk());
 for (let i=0;i<numWalks;i++) {
 	let w = basicP.instantiate();
 	addWebMethods(w);

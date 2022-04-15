@@ -42,7 +42,7 @@ let  gridParams = {width:wd,height:ht,numRows:nr,numCols:200}
 Object.assign(rs,topParams);
 
 rs.initialize = function () {
- // core.root.backgroundColor = 'rgb(100,20,20)';
+ // setBackgroundColor( = 'rgb(100,20,20)';
   
   this.initProtos();
   this.addFrame();

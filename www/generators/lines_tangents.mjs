@@ -36,7 +36,8 @@ rs.circleWithBackground= function(nm,pnt,radius,circleP) {
 
 
 rs.initialize = function () {
-  core.root.backgroundColor = 'gray';
+ // setBackgroundColor( = 'gray';
+  this.setBackgroundColor('gray');
   debugger;
   this.initProtos();
   this.addFrame();

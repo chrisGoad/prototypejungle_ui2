@@ -18,7 +18,7 @@ Object.assign(rs,topParams);
 rs.addGrid = function (nm,fromLeft,turnUp) {
   let g = bendP.instantiate();
   Object.assign(g,partParams);
-  g.backgroundColor = 'black';
+  g.backFill = 'black';
   g.fromLeft = fromLeft;
   g.turnUp = turnUp;
   this.set(nm,g);
@@ -44,7 +44,7 @@ rs.addFan = function (nm,fromLeft,up) {
   f.up = up;
   f.height = 0.78*f.width;
   f.width = 0.78*f.width;
-  f . backgroundColor = 'blue';
+  f . backFill = 'blue';
   this.set(nm,f);
   f.initialize();
   return f;

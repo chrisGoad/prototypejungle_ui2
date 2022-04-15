@@ -96,7 +96,7 @@ grid2.boundaryLineGenerator = function (end0,end1,rvs,cell) {
 }
 rs.initialize = function () {
  // debugger;
- // core.root.backgroundColor = 'blue';
+ // setBackgroundColor( = 'blue';
   let {focalPoint,focalLength,cameraScaling} = this.grid1;
   this.addFrame();
 

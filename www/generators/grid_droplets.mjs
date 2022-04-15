@@ -60,7 +60,7 @@ rs.initialize = function () {
   this.initProtos();
   this.addFrame();
   //this.addFrame({framePadding:0.3*this.width,frameStroke:'white'});
-  this.addRectangle(this.backFill)();
+  this.addRectangle(this.backFill);
   this.setupRandomGridForBoundaries('yellow',{step:30,min:50,max:200});
   this.setupRandomGridForShapes('dimension',{step:2,min:1,max:4});
   this.setupRandomGridForShapes('which',{step:0.3,min:0,max:1});

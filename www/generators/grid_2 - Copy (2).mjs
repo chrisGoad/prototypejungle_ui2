@@ -91,7 +91,7 @@ rs.boundaryLineGenerator = function (end0,end1,rvs,cell) {
 rs.initialize = function () {
 	this.initProtos();
     this.addFrame();
-    this.addRectangle(this.backFill)();
+    this.addRectangle(this.backFill);
   
   let {numRows,numCols} = this;
 	/*let numRows = this.numRows= 41;

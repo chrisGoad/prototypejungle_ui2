@@ -62,7 +62,7 @@ rs.shapeGenerator = function (rvs,cell) {
 
 rs.initialize = function () {
   this.initProtos();
-  this.addRectangle(this.backFill)();
+  this.addRectangle(this.backFill);
   this.generateGrid();
 }
 

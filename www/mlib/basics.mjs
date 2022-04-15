@@ -63,25 +63,18 @@ item.addSignature = function() {
 	sig['font-family'] = 'Trattatello';
 	sig['font'] = 'fantasy';
 	//sig['font-size'] = "30"	;
-	sig.setScale(vertical?vSigScale:sigScale);
+	sig.setScale(vertical?vSigScale:sigScale)
 }
-item.mkContainerShape = function () {
-  return  svg.Element.mk('<g/>');
-}
-item.mkArrayShape = function () {
-  return core.ArrayNode.mk();
-}
+
 
 item.numFrames = 0;
 item.numRects =0;
 item.addRectangle  = function (iparams) {
 	debugger;
-  let params;
-  if (typeof iparams === 'string') {
-    params = {fill:iparams}
-  } else {
-    params = iparams;
-  } 
+  if (!iparams) {
+    return;
+  }
+  let params = (typeof iparams === 'string')?{fill:iparams}:iparams;
   let {width,height,position,fill,stroke,stroke_width=0} = params;
   if (!width) {
     width = this.width;
@@ -411,8 +404,8 @@ item.circleToCircleShape = function (nm,c,circleP) {
   return crc;
 }
  
- 
-
+core.root.backgroundColor = 'black';
+item.setBackgroundColor = (clr) => core.root.backgroundColor = clr; 
 
 
 }

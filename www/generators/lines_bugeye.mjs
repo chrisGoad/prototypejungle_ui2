@@ -57,7 +57,7 @@ item.initialize = function () {
  // this.numLines=2;
  // this.angleMax = 10;
  // this.angleMin = -10;
- // core.root.backgroundColor = 'rgb(24, 24, 69)';
+ // setBackgroundColor( = 'rgb(24, 24, 69)';
  
  
  

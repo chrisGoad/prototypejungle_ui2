@@ -5,7 +5,7 @@ import {rs as basicsP} from '/generators/basics.mjs';
 
 
 let rs = basicsP.instantiate();
-rs.setName('grid_grid_1_i_4',13);
+rs.setName('grid_grid_1_i_4',14);
 let wd = 400;
 let nr = 20;
 let fwd = 1.2  * wd;

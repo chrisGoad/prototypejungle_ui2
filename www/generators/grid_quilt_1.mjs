@@ -27,7 +27,7 @@ let newTopParams = {
   pointJiggle:2,  
   numRows : 64,
   numCols : 64,
-  backgroundColor : 'white'
+  backFill : 'white'
 }
 Object.assign(rs,newTopParams);
 

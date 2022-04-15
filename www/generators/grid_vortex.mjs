@@ -54,7 +54,7 @@ let topParams = {
   angleMin : -180,
   angleMax : 180,
   center : Point.mk(0,0),
-  //backgroundColor : 'black'
+  //backFill : 'black'
 }
 Object.assign(rs,topParams);
 

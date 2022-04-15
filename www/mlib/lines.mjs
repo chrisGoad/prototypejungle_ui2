@@ -55,7 +55,7 @@ item.randomPointInRect = function (rect,on) {
  }
  
 item.randomSegOnRect = function (rect,on) {
-  debugger;
+  //debugger;
   let sides;
   if (!sides) {
     sides = this.sides = rect.sides();

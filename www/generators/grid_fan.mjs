@@ -65,7 +65,7 @@ rs.shapeGenerator = function (rvs,cell) {
 
 rs.initialize = function () {
   this.initProtos();
-  this.addRectangle(this.backFill)();
+  this.addRectangle(this.backFill);
   this.setupRandomGridForShapes('level', {step:30,min:0,max:255});
   this.set('llines',arrayShape.mk());
   this.generateGrid(); 

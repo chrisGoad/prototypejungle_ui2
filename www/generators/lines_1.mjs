@@ -27,7 +27,8 @@ rs.initialize = function () {
   let quad10 = this.set('quad10',fromCenterP.instantiate().show());
   quad10.width = quad10.height = 0.5*wd;
   quad10.lineColor = 'black';
-  quad10.backgroundColor = 'white';
+  debugger;
+  quad10.backFill = 'white';
   quad10.initialize();
   quad10.moveto(Point.mk(mv,-mv));
   let quad01= this.set('quad01',cobwebP.instantiate().show());
@@ -37,7 +38,7 @@ rs.initialize = function () {
   let quad11 = this.set('quad11',cobwebP.instantiate().show());
   quad11.width = quad11.height = 0.5*wd;
   quad11.lineColor = 'black';
-  quad11.backgroundColor = 'white';
+  quad11.backFill = 'white';
   quad11.initialize();
   quad11.moveto(Point.mk(mv,mv));
 

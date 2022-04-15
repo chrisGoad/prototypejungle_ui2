@@ -54,13 +54,13 @@ item.genRandomUnitVector= function () {
 item.initialize = function () {
   debugger;
   this.initializeProtos();
-  //core.root.backgroundColor = 'blue';
- // core.root.backgroundColor = 'rgb(10,10,125)';
+  //setBackgroundColor( = 'blue';
+ // setBackgroundColor( = 'rgb(10,10,125)';
   //
   //this.width = 600;
  // this.width = 1200;
   //this.height = 400;
-  this.addRectangle(this.backFill)();
+  this.addRectangle(this.backFill);
   this.numPoints = 300;//0;
   this.numPoints = 100;
   this.minRadius = 2;

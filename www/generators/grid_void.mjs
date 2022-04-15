@@ -61,7 +61,7 @@ rs.initProtos = function () {
 rs.initialize = function () {
   this.initProtos();
   this.pByC.shapeProto = this.rectP;
-  this.addRectangle(this.backgroundColor);
+  this.addRectangle(this.backFill);
   this.generateGrid();
   let rect = this.set('rect',this.rectP.instantiate()).show();
   let rdim = 10;

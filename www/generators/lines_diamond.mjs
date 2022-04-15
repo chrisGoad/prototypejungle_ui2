@@ -20,7 +20,7 @@ rs.initProtos = function () {
 }  
 
 rs.initialize = function () {
-  core.root.backgroundColor = 'white';
+  this.setBackgroundColor('white');
   debugger;
   this.initProtos();
     this.addFrame();

@@ -22,7 +22,7 @@ rs.initProtos = function () {
 }  
 
 rs.initialize = function () {
-  root.backgroundColor = 'black';
+  root.backFill = 'black';
   this.initProtos();
   let pnts = this.genRings(this);
   this.generateWeb(pnts,this.lineP);

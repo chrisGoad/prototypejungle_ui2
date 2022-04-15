@@ -61,7 +61,6 @@ rs.genDropStruct = function (p) {
 }
   
 rs.initialize = function () {
-  
   this.addFrame();
   this.initProtos();
   this.generateDrop();

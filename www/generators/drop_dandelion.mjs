@@ -30,9 +30,9 @@ numSeeds:15};
 Object.assign(rs,topParams);
 
 rs.initProtos = function () {
-	 this.lineP = linePP.instantiate();
-	this.lineP.stroke = 'white';
-	this.lineP['stroke-width'] = .5;
+  this.lineP = linePP.instantiate();
+  this.lineP.stroke = 'white';
+  this.lineP['stroke-width'] = .5;
 }  
 
 rs.segParams = function () {
@@ -47,7 +47,7 @@ rs.genSeeds = function () {
   debugger;
   let {width,lineP} = this;
   this.ringRadius = 0.15 * 0.5 * width;
-  return this.ringSeeds(lineP,'transparent');	
+  return this.ringSeeds(lineP,'transparent');  
 }
 
 rs.genDropStruct = function (p) {
@@ -57,8 +57,8 @@ rs.genDropStruct = function (p) {
 rs.initialize = function () {
   
   this.initProtos();
-	this.addFrame();
-	this.generateDrop();
+  this.addFrame();
+  this.generateDrop();
 }
 
 export {rs};

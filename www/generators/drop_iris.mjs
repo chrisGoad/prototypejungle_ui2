@@ -46,7 +46,6 @@ rs.computeState  = function () {
 }
 
 rs.initialize = function () {
-  
   this.initProtos();
   this.addFrame();
   if (this.saveState) {

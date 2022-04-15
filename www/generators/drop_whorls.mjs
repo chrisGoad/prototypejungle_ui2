@@ -34,11 +34,9 @@ rs.genSeeds = function () {
 }
   
 rs.initialize = function () {
-  debugger;
-  
   this.initProtos();
   this.addFrame();
-	this.generateDrop();
+  this.generateDrop();
 }
 
 export {rs};

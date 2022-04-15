@@ -57,7 +57,6 @@ rs.initialSegments = function () {
 
   
 rs.initialize = function () {
-  
   this.initProtos();
   this.addFrame();
   this.generateDrop();

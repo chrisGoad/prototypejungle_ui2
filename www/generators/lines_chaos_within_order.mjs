@@ -50,7 +50,6 @@ rs.drawGrid = function () {
 rs.initialize = function () {
   this.initProtos();
   let {lineP,circleP,circleRadius,numLines} = this;
-  
   this.addFrame();
   this.drawGrid();
   let circleShape =  this.set('visCircle',this.circleP.instantiate().show());

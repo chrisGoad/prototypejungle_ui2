@@ -17,9 +17,9 @@ rs.initProtos = function () {
   this.rectP.height = 4;
 }  
 
-let nr = 25;
+let nr = 24;
 let ht = 20;
-let ar = 1;
+let ar = 1.5;
 let wd = ar*ht
 let nc = ar*nr;
 
@@ -59,11 +59,10 @@ rs.shapeGenerator = function (rvs,cell) {
 
 rs.initialize = function () { 
   let {numRows,numCols} = this;
-  
   this.initProtos();
   this.addFrame();
   let rnp = {};
-  const walkParams = function (i,j) {
+  const computeParams = function (i,j) {
     let t0 = 0.1*numCols;
     let t1 = 0.5*numCols;
     let t2 = 0.9*numCols;
@@ -86,7 +85,7 @@ rs.initialize = function () {
     rnp.step = step;
     return rnp;
   }  
-  this.setupRandomGridForShapes('which', {walkParams:walkParams});
+  this.setupRandomGridForShapes('which', computeParams);
   this.setupRandomGridForShapes('v', {step:30,min:150,max:250});
   this.addFrame();
   this.generateGrid();

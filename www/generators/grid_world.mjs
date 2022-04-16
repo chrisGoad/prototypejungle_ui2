@@ -45,7 +45,6 @@ rs.shapeGenerator = function (rvs,cell) {
 }
 
 rs.initialize = function () {
-	
 	this.initProtos();
   this.addFrame();
   this.setupRandomGridForShapes('blueOrWhite',{step:0.5,min:0,max:2});

@@ -59,7 +59,6 @@ rs.initialize = function () {
   this.addFrame();
   this.initProtos();
   this.globalParams.shapeProto = this.rectP;
-  
   this.generateGrid();
 }  
 

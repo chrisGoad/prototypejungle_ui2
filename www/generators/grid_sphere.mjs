@@ -71,7 +71,6 @@ rs.initialize = function () {
  this.initProtos();
  this.pByC.shapeProto = this.polygonP;
  this.addFrame();
- 
  this.camera = geom.Camera.mk(focalPoint,focalLength,cameraScaling,'z');
   this.generateGrid();
 }

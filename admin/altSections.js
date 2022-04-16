@@ -18,6 +18,8 @@ sections: [
  [0,'grid_void_variant','generators',1,'void variant',{likes:0,posted:0,category:'lines'}], 
  	 [0,'grid_decos','generators','wide2','Deco',{likes:0,posted:0,category:'grid'}],
  [0,'web_triangles','generators',1,'Triangles',{likes:5,posted:1,category:'web'}],
+ 		   [0,'grid_6','generators','square','Grid 6',{likes:0,posted:0,category:'grid'}],
+
 
 // [0,'grid_decos','generators','square','Deco',{likes:0,posted:0,category:'drop'}],
  /*     				[0,'grid_star_maps','generators','wide2','Star Maps',2],  // HH

@@ -35,6 +35,7 @@ rs.pByC  = {
       4:`yellow`,
     }
 };
+
 rs.paramsByCell = function (cell) {
   return this.pByC;
 }

@@ -16,7 +16,6 @@ item.initProtos = function () {
   this.lineP = linePP.instantiate().show();
   let left = this.left;
   this.lineP.stroke = left?'rgb(230,230,230)':'rgb(232, 159, 39)';
-  //this.lineP.radius = 150;
   this.lineP['stroke-width'] = .1; 	
 }  
 
@@ -37,7 +36,6 @@ item.initProtos = function () {
   let e1y = end1.y;
   let emy  = 0.5*(e0y+e1y);
   let miny = -0.5*height;
-  //let radius = 1000;//1000 - 8*(emy-miny);
   let line = lineP.instantiate().show();
   line.sweep = left?((emy<0)?1:0):((emy >= 0)?1:0);
   line.setEnds(end0,end1);
@@ -47,22 +45,11 @@ item.excludeLineFunction = function (sg) {
     let md = sg.middle();
     let ln = md.length();
     return(ln > 40);
-  //  return (ln >80) || (ln <40) 
   }
 
 item.initialize = function () {
   this.initProtos();
   let circle = Circle.mk(Point.mk(0,0),this.radius);
- // this.numLines=1000;
- // this.numLines=2;
- // this.angleMax = 10;
- // this.angleMin = -10;
- // setBackgroundColor( = 'rgb(24, 24, 69)';
- 
- 
- 
- //this.lineCenterDistance = 40;
- debugger;
   this.generateLines({src:circle,srcOn:1,dst:circle,dstOn:1,lineP:this.lineP,numLines:this.numLines});
  
 }	

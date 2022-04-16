@@ -52,7 +52,6 @@ rs.addFan = function (nm,fromLeft,up) {
 
 
 rs.initialize = function () {
-  
   this.initProtos();
   this.addFrame();
   let fwd  = partParams.width;

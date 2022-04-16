@@ -65,7 +65,6 @@ rs.boundaryLineGenerator = function (end0,end1,rvs,cell) {
 
 rs.initialize = function () {
   this.initProtos();
-  
   this.addFrame();
   this.setupRandomGridForShapes('shade', {step:30,min:50,max:250});
   this.setupRandomGridForShapes('direction', {step:0.05* Math.PI,min:0.95*Math.PI,max:2*Math.PI});

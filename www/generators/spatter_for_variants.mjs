@@ -16,7 +16,7 @@ rs.initProtos = function () {
   this.lineP.stroke = 'rgb(255,255,255)';
   this.lineP['stroke-width'] = 1;
   this.lineP.dimension = 4;
-  this.boundaryLineP',linePP);
+  this.boundaryLineP = linePP.instantiate();
   this.boundaryLineP.stroke = 'rgb(255,255,0)';
   this.boundaryLineP['stroke-width'] = 1;
 }  
@@ -59,8 +59,6 @@ rs.initialize = function () {
   this.initProtos();
   this.setupRandomGridForShapes('direction', {step:0.2* Math.PI,stept:0.1*Math.PI,min:0,max:2*Math.PI});
   if (which === 1) {
-    debugger;
-    //this.setupRandomGridForShapes('length', {step:5,min:2,max:5});
     this.setupRandomGridForShapes('length', {step:5,min:5,max:15});
   }
   if (which === 2) {

@@ -73,7 +73,6 @@ rs.computeState  = function () {
 rs.initialize = function () {
    this.initProtos();
    this.addFrame();
-   
    let {width:wd,height:ht,numCols:nc,saveState} = this;
    let fr =0.005;
    if (saveState) {

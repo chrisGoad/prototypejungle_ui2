@@ -50,7 +50,6 @@ rs.initProtos = function () {
 }
 
 rs.initialize = function () {
-  
   this.addFrame();
 	this.initProtos();
   this.pByC.shapeProto = this.circleP;

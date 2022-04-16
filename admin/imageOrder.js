@@ -26,6 +26,7 @@ module.exports = [
 
    [220,'random_stripes'],
    [260,'grid_distortion_field'],
+   [260,'grid_distortion_field_warped'],
    [265,'grid_quilt_2'],
  
     [270,'grid_mat'],

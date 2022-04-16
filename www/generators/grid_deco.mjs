@@ -29,14 +29,19 @@ rs.paramsByCell = null;
 rs.paramsByRow = null;
 rs.paramsByCol = null;
 
+let topParams = {randomizeOrder:0,orderByOrdinal:1,width:300,height:300,pointJiggle:0,backFill:'black',numRows:64,numCols:64,ordinalMap:[0,1,2,3,4,5,6]};
+
+Object.assign(rs,topParams);
 
 let oo = 0.1;
 let b = 255;
 let r = 255;
-rs.globalParams = {
+rs.pByC = {
 	opacityMap:{0:oo,1:oo,2:1,3:oo,4:oo,5:oo,6:oo},
-	widthFactor:2,
-	heightFactor:2,
+//	widthFactor:2,
+	widthFactor:1,
+//	heightFactor:2,
+	heightFactor:1,
 	sizePower:2,
 	maxSizeFactor:4,
 	genCircles: 0,
@@ -52,7 +57,14 @@ rs.globalParams = {
 4:`rgba(0,0,${r},${oo})`,
 5:`rgba(0,0,0,${oo})`,
 6:`rgba(${r},${r},0,${oo})`},
-sizeMap:{0:2,1:2,2:2,3:3,4:4,5:0,6:0}};
+//sizeMap:{0:1,1:0,2:0,3:0,4:0,5:0,6:0}
+sizeMap:{0:2,1:2,2:2,3:3,4:4,5:0,6:0}
+};
+
+
+rs.paramsByCelll = function (cell) {
+  return this.pByC;
+}
 
 rs.initProtos = function () {
 	
@@ -63,8 +75,8 @@ rs.initProtos = function () {
 }  
 
 rs.initialize = function () {
-	debugger;
 	this.initProtos();
+  this.pByC.shapeProto = this.rectP;
   this.generateGrid();
 }
 
@@ -105,7 +117,7 @@ rs.getParams = function (cell,props) {
 			 
 		
 
-rs.globalParams = {randomizingFactor:0,sizePower:2,widthFactor:1,heightFactor:1,maxSizeFactor:2,genCircles:0,genPolygons:0,
+rs.pByC = {randomizingFactor:0,sizePower:2,widthFactor:1,heightFactor:1,maxSizeFactor:2,genCircles:0,genPolygons:0,
 	 opacityMap:{0:0.4,1:0.4,2:0.4,3:0.4,4:0.4,5:0.4,6:0.4},
 	  colorMap:{0: (r,g,b,opacity) => `rgba(${r},0,0,${opacity})`,
 	            1: (r,g,b,opacity) => `rgba(${r},0,0,${opacity})`,
@@ -360,17 +372,15 @@ rs.shapeGenerator = function (rvs,cell,center) {
 
 
 rs.initProtos = function () {
-	
 	this.rectP = rectPP.instantiate();
 	this.rectP.fill = 'blue';
 	
 }  
 
 rs.initialize = function () {
-	debugger;
 	this.initProtos();
-//	this.finishProtos();
-	  this.generateGrid();
+  this.pByC.shapeProto = this.rectP;
+	this.generateGrid();
 }
 
 

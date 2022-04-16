@@ -81,7 +81,6 @@ rs.boundaryLineGeneratorr = function (p11,p21,rvs) {
 }
 
 rs.initialize = function () {
-  
   this.addFrame();
   this.initProtos();
   this.pByC.shapeProto = this.circleP;

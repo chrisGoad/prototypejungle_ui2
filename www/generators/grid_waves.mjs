@@ -52,7 +52,6 @@ rs.shapeGenerator = function (rvs,cell) {
 rs.initialize = function () {
   debugger;
   this.initProtos();
-  
   this.addFrame();
   let rmin = 0;
   let rmax = 50;

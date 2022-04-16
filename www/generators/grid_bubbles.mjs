@@ -54,10 +54,9 @@ colorMap:{0:'white',1:'white',2:'white',3:'white',4:`rgba(0,0,255,${oo})`,5:`rgb
 rs.globalParams = globalValues;
 
 rs.initialize = function () {
-  debugger;
 	this.initProtos();
   this.setParams();
-  this.addRectangle(this.backFill)(	);
+  this.addRectangle(this.backFill);
   this.addFrame();
 	this.generateGrid();
 }

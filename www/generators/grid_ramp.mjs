@@ -58,7 +58,6 @@ rs.computeState  = function () {
 rs.initialize = function () {
   debugger;
   let {saveState} = this;
-  
   this.initProtos();
   this.addFrame();
   if (saveState) {

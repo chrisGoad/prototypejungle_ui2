@@ -48,8 +48,6 @@ rs.boundaryLineGenerator= function (end0,end1,rvs,cell) {
 }
 
 rs.initialize = function () {
- // debugger;
- // setBackgroundColor( = 'blue';
   let {focalPoint,focalLength,cameraScaling} = this;
   this.addFrame();
   this.camera = geom.Camera.mk(focalPoint,focalLength,cameraScaling,'z');

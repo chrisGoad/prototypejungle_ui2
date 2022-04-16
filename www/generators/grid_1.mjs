@@ -80,7 +80,7 @@ rs.boundaryLineGenerator = function (end0,end1,rvs,cell) {
   return line;
 }
 
-rs.initialize = function () 
+rs.initialize = function () {
   this.addFrame();
   draw.vars.jpgPadFactor = 1.1;
   this.initProtos();

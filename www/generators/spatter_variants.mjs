@@ -15,8 +15,7 @@ grid1.which = 1;
 grid2.which = 2;
 grid3.which = 3;
 grid4.which = 4;
-
-  
+ 
 let wd = 1000;
 let topParams = {width:wd,height:wd,framePadding:0.1*wd};
 Object.assign(rs,topParams);

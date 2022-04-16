@@ -60,8 +60,6 @@ rs.boundaryLineGenerator = function (end0,end1,rvs,cell) {
 }
 
 rs.initialize = function () {
-  let {numRows,numCols} = this;
-  
   this.addFrame();
   this.initProtos();
   this.setupRandomGridForBoundaries('color', {step:35,min:150,max:250});

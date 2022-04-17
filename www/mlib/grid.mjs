@@ -41,7 +41,6 @@ item.linearInterpolator = function (a,b,fr) {
 }
 	
 item.sidesPositionFunction = function (i,j) {
-  debugger;
 	//let {numRows,numCols,sideA,sideB,Interpolator} = grid;
 	let {numRows,numCols,sideA:sideAi,sideB:sideBi,Interpolator} = this;
   let sideA = (typeof sideAi === 'function')?sideAi:function(fr) {return sideAi.pointAlong(fr);}
@@ -59,7 +58,6 @@ item.sidesPositionFunction = function (i,j) {
 	
 
  item.radialPositionFunction = function (i,j) {
-   debugger;
  //item.radialPositionFunction = function (grid,i,j) {
     let {numRows,numCols,angleMin=-180,angleMax=180,
 	       innerRadius,outerRadius,center,rotation=0} = this;
@@ -88,7 +86,6 @@ item.sidesPositionFunction = function (i,j) {
   
 
 item.genPointsFunction0 = function () {
-  debugger;
   let {numRows,numCols,positionFunction,points,rpoints} = this;
   //let pf = positionFunction?positionFunction:defaultPositionFunction;
 	let lx = Infinity;
@@ -122,7 +119,6 @@ item.genPointsFunction0 = function () {
     this.thePoints = rpoints;
   }
   if (this.genPoint3d) {
-  debugger;
     this.thePoints = this.thePoints.map((p) => this.camera.project(this.genPoint3d(p)));
     //let points3d = this.thePoints.map((p) => this.camera.project(this.genPoint3d(p)));
     //let points3d = this.thePoints.map((p) => p.times(1));
@@ -714,7 +710,6 @@ item.color2rgb = function (c) {
 
 item.jigglePoints = function () {
   let {numRows,numCols,randomizer,isPointJiggle,randomGridsForBoundaries} = this;
-	debugger;
   if (!isPointJiggle) {
     return;
   }
@@ -754,7 +749,7 @@ item.generateGrid = function () {
 	//,backgroundColor,backgroundPadding,backgroundPos,width,height,
 	//backgroundWidth,backgroundHeight} = this;
  //this.initBackgroundProtos();
- debugger;
+ //debugger;
  this.isPointJiggle = pointJiggle || pointJiggleParams;
  //this.addBackground();
 // this.addBackStripe();

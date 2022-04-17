@@ -70,7 +70,7 @@ rs.sizeFactor = function ( cell) {
 
 
 rs.colorSetter = function (shape,fc,cell) {
-  //debugger;
+  debugger;
 	let colorMap = this.getParam(cell,'colorMap');
 	if (!colorMap) {
 		debugger;

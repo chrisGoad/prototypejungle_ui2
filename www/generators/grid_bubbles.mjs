@@ -3,37 +3,21 @@ import {rs as circlePP} from '/shape/circle.mjs';
 import {rs as basicsP} from '/generators/basics.mjs';
 import {rs as addGridMethods} from '/mlib/grid.mjs';
 import {rs as addRandomMethods} from '/mlib/boundedRandomGrids.mjs';
-import {rs as addParamsByCellMethods} from '/mlib/ParamsByCell.mjs';
+import {rs as addPowerGridMethods} from '/mlib/PowerGrid.mjs';
 
 let rs = basicsP.instantiate();
 addRandomMethods(rs);
 addGridMethods(rs);
-addParamsByCellMethods(rs);
+addPowerGridMethods(rs);
 rs.setName('grid_bubbles');
 
-  let numRows = 64;
-	let ht = 1000;
+let numRows = 64;
+let ht = 1000;
 	
-	let topParams = {numRows:numRows,numCols:numRows,width:1.5*ht,height:ht,randomizeOrder:1,orderByOrdinal:0,backFill:'blue',backgroundPadding:0.05*ht,framePadding:0.2*ht};
-	Object.assign(rs,topParams);
+let topParams = {numRows:numRows,numCols:numRows,width:1.5*ht,height:ht,randomizeOrder:1,orderByOrdinal:0,backFill:'blue',backgroundPadding:0.05*ht,framePadding:0.2*ht};
+Object.assign(rs,topParams);
 	
-	
-rs.setParams = function () {
-	let hr = numRows/2;
-	let pbr = this.paramsByRow=[];
-	for (let i=0;i<numRows;i++)  {
-		if	(i%8 === 4) {
-			pbr[i] = {'sizePower':3};
-		}
-	}
-  this.paramsByCell=()=>{return {shapeProto:this.circleP}};
- 
-}
-
-//setParamsByRow();
 			
-			
-
 rs.initProtos = function () {	
 	this.circleP = circlePP.instantiate();
   this.circleP.fill = 'white';
@@ -43,19 +27,19 @@ rs.initProtos = function () {
 
 let oo = 0.3;
 let r = 255;
-let globalValues = {
-widthFactor:1,
-heightFactor:1,
-sizePower:2,
-maxSizeFactor:5,
-genCircles: 1,
-sizeMap:{0:1,1:2,2:4,3:8,4:0,5:0,6:0},
-colorMap:{0:'white',1:'white',2:'white',3:'white',4:`rgba(0,0,255,${oo})`,5:`rgba(0,0,0,${oo})`,6:`rgba(${r},${r},0,${oo})`}};
-rs.globalParams = globalValues;
+rs.powerParams = {
+  root:2,
+  genCircles: 1,
+  sizeMap:[1,2,4,8,0,0,0],
+  fillMap:['white','white','white','white',`rgba(0,0,255,${oo})`,`rgba(0,0,0,${oo})`,`rgba(${r},${r},0,${oo})`]
+}
 
+
+rs.shapeGenerator = function () {
+  return this.circleP.instantiate().show();
+}
 rs.initialize = function () {
 	this.initProtos();
-  this.setParams();
   this.addRectangle(this.backFill);
   this.addFrame();
 	this.generateGrid();

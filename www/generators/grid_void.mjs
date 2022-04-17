@@ -3,32 +3,23 @@ import {rs as rectPP} from '/shape/rectangle.mjs';
 import {rs as basicsP} from '/generators/basics.mjs';
 import {rs as addGridMethods} from '/mlib/grid.mjs';
 import {rs as addRandomMethods} from '/mlib/boundedRandomGrids.mjs';
-import {rs as addParamsByCellMethods} from '/mlib/ParamsByCell.mjs';
+import {rs as addPowerGridMethods} from '/mlib/powerGrid.mjs';
 let rs = basicsP.instantiate();
 
 addGridMethods(rs);
 addRandomMethods(rs);
-addParamsByCellMethods(rs);
+addPowerGridMethods(rs);
 rs.setName('grid_void');
 
 
-rs.pByC  = {
-  widthFactor:1,
-  heightFactor:1,
-  maxSizeFactor:3,
-  sizePower:2,
-  sizeMap:  {0:1,1:1,2:2,3:4},
-  colorMap: 
-    {
-      0:`rgba(${255},0,0,0)`,
-      1:`rgba(${255},0,0,0.4)`,
-      2:`rgba(255,255,255,0.4)`,
-      3:`rgba(0,0,0,1)`,
-    }
+rs.powerParams  = {
+  root:2,
+  sizeMap:  [1,1,2,4],
+  fillMap: [`rgba(255,0,0,0)`,`rgba(255,0,0,0.4)`,`rgba(255,255,255,0.4)`,`rgba(0,0,0,1)`]
 };
 
-rs.paramsByCell = function (cell) {
-  let {numRows,numCols,pByC} = this;
+rs.powerParamsByCell = function (cell) {
+  let {numRows,numCols,powerParams} = this;
   let {x,y} = cell;
   let cx = numCols/2;
   let cy = numRows/2;
@@ -40,9 +31,9 @@ rs.paramsByCell = function (cell) {
   let df = cd/maxd; //fractional distance from center; 1 = far as possible; 0 = at center
   let yf = y/numRows;
   let wf =  1.3* df;
-  pByC.widthFactor = wf;
-  pByC.heightFactor = wf;
-  return pByC;
+  powerParams.widthFactor = wf;
+  powerParams.heightFactor = wf;
+  return powerParams;
 }
 	
 //rs.globalParams = {genCircles:0,genPolygons:0,randomizingFactor:0};
@@ -58,16 +49,17 @@ rs.initProtos = function () {
   this.rectP['stroke-width'] = 0.2;
 }
 
+
+rs.shapeGenerator = function () {
+  return this.rectP.instantiate().show();
+}
+
 rs.initialize = function () {
   this.initProtos();
-  this.pByC.shapeProto = this.rectP;
   this.addRectangle(this.backFill);
   this.generateGrid();
-  let rect = this.set('rect',this.rectP.instantiate()).show();
   let rdim = 10;
-  rect.width = rdim;
-  rect.height = rdim;
-  rect.fill = 'black';
+  this.addRectangle({width:rdim,height:rdim,fill:'black'});
   this.addFrame();
 }
 

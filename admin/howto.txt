@@ -23,7 +23,9 @@ or
 
 
 cd c:\prototypejungle
-git add admin server www .gitignore
+git add admin js server www .gitignore
 git commit -m "misc"
 git push origin main
 
+cd c:\prototypejungle_clone
+git clone https://github.com/chrisGoad/prototypejungle.git

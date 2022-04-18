@@ -1,13 +1,76 @@
-{{boilerplate1}}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="description" content="Diagramming basedd on an open repository of prototype structures.">
+<title>PrototypeJungle</title>
+<link rel="stylesheet" type="text/css"  href="style.css"/>
+<link rel="stylesheet" type="text/css"  href="spectrum.css"/>
+<link rel="icon" href="/images/favicon.ico" />
+
+<style>
+	.theGrid {
+		display:grid;
+		padding-top:10px;
+		grid-template-columns:1fr 4fr 1fr;
+	}
+  .indent {
+		padding-left:20px;
+	}
+  .indent2 {
+		padding-left:40px;
+	}
+  .codeVar {
+		font-style:italic;
+	}  
+  
+  .textVar {
+		font-weight:bold;
+    font-size:12pt
+	}
+  .plainText {
+		font-weight:normal;
+    font-size:12pt
+	}
+  .title {
+		font-weight:bold;
+    font-size:16pt;
+    text-align:center;
+	}
+  .source {
+    font-size:16pt;
+    text-align:center;
+	}
+ .section {
+   padding-top:30px;
+		font-weight:bold;
+    font-size:15pt;
+	}
+  .blank_row
+{
+    height: 10px !important; /* overwrites any other rules */
+    background-color: #FFFFFF;
+}
+td {
+  borderr: 1px solid rgb(190,190,190);
+  padding-left: 20px;
+}
+</style>
+</head>
+<body style="background-color:white;font-size:14pt"> 
+<div class="theGrid">
+<div></div>
+<div>
+
 <p class="title">Installation</a></p>
 
 
 <p>First download this zip, or clone from github.  You can place the PrototypeJungle directory anywhere you like. Install <a href="https://nodejs.org/node">node</a>, if it is not already present on your machine. In a shell, rev up the server:</p>
 
-<precode>
+<pre style="padding-left:20px;font-size:10pt;font-weight:bold" class="code">
 cd &lt;prototypejungle&gt;
 node server/server.js
-</precode>
+</pre>
 
 <p>Then you can run an image generator by, for example, directing your browser to </p>
 <p class="txtVar"><a href="http://localhost:8081/draw.html?source=/generators/lines_chaos_within_order.mjs">http://localhost:8081/draw.html?source=/generators/lines_chaos_within_order.mjs</a>. </p>
@@ -17,4 +80,9 @@ node server/server.js
  
 
 
- {{endplate}}
+ 
+</div>
+</div>
+</body>
+</html>
+

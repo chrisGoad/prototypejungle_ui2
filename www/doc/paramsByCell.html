@@ -1,4 +1,67 @@
-{{boilerplate1}}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="description" content="Diagramming basedd on an open repository of prototype structures.">
+<title>PrototypeJungle</title>
+<link rel="stylesheet" type="text/css"  href="style.css"/>
+<link rel="stylesheet" type="text/css"  href="spectrum.css"/>
+<link rel="icon" href="/images/favicon.ico" />
+
+<style>
+	.theGrid {
+		display:grid;
+		padding-top:10px;
+		grid-template-columns:1fr 4fr 1fr;
+	}
+  .indent {
+		padding-left:20px;
+	}
+  .indent2 {
+		padding-left:40px;
+	}
+  .codeVar {
+		font-style:italic;
+	}  
+  
+  .textVar {
+		font-weight:bold;
+    font-size:12pt
+	}
+  .plainText {
+		font-weight:normal;
+    font-size:12pt
+	}
+  .title {
+		font-weight:bold;
+    font-size:16pt;
+    text-align:center;
+	}
+  .source {
+    font-size:16pt;
+    text-align:center;
+	}
+ .section {
+   padding-top:30px;
+		font-weight:bold;
+    font-size:15pt;
+	}
+  .blank_row
+{
+    height: 10px !important; /* overwrites any other rules */
+    background-color: #FFFFFF;
+}
+td {
+  borderr: 1px solid rgb(190,190,190);
+  padding-left: 20px;
+}
+</style>
+</head>
+<body style="background-color:white;font-size:14pt"> 
+<div class="theGrid">
+<div></div>
+<div>
+
 <p class="title">paramsByCell</p>
 
 <p> This module will be introduced, as usual, via annotated code, which generates the image</p>
@@ -6,7 +69,7 @@
  <p>First, here's a simplified variant of the  code, which generates</p>
   <p><img  src="/images/grid_void_variant.jpg?alt=media" style="bborder:thin black solid;cursor:pointer"  width="400" height="400" max-height="500"/></p>
 
-<precode>
+<pre style="padding-left:20px;font-size:10pt;font-weight:bold" class="code">
 
 import {rs as rectPP} from '/shape/rectangle.mjs';
 import {rs as basicsP} from '/generators/basics.mjs';
@@ -68,9 +131,9 @@ export {rs};
 
 
 
-</precode>
+</pre>
 <p> We've seen this all before except for the lines: </p>
-<precode>
+<pre style="padding-left:20px;font-size:10pt;font-weight:bold" class="code">
 
 rs.pByC  = {
   widthFactor:1,
@@ -100,17 +163,17 @@ rs.initialize = function () {
 }
 
 
-</precode>
+</pre>
 <p> <span class="textVar">paramsByCell(cell)</span> returns a particular way of computing the size, color, and prototype to be used for the shape which will populate the given cell. There is a sizeMap for sizes and a colorMap for colors. These maps take as input the largest power of sizePower which occurs as factor in both of the cell's coordinates.  Call the largest power of n which occurs as a factor of a number its n-regularity.  Then odd numbers have 2-regularity 0 because they are not multiples of any power of 2. Numbers of the form 2*&lt;odd-number&gt; have regularity 1 because they have a factor which is 2**1. Numbers of the form 4*&lt;odd-number&gt; have 2-regularity 2 because they are multiples of 2**2. And so on. Here is a 2-regularity table for numbers up to 16:
-<precode>
+<pre style="padding-left:20px;font-size:10pt;font-weight:bold" class="code">
 input         0  1  2  3  4  5  6  7  8  9  10 11 12 13 14 15 16
 2-regularity  0  0  1  0  2  0  1  0  3  0   1  0  2  0  1  0  4
-</precode>
+</pre>
 <p>The 2-regularity of a cell is the minimum of the regularity of its x coordinate, and the regularity of its y coordinate. Perhaps now you can see how the image immediately above was generated. Regularity 0 cells are populated by small red rectangles. Regularity 1 cells are populated by small yellos rectangle. Regularity 2 cells are  populated by larger blue rectangles. Finally, regularity 3 cells are populated by  larger white rectangles.  The line </p>
-<precode>
+<pre style="padding-left:20px;font-size:10pt;font-weight:bold" class="code">
   this.pByC.shapeProto = this.rectP;
 
-</precode>
+</pre>
 <p> determines what shape prototype will be instantiated in the grid cells.</p>
 
 
@@ -119,7 +182,7 @@ input         0  1  2  3  4  5  6  7  8  9  10 11 12 13 14 15 16
 
 <p>This is done by the following code:</p>
 
-<precode>
+<pre style="padding-left:20px;font-size:10pt;font-weight:bold" class="code">
 
 
 rs.paramsByCell = function (cell) {
@@ -140,9 +203,9 @@ rs.paramsByCell = function (cell) {
   return pByC;
 }
 
-</precode>
+</pre>
 <p> As a final, touch, a largish black square is added at the center by the following modified initializer: </p>
-	<precode>
+	<pre style="padding-left:20px;font-size:10pt;font-weight:bold" class="code">
   
 rs.initialize = function () {
   this.initProtos();
@@ -156,7 +219,12 @@ rs.initialize = function () {
   rect.fill = 'black';
   this.addFrame();
 }
-	</precode>
+	</pre>
 
 
-{{endplate}}
+
+</div>
+</div>
+</body>
+</html>
+

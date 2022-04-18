@@ -27,7 +27,6 @@ let topParams = {numRows:nr,numCols:nc,width:wd,height:ht,frameStrokeWidth:0.5,f
 
 Object.assign(rs,topParams);
 
-  
 rs.shapeGenerator = function (rvs,cell) {
   let {rectP,shapes,height} = this;
   let w = rvs.which;

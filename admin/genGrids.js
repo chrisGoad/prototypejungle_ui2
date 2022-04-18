@@ -1,6 +1,5 @@
 
 let kind = process.argv[2];
-//let signedstr = process.argv[3]
 let forKOPstr = process.argv[3];
 let sortByOrderstr = "1";
 if (process.argv[4]==="0") {
@@ -30,16 +29,13 @@ let vertical = kind === 'vertical';
 let horizontal = kind === 'horizontal';
 let horizontalnf = kind === 'horizontalnf'; // horizontal no frame
 let square = kind === 'square';
-let grids = kind === 'images';
+let images = kind === 'images';
+let local_images = (kind === 'local_images') || alternate;
 
 console.log('kind','['+kind+']','sortByOrder',sortByOrder,'forKOP',forKOP,'byKind',byKind,'byAspect',byAspect,'byLikes',byLikes,'signed',signed,'horizontal',horizontal,'horizontalnf',horizontalnf);
 //return;
 //let alternate = 0;
 let sectionsPath;
-/*let pagesVar = 'gPages';
-let pagesPath = 'www/gPages.js';
-let titlesPath = 'www/gTitles.js';
-let titlesVar = 'gTitles';*/
 let imKind;
 if (byLikes) {
   sectionsPath = './gridSections.js';
@@ -86,11 +82,10 @@ if (byLikes) {
   signed = 0;
   imKind = 'sq';
   sectionsPath = './squareSections.js';
- /* pagesPath = 'www/sqPages.js';  
-  pagesVar = 'sqPages';  
-  titlesPath = 'www/sqTitles.js';
-  titlesVar = 'sqTitles';*/
-} else if (grids)  {
+} else if (images)  {
+  sectionsPath = './gridSections.js';
+  imKind = 'g'
+} else if (local_images)  {
   sectionsPath = './gridSections.js';
   imKind = 'g'
 } else {
@@ -122,7 +117,7 @@ if (alternate) {
 } else if (square) {
   outPath = 'www/square.html';
 } else {
-  outPath = 'www/images.html';
+  outPath = (local_images)?"www/local_images.html":'www/images.html';
 }
 console.log('sectionsPath', sectionsPath,'outPath',outPath);
 
@@ -271,30 +266,30 @@ const thingString = function (order,ix,dir,useThumb,ititle,props) {
 	//let thumbsrc = useThumb?`thumbs/${vpath}.jpg`:imsrc;
 	let thumbsrc = `thumbs/${vpath}.jpg`;
   let localSrc =`www/thumbs/${vpath}.jpg`;
-  let localim = fs.existsSync(localSrc);
+  //let localim = fs.existsSync(localSrc);
   if (ix === 'drift_web') {
     console.log('IIIIIXXXX',ix);
   }
-  theLocals.push(localim?1:0);
+  //theLocals.push(localim?1:0);
 
-  if (!localim) {
+  if (!local_images) {
 	  thumbsrc = `https://kingdomofpattern.com/thumbs/${vpath}.jpg`;
   }
 //console.log('thumbsrc',thumbsrc);
 	let pageArg = 'page='+pageNumber;
   let kindArg = 'imKind='+imKind;
-  //let localArg = 'local='+(localim?1:0);
+  let localArg = 'local='+(local_images?1:0);
 	let theImageArg = '';
   //imageArg?'&image='+imageArg:'';
 	pageNumber++;
 	let lastPageArg = (pageNumber === numPages)?'&lastPage=1':'';
 	let rs;
 	//let astart = `<a style="color:white" href="page.html?image=${vx}&${pageArg}&${kindArg}&${localArg}">`;
-	let astart = `<a style="color:white" href="page.html?image=${vx}&${pageArg}&${kindArg}">`;
+	let astart = `<a style="color:white" href="page.html?image=${vx}&${pageArg}&${kindArg}&${localArg}">`;
   console.log('ASTART',astart);
  // let likesStr = likes?`<span style="font-size:10pt">Likes ${likes} ${category}</span><br/>`:'';
   //let propsStr = `<span style="font-size:10pt">Likes ${likes?likes:'none'} Order ${order}${posted?"":" NOT POSTED"} ${category}</span><br/>`;
-  let propsStr = `<span style="font-size:10pt">${likes?'Likes '+likes:''} ${posted?"":" NOT POSTED"} ${localim?'Local':''} ${category}</span><br/>`;
+  let propsStr = `<span style="font-size:10pt">${likes?'Likes '+likes:''} ${posted?"":" NOT POSTED"} ${local_images?'Local':''} ${category}</span><br/>`;
 	if (forKOP) {
 		let titleLink = title?`${astart}${title}</a></p>`:'';
 		console.log('forKOP');
@@ -520,6 +515,6 @@ numPages = countPages(sectionsC.sections);
  writePage(sectionsC.sections);
  writeThePages();
  writeTheTitles();
- writeTheLocals();
+ //writeTheLocals();
  console.log('numPages',numPages);
  

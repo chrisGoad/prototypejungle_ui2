@@ -1,4 +1,67 @@
-{{boilerplate1}}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="description" content="Diagramming basedd on an open repository of prototype structures.">
+<title>PrototypeJungle</title>
+<link rel="stylesheet" type="text/css"  href="style.css"/>
+<link rel="stylesheet" type="text/css"  href="spectrum.css"/>
+<link rel="icon" href="/images/favicon.ico" />
+
+<style>
+	.theGrid {
+		display:grid;
+		padding-top:10px;
+		grid-template-columns:1fr 4fr 1fr;
+	}
+  .indent {
+		padding-left:20px;
+	}
+  .indent2 {
+		padding-left:40px;
+	}
+  .codeVar {
+		font-style:italic;
+	}  
+  
+  .textVar {
+		font-weight:bold;
+    font-size:12pt
+	}
+  .plainText {
+		font-weight:normal;
+    font-size:12pt
+	}
+  .title {
+		font-weight:bold;
+    font-size:16pt;
+    text-align:center;
+	}
+  .source {
+    font-size:16pt;
+    text-align:center;
+	}
+ .section {
+   padding-top:30px;
+		font-weight:bold;
+    font-size:15pt;
+	}
+  .blank_row
+{
+    height: 10px !important; /* overwrites any other rules */
+    background-color: #FFFFFF;
+}
+td {
+  borderr: 1px solid rgb(190,190,190);
+  padding-left: 20px;
+}
+</style>
+</head>
+<body style="background-color:white;font-size:14pt"> 
+<div class="theGrid">
+<div></div>
+<div>
+
 
 <div class="title">Prototype Trees - Technical Details</div>
 
@@ -65,10 +128,10 @@ otherwise they would be, in a sense, lost.</p>
 <!--<img src="/images/instantiate1.svg" style="border:none" width="200" height="140"/> -->
 
 <p>Then after,</p>
-<precode>
+<pre style="padding-left:20px;font-size:10pt;font-weight:bold" class="code">
 jjj = iii.instantiate();
 jjj.a.y = 4;
-</precode>
+</pre>
 <p>we have: </p> 
 <!-- <img src="/images/instantiate2.svg" style="border:none" width="500" height="200"/>-->
 <img style="border:none" width="250" src="https://firebasestorage.googleapis.com/v0/b/project-5150272850535855811.appspot.com/o/twitter%3A14822695%2FforDocs%2FinstantiateDiagram2.svg?alt=media"/>
@@ -91,23 +154,23 @@ contain interior nodes which either inherit prototype-wise from elsewhere in the
 This is not quite right.  Instead of using plain object and arrays,  we instead introduce these prototypes:</p>
 
 
-<precode>
+<pre style="padding-left:20px;font-size:10pt;font-weight:bold" class="code">
   
 const ObjectNode = {};
 
 const ArrayNode = [];
-</precode>
+</pre>
 
 <p>
 With these constructors:
 </p>
-<precode>
+<pre style="padding-left:20px;font-size:10pt;font-weight:bold" class="code">
   
 ObjectNode.mk = function () {return Object.create(pj.Object)}
 
 ArrayNode.mk = function () {return Object.create(pj.Array)}
 
-</precode>
+</pre>
 <p>	
  This means that we can define tree operations on
 <span class="textVar">ObjectNode</span> and
@@ -123,9 +186,9 @@ The other modules, such as geom, add things to externals as they are loaded.
 When any prototype tree containing an external  is serialized, the external is encoded by its path within the externals tree.
 For example, most of the basic types, such as geom.Point (and ObjectNode!) appear in the externals tree. Consider this code: 
 </p>
-<precode>
+<pre style="padding-left:20px;font-size:10pt;font-weight:bold" class="code">
 someNode.set('p',geom.Point.mk(1,2));
-</precode>
+</pre>
 
 <p>
 Then the geom.Point type (that is, prototype) will appear within someNode. Serialization and deserializtion of someNode (or a tree containing someNode) will work correctly, 
@@ -146,4 +209,9 @@ Now, interior nodes can inherit from any object in the externals tree as well.
 </p>
 
 
-{{endplate}}
+
+</div>
+</div>
+</body>
+</html>
+

@@ -74,7 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
   imKind = getArgs.imKind;
   debugger;
   imLocalS = getArgs.local;
-  //imLocal = (imLocalS==='0')?0:1;
+  imLocal = (imLocalS==='0')?0:1;
   if (imKind === 'g') {
     thePages = gPages;
     theTitles = gTitles;
@@ -99,7 +99,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 	//lastPage = getArgs.lastPage;
 	let title = theTitles[cPage];
-	let imLocal = theLocals[cPage];
+	//let imLocal = theLocals[cPage];
   debugger;
 	let prevDiv = document.getElementById('prevDiv');
 	let nextDiv = document.getElementById('nextDiv');

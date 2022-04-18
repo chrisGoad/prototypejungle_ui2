@@ -19,10 +19,10 @@ Object.assign(rs,topParams);
 	
 			
 rs.initProtos = function () {	
-	this.circleP = circlePP.instantiate();
+  this.circleP = circlePP.instantiate();
   this.circleP.fill = 'white';
   this.circleP.stroke = 'rgba(0,0,0,.8)';
-	this.circleP['stroke-width'] = 2;  
+  this.circleP['stroke-width'] = 2;  
 }
 
 let oo = 0.3;
@@ -38,11 +38,12 @@ rs.powerParams = {
 rs.shapeGenerator = function () {
   return this.circleP.instantiate().show();
 }
+
 rs.initialize = function () {
-	this.initProtos();
+  this.initProtos();
   this.addRectangle(this.backFill);
   this.addFrame();
-	this.generateGrid();
+  this.generateGrid();
 }
 
 export {rs};

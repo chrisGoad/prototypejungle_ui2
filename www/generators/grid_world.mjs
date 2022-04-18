@@ -14,10 +14,10 @@ let topParams = {numCols:sqd,numRows:sqd,width:wd,height:wd,framePadding:0.1*wd,
 Object.assign(rs,topParams);
 
 rs.initProtos = function () {
-	this.rectP = rectPP.instantiate();
-	this.rectP.stroke = 'black';
-	this.rectP.fill = 'blue';
-	this.rectP['stroke-width'] = 4;
+  this.rectP = rectPP.instantiate();
+  this.rectP.stroke = 'black';
+  this.rectP.fill = 'blue';
+  this.rectP['stroke-width'] = 4;
 }  
 
 let baseColor = 100;
@@ -45,10 +45,10 @@ rs.shapeGenerator = function (rvs,cell) {
 }
 
 rs.initialize = function () {
-	this.initProtos();
+  this.initProtos();
   this.addFrame();
   this.setupRandomGridForShapes('blueOrWhite',{step:0.5,min:0,max:2});
-	this.generateGrid();
+  this.generateGrid();
 }
 
 export {rs};

@@ -1,4 +1,3 @@
-//core.require('/shape/line.js','/gen0/Basics.js','/mlib/drop.js','/mlib/segsets.js',function (linePP,rs,addDropMethods,addSegsetMethods) {
 
 import {rs as linePP} from '/shape/line.mjs';
 import {rs as basicsP} from '/generators/basics.mjs';
@@ -11,10 +10,9 @@ addSegsetMethods(rs);
 rs.setName('drop_ice');
 let wd = 200;
 
-let topParams = {width:wd,height:wd,dropTries:100,fromEnds:0,lineLength:2,framePadding:20,frameVisible:0,minSeparation:10}
+let topParams = {width:wd,height:wd,dropTries:100,lineLength:2,framePadding:20,minSeparation:10}
 
 Object.assign(rs,topParams);
-
 
 rs.initProtos = function () {
   this.lineP = linePP.instantiate();
@@ -47,7 +45,6 @@ rs.genDropStruct = function (p) {
   return [[eseg],[ln]];
 }
  
-
 rs.initialize = function () {
   this.initProtos();
   this.generateDrop();

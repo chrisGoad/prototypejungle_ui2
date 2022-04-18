@@ -1,4 +1,15 @@
-{{boilerplate0}}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="description" content="Diagramming basedd on an open repository of prototype structures.">
+<title>PrototypeJungle</title>
+<link rel="stylesheet" type="text/css"  href="style.css"/>
+<link rel="stylesheet" type="text/css"  href="spectrum.css"/>
+<link rel="icon" href="/images/favicon.ico" />
+</head>
+<body style="background-color:white;font-size:14pt"> <!-- from 12 6/8/19 -->
+
 <!--
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
 <script src="js/color_picker.js"></script>
@@ -9,7 +20,10 @@
 </script>
  
 <script type="module">
-  {{mainImports}}
+  import * as core from "/js/core-1.1.0.js";
+import * as geom from "/js/geom-1.1.0.js";
+import * as dom from "/js/dom-1.1.0.js";
+
 //import * as tree from "/js/tree-1.1.0.min.js";
 //import * as catalog from "/js/catalog-1.1.0.min.js";
 //import * as editor from "/js/editor-1.1.0.min.js";

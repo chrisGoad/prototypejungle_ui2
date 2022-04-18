@@ -1,3 +1,4 @@
+// this is a component of generators/spatter_variant.mjs
 import {rs as linePP} from '/shape/line.mjs';
 import {rs as rectPP} from '/shape/rectangle.mjs';
 import {rs as basicP} from '/generators/basics.mjs';
@@ -9,7 +10,7 @@ addSpatterMethods(rs);
 addRandomMethods(rs);
 rs.setName('spatter_for_variants');
 
-rs.which = 1;
+rs.which = 1; // set in container, ie generators/spatter_variant.mjs 
 
 rs.initProtos = function () {
   this.lineP = linePP.instantiate();
@@ -21,10 +22,7 @@ rs.initProtos = function () {
   this.boundaryLineP['stroke-width'] = 1;
 }  
 
-
-  
 let topParams = {numRows:20,numCols:20,width:400,height:400,numDrops:3000};
-
 
 Object.assign(rs,topParams);
 
@@ -53,7 +51,6 @@ rs.shapeGenerator = function (rvs) {
   return line;
 }
 
-
 rs.initialize = function () {
   let which = this.which;
   this.initProtos();
@@ -76,18 +73,6 @@ rs.initialize = function () {
   this.addSpatter();
 }	
 
-
-	rs.addTheBoxx = function () {
-		this.lineP = grid1.lineP;
-		this.width =2.2*grid1.width;
-		this.height = 2.2*grid1.height;
-		this.addBox('white',50,1);
-		this.show();
-		draw.fitTheContents();
-	}
-	
-
-	
 export {rs};
 
 

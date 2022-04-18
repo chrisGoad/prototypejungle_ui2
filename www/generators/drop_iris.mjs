@@ -12,7 +12,7 @@ addSegsetMethods(rs);
 rs.setName('drop_iris');
 let ht = 160;
  ht = 700;
-let topParams = {saveState:1,width:ht,height:ht,numRows:20,numCols:30,dropTries:20,endLoopss:1000,lineLength:10,framePadding:0.1*ht,frameVisible:0,separation:0,randomDirectionChange:0.3*Math.PI,fromEnds:1,sepNext:.1,lineExt:.2,onlyFromSeeds:1,extendWhich:'random',numSeeds:100,splitChance:0.5,splitAmount:0.08 * Math.PI,directionChange:0.025 * Math.PI}
+let topParams = {saveState:1,width:ht,height:ht,numRows:20,numCols:30,dropTries:20,lineLength:10,framePadding:0.1*ht,randomDirectionChange:0.3*Math.PI,fromEnds:1,sepNext:.1,lineExt:.2,onlyFromSeeds:1,extendWhich:'random',numSeeds:100,splitChance:0.5,splitAmount:0.08 * Math.PI,directionChange:0.025 * Math.PI}
 	
 Object.assign(rs,topParams);
 
@@ -27,7 +27,6 @@ rs.genDropStruct = function (p,rvs) {
   let clr = `rgb(${r},${g},${b})`;
   return this.genSegmentsFan(this.lineP,p,clr);
 }
-
 
 rs.genSeeds = function () {
   let {width,height,ringRadius} = this;

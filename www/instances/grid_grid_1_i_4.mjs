@@ -9,7 +9,7 @@ rs.setName('grid_grid_1_i_4',19);
 let wd = 400;
 let nr = 20;
 let fwd = 1.2  * wd;
-let topParams = {saveState:1,width:fwd,height:fwd,numRows:nr,numCols:nr,pointJiggle:10,innerRows:5,backgroundColor:'rgb(0,0,100)',framePadding:0.75*fwd,frameStrokee:'white'};
+let topParams = {saveState:0,width:fwd,height:fwd,numRows:nr,numCols:nr,pointJiggle:10,innerRows:5,backgroundColor:'rgb(0,0,100)',framePadding:0.75*fwd,frameStrokee:'white'};
 
 rs.set('g00',generatorP.instantiate());
 rs.set('g10',generatorP.instantiate());
@@ -31,23 +31,47 @@ rs.decider = function (rvs,cell) {
   return (cell.x+cell.y) % 2 === 0;
   return  cell.x < hnr;
 }
-  
+ 
+
+rs.computeState  = function () {
+   debugger;
+   let st =
+   [["g00/whichElts",this.g00.whichElts],["g00/eltDState1",this.g00.eltDState1],["g00/eltDState2",this.g00.eltDState2],
+   ["g01/whichElts",this.g01.whichElts],["g01/eltDState1",this.g01.eltDState1],["g01/eltDState2",this.g01.eltDState2],
+   ["g10/whichElts",this.g10.whichElts],["g10/eltDState1",this.g10.eltDState1],["g10/eltDState2",this.g10.eltDState2],
+   ["g11/whichElts",this.g11.whichElts],["g11/eltDState1",this.g11.eltDState1],["g11/eltDState2",this.g11.eltDState2]];
+   return st;
+} 
   
 rs.initialize = function () {
   core.root.backgroundColor = 'rgb(0,0,0)';
-  
+  debugger;
   this.addFrame();
-  //this.addBackground();
-  rs.g00.initialize();
-  rs.g01.initialize();
-  rs.g10.initialize();
-  rs.g11.initialize();
-  let mv = 0.5*wd;
-  rs.g00.moveto(Point.mk(-mv,-mv));
-  rs.g10.moveto(Point.mk(mv,-mv));
-  rs.g01.moveto(Point.mk(-mv,mv));
-  rs.g11.moveto(Point.mk(mv,mv));
-  
+  const performBuild = (svs) =>  {
+    this.g00.saveState = svs;
+    this.g10.saveState = svs;
+    this.g01.saveState = svs;
+    this.g11.saveState = svs;
+    this.g00.initialize();
+    this.g01.initialize();
+    this.g10.initialize();
+    this.g11.initialize();
+    this.saveTheState();
+    let mv = 0.5*wd;
+    this.g00.moveto(Point.mk(-mv,-mv));
+    this.g10.moveto(Point.mk(mv,-mv));
+    this.g01.moveto(Point.mk(-mv,mv));
+    this.g11.moveto(Point.mk(mv,mv));
+  }
+  if (this.saveState) {
+    performBuild(1);
+    this.saveTheState();
+  } else {
+    this.getTheState(() => {
+      debugger;
+      performBuild(0);
+    });
+  } 
 }
 
 export {rs};

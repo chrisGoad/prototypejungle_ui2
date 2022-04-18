@@ -8,7 +8,7 @@ let rs = basicsP.instantiate();
 addGridMethods(rs);
 addRandomMethods(rs);
 addRandomMethods(rs);
-  
+let asComponent = 1;  
 let wd = 400;
 let nr = 20;
 let topParams = {saveState:1,width:wd,height:wd,numRows:nr,numCols:nr,pointJiggle:10,innerRows:5};
@@ -96,7 +96,6 @@ rs.shapeGenerator = function (rvs,cell) {
 
 rs.computeState  = function () {
    return [["whichElts",this.whichElts],["eltDState1",this.eltDState1],["eltDState2",this.eltDState2]];
-   //["innerPresent2",this.innerPresent2],["whichShape1",this.whichShape1],["whichShape2",this.which];
 }
 
 
@@ -120,9 +119,15 @@ rs.initialize = function () {
     this.whichShape1  = eltD2.whichShape1;
     this.whichShape2  = eltD2.whichShape2;*/
     this.generateGrid();
-    this.saveTheState();
+  //  this.saveTheState();
   } else {
-    this.getTheState(() => {
+    if (asComponent) {
+       this.eltDescription1 = this.genEltDescription(1);
+        this.eltDescription2 = this.genEltDescription(2);
+        this.generateGrid();
+        return;
+   }
+   this.getTheState(() => {
       debugger;
       this.eltDescription1 = this.genEltDescription(1);
       this.eltDescription2 = this.genEltDescription(2);

@@ -4,7 +4,7 @@ let rs = basicsP.instantiate();
 let grid1 = rs.set('grid1',gfs.instantiate());
 let grid2 = rs.set('grid2',gfs.instantiate());
 
-
+rs.setName('grid_superposition');
 let wd = 200;
 let fc = 1.1;
 grid1.width = wd;

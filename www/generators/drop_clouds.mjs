@@ -22,7 +22,7 @@ rs.initProtos = function () {
   this.lineP['stroke-width'] = .6;
 }  
 
-rs.genDropStruct = function (p) {
+rs.dropAt = function (p) {
   let {width,height,lineP} = this;
   let params = {direction:0.75*Math.PI,zigzag:1,randomness:0,vertical:0,widths:[10],heightRatio:0.05,numSegs:4,pos:p};
   let which = this.computeWhichByCornerInterpolation(p);
@@ -47,7 +47,7 @@ rs.genDropStruct = function (p) {
   return [segs,lines];
 }
 
-rs.initialSegments = function () {
+rs.initialDrop = function () {
   let {width,height,lineP} = this; 
   let segs = this.rectangleSegments(width,height);
   let lines = segs.map((sg) => this.genLine(sg,lineP)); 

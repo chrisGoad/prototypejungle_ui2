@@ -32,7 +32,7 @@ rs.initProtos = function () {
   circleP.stroke = 'transparent';
 }  
 
-rs.genDropStruct = function (p) {
+rs.initialDrop = function (p) {
   let rd = 30;
   let gcrc = geom.Circle.mk(p,rd);
   let scrc = this.circleP.instantiate();

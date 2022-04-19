@@ -22,21 +22,20 @@ rs.initProtos = function () {
   this.lineP['stroke-width'] = 2;
 }  
 
-rs.genDropStruct = function (p,rvs) {
+rs.dropAt = function (p,rvs) {
   let {r,g,b} = rvs;
   let clr = `rgb(${r},${g},${b})`;
-  return this.genSegmentsFan(this.lineP,p,clr);
+  return this.genFan({startingPoint:p,stroke:clr});
 }
 
-rs.genSeeds = function () {
-  let {width,height,ringRadius} = this;
-  this.ringRadius = 0.3 * 0.5 * width;
-  let exc = geom.Circle.mk(Point.mk(0,0),this.ringRadius - 1);
+rs.initialDrop = function () {
+  let {width} = this;
+  let rad = 0.3 * 0.5 * width;
+  let exc = geom.Circle.mk(Point.mk(0,0),rad - 1);
   this.exclusionZones = [exc];
-  let dnc = geom.Circle.mk(Point.mk(0,0),3* this.ringRadius);
+  let dnc = geom.Circle.mk(Point.mk(0,0),3*rad);
   this.doNotExit= [dnc];
-  let seeds =this.ringSeeds(this.lineP,'white');
-  return seeds;
+  return this.ringSeeds({stroke:'white',ringRadius:rad});  
 }
 
 

@@ -20,7 +20,7 @@ rs.initProtos = function () {
   this.lineP['stroke-width'] = .3;
 }  
 
-rs.initialSegments = function () {
+rs.initialDrop = function () {
   let {width,height,lineP} = this; 
   let segs = this.rectangleSegments(width,height);
   let lines = segs.map((sg) => this.genLine(sg,lineP));  
@@ -35,8 +35,7 @@ rs.segParams = function () {
   return {angle,length};
 } 
 
-rs.genDropStruct = function (p) {
-  debugger;
+rs.dropAt = function (p) {
   let {minSeparation:sep,lineP} = this;
   let {length,angle} = this.segParams();
   let seg = this.genSegment(p,length,angle);

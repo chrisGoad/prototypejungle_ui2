@@ -1,9 +1,4 @@
 
-//core.require('/line/line.js','/mlib/lines.js','/gen0/Basics.js',
-//function (linePP,addMethods,linesP) {
-
-
-
 import {rs as linePP} from '/line/line.mjs';
 import {rs as basicP} from '/generators/basics.mjs';
 import {rs as fromCenterP} from '/generators/lines_from_center.mjs';	

@@ -202,11 +202,20 @@ if (imKind === 'g') {
 
 
     <p class="introLineSmall">To Expand the Images Below, Click on Them</p>
-  `} else {
-     pageIntro = 
-    `
-    <p class="introLineLarge">PrototypeJungle</p>
-    `;
+  `} else  {
+    if (local_images) {
+      pageIntro = 
+      `
+      <p class="introLineLarge">PrototypeJungle</p>
+      <p class="introLineSmall">These are the images that you have rebuilt in your local copy of PrototypeJungle</p>
+      <p class="introLineSmall">Initially, no images will appear</p>
+      `;
+    } else {
+       pageIntro = 
+      `
+      <p class="introLineLarge">PrototypeJungle</p>
+      `;
+    }
   }
 } else if (imKind === 'h') {
 pageIntro = 

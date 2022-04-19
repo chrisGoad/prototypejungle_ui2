@@ -67,6 +67,15 @@ var boilerplate1 =
 		font-weight:bold;
     font-size:15pt;
 	}
+  .userDefinedText {
+  	font-weight:bold;
+    font-size:12pt;
+    color:rgb(200,0,0);
+   }
+   .userDefinedCode {
+    font-style:italic;
+    color:rgb(200,0,0);
+   }
   .blank_row
 {
     height: 10px !important; /* overwrites any other rules */
@@ -111,6 +120,7 @@ function doSubstitution(s,what,value,withDoubleBracket) {
   irs = doSubstitution(irs,'boilerplate1',boilerplate1,1);
     //var irs = doSubstitution(irs,'<precode>','<p style="padding:5px"></p><hr/><pre style="padding-left:20px;font-size:10pt;font-weight:bold" class="code">');
     irs = doSubstitution(irs,'<precode>','<pre style="padding-left:20px;font-size:10pt;font-weight:bold" class="code">');
+    irs = doSubstitution(irs,'<preUserDefinedCode>','<pre style="padding-left:20px;font-size:10pt;font-weight:bold;color:rgb(200,0,0)" class="code">');
     irs = doSubstitution(irs,'</precode>','</pre>');
 
    irs = doSubstitution(irs,'mainImports',mainImports,1);

@@ -27,7 +27,7 @@ rs.initProtos = function () {
   this.lineP['stroke-width'] = .6;
 }  
 
-rs.genDropStruct = function (p) {
+rs.dropAt = function (p) {
   let {width,height,lineP} = this;
   let params = {direction:Math.PI/4,zigzag:1,randomness:0,vertical:0,widths:[10],heightRatio:0.05,numSegs:4,pos:p};
   let params1 = Object.assign({},params);

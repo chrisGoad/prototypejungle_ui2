@@ -27,7 +27,7 @@ rs.segParams = function () {
   return {angle,length};
 }
 
-rs.genDropStruct = function (p) {
+rs.dropAt = function (p) {
   let sizes = [2,5,10,20,40];
   let which = Math.floor(Math.random()*5);
   let sz = sizes[which];
@@ -45,7 +45,7 @@ rs.genDropStruct = function (p) {
 }
 
 
-rs.initialSegments = function () {
+rs.initialDrop = function () {
   let {width,height,lineP} = this; 
   let segs = this.rectangleSegments(width,height);
   let lines = segs.map((sg) => this.genLine(sg,lineP)); 

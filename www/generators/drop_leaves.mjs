@@ -18,40 +18,34 @@ let topParams = {width:wd,height:ht,numSeedRows:0,numSeedCols:0,dropTries:500,li
 
 Object.assign(rs,topParams);
 
-
 rs.initProtos = function () {
   this.lineP = linePP.instantiate();
   this.lineP.stroke = 'white';
   this.lineP['stroke-width'] = .5;
 }  
 
-rs.genSeeds = function () {
+rs.initialDrop = function () {
   let {width,height,lineP} = this;
   let hw = 0.5 * width;
   let hh = 0.5 * height;
-  let [segs,lines] = [[],[]];//this.gridSeeds('white');
+  let segs = [];//[segs,lines] = [[],[]];//this.gridSeeds('white');
   let dc = 35;
   let LL = Point.mk(dc - hw,hh-dc);
-  let LLS = this.genSingletonUnit(lineP,LL,-0.5*Math.PI,'white');
-  segs.push(LLS[0][0]);
+  let LLS = this.genOneSegment(LL,-0.5*Math.PI,'white');
+  segs.push(LLS);
   let UL = Point.mk(dc - hw,dc-hh);
-  let ULS = this.genSingletonUnit(lineP,UL,0,'white');
-  segs.push(ULS[0][0]);
+  let ULS = this.genOneSegment(UL,0,'white');
+  segs.push(ULS);
   let LR = Point.mk(hw-dc,hh-dc);
-  let LRS = this.genSingletonUnit(lineP,LR,Math.PI,'white');
-  segs.push(LRS[0][0]);
+  let LRS = this.genOneSegment(LR,Math.PI,'white');
+  segs.push(LRS);
+  let rsegs = this.rectangleSegments(width,height);
+  let lines = rsegs.map((sg) => this.genLine(sg,lineP));  
   return [segs,lines];
 }
 
-rs.genDropStruct = function (p) {
-  return this.genSegmentsFan(this.lineP,p,'white');//,params);
-}
-
-rs.initialSegments = function () {
-  let {width,height,lineP} = this; 
-  let segs = this.rectangleSegments(width,height);
-  let lines = segs.map((sg) => this.genLine(sg,lineP)); 
-  return [segs,lines];
+rs.dropAt = function (p) {
+  return this.genFan({startingPoint:p,stroke:'white'});
 }
 
 rs.initialize = function () {

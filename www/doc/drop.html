@@ -68,7 +68,7 @@ rs.initProtos = function () {
 	this.lineP['stroke-width'] = .3;
 }  
 
-rs.initialSegments = function () {
+rs.initialDrop= function () {
   let {width,height} = this; 
   // the rectangleSegments method is defined in the segsets module
   let segs = this.rectangleSegments(width,height);
@@ -84,7 +84,7 @@ rs.segParams = function () {
   return {angle,length};
 } 
 
-rs.genSegments = function (p) {
+rs.dropAt = function (p) {
   let {minSeparation:sep,lineP} = this;
   let {length,angle} = this.segParams();
   let seg = this.genSegment(p,length,angle);
@@ -97,7 +97,7 @@ rs.genSegments = function (p) {
 rs.initialize = function () {
   core.root.backgroundColor = 'black';
 	this.initProtos();
-	this.initializeDrop();
+	this.generateDrop();
   	this.addFrame();
 
 }
@@ -106,35 +106,100 @@ export {rs};
 
 
 </pre>
-<p> The DROP algorithm drops  things at random positions on the canvas. If a thing lands on top of another, it is thrown away, otherwise it is added.   I have used the vague word "thing". A thing is a pair [lineSegments,lines], called a dropStruct. Often, but not always, the lines correspond directly to the segments in that they have the same ends; that is, they coincide geometrically. The operation
-
+<p> The DROP algorithm drops  things at random positions on the canvas. If a thing lands on top of another, it is thrown away, otherwise it is added.   I have used the vague word "thing". A thing is a pair [lineSegments,shapes], called a dropStruct. Often, but not always, the shapes are lines that  correspond directly to the segments in that they have the same ends; that is, they coincide geometrically. The operation</p>
+<precode>
 rs.segsToDropStruct = function (segs,lineP) {
   return [segs,segs.map((seg) => this.genLine(seg,LineP)]
 ]
+</precode>
 
-will convert an array of segments into a dropStruct where this exact correspondence holds.
+<p> will convert an array of segments into a dropStruct where this exact correspondence holds.</p> 
  
-As I say, lineSegments are used for detecting collisions. If a given drop does not intersect with the lineSegments already dropped, then the lines are displayed (by adding them to the shape tree).
+<p> As I say, lineSegments are used for detecting collisions. If a given drop does not intersect with the lineSegments already dropped, then the shapes are displayed (by adding them to the shape tree).
  The segsets method library is used to build sets of segments. </p>
 
 <p>In an image generator, the  method: </p>
-<pre style="padding-left:20px;font-size:10pt;font-weight:bold" class="code">
-rs.genDropStruct = function (p) {
+<preUserDefinedCode>
+rs.dropAt = function (p) {
 ...
-return [segs,lines];
+  return [segs,shapes];
 }
-</pre>
-<p>should be defined, where p is a Point (the "anchor point"). rs.performDrop will call rs.genDropStruct  on randomly generated points p within the canvas.  </p>
+</precode>
+<p>should be defined, where p is a Point (the "anchor point"). rs.generateDrop will call rs.dropAt  on randomly generated points p within the canvas.  </p>
 
 <p>Parameters: rs.dropTries sets how many unsuccessful drops are tolerated before the algorithm is terminated. </p>
 
-<p> The DROP algorithm has another mode of operation, which is deployed when the top parameter fromEnds is set.
+<p> The DROP algorithm has another mode of operation, which is deployed when the top parameter fromEnds is set.</p>
 
-In fromEnds mode, segments are dropped in such a way as to extend an already existing tree. In this mode, illustrated by the dandelion, the current state consists of a tree of segments. Each segment in the tree is either interior, meaning that its end1 has been continued by one or more segments, or terminal, meaning that there is no continuing segment emerging from its end1.
+<p>In fromEnds mode, segments are dropped in such a way as to extend an already existing tree. In this mode, illustrated by the dandelion image just below, the current state consists of a tree of segments. Each segment in the tree is either interior, meaning that its end1 has been continued by one or more segments, or terminal, meaning that there is no continuing segment emerging from its end1.</p>
+ <p><img  src="/doc/drop_dandelion.jpg?alt=media" style="bborder:thin black solid;cursor:pointer"  width="400" height="400" max-height="500"/></p>
 
-let topParams = {width:wd,height:ht,dropTries:10,lineLength:5,framePadding:0.15*ht,frameVisible:0,minSeparation:0,rectangleDim:0.2,gridPadding:60,fromEnds:1,sepNext:0.01,extendWhich:'first',splitChance:.40,splitAmount:0.05 * Math.PI,seedDirections:[0*Math.PI],directionChange:0.0*Math.PI,randomDirectionChange:0.025*Math.PI,lineExt:0,numSeeds:15,fromEnds:1,doNotExit:[geom.Circle.mk(Point.mk(0,0),0.5*ht)]};
+<p> Here is the code:</p>
+<precode>
+import {rs as linePP} from '/shape/line.mjs';
+import {rs as basicP} from '/generators/basics.mjs';
+import {rs as addDropMethods} from '/mlib/drop.mjs';
+import {rs as addSegsetMethods} from '/mlib/segsets.mjs';
+import {rs as addRandomMethods} from '/mlib/boundedRandomGrids.mjs';
+
+let rs = basicP.instantiate();
+addDropMethods(rs);
+addRandomMethods(rs);
+addSegsetMethods(rs);
+addRandomMethods(rs);
+
+rs.setName('drop_dandelion');
+let ht = 360;
+let wd = 1* ht;
 
 
+
+
+let topParams = {width:wd,height:ht,framePadding:0.15*ht,
+//parameters to performDrop
+dropTries:10,maxDrops:Infinity,fromEnds:1,doNotExit:[geom.Circle.mk(Point.mk(0,0),0.5*ht)],
+//parameters to genSegmentsFan
+lineLength:5,fromEnds:1,extendWhich:'first',sepNext:0.01,splitChance:.40,splitAmount:0.05 *Math.PI,
+directionChange:0.0*Math.PI,randomDirectionChange:0.025*Math.PI,lineExt:0,
+// parameters to ringSeeds
+numSeeds:15};
+
+Object.assign(rs,topParams);
+
+rs.initProtos = function () {
+  this.lineP = linePP.instantiate();
+  this.lineP.stroke = 'white';
+  this.lineP['stroke-width'] = .5;
+}  
+
+rs.segParams = function () {
+  let r = Math.random();
+  let np = 4;
+  let angle = Math.floor(r*np)* (Math.PI/np)
+  let length = 2 + Math.floor(r*np)*4;
+  return {angle,length};
+}
+
+rs.genSeeds = function () {
+  debugger;
+  let {width,lineP} = this;
+  this.ringRadius = 0.15 * 0.5 * width;
+  return this.ringSeeds(lineP,'transparent');  
+}
+
+rs.genDropStruct = function (p) {
+  return this.genFan(this.lineP,p,'white',topParams);
+}
+
+rs.initialize = function () {
+  
+  this.initProtos();
+  this.addFrame();
+  this.generateDrop();
+}
+
+export {rs};
+</precode>
 </div>
 </div>
 </body>

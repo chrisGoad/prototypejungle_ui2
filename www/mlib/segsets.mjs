@@ -299,8 +299,9 @@ item.genSegmentsFan = function (lineP,p,clr,params) {
 }
 
 
- // the following methods generate segsLines, which are used as the seeds of the drop operation. 
+ // the following methods generate segsLines, which are used as the seeds of the drop operation. moved to drop.mjs
 //item.ringSeeds = function (lineP,clr,icenter,outward=1,divergence=0) {
+/*
 item.ringSeeds = function (lineP,clr,icenter,divergence=0,data) {
   //let {width,height,sepNext,numSeeds,ringRadius:radius,lineLength:len,lineExt=0} = this;
   let {sepNext,numSeeds,ringRadius:radius,lineLength:len,lineExt=0} = this;
@@ -454,7 +455,7 @@ item.gridSeeds = function (lineP,clr) {
  // lines.forEach((ln) => ln.stroke = clr);//'white');
   return [segs,lines];
 }
-
+*/
 /*
 item.setupColorRandomizer = function (params) {
   this.setupShapeRandomizer('r',params);

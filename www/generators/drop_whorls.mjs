@@ -22,15 +22,15 @@ rs.initProtos = function () {
 	this.lineP['stroke-width'] = .6;
 }  
 
-rs.genDropStruct = function (p) {
-  return this.genSegmentsFan(this.lineP,p,'white');
+rs.dropAt = function (p) {
+  return this.genFan({startingPoint:p,stroke:'white'});
 }
 
 
-rs.genSeeds = function () {
+rs.initialDrop = function () {
   let {width,lineP} = this;
   this.ringRadius = 0.2 * 0.5 * width;
-  return this.gridSeeds(lineP,'white');
+  return this.gridSeeds({stroke:'white'});
 }
   
 rs.initialize = function () {

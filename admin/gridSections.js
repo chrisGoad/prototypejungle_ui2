@@ -27,7 +27,7 @@ sections: [
   [0,'web_stripes','instances',1,'Stripes 1',{likes:10,posted:1,category:'web',sources:1}],
   [0,'web_diamond','generators',1,'Diamond',{likes:137,posted:1,category:'web'}],
    [0,'drop_iris','generators',1,'Iris',{likes:45,posted:1,category:'drop'}], //was [0,'drop0_1_27','final',1,'Iris',posted:1,category:'grid'}],
-  [0,'drop_aphelion','generators',1,'Aphelion',{likes:31,posted:1,category:'drop'}],
+  [0,'web_aphelion','generators',1,'Aphelion',{likes:31,posted:1,category:'web'}],
   [0,'web_wheel','generators',1,'Wheel',{likes:30,posted:1,category:'web'}],
   [0,'web_drift','generators',1,'Drift',{likes:30,posted:1,category:'web'}],
   [0,'drop_arrows','generators',1,'Arrows',{likes:27,posted:1,category:'drop'}],  //was [0,'drop0_1_21','final',1,'Leaves']

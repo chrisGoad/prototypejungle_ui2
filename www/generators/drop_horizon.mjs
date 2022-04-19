@@ -27,7 +27,7 @@ rs.segParams = function () {
   return {angle,length};
 }
 
-rs.initialSegments = function () {
+rs.initialDrop = function () {
   let {width,height,lineP} = this; 
   let segs = this.rectangleSegments(width,height);
   let lines = segs.map((sg) => this.genLine(sg,lineP)); 
@@ -38,24 +38,19 @@ rs.genRectSegments = function (p) {
   let sizes = [2,5,10,20,40];
   let which = Math.floor(Math.random()*5);
   let sz = sizes[which];
-  let wd = sz;
-  let ht = sz;
-  let segs = this.rectangleSegments(wd,ht,p);
+  let segs = this.rectangleSegments(sz,sz,p);
   return segs;
 }
 
-
-rs.genDropStruct = function (p) {
+rs.dropAt = function (p) {
   let wparams = {direction:0,zigzag:1,randomness:0,vertical:0,widths:[10,20,50],heightRatio:0.05,numSegs:15,pos:p};
   let segs = (p.y < 0)?this.genRectSegments(p):this.wigglySegments(wparams);
   let lines = segs.map((sg) => this.genLine(sg,this.lineP));
   const genRGBval = function () {
     return 155 + Math.floor(Math.random()*100);
   }
-  let r = genRGBval();
-  let g = genRGBval();
-  let b = genRGBval();
-  let clr = `rgb(${r},${r},${b})`;
+  let v = genRGBval();
+  let clr = `rgb(${v},${v},${v})`;
   lines.forEach( (line) => line.stroke = clr);
   return [segs,lines];
 }

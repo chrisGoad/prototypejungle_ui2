@@ -51,7 +51,7 @@ item.genFan = function (iparams) {
  Object.assign(params,this);
  Object.assign(params,iparams);
 	let {width,height,lineP,startingPoint:p,stroke,sepNext,splitChance,splitAmount,
-	     lineLength:len,directionChange:dc=0,randomDirectionChange:rdc=0,lineExt=0} = params;
+	     segLength:len,directionChange:dc=0,randomDirectionChange:rdc=0,lineExt=0} = params;
   let angle;
 	let rn = Math.random();
   if (typeof p.direction === 'number') {
@@ -92,7 +92,7 @@ item.ringSeeds = function (iparams) {//lineP,clr,icenter,divergence=0,data) {
     let params = {};
     Object.assign(params,this);
     Object.assign(params,iparams);
-    let {center=Point.mk(0,0),stroke,lineP,numSeeds,ringRadius:radius,lineLength:len,divergence=0,data} = params;
+    let {center=Point.mk(0,0),stroke,lineP,numSeeds,ringRadius:radius,segLength:len,divergence=0,data} = params;
   let segs = [];
   let cangle = 0.5* Math.PI;
   let delta = (Math.PI*2)/numSeeds;
@@ -117,7 +117,7 @@ item.ringSeeds = function (iparams) {//lineP,clr,icenter,divergence=0,data) {
   return [segs,lines];
 }
 item.sideSeeds = function (lineP,clr,data,right) {
-  let {width,height,sepNext,numSeeds,ringRadius:radius,lineLength:len,lineExt=0} = this;
+  let {width,height,sepNext,numSeeds,ringRadius:radius,segLength:len,lineExt=0} = this;
   let segs = [];
   let delta  = height/(numSeeds+1);
 		let hw = width/2;
@@ -149,7 +149,7 @@ item.rightSideSeeds = function (clr,data) {
 
 
 item.randomSeeds = function (clr) {
-  let {width,height,sepNext,numSeeds,ringRadius:radius,seedDirections,lineLength:len,lineExt=0} = this;
+  let {width,height,sepNext,numSeeds,ringRadius:radius,seedDirections,segLength:len,lineExt=0} = this;
   let segs = [];
 	let ld;
 	if (seedDirections) {
@@ -374,7 +374,7 @@ item.activeEnds = function () {
 }
 
 item.addSegmentAtThisEnd = function (end) {
-  let {maxDrops,segments,lineLength,ends,shapes,numRows,randomGridsForShapes,dropTries} = this;
+  let {maxDrops,segments,segLength,ends,shapes,numRows,randomGridsForShapes,dropTries} = this;
   if (!this.dropAt) {
     return;
   }
@@ -502,7 +502,7 @@ item.addRandomSegment = function () {
 }
     
 item.addNrandomSegments = function (n) {
-  let {maxDrops,dropTries,maxLoops,segments,lineLength,ends,shapes,fromEnds,onlyFromSeeds} = this;
+  let {maxDrops,dropTries,maxLoops,segments,segLength,ends,shapes,fromEnds,onlyFromSeeds} = this;
   if (!this.dropAt) {
     return;
   }
@@ -537,7 +537,7 @@ item.addNrandomSegments = function (n) {
 } 
 
 item.addRandomSegments = function () {
-  let {maxDrops,dropTries,maxLoops,segments,lineLength,ends,shapes,fromEnds,onlyFromSeeds} = this;
+  let {maxDrops,dropTries,maxLoops,segments,segLength,ends,shapes,fromEnds,onlyFromSeeds} = this;
   if (!this.dropAt) {
     return;
   }

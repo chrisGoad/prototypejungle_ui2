@@ -152,7 +152,7 @@ let topParams = {width:wd,height:ht,framePadding:0.15*ht,
 //parameters to performDrop
 dropTries:10,maxDrops:Infinity,fromEnds:1,doNotExit:[geom.Circle.mk(Point.mk(0,0),0.5*ht)],
 //parameters to genFan
-lineLength:5,fromEnds:1,extendWhich:'first',sepNext:0.01,splitChance:.40,splitAmount:0.05 *Math.PI,
+lineLength:5,extendWhich:'first',sepNext:0.01,splitChance:.40,splitAmount:0.05 *Math.PI,
 directionChange:0.0*Math.PI,randomDirectionChange:0.025*Math.PI,lineExt:0,
 // parameters to ringSeeds
 numSeeds:15};
@@ -200,8 +200,15 @@ rs.dropAt = function (p) {
   return this.genFan({startingPoint:p,stroke:'white'});
 }
 </precode>
-<p class="indent">dropAt, like many methods, accepts its parameters from its argument {startingPoint:p,stroke:'white'} first, and if not found there, from this (the image generator rs itself). genFan produces a branching of the tree by adding two segments emanating from startingPoint, which will be a terminal node of the existing tree. Parameters to genFan are:</p>
-<p class="indent"> lineLength
+<p class="indent">dropAt, like many methods, accepts its parameters from its argument {startingPoint:p,stroke:'white'} first, and if not found there, from this (the image generator rs itself). genFan either extends the tree by one or two segments (controlled by splitChance). In the latter case, it produces a branching of the tree by adding two segments emanating from startingPoint, which will be a terminal node of the existing tree. Parameters to genFan are:</p>
+<p class="indent"> <span class = "textVar">segLength</span>: the length of segments dropped.</p>
+<p class="indent"> <span class = "textVar">extendWhich</span>: the length of segments dropped.</p>
+<p class="indent"> <span class = "textVar">sepNext</span>: the length of segments dropped.</p>
+<p class="indent"> <span class = "textVar">splitChance</span>: the length of segments dropped.</p>
+<p class="indent"> <span class = "textVar">splitAmount</span>: the length of segments dropped.</p>
+<p class="indent"> <span class = "textVar">directionChange</span>: the length of segments dropped.</p>
+<p class="indent"> <span class = "textVar">randomDirectionChange</span>: the length of segments dropped.</p>
+<p class="indent"> <span class = "textVar">lineExt</span>: the length of segments dropped.</p>
 
 
 </div>

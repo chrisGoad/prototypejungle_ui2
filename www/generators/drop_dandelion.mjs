@@ -15,7 +15,7 @@ let topParams = {width:wd,height:ht,framePadding:0.15*ht,
 //parameters to performDrop
 dropTries:10,maxDrops:Infinity,fromEnds:1,doNotExit:[geom.Circle.mk(Point.mk(0,0),0.5*ht)],
 //parameters to genFan
-lineLength:5,fromEnds:1,extendWhich:'first',sepNext:0.01,splitChance:.40,splitAmount:0.05 *Math.PI,
+segLength:5,fromEnds:1,extendWhich:'first',sepNext:0.01,splitChance:.40,splitAmount:0.05 *Math.PI,
 directionChange:0.0*Math.PI,randomDirectionChange:0.025*Math.PI,lineExt:0,
 // parameters to ringSeeds
 numSeeds:15};
@@ -34,6 +34,7 @@ rs.initialDrop = function () {
 }
 
 rs.dropAt = function (p) {
+  debugger;
   return this.genFan({startingPoint:p,stroke:'white'});
 }
 

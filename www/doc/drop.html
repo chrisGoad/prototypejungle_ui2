@@ -108,8 +108,7 @@ export {rs};
 </pre>
 <p> The DROP algorithm drops  things at random positions on the canvas. If a thing lands on top of another, it is thrown away, otherwise it is added.   I have used the vague word "thing". A thing is a pair [lineSegments,shapes], called a dropStruct. Often, but not always, the shapes are lines that  correspond directly to the segments in that they have the same ends; that is, they coincide geometrically. The operation</p>
 <precode>
-rs.segsToDropStruct = function (segs,lineP) {
-  return [segs,segs.map((seg) => this.genLine(seg,LineP)]
+(segs,lineP) => [segs,segs.map((seg) => this.genLine(seg,LineP)]
 ]
 </precode>
 
@@ -136,29 +135,23 @@ rs.dropAt = function (p) {
 
 <p> Here is the code:</p>
 <precode>
+
 import {rs as linePP} from '/shape/line.mjs';
 import {rs as basicP} from '/generators/basics.mjs';
 import {rs as addDropMethods} from '/mlib/drop.mjs';
-import {rs as addSegsetMethods} from '/mlib/segsets.mjs';
-import {rs as addRandomMethods} from '/mlib/boundedRandomGrids.mjs';
 
 let rs = basicP.instantiate();
 addDropMethods(rs);
-addRandomMethods(rs);
-addSegsetMethods(rs);
-addRandomMethods(rs);
 
 rs.setName('drop_dandelion');
 let ht = 360;
 let wd = 1* ht;
 
 
-
-
 let topParams = {width:wd,height:ht,framePadding:0.15*ht,
 //parameters to performDrop
 dropTries:10,maxDrops:Infinity,fromEnds:1,doNotExit:[geom.Circle.mk(Point.mk(0,0),0.5*ht)],
-//parameters to genSegmentsFan
+//parameters to genFan
 lineLength:5,fromEnds:1,extendWhich:'first',sepNext:0.01,splitChance:.40,splitAmount:0.05 *Math.PI,
 directionChange:0.0*Math.PI,randomDirectionChange:0.025*Math.PI,lineExt:0,
 // parameters to ringSeeds
@@ -170,36 +163,47 @@ rs.initProtos = function () {
   this.lineP = linePP.instantiate();
   this.lineP.stroke = 'white';
   this.lineP['stroke-width'] = .5;
-}  
-
-rs.segParams = function () {
-  let r = Math.random();
-  let np = 4;
-  let angle = Math.floor(r*np)* (Math.PI/np)
-  let length = 2 + Math.floor(r*np)*4;
-  return {angle,length};
 }
 
-rs.genSeeds = function () {
-  debugger;
-  let {width,lineP} = this;
-  this.ringRadius = 0.15 * 0.5 * width;
-  return this.ringSeeds(lineP,'transparent');  
+rs.initialDrop = function () {
+  let rad  = 0.15 * 0.5 * this.width;
+  return this.ringSeeds({stroke:'transparent',ringRadius:rad});  
 }
 
-rs.genDropStruct = function (p) {
-  return this.genFan(this.lineP,p,'white',topParams);
+rs.dropAt = function (p) {
+  return this.genFan({startingPoint:p,stroke:'white'});
 }
 
 rs.initialize = function () {
-  
   this.initProtos();
   this.addFrame();
   this.generateDrop();
 }
 
 export {rs};
+
+
+
+
 </precode>
+<p> Here is an explanation of the parameters:</p>
+<p class="indent"> First, parameters to the main drop algorithm:</p>
+
+<p class="indent"><span class = "textVar">dropTries:number</span> : if this number of consectutive drops fail due to collision, terminate the algorithm.</p>
+<p class="indent"><span class = "textVar">maxDrops:number</span>: the maximum number of drop trials</p>
+<p class="indent"><span class = "textVar">fromEnds:boolean</span>: run the algorithm in fromEnds mode if this value is truthy</p>
+<p class="indent"><span class = "textVar">doNotExit:circle or rectangle</span>: reject drops any of whose segments straddle the inside and outside of the given geometric figure</p>
+<p class="indent"> Next, parameters to genFan</p>:
+<p class="indent"> Note that the generator of dropStructs, dropAt, relies on genFan to do its work:</p>:
+<precode>
+rs.dropAt = function (p) {
+  return this.genFan({startingPoint:p,stroke:'white'});
+}
+</precode>
+<p class="indent">dropAt, like many methods, accepts its parameters from its argument {startingPoint:p,stroke:'white'} first, and if not found there, from this (the image generator rs itself). genFan produces a branching of the tree by adding two segments emanating from startingPoint, which will be a terminal node of the existing tree. Parameters to genFan are:</p>
+<p class="indent"> lineLength
+
+
 </div>
 </div>
 </body>

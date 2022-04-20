@@ -1,7 +1,3 @@
-//active
-//core.require('/mlib/animation.js','/mlib/basics.js','/mlib/boundeddRandomGrids.js','/shape/rectangle.js','/line/line.js',
-//core.require(
-//function (addAnimationMethods,addBasicMethods,addRandomMethods,rectanglePP,linePP) {
 const rs = function (item) {
 
 /* theory of operation. 
@@ -24,17 +20,13 @@ Parameters: dropTries sets how many unsuccessful drops are tolerated before the 
 
 In fromEnds mode, segments are dropped in such a way as to extend an already existing tree. In this mode, illustrated by the dandelion, the current state consists of a tree of segments. Each segment in the tree is either interior, meaning that its end1 has been continued by one or more segments, or terminal, meaning that there is no continuing segment emerging from its end1. The end1 of such a segment is held in the array this.ends. 
 */
-//core.require(function () {
-//addBasicMethods(item);
-//addRandomMethods(item);
+
 let defaults = {maxDrops:Infinity,dropTries:5,maxLoops:Infinity};//,maxTriesPerEnd:20};
-//defaults = {maxDrops:1000,dropTries:5,maxLoops:1000};
 
 Object.assign(item,defaults);
 /*adjustable parameters  */
-//let topParams = 	{width:100,height:100,maxDrops:10,dropTries:5,maxLoops:100000,lineLength:10,backgroundColor:undefined,minSeparation:5,endLoops:20000,fromEnds:1,	onlyFromSeeds:0}
 
-//Object.assign(item,topParams);
+
 
 /* end */
 
@@ -54,25 +46,10 @@ item.genSingletonUnit =  function (lineP,p,direction,clr) {
 	return [[seg],[ln]];
 }
 // was genSegmentsFan
-//item.genFan = function (lineP,p,clr,params) {
 item.genFan = function (iparams) {
  let params = {};
  Object.assign(params,this);
  Object.assign(params,iparams);
-/*	let thisCopy;
-	if (params) {
-		thisCopy = {};
-		//debugger;
-		for (let p in this) {
-			let v = this[p];
-			if (typeof v !== 'function') {
-			 thisCopy[p] = v;
-			}
-		Object.assign(thisCopy,params);
-		}
-	} else {
-		thisCopy = this;
-	}*/
 	let {width,height,lineP,startingPoint:p,stroke,sepNext,splitChance,splitAmount,
 	     lineLength:len,directionChange:dc=0,randomDirectionChange:rdc=0,lineExt=0} = params;
   let angle;
@@ -85,11 +62,8 @@ item.genFan = function (iparams) {
   let hsa = 0.5 * splitAmount;
   let a0 = angle+splitAmount;
   let a1 = angle-splitAmount;
- // let a0 = angle+0.02 * Math.PI;
- // let a1 = angle-0.02 * Math.PI;
-	//let len = 10;//2 + Math.floor(r*4)*4;
+
   if (Math.random() < splitChance ) {
-		//debugger;
 	  let seg0 = this.genSegment(p,len,a0,sepNext);
 	  let seg1 = this.genSegment(p,len,a1,sepNext);
     p.isEnd = 1;
@@ -104,7 +78,6 @@ item.genFan = function (iparams) {
 	  let seg = this.genSegment(p,len,angle,sepNext);
     p.isEnd = 1;
 		let ln = this.genLine(seg,lineP,lineExt);
-	//	let clr = `rgb(${r},${r},${r})`;
     if (stroke) {
 		  ln.stroke = stroke;//'white';//clr;
     }
@@ -115,29 +88,17 @@ item.genFan = function (iparams) {
 
 
  // the following methods generate segsLines, which are used as the seeds of the drop operation. 
-//item.ringSeeds = function (lineP,clr,icenter,outward=1,divergence=0) {
 item.ringSeeds = function (iparams) {//lineP,clr,icenter,divergence=0,data) {
     let params = {};
     Object.assign(params,this);
     Object.assign(params,iparams);
     let {center=Point.mk(0,0),stroke,lineP,numSeeds,ringRadius:radius,lineLength:len,divergence=0,data} = params;
-
-  //let {width,height,sepNext,numSeeds,ringRadius:radius,lineLength:len,lineExt=0} = this;
-  //let {numSeeds,ringRadius:radius,lineLength:len} = this;
-  //let {sepNext,numSeeds,ringRadius:radius,lineLength:len,lineExt=0} = this;
-	//let center = icenter?icenter:Point.mk(0,0);
   let segs = [];
-//  let numStarts = 16;
   let cangle = 0.5* Math.PI;
   let delta = (Math.PI*2)/numSeeds;
- // let radius = 0.2* 0.5 * height;
- // let len = 5;//2 + Math.floor(r*4)*4;
-  //let zp = Point.mk(0,0);
-	//debugger;
   for (let j=0;j<numSeeds;j++) {
     let ip = Point.mk(Math.cos(cangle),Math.sin(cangle)).times(radius);
 		let p = ip.plus(center);
-	//	let dir = outward?cangle+divergence:-cangle-divergence;
 		let dir = cangle+divergence;
 		let seg =  this.genSegment(p,len,dir);
 		let end = seg.end;
@@ -149,7 +110,6 @@ item.ringSeeds = function (iparams) {//lineP,clr,icenter,divergence=0,data) {
 		segs.push(seg); 
     cangle += delta;
   }
- // let lines = segs.map((sg) => this.genLine(sg.end0,sg.end1,lineExt)); 
   let lines = segs.map((sg) => this.genLine(sg,lineP)); 
   if (stroke) {
     lines.forEach((ln) => ln.stroke = stroke);
@@ -159,13 +119,11 @@ item.ringSeeds = function (iparams) {//lineP,clr,icenter,divergence=0,data) {
 item.sideSeeds = function (lineP,clr,data,right) {
   let {width,height,sepNext,numSeeds,ringRadius:radius,lineLength:len,lineExt=0} = this;
   let segs = [];
-//  let numStarts = 16;
   let delta  = height/(numSeeds+1);
 		let hw = width/2;
 	let cy = delta-hw;
   for (let j=0;j<numSeeds;j++) {
     let ip = Point.mk(right?hw:-hw,cy);
-	//	let dir = outward?cangle+divergence:-cangle-divergence;
 		let seg =  this.genSegment(ip,len,right?Math.PI:0,sepNext);
 		let end = seg.end;
 		if (data) {
@@ -220,30 +178,20 @@ item.randomSeeds = function (clr) {
 
 
 
-//item.gridSeeds = function (lineP,clr) {
 item.gridSeeds = function (iparams) {
      debugger;
 
     let params = {};
     Object.assign(params,this);
     Object.assign(params,iparams);
-    //let {center=Point.mk(0,stroke,lineP,numSeeds,ringRadius:radius,lineLength:len,divergence=0,data} = params;
-
   let {width,height,lineP,stroke,sepNext,fanAngles,numSeedRows:numRows,
        numSeedCols:numCols,gridPadding:padding=0,lineExt=0} = params;
   let segs = [];//this.rectangleSegments(width,height);
 	let lines = [];
- // let numCols = 4;
-//  let numRows = 4;
- // let invx = width/(numCols+1);
- // let invy = height/(numRows+1);
   let iwidth = width - padding;
   let iheight = height - padding;
   let hwd = iwidth/2;
   let hht = iheight/2;
-//  let ix = invx-hwd;
- // let iy = hht-invy;
-//  let iy = hht;
   let angle0 = 0.5*Math.PI;
   let angle1 = -0.5*Math.PI;
   let len = 5;//2 + Math.floor(r*4)*4;
@@ -251,7 +199,6 @@ item.gridSeeds = function (iparams) {
 	let deltaY = this.deltaY = iheight/numRows;
 	let ix = (-hwd) + 0.5*deltaX;
 	let yv = (-hht) + 0.5*deltaY;
-//	debugger;
   for (let j=0;j<numRows;j++) {
     let xv = ix;
 		for (let i=0;i<numCols;i++) {
@@ -270,18 +217,14 @@ item.gridSeeds = function (iparams) {
 					lines.push(this.genLine(seg,lineP,lineExt));
 				});
 			}
-			//ix += invx;
 			xv += deltaX;
 
 		}	 
     yv += deltaY;
-    //iy -= invy;
   }
 	if (stroke) {
     lines.forEach((ln) => ln.stroke = stroke);
   }
-  //let lines = segs.map((sg) => this.genLine(sg.end0,sg.end1,1)); 
- // lines.forEach((ln) => ln.stroke = clr);//'white');
   return [segs,lines];
 }
 
@@ -305,7 +248,6 @@ item.extendSegment = function (seg,ln) {
 
 
 item.genRandomPoint = function (rect) {
-	//debugger;
   if (rect) {
     let {corner,extent} = rect;
     let lx = corner.x;
@@ -327,7 +269,6 @@ item.genSegment = function (p,ln,angle,sepNext=0) {
   if (!p) {
     debugger;
   }
-//item.genSegment = function (p,ln,angle,sep=0,sepNext=0,centered=1) {
   let vec = Point.mk(Math.cos(angle),Math.sin(angle));
   let e0,e1,end,rs;
 	e0 = p;
@@ -433,14 +374,11 @@ item.activeEnds = function () {
 }
 
 item.addSegmentAtThisEnd = function (end) {
- // let {maxDrops,dropTries,segments,lineLength,ends,shapes,fromEnds,numRows,randomGridsForShapes} = this;
- // let {maxDrops,segments,lineLength,ends,shapes,numRows,randomGridsForShapes,maxTriesPerEnd} = this;
   let {maxDrops,segments,lineLength,ends,shapes,numRows,randomGridsForShapes,dropTries} = this;
   if (!this.dropAt) {
     return;
   }
   let tries = 0;
- // let numDropped = 0;
 	let cell,rvs;
 	if (numRows && randomGridsForShapes) {
 	  cell = this.cellOf(end);
@@ -465,10 +403,8 @@ item.addSegmentAtThisEnd = function (end) {
 		}
 		if (ifnd) {
 			tries++;
-			//if (tries === maxTriesPerEnd) {
 			if (tries === dropTries) {
         console.log('inactivated - could not find continuation');
-       //debugger;
         end.inactive = 1;
 				return 0;
 			}
@@ -534,22 +470,16 @@ item.addSegmentsAtEnds = function () {
     if (ars === 'noEndsLeft') {
       return ars;
     }
-		// new 11/8
     if (!ars) {
-     // tries++;
-     // if (tries >= maxEndTries) {
      return 'triesExhausted';
-     // }
     }
   }
-  //debugger;
   return ['loopsExceeded',this.numDropped];
 }
        
 
 item.addRandomSegment = function () {
   let p = this.genRandomPoint(); 
-  //debugger;
   let dropStruct = this.dropAt(p);
   let ifnd = 0;
   let sln=0;
@@ -588,7 +518,6 @@ item.addNrandomSegments = function (n) {
       }
       continue; //added return 11/21
     }
-		//let ifnd = this.addRandomSegment();
 		let segsAdded = this.addRandomSegment();
 		if (segsAdded) {
       tries = 0;
@@ -616,7 +545,6 @@ item.addRandomSegments = function () {
   let tries = 0;
   let endsVsNew = 1;
   let loops = 0;
-	//debugger;
   while (loops < maxLoops) {
     loops++;
     if (fromEnds) {
@@ -628,7 +556,6 @@ item.addRandomSegments = function () {
       }
 			return; //added return 11/21
     }
-	//	let ifnd = this.addRandomSegment();
 		let segsAdded = this.addRandomSegment();
 		if (segsAdded) {
       tries = 0;
@@ -674,7 +601,6 @@ item.installDropStruct = function (dropStruct) {
   let {segments,ends} = this;
   let ln = segments.length;
   let [segs,shapes] = dropStruct;
-//	if (dropStruct.isRectangle) {
 	if (!Array.isArray(segs)) {
     debugger;
 		let rect = segs;
@@ -751,24 +677,12 @@ item.concatEachArray = function (ays) {
 	 let [a0,a1]= a;
 	 c0.push(...a0);
 	 c1.push(...a1);
-	 //c0 = c0.concat(a0);
-	 //c1 = c1.concat(a1);
   });	 
 	 return [c0,c1];
 }
-/*
-item.initProtos = function () {
-	core.assignPrototypes(this,'lineP',linePP);
-	this.lineP.stroke = 'white';
-	this.lineP['stroke-width'] = 1;
-	if (this.finishProtos) {
-		this.finishProtos();
-	}
-}  
-*/
+
 
 item.generateDrop = function (doDrop=1) {
-  //let {rectangles,initialSegments,genSeeds} = this;
   this.segments = [];
 	this.numDropped = 0;
   this.ends = [];

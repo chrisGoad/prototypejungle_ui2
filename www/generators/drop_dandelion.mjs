@@ -26,14 +26,6 @@ rs.initProtos = function () {
   this.lineP = linePP.instantiate();
   this.lineP.stroke = 'white';
   this.lineP['stroke-width'] = .5;
-}  
-
-rs.segParams = function () {
-  let r = Math.random();
-  let np = 4;
-  let angle = Math.floor(r*np)* (Math.PI/np)
-  let length = 2 + Math.floor(r*np)*4;
-  return {angle,length};
 }
 
 rs.initialDrop = function () {

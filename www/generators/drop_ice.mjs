@@ -36,11 +36,13 @@ rs.segParams = function () {
 } 
 
 rs.dropAt = function (p) {
-  let {minSeparation:sep,lineP} = this;
+  let {minSeparation,lineP} = this;
   let {length,angle} = this.segParams();
   let seg = this.genSegment(p,length,angle);
   let ln = this.genLine(seg,lineP);
-  let eseg = this.genSegment(p,length+sep,angle);
+  // the segment is minSeparation longer than the line, meaning that lines extended by this much
+  // which intersect existing dropStructs are rejected as drop candidates
+  let eseg = this.genSegment(p,length+minSeparatopm,angle);
   return [[eseg],[ln]];
 }
  

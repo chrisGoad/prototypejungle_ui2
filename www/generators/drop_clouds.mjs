@@ -10,7 +10,7 @@ addInterpolateMethods(rs);
 addSegsetMethods(rs);
 rs.setName('drop_clouds');
 let ht = 400;
-let topParams = {width:1.5*ht,height:ht,maxDrops:100000,dropTries:50,lineLength:2,framePadding:0.17*ht,minSeparation:0}
+let topParams = {width:1.5*ht,height:ht,maxDrops:100000,dropTries:50,segLength:2,framePadding:0.17*ht,minSeparation:0}
 
 
 Object.assign(rs,topParams);

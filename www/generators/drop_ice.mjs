@@ -10,7 +10,7 @@ addSegsetMethods(rs);
 rs.setName('drop_ice');
 let wd = 200;
 
-let topParams = {width:wd,height:wd,dropTries:100,lineLength:2,framePadding:20,minSeparation:10}
+let topParams = {width:wd,height:wd,dropTries:100,segLength:2,framePadding:20,minSeparation:10}
 
 Object.assign(rs,topParams);
 
@@ -42,7 +42,7 @@ rs.dropAt = function (p) {
   let ln = this.genLine(seg,lineP);
   // the segment is minSeparation longer than the line, meaning that lines extended by this much
   // which intersect existing dropStructs are rejected as drop candidates
-  let eseg = this.genSegment(p,length+minSeparatopm,angle);
+  let eseg = this.genSegment(p,length+minSeparation,angle);
   return [[eseg],[ln]];
 }
  

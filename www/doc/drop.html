@@ -200,15 +200,29 @@ rs.dropAt = function (p) {
   return this.genFan({startingPoint:p,stroke:'white'});
 }
 </precode>
-<p class="indent">dropAt, like many methods, accepts its parameters from its argument {startingPoint:p,stroke:'white'} first, and if not found there, from this (the image generator rs itself). genFan either extends the tree by one or two segments (controlled by splitChance). In the latter case, it produces a branching of the tree by adding two segments emanating from startingPoint, which will be a terminal node of the existing tree. Parameters to genFan are:</p>
-<p class="indent"> <span class = "textVar">segLength</span>: the length of segments dropped.</p>
-<p class="indent"> <span class = "textVar">extendWhich</span>: the length of segments dropped.</p>
-<p class="indent"> <span class = "textVar">sepNext</span>: the length of segments dropped.</p>
-<p class="indent"> <span class = "textVar">splitChance</span>: the length of segments dropped.</p>
-<p class="indent"> <span class = "textVar">splitAmount</span>: the length of segments dropped.</p>
-<p class="indent"> <span class = "textVar">directionChange</span>: the length of segments dropped.</p>
-<p class="indent"> <span class = "textVar">randomDirectionChange</span>: the length of segments dropped.</p>
-<p class="indent"> <span class = "textVar">lineExt</span>: the length of segments dropped.</p>
+<p class="indent">genFanA, like many methods, accepts its parameters from its argument {startingPoint:p,stroke:'white'} first, and if not found there, from this (the image generator rs itself). genFan  extends the tree by either one or two segments (controlled by splitChance).  The segments, in either case, emanate from startingPoint, which will be a terminal node of the existing tree. In the latter case, it produces a branching of the tree, and in the former case not. Parameters to genFan are:</p>
+<p class="indent"> <span class = "textVar">segLength:number</span>: the length of segments dropped.</p>
+<p class="indent"> <span class = "textVar">startingPoint:Point</span>: the position of the terminal node to be extened. </p>
+<p class="indent"> <span class = "textVar">extendWhich:string</span>: which of the terminal nodes to extend. Possible values 'first', meaning the earliest added terminal node that has not yet been extended, 'random' meaning a randomly selected terminal node, and 'last' meaning the last added terminal node.</p>
+<p class="indent"> <span class = "textVar">sepNext</span>: the separation between the terminal node and the new segment(s)</p>
+<p class="indent"> <span class = "textVar">splitChance</span>: the chance that a split (two segments) rather than a linear continuation (one segment), will be chosen.</p>
+<p class="indent"> <span class = "textVar">splitAmount</span>: if a split is chosen, the angular difference between the two new segments.</p>
+<p class="indent"> <span class = "textVar">directionChange</span>: the direction of the new segment, or center of the new branch, relative to the terminal segment being extended</p>
+<p class="indent"> <span class = "textVar">randomDirectionChange</span>: a random value to be added to directionChange is chosen at random from the interval [-randomDirectionChange,randomDirectionChange]</p>
+<p class="indent"> <span class = "textVar">lineExt</span>: the amount by which lineSegments should be extended to produce lines in the dropStruct. </p>
+
+<p class="indent"> Finally , parameters to genSeeds</p>:
+<p class="indent"> Note that initialDrops , relies on ringSeeds to do  its work:</p>:
+<precode>
+
+rs.initialDrop = function () {
+  let rad  = 0.15 * 0.5 * this.width;
+  return this.ringSeeds({stroke:'transparent',ringRadius:rad});  
+}
+</precode>
+<p> Like genFan, ringSeeds takes its parameters first from its argument, and then from this. The parameters to ringSeeds are:</p>
+
+<p class="indent"> <span class = "textVar">lineExt</span>: the amount by which lineSegments should be extended to produce lines in the dropStruct. </p>
 
 
 </div>

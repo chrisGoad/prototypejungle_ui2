@@ -15,7 +15,7 @@ addInterpolateMethods(rs);
 
 rs.setName('drop_arrows');
 let ht = 400;
-let topParams = {width:1.0*ht,height:ht,dropTries:40,lineLength:2,minSeparation:0,framePadding:0.1*ht}
+let topParams = {width:1.0*ht,height:ht,dropTries:40,segLength:2,minSeparation:0,framePadding:0.1*ht}
 
 Object.assign(rs,topParams);
 

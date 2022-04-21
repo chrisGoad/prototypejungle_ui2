@@ -919,14 +919,16 @@ item.instantiateDescriptionInto = function (rs,eltDescription) {
  }
 
 item.genInnerGridPositions = function () {
-  let {innerRows,width,numRows} = this;
-  let deltaX = width/numRows;
-  let innerDim = deltaX/innerRows;
+  let {innerRows,innerCols,width,height,numRows,numCols} = this;
+  let deltaX = width/numCols;
+  let deltaY = height/numRows;
+  let innerDimX = deltaX/innerCols;
+  let innerDimY = deltaX/innerRows;
   let positions = [];
   for (let i=0;i<innerRows;i++) {
-   let posx=innerDim*(i+0.5) -0.5*deltaX;
-   for (let j=0;j<innerRows;j++) {
-     let posy=innerDim*(j+0.5)-0.5*deltaX;
+   let posx=innerDimX*(i+0.5) -0.5*deltaX;
+   for (let j=0;j<innerCols;j++) {
+     let posy=innerDimY*(j+0.5)-0.5*deltaY;
      positions.push(Point.mk(posx,posy));
     }
   }

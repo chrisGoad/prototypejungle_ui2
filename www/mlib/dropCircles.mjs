@@ -24,11 +24,12 @@ Object.assign(rs,defaults);
 
       
 rs.collides0 = function (point1,radius1,point2,radius2) {
+  let {minSeparation=0} = this;
   let p1x = point1.x;
   let p1y = point1.y;
   let p2x = point2.x;
   let p2y = point2.y;
-  let minDist =  radius1 + radius2 + this.minSeparation;
+  let minDist =  radius1 + radius2 + minSeparation;
   if (Math.abs(p2x - p1x) >=  minDist) {return false;}
   if (Math.abs(p2y - p1y) >= minDist) {return false;}
   let d = point1.distance(point2);

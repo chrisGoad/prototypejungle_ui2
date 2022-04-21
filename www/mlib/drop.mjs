@@ -89,6 +89,7 @@ item.genFan = function (iparams) {
 
  // the following methods generate segsLines, which are used as the seeds of the drop operation. 
 item.ringSeeds = function (iparams) {//lineP,clr,icenter,divergence=0,data) {
+     debugger;
     let params = {};
     Object.assign(params,this);
     Object.assign(params,iparams);

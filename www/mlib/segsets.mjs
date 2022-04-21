@@ -226,7 +226,7 @@ item.wigglySegments = function (params) {
 
 
 item.genOneSegment = function (p,direction) {
-  let {sepNext,lineLength:len,lineExt=0} = this;
+  let {sepNext,segLength:len,lineExt=0} = this;
   debugger;
 	let seg = this.genSegment(p,len,direction,sepNext);
   return seg;
@@ -259,7 +259,7 @@ item.genSegmentsFan = function (lineP,p,clr,params) {
 		thisCopy = this;
 	}
 	let {width,height,sepNext,splitChance,splitAmount,
-	     lineLength:len,directionChange:dc=0,randomDirectionChange:rdc=0,lineExt=0} = thisCopy;
+	     segLength:len,directionChange:dc=0,randomDirectionChange:rdc=0,lineExt=0} = thisCopy;
   let angle;
 	let rn = Math.random();
   if (typeof p.direction === 'number') {
@@ -303,8 +303,8 @@ item.genSegmentsFan = function (lineP,p,clr,params) {
 //item.ringSeeds = function (lineP,clr,icenter,outward=1,divergence=0) {
 /*
 item.ringSeeds = function (lineP,clr,icenter,divergence=0,data) {
-  //let {width,height,sepNext,numSeeds,ringRadius:radius,lineLength:len,lineExt=0} = this;
-  let {sepNext,numSeeds,ringRadius:radius,lineLength:len,lineExt=0} = this;
+  //let {width,height,sepNext,numSeeds,ringRadius:radius,segLength:len,lineExt=0} = this;
+  let {sepNext,numSeeds,ringRadius:radius,segLength:len,lineExt=0} = this;
 	let center = icenter?icenter:Point.mk(0,0);
   let segs = [];
 //  let numStarts = 16;
@@ -337,7 +337,7 @@ item.ringSeeds = function (lineP,clr,icenter,divergence=0,data) {
   return [segs,lines];
 }
 item.sideSeeds = function (lineP,clr,data,right) {
-  let {width,height,sepNext,numSeeds,ringRadius:radius,lineLength:len,lineExt=0} = this;
+  let {width,height,sepNext,numSeeds,ringRadius:radius,segLength:len,lineExt=0} = this;
   let segs = [];
 //  let numStarts = 16;
   let delta  = height/(numSeeds+1);
@@ -371,7 +371,7 @@ item.rightSideSeeds = function (clr,data) {
 
 
 item.randomSeeds = function (clr) {
-  let {width,height,sepNext,numSeeds,ringRadius:radius,seedDirections,lineLength:len,lineExt=0} = this;
+  let {width,height,sepNext,numSeeds,ringRadius:radius,seedDirections,segLength:len,lineExt=0} = this;
   let segs = [];
 	let ld;
 	if (seedDirections) {

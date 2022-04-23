@@ -25,7 +25,7 @@ let topParams = {pointJiggle:1,numRows:nr,numCols:nr,width:wd,height:wd,backgrou
 Object.assign(rs,topParams);
 
 rs.initProtos = function () {
-  let rectP = this.set('rectP',rectPP.instantiate()).hide();
+  let rectP = this.rectP = rectPP.instantiate();
   this.rectP['stroke-width'] = 0;
 }
 

@@ -2,26 +2,28 @@
 
 <p class = 'title'>basics</p>
 
-<p>This module, <span class='textVar'>/mlib/basics.mjs</span>,  is present in every image generator. The methods defined by this module are as follows:</p>
+<p>The module <span class='textVar'>/mlib/basics.mjs</span>  is present in every image generator. The methods defined by this module are as follows:</p>
 <pre style="padding-left:20px;font-size:10pt;font-weight:bold" class="code">
 setName(nm:string);
 </pre>
-<p><span class='textVar'>nm</span> This determines where the image will be placed when the <span class='textVar'>Save Image</span>  and <span class='textVar'>Save Image (High Res)</span> buttons are pressed. For example,</p>
+<p><span class='textVar'>nm</span>  determines where the image will be placed when the <span class='textVar'>Save Image</span>  and <span class='textVar'>Save Image (High Res)</span> buttons are pressed. For example,</p>
 <pre style="padding-left:20px;font-size:10pt;font-weight:bold" class="code">
 rs.setName('grid_droplets');
 </pre>
 <p> means that, when the image generator containing this call is loaded into PrototypeJungle, and the <span class='textVar'>Save Image</span>   button is pressed, the image will be saved at  <span class='textVar'>&lt;prototypejungle&gt;/www/images/grid_droplets.jpg</span> . The <span class='textVar'>Save Image (High Res)</span> button saves a higher resolution variant of the same image at 
- <span class='textVar'>&lt;prototypejungle&gt;/www/images_hi_res/grid_droplets.jpg</span>. The lower resolution variant is adequate for web display, but the higher resolution variant is needed for some image printing purposes (e.g. by <a href="https://mpix.com">mpix.com</a>.</p>
+ <span class='textVar'>&lt;prototypejungle&gt;/www/images_hi_res/grid_droplets.jpg</span>. The lower resolution variant is adequate for web display, but the higher resolution variant is needed for some image printing purposes (e.g. by <a href="https://mpix.com">mpix.com</a>).</p>
  <hr/>
 <pre style="padding-left:20px;font-size:10pt;font-weight:bold" class="code">
 this.addFrame();
 </pre>
 <p> is called from within the <span class='userDefinedText'>initialize</span> method of an image generator, and takes its parameters from the image generation object (the <span class='textVar'>this</span> of <span class='textVar'>initialize</span>). The image generator may set the frame parameters <span class='textVar'>frameStroke</span>, <span class='textVar'>frameFill</span>, and  <span class='textVar'>framePadding</span>.  Then the method <span class='textVar'>addFrame()</span> will generate a rectangular  frame around the image as determined by these parameters. Here is their meaning:</p>
 <p><span class='textVar'>frameStroke</span> and <span class='textVar'>frameFill</span> are the stroke and fill respectively of the frame. The default value for <span class='textVar'>frameFill</span> is "transparent", and for <span class='textVar'>frameStroke</span>, "rgb(2,2,2)" These defaults produce a frame which is  undetectable by the human eye against a black background. However, it is detectable by software which automatically adjusts image scaling for fit in the process of display or printing. Hence the frame facility can be used to control this scaling. I use it in this way for printing at <a href="https://mpix.com">mpix.com</a>.  </p>
-<p> <span class='textVar'>framePadding</span> determines the amount of excess width and height of the frame relative to the image. This utilizes the  <span class='textVar'>width and  <span class='textVar'>height parameters of the image, so they must be defined for this to work.</p>
+<p> <span class='textVar'>framePadding</span> determines the amount of excess width and height of the frame relative to the image. This utilizes the  <span class='textVar'>width</span> and  <span class='textVar'>height</span> parameters of the image, so they must be defined for this to work.</p>
+<p>The following more general routine 
 <pre style="padding-left:20px;font-size:10pt;font-weight:bold" class="code">
-this.addRectangle({width:number,height:number,position:Point,stroke:number,fill:number});
+this.addRectangle({width:number,height:number,stroke_width:number,position:Point=Point(0,0),stroke:color='white',fill:color='Transparent':});
 </pre>
+is also available.
 <p>
 Here are the relevant lines of code from the <a href="grid.html">grid example</a></p>
 

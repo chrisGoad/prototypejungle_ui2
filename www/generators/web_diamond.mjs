@@ -23,7 +23,7 @@ Object.assign(rs,topParams);
 
 
 rs.initProtos = function () {	
-  let lineP = this.set('lineP',linePP.instantiate()).hide();
+  let lineP = this.lineP = linePP.instantiate();
   lineP['stroke-width'] = 7;
 }  
 

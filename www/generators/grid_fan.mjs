@@ -38,7 +38,7 @@ rs.positionFunction = function (i,j) {
     
      
 rs.initProtos = function () {	
-  let circleP = this.set('circleP',circlePP.instantiate()).hide();
+  let circleP = this.circleP = circlePP.instantiate();
   circleP['stroke-width'] = 0;
   circlePP.stroke = 'blue';
   circleP.dimension = 30;

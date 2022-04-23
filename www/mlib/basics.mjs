@@ -75,7 +75,7 @@ item.addRectangle  = function (iparams) {
     return;
   }
   let params = (typeof iparams === 'string')?{fill:iparams}:iparams;
-  let {width,height,position,fill,stroke,stroke_width=0} = params;
+  let {width,height,fill,stroke,stroke_width=0,position} = params;
   if (!width) {
     width = this.width;
    }
@@ -96,7 +96,9 @@ item.addRectangle  = function (iparams) {
   } 
   rect.width = width;
   rect.height = height;
-	
+	if (position) {
+    rect.moveto(position);
+  }
   rect.update();
 	rect.show();
   return rect;

@@ -270,7 +270,7 @@ const thingString = function (order,ix,dir,useThumb,ititle,props) {
   let vpath = (variant?path+'_v_'+variant:path);
   //console.log('variant',variant);
   //console.log('vpath',vpath);
-  let vx = vpath+'.'+ext;
+  let vx = vpath+(variant?'_'+variant:'')+'.'+ext;
 	let imsrc = `images/${vpath}.jpg`;
 	//let thumbsrc = useThumb?`thumbs/${vpath}.jpg`:imsrc;
 	let thumbsrc = `thumbs/${vpath}.jpg`;

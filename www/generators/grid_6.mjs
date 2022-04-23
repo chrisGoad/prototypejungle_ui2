@@ -21,7 +21,7 @@ Object.assign(rs,topParams);
 
 
 rs.initProtos = function () {	
-	let rectP = this.set('rectP',rectPP.instantiate()).hide();
+	let rectP = this.rectP = rectPP.instantiate();
 	rectPP.fill = 'rgba(250,250,250,0.5)';
 	rectPP['stroke-width'] = 0;
 

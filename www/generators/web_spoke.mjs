@@ -21,7 +21,7 @@ let  gridParams = {initialPos:Point.mk(-0.0*wd,0),initialDirection:0,width:ht,st
 Object.assign(rs,topParams);
 	
 rs.initProtos = function () {	
-  let lineP = this.set('lineP',linePP.instantiate()).hide();
+  let lineP = this.lineP = linePP.instantiate();
 	this.lineP.stroke = 'white';
 	this.lineP['stroke-width'] = 3;
 }

@@ -27,7 +27,7 @@ rs.addGrid = function (nm,fromLeft,turnUp) {
 }
      
 rs.initProtos = function () {	
-  let rectP = this.set('rectP',rectPP.instantiate()).hide();
+  let rectP = this.rectP = rectPP.instantiate();
   rectP['stroke-width'] = 0;
   let wd = 200;
   rectP.width = wd;

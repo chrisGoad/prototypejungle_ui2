@@ -15,7 +15,7 @@ let topParams = {width:wd,height:wd,numRows:nr,numCols:nr,pointJiggle:20,framePa
 Object.assign(rs,topParams);
 
 rs.initProtos = function () {	
-  let circleP = this.set('circleP',circlePP.instantiate()).hide();
+  let circleP = this.circleP = circlePP.instantiate();
   circleP.fill = 'red';
   circleP['stroke-width'] = 0;
   circleP.radius= 7;

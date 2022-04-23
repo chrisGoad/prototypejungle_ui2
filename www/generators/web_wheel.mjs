@@ -15,7 +15,7 @@ let  topParams = {webTries:1000,numRings:20,radius:rd,numPointsPerRing:20,frameP
 Object.assign(rs,topParams);
 
 rs.initProtos = function () {	
-  let lineP = this.set('lineP',linePP.instantiate()).hide();
+  let lineP = this.lineP = linePP.instantiate();
   this.lineP.stroke = 'white';
   this.lineP['stroke-width'] = .1;
   this.lineP['stroke-width'] = 5;

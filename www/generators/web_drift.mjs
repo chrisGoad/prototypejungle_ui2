@@ -22,11 +22,11 @@ Object.assign(rs,topParams);
 
 
 rs.initProtos = function () {
-  let lineP = this.set('lineP',linePP.instantiate()).hide();
+  let lineP = this.lineP = linePP.instantiate();
   this.lineP.stroke = 'white';
   this.lineP['stroke-width'] = .1;
   this.lineP['stroke-width'] = 6;
-  let circleP = this.set('circleP',circlePP.instantiate()).hide();
+  let circleP = this.circleP = circlePP.instantiate();
   circleP.dimension = 20;
   circleP.fill = 'transparent';
   circleP.stroke = 'transparent';

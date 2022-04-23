@@ -50,7 +50,7 @@ rs.positionFunction = function (i,j) {
 }
  
 rs.initProtos = function () {	
-  let circleP = this.set('circleP',circlePP.instantiate()).hide();
+  let circleP = this.circleP = circlePP.instantiate();
   circleP['stroke-width'] = 0;
   circleP.dimension = 30;
   circleP.fill = 'rgba(255,255,0,0.4)';

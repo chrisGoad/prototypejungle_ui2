@@ -25,10 +25,10 @@ rs.sphereCenter = Point3d.mk(0,0,-0.4*ht)
 
 rs.initProtos = function () {
   debugger;
-  let lineP = this.set('lineP',linePP.instantiate()).hide();
+  let lineP = this.lineP = linePP.instantiate();
   this.lineP.stroke = 'yellow';
   this.lineP['stroke-width'] = 8;
-  let circleP = this.set('circleP',circlePP.instantiate()).hide();
+  let circleP = this.circleP = circlePP.instantiate();
 
 }  
  

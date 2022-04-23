@@ -11,7 +11,7 @@ addWebMethods(rs);
 rs.setName('web_stripe');
 
 rs.initProtos = function (clr='white') {	
-  let lineP = this.set('lineP',linePP.instantiate()).hide();
+  let lineP = this.lineP = linePP.instantiate();
 	this.lineP.stroke = clr;
 	this.lineP['stroke-width'] = 3;
 }  

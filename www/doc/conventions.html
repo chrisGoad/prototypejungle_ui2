@@ -14,7 +14,13 @@ things like </p>
 nd.set('a',shp);
 </pre>
 
+
 <p>in code, but never the types.</p>
+<p>Some methods take as input an object whose properties contain the parameters to the function. The form of the expected parameter object is indicated in the following way:</p>
+<precode>
+addRectangle({width:number,height:number,stroke_width:number,position:Point=Point(0,0),stroke:color='white',fill:color='Transparent'})
+</precode>
+<p> If an "=" appears, this indicates that the parameter is optional, and gives its default value.</p> 
 <p class="section">User-Defined Methods</p>
 
 <p> In each of the image generation modules, many methods will be defined by the module, but some need to be defined by the user.  For example, in the grid module, <span class="textVar">generateGrid</span> is defined by the module, but <span class="userDefinedText">shapeGenerator</span>  should be defined by the user. The latter sort of method will appear in <span style="color:rgb(200,0,0)">red</span>.</p>

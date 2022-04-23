@@ -15,7 +15,7 @@ Object.assign(rs,topParams);
 
 
 rs.initProtos = function () {	
-  let circleP = this.set('circleP',circlePP.instantiate()).hide();
+  let circleP = this.circleP = circlePP.instantiate();
   circleP['stroke-width'] = 0;
   circleP.dimension = 30;
 }

@@ -23,7 +23,7 @@ Object.assign(rs,topParams);
 let numSpokes = 18;
 
 rs.initProtos = function () {	
-  let lineP = this.set('lineP',linePP.instantiate()).hide();
+  let lineP = this.lineP = linePP.instantiate();
 	this.lineP.stroke = 'white';
 	this.lineP['stroke-width'] = 3;
 }  

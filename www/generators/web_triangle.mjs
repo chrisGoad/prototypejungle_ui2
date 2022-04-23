@@ -53,7 +53,7 @@ let oclr = 'red';
 let triangleColors = [oclr,iclr,oclr,iclr,iclr,oclr];
 
 rs.initProtos = function () {	
-  let lineP = this.set('lineP',linePP.instantiate()).hide();
+  let lineP = this.lineP = linePP.instantiate();
 	this.lineP.stroke = 'blue';
 	this.lineP.stroke = 'white';
 	this.lineP['stroke-width'] = 0.1*sep;

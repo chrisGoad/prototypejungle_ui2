@@ -19,7 +19,7 @@ rs.setName('grid_2');
 
 let wd = 300;
 let nr= 40
-let topParams = {width:wd,height:wd,numRows:nr,numCols:nr,pointJiggle:5,framePadding:0.15*wd,frameStroke:'white',backgroundColor:'rgb(200,0,0)'};
+let topParams = {width:wd,height:wd,numRows:nr,numCols:nr,pointJiggle:5,framePadding:0.15*wd,frameStroke:'white'};
 
 Object.assign(rs,topParams);
 
@@ -96,17 +96,17 @@ export {rs};
 let topParams = {width:wd,height:wd,numRows:nr,numCols:nr,pointJiggle:5,framePadding:0.15*wd,frameStroke:'white',backgroundColor:'rgb(200,0,0)'};
 </pre>
 need explanation. First, <span class="textVar">pointJiggle</span> , if defined and non-zero, causes
- two bounded grids to be setup via <span class="textVar">setupRandomGridForBoundaries</span>, named <span class="textVar">xJiggle</span> and <span class="textVar">yJiggle</span>. Then the points in the grid are jiggled by the amounts specified in those bounded grids. The maximum amount of jiggle is given by the <span class="textVar">pointJiggle</span> parameter. Since the grids are bounded, the amount of jiggle varies smoothly across the grid. Instead of pointJiggle, jiggleParams may be specified instead as in</p>
+ two bounded grids to be setup via <span class="textVar"><a href="boundedRandomGrids.html">setupRandomGridForBoundaries</a></span>, named <span class="textVar">xJiggle</span> and <span class="textVar">yJiggle</span>. Then the points in the grid are jiggled by the amounts specified in those bounded grids. The maximum amount of jiggle is given by the <span class="textVar">pointJiggle</span> parameter. Since the grids are bounded, the amount of jiggle varies smoothly across the grid. Instead of pointJiggle, jiggleParams may be specified instead as in</p>
  <pre style="padding-left:20px;font-size:10pt;font-weight:bold" class="code">
  let topParams = {...jiggleParams:{step:1,min:-5,max:5}...};
 </pre>
 <p>
-Next, the frame parameters:  The frame facility, which draws the white rectangle around the grid, is <a href="/doc/frame.html">documented separately</a>, since the frame facility is implemented in the basics module, not the grid module, and can be used with any of the image generation modules in prototypejungle.</p>
-<p> It is possible to modify the placement of grid points by defining <span class="textVar">positionFunction(i,j)</span> where <span class="textVar">i</span> is the index of the current cell in the x (width) direction,
+Next, the frame parameters:  The frame facility, which draws the white rectangle around the grid, is defined in the  <a href="basics.html">basics module</a>.</p>
+<p> It is possible to modify the placement of grid points by defining <span class="textVar">positionMethod(i,j)</span> where <span class="textVar">i</span> is the index of the current cell in the x (width) direction,
 and <span class="textVar">j</span> is its index in the y (height) direction. Here is an example:</p>
 
  <p><img  src="/doc/grid_example2.jpg?alt=media" style="bborder:thin black solid;cursor:pointer"  width="300" height="300"/></p>
-<p>and the code that produced it. Have a look at the positionFunction - the other operations we've seen before.
+<p>and the code that produced it. Have a look at the positionMethod - the other operations we've seen before.
 <pre style="padding-left:20px;font-size:10pt;font-weight:bold" class="code">
 import {rs as basicsP} from '/generators/basics.mjs';
 import {rs as addGridMethods} from '/mlib/grid.mjs';
@@ -127,7 +127,7 @@ let wd = 200;
 let topParams = {numRows:nr,numCols:nr,width:wd,height:wd};
 Object.assign(rs,topParams);
 
-rs.positionFunction = function(i,j) {
+rs.positionMethod = function(i,j) {
   let {width,height,numRows,numCols} = this;
   let cellht = height/numRows;
   let cellwd = width/numCols;
@@ -157,7 +157,7 @@ rs.initialize = function () {
 export {rs};
 </pre>
 
-<p>Several position functions are provided as part of the grid module.  The first is the default position function, which builds the usual sort of rectangular grid, and is installed as the initial positionFunction. The second is <span class="textVar">sidesPositionFunction</span>, in which the endpoints of  the "horizontal" (same y index)  lines are placed at even intervals on two sides, <span class="textVar">sideA</span>, and <span class="textVar">sideB</span>. 
+<p>Several position functions are provided as part of the grid module.  The first is the default position function, which builds the usual sort of rectangular grid, and is installed as the initial positionMethod. The second is <span class="textVar">sidesPositionFunction</span>, in which the endpoints of  the "horizontal" (same y index)  lines are placed at even intervals on two sides, <span class="textVar">sideA</span>, and <span class="textVar">sideB</span>. 
 For example the following code yields the same grid as shown immediately above.</p>
 
 <pre style="padding-left:20px;font-size:10pt;font-weight:bold" class="code">
@@ -169,10 +169,10 @@ let topParams =
 };
 Object.assign(rs,topParams);
 
-rs.positionFunction = rs.sidesPositionFunction;
+rs.positionMethod = rs.sidesPositionMethod;
 </pre>
 
-<p>in <span class="textVar">sidesPositionFunction</span>, <span class="textVar">sideA</span> and <span class="textVar">sideB</span> can also be defined by functions which take a real input in the interval [0,1] and return a point on the plane. This allows the sides to be defined as arbitrary computable curves. For example, yet another way of producing
+<p>in <span class="textVar">sidesPositionMethod</span>, <span class="textVar">sideA</span> and <span class="textVar">sideB</span> can also be defined by functions which take a real input in the interval [0,1] and return a point on the plane. This allows the sides to be defined as arbitrary computable curves. For example, yet another way of producing
  the above grid is:
  <pre style="padding-left:20px;font-size:10pt;font-weight:bold" class="code">
 
@@ -183,12 +183,12 @@ rs.positionFunction = rs.sidesPositionFunction;
  sideA:function(fr) {return this.leftSide.pointAlong(fr)},
  sideB:function(fr) {return this.rightSide.pointAlong(fr)}};
 Object.assign(rs,topParams);
-rs.positionFunction = rs.sidesPositionFunction;
+rs.positionMethod = rs.sidesPositionMethod;
 </pre>
 
 <p>If <span class="textVar">rs.genPoint3d</span> of type
- <span class="textVar"><a href="/doc/geometry.html#Point">Point</a>=><span class="textVar"><a href="/doc/geometry.html#Point3d">Point3d</a></span> is defined, 
-then the points on the grid (which may have been generated by a custom <span class="textVar">positionFunction</span>) are mapped  via</p>
+ <span class="textVar"><a href="/doc/geometry.html#Point">Point</a>=><a href="/doc/geometry.html#Point3d">Point3d</a></span> is defined, 
+then the points on the grid (which may have been generated by a custom <span class="textVar">positionMethod</span>) are mapped  via</p>
  <pre style="padding-left:20px;font-size:10pt;font-weight:bold" class="code">
 this.points = this.points.map((p) => this.camera.project(this.genPoint3d(p)))
  </pre>

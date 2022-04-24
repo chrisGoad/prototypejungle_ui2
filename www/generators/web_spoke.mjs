@@ -15,7 +15,7 @@ let wd= 2000;
 let ht = 0.02*wd; // height  of stripes
 let sep = 0.4*wd; // separation between stripes
 
-let  topParams = {minConnectorLength:0.5*ht,maxConnectorLength:2.2*ht,maxRingConnectorLength:3.2*sep,webTries:100};
+let  topParams = {minConnectorLength:0.5*ht,maxConnectorLength:2.2*ht,maxRingConnectorLength:3.2*sep,webTries:100,maxLoops:1000};
 let  gridParams = {initialPos:Point.mk(-0.0*wd,0),initialDirection:0,width:ht,step:0.007*wd,delta:0.02*Math.PI,numSteps:70};
 
 Object.assign(rs,topParams);
@@ -27,10 +27,10 @@ rs.initProtos = function () {
 }
 
 rs.initialize = function () {
-  
+  debugger;
 	this.initProtos();
-  let pnts =this.genRandomWalk(gridParams);
-	rs.generateWeb(pnts,this.lineP);
+  let points =this.genRandomWalk(gridParams);
+	rs.generateWeb({points});
 }
 	
 export {rs};

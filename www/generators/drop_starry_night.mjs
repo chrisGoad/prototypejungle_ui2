@@ -12,7 +12,6 @@ let topParams = {width:1.5*ht,height:ht,dropTries:50,segLength:2,framePadding:0.
 
 Object.assign(rs,topParams);
 
-
 rs.initProtos = function () {
   this.lineP = linePP.instantiate();
   this.lineP.stroke = 'white';

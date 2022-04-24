@@ -38,8 +38,8 @@ rs.initialize = function () {
   this.zone = geom.Circle.mk(Point.mk(0,0),0.5*this.width);
   var pnts = this.doDrops(30);
   this.camera = geom.Camera.mk(focalPoint,focalLength,cameraScaling,'z');
-  let pnts3d = this.pointsTo3dAndBack(pnts);
-  this.generateWeb(pnts3d,lineP);
+  let points = this.pointsTo3dAndBack(pnts);
+  this.generateWeb({points});
   this.addFrame();
 }
 

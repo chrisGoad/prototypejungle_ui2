@@ -32,7 +32,8 @@ rs.initProtos = function () {
   circleP.stroke = 'transparent';
 }  
 
-rs.initialDrop = function (p) {
+rs.dropAt = function (p) {
+  debugger;
   let rd = 30;
   let gcrc = geom.Circle.mk(p,rd);
   let scrc = this.circleP.instantiate();
@@ -52,7 +53,8 @@ const nearDiagonal = function (pi,pj,howNear) {
   
 rs.numCalls = 0;
 rs.pairFilter = function (i,j) {
-  let {maxConnectorLength:mxCln,minConnectorLength:mnCln=0,cPoints,numDropped,width} = this;
+  //let {maxConnectorLength:mxCln,minConnectorLength:mnCln=0,cPoints,numDropped,width} = this;
+  let {cPoints} = this;
   let pi = cPoints[i];
   let pj = cPoints[j];
   let cell = this.cellOf(pi);
@@ -66,15 +68,16 @@ rs.pairFilter = function (i,j) {
 
 rs.initialize = function () {
   this.initProtos();
-  let {maxConnectorLength:mxCln,minConnectorLength:mnCln=0,width,lineP} = this;
+  //let {maxConnectorLength:mxCln,minConnectorLength:mnCln=0,width,lineP} = this;
   
   this.setupShapeRandomizer('connectorLn',{step:80,stept:0.5,min:50,max:500});
   this.addFrame();
   this.generateDrop();
-  let pnts = this.pointsFromCircleDrops();
-  let p = pnts[0];
+  let points = this.pointsFromCircleDrops();
+  let p = points[0];
   p.onFringe = 1
-  this.generateWeb(pnts,lineP);
+  //this.generateWeb(pnts,lineP);
+  this.generateWeb({points});
 }
 
 export {rs};

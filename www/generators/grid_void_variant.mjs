@@ -11,17 +11,15 @@ addRandomMethods(rs);
 addPowerGridMethods(rs);
 rs.setName('grid_void_variant');
 
-
 rs.powerParams  = {
   root:2,
   sizeMap:[0.5,0.5,1,1],
   fillMap:['red','yellow','blue','white']
 };
 
-	
 let wd = 100;
 let nr = 32;
-let topParams = {pointJiggle:1,numRows:nr,numCols:nr,width:wd,height:wd,backgroundColorr:'red',framePadding:0.15*wd};
+let topParams = {pointJiggle:1,numRows:nr,numCols:nr,width:wd,height:wd,framePadding:0.15*wd};
 Object.assign(rs,topParams);
 
 rs.initProtos = function () {
@@ -35,7 +33,6 @@ rs.shapeGenerator = function () {
 
 rs.initialize = function () {
   this.initProtos();
-  this.addRectangle(this.backFill);
   this.generateGrid();
   this.addFrame();
 }

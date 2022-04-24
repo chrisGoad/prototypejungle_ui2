@@ -21,7 +21,7 @@ let ht = wd;
 let topParams = {numRows:nr,numCols:nr,width:wd,height:ht,framePadding:0.1*wd,
                  sideA:geom.LineSegment.mk(Point.mk(0,-0.5*ht),Point.mk(-0.5*wd,0.5*ht)),
                  sideB:geom.LineSegment.mk(Point.mk(0,-0.5*ht),Point.mk(0.5*wd,0.5*ht)),
-                 positionFunction:rs.sidesPositionFunction};
+                 positionMethod:rs.sidesPositionFunction};
 Object.assign(rs,topParams);
 
 rs.positionFunctionn = function(i,j) {

@@ -95,8 +95,12 @@ rs.doDrops = function (radius) {
 	let radii = this.set('radii',core.ArrayNode.mk());
 	let cnt =0;
   let tries = 0;
+ 
 	while (cnt < maxLoops) {
 		let pnt = this.genRandomPoint();
+    if (this.radiusGenerator) {
+      radius = this.radiusGenerator(pnt);
+    }
 		let cl = this.collides(pnt,radius);
 		if (cl) {
 			tries++;

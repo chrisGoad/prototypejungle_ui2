@@ -34,7 +34,7 @@ const pointAlongL = function (startPnt,turningPnt,x,up) {
   return p;
 }
 
-rs.positionFunction = function (i,j) {
+rs.positionMethod = function (i,j) {
   let {width,numRows,delta,fromLeft,turnUp} = this;
   let ci = numRows - i - 1;
   let hw = 0.5*width;

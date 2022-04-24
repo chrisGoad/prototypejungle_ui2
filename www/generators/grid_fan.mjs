@@ -23,7 +23,7 @@ const pointAlongL = function (startPnt,endPnt,x) {
 }
 
 
-rs.positionFunction = function (i,j) {
+rs.positionMethod = function (i,j) {
   let {width,numRows,delta,fromLeft,up} = this;
   let ci = numRows - i - 1;
   let hw = 0.5*width;

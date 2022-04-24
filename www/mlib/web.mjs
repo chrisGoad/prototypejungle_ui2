@@ -113,11 +113,17 @@ rs.rnearsIndex2NearsIndexViaIndexOf = function (nears,rnears,ri) {
 		
 	
 	
-rs.generateWeb = function (pnts,lineP) {	
+rs.generateWeb = function (iparams) {
+  let props = ['points','lineP','minConnectorLength','maxConnectorLength','webTries','shortenBy','maxLoops'];
+  let params = {};
+  core.transferProperties(params,this,props);
+  core.transferProperties(params,iparams,props);
+	let {points:pnts,lineP,minConnectorLength,maxConnectorLength,webTries,shortenBy=10,maxLoops=Infinity} = params;
+  
 	if (pnts) {
 		this.initWeb(pnts);
 	}
-	let {cPoints,nearbyPoints,connectSegs,shortenBy=10,maxLoops = 10000,webTries} = this;
+	let {cPoints,nearbyPoints,connectSegs} = this;
 	let nbp = this.nearbyPoints = [];
 	const computeNears = () => {
 		let {cPoints,nearbyPoints:nbp} = this;

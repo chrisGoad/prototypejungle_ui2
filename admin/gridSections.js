@@ -65,7 +65,7 @@ sections: [
 	[0,'lines_2','generators','wide2','Lines 2',{likes:0,posted:0,category:'lines'}],
    [0,'grid_maze','generators','square','Maze',{likes:38,posted:1,category:'grid'}],  // was [0,'grid0_8','final','square','Maze',posted:1,category:'grid'}],
    [0,'lines_bugeyes','generators','square','Bug Eyes',{likes:6,posted:1,category:'lines',sources:1}],
-	   [1000,'lines_lights','generators','square','Lightss',{likes:12,posted:1,category:'lines'}],  // VV 
+	   [1000,'lines_lights','generators','square','Lights',{likes:12,posted:1,category:'lines'}],  // VV 
 
 	 [0,'grid_eye','generators',1,'Eye',{likes:34,posted:1,category:'grid'}],
 	

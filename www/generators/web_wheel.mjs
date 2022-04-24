@@ -24,8 +24,8 @@ rs.initProtos = function () {
 rs.initialize = function () {
   root.backFill = 'black';
   this.initProtos();
-  let pnts = this.genRings(this);
-  this.generateWeb(pnts,this.lineP);
+  let points = this.genRings();
+  this.generateWeb({points});
   this.addFrame();
 }
 

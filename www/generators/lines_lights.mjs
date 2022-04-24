@@ -19,7 +19,6 @@ rs.initProtos = function () {
 }  
 
 rs.initialize = function () {
-  
   let {numLines,lineP} = this;
   this.addFrame();
   this.initProtos();

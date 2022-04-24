@@ -19,20 +19,21 @@ let wd= 2000;
 let ht = 0.2*wd;
 let nr = 2;
 
-let  topParams = {width:wd,height:ht,numRows:2,numCols:1000,minConnectorLength:0.5*ht,maxConnectorLength:1.2*ht,webTries:1000,maxLoopps:10000};
+let  topParams = {width:wd,height:ht,numRows:2,numCols:1000,minConnectorLength:0.5*ht,maxConnectorLength:1.2*ht,webTries:1000,maxLoopss:100000};
 
 Object.assign(rs,topParams);
 
+debugger;
 
 //let  topParams {width:wd,height:ht,numRows:2,numCols:100,frameWidth:1.2*wd,frameHeight:1.2*wd,frameVisible:0,minConnectorLength:0.5*ht,maxConnectorLength:1.2*ht}
 
 let  gridParams = {width:wd,height:ht,numRows:nr,numCols:200}
 
-rs.initialize = function (clr) {
-  
+rs.initialize = function (clr) { 
+debugger;
   this.initProtos(clr);
-	let pnts = this.genGrid(gridParams);
-  this.generateWeb(pnts,this.lineP);
+	let points = this.genGrid(gridParams);
+  this.generateWeb({points});
 }
 
 

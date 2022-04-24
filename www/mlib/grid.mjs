@@ -40,7 +40,7 @@ item.linearInterpolator = function (a,b,fr) {
 	return rs;
 }
 	
-item.sidesPositionFunction = function (i,j) {
+item.sidesPositionMethod = function (i,j) {
 	//let {numRows,numCols,sideA,sideB,Interpolator} = grid;
 	let {numRows,numCols,sideA:sideAi,sideB:sideBi,Interpolator} = this;
   let sideA = (typeof sideAi === 'function')?sideAi:function(fr) {return sideAi.pointAlong(fr);}
@@ -86,8 +86,8 @@ item.sidesPositionFunction = function (i,j) {
   
 
 item.genPointsFunction0 = function () {
-  let {numRows,numCols,positionFunction,points,rpoints} = this;
-  //let pf = positionFunction?positionFunction:defaultPositionFunction;
+  let {numRows,numCols,positionMethod,points,rpoints} = this;
+  //let pf = positionMethod?positionMethod:defaultPositionFunction;
 	let lx = Infinity;
 	let ly = Infinity;
 	let hx = -Infinity;
@@ -95,7 +95,7 @@ item.genPointsFunction0 = function () {
   for (let i = 0;i <= numCols; i++) {
     for (let j = 0;j <= numRows; j++) {
 			//console.log('genPoints i j',i,j);
-      let p = this.positionFunction?this.positionFunction(i,j):this.defaultPositionFunction(i,j);
+      let p = this.positionMethod?this.positionMethod(i,j):this.defaultPositionFunction(i,j);
 			let {x,y} = p;
 			if (x<lx) {
 				lx = x;

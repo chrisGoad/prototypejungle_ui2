@@ -57,15 +57,15 @@ addSegsetMethods(rs);
 rs.setName('drop_ice');
 let wd = 200;
 
-let topParams = {width:wd,height:wd,dropTries:100,lineLength:2,frameStroke:'rgb(2,2,2)',framePadding:20,frameVisible:0,minSeparation:10}
+let topParams = {width:wd,height:wd,dropTries:100,lineLength:2,framePadding:20,minSeparation:10}
 
 Object.assign(rs,topParams);
 
 
 rs.initProtos = function () {
-	this.lineP = linePP.instantiate();
-	this.lineP.stroke = 'yellow';
-	this.lineP['stroke-width'] = .3;
+  this.lineP = linePP.instantiate();
+  this.lineP.stroke = 'yellow';
+  this.lineP['stroke-width'] = .3;
 }  
 
 rs.initialDrop= function () {
@@ -93,12 +93,10 @@ rs.dropAt = function (p) {
   return [[eseg],[ln]];
 }
  
-
 rs.initialize = function () {
-  core.root.backgroundColor = 'black';
-	this.initProtos();
-	this.generateDrop();
-  	this.addFrame();
+  this.initProtos();
+  this.generateDrop();
+  this.addFrame();
 
 }
 

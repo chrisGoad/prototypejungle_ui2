@@ -45,7 +45,7 @@ rs.initProtos = function () {
   this.lineP['stroke-width'] = 0.5;
 }
 
-rs.positionFunction = rs.radialPositionFunction;
+rs.positionMethod = rs.radialPositionFunction;
 
 rs.boundaryLineGenerator = function (p11,p21,rvs) {
   let line = this.lineP.instantiate().show();

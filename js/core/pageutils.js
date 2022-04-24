@@ -117,7 +117,17 @@ const parseQuerystring = function() {
   });
   return nvpair;
 }
-  
+
+const transferProperties = function(dst,src,props) {
+  if (src) {
+    props.forEach((prop) => {
+      let pv = src[prop];
+      if (pv !== undefined) {
+         dst[prop] = pv;
+      }
+    });
+  }
+}
 
 
-export {httpGet,saveJson,beginsWith,endsIn,afterLastChar,beforeLastChar,parseQuerystring,pathExceptLast,pathLast};
+export {httpGet,saveJson,beginsWith,endsIn,afterLastChar,beforeLastChar,parseQuerystring,pathExceptLast,pathLast,transferProperties};

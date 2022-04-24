@@ -92,7 +92,7 @@ rs.initialize = function () {
   let arcB = geom.Arc.mk(endB0,endB1,-200); 
   this.sideA = (fr) => arcA.pointAlong(fr);
   this.sideB = (fr) => arcB.pointAlong(fr);
-  this.positionFunction = this.sidesPositionFunction;
+  this.positionMethod = this.sidesPositionFunction;
   this.setupRandomGridForBoundaries('red', {step:30,min:50,max:250});
   this.setupRandomGridForShapes('red', {step:30,min:50,max:250}); 
   let  dParams = {step:0.1* Math.PI,min:0.95*Math.PI,max:2*Math.PI};

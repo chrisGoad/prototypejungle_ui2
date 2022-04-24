@@ -14,7 +14,7 @@ rs.setName('grid_bubbles');
 let numRows = 64;
 let ht = 1000;
 	
-let topParams = {numRows:numRows,numCols:numRows,width:1.5*ht,height:ht,randomizeOrder:1,orderByOrdinal:0,backFill:'blue',backgroundPadding:0.05*ht,framePadding:0.2*ht};
+let topParams = {numRows:numRows,numCols:numRows,width:1.5*ht,height:ht,randomizeOrder:1,orderByOrdinal:0,backFill:'blue',backgroundPaddingg:0.05*ht,framePadding:0.2*ht};
 Object.assign(rs,topParams);
 	
 			

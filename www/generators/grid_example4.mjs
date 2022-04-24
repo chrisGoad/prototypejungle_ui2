@@ -24,7 +24,7 @@ let topParams =
  rightSide:LineSegment.mk(Point.mk(0,-0.5*ht),Point.mk(0.5*wd,0.5*ht)),
  sideA:function(fr) {return this.leftSide.pointAlong(fr)},
  sideB:function(fr) {return this.rightSide.pointAlong(fr)},
-  positionFunction:rs.sidesPositionFunction};
+  positionMethod:rs.sidesPositionFunction};
 Object.assign(rs,topParams);
 
 

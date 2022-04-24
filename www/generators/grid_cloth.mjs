@@ -23,7 +23,6 @@ rs.shapeGenerator = function (rvs,cell) {
   let shapes = this.shapes;
   let {rectP,deltaX,deltaY} = this;
   let rb = Math.random() > 0.5;
-  debugger;
   let shape  = containerShape.mk();
   let inner = this.rectP.instantiate();
   shape.set('i',inner);
@@ -39,7 +38,6 @@ rs.shapeGenerator = function (rvs,cell) {
   let {v} = rvs;
   inner.moveto(Point.mk(jogx,jogy));
   inner.show();
-  debugger;
   inner.fill = this.toGray(v);
   shape.show();
   return shape;
@@ -51,7 +49,7 @@ rs.initialize = function () {
   let rnp = {min:0,max:0,step:0}
   let numCols = this.numCols;
   let numRows = this.numRows;
-  const walkParams = function (i,j) {
+  const computeParams = function (i,j) {
     let hw = 0.5 * numCols;
     let frw = Math.abs(i - hw)/hw;
     let hh = 0.5 * numRows;
@@ -67,8 +65,8 @@ rs.initialize = function () {
      rnp.step = fr *stepFactor;
     return rnp;
   }
-  this.setupRandomGridForShapes('jogx', {walkParams:walkParams});
-  this.setupRandomGridForShapes('jogy', {walkParams:walkParams});
+  this.setupRandomGridForShapes('jogx', computeParams);
+  this.setupRandomGridForShapes('jogy', computeParams);
   this.setupRandomGridForShapes('v', {step:30,min:50,max:240});
   this.generateGrid();
 }

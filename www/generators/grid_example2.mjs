@@ -20,7 +20,7 @@ let wd = 200;
 let topParams = {numRows:nr,numCols:nr,width:wd,height:wd,framePadding:0.1*wd};
 Object.assign(rs,topParams);
 
-rs.positionFunction = function(i,j) {
+rs.positionMethod = function(i,j) {
   let {width,height,numRows,numCols} = this;
   let incy = height/numRows;
   let incx = width/numCols;
@@ -33,7 +33,7 @@ rs.positionFunction = function(i,j) {
  }
 
 
-rs.positionFunction = function(i,j) {
+rs.positionMethod = function(i,j) {
   let {width,height,numRows,numCols} = this;
   let cellht = height/numRows;
   let cellwd = width/numCols;

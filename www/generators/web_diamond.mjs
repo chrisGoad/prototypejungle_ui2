@@ -87,8 +87,9 @@ rs.pairFilter = function (i,j) {
 rs.initialize = function () {
   this.initProtos();
   this.addFrame();
-  let pnts = this.genGrid(this);
-  this.generateWeb(pnts,this.lineP);
+ // let points = this.genGrid(this);
+  let points = this.genGrid();
+  this.generateWeb({points});
 }
 
 export {rs};

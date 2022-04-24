@@ -2,7 +2,12 @@
 const rs = function (rs) {
 
 
-rs.genRings = function (params) {
+rs.genRings = function (iparams) {
+ let params = {};
+ Object.assign(params,this);
+ if (iparams) {
+   Object.assign(params,iparams);
+ }
 	let {numRings,radius,pos=Point.mk(0,0),randomFactor = 0,fromAngle=0,toAngle=2*Math.PI,numPointsPerRing=20,ringSeparation} = params;
 	let pnts = [];
 	let dr = ringSeparation?ringSeparation:radius/numRings;
@@ -107,7 +112,12 @@ const interpolatePoints = function (end0,end1,fr) {
 	return rs;
 }
 	
-rs.genGrid = function (params) {
+rs.genGrid = function (iparams) {
+ let params = {};
+ Object.assign(params,this);
+ if (iparams) {
+   Object.assign(params,iparams);
+ }
 	let {width,height,numRows,numCols,left:ileft,right:iright,k=1,missingRows=0,missingCols=0,jiggle=0,pos=Point.mk(0,0)} = params;
 	const doJiggle = function (p) {
 		if (jiggle) {

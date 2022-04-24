@@ -48,8 +48,10 @@ item.genSingletonUnit =  function (lineP,p,direction,clr) {
 // was genSegmentsFan
 item.genFan = function (iparams) {
  let params = {};
- Object.assign(params,this);
- Object.assign(params,iparams);
+ let props = ['width','height','lineP','startingPoint','stroke','sepNext','splitChance','splitAmount',
+	     'segLength','directionChange','randomDirectionChange','lineExt'];
+   core.transferProperties(params,this,props);
+   core.transferProperties(params,iparams,props);
 	let {width,height,lineP,startingPoint:p,stroke,sepNext,splitChance,splitAmount,
 	     segLength:len,directionChange:dc=0,randomDirectionChange:rdc=0,lineExt=0} = params;
   let angle;
@@ -90,9 +92,10 @@ item.genFan = function (iparams) {
  // the following methods generate segsLines, which are used as the seeds of the drop operation. 
 item.ringSeeds = function (iparams) {//lineP,clr,icenter,divergence=0,data) {
      debugger;
+     let prop = ['center','stroke','lineP','numSeeds','ringRadius','segLength','divergence','data'];
     let params = {};
-    Object.assign(params,this);
-    Object.assign(params,iparams);
+    core.transferProperties(params,this,props);
+    core.transferProperties(params,iparams,props);
     let {center=Point.mk(0,0),stroke,lineP,numSeeds,ringRadius:radius,segLength:len,divergence=0,data} = params;
   let segs = [];
   let cangle = 0.5* Math.PI;
@@ -181,10 +184,11 @@ item.randomSeeds = function (clr) {
 
 item.gridSeeds = function (iparams) {
      debugger;
-
+    let props = ['width','height','lineP','stroke','sepNext','fanAngles','numSeedRows:numRows',
+       'numSeedCols','gridPadding','lineExt'];
     let params = {};
-    Object.assign(params,this);
-    Object.assign(params,iparams);
+    core.transferProperties(params,this,props);
+   core.transferProperties(params,iparams,props);
   let {width,height,lineP,stroke,sepNext,fanAngles,numSeedRows:numRows,
        numSeedCols:numCols,gridPadding:padding=0,lineExt=0} = params;
   let segs = [];//this.rectangleSegments(width,height);

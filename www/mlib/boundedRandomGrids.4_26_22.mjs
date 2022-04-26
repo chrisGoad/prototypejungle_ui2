@@ -6,7 +6,7 @@ const rs = function (item) {
 
 
 addRandomMethods(item);
-/*
+
 item.initRandomizer = function () {
 	let rm = this.randomizer;
 	if (!rm) {
@@ -26,6 +26,10 @@ item.setupRandomizer = function (tp,nm,params) {
 		debugger;
 	}
 	let kind = params.kind =  (tp === 'randomGridsForBoundaries')?'boundaries':'cells';
+	/*if (!params.numRows) {
+		params.numRows = kind==='boundaries'?this.numRows+1:this.numRows;
+		params.numCols = kind==='boundaries'?this.numCols+1:this.numCols;
+	}*/
 	let rm = this.initRandomizer();
 	let rnds = this[tp];
   let rs  = rm.genRandomGrid(tp,{timeStep:0,params,numRows:this.numRows,numCols:this.numCols});
@@ -154,14 +158,14 @@ item.setupRandomGridForShapes = function (nm,params) {
   return this.setupRandomizer('randomGridsForShapes',nm,params);
 }
 
-*/
+
 
 item.setupColorRandomizer = function (params) {
-  this.setupRandomGridForShapes('r',params);
-  this.setupRandomGridForShapes('g',params);
-  this.setupRandomGridForShapes('b',params);
+  this.setupShapeRandomizer('r',params);
+  this.setupShapeRandomizer('g',params);
+  this.setupShapeRandomizer('b',params);
 }
-/*
+
 item.setupBoundaryRandomizer = function (nm,params) {
   return this.setupRandomizer('randomGridsForBoundaries',nm,params);
 }        		
@@ -169,11 +173,11 @@ item.setupBoundaryRandomizer = function (nm,params) {
 item.setupRandomGridForBoundaries = function (nm,params) {
   return this.setupRandomizer('randomGridsForBoundaries',nm,params);
 }        		
-*/
+
+  
 
  
 item.randomValueAtCell = function (randomGrids,prop,i,j) {
-  debugger;
 	if (!randomGrids) {
 		return;
 	}
@@ -182,7 +186,7 @@ item.randomValueAtCell = function (randomGrids,prop,i,j) {
 		return;
 	}
   let {randomizer} = this;  
-	let rs = this.valueAt(randomValues,i,j);
+	let rs = randomizer.valueAt(randomValues,i,j);
 	return rs;
 }
     
@@ -197,7 +201,7 @@ item.randomValuesAtCell = function (randomGrids,i,j) {
 	for (let prop in randomGrids) {
 	  let randomValues = randomGrids[prop];
     if ((prop !== 'interpolateTo') && (prop !== 'interpolateFrom') && (prop !== 'nowInterpolating')) {
-	    rs[prop] = this.valueAt(randomValues,i,j);
+	    rs[prop] = randomizer.valueAt(randomValues,i,j);
     }
 	}
 	return rs;

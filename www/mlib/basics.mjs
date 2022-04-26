@@ -205,6 +205,17 @@ item.installLine = function (line) {
 
 
 
+item.cellOf  = function (p) {
+  let {x,y} = p;
+  let {width,height,numRows,numCols} = this;
+  let hw = width/2;
+  let hh = height/2;
+  let ix = Math.floor(((x+hw)/width) * numCols);
+  let iy = Math.floor(((y+hh)/height) * numRows);
+  return {x:ix,y:iy};
+}
+
+
 item.genLine = function (sg,lineP,ext=0) {
   let {end0,end1} = sg;
   if (!lineP) {

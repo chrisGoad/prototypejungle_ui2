@@ -974,7 +974,8 @@ item.addOpaqueLayer = function () {
       opl.push(rect);
       let pos = Point.mk(xl + i*xdim,yl + j*ydim);
       rect.moveto(pos);
-      let opv = randomizer.valueAt(opacities,i,j);
+     // let opv = randomizer.valueAt(opacities,i,j);
+      let opv = this.valueAt(opacities,i,j);
     //  let rgb = `rgba(0,0,0,${opv})`;
    //   let rgb = `rgba(255,255,255,${opv})`;
       let rgb = `rgba(0,0,100,${opv})`;

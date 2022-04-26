@@ -28,12 +28,14 @@ rs.dropAt = function (p) {
 
 
 rs.initialDrop = function () {
+  debugger;
   let {width,lineP} = this;
   this.ringRadius = 0.2 * 0.5 * width;
   return this.gridSeeds({stroke:'white'});
 }
   
 rs.initialize = function () {
+  debugger;
   this.initProtos();
   this.addFrame();
   this.generateDrop();

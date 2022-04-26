@@ -13,6 +13,7 @@ sections: [
  [0,'grid_grid_1_i_3_v_5','instances',1,'Grid 5\ v 5',{likes:0,posted:0,category:'drop'}], 
  [0,'grid_grid_3_i_1','instances',1,'Grid grid 3 v 1',{likes:0,posted:0,category:'drop',variant:1}], 
  [0,'grid_void_variant','generators',1,'Void variant',{likes:0,posted:0,category:'grid'}], 
+ [0,'web_random_radius','generators',1,'Random radius',{likes:0,posted:0,category:'grid'}], 
  [0,'lines_from_center','generators',1,'lines from center',{likes:0,posted:0,category:'lines'}], 
  [0,'lines_cobweb','generators',1,'cobweb',{likes:0,posted:0,category:'lines'}], 
  [0,'lines_tangents','generators',1,'tangents',{likes:0,posted:0,category:'lines'}], 

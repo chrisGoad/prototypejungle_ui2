@@ -11,14 +11,13 @@ let ht = 360;
 let wd = 1* ht;
 
 
-let topParams = {width:wd,height:ht,framePadding:0.15*ht,
-//parameters to performDrop
-dropTries:10,maxDrops:Infinity,fromEnds:1,doNotExit:[geom.Circle.mk(Point.mk(0,0),0.5*ht)],
+let topParams = {width:wd,height:ht,framePadding:0.15*ht,stroke:'white',segLength:5,
+//parameters to generateDrop 
+fromEnds:1,extendWhich:'first',sepNext:0.01,dropTries:10,maxDrops:Infinity,doNotExit:[geom.Circle.mk(Point.mk(0,0),0.5*ht)]};
 //parameters to genFan
-segLength:5,fromEnds:1,extendWhich:'first',sepNext:0.01,splitChance:.40,splitAmount:0.05 *Math.PI,
-directionChange:0.0*Math.PI,randomDirectionChange:0.025*Math.PI,lineExt:0,
+let fanParams = {splitChance:.40,splitAmount:0.05 *Math.PI,directionChange:0.0*Math.PI,randomDirectionChange:0.025*Math.PI,lineExt:0};
 // parameters to ringSeeds
-numSeeds:15};
+let ringParams = {numSeeds:15,ringRadius:0.15 * 0.5 * wd,stroke:'transparent'};
 
 Object.assign(rs,topParams);
 
@@ -30,17 +29,17 @@ rs.initProtos = function () {
 
 rs.initialDrop = function () {
   let rad  = 0.15 * 0.5 * this.width;
-  return this.ringSeeds({stroke:'transparent',ringRadius:rad});  
+  return this.ringSeeds(ringParams);  
 }
 
 rs.dropAt = function (p) {
-  debugger;
-  return this.genFan({startingPoint:p,stroke:'white'});
+  return this.genFan(p,fanParams);
 }
 
 rs.initialize = function () {
   this.initProtos();
   this.addFrame();
+  debugger;
   this.generateDrop();
 }
 

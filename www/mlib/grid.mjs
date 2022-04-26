@@ -717,8 +717,8 @@ item.jigglePoints = function () {
   for (let i = 0;i<(numCols+1);i++) {
      for (let j = 0;j < (numRows+1);j++) {
         let pnt = this.pointAt(this.points,i,j);
-        let jogX = randomizer.valueAt(jiggleX,i,j);
-        let jogY = randomizer.valueAt(jiggleY,i,j);
+        let jogX = this.valueAt(jiggleX,i,j);
+        let jogY = this.valueAt(jiggleY,i,j);
         let rpnt = this.pointAt(this.rpoints,i,j); 
         rpnt.x = pnt.x + jogX;
         rpnt.y = pnt.y + jogY;
@@ -737,8 +737,8 @@ item.setupPointJiggle = function () {
   let {numRows,numCols,pointJiggle,pointJiggleParams} = this;
   if (pointJiggle || pointJiggleParams) {
 		let jParams = pointJiggleParams?pointJiggleParams:this.computeJiggleParams(pointJiggle);
-    this.setupBoundaryRandomizer('jiggleX',jParams);
-    this.setupBoundaryRandomizer('jiggleY',jParams);
+    this.setupRandomGridForBoundaries('jiggleX',jParams);
+    this.setupRandomGridForBoundaries('jiggleY',jParams);
 	}
 }
 

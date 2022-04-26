@@ -46,13 +46,16 @@ item.genSingletonUnit =  function (lineP,p,direction,clr) {
 	return [[seg],[ln]];
 }
 // was genSegmentsFan
-item.genFan = function (iparams) {
+item.genFan = function (p,iparams) {
+debugger;
  let params = {};
- let props = ['width','height','lineP','startingPoint','stroke','sepNext','splitChance','splitAmount',
+ //let props = ['width','height','lineP','startingPoint','stroke','sepNext','splitChance','splitAmount',
+ let props = ['width','height','lineP','stroke','sepNext','splitChance','splitAmount',
 	     'segLength','directionChange','randomDirectionChange','lineExt'];
    core.transferProperties(params,this,props);
    core.transferProperties(params,iparams,props);
-	let {width,height,lineP,startingPoint:p,stroke,sepNext,splitChance,splitAmount,
+	//let {width,height,lineP,startingPoint:p,stroke,sepNext,splitChance,splitAmount,
+	let {width,height,lineP,stroke,sepNext,splitChance,splitAmount,
 	     segLength:len,directionChange:dc=0,randomDirectionChange:rdc=0,lineExt=0} = params;
   let angle;
 	let rn = Math.random();
@@ -92,7 +95,7 @@ item.genFan = function (iparams) {
  // the following methods generate segsLines, which are used as the seeds of the drop operation. 
 item.ringSeeds = function (iparams) {//lineP,clr,icenter,divergence=0,data) {
      debugger;
-     let prop = ['center','stroke','lineP','numSeeds','ringRadius','segLength','divergence','data'];
+     let props = ['center','stroke','lineP','numSeeds','ringRadius','segLength','divergence','data'];
     let params = {};
     core.transferProperties(params,this,props);
     core.transferProperties(params,iparams,props);
@@ -184,7 +187,7 @@ item.randomSeeds = function (clr) {
 
 item.gridSeeds = function (iparams) {
      debugger;
-    let props = ['width','height','lineP','stroke','sepNext','fanAngles','numSeedRows:numRows',
+    let props = ['width','height','lineP','stroke','sepNext','fanAngles','numSeedRows',
        'numSeedCols','gridPadding','lineExt'];
     let params = {};
     core.transferProperties(params,this,props);
@@ -656,7 +659,7 @@ item.removeSegmentsAndShapes = function (n) {
 	shapes.length = nln;
 }
 
-
+/* now in basics.mjs
 item.cellOf  = function (p) {
   let {x,y} = p;
   let {width,height,numRows,numCols} = this;
@@ -666,6 +669,7 @@ item.cellOf  = function (p) {
   let iy = Math.floor(((y+hh)/height) * numRows);
   return {x:ix,y:iy};
 }
+*/
 
 item.segsToSeed = function (segs) {
   let shapes = segs.map((sg) => {

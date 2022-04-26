@@ -38,9 +38,8 @@ rs.collides0 = function (point1,radius1,point2,radius2) {
 
 
 
-rs.collides = function (point,radius) {
+rs.collides = function (point,radius,points,radii) {
  // initializer(this);
-  let {points,radii} = this;
   let n = points.length;
   for (let i=0;i<n;i++) {
     if (this.collides0(point,radius,points[i],radii[i])) {
@@ -88,20 +87,21 @@ rs.via3d = function (p) {
 
 
 
-rs.doDrops = function (radius) {
+rs.generateDrop = function (radius) {
 	let {maxLoops,dropTries} = this;
   debugger;
-	let points = this.set('points',core.ArrayNode.mk()); 
-	let radii = this.set('radii',core.ArrayNode.mk());
+//	let points = this.set('points',core.ArrayNode.mk()); 
+//	let radii = this.set('radii',core.ArrayNode.mk());
 	let cnt =0;
   let tries = 0;
- 
+  let points = [];
+  let radii = [];
 	while (cnt < maxLoops) {
 		let pnt = this.genRandomPoint();
     if (this.radiusGenerator) {
       radius = this.radiusGenerator(pnt);
     }
-		let cl = this.collides(pnt,radius);
+		let cl = this.collides(pnt,radius,points,radii);
 		if (cl) {
 			tries++;
 			if (tries >= dropTries) {
@@ -114,7 +114,7 @@ rs.doDrops = function (radius) {
 			tries = 0;
     }
 	}
-  return points;
+  return {radii,points};
 }
 }
 

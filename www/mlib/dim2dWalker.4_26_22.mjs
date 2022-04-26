@@ -10,7 +10,7 @@ item.randomStep = function (iCorrelated,x,y,pv,istepx,istepy,istept,imin,imax,i,
 	let {timeStep,params} = rg;
   let oneWay = 0;
 	let min,max,stepx,stepy,lb,ub,rs,correlated,stept;;
-	let firstT = 1;//(pv === undefined);
+	let firstT = (pv === undefined);
 	let rp = (typeof params === 'function')?params:undefined;
 	//let rp = params.walkParams;
 	if (rp) {
@@ -125,29 +125,61 @@ item.valueAt = function (grid,i,j) {
     debugger;
   }
  debugger;
-	let {params,values,numRows,numCols} = grid;
+	let params = grid.params;
+	//let {numRows,numCols,values,params} = grid;
+	let {numRows,numCols,values} = params;// new 4/26/22
  // let rv =  grid.values[this.indexFor(numRows,i,j)];
    let idx = this.indexFor(numRows,i,j);
   let rv =  grid.values[idx];//new 4/26/22
+ /* if (typeof params === 'function') {
+     let pv = params(i,j);
+     let bias = pv.bias;
+     if (pv) {
+       rv = rv + pv
+     }
+   }
+ let biasFun;
+  if (biasFun) {
+		//debugger;
+    let bfv = biasFun(grid,i,j);
+    let {weight,value} = bfv;
+    return weight * rv + (1 - weight)*value;
+  } else {*/
   return rv;
  
 }
    
     
-item.genRandomGrid = function (numCols,numRows,iparams) {
- // let {numRowsinr,numCols} = this;
-	 let inr = numRows;
-   let inc = numCols;
-	debugger;
-   //let kind,biasUp,numCols,numRows,step,stepx,stepy,stept,min,max,biasFun,constantFirstRow,correlated;
+item.genRandomGrid = function (tp,predecessor) {
+	let {timeStep:itimeStep,values:prevValues,params,numRows,numCols} = predecessor;
+  if ((tp == 'randomGridsForBoundaries')&&numRows) {
+    numRows++;
+    numCols++;
+  }
+  let walkParams;
+	//debugger;
+   //let kind,biasUp,numCols,numRows,step,stepx,stepy,stept,min,max,biasFun,constantFirstRow,
 	  //   backwards,convergenceFactor,convergenceValue,walkParams,correlated;
   //  let walkParams;
-  let isfun = typeof iparams === 'function';
-  let step,stepx,stepy,min,max,cFr,pcor,correlated;
-  let stept = 0;
+  let {kind,biasUp,numRows:inr,numCols:inc,step,stepx:istepx,stepy:istepy,stept,min,max,biasFun,constantFirstRow:cFr,
+	    backwards,convergenceFactor,convergenceValue,correlated:pcor} = params;
+  if (typeof params === 'function') {
+    walkParams = params;
+  } else if (inr) {
+    numRows = inr;
+    numCols = inc;
+  }
+	let stepx,stepy,correlated;
   let oneWay = 0;
+	let timeStep = prevValues?itimeStep+1:0;
+	biasUp = (biasUp === undefined)?0:biasUp;
   const computeParams = function(i,j) {
-    let theParams = isfun?iparams(i,j):iparams;
+   // debugger;
+    let theParams = walkParams?walkParams(i,j,timeStep):params;
+    if (theParams.numRows) {
+      numRows = theParams.numRows;
+      numCols = theParams.numCols;
+		}
 	  let pcor = theParams.correlation;
 		correlated = pcor || (pcor === undefined);		
 		min = theParams.min;
@@ -155,15 +187,50 @@ item.genRandomGrid = function (numCols,numRows,iparams) {
 		step = theParams.step;
 		stepx = theParams.stepx;
 		stepy = theParams.stepy;
-		//stept = theParams.stept;
+		stept = theParams.stept;
+		biasUp = theParams.biasUp;
+		if (biasUp === undefined) {
+			biasUp = 0;
+		}
 		if (typeof step === 'number') {
 			stepx = stepy = step;
 		}
   }
   computeParams(0,0);  
+	if (walkParams) {
+		/*let wparams = walkParams(0,0,timeStep);
+    if (wparams.numRows) {
+      numRows = wparams.numRows;
+      numCols = wparams.Cols;
+		}
+	  let pcor = wparams.correlation;
+		correlated = pcor || (pcor === undefined);		
+		min = wparams.min;
+		max = wparams.max;
+		step = wparams.step;
+		stepx = wparams.stepx;
+		stepy = wparams.stepy;
+		stept = wparams.stept;
+		biasUp = wparams.biasUp;
+		if (biasUp === undefined) {
+			biasUp = 0;
+		}
+		if (typeof step === 'number') {
+			stepx = stepy = step;
+		} */
+	/*} else {
+		correlated = pcor || (pcor === undefined);
+		if (typeof step === 'number') {
+			stepx = stepy = step;
+		} else {
+			stepx  = istepx;
+			stepy  = istepy;
+		}*/
+	}
   let values = [];
   //debugger;
-  let rs = {values,numRows,numCols,iparams};
+  let rs = {timeStep,values,numRows,numCols,params};
+ // let rs = {timeStep,values,params};
   let n = numCols * numRows;
   values.length = n;
   let i = 0;
@@ -175,11 +242,11 @@ item.genRandomGrid = function (numCols,numRows,iparams) {
 		j = goingUp?0:numRows-1;
 		let firstJ = true;
     while (goingUp?j < numRows: j>=0) {
-		  if (isfun) {
+		  if (walkParams) {
         computeParams(i,j);
       }
 			let idx = this.indexFor(numRows,i,j);
-			let pv = 0;//prevValues?prevValues[idx]:undefined;
+			let pv = prevValues?prevValues[idx]:undefined;
 			if ((i === 0) && cFr) {
 				values[idx] === cFr;
 				j++;
@@ -198,9 +265,8 @@ item.genRandomGrid = function (numCols,numRows,iparams) {
 					ub = max;
 				//	values[idx] = 0.5*(min+max);
 				}
-				//let vl =  lb + biasUp +Math.random() * (ub - lb);
-				let vl =  lb  +Math.random() * (ub - lb);
-			//	console.log('i',i,'j',j,'min ',min,' max ',max,' tlb ',tlb,' tub ', tub,' lb ',lb,' ub ', ub,' vl ',vl);
+				let vl =  lb + biasUp +Math.random() * (ub - lb);
+				console.log('BIAS',biasUp,'i',i,'j',j,'min ',min,' max ',max,' tlb ',tlb,' tub ', tub,' lb ',lb,' ub ', ub,' vl ',vl);
 				values[idx] = vl;
 				//debugger;
 				j++;
@@ -228,13 +294,13 @@ item.genRandomGrid = function (numCols,numRows,iparams) {
   //return values;
   return rs;
 }
-
+/*
 
 item.initRandomizer = function () {
 	let rm = this.randomizer;
 	if (!rm) {
 		rm = this.randomizer = {};
-	 // addRandomMethods(rm);
+	  addRandomMethods(rm);
 	  if (!this.randomGridsForShapes) {
 			this.randomGridsForShapes = {};
 		}
@@ -245,22 +311,51 @@ item.initRandomizer = function () {
 	return rm;
 }
 item.setupRandomizer = function (tp,nm,params) {
-	let numRows = tp === 'randomGridsForBoundaries'?this.numRows+1:this.numRows;
-	let numCols = tp === 'randomGridsForBoundaries'?this.numCols+1:this.numCols;
+	if (nm === 'pattern') {
+	//	debugger;
+	}
+	let kind = params.kind =  (tp === 'randomGridsForBoundaries')?'boundaries':'cells';
+	if (!params.numRows) {
+		params.numRows = kind==='boundaries'?this.numRows+1:this.numRows;
+		params.numCols = kind==='boundaries'?this.numCols+1:this.numCols;
+	}
 	let rm = this.initRandomizer();
 	let rnds = this[tp];
-  let rs  = this.genRandomGrid(numCols,numRows,params);
+  let rs  = rm.genRandomGrid(tp,{timeStep:0,params});
 	rnds[nm]  = rs;
 	return rs;
 }
 
-item.setupRandomGridForShapes = function (nm,params) {
+
+item.stepRandomizer = function (tp,nm) {
+	let wrnds = this[tp];
+	let rg = wrnds[nm];
+	let rm = this.randomizer;
+	let rs  = rm.genRandomGrid(tp,rg);
+	wrnds[nm]  = rs;
+	return rs;
+}
+	
+item.stepShapeRandomizer = function (nm) {
+  return this.stepRandomizer('randomGridsForShapes',nm);
+}
+	
+
+item.stepBoundaryRandomizer = function (nm) {
+  return this.stepRandomizer('randomGridsForBoundaries',nm);
+}
+
+
+
+item.setupShapeRandomizer = function (nm,params) {
   return this.setupRandomizer('randomGridsForShapes',nm,params);
 }
 
 
-item.setupRandomGridForBoundaries = function (nm,params) {
+item.setupBoundaryRandomizer = function (nm,params) {
   return this.setupRandomizer('randomGridsForBoundaries',nm,params);
 }        		
-}
+*/
+
+}   
 export {rs};

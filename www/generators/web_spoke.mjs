@@ -29,7 +29,7 @@ rs.initProtos = function () {
 rs.initialize = function () {
   debugger;
 	this.initProtos();
-  let points =this.genRandomWalk(gridParams);
+  let points =this.randomWalkPoints(gridParams);
 	rs.generateWeb({points});
 }
 	

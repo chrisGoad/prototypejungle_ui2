@@ -1,7 +1,7 @@
 import {rs as linePP} from '/shape/line.mjs';
 import {rs as circlePP} from '/shape/circle.mjs';
 import {rs as basicP} from '/generators/basics.mjs';
-import {rs as addRandomMethods} from '/mlib/topRandomMethods.mjs';
+import {rs as addRandomMethods} from '/mlib/boundedRandomGrids.mjs';
 import {rs as addDropMethods} from '/mlib/drop.mjs';
 import {rs as addWebMethods} from '/mlib/web.mjs';
 
@@ -70,7 +70,7 @@ rs.initialize = function () {
   this.initProtos();
   //let {maxConnectorLength:mxCln,minConnectorLength:mnCln=0,width,lineP} = this;
   
-  this.setupShapeRandomizer('connectorLn',{step:80,stept:0.5,min:50,max:500});
+  this.setupRandomGridForShapes('connectorLn',{step:80,stept:0.5,min:50,max:500});
   this.addFrame();
   this.generateDrop();
   let points = this.pointsFromCircleDrops();

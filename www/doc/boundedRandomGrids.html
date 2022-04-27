@@ -13,14 +13,14 @@ It is assumed that <span class="textVar">this</span> has properties <span class=
 <p><span class="textVar">this.setupRandomGridForBoundaries(nm,params)</span> is the same, except that a random grid of dimensions <span class="textVar">this.numRows+1</span> and <span class="textVar">this.numCols+1</span> is produced (thus one for each boundary line in a grid).</p> 
 
 <p>When several such grids, named, say <span class="textVar">a,b,c</span>  have been setup by <span class="textVar">setupRandomGridForShapes</span>, 
-they are used to produce the <span class="textVar">rvs</span>  argument  to <a href="/doc/grid.html#shapeGenerator"><span class="textVar">shapeGenerator</span></a> in the grid module. Specifically, <span class="textVar">shapeGenerator</span> will be called, for each grid cell, with <span class="textVar">rvs</span> set to <span class="textVar">{a:&lt;va&gt;,b:&lt;vb&gt;,c:&lt;vc&gt;}</span> where <span class="textVar">va,vb,</span> and <span class="textVar">vc</span> are the values at the given cell in the grids that have been setup by the calls:</p>
+they are used to produce the <span class="textVar">rvs</span>  argument  to <a href="/doc/grid.html#shapeGenerator"><span class="userDefinedText">shapeGenerator</span></a> in the grid module. Specifically, <span class="userDefinedText">shapeGenerator</span> will be called, for each grid cell, with <span class="textVar">rvs</span> set to <span class="textVar">{a:&lt;va&gt;,b:&lt;vb&gt;,c:&lt;vc&gt;}</span> where <span class="textVar">va,vb,</span> and <span class="textVar">vc</span> are the values at the given cell in the grids that have been setup by the calls:</p>
 <pre style="padding-left:20px;font-size:10pt;font-weight:bold" class="code">
 <p>this.setupRandomGridForShapes('a',params); </p>
 <p>this.setupRandomGridForShapes('b',params);</p>
 <p>this.setupRandomGridForShapes('c',params); </p>
 </pre>
 
-<p>Similarly, <span class="textVar">setupRandomGridForBoundaries(nm,params)</span> sets up grids which are used to produce the <span class="textVar">rvs</span> argument to <a href="/doc/grid.html#boundaryLineGenerator"><span class="textVar">boundaryLineGenerator</span></a>.</p>
+<p>Similarly, <span class="textVar">setupRandomGridForBoundaries(nm,params)</span> sets up grids which are used to produce the <span class="textVar">rvs</span> argument to <a href="/doc/grid.html#boundaryLineGenerator"><span class="userDefinedText">boundaryLineGenerator</span></a>.</p>
 
 <p> This is how the methods in this module are added to an the image generator <span class="textVar">ig</span>:</p>
 <pre style="padding-left:20px;font-size:10pt;font-weight:bold" class="code">
@@ -28,12 +28,11 @@ import {rs as addRandomMethods} from '/mlib/boundedRandomGrids.mjs';
 addRandomMethods(ig);
 </pre>	
 <p> Sometimes, instead of fixing bounding parameters for the entire grid, it is desirable to have them vary with grid coordinates. For this case, the params can be formulated as a function of type
-<span class="textVar">(x:number,j:number) => {step:number,min:&lt;number&gt;,max:&lt;number&gt;}</span>. Here is an example
+<span class="textVar">(i:number,j:number) => {step:number,min:number,max:number}</span>. Here is an example
 <pre style="padding-left:20px;font-size:10pt;font-weight:bold" class="code">
  
 
 rs.initialize = function () {
-  core.root.backgroundColor = 'black';
   this.initProtos();
   let {numRows,numCols,lowJiggle,highJiggle,lowJiggleStep,highJiggleStep} = this;
   this.addFrame();

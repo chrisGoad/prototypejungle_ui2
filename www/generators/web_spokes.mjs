@@ -37,7 +37,7 @@ rs.initialize = function () {
 	this.addFrame();
 	for (let i=0;i<numSpokes;i++) {
 		gridParams.initialDirection = 2*i*(Math.PI/numSpokes);
-    let points = this.genRandomWalk(gridParams);
+    let points = this.randomWalkPoints(gridParams);
     let spoke = webSpoke.instantiate();
     spoke.lineP = lineP;
     spokes.push(spoke);

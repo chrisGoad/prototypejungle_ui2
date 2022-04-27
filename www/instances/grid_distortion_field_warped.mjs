@@ -14,7 +14,7 @@ Object.assign(rs,topParams);
 
 let root2 = Math.sqrt(2);
 
-rs.positionFunction = function(i,j) {
+rs.positionMethod = function(i,j) {
   let {width,height,numRows,numCols} = this;
   let hnr  = numRows/2;
   let di = i - hnr;

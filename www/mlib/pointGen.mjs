@@ -2,12 +2,12 @@
 const rs = function (rs) {
 
 
-rs.genRings = function (iparams) {
- let params = {};
- Object.assign(params,this);
+rs.ringPoints = function (params) {
+ //gen params = {};
+/* Object.assign(params,this);
  if (iparams) {
    Object.assign(params,iparams);
- }
+ }*/
 	let {numRings,radius,pos=Point.mk(0,0),randomFactor = 0,fromAngle=0,toAngle=2*Math.PI,numPointsPerRing=20,ringSeparation} = params;
 	let pnts = [];
 	let dr = ringSeparation?ringSeparation:radius/numRings;
@@ -49,28 +49,9 @@ rs.rings2polygon = function (pnts) {
 	pgon.corners = ppnts;
 	return pgon;
 }
-/*
-rs.genGrid = function (params) {
-	let {width,height,numRows,numCols} = params;
-	let dx = width/numCols;
-	let dy = height/numRows;
-	let cx = -0.5*width;
-	let rs  = [];
-	for (let i = 0;i<numCols;i++) {
-		let cy = -0.5*height;
-		for (let j=0;j<numRows;j++) {
-			let p = Point.mk(cx,cy);
-			rs.push(p);
-			cy += dy;
-		}
-	  cx += dx;
-	}
-	return rs;
-}
 
-*/
 
-rs.genRandomWalk = function (params) {
+rs.randomWalkPoints = function (params) {
 	let {initialPos,initialDirection,width,step,delta,numSteps}  = params;
 	let cpos = initialPos;
 	let sidepos;
@@ -112,12 +93,11 @@ const interpolatePoints = function (end0,end1,fr) {
 	return rs;
 }
 	
-rs.genGrid = function (iparams) {
+rs.gridPoints = function (iparams) {
  let params = {};
- Object.assign(params,this);
- if (iparams) {
-   Object.assign(params,iparams);
- }
+ 	let props = ['width','height','numRows','numCols','left','right','k','missingRows','missingCols','jiggle','pos'];
+  core.transferProperties(params,this,props);
+  core.transferProperties(params,iparams,props);
 	let {width,height,numRows,numCols,left:ileft,right:iright,k=1,missingRows=0,missingCols=0,jiggle=0,pos=Point.mk(0,0)} = params;
 	const doJiggle = function (p) {
 		if (jiggle) {
@@ -184,7 +164,7 @@ rs.genGrid = function (iparams) {
 	return rs;
 }
 
-rs.genPascal = function (params) {
+rs.pascalPoints = function (params) {
 	let {numRows,rowSep} = this;
 	let cy = 0;
 	let pnts = [];

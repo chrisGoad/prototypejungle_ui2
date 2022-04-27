@@ -49,12 +49,10 @@ item.genSingletonUnit =  function (lineP,p,direction,clr) {
 item.genFan = function (p,iparams) {
 debugger;
  let params = {};
- //let props = ['width','height','lineP','startingPoint','stroke','sepNext','splitChance','splitAmount',
  let props = ['width','height','lineP','stroke','sepNext','splitChance','splitAmount',
 	     'segLength','directionChange','randomDirectionChange','lineExt'];
    core.transferProperties(params,this,props);
    core.transferProperties(params,iparams,props);
-	//let {width,height,lineP,startingPoint:p,stroke,sepNext,splitChance,splitAmount,
 	let {width,height,lineP,stroke,sepNext,splitChance,splitAmount,
 	     segLength:len,directionChange:dc=0,randomDirectionChange:rdc=0,lineExt=0} = params;
   let angle;
@@ -67,7 +65,6 @@ debugger;
   let hsa = 0.5 * splitAmount;
   let a0 = angle+splitAmount;
   let a1 = angle-splitAmount;
-
   if (Math.random() < splitChance ) {
 	  let seg0 = this.genSegment(p,len,a0,sepNext);
 	  let seg1 = this.genSegment(p,len,a1,sepNext);
@@ -92,7 +89,7 @@ debugger;
 }
 
 
- // the following methods generate segsLines, which are used as the seeds of the drop operation. 
+ // the following methods generate dropStructs, which are used as the seeds of the drop operation. 
 item.ringSeeds = function (iparams) {//lineP,clr,icenter,divergence=0,data) {
      debugger;
      let props = ['center','stroke','lineP','numSeeds','ringRadius','segLength','divergence','data'];
@@ -219,6 +216,7 @@ item.gridSeeds = function (iparams) {
 				  lines.push(...SL[1]);
 				}
 		  } else {
+      debugger;
 				fanAngles.forEach( (angle) => {
 					let seg = this.genSegment(ip,len,angle,sepNext);
 					segs.push(seg);

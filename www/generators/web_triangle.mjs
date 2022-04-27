@@ -69,7 +69,7 @@ rs.initialize = function () {
 	let {circleP,rectP,polygonP} = this;
 	let rws = [];
 	for (let i=0;i<numWalks;i++) {
-		rws.push(this.genPascal(gridParams));
+		rws.push(this.pascalPoints(gridParams));
 	}
 	let hwd = 0.5* wd;
 	let hsep = 0.5*sep;

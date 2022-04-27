@@ -17,10 +17,11 @@ let mcl = 1.6*(ht/nrc);
 mcl = 50
 let minc = 20;
 
-let  topParams = {frameStroke:'rgb(52,52,52)',framePadding:0.1*ht,width:ht,height:ht,maxFringeTries:100,numRings:nrc, numRows:nrc, numCols:nrc, minConnectorLength:mcl, maxConnectorLength:mcl+minc, webTries:100};
+let  topParams = {frameStroke:'rgb(52,52,52)',framePadding:0.1*ht,width:ht,height:ht,maxFringeTries:100, minConnectorLength:mcl, maxConnectorLength:mcl+minc, webTries:100};
 
 Object.assign(rs,topParams);
 
+let gridParams =  {numRows:nrc,numCols:nrc};
 
 rs.initProtos = function () {	
   let lineP = this.lineP = linePP.instantiate();
@@ -37,7 +38,6 @@ rs.inDiamond = function (p) {
   return bd < 0.5 * width;
 }
 
-
 const inSquare = function (p,hw) {
   return (-hw < p.x) && (p.x < hw) && (-hw < p.y) && (p.y < hw);
   
@@ -46,7 +46,6 @@ const inSquare = function (p,hw) {
 const inCircle = function (p,d) {
   let dist = p.distance(Point.mk(0,0));
   return dist < d;
-  
 }
 
 rs.colorFromPoint = function (p) {
@@ -59,11 +58,8 @@ rs.colorFromPoint = function (p) {
   }
   if (this.inDiamond(p)) {
     return 'gray';
-    return 'blue';
   } 
-  return 'transparent';
-  return 'white';
-  
+  return 'transparent';  
 }
 
 rs.pairFilter = function (i,j) {
@@ -87,8 +83,7 @@ rs.pairFilter = function (i,j) {
 rs.initialize = function () {
   this.initProtos();
   this.addFrame();
- // let points = this.genGrid(this);
-  let points = this.genGrid();
+  let points = this.gridPoints(gridParams);
   this.generateWeb({points});
 }
 

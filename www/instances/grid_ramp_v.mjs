@@ -16,7 +16,7 @@ let nc = 100;
 let topParams = {saveState:0};
 
 
-  topParams = {numRows:nr,numCols:nr,width:wd,height:ht,backStripeColor:'rgb(2,2,2)',pointJiggle:0,backStripePadding:0.20*wd,backStripeVisible:0,sideA:function(fr) {return this.leftSide.pointAlong(fr)},sideB:function(fr) {return this.rightSide.pointAlong(fr)},positionFunction:grid1.sidesPositionFunction};
+  topParams = {numRows:nr,numCols:nr,width:wd,height:ht,backStripeColor:'rgb(2,2,2)',pointJiggle:0,backStripePadding:0.20*wd,backStripeVisible:0,sideA:function(fr) {return this.leftSide.pointAlong(fr)},sideB:function(fr) {return this.rightSide.pointAlong(fr)},positionMethod:grid1.sidesPositionFunction};
 
 //topParams = {numRows:2,numCols:nc,width:wd,height:wd,backStripeColor:'rgb(2,2,2)',pointJiggle:40,backStripePadding:0.15*wd,numTimeSteps:100};
 */

@@ -39,7 +39,7 @@ rs.drawGrid = function () {
     let end1 = Point.mk(hwd,cy);
     this.addLine({lines:gridLines,end0:end0,end1:end1,lineP:gridLineP});
   }
-   for (let i=0;i<=numVlines;i++) {
+  for (let i=0;i<=numVlines;i++) {
     let cx = -hwd + i*delta;
     let end0 = Point.mk(cx,-hht);
     let end1 = Point.mk(cx,hht);

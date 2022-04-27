@@ -40,7 +40,8 @@ rs.initialDrop = function () {
   this.exclusionZones = [exc];
   let dnc = geom.Circle.mk(Point.mk(0,0),3*rad);
   this.doNotExit= [dnc];
-  return this.ringSeeds({stroke:'white',ringRadius:rad});  
+  return this.ringSeeds(ringParams);  
+  //return this.ringSeeds({stroke:'white',ringRadius:rad});  
 }
 
 
@@ -53,7 +54,7 @@ rs.initialize = function () {
   this.initProtos();
   this.addFrame();
   if (this.saveState) {
-    this.setupColorRandomizer({step:10,min:100,max:240});
+    this.setupColorGridsForShapes({step:10,min:100,max:240});
     this.saveTheState();
     this.generateDrop();
   } else {

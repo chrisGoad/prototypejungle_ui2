@@ -36,7 +36,7 @@ rs.initialize = function () {
   this.initProtos();
   let {focalPoint,focalLength,cameraScaling,lineP} = this;
   this.zone = geom.Circle.mk(Point.mk(0,0),0.5*this.width);
-  var pnts = this.doDrops(30);
+  var pnts = this.generateDrop(30).points;
   this.camera = geom.Camera.mk(focalPoint,focalLength,cameraScaling,'z');
   let points = this.pointsTo3dAndBack(pnts);
   this.generateWeb({points});

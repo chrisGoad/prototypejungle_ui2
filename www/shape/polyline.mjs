@@ -10,13 +10,13 @@ rs.role = 'spot';
 rs.points = [];
 
 rs.update = function () {
-	let {thePoints} = this;
-  thePoints.forEach((p) => {
+	let {wayPoints} = this;
+  wayPoints.forEach((p) => {
     if (isNaN(p.x) || isNaN(p.y)) {
        debugger;
     }
   });
-	let ln = thePoints.length;
+	let ln = wayPoints.length;
 	if (!ln) {
 		return;
 	}
@@ -25,7 +25,7 @@ rs.update = function () {
   };
 	let path = '';
 	for (let i=0;i<ln;i++) {
-		let point = thePoints[i];
+		let point = wayPoints[i];
 		let pstr = p2str(point,i===(ln-1)?'':' ');
 		path += pstr;
 	}

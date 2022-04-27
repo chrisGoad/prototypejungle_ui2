@@ -47,7 +47,7 @@ rs.initialize = function () {
   this.initProtos();
   this.addFrame();
 	//this.initBasis();
-	let pnts = this.genGrid(gridParams);
+	let pnts = this.gridPoints(gridParams);
 	stripes[0].generateWeb(pnts,this.lineP);
 	stripes[1].generateWeb(pnts,this.lineP2);
 	stripes[2].generateWeb(pnts,this.lineP);

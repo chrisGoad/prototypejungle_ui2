@@ -76,7 +76,7 @@ rs.initialize = function () {
    let {width:wd,height:ht,numCols:nc,saveState} = this;
    let fr =0.005;
    if (saveState) {
-     this.setupShapeRandomizer('v',{step:fr*10,stept:fr*10,min:-fr*100,max:0.9*fr*100});
+     this.setiupRandomGridForShapes('v',{step:fr*10,stept:fr*10,min:-fr*100,max:0.9*fr*100});
      this.saveTheState();
      this.mkStripes(nc,'vertical',0,wd/50);
      this.mkStripes(nc,'horizontal',0,ht/50);

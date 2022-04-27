@@ -32,7 +32,7 @@ let  gridParams = {width:wd,height:ht,numRows:nr,numCols:200}
 rs.initialize = function (clr) { 
 debugger;
   this.initProtos(clr);
-	let points = this.genGrid(gridParams);
+	let points = this.gridPoints(gridParams);
   this.generateWeb({points});
 }
 

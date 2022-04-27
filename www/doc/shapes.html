@@ -52,6 +52,10 @@ Here are the elementary shapes supported by PrototypeJungle, and their propertie
 <hr/>
 <p class="textVar" id="Line">line</p>
 </p>
+<p>Acessed via:</p>
+<precode>
+import {rs as linePP} from '/shape/line.mjs';
+</precode>
 
 <p> Properties of line <span class="textVar">ln</span>,</p>
 <table>
@@ -75,10 +79,14 @@ ln.setEnds(end0:Point,end1:Point) => null
 This corresponds to the SVG <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Element/line">line</a> element.
 </p>
 
+<hr/>
 
 <p class="textVar" id="Point">rectangle</p>
 </p>
-
+<p>Acessed via:</p>
+<precode>
+import {rs as rectPP} from '/shape/rectangle.mjs';
+</precode>
 <p> Properties of rectangle <span class="textVar">r</span>,</p>
 <table>
 
@@ -97,10 +105,13 @@ This corresponds to the SVG <a href="https://developer.mozilla.org/en-US/docs/We
 <p>This corresponds to the SVG <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Element/rect">rect</a> element.
 </p>
 
-
+<hr/>
 <p class="section" id="Point">circle</p>
 </p>
-
+<p>Acessed via:</p>
+<precode>
+import {rs as circlePP} from '/shape/circle.mjs';
+</precode>
 <p> Properties of circle <span class="textVar">c</span>,</p>
 <table>
 
@@ -118,85 +129,54 @@ This corresponds to the SVG <a href="https://developer.mozilla.org/en-US/docs/We
 <p>This corresponds to the SVG <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Element/circle">circle</a> element.
 </p>
 
-</pre>
-<p>Methods for Point <span class="textVar">p</span>,</p>
-<pre style="padding-left:20px;font-size:10pt;font-weight:bold" class="code">
-p.plus(q:&lt;Point&gt;); // returns the vector sum p and q
-p.difference(q:&lt;Point&gt;); // returns the vector subtraction of q from p
-p.distance(q:&lt;Point&gt;); // returns distance from p to q
-p.normalize(); // returns p shrunk or extended to a unit vector with the same direction
-p.normal(); // returns a vector which is orthogonal to p
-p.times(s:&lt;number&gt;); // return p scaled by s
-</pre>
 <hr/>
-<p class="textVar">LineSegment</p>
-<pre style="padding-left:20px;font-size:10pt;font-weight:bold" class="code">
-LineSegment.mk(end0:&lt;Point&gt;,end1:&lt;Point&gt;)
-</pre>
-<p> Properties of LineSegment <span class="textVar">s</span>,</p>
-<pre style="padding-left:20px;font-size:10pt;font-weight:bold" class="code">
-s.end0
-s.end1
-</pre>
-<p>Methods for LineSegment <span class="textVar">s</span>,</p>
-<pre style="padding-left:20px;font-size:10pt;font-weight:bold" class="code">
-s.length();
-s.pointAlong(n:&lt;number&gt;) // for 0&lt;=n&lt;=1, returns the point fraction n of the way from end0 to end1
-</pre>
-<hr/>
-<p class="textVar">Circle</p>
-<pre style="padding-left:20px;font-size:10pt;font-weight:bold" class="code">
-Circle.mk(center:&lt;Point&gt;,radius:&lt;number&gt;)
-</pre>
-<p> Properties of Circle <span class="textVar">c</span>,</p>
-<pre style="padding-left:20px;font-size:10pt;font-weight:bold" class="code">
-c.center
-c.radius
-</pre>
-<hr/>
-<p class="textVar" id="Point3d">Point3d</p>
-
+<p class="textVar" id="Line">polyline</p>
 </p>
-<p>Constructor:</p>
-<pre style="padding-left:20px;font-size:10pt;font-weight:bold" class="code">
-Point3d.mk(x:&lt;number&gt;,y:&lt;number&gt;,z:&lt;number&gt;)
-</pre>
-<p> Properties of Point3d <span class="textVar">p</span>,</p>
-<pre style="padding-left:20px;font-size:10pt;font-weight:bold" class="code">
-p.x
-p.y
-p.z
-</pre>
-<p>Methods for Point3d <span class="textVar">p</span>,</p>
-<pre style="padding-left:20px;font-size:10pt;font-weight:bold" class="code">
-p.plus(q:&lt;Point&gt;); // returns the vector sum p and q
-p.difference(q:&lt;Point&gt;); // returns the vector subtraction of q from p
-p.distance(q:&lt;Point&gt;); // returns distance from p to q
-p.times(s:&lt;number&gt;); // return p scaled by s
-</pre>
-<hr/>
-<p class="textVar" id="Camera">Camera</p>
+<p>Acessed via:</p>
+<precode>
+import {rs as polylinePP} from '/shape/polyline.mjs';
+</precode>
+
+<p> Properties of polyline <span class="textVar">ln</span>,</p>
+<table>
+
+<tbody>
+<tr class="pbot"><td>Property</td><td>Type</td></tr>
+<tr><td colspan="3">----------------------------------------</td></tr>
+<tr><td><span class="textVar">ln.wayPoints</span></td><td>array of Points</td></tr>
+<tr><td><span class="textVar">ln.stroke</td><td>color string</td></tr>
+<tr><td><span class="textVar">ln['stroke-width']</span></td><td>number</td></tr>
+</tbody>
+</table>
+
+<p>
+This corresponds to the SVG <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Element/polyline">polyline</a> element.
 </p>
 
+<hr/>
+<p class="textVar" id="Line">polygon</p>
+</p>
+<p>Acessed via:</p>
+<precode>
+import {rs as polygonPP} from '/shape/polygon.mjs';
+</precode>
 
-<p>Constructor:</p>
-<pre style="padding-left:20px;font-size:10pt;font-weight:bold" class="code">
-Camera.mk(focalPoint:&lt;Point3d&gt;,focalLength:&lt;number&gt;,scaling:&lt;number&gt;,axis:&lt;string&gt;)
-</pre>
-<p><span class="textVar">axis</span> should be one of "x", "y", "z"
-<p> Properties of Camera <span class="textVar">c</span>,</p>
-<pre style="padding-left:20px;font-size:10pt;font-weight:bold" class="code">
-c.focalPoint
-c.focalLength
-p.scaling
-p.axis
-</pre>
-<p>Methods for Camera <span class="textVar">c</span>,</p>
-<pre style="padding-left:20px;font-size:10pt;font-weight:bold" class="code">
-c.project(p:&lt;Point3d&gt;); // returns the projection of p onto the focal plane
-</pre>
+<p> Properties of polygon <span class="textVar">pg</span>,</p>
+<table>
 
+<tbody>
+<tr class="pbot"><td>Property</td><td>Type</td></tr>
+<tr><td colspan="3">----------------------------------------</td></tr>
+<tr><td><span class="textVar">pg.corners</span></td><td>array of Points</td></tr>
+<tr><td><span class="textVar">pg.fill</td><td>color string</td></tr>
+<tr><td><span class="textVar">pg.stroke</td><td>color string</td></tr>
+<tr><td><span class="textVar">pg['stroke-width']</span></td><td>number</td></tr>
+</tbody>
+</table>
 
+<p>
+This corresponds to the SVG <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Element/polygon">polygon</a> element.
+</p>
 
 </div>
 </div>

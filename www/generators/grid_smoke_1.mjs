@@ -41,21 +41,25 @@ rs.initialize = function () {
   let {numRows,numCols } = this;
   this.addFrame();
   this.initProtos();
-  let rnp = {correlated:true};
+  //let rnp = {correlated:true};
+  let rnp = {correlated:0};
   const computeParams = function (i,j) {
     let fri = i/numRows;
     let frj = j/numCols;
     if ((frj>0.4) && (frj<.6) && (fri>.45) && (fri<0.5)) {
-      rnp.stepx = 30;
-      rnp.stepy = 50;
+     //rnp.stepx = 30;
+     //rnp.stepy = 50;  
+     rnp.step = 30;
       rnp.max=0;
       rnp.min=0;
-    } else if ((fri > 0.5) && (frj>0.4) && (frj<.6)) {
-      rnp.stepx = 5;
-      rnp.stepy = 30;
+    } else if (0 && (fri > 0.5) && (frj>0.4) && (frj<.6)) {
+      //rnp.stepx = 5;
+      //rnp.stepy = 30;
+      rnp.step = 5;
     } else {
-      rnp.stepx = 15;
-      rnp.stepy = 30;
+     //rnp.stepx = 15;
+    // rnp.stepy = 30;
+      rnp.step = 20;
       rnp.min = 50;
       rnp.max = 250;
     }

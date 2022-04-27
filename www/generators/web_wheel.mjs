@@ -10,8 +10,8 @@ addWebMethods(rs);
 rs.setName('web_wheel');
 let rd= 3000;
 
-let  topParams = {webTries:1000,numRings:20,radius:rd,numPointsPerRing:20,framePadding:1.2*rd,minConnectorLength:0,maxConnectorLength:2000}
-
+let  topParams = {framePadding:1.2*rd,webTries:1000,minConnectorLength:0,maxConnectorLength:2000};
+let ringParams = {numRings:20,radius:rd,numPointsPerRing:20};
 Object.assign(rs,topParams);
 
 rs.initProtos = function () {	
@@ -24,7 +24,7 @@ rs.initProtos = function () {
 rs.initialize = function () {
   root.backFill = 'black';
   this.initProtos();
-  let points = this.genRings();
+  let points = this.ringPoints(ringParams);
   this.generateWeb({points});
   this.addFrame();
 }

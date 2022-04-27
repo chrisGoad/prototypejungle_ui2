@@ -5,28 +5,27 @@
 const rs = function (item) {	
 
 
-//item.randomStep = function (iCorrelated,x,y,step,istepy,min,imax,i,j) {
-//item.randomStep = function (x,y,step,istepy,min,max,i,j) {
-item.randomStep = function (x,y,step,min,max,i,j) {
+//item.randomStep = function (iCorrelated,x,y,istepx,istepy,imin,imax,i,j) {
+item.randomStep = function (x,y,istepx,istepy,imin,imax,i,j) {
   let oneWay = 0;
-	let lb,ub,rs;
-  //stepx = istepx;
-  //stepy = istepx;
- // if (stepy && (stepx !== stepy)) {
-  //  debugger;
- // }
-  //min = imin;
-  //max = imax;
+	let min,max,stepx,stepy,lb,ub,rs;
+  stepx = istepx;
+  stepy = istepx;
+  if (stepy && (stepx !== stepy)) {
+    debugger;
+  }
+  min = imin;
+  max = imax;
   let sumSteps,sumVals,tlb,tub;
 	if (y !==  undefined) { // 2d case	
-    sumSteps = 2*step;
+    sumSteps = stepx+stepy;
     sumVals = x+y;
     ub = 0.5 * (sumVals+sumSteps);
     lb = 0.5 * (sumVals-sumSteps);		
 	} else {
 		if (1) {
-		  ub = x + step;
-		  lb = x - step;
+		  ub = x + stepx;
+		  lb = x - stepx;
 		} 
 	}
 	if (min > ub) {  //just march towards this target
@@ -47,8 +46,7 @@ item.scalarRandomStep = function (correlated,c,pv,step,stept,min,max,i,j,rg) {
 */
 
 item.scalarRandomStep = function (c,step,min,max,i,j) {
-	//return this.randomStep(c,undefined,step,undefined,min,max,i,j);
-	return this.randomStep(c,undefined,step,min,max,i,j);
+	return this.randomStep(c,undefined,step,undefined,min,max,i,j);
 }
 
 
@@ -60,8 +58,8 @@ item.dim2randomStep = function (correlated,x, y,pv, stepx,stepy,stept,min,max,i,
 
 */
 
-item.dim2randomStep = function (x, y, step,min,max,i,j) { 
-	return this.randomStep(x,y,step,min,max,i,j);
+item.dim2randomStep = function (x, y, stepx,stepy,min,max,i,j) { 
+	return this.randomStep(x,y,stepx,stepy,min,max,i,j);
 }
 
    
@@ -91,23 +89,34 @@ item.genRandomGrid = function (numCols,numRows,iparams) {
    let inc = numCols;
 	debugger;
   let isfun = typeof iparams === 'function';
-  let step,min,max;
+  //let step,stepx,stepy,min,max,cFr,pcor,correlated;
+  let step,stepx,stepy,min,max,cFr;
   let stept = 0;
   let oneWay = 0;
   const computeParams = function(i,j) {
     let theParams = isfun?iparams(i,j):iparams;
+	  //let pcor = theParams.correlation;
+		//correlated = pcor || (pcor === undefined);		
 		min = theParams.min;
 		max = theParams.max;
 		step = theParams.step;
+		stepx = theParams.stepx;
+		stepy = theParams.stepy;
+		//stept = theParams.stept;
+		if (typeof step === 'number') {
+			stepx = stepy = step;
+		}
   }
   computeParams(0,0);  
   let values = [];
+  //debugger;
   let rs = {values,numRows,numCols,iparams};
   let n = numCols * numRows;
   values.length = n;
   let i = 0;
   let j = 0;
 	let pv;
+	//debugger;
   while (i < numCols) {
     let goingUp = i%2 === 0; //means  j is going up
 		j = goingUp?0:numRows-1;
@@ -117,11 +126,11 @@ item.genRandomGrid = function (numCols,numRows,iparams) {
         computeParams(i,j);
       }
 			let idx = this.indexFor(numRows,i,j);
-			/*if ((i === 0) && cFr) {
+			if ((i === 0) && cFr) {
 				values[idx] === cFr;
 				j++;
 				continue;
-			}		*/			
+			}					
 			if ((i === 0) && (j === 0)) {
 				let lb,ub,tlb,tub;
         lb = min;
@@ -134,15 +143,14 @@ item.genRandomGrid = function (numCols,numRows,iparams) {
 			}
 			let c;
 			if (i === 0) {
-				c = this.scalarRandomStep(values[j-1],step,min,max,i,j);
+				c = this.scalarRandomStep(values[j-1],stepx,min,max,i,j);
 			} else if (firstJ){
 				let lftidx = this.indexFor(numRows,i-1,goingUp?0:numRows-1);
-				c = this.scalarRandomStep(values[lftidx],step,min,max,i,j);       
+				c = this.scalarRandomStep(values[lftidx],stepx,min,max,i,j);       
 			} else {
 				let lftidx = this.indexFor(numRows,i-1,j)
 				let upidx = this.indexFor(numRows,i,goingUp?j-1:j+1)
-				//c = this.dim2randomStep(values[lftidx],values[upidx],stepx,stepy,min,max,i,j);
-				c = this.dim2randomStep(values[lftidx],values[upidx],step,min,max,i,j);
+				c = this.dim2randomStep(values[lftidx],values[upidx],stepx,stepy,min,max,i,j);
 			}
 			values[idx] = c;
 			j = goingUp?j+1:j-1;

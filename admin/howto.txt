@@ -29,3 +29,6 @@ git push origin main
 
 cd c:\prototypejungle_clone
 git clone https://github.com/chrisGoad/prototypejungle.git
+
+cd c:\kop
+firebase deploy --only hosting

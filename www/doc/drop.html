@@ -63,7 +63,7 @@ export {rs};
 
 
 </pre>
-<p> The DROP algorithm drops  things at random positions on the canvas. If a thing lands on top of another, it is thrown away, otherwise it is added.   I have used the vague word "thing". A thing is a pair [lineSegments,shapes], called a dropStruct. Often, but not always, the shapes are lines that  correspond directly to the segments in that they have the same ends; that is, they coincide geometrically. The operation</p>
+<p> The DROP algorithm drops  things at random positions on the canvas. If a thing lands on top of another, it is thrown away, otherwise it is added.   I have used the vague word "thing". A thing is a pair [array of lineSegment,array of shape], called a dropStruct. Often, but not always, the shapes are lines that  correspond directly to the segments in that they have the same ends; that is, they coincide geometrically. The operation</p>
 <precode>
 (segs,lineP) => [segs,segs.map((seg) => this.genLine(seg,LineP)]
 ]
@@ -104,17 +104,16 @@ rs.setName('drop_dandelion');
 let ht = 360;
 let wd = 1* ht;
 
-
-let topParams = {width:wd,height:ht,framePadding:0.15*ht,
-//parameters to performDrop
-dropTries:10,maxDrops:Infinity,fromEnds:1,doNotExit:[geom.Circle.mk(Point.mk(0,0),0.5*ht)],
+let topParams = {width:wd,height:ht,framePadding:0.15*ht,stroke:'white',segLength:5};
+//parameters to generateDrop 
+let dropParams = {fromEnds:1,extendWhich:'first',sepNext:0.01,dropTries:10,maxDrops:Infinity,doNotExit:[geom.Circle.mk(Point.mk(0,0),0.5*ht)]};
 //parameters to genFan
-lineLength:5,extendWhich:'first',sepNext:0.01,splitChance:.40,splitAmount:0.05 *Math.PI,
-directionChange:0.0*Math.PI,randomDirectionChange:0.025*Math.PI,lineExt:0,
+let fanParams = {splitChance:.40,splitAmount:0.05 *Math.PI,directionChange:0.0*Math.PI,randomDirectionChange:0.025*Math.PI};
 // parameters to ringSeeds
-numSeeds:15};
+let ringParams = {numSeeds:15,ringRadius:0.15 * 0.5 * wd,stroke:'transparent'};
 
 Object.assign(rs,topParams);
+Object.assign(rs,dropParams); // drop params are taken from <span class="codeVar">this</span>
 
 rs.initProtos = function () {
   this.lineP = linePP.instantiate();
@@ -124,12 +123,13 @@ rs.initProtos = function () {
 
 rs.initialDrop = function () {
   let rad  = 0.15 * 0.5 * this.width;
-  return this.ringSeeds({stroke:'transparent',ringRadius:rad});  
+  return this.ringSeeds(ringParams);  
 }
 
 rs.dropAt = function (p) {
-  return this.genFan({startingPoint:p,stroke:'white'});
+  return this.genFan(Object.assign({startingPoint:p},fanParams));
 }
+
 
 rs.initialize = function () {
   this.initProtos();
@@ -141,7 +141,6 @@ export {rs};
 
 
 
-
 </precode>
 <p> Here is an explanation of the parameters:</p>
 <p class="indent"> First, parameters to the main drop algorithm:</p>
@@ -150,14 +149,14 @@ export {rs};
 <p class="indent"><span class = "textVar">maxDrops:number</span>: the maximum number of drop trials</p>
 <p class="indent"><span class = "textVar">fromEnds:boolean</span>: run the algorithm in fromEnds mode if this value is truthy</p>
 <p class="indent"><span class = "textVar">doNotExit:circle or rectangle</span>: reject drops any of whose segments straddle the inside and outside of the given geometric figure</p>
-<p class="indent"> Next, parameters to genFan</p>:
-<p class="indent"> Note that the generator of dropStructs, dropAt, relies on genFan to do its work:</p>:
+<p class="indent"> Next, parameters to <span class = "textVar">genFan</span>:</p>
+<p class="indent"> Note that the generator of dropStructs, <span class = "textVar">dropAt</span>, relies on genFan to do its work:</p>
 <precode>
 rs.dropAt = function (p) {
   return this.genFan({startingPoint:p,stroke:'white'});
 }
 </precode>
-<p class="indent">genFanA, like many methods, accepts its parameters from its argument {startingPoint:p,stroke:'white'} first, and if not found there, from this (the image generator rs itself). genFan  extends the tree by either one or two segments (controlled by splitChance).  The segments, in either case, emanate from startingPoint, which will be a terminal node of the existing tree. In the latter case, it produces a branching of the tree, and in the former case not. Parameters to genFan are:</p>
+<p class="indent"><span class = "textVar">genFan</span>, like many methods, accepts its parameters from its argument <span class = "textVar">Object.assign({startingPoint:p},fanParams)</span> first, and if not found there, from <span class = "textVar">this</span> (the image generator rs itself). <span class = "textVar">genFan</span>  extends the tree by either one or two segments (controlled by <span class = "textVar">splitChance</span>).  The segments, in either case, emanate from <span class = "textVar">startingPoint</span>, which will be a terminal node of the existing tree. In the latter case, it produces a branching of the tree, and in the former case not. Parameters to <span class = "textVar">genFan</span> are:</p>
 <p class="indent"> <span class = "textVar">segLength:number</span>: the length of segments dropped.</p>
 <p class="indent"> <span class = "textVar">startingPoint:Point</span>: the position of the terminal node to be extened. </p>
 <p class="indent"> <span class = "textVar">extendWhich:string</span>: which of the terminal nodes to extend. Possible values 'first', meaning the earliest added terminal node that has not yet been extended, 'random' meaning a randomly selected terminal node, and 'last' meaning the last added terminal node.</p>
@@ -165,22 +164,26 @@ rs.dropAt = function (p) {
 <p class="indent"> <span class = "textVar">splitChance</span>: the chance that a split (two segments) rather than a linear continuation (one segment), will be chosen.</p>
 <p class="indent"> <span class = "textVar">splitAmount</span>: if a split is chosen, the angular difference between the two new segments.</p>
 <p class="indent"> <span class = "textVar">directionChange</span>: the direction of the new segment, or center of the new branch, relative to the terminal segment being extended</p>
-<p class="indent"> <span class = "textVar">randomDirectionChange</span>: a random value to be added to directionChange is chosen at random from the interval [-randomDirectionChange,randomDirectionChange]</p>
+<p class="indent"> <span class = "textVar">randomDirectionChange</span>: a random value to be added to directionChange is chosen at random from the interval [<span class = "textVar">[-randomDirectionChange,randomDirectionChange]</span>]</p>
 <p class="indent"> <span class = "textVar">lineExt</span>: the amount by which lineSegments should be extended to produce lines in the dropStruct. </p>
+<p class="indent"> <span class = "textVar">stroke</span>: self-explanatory </p>
+<p class="indent"> <span class = "textVar">strokeWidth</span>: self-explanatory </p>
 
-<p class="indent"> Finally , parameters to genSeeds</p>:
-<p class="indent"> Note that initialDrops , relies on ringSeeds to do  its work:</p>:
+<p class="indent"> Note that <span class = "textVar">initialDrop</span> relies on <span class = "textVar">ringSeeds</span> to do  its work:</p>
 <precode>
 
 rs.initialDrop = function () {
   let rad  = 0.15 * 0.5 * this.width;
-  return this.ringSeeds({stroke:'transparent',ringRadius:rad});  
+  return this.ringSeeds(ringParams);  
 }
+
 </precode>
-<p> Like genFan, ringSeeds takes its parameters first from its argument, and then from this. The parameters to ringSeeds are:</p>
+<p> <span class = "textVar">ringSeeds</span> returns a dropStruct: [array of lineSegment,array of shape]. In this case the elements of dropStruct play the role of seeds for starting the construction of a tree, thence the name.  Like <span class = "textVar">genFan, ringSeeds</span> takes its parameters first from its argument, and then from <span class = "textVar">this</span>. The parameters to <span class = "textVar">ringSeeds</span> are:</p>
 
-<p class="indent"> <span class = "textVar">lineExt</span>: the amount by which lineSegments should be extended to produce lines in the dropStruct. </p>
+<p class="indent"> <span class = "textVar">lineExt</span>: the amount by which the lineSegments should be extended to produce lines in the dropStruct. </p>
+<p class="indent"> <span class = "textVar">numSeeds</span>:<span class = "textVar">ringSeeds</span> generates a ring of outwardly directed segments, evenly placed around a ring. <span class = "textVar">numSeeds is their count. </p>
 
+<p> The other parameters to <span class = "textVar">ringSeeds</span>,  namely <span class = "textVar">ringRadius, stroke,</span> and <span class = "textVar">strokeWidth</span> are self-explanatory.</p
 
 </div>
 </div>

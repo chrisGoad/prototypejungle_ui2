@@ -22,7 +22,7 @@ rs.initProtos = function () {
 
 rs.initialDrop = function () {
   let {width,height,lineP} = this; 
-  let segs = this.rectangleSegments(width,height);
+  let segs = this.rectangleSegments(width,height); // rectangleSegments is defined in segsets.mjs
   let lines = segs.map((sg) => this.genLine(sg,lineP));  
   return [segs,lines];
 }

@@ -14,7 +14,7 @@ rs.setName('drop_leaves');
 let ht = 300;
 let wd = 1.5 * ht;
 
-let topParams = {width:wd,height:ht,numSeedRows:0,numSeedCols:0,dropTries:500,segLength:5,framePadding:0.17*ht,frameVisible:0,minSeparation:0,rectangleDim:0.2,gridPadding:60,fromEnds:1,sepNext:0.01,onlyFromSeeds:1,extendWhich:'first',numSeeds:60,endLoops:3000,seedDirections:[0*Math.PI],lineExt:0}
+let topParams = {width:wd,height:ht,numSeedRows:0,numSeedCols:0,dropTries:500,segLength:5,framePadding:0.17*ht,frameVisible:0,minSeparation:0,rectangleDim:0.2,gridPadding:60,fromEnds:1,sepNext:0.01,extendWhich:'first',numSeeds:60,endLoops:3000,seedDirections:[0*Math.PI],lineExt:0}
 let fanParams = {splitChance:.10,splitAmount:0.005 * Math.PI,directionChange:0.0*Math.PI,randomDirectionChange:0.051*Math.PI,lineExt:0}
 
 Object.assign(rs,topParams);
@@ -46,7 +46,7 @@ rs.initialDrop = function () {
 }
 
 rs.dropAt = function (p) {
-  return this.genFan(p,fanParams);
+  return this.genFan(Object.assign({startingPoint:p},fanParams));
 }
 
 rs.initialize = function () {

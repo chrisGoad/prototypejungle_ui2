@@ -46,14 +46,14 @@ item.genSingletonUnit =  function (lineP,p,direction,clr) {
 	return [[seg],[ln]];
 }
 // was genSegmentsFan
-item.genFan = function (p,iparams) {
+item.genFan = function (iparams) {
 debugger;
  let params = {};
- let props = ['width','height','lineP','stroke','sepNext','splitChance','splitAmount',
+ let props = ['startingPoint','width','height','lineP','stroke','sepNext','splitChance','splitAmount',
 	     'segLength','directionChange','randomDirectionChange','lineExt'];
    core.transferProperties(params,this,props);
    core.transferProperties(params,iparams,props);
-	let {width,height,lineP,stroke,sepNext,splitChance,splitAmount,
+	let {startingPoint:p,width,height,lineP,stroke,strokeWidth,sepNext=0,splitChance,splitAmount,
 	     segLength:len,directionChange:dc=0,randomDirectionChange:rdc=0,lineExt=0} = params;
   let angle;
 	let rn = Math.random();
@@ -83,6 +83,9 @@ debugger;
     if (stroke) {
 		  ln.stroke = stroke;//'white';//clr;
     }
+    if (strokeWidth) {
+		  ln['stroke-width'] = strokeWidth;//'white';//clr;
+    }
 		return [[seg],[ln]];
   }
 
@@ -92,11 +95,11 @@ debugger;
  // the following methods generate dropStructs, which are used as the seeds of the drop operation. 
 item.ringSeeds = function (iparams) {//lineP,clr,icenter,divergence=0,data) {
      debugger;
-     let props = ['center','stroke','lineP','numSeeds','ringRadius','segLength','divergence','data'];
+     let props = ['center','stroke','strokeWidth','lineP','numSeeds','ringRadius','segLength','divergence','data'];
     let params = {};
     core.transferProperties(params,this,props);
     core.transferProperties(params,iparams,props);
-    let {center=Point.mk(0,0),stroke,lineP,numSeeds,ringRadius:radius,segLength:len,divergence=0,data} = params;
+    let {center=Point.mk(0,0),stroke,strokeWidth,lineP,numSeeds,ringRadius:radius,segLength:len,divergence=0,data} = params;
   let segs = [];
   let cangle = 0.5* Math.PI;
   let delta = (Math.PI*2)/numSeeds;
@@ -118,10 +121,13 @@ item.ringSeeds = function (iparams) {//lineP,clr,icenter,divergence=0,data) {
   if (stroke) {
     lines.forEach((ln) => ln.stroke = stroke);
   }
+  if (strokeWidth) {
+    lines.forEach((ln) => ln['stroke-width'] = strokeWidth);
+  }
   return [segs,lines];
 }
 item.sideSeeds = function (lineP,clr,data,right) {
-  let {width,height,sepNext,numSeeds,ringRadius:radius,segLength:len,lineExt=0} = this;
+  let {width,height,sepNext=0,numSeeds,ringRadius:radius,segLength:len,lineExt=0} = this;
   let segs = [];
   let delta  = height/(numSeeds+1);
 		let hw = width/2;
@@ -153,7 +159,7 @@ item.rightSideSeeds = function (clr,data) {
 
 
 item.randomSeeds = function (clr) {
-  let {width,height,sepNext,numSeeds,ringRadius:radius,seedDirections,segLength:len,lineExt=0} = this;
+  let {width,height,sepNext=0,numSeeds,ringRadius:radius,seedDirections,segLength:len,lineExt=0} = this;
   let segs = [];
 	let ld;
 	if (seedDirections) {
@@ -184,12 +190,12 @@ item.randomSeeds = function (clr) {
 
 item.gridSeeds = function (iparams) {
      debugger;
-    let props = ['width','height','lineP','stroke','sepNext','fanAngles','numSeedRows',
+    let props = ['width','height','lineP','stroke','strokeWidth','sepNext','fanAngles','numSeedRows',
        'numSeedCols','gridPadding','lineExt'];
     let params = {};
     core.transferProperties(params,this,props);
    core.transferProperties(params,iparams,props);
-  let {width,height,lineP,stroke,sepNext,fanAngles,numSeedRows:numRows,
+  let {width,height,lineP,stroke,strokeWidth,sepNext=0,fanAngles,numSeedRows:numRows,
        numSeedCols:numCols,gridPadding:padding=0,lineExt=0} = params;
   let segs = [];//this.rectangleSegments(width,height);
 	let lines = [];
@@ -508,7 +514,7 @@ item.addRandomSegment = function () {
 }
     
 item.addNrandomSegments = function (n) {
-  let {maxDrops,dropTries,maxLoops,segments,segLength,ends,shapes,fromEnds,onlyFromSeeds} = this;
+  let {maxDrops,dropTries,maxLoops,segments,segLength,ends,shapes,fromEnds} = this;
   if (!this.dropAt) {
     return;
   }
@@ -543,7 +549,7 @@ item.addNrandomSegments = function (n) {
 } 
 
 item.addRandomSegments = function () {
-  let {maxDrops,dropTries,maxLoops,segments,segLength,ends,shapes,fromEnds,onlyFromSeeds} = this;
+  let {maxDrops,dropTries,maxLoops,segments,segLength,ends,shapes,fromEnds} = this;
   if (!this.dropAt) {
     return;
   }
@@ -657,18 +663,6 @@ item.removeSegmentsAndShapes = function (n) {
 	shapes.length = nln;
 }
 
-/* now in basics.mjs
-item.cellOf  = function (p) {
-  let {x,y} = p;
-  let {width,height,numRows,numCols} = this;
-  let hw = width/2;
-  let hh = height/2;
-  let ix = Math.floor(((x+hw)/width) * numCols);
-  let iy = Math.floor(((y+hh)/height) * numRows);
-  return {x:ix,y:iy};
-}
-*/
-
 item.segsToSeed = function (segs) {
   let shapes = segs.map((sg) => {
 	  let line = this.genLine(sg);
@@ -687,7 +681,6 @@ item.concatEachArray = function (ays) {
   });	 
 	 return [c0,c1];
 }
-
 
 item.generateDrop = function (doDrop=1) {
   this.segments = [];

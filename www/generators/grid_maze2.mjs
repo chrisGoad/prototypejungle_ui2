@@ -11,40 +11,57 @@ rs.setName('grid_maze');
 	
 rs.initProtos = function () {
   this.rectP = rectPP.instantiate();
+  this.rectP.fill = 'white';
+  this.rectP.stroke = 'black';
+  this.rectP['stroke-width'] = 0.1;
   this.rectP['stroke-width'] = 0;
+  this.rectP.width = 1;
+  this.rectP.height = 4;
 }  
 
 let nr = 48;
 let ht = 20;
-let ar = 1.5;
+let ar = 1;
 let wd = ar*ht
 let nc = ar*nr;
-let topParams = {numRows:nr,numCols:nc,width:wd,height:ht,frameStrokeWidth:0.5,framePadding:0.17*wd};
+
+let topParams = {numRows:nr,numCols:nc,width:wd,height:ht,factorX:1,factorY:0.9,frameStrokeWidthh:0.5,framePadding:0.17*wd};
+//let topParams = {numRows:nr,numCols:nc,width:wd,height:ht,factorX:5,factorY:5,frameStrokeWidthh:0.5,framePadding:0.17*wd};
 
 Object.assign(rs,topParams);
 
 rs.shapeGenerator = function (rvs,cell) {
-  let {rectP,shapes,width,height,numRows,numCols} = this;
+  let {rectP,shapes,width,height,numRows,numCols,factorX,factorY} = this;
   let w = rvs.which;
   let shape  = containerShape.mk();
   let inner = this.rectP.instantiate();
-  shape.set('i',inner);
-  let v = rvs.v;
-  let rgb = `rgb(${Math.floor(v)},${Math.floor(v)},${Math.floor(v)})`;
   let deltaX = width/numCols;
   let deltaY = height/numRows;
-  debugger;
+  shape.set('i',inner);
+  let v = rvs.v;
+  let rgb = `rgba(${Math.floor(v)},${Math.floor(v)},${Math.floor(v)},1)`;
   if (w<0.5) {
-    inner.width = 0.96*deltaX;//*0.04*height;
-    inner.height = 0.72*deltaX;//*0.04*height;
+    inner.width = 4;
+    inner.width = 0.04*height;
+    inner.width = 4*factorX*deltaX;
+    inner.height = 3;
+    inner.height = 0.03*height;
+    inner.height = 3*factorY*deltaY;
     inner.fill = 'rgb(100,50,50)';
     inner.fill = rgb;
   } else {
-    inner.width = 0.72*deltaX;//*0.04*height;
-    inner.height = 0.96*deltaX;//*0.04*height;
+    inner.width = 3;
+    inner.width = 3* factorX * deltaX;
+    //inner.width = 0.03*height;
+    inner.height = 4;
+    inner.height = 0.04*height;
+    inner.height = 4*factorY * deltaY;
     inner.fill = rgb;
   }
+  shapes.push(shape);
   inner.update();
+  inner.show();
+  shape.show();
   return shape;
 }
 
@@ -83,4 +100,5 @@ rs.initialize = function () {
 }
 
 export {rs};
+
 

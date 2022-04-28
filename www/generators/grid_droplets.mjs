@@ -1,5 +1,4 @@
 
-
 import {rs as linePP} from '/shape/line.mjs';
 import {rs as rectPP} from '/shape/rectangle.mjs';
 import {rs as circlePP} from '/shape/circle.mjs';
@@ -11,7 +10,6 @@ let rs = basicsP.instantiate();
 addGridMethods(rs);
 addRandomMethods(rs);
 rs.setName('grid_droplets');
-
 
 let wd = 300;
 let nr= 40;

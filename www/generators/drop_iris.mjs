@@ -12,10 +12,11 @@ addSegsetMethods(rs);
 rs.setName('drop_iris');
 let ht = 160;
  ht = 700;
-let topParams = {saveState:0,width:ht,height:ht,numRows:20,numCols:30,dropTries:20,segLength:10,framePadding:0.1*ht,randomDirectionChange:0.3*Math.PI,fromEnds:1,sepNext:.1,lineExt:.2,onlyFromSeedss:1,fromEnds:1,extendWhich:'random',extendWhich:'random',numSeeds:100}
-let fanParams = {randomDirectionChange:0.3*Math.PI,sepNext:.1,lineExt:.2,onlyFromSeeds:1,numSeeds:100,splitChance:0.5,splitAmount:0.08 * Math.PI,directionChange:0.025 * Math.PI}
+let topParams = {saveState:0,width:ht,height:ht,numRows:20,numCols:30,dropTries:20,segLength:10,framePadding:0.1*ht,fromEnds:1,sepNext:.1,lineExt:.2,extendWhich:'random','numSeedss':100}
+
+let fanParams = {randomDirectionChange:0.3*Math.PI,sepNext:.1,splitChance:0.5,splitAmount:0.08 * Math.PI,directionChange:0.025 * Math.PI}
 	
-  let ringParams = {numSeeds:100,ringRadius:0.3 * 0.5 * ht,stroke:'transparent'};
+let ringParams = {numSeeds:100,ringRadius:0.3 * 0.5 * ht,stroke:'transparent'};
 
 Object.assign(rs,topParams);
 
@@ -26,11 +27,9 @@ rs.initProtos = function () {
 }  
 
 rs.dropAt = function (p,rvs) {
-  debugger;
   let {r,g,b} = rvs;
   let clr = `rgb(${r},${g},${b})`;
-//  return this.genFan({startingPoint:p,stroke:clr});
-  return this.genFan(p,Object.assign(fanParams,{stroke:clr}));
+  return this.genFan(Object.assign({startingPoint:p,stroke:clr},fanParams));
 }
 
 rs.initialDrop = function () {
@@ -41,12 +40,9 @@ rs.initialDrop = function () {
   let dnc = geom.Circle.mk(Point.mk(0,0),3*rad);
   this.doNotExit= [dnc];
   return this.ringSeeds(ringParams);  
-  //return this.ringSeeds({stroke:'white',ringRadius:rad});  
 }
 
-
 rs.computeState  = function () {
-   debugger;
    return [["randomGridsForShapes",this.randomGridsForShapes]];
 }
 

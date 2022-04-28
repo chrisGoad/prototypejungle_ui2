@@ -33,10 +33,11 @@ rs.shapeGenerator = function (rvs,cell) {
   let fc =1 - rdist;
   let clr = 100 + 200*(1-rdist);
   let dim =  Math.sqrt(Math.max(0,fc)) * 2 * sqsz;
+  if (dim === 0) {
+    return;
+  }
   shape.width = dim;
-  shape.width = 1 * dim;
   shape.height = dim;
-  shape.height = 1*dim;
   let lev = 100 + bOw*50;
   let scolor = Math.max(baseColor,clr - 50);
   shape.fill = (bOw < 1)?`rgba(${scolor-50},${scolor-50},${clr},1)`:`rgba(${clr},${clr},${clr})`;

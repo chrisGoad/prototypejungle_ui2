@@ -16,7 +16,7 @@ rs.setName('web_random_radius');
 let ht= 2000;
 ht = 6000;
 let nrc = 100;
-let topParams = {maxFringeTries:10,numRows:nrc,numCols:nrc,width:ht,height:ht,maxLoops:20000,dropTries:100,webTries:1000000,lineLength:2,framePadding:0.1*ht,minSeparation:20,minConnectorLength:0,maxConnectorLength:300,shortenBy:10,sphereCenter:Point3d.mk(0,0,-0.3*ht),sphereDiameter:0.5*ht,focalPoint:Point3d.mk(0,0,ht),focalLength:10,cameraScaling:1000}
+let topParams = {maxFringeTries:10,numRows:nrc,numCols:nrc,width:ht,height:ht,maxLoops:20000,dropTries:100,webTries:1000000,lineLength:2,framePadding:0.1*ht:20,minConnectorLength:0,maxConnectorLength:300,shortenBy:10,sphereCenter:Point3d.mk(0,0,-0.3*ht),sphereDiameter:0.5*ht,focalPoint:Point3d.mk(0,0,ht),focalLength:10,cameraScaling:1000}
 
 Object.assign(rs,topParams);
 

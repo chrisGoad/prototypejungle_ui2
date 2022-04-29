@@ -136,7 +136,7 @@ const endsIn = function (string,p) {
     console.log('read',ffl);
      var scripts = '';
      let spath = (dir==='')?ffl:dir+'/'+ffl;
-    let ipath = '../prototypejungle_ui2/'+spath;
+    let ipath = '../../prototypejungle_ui2/'+spath;
     var vl = fs.readFileSync(ipath).toString();
     console.log('read',ipath);
     let  ovl = endsIn(ffl,'.html')?insertBoilerplate(vl,scripts,''):vl;
@@ -159,7 +159,7 @@ var fs = require('fs');
 
   
   var xferDir = function (dir) {
-     let ipath = '../prototypejungle_ui2/'+dir;
+     let ipath = '../../prototypejungle_ui2/'+dir;
 		 console.log('Transfering dir with ipath',ipath);
      let files = fs.readdirSync(ipath);
      files.forEach( function (fln) {
@@ -195,13 +195,13 @@ var fs = require('fs');
 //xferDir(0,'www','doc');
 xferDir('admin');
 xferDir('server');
-xferFiles('www',['draw.html','index.html','topdefs.js','style.css','spectrum.css','page.html','pageSupport.js']);
+xferFiles('public',['draw.html','index.html','topdefs.js','style.css','spectrum.css','page.html','pageSupport.js']);
 xferFiles('admin',['genGrids.js','gridSections.js','imageOrder.js']);
-xferDirs(['www/generators','www/instances','www/shape','www/mlib','www/json','www/doc']);
+xferDirs(['public/generators','public/instances','public/shape','public/mlib','public/json','public/doc','public/server']);
 xferDirs(['js/core','js/dom','js/geom','js/draw']);
 return;
-//xferDir(0,'www','');
- xferDir('top','','server');
+//xferDir(0,'public','');
+ //xferDir('top','','server');
 xferFiles(0,'www',['page.html','altPage.html','byKindPage.html','draw.html','drawImage.html','essay.html','eutelic.html','zoom0.js','topdefs.js','style.css','spectrum.css','pageSupport.js']);
 //xferDir(1,'www','doc');
 //xferDir(0,'www','intro');

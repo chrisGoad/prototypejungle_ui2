@@ -8,7 +8,7 @@ let rs = basicsP.instantiate();
 addDropMethods(rs);
 addSegsetMethods(rs);
 rs.setName('drop_horizon');
-let topParams = {width:200,height:200,maxDrops:100000,dropTries:50,segLength:2,backFill:undefined,minSeparation:0}
+let topParams = {width:200,height:200,maxDrops:100000,dropTries:50,segLength:2,backFill:undefined}
 
 Object.assign(rs,topParams);
 

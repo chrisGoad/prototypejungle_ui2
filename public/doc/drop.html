@@ -5,7 +5,7 @@
  <p>Here's the code:</p>
 <pre style="padding-left:20px;font-size:10pt;font-weight:bold" class="code">
 
-import {rs as linePP} from '/line/line.mjs';
+import {rs as linePP} from '/shape/line.mjs';
 import {rs as basicsP} from '/generators/basics.mjs';
 import {rs as addDropMethods} from '/mlib/drop.mjs';
 import {rs as addSegsetMethods} from '/mlib/segsets.mjs';
@@ -16,10 +16,9 @@ addSegsetMethods(rs);
 rs.setName('drop_ice');
 let wd = 200;
 
-let topParams = {width:wd,height:wd,dropTries:100,lineLength:2,framePadding:20,minSeparation:10}
+let topParams = {width:wd,height:wd,dropTries:100,segLength:2,framePadding:20,minSeparation:10}
 
 Object.assign(rs,topParams);
-
 
 rs.initProtos = function () {
   this.lineP = linePP.instantiate();
@@ -27,11 +26,10 @@ rs.initProtos = function () {
   this.lineP['stroke-width'] = .3;
 }  
 
-rs.initialDrop= function () {
-  let {width,height} = this; 
-  // the rectangleSegments method is defined in the segsets module
-  let segs = this.rectangleSegments(width,height);
-  let lines = segs.map((sg) => this.genLine(sg));  
+rs.initialDrop = function () {
+  let {width,height,lineP} = this; 
+  let segs = this.rectangleSegments(width,height); // rectangleSegments is defined in segsets.mjs
+  let lines = segs.map((sg) => this.genLine(sg,lineP));  
   return [segs,lines];
 }
 
@@ -44,11 +42,13 @@ rs.segParams = function () {
 } 
 
 rs.dropAt = function (p) {
-  let {minSeparation:sep,lineP} = this;
+  let {minSeparation,lineP} = this;
   let {length,angle} = this.segParams();
   let seg = this.genSegment(p,length,angle);
   let ln = this.genLine(seg,lineP);
-  let eseg = this.genSegment(p,length+sep,angle);
+  // the segment is minSeparation longer than the line, meaning that lines extended by this much
+  // which intersect existing dropStructs are rejected as drop candidates
+  let eseg = this.genSegment(p,length+minSeparation,angle);
   return [[eseg],[ln]];
 }
  

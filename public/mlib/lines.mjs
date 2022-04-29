@@ -19,7 +19,6 @@ item.backgroundColor = undefined; //undefined if no background wanted
 item.minRadius = 10;
 item.maxRadius = 20;
 item.numPoints = 3;
-item.minSeparation = 1;
 item.maxTries = 100;
 item.margin = 10;
 item.shortenBy = 10;

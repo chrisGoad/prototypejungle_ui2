@@ -8,7 +8,7 @@ addDropMethods(rs);
 addSegsetMethods(rs);
 rs.setName('drop_starry_night');
 let ht = 200;
-let topParams = {width:1.5*ht,height:ht,dropTries:50,segLength:2,framePadding:0.17*ht,minSeparation:0,}
+let topParams = {width:1.5*ht,height:ht,dropTries:50,segLength:2,framePadding:0.17*ht,}
 
 Object.assign(rs,topParams);
 

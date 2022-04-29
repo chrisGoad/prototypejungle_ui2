@@ -10,7 +10,7 @@ addSegsetMethods(rs);
 rs.setName('drop_ice');
 let wd = 200;
 
-let topParams = {width:wd,height:wd,dropTries:100,segLength:2,framePadding:20,minSeparation:10}
+let topParams = {width:wd,height:wd,dropTries:100,segLength:2,minSeparation:10,framePadding:20}
 
 Object.assign(rs,topParams);
 

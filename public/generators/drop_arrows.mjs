@@ -3,12 +3,10 @@ import {rs as linePP} from '/shape/line.mjs';
 import {rs as basicsP} from '/generators/basics.mjs';
 import {rs as addDropMethods} from '/mlib/drop.mjs';
 import {rs as addSegsetMethods} from '/mlib/segsets.mjs';
-import {rs as addRandomMethods} from '/mlib/boundedRandomGrids.mjs';
 import {rs as addInterpolateMethods} from '/mlib/interpolate.mjs';
 
 let rs = basicsP.instantiate();
 
-addRandomMethods(rs);
 addDropMethods(rs);
 addSegsetMethods(rs);
 addInterpolateMethods(rs);

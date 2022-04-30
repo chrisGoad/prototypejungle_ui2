@@ -53,9 +53,9 @@ if (byLikes) {
   signed = 0;
   imKind = 'v';
   sectionsPath = './verticalSections.js';
-  pagesPath = 'www/vPages.js';
+  pagesPath = 'public/vPages.js';
   pagesVar = 'vPages';
-  titlesPath = 'www/vTitles.js';
+  titlesPath = 'public/vTitles.js';
   titlesVar = 'vTitles';
 } else if (horizontal) {
 
@@ -64,18 +64,18 @@ if (byLikes) {
 
   imKind = 'h';
   sectionsPath = './horizontalSections.js';
-  pagesPath = 'www/hPages.js';
+  pagesPath = 'public/hPages.js';
   pagesVar = 'hPages';
-  titlesPath = 'www/hTitles.js';
+  titlesPath = 'public/hTitles.js';
   titlesVar = 'hTitles';
 
 } else if (horizontalnf) {
   console.log('HORIZONTALNF');
   imKind = 'hnf';
   sectionsPath = './horizontalnfSections.js';
-  pagesPath = 'www/hnfPages.js';
+  pagesPath = 'public/hnfPages.js';
   pagesVar = 'hnfPages';
-  titlesPath = 'www/hnfTitles.js';
+  titlesPath = 'public/hnfTitles.js';
   titlesVar = 'hnfTitles';
 
 } else if (square) {
@@ -93,31 +93,31 @@ if (byLikes) {
   return;
 }
 
- pagesPath = `www/${imKind}Pages.js`;
+ pagesPath = `public/${imKind}Pages.js`;
   pagesVar = `${imKind}Pages`;
-  titlesPath = `www/${imKind}Titles.js`;
+  titlesPath = `public/${imKind}Titles.js`;
   titlesVar = `${imKind}Titles`;
-  localsPath = `www/${imKind}Locals.js`;
+  localsPath = `public/${imKind}Locals.js`;
   localsVar = `${imKind}Locals`;
   
  console.log('pagesPath',pagesPath)
 let outPath;
 if (alternate) {
-  outPath = 'www/altImages.html';
+  outPath = 'public/altImages.html';
 } else if (byKind) {
-  outPath = 'www/byKind.html';
+  outPath = 'public/byKind.html';
 } else if (byAspect) {
-  outPath = 'www/aspectGrids.html';
+  outPath = 'public/aspectGrids.html';
 } else if (vertical) {
-  outPath = 'www/vertical.html';
+  outPath = 'public/vertical.html';
 } else if (horizontal) {
-  outPath = 'www/horizontal.html';
+  outPath = 'public/horizontal.html';
 } else if (horizontalnf) {
-  outPath = 'www/horizontalnf.html';
+  outPath = 'public/horizontalnf.html';
 } else if (square) {
-  outPath = 'www/square.html';
+  outPath = 'public/square.html';
 } else {
-  outPath = (local_images)?"www/local_images.html":'www/images.html';
+  outPath = (local_images)?"public/local_images.html":'public/images.html';
 }
 console.log('sectionsPath', sectionsPath,'outPath',outPath);
 
@@ -198,7 +198,7 @@ if (imKind === 'g') {
     <p  class="introLineSmall">As you will see from <a style="color:white;text-decoration:underline" href="essay.html">theory</a>, the phrase "Kingdom of Pattern" is not a claim to grandeur.</p>
     <p class="introLineSmall">Images by Chris Goad (via JavaScript)</p> 
 
-    <p class="introLineSmall">Click <a style="color:white;text-decoration:underline" href="https://www.etsy.com/shop/KingdomOfPattern"> here </a> if  you'd like a print of one of these images for your wall.</p>
+    <p class="introLineSmall">Click <a style="color:white;text-decoration:underline" href="https://public.etsy.com/shop/KingdomOfPattern"> here </a> if  you'd like a print of one of these images for your wall.</p>
 
 
     <p class="introLineSmall">To Expand the Images Below, Click on Them</p>
@@ -274,7 +274,7 @@ const thingString = function (order,ix,dir,useThumb,ititle,props) {
 	let imsrc = `images/${vpath}.jpg`;
 	//let thumbsrc = useThumb?`thumbs/${vpath}.jpg`:imsrc;
 	let thumbsrc = `thumbs/${vpath}.jpg`;
-  let localSrc =`www/thumbs/${vpath}.jpg`;
+  let localSrc =`public/thumbs/${vpath}.jpg`;
   //let localim = fs.existsSync(localSrc);
   if (ix === 'drift_web') {
     console.log('IIIIIXXXX',ix);
@@ -467,14 +467,14 @@ const writeThePages = function () {
 	let js = `let ${pagesVar}= ${JSON.stringify(thePages)};`;
   console.log('writeThePagess',js,pagesVar,pagesPath);
 	fs.writeFileSync(pagesPath,js);
-	//fs.writeFileSync(alternate?'www/altPages.js':(byKind?'www/byKindPages.js':'www/thePages.js'),js);
+	//fs.writeFileSync(alternate?'public/altPages.js':(byKind?'public/byKindPages.js':'public/thePages.js'),js);
 }
 const writeTheTitles = function () {
 	let js = `let ${titlesVar} = ${JSON.stringify(theTitles)};`
     console.log('writeTheTitles',js,titlesPath);
 
 	fs.writeFileSync(titlesPath,js);
-//	fs.writeFileSync(alternate?'www/altTitles.js':(byKind?'www/byKindTitles.js':'www/theTitles.js'),js);
+//	fs.writeFileSync(alternate?'public/altTitles.js':(byKind?'public/byKindTitles.js':'public/theTitles.js'),js);
 }
 const writeTheLocals = function () {
 	let js = `let ${localsVar} = ${JSON.stringify(theLocals)};`

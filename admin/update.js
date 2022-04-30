@@ -197,7 +197,7 @@ xferDir('admin');
 xferDir('server');
 xferFiles('public',['draw.html','index.html','topdefs.js','style.css','spectrum.css','page.html','pageSupport.js']);
 xferFiles('admin',['genGrids.js','gridSections.js','imageOrder.js']);
-xferDirs(['public/generators','public/instances','public/shape','public/mlib','public/json','public/doc','public/server']);
+xferDirs(['public/generators','public/instances','public/shape','public/mlib','public/json','public/doc','public/server','public/admin']);
 xferDirs(['js/core','js/dom','js/geom','js/draw']);
 return;
 //xferDir(0,'public','');

@@ -42,7 +42,7 @@ sections: [
 [0,'drop_horizon','generators',1,'Horizon',{likes:0,posted:0,category:'drop'}], //was  [0,'drop0_3','final',1,'Horizon']
     [0,'drop_starry_night','generators',1,'Starry Night',{likes:47,posted:1,category:'drop'}], // was [0,'drop0__13','final',1,'Starry Night']
    [0,'grid_sphere','generators',1,'Sphere',{likes:4,posted:1,category:'grid'}],
-    [0,'grid_distortion_field_warped','instances',1,'Distortion Field',{likes:11,posted:1,category:'grid'}],  // was [0,'grid0_28','final',1,'Distortion Field',posted:1,category:'grid'}],
+    [0,'grid_distortion_field_warped','instances',1,'Distortion Field',{likes:11,posted:1,category:'grid',sources:1}],  // was [0,'grid0_28','final',1,'Distortion Field',posted:1,category:'grid'}],
     [0,'grid_waves','generators',1,'Waves',{likes:24,posted:1,category:'grid'}], //was [0,'grid0_16_1','final',1,'Waves',posted:1,category:'grid'}],
     [0,'grid_code','generators',1,'Code',{likes:0,posted:0,category:'grid'}],  // was [0,'grid0_45','final',1,'Code',posted:1,category:'grid'}],
 		 [0,'grid_quilt_1','generators','square','Quilt 1',{likes:23,posted:1,category:'grid'}],// was //[0,'grid0_8_15.jpg','final','square','Quilt 1',posted:1,category:'grid'}],

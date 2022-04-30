@@ -50,7 +50,6 @@ rs.initialize = function () {
   this.initProtos();
   this.generateDrop();
   this.addFrame();
-
 }
 
 export {rs};

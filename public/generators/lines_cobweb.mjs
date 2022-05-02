@@ -22,7 +22,7 @@ rs.initialize = function () {
   this.addFrame();
   this.addRectangle(this.backFill);
   let rect = this.canvasToRectangle();
-  this.generateLines({src:rect,srcOn:1,dst:rect,dstOn:1,numLines:this.numLines,lineP:this.lineP});
+  this.generateLines({src:rect,srcOn:1,dst:rect,dstOn:1});
 }
 
 export {rs}

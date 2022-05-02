@@ -12,7 +12,7 @@ Object.assign(item,defaultTopParams);
 let points = [];
 
 
-item.defaultPositionFunction = function (i,j) {
+item.defaultPositionMethod = function (i,j) {
   let {deltaX,deltaY,numRows,numCols,width,height,points3d,camera} = this;
 /*	if (points3d) { // cg 3/26/22
 		let idx = this.pcoordsToIndex(i,j);
@@ -57,8 +57,7 @@ item.sidesPositionMethod = function (i,j) {
 	
 	
 
- item.radialPositionFunction = function (i,j) {
- //item.radialPositionFunction = function (grid,i,j) {
+ item.radialPositionMethod = function (i,j) {
     let {numRows,numCols,angleMin=-180,angleMax=180,
 	       innerRadius,outerRadius,center,rotation=0} = this;
 	    //   innerRadius,outerRadius,center} = grid;
@@ -87,15 +86,14 @@ item.sidesPositionMethod = function (i,j) {
 
 item.genPointsFunction0 = function () {
   let {numRows,numCols,positionMethod,points,rpoints} = this;
-  //let pf = positionMethod?positionMethod:defaultPositionFunction;
+  //let pf = positionMethod?positionMethod:defaultPositionMethod;
 	let lx = Infinity;
 	let ly = Infinity;
 	let hx = -Infinity;
 	let hy = -Infinity;
   for (let i = 0;i <= numCols; i++) {
     for (let j = 0;j <= numRows; j++) {
-			//console.log('genPoints i j',i,j);
-      let p = this.positionMethod?this.positionMethod(i,j):this.defaultPositionFunction(i,j);
+      let p = this.positionMethod?this.positionMethod(i,j):this.defaultPositionMethod(i,j);
 			let {x,y} = p;
 			if (x<lx) {
 				lx = x;

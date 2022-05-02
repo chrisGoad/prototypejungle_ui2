@@ -47,7 +47,7 @@ item.genSingletonUnit =  function (lineP,p,direction,clr) {
 }
 // was genSegmentsFan
 item.genFan = function (iparams) {
-debugger;
+//debugger;
  let params = {};
  let props = ['startingPoint','width','height','lineP','stroke','sepNext','splitChance','splitAmount',
 	     'segLength','directionChange','randomDirectionChange','lineExt'];
@@ -222,7 +222,6 @@ item.gridSeeds = function (iparams) {
 				  lines.push(...SL[1]);
 				}
 		  } else {
-      debugger;
 				fanAngles.forEach( (angle) => {
 					let seg = this.genSegment(ip,len,angle,sepNext);
 					segs.push(seg);
@@ -281,6 +280,7 @@ item.genSegment = function (p,ln,angle,sepNext=0) {
   if (!p) {
     debugger;
   }
+  debugger;
   let vec = Point.mk(Math.cos(angle),Math.sin(angle));
   let e0,e1,end,rs;
 	e0 = p;
@@ -316,7 +316,8 @@ item.insideCanvas = function (p) {
 
 
 item.segmentIntersects = function (seg) {
-  let {segments,width,height,exclusionZones,doNotCross,doNotExit} = this;
+  let {segments,width,height} = this;
+  let {exclusionZones,doNotCross,doNotExit} = this.dropParams;
   let {end0,end1} = seg;
   if ((!this.insideCanvas(end0)) || (!this.insideCanvas(end1))) {
     return true;
@@ -373,6 +374,7 @@ item.intersectsSomething = function (g) {
 }
 
 item.activeEnds = function () {
+  debugger;
   let ends = this.ends;
   let rs = [];
 	let cnt = 0;
@@ -386,7 +388,9 @@ item.activeEnds = function () {
 }
 
 item.addSegmentAtThisEnd = function (end) {
-  let {maxDrops,segments,segLength,ends,shapes,numRows,randomGridsForShapes,dropTries} = this;
+  //let {maxDrops,segments,segLength,ends,shapes,numRows,randomGridsForShapes,dropTries} = this;
+  let {segments,ends,shapes,numRows,randomGridsForShapes} = this;
+  let {maxDrops,segLength,dropTries} = this.dropParams;
   if (!this.dropAt) {
     return;
   }
@@ -396,6 +400,7 @@ item.addSegmentAtThisEnd = function (end) {
 	  cell = this.cellOf(end);
     rvs = this.randomValuesAtCell(randomGridsForShapes,cell.x,cell.y);
 	}
+  debugger;
   while (true) {
 		let dropStruct = this.dropAt(end,rvs);
 		let ifnd = 0;
@@ -448,7 +453,7 @@ item.randomDirection = function (n) {
 
 
 item.addSegmentAtSomeEnd = function () {
-  let {extendWhich} = this;
+  let {extendWhich} = this.dropParams;
   while (true) {
     let ae = this.activeEnds();
     let end;
@@ -472,12 +477,12 @@ item.addSegmentAtSomeEnd = function () {
 }
 
 item.addSegmentsAtEnds = function () {
+debugger;
   let maxEndTries = 100;
   let tries = 0; 
-  let loop = 0;
-	let maxDrops = this.maxDrops;
+	let maxDrops = this.dropParams.maxDrops;
   while (this.numDropped  < maxDrops) {
-    loop++;
+  //  loop++;
     let ars = this.addSegmentAtSomeEnd();
     if (ars === 'noEndsLeft') {
       return ars;
@@ -514,7 +519,10 @@ item.addRandomSegment = function () {
 }
     
 item.addNrandomSegments = function (n) {
-  let {maxDrops,dropTries,maxLoops,segments,segLength,ends,shapes,fromEnds} = this;
+ // let {maxDrops,dropTries,maxLoops,segments,segLength,ends,shapes,fromEnds} = this;
+  let {segments,ends,shapes} = this;
+ // let {maxDrops,dropTries,maxLoops,segLength,fromEnds} = this.dropParams;
+  let {maxDrops=Infinity,dropTries,maxLoops=Infinity,segLength,fromEnds} = this.dropParams;
   if (!this.dropAt) {
     return;
   }
@@ -549,7 +557,10 @@ item.addNrandomSegments = function (n) {
 } 
 
 item.addRandomSegments = function () {
-  let {maxDrops,dropTries,maxLoops,segments,segLength,ends,shapes,fromEnds} = this;
+ // let {maxDrops,dropTries,maxLoops,segments,segLength,ends,shapes,fromEnds} = this;
+   let {segments,ends,shapes} = this;
+  let {maxDrops=Infinity,dropTries,maxLoops=Infinity,segLength,fromEnds} = this.dropParams;
+  debugger;
   if (!this.dropAt) {
     return;
   }
@@ -682,18 +693,26 @@ item.concatEachArray = function (ays) {
 	 return [c0,c1];
 }
 
-item.generateDrop = function (doDrop=1) {
+//item.generateDrop = function (doDrop=1) {
+item.generateDrop = function (iparams) {
+  let params = {};
+  let props = ['fromEnds','extendWhich','sepNext','segLength','dropTries','maxDrops','maxLoops','doNotExit','exclusionZones','doNotCross'];
+  core.transferProperties(params,this,props);
+  core.transferProperties(params,iparams,props);
+  this.dropParams = params;
   this.segments = [];
 	this.numDropped = 0;
   this.ends = [];
-  this.set('shapes',core.ArrayNode.mk());
+  if (!this.shapes) {
+     this.set('shapes',core.ArrayNode.mk());
+  }
   if (this.initialDrop) {
     let isegs = this.initialDrop();
     this.installDropStruct(isegs);
   }
-  if (doDrop) {
+ // if (doDrop) {
 		this.addRandomSegments();
-	}
+	//}
 }
 item.inAzone = function (zones,p) {
 	if (!zones) {

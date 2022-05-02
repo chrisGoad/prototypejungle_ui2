@@ -13,7 +13,9 @@ addInterpolateMethods(rs);
 
 rs.setName('drop_arrows');
 let ht = 400;
-let topParams = {width:1.0*ht,height:ht,dropTries:40,segLength:2,framePadding:0.1*ht}
+let topParams = {width:ht,height:ht,framePadding:0.1*ht};
+
+let dropParams = {dropTries:40,segLength:2};
 
 Object.assign(rs,topParams);
 
@@ -95,7 +97,7 @@ rs.dropAt = function (p) {
 rs.initialize = function () {
   this.addFrame();
   this.initProtos();
-  this.generateDrop();
+  this.generateDrop(dropParams);
 }
 
 export {rs};

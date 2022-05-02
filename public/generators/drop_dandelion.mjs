@@ -10,7 +10,7 @@ rs.setName('drop_dandelion');
 let ht = 360;
 let wd = 1* ht;
 
-let topParams = {width:wd,height:ht,framePadding:0.15*ht,stroke:'white',segLength:5};
+let topParams = {width:wd,height:ht,framePadding:0.15*ht,stroke:'white',segLength:5,sepNext:0.01};
 //parameters to generateDrop 
 let dropParams = {fromEnds:1,extendWhich:'first',sepNext:0.01,dropTries:10,maxDrops:Infinity,doNotExit:[geom.Circle.mk(Point.mk(0,0),0.5*ht)]};
 //parameters to genFan
@@ -19,7 +19,7 @@ let fanParams = {splitChance:.40,splitAmount:0.05 *Math.PI,directionChange:0.0*M
 let ringParams = {numSeeds:15,ringRadius:0.15 * 0.5 * wd,stroke:'transparent'};
 
 Object.assign(rs,topParams);
-Object.assign(rs,dropParams); // drop params are taken from this
+//Object.assign(rs,dropParams); // drop params are taken from this
 
 rs.initProtos = function () {
   this.lineP = linePP.instantiate();
@@ -39,7 +39,8 @@ rs.dropAt = function (p) {
 rs.initialize = function () {
   this.initProtos();
   this.addFrame();
-  this.generateDrop();
+  debugger;
+  this.generateDrop(dropParams);
 }
 
 export {rs};

@@ -11,7 +11,7 @@ rs.setName('drop_ice');
 let wd = 200;
 
 let topParams = {width:wd,height:wd,minSeparation:10,framePadding:20}
-let dropParams = {dropTries:100,segLength:2}
+let dropParams = {dropTries:100}
 
 Object.assign(rs,topParams);
 

@@ -14,7 +14,8 @@ let defaults = {webTries:5,maxLoops:Infinity};//,maxTriesPerEnd:20};
 Object.assign(rs,defaults);
 
 rs.pairFilter = function (i,j) {
-	let {maxConnectorLength:mxCln,minConnectorLength:mnCln=0,cPoints} = this;
+	let {maxConnectorLength:mxCln,minConnectorLength:mnCln=0} = this.webParameters
+  let {cPoints} = this;
 	let pi = cPoints[i];
 	let pj = cPoints[j];
 	let d = pi.distance(pj);
@@ -118,6 +119,7 @@ rs.generateWeb = function (iparams) {
   let params = {};
   core.transferProperties(params,this,props);
   core.transferProperties(params,iparams,props);
+  this.webParameters = params;
 	let {points:pnts,lineP,minConnectorLength,maxConnectorLength,webTries,shortenBy=10,maxLoops=Infinity} = params;
   
 	if (pnts) {
@@ -151,7 +153,7 @@ rs.generateWeb = function (iparams) {
 			});
 		}
 	}
-	
+	debugger;
 	computeNears();
 	
 	const copyNbp = function () {

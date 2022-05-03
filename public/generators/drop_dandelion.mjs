@@ -19,7 +19,6 @@ let fanParams = {splitChance:.40,splitAmount:0.05 *Math.PI,directionChange:0.0*M
 let ringParams = {numSeeds:15,ringRadius:0.15 * 0.5 * wd,stroke:'transparent'};
 
 Object.assign(rs,topParams);
-//Object.assign(rs,dropParams); // drop params are taken from this
 
 rs.initProtos = function () {
   this.lineP = linePP.instantiate();
@@ -39,7 +38,6 @@ rs.dropAt = function (p) {
 rs.initialize = function () {
   this.initProtos();
   this.addFrame();
-  debugger;
   this.generateDrop(dropParams);
 }
 

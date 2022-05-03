@@ -12,7 +12,7 @@ addDropMethods(rs);
 addWebMethods(rs);
 
 
-rs.setName('web_random_radius');
+rs.setName('web_random_radius',3);
 let ht= 2000;
 ht = 6000;
 let nrc = 100;

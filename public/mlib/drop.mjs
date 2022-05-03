@@ -40,9 +40,9 @@ item.genSingletonUnit =  function (lineP,p,direction,clr) {
 	let seg = this.genOneSegment(p,direction);
 	//let ln = this.genLine(seg.end0,seg.end1,sepNext);
 	let ln = this.genLine(seg,lineP,lineExt);
-  if (clr) {
+ /* if (clr) { removed 5/3/22
 		ln.stroke = clr;//'white';//clr;
-  }
+  }*/
 	return [[seg],[ln]];
 }
 // was genSegmentsFan

@@ -14,7 +14,7 @@ addSegsetMethods(rs);
 rs.setName('drop_whorls');
 let ht  = 400;
 
-let topParams = {width:1.5*ht,height:ht,maxTriess:10,segLength:10,framePadding:0.1*ht,sepNext:1,strokee:'white'};
+let topParams = {width:1.5*ht,height:ht,maxTriess:10,segLength:10,framePadding:0.1*ht,sepNext:1};
 
 let dropParams = {fromEnds:1,sepNext:1,extendWhich:'last',dropTries:10};
 
@@ -26,6 +26,7 @@ Object.assign(rs,topParams);
 
 rs.initProtos = function () {
   this.lineP = linePP.instantiate();
+  this.lineP.stroke = 'white';
 	this.lineP['stroke-width'] = .6;
 }  
 

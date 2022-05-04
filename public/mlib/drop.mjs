@@ -49,11 +49,13 @@ item.genSingletonUnit =  function (lineP,p,direction,clr) {
 item.genFan = function (iparams) {
 //debugger;
  let params = {};
- let props = ['startingPoint','width','height','lineP','stroke','sepNext','splitChance','splitAmount',
+ //let props = ['startingPoint','width','height','lineP','stroke','sepNext','splitChance','splitAmount',
+ let props = ['startingPoint','width','height','lineP','sepNext','splitChance','splitAmount', //stroke removal 5/3/22
 	     'segLength','directionChange','randomDirectionChange','lineExt'];
    core.transferProperties(params,this,props);
    core.transferProperties(params,iparams,props);
-	let {startingPoint:p,width,height,lineP,stroke,strokeWidth,sepNext=0,splitChance,splitAmount,
+	//let {startingPoint:p,width,height,lineP,stroke,strokeWidth,sepNext=0,splitChance,splitAmount,
+	let {startingPoint:p,width,height,lineP,sepNext=0,splitChance,splitAmount,  //stroke removal 5/3/22
 	     segLength:len,directionChange:dc=0,randomDirectionChange:rdc=0,lineExt=0} = params;
   let angle;
 	let rn = Math.random();
@@ -71,21 +73,21 @@ item.genFan = function (iparams) {
     p.isEnd = 1;
 		let ln0 = this.genLine(seg0,lineP,lineExt);
 		let ln1 = this.genLine(seg1,lineP,lineExt);
-	  if (stroke) {
+	  /*if (stroke) {  //stroke removal 5/3/22
 		  ln0.stroke = stroke;//'white';//clr;
 		  ln1.stroke = stroke;//'white';//clr;
-    }
+    }*/
 		return [[seg0,seg1],[ln0,ln1]];
   } else {
 	  let seg = this.genSegment(p,len,angle,sepNext);
     p.isEnd = 1;
 		let ln = this.genLine(seg,lineP,lineExt);
-    if (stroke) {
+   /* if (stroke) {  //stroke removal 5/3/22
 		  ln.stroke = stroke;//'white';//clr;
     }
     if (strokeWidth) {
 		  ln['stroke-width'] = strokeWidth;//'white';//clr;
-    }
+    }*/
 		return [[seg],[ln]];
   }
 
@@ -95,11 +97,13 @@ item.genFan = function (iparams) {
  // the following methods generate dropStructs, which are used as the seeds of the drop operation. 
 item.ringSeeds = function (iparams) {//lineP,clr,icenter,divergence=0,data) {
      debugger;
-     let props = ['center','stroke','strokeWidth','lineP','numSeeds','ringRadius','segLength','divergence','data'];
+     //let props = ['center','stroke','strokeWidth','lineP','numSeeds','ringRadius','segLength','divergence','data'];
+     let props = ['center','lineP','numSeeds','ringRadius','segLength','divergence','data']; //stroke removal 5/3/22
     let params = {};
     core.transferProperties(params,this,props);
     core.transferProperties(params,iparams,props);
-    let {center=Point.mk(0,0),stroke,strokeWidth,lineP,numSeeds,ringRadius:radius,segLength:len,divergence=0,data} = params;
+   // let {center=Point.mk(0,0),stroke,strokeWidth,lineP,numSeeds,ringRadius:radius,segLength:len,divergence=0,data} = params;
+    let {center=Point.mk(0,0),lineP,numSeeds,ringRadius:radius,segLength:len,divergence=0,data} = params;  //stroke removal 5/3/22
   let segs = [];
   let cangle = 0.5* Math.PI;
   let delta = (Math.PI*2)/numSeeds;
@@ -118,12 +122,12 @@ item.ringSeeds = function (iparams) {//lineP,clr,icenter,divergence=0,data) {
     cangle += delta;
   }
   let lines = segs.map((sg) => this.genLine(sg,lineP)); 
-  if (stroke) {
+ /* if (stroke) {  //stroke removal 5/3/22
     lines.forEach((ln) => ln.stroke = stroke);
   }
   if (strokeWidth) {
     lines.forEach((ln) => ln['stroke-width'] = strokeWidth);
-  }
+  }*/
   return [segs,lines];
 }
 item.sideSeeds = function (lineP,clr,data,right) {
@@ -144,9 +148,9 @@ item.sideSeeds = function (lineP,clr,data,right) {
     cy += delta;
   }
   let lines = segs.map((sg) => this.genLine(sg,lineP,lineExt)); 
-  if (clr) {
+ /* if (clr) {  //stroke removal 5/3/22
     lines.forEach((ln) => ln.stroke = clr);
-  }
+  }*/
   return [segs,lines];
 }
 item.leftSideSeeds = function (clr,data) {
@@ -178,9 +182,9 @@ item.randomSeeds = function (clr) {
 		segs.push(seg); 
   }
   let lines = segs.map((sg) => this.genLine(sg,lineP,lineExt)); 
-  if (clr) {
+  /*if (clr) {  //stroke removal 5/3/22
     lines.forEach((ln) => ln.stroke = clr);
-  }
+  }*/
   return [segs,lines];
 }
 
@@ -190,12 +194,14 @@ item.randomSeeds = function (clr) {
 
 item.gridSeeds = function (iparams) {
      debugger;
-    let props = ['width','height','lineP','stroke','strokeWidth','sepNext','fanAngles','numSeedRows',
+   // let props = ['width','height','lineP','stroke','strokeWidth','sepNext','fanAngles','numSeedRows',
+    let props = ['width','height','lineP','sepNext','fanAngles','numSeedRows',  //stroke removal 5/3/22
        'numSeedCols','gridPadding','lineExt'];
     let params = {};
     core.transferProperties(params,this,props);
    core.transferProperties(params,iparams,props);
-  let {width,height,lineP,stroke,strokeWidth,sepNext=0,fanAngles,numSeedRows:numRows,
+ // let {width,height,lineP,stroke,strokeWidth,sepNext=0,fanAngles,numSeedRows:numRows,
+  let {width,height,lineP,sepNext=0,fanAngles,numSeedRows:numRows,  //stroke removal 5/3/22
        numSeedCols:numCols,gridPadding:padding=0,lineExt=0} = params;
   let segs = [];//this.rectangleSegments(width,height);
 	let lines = [];
@@ -233,9 +239,9 @@ item.gridSeeds = function (iparams) {
 		}	 
     yv += deltaY;
   }
-	if (stroke) {
+/*	if (stroke) {  //stroke removal 5/3/22
     lines.forEach((ln) => ln.stroke = stroke);
-  }
+  }*/
   return [segs,lines];
 }
 

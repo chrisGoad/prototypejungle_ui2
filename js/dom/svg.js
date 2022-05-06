@@ -1238,7 +1238,7 @@ core.ObjectNode.__svgClear = function () {
 SvgElement.mk = function (s) {
   let enm = s?s:'<g/>';
   if (!s) {
-    debugger;
+  //  debugger;
   }
   let hasVis = false;
   let rs,ops,pv;

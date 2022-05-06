@@ -49,7 +49,7 @@ rs.initialDrop = function () {
 }
 
 rs.dropAt = function (p) {
-  return this.genFan(Object.assign({startingPoint:p},fanParams));
+  return this.generateFan(Object.assign({startingPoint:p},fanParams));
 }
 
 rs.initialize = function () {

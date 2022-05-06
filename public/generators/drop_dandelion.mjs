@@ -13,7 +13,7 @@ let wd = 1* ht;
 let topParams = {width:wd,height:ht,framePadding:0.15*ht,segLength:5,sepNext:0.01};  
 //parameters to generateDrop 
 let dropParams = {fromEnds:1,extendWhich:'first',sepNext:0.01,dropTries:10,maxDrops:Infinity,doNotExit:[geom.Circle.mk(Point.mk(0,0),0.5*ht)]};
-//parameters to genFan
+//parameters to generateFan
 let fanParams = {splitChance:.40,splitAmount:0.05 *Math.PI,directionChange:0.0*Math.PI,randomDirectionChange:0.025*Math.PI};
 // parameters to ringSeeds
 let ringParams = {numSeeds:15,ringRadius:0.15 * 0.5 * wd};
@@ -31,12 +31,11 @@ rs.initProtos = function () {
 }
 
 rs.initialDrop = function () {
-  let rad  = 0.15 * 0.5 * this.width;
   return this.ringSeeds(ringParams);  
 }
 
 rs.dropAt = function (p) {
-  return this.genFan(Object.assign({startingPoint:p},fanParams));
+  return this.generateFan(Object.assign({startingPoint:p},fanParams));
 }
 
 rs.initialize = function () {

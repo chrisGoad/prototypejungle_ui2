@@ -46,7 +46,7 @@ item.genSingletonUnit =  function (lineP,p,direction,clr) {
 	return [[seg],[ln]];
 }
 // was genSegmentsFan
-item.genFan = function (iparams) {
+item.generateFan = function (iparams) {
 //debugger;
  let params = {};
  //let props = ['startingPoint','width','height','lineP','stroke','sepNext','splitChance','splitAmount',

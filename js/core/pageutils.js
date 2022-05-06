@@ -97,7 +97,7 @@ const httpGet = function (url,cb) { // there is a fancier version in core/instal
 
 const saveJson = function (path,str,cb) {
 	debugger;
-	httpPost('www/'+path,str,cb);
+	httpPost('path,str,cb);
  //fb.saveString(path,str,fb.jsonMetadata,undefined,cb);
 }
 

@@ -37,8 +37,8 @@ rs.initProtos = function () {
 rs.dropAt = function (p,rvs) {
   let {r,g,b} = rvs;
   let clr = `rgb(${r},${g},${b})`;
-  //let rs =  this.genFan(Object.assign({startingPoint:p,stroke:clr},fanParams));
-  let rs =  this.genFan(Object.assign({startingPoint:p},fanParams));
+  //let rs =  this.generateFan(Object.assign({startingPoint:p,stroke:clr},fanParams));
+  let rs =  this.generateFan(Object.assign({startingPoint:p},fanParams));
   let lines = rs[1];
   lines.forEach((line) => line.stroke = clr);
   return rs;

@@ -62,7 +62,7 @@ sections: [
 	[0,'grid_1','generators','square','Grid 1',{likes:0,posted:0,category:'grid'}],
 	[0,'grid_droplets','generators','square','Droplets',{likes:130,posted:1,category:'grid'}],
 	
-	[0,'lines_2','generators','wide2','Lines 2',{likes:0,posted:0,category:'lines'}],
+	[0,'lines_2','instances','wide2','Lines 2',{likes:0,posted:0,category:'lines',sources:1}],
    [0,'grid_maze','generators','square','Maze',{likes:38,posted:1,category:'grid'}],  // was [0,'grid0_8','final','square','Maze',posted:1,category:'grid'}],
    [0,'lines_bugeyes','generators','square','Bug Eyes',{likes:6,posted:1,category:'lines',sources:1}],
 	   [1000,'lines_lights','generators','square','Lights',{likes:12,posted:1,category:'lines'}],  // VV 

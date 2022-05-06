@@ -6,6 +6,7 @@ sections: [
 [  
 /* Puzzle: Which three of the quadrants are the same, and which is different? Before you saw the differences in what sense did you "see" the quadrants?"*/
 // [0,'web_drift','generators',1,'Drift Web',{likes:0,posted:0,category:'drop'}], 
+ [0,'quad_0','generators',1,'Quad 0',{likes:0,posted:0,category:'quad'}], 
  [0,'drop_metals','instances',1,'Drop Metals 1',{likes:0,posted:0,category:'drop'}], 
  [0,'drop_metals_2','instances',1,'Drop Metals 2',{likes:0,posted:0,category:'drop'}], 
  [0,'drop_metals_3','instances',1,'Drop Metals 3',{likes:0,posted:0,category:'drop'}], 
@@ -15,7 +16,7 @@ sections: [
  [0,'grid_grid_1_i_4_v_13','instances',1,'Grid Grid 1 I 4 V 13',{likes:0,posted:0,category:'drop'}], 
  [0,'grid_grid_1_i_4','instances',1,'Grid Grid 1 I 4',{likes:0,posted:0,category:'drop',variant:19}], 
  [0,'grid_grid_1_i_3_v_5','instances',1,'Grid 5\ v 5',{likes:0,posted:0,category:'drop'}], 
- [0,'grid_grid_3_i_1','instances',1,'Grid grid 3 v 1',{likes:0,posted:0,category:'drop',variant:1}], 
+ [0,'grid_grid_3_i_1','instances',1,'Grid grid 3 i 1 v 1',{likes:0,posted:0,category:'drop',variant:1}], 
  [0,'grid_void_variant','generators',1,'Void variant',{likes:0,posted:0,category:'grid'}], 
  [0,'web_random_radius','generators',1,'Random radius',{likes:0,posted:0,category:'grid'}], 
  [0,'web_random_radius_v_1','generators',1,'Random radius V 1',{likes:0,posted:0,category:'grid'}], 

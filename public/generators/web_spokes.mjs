@@ -12,14 +12,11 @@ let spokes = rs.set('spokes',arrayShape.mk());
 rs.setName('web_spokes');
 
 let wd= 2000;
-let ht = 0.02*wd; // height  of stripes
 
-let  topParams = {width:wd,height:wd,framePadding:.15*wd,numSpokes:18};
+let  topParams = {width:wd,height:wd,framePadding:.15*wd,spokeHeight:40,numSpokes:18};
 
 Object.assign(rs,topParams);
 	
-let numSpokes = 18;
-
 rs.initProtos = function () {	
   let lineP = this.lineP = linePP.instantiate();
   this.lineP.stroke = 'white';
@@ -34,8 +31,8 @@ rs.initialize = function () {
     let spoke = webSpoke.instantiate();
     spoke.lineP = lineP;
     spokes.push(spoke);
-    spoke.gridParams.initialDirection = 2*i*(Math.PI/numSpokes);
-    spoke.initialize();
+    let dir = 2*i*(Math.PI/numSpokes);
+    spoke.initialize(this.spokeHeight,dir);
   }  
 }
 

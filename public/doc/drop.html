@@ -54,18 +54,18 @@ rs.dropAt = function (p) {
   return [[eseg],[ln]];
 }
  
+
 rs.initialize = function () {
   this.initProtos();
-  this.generateDrop();
+  this.generateDrop(dropParams);
   this.addFrame();
-
 }
 
 export {rs};
 
 
 </pre>
-<p> The DROP algorithm drops  things at random positions on the canvas. If a thing lands on top of another, it is thrown away, otherwise it is added.   I have used the vague word "thing". A thing is a pair <span class = "textVar">[array of lineSegment,array of shape]</span>, called a dropStruct. Often, but not always, the shapes are lines that  correspond directly to the segments in that they have the same ends; that is, they coincide geometrically. The operation</p>
+<p> Like all the other generators, <span class="textVar">generateDrop</span> will take its parameters from <span class="textVar">this</span>, if not present in the params argument. </p><p> The DROP algorithm drops  things at random positions on the canvas. If a thing lands on top of another, it is thrown away, otherwise it is added.   I have used the vague word "thing". A thing is a pair <span class = "textVar">[array of lineSegment,array of shape]</span>, called a dropStruct. Often, but not always, the shapes are lines that  correspond directly to the segments in that they have the same ends; that is, they coincide geometrically. The operation</p>
 <precode>
 (segs,lineP) => [segs,segs.map((seg) => this.genLine(seg,LineP)]
 </precode>
@@ -146,8 +146,8 @@ export {rs};
 <p class="indent"><span class = "textVar">fromEnds:boolean</span>: run the algorithm in fromEnds mode if this value is truthy</p>
 <p class="indent"><span class = "textVar">doNotExit:circle or rectangle</span>: reject drops any of whose segments straddle the inside and outside of the given geometric figure</p>
 <p class="indent"> Next, parameters to <span class = "textVar">generateFan</span>:</p>
-<p class="indent"> Note that the generator of dropStructs, <span class = "textVar">dropAt</span>, relies on generateFan to do its work:</p>
-<precode>
+<p class="indent"> Note that the generator of dropStructs, <span class = "userDefinedText">dropAt</span>, relies on generateFan to do its work:</p>
+<preUserDefinedCode>
 rs.dropAt = function (p) {
   return this.generateFan(Object.assign({startingPoint:p},fanParams));
 }

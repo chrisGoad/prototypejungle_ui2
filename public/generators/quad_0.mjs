@@ -6,10 +6,10 @@ import {rs as addQuadMethods} from '/mlib/quadTree.mjs';
 
 let rs = basicP.instantiate();
 addQuadMethods(rs);
-rs.setName('quad_0');
+rs.setName('quad_0',7);
 
 let wd = 100;
-let topParams = {width:wd,height:wd,levels:7,chance:0.7,framePadding:0.1*wd,backFill:'red'}
+let topParams = {width:wd,height:wd,levels:7,chance:0.8,framePadding:0.1*wd,backFill:'red'}
 Object.assign(rs,topParams);
 
 rs.initProtos = function () {
@@ -33,6 +33,7 @@ rs.initialize = function () {
   this.extendQuadNLevels(qd,this);
   
   this.displayQuad(qd,this.rectP);
+  console.log(this.shapes.length,' squares ');
 }	
 
 export {rs};

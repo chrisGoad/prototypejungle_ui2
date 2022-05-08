@@ -2,7 +2,6 @@
 const rs =function (rs) {
 
 //topLevel = {levels:4,chance:0.75};
-
 rs.extendQuadOneLevel = function (qd) {
  //  debugger;
    if (qd.UL) {
@@ -13,10 +12,10 @@ rs.extendQuadOneLevel = function (qd) {
    let {x:cx,y:cy} = corner;
    let hxt = extent.times(0.5);
    let {x:ex,y:ey} = hxt;
-   qd.UL = {rectangle:Rectangle.mk(corner,hxt)};
-   qd.UR = {rectangle:Rectangle.mk(Point.mk(cx+ex,cy),hxt)};
-   qd.LL = {rectangle:Rectangle.mk(Point.mk(cx,cy+ey),hxt)};
-   qd.LR = {rectangle:Rectangle.mk(Point.mk(cx+ex,cy+ey),hxt)};
+   qd.UL = {rectangle:Rectangle.mk(corner.copy(),hxt)};
+   qd.UR = {rectangle:Rectangle.mk(Point.mk(cx+ex,cy),hxt.copy())};
+   qd.LL = {rectangle:Rectangle.mk(Point.mk(cx,cy+ey),hxt.copy())};
+   qd.LR = {rectangle:Rectangle.mk(Point.mk(cx+ex,cy+ey),hxt.copy())};
  }
  
  

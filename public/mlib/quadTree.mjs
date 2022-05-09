@@ -39,6 +39,9 @@ rs.extendQuadNLevels = function (qd,params,i=0) {
    if (!shapes) {
      shapes = this.set('shapes',arrayShape.mk());
    }
+   if (shapes.length >= 7000) {
+     return;
+   }
    let {extent} = r;
    let c = r.center();
    let shape = rectP.instantiate();g 

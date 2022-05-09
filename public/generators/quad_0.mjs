@@ -6,7 +6,7 @@ import {rs as addQuadMethods} from '/mlib/quadTree.mjs';
 
 let rs = basicP.instantiate();
 addQuadMethods(rs);
-rs.setName('quad_0',7);
+rs.setName('quad_0',14);
 
 let wd = 100;
 let topParams = {width:wd,height:wd,levels:7,chance:0.8,framePadding:0.1*wd,backFill:'red'}

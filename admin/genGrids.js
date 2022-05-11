@@ -264,13 +264,15 @@ const thingString = function (order,ix,dir,useThumb,ititle,props) {
 	let path = spix[0];
 	let ext = (spix.length === 1)?'jpg':spix[1];
 	let x = path + '.'+ ext;
-	thePages.push(x);
+	//thePages.push(x);
   let title=ititle?ititle:pageNumber+'';
   theTitles.push(ititle?ititle:pageNumber+'');
   let vpath = (variant?path+'_v_'+variant:path);
   //console.log('variant',variant);
   //console.log('vpath',vpath);
-  let vx = vpath+(variant?'_'+variant:'')+'.'+ext;
+  //let vx = vpath+(variant?'_'+variant:'')+'.'+ext;
+  let vx = vpath+'.'+ext;
+  thePages.push(vx);
 	let imsrc = `images/${vpath}.jpg`;
 	//let thumbsrc = useThumb?`thumbs/${vpath}.jpg`:imsrc;
 	let thumbsrc = `thumbs/${vpath}.jpg`;
@@ -346,10 +348,13 @@ const stripOrnt = function (str) {
     return rs;
   }
  const getOrder = function (thing) {
-  // console.log('getOrder',thing);
+ // console.log('getOrder',thing);
     let file = stripOrnt(thing[1]);
-    let order = orderDict[file];
-   // console.log('getOrder',order,typeof order);
+    let props = thing[5];
+    let vr = props.variant;
+    let ffile = vr?file+'_v_'+vr:file;
+    let order = orderDict[ffile];
+   // console.log('getOrder',order,ffile,typeof order);
     return order?order:1000;
  }
  
@@ -419,7 +424,7 @@ let sectionString = function (things) {
     things.sort(compareByOrder);
   }
   // console.log('things ordered',things);
-// ln = 2;
+ // ln = 2;
 	for (let i=0;i<ln;i++) {
 		let thing = things[i];
     let tln = thing.length;
@@ -489,7 +494,9 @@ const writePage = function (sections) {
 	frs += pageTop;
   frs += pageIntro;
   frs += pageScript;
-	frs +=sectionsString(sections);
+	let ss =sectionsString(sections);
+	frs +=ss;
+  console.log('sectionsScript',ss);
 	fs.writeFileSync(outPath,frs);
 }
 

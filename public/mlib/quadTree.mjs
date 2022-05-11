@@ -1,9 +1,7 @@
 // a quad tree node has the form {rectangle,UL:quadNode,UR:quadNode,LL:quadNode,QLR
 const rs =function (rs) {
 
-//topLevel = {levels:4,chance:0.75};
 rs.extendQuadOneLevel = function (qd) {
- //  debugger;
    if (qd.UL) {
      return;
    }
@@ -39,22 +37,12 @@ rs.extendQuadNLevels = function (qd,params,i=0) {
    if (!shapes) {
      shapes = this.set('shapes',arrayShape.mk());
    }
-   /*if (shapes.length >= 7000) {
-     return;
-   }*/
-   let lastLevel;// = depth===levels;
    let {extent} = r;
    let c = r.center();
    let shape = this.rectP.instantiate();g 
    const shade = ()=> Math.floor(255*Math.random());
    let fill = this.computeFill(depth);
-  // let v = shade();
-  // let clr = `rgb(${v},${v},${v})`;
-   
    shape.fill = fill;
-   if (lastLevel) {
-     shape.stroke = 'black';
-   }
    let fc = 0.8;
    shape.width = fc*extent.x;
    shape.height = fc*extent.y;
@@ -97,26 +85,21 @@ rs.extendQuadNLevels = function (qd,params,i=0) {
    if (!shapes) {
      shapes = this.set('shapes',arrayShape.mk());
    }
-   /*if (shapes.length >= 7000) {
-     return;
-   }*/
    let lastLevel;// = depth===levels;
    let c = r.center();
    let {extent,corner} = r;
    let {x:ex,y:ey} = extent;
-
    let shape = this.circleP.instantiate(); 
    shape.dimension = 0.7*ex;
    let fill = this.computeFill();
    shape.fill = fill;
-  
    this.shapes.push(shape);
    shape.moveto(c);
    shape.update();
  }   
    
 rs.rectangleToShape  = function (r,depth) {
-  if (Math.random() > 0.5) {
+  if (this.chooseCircle(r,depth)) {
    this.rectangleToCircle(r,depth);
   } else {
    this.rectangleToRectangle(r,depth);

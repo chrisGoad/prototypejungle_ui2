@@ -6,6 +6,7 @@ sections: [
 [  
 /* Puzzle: Which three of the quadrants are the same, and which is different? Before you saw the differences in what sense did you "see" the quadrants?"*/
 // [0,'web_drift','generators',1,'Drift Web',{likes:0,posted:0,category:'drop'}], 
+ [0,'quad_2','generators',1,'7,462 Circles and Squares',{likes:0,posted:0,category:'quad',version:2}], 
  [0,'quad_0','generators',1,'Quad 0',{likes:0,posted:0,category:'quad'}], 
  [0,'drop_metals','instances',1,'Drop Metals 1',{likes:0,posted:0,category:'drop'}], 
  [0,'drop_metals_2','instances',1,'Drop Metals 2',{likes:0,posted:0,category:'drop'}], 

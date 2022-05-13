@@ -1,27 +1,34 @@
 
 import {rs as linePP} from '/shape/line.mjs';
+import {rs as circlePP} from '/shape/circle.mjs';
 import {rs as basicP} from '/generators/basics.mjs';
 import {rs as addWebMethods} from '/mlib/web.mjs';	
 import {rs as addQuadMethods} from '/mlib/quadTree.mjs';	
+import {rs as addPointMethods} from '/mlib/pointGen.mjs';	
 
 let rs = basicP.instantiate();
-//addPointMethods(rs);
+addPointMethods(rs);
 addWebMethods(rs);
 addQuadMethods(rs);
 rs.setName('web_quad');
 let wd = 100;
 
+//let topParams = {width:wd,height:wd,levels:7,chance:0.8,framePadding:0.1*wd,backFill:'red'}
 let topParams = {width:wd,height:wd,levels:7,chance:0.8,framePadding:0.1*wd,backFill:'red'}
 
 //let  topParams = {width:rd,height:rd,framePadding:1.2*rd};
-let  webParams = {webTries:1000,minConnectorLength:0,maxConnectorLength:2000};
+let  webParams = {webTries:100,maxLoops:10000,shortenBy:0,minConnectorLength:0,maxConnectorLength:100};
 Object.assign(rs,topParams);
 
 rs.initProtos = function () {	
   let lineP = this.lineP = linePP.instantiate();
   this.lineP.stroke = 'white';
   this.lineP['stroke-width'] = .1;
-  this.lineP['stroke-width'] = 5;
+  let circleP = this.circleP = circlePP.instantiate();
+  this.circleP.fill = 'transparent';
+  this.circleP.stroke = 'white';
+  this.circleP.dimension = 5;
+  this.circleP['stroke-width'] = 0.01;
 }  
 
 
@@ -48,6 +55,8 @@ rs.initialize = function () {
   this.extendQuadNLevels(qd,this);
   
   let points = leafPositions(qd);
+  this.placeShapesAtPoints(points,this.circleP);
+  return;
   this.generateWeb(Object.assign(webParams,{points}));
   this.addFrame();
 }

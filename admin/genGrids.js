@@ -1,14 +1,10 @@
 
 let kind = process.argv[2];
-let forKOPstr = process.argv[3];
+//let forKOPstr = process.argv[3];
 let sortByOrderstr = "1";
-if (process.argv[4]==="0") {
+if (process.argv[3]==="0") {
   sortByOrderstr = "0";
 }
-/*let alternateStr = process.argv[3];
-let byKindstr = process.argv[4];
-let byLikesstr = process.argv[5];
-let aspectstr = process.argv[6];*/
 
 const toBoolean = (v) => {
   if (typeof v === 'string') {
@@ -19,7 +15,8 @@ const toBoolean = (v) => {
 }
 let signed = 0
 //let signed = toBoolean(signedstr);
-let forKOP = toBoolean(forKOPstr);
+//let forKOP = toBoolean(forKOPstr);
+let forKOP = kind === 'forKOP';
 let sortByOrder = toBoolean(sortByOrderstr);
 let byKind = kind === 'byKind';
 let alternate = kind === 'alternate';
@@ -82,7 +79,7 @@ if (byLikes) {
   signed = 0;
   imKind = 'sq';
   sectionsPath = './squareSections.js';
-} else if (images)  {
+} else if (images || forKOP)  {
   sectionsPath = './gridSections.js';
   imKind = 'g'
 } else if (local_images)  {
@@ -196,13 +193,15 @@ if (imKind === 'g') {
      and Practice (below). </p>
 
     <p  class="introLineSmall">As you will see from <a style="color:white;text-decoration:underline" href="essay.html">theory</a>, the phrase "Kingdom of Pattern" is not a claim to grandeur.</p>
-    <p class="introLineSmall">Images by Chris Goad (via JavaScript)</p> 
+    <p class="introLineSmall">Images by Chris Goad, via the JavaScript library at <a style="color:white" href="https://prototypejungle.net">prototypejungle.net</a>.</p> 
 
-    <p class="introLineSmall">Click <a style="color:white;text-decoration:underline" href="https://public.etsy.com/shop/KingdomOfPattern"> here </a> if  you'd like a print of one of these images for your wall.</p>
+  
 
 
     <p class="introLineSmall">To Expand the Images Below, Click on Them</p>
-  `} else  {
+  `
+   <!-- <p class="introLineSmall">Click <a style="color:white;text-decoration:underline" href="https://public.etsy.com/shop/KingdomOfPattern"> here </a> if  you'd like a print of one of these images for your wall.</p>-->
+   } else  {
     if (local_images) {
       pageIntro = 
       `
@@ -256,7 +255,6 @@ document.addEventListener('DOMContentLoaded', () => {
 let pageNumber = 0;
 let numPages = 0;
 const thingString = function (order,ix,dir,useThumb,ititle,props) {
-	//console.log('thingString order',order,'ix',ix,'variant',variant,'dir',dir,'useThumb',useThumb,'title',ititle,'likes',likes);
 	debugger;
   let {variant,likes,posted,category,sources} = props;
   console.log('POSTED',posted);
@@ -264,20 +262,16 @@ const thingString = function (order,ix,dir,useThumb,ititle,props) {
 	let path = spix[0];
 	let ext = (spix.length === 1)?'jpg':spix[1];
 	let x = path + '.'+ ext;
-	//thePages.push(x);
   let title=ititle?ititle:pageNumber+'';
   theTitles.push(ititle?ititle:pageNumber+'');
   let vpath = (variant?path+'_v_'+variant:path);
   //console.log('variant',variant);
   //console.log('vpath',vpath);
-  //let vx = vpath+(variant?'_'+variant:'')+'.'+ext;
   let vx = vpath+'.'+ext;
   thePages.push(vx);
 	let imsrc = `images/${vpath}.jpg`;
-	//let thumbsrc = useThumb?`thumbs/${vpath}.jpg`:imsrc;
 	let thumbsrc = `thumbs/${vpath}.jpg`;
   let localSrc =`public/thumbs/${vpath}.jpg`;
-  //let localim = fs.existsSync(localSrc);
   if (ix === 'drift_web') {
     console.log('IIIIIXXXX',ix);
   }
@@ -291,38 +285,29 @@ const thingString = function (order,ix,dir,useThumb,ititle,props) {
   let kindArg = 'imKind='+imKind;
   let localArg = 'local='+(local_images?1:0);
 	let theImageArg = '';
-  //imageArg?'&image='+imageArg:'';
 	pageNumber++;
 	let lastPageArg = (pageNumber === numPages)?'&lastPage=1':'';
 	let rs;
-	//let astart = `<a style="color:white" href="page.html?image=${vx}&${pageArg}&${kindArg}&${localArg}">`;
 	let astart = `<a style="color:white" href="page.html?image=${vx}&${pageArg}&${kindArg}&${localArg}">`;
   console.log('ASTART',astart);
- // let likesStr = likes?`<span style="font-size:10pt">Likes ${likes} ${category}</span><br/>`:'';
-  //let propsStr = `<span style="font-size:10pt">Likes ${likes?likes:'none'} Order ${order}${posted?"":" NOT POSTED"} ${category}</span><br/>`;
   let propsStr = `<span style="font-size:10pt">${likes?'Likes '+likes:''} ${posted?"":" NOT POSTED"} ${local_images?'Local':''} ${category}</span><br/>`;
+  let sourcenm = `source${sources?'s':''}`;
 	if (forKOP) {
 		let titleLink = title?`${astart}${title}</a></p>`:'';
 		console.log('forKOP');
-rs = `<div><p class="centered">${titleLink}
-<p class="centered">${astart}<img width="200" src="${thumbsrc}" alt="Image Missing"></a></p></div>
+    let srcUrl = (sources)?`https://prototypejungle.net/doc/${path}_sources.html`:`https://prototypejungle.net/${dir}/${path}.${fileExt}`;
+    rs = `<div><p class="centered">${titleLink}</p>
+    <p class="centered"><a href="${srcUrl}">${sourcenm}</a></p>
+    <p class="centered">${astart}<img width="200" src="${thumbsrc}" alt="Image Missing"></a></p></div>
 	`; 
 	} else {
     let srcUrl = (sources)?`doc/${path}_sources.html`:`${dir}/${path}.${fileExt}`;
-    let sourcenm = `source${sources?'s':''}`;
-
 		console.log('not for KOP');
-rs = `<div><p style="text-align:center"><a href="http://localhost:8081/draw.html?source=/${dir}/${path}.${fileExt}${theImageArg}">${title}</a><br/>
-<a href="${srcUrl}">${sourcenm}</a><br/>
-${propsStr}
-${astart}<img width="200" src="${thumbsrc}"></a></p></div>
-`;
-/*
-rs = `<div><p style="text-align:center"><a href="http://localhost:8081/draw.html?source=/${dir}/${path}.${fileExt}${theImageArg}">${title}</a><br/>
-<a href="${srcUrl}">${sourcenm}</a><br/>
-${propsStr}
-${astart}<img width="200" src="${thumbsrc}"></a></p></div>
-`;*/
+    rs = `<div><p style="text-align:center"><a href="http://localhost:8081/draw.html?source=/${dir}/${path}.${fileExt}${theImageArg}">${title}</a><br/>
+    <a href="${srcUrl}">${sourcenm}</a><br/>
+    ${propsStr}
+    ${astart}<img width="200" src="${thumbsrc}"></a></p></div>
+    `;
 	}
   console.log ('rs = ',rs);
 	return rs;

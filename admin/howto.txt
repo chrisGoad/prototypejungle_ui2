@@ -39,3 +39,11 @@ firebase deploy --only hosting
 
 cd c:\prototypejungle
 firebase deploy --only hosting
+
+cd c:\prototypejungle
+node admin/update
+node admin/genGrids images
+
+
+cd c:\prototypejungle\public
+node server/server

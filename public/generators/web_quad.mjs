@@ -32,18 +32,18 @@ rs.initProtos = function () {
 }  
 
 
-rs.chooseCircle = function (r,depth) {
+rs.chooseCircle = function (r,depth=0) {
   debugger;
   return 1;
 }
 
-const leafPositions = function (qd) {
+const leafPositions = function (qd,depth=0) {
    if (qd.UL) {
-     let ulp = leafPositions(qd.UL);
-     rs = ulp.concat(leafPositions(qd.UR),leafPositions(qd.LL),leafPositions(qd.LR))
+     let ulp = leafPositions(qd.UL,depth+1);
+     rs = ulp.concat(leafPositions(qd.UR,depth+1),leafPositions(qd.LL,depth+1),leafPositions(qd.LR,depth+1))
      return rs;
    }
-   return [qd.rectangle.center()]
+   return (depth > 4)?[qd.rectangle.center()]:[];
 }
      
 rs.initialize = function () {

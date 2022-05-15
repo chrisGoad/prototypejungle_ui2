@@ -198,7 +198,7 @@ if (imKind === 'g') {
   
 
 
-    <p class="introLineSmall">To Expand the Images Below, Click on Them</p>
+    <p class="introLineSmall">To expand the images below, click on them.</p>
   `
    <!-- <p class="introLineSmall">Click <a style="color:white;text-decoration:underline" href="https://public.etsy.com/shop/KingdomOfPattern"> here </a> if  you'd like a print of one of these images for your wall.</p>-->
    } else  {
@@ -293,7 +293,8 @@ const thingString = function (order,ix,dir,useThumb,ititle,props) {
   let propsStr = `<span style="font-size:10pt">${likes?'Likes '+likes:''} ${posted?"":" NOT POSTED"} ${local_images?'Local':''} ${category}</span><br/>`;
   let sourcenm = `source${sources?'s':''}`;
 	if (forKOP) {
-		let titleLink = title?`${astart}${title}</a></p>`:'';
+		//let titleLink = title?`${astart}${title}</a></p>`:'';
+		let titleLink = title?`${astart}${title}</a>`:'';
 		console.log('forKOP');
     let srcUrl = (sources)?`https://prototypejungle.net/doc/${path}_sources.html`:`https://prototypejungle.net/${dir}/${path}.${fileExt}`;
     rs = `<div><p class="centered">${titleLink}</p>

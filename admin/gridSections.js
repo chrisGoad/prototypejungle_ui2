@@ -5,16 +5,16 @@ sections: [
 
 [
 //['Square'],
-// [0,'grid_grid_1_i_3',4,'instances',1,'Grid 5'], 
+// [0,'grid_grid_1_i_3',4,'instances',1,'Grid 5'], d
 //// [0,'grid_grid_1_i_3_v_4','instances',1,'Grid 5'], 
 // [0,'grid_grid_1_i_3_g_1','instances',1,'Grid 5'], 
 // [0,'grid_grid_1_i_3','instances',1,'Grid 5'], 
 //   [110,'drop_whorls_v','instances',1,'Whorls',45], // was [1000,'grid0_46','final',1,'Cloudy Sky',{likes:45,posted:1,category:'grid'}],
  [0,'web_random_radius','generators',1,'Scratches',{likes:0,posted:0,category:'quad',variant:2}], 
- [0,'quad_2','generators',1,'Circles and Squares',{likes:0,posted:0,category:'quad',variant:2}], 
-
+ [0,'quad_3','generators',1,'Circles',{likes:72,posted:0,category:'quad',variant:2}], 
+//[0,'quad_2','generators',1,'Circles and Squares',{likes:0,posted:0,category:'quad',variant:2}], 
  [0,'drop_whorls','generators',1,'Whorls',{likes:45,posted:1,category:'drop'}], 
- [0,'random_stripes','generators',1,'Stripes 3',{likes:26,posted:1,category:'grid'}], 
+ //[0,'random_stripes','generators',1,'Stripes 3',{likes:26,posted:1,category:'grid'}], 
  [0,'grid_fade','generators',1,'Fade',{likes:532,posted:1,category:'grid'}], 
 // [0,'grid_incoming','generators',1,'Incoming',{likes:57,posted:1,category:'grid'}], 
  [0,'grid_comet','generators',1,'Comet',{likes:57,posted:1,category:'grid'}], 
@@ -31,7 +31,7 @@ sections: [
    [0,'drop_iris','generators',1,'Iris',{likes:45,posted:1,category:'drop'}], //was [0,'drop0_1_27','final',1,'Iris',posted:1,category:'grid'}],
   [0,'web_aphelion','generators',1,'Aphelion',{likes:31,posted:1,category:'web'}],
   [0,'web_wheel','generators',1,'Wheel',{likes:30,posted:1,category:'web'}],
-  [0,'web_drift','generators',1,'Drift',{likes:30,posted:1,category:'web'}],
+ // [0,'web_drift','generators',1,'Drift',{likes:30,posted:1,category:'web'}],
   [0,'drop_arrows','generators',1,'Arrows',{likes:27,posted:1,category:'drop'}],  //was [0,'drop0_1_21','final',1,'Leaves']
   [0,'drop_leaves','generators',1,'Leaves',{likes:0,posted:0,category:'drop'}],  //was [0,'drop0_1_21','final',1,'Leaves']
   [0,'drop_dandelion','generators',1,'Dandelion',{likes:78,posted:1,category:'drop'}],// was [0,'drop0_1_24','final',1,'Dandelion',posted:1,category:'grid'}],

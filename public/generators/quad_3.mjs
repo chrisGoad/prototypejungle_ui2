@@ -7,7 +7,7 @@ import {rs as addQuadMethods} from '/mlib/quadTree.mjs';
 
 let rs = basicP.instantiate();
 addQuadMethods(rs);
-rs.setName('quad_3',1);
+rs.setName('quad_3',2);
 
 let wd = 100;
 let topParams = {width:wd,height:wd,levels:7,chance:0.8,framePadding:0.1*wd,backFill:'red'}
@@ -22,7 +22,8 @@ rs.initProtos = function () {
    this.circleP =  circlePP.instantiate();
   this.circleP.stroke = 'blue';
   this.circleP.stroke = 'white';
-    this.circleP['stroke-width'] = .1; 	
+    this.circleP['stroke-width'] = .2; 	
+    this.circleP['stroke-width'] =.15;
 
  //this.rectP.stroke = 'yellow';
   this.rectP.fill = 'transparent';

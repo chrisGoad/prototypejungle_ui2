@@ -33,6 +33,11 @@ git push -u origin main (first time, maybe)
 cd c:\prototypejungle_clone
 git clone https://github.com/chrisGoad/prototypejungle.git
 
+to deploy to kop
+cd c:\prototypejungle
+node admin/genGrids forKOP
+then copy c:\prototypejungle\pulic\images.html to c:\kop\public\index.htmo
+
 cd c:\kop
 firebase deploy --only hosting
 

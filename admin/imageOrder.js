@@ -1,13 +1,17 @@
 module.exports = [
 [1,'grid_grid_1_i_3_v_4'],
-[2,'quad_2_v_2'],
-[3,'web_random_radius_v_2'],
+[2,'quad_3_v_2'],
+[3,'quad_2_v_2'],
+[4,'web_random_radius_v_2'],
 [5,'lines_chaos_within_order'],
  [20,'web_diamond'],
+
  [25,'grid_fade'],
 [30,'grid_superposition'],
 [40,'grid_bubbles'],
 [50,'grid_void'],
+ [55,'quad_3_v_2'],
+
  [60,'drop_dandelion'],
  [70,'spatter_variants'],
    [75,'grid_droplets'],
@@ -24,9 +28,9 @@ module.exports = [
 
   [200,'web_wheel'],
      [210,'drop_arrows'],
-     [215,'web_drift'],
+  //   [215,'web_drift'],
 
-   [220,'random_stripes'],
+  // [220,'random_stripes'],
    [260,'grid_distortion_field'],
    [260,'grid_distortion_field_warped'],
    [265,'grid_quilt_2'],

@@ -44,6 +44,10 @@ const onNext = function () {
 	window.location.href = `./page.html?image=${dest}&page=${cPage+1}${lastPageArg}&imKind=${imKind}&local=${imLocalS}`;
 }
 
+const onFull = function () {
+  debugger;
+	window.location.href = imurl;
+}
 
 const onTop = function () {
   debugger;
@@ -62,7 +66,7 @@ const onTop = function () {
 	window.location.href = './'+dst+'.html';
 }
 
-let imKind,imLocalS,thePages,theTitles,theLocals;
+let imKind,imLocalS,thePages,theTitles,theLocals,imurl;
 document.addEventListener('DOMContentLoaded', () => {
   debugger;
 	let cWidth =document.documentElement.clientWidth;
@@ -103,6 +107,7 @@ document.addEventListener('DOMContentLoaded', () => {
   debugger;
 	let prevDiv = document.getElementById('prevDiv');
 	let nextDiv = document.getElementById('nextDiv');
+	let fullDiv = document.getElementById('fullDiv');
 	let topDiv = document.getElementById('topDiv');
 	let titleDiv = document.getElementById('titleDiv');
 	let imageDiv = document.getElementById('imageDiv');
@@ -119,6 +124,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	prevDiv.addEventListener('click',onPrev);
 	nextDiv.addEventListener('click',onNext);
 	topDiv.addEventListener('click',onTop);
+	fullDiv.addEventListener('click',onFull);
 	if (title) {
 	  titleDiv.innerHTML = decodeURI(title);
 	}
@@ -128,8 +134,9 @@ document.addEventListener('DOMContentLoaded', () => {
 	let im = getArgs.image;
 	let ext = extension(im);
 	//let dir = (ext==='jpg')?'images/':'videos/';
-	let dir = imLocal?'images/':'https://kingdomofpattern.com/images/';
-  debugger;
+	let dir = imLocal?'./images/':'https://kingdomofpattern.com/images/';
+   imurl = dir+'/'+im;
+ debugger;
   //console.log('DIR ',dir);
 	if (ext === 'mp4') {
 	  imageDiv.style.display = 'none';

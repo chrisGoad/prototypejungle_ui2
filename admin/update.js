@@ -82,7 +82,6 @@ var boilerplate1 =
     background-color: #FFFFFF;
 }
 td {
-  borderr: 1px solid rgb(190,190,190);
   padding-left: 20px;
 }
 </style>

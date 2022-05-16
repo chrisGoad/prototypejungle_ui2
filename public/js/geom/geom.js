@@ -762,6 +762,29 @@ LineSegment.lengthen = function (ln) {
 	return LineSegment.mk(nend0,nend1);
 }
   
+LineSegment.onOppositeSides = function (line1) { // the ends of line1 are on opposite sides of this
+  let line0 = this;
+  let e00 = line0.end0;
+  let e01 = line0.end1;
+  let e10 = line1.end0;
+  let e11 = line1.end1;
+  let vec0 = e01.difference(e00);
+  let n0 = vec0.normal();
+  let e10Toe00 = e10.difference(e00);
+  let e11Toe00 = e11.difference(e00);
+  let dt0 = e10Toe00.dotp(n0);
+  let dt1 = e11Toe00.dotp(n0);
+  let sd0 = dt0 >0;
+  let sd1 = dt1 <0;
+  return sd0 === sd1;
+}
+ 
+LineSegment.intersectsLineSegment = function (line1) {
+  let op1 = this.onOppositeSides(line1);
+  let op0 = line1.onOppositeSides(this);
+  return op1 && op0;
+} 
+
 LineSegment.intersect = function (line1) {
 	let verbose = false;
   let line0 = this;
@@ -835,9 +858,11 @@ LineSegment.intersect = function (line1) {
   return false;
   
 }
+/*
 LineSegment.intersectsLineSegment = function (seg) {
 	return !!this.intersect(seg);
 }
+*/
 LineSegment.distanceTo = function (p) {
   let {end0,end1} = this;
   let vec = end1.difference(end0);

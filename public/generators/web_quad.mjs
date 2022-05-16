@@ -17,7 +17,7 @@ let wd = 100;
 let topParams = {width:wd,height:wd,levels:7,chance:0.8,framePadding:0.1*wd,backFill:'red'}
 
 //let  topParams = {width:rd,height:rd,framePadding:1.2*rd};
-let  webParams = {webTries:100,maxLoops:10000,shortenBy:0,minConnectorLength:0,maxConnectorLength:100};
+let  webParams = {webTries:1000,maxLoops:100000,minConnectorLength:0,maxConnectorLength:100};
 Object.assign(rs,topParams);
 
 rs.initProtos = function () {	
@@ -28,6 +28,7 @@ rs.initProtos = function () {
   this.circleP.fill = 'transparent';
   this.circleP.stroke = 'white';
   this.circleP.dimension = 5;
+  this.circleP.dimension = 1;
   this.circleP['stroke-width'] = 0.01;
 }  
 
@@ -43,7 +44,7 @@ const leafPositions = function (qd,depth=0) {
      rs = ulp.concat(leafPositions(qd.UR,depth+1),leafPositions(qd.LL,depth+1),leafPositions(qd.LR,depth+1))
      return rs;
    }
-   return (depth > 4)?[qd.rectangle.center()]:[];
+   return (depth > 0)?[qd.rectangle.center()]:[];
 }
      
 rs.initialize = function () {
@@ -56,7 +57,7 @@ rs.initialize = function () {
   
   let points = leafPositions(qd);
   this.placeShapesAtPoints(points,this.circleP);
-  return;
+ return;
   this.generateWeb(Object.assign(webParams,{points}));
   this.addFrame();
 }

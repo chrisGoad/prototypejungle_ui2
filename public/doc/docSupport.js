@@ -6,42 +6,42 @@ const afterLastChar = function (string,chr,strict) {
   }
   return string.substr(idx+1);
 }
-
+const beforeLastChar = function (string,chr,strict) {
+  let idx = string.lastIndexOf(chr);
+  if (idx < 0) {
+    return strict?undefined:string;
+  }
+  return string.substr(0,idx);
+}
 const extension = function (string) {
   return afterLastChar(string,'.');
 }
-	
-const parseQuerystring = function() {
-  let nvpair = {};
-  let qs = window.location.search.replace('?','');
-  let pairs = qs.split('&');
-  pairs.forEach(function(v) {
-    let pair = v.split('=');
-    if (pair.length>1) {
-      nvpair[pair[0]] = pair[1];
-    }
-  });
-  return nvpair;
+
+const getPage = function () {
+  debugger;
+	let c_url = window.location.href;
+  let c_file = afterLastChar(c_url,'/');
+  let c_name = beforeLastChar(c_file,'.');
+  let c_page = thePages.indexOf(c_name);
+  return c_page;
 }
+
 let cWidth;
 let cPage;
 let lastPage;
+let thePages = ['disclaimer','installation'];
 const onPrev = function () {
   debugger;
-	
+	let cPage = getPage();
 	let dest = thePages[cPage-1];
-	  
-		window.location.href = `./page.html?image=${dest}&page=${cPage-1}&imKind=${imKind}&local=${imLocalS}`;
-
-	//window.location.href = `./page.html?image=${dest}&page=${cPage-1}&imKind=${imKind}`;
+	window.location.href = dest+'.html';
 }
+
 const onNext = function () {
   debugger;
-	
+  let cPage = getPage();
 	let dest = thePages[cPage+1];
-	let lastPageArg = (cPage === (thePages.length - 2))?'&lastPage=1':'';
-
-	window.location.href = `./page.html?image=${dest}&page=${cPage+1}${lastPageArg}&imKind=${imKind}&local=${imLocalS}`;
+	window.location.href = dest+'.html';
 }
 
 const onFull = function () {
@@ -66,12 +66,13 @@ const onTop = function () {
 	window.location.href = './'+dst+'.html';
 }
 
-let imKind,imLocalS,thePages,theTitles,theLocals,imurl;
+let imKind,imLocalS,theTitles,theLocals,imurl;
 document.addEventListener('DOMContentLoaded', () => {
   debugger;
-	let prevDiv = document.getElementById('prevDiv');
-	let nextDiv = document.getElementById('nextDiv');
-	prevDiv.addEventListener('click',onPrev);
-	nextDiv.addEventListener('click',onNext);
+	let prevSpan = document.getElementById('prevSpan');
+	let nextSpan = document.getElementById('nextSpan');
+	//prevSpan.addEventListener('click',onPrev);
+	nextSpan.addEventListener('click',onNext);
+  prevSpan.hidden = true;
 	
 });	

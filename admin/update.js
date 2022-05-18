@@ -35,11 +35,11 @@ var boilerplate1 =
 
 <div class="topGrid">
 <div></div>
-<div id ="prevDiv"><span style="font-size:16pt;font-weight:bold"> &lt;</span></div>
+<div ><span id ="prevSpan" class="button"> &lt;</span></div>
 <div><span class="textVar">PrototypeJungle</span></div>
 <div></div>
-<div id="nextDiv"><span style="padding-top:0px"> <img  src="logo.svg" width="30" height="30" /></span></div>
-<div <span id="next" style="font-size:14pt;font-weight:bold"> &gt; </span></div>
+<div><span style="padding-top:0px"> <img  src="logo.svg" width="30" height="30" /></span></div>
+<div><span id="nextSpan" class="button"> &gt; </span></div>
 </div>
 <hr/>
 <div class="theGrid">

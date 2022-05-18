@@ -113,6 +113,9 @@ rs.generateCircleDrop = function (iparams) {
     if (this.radiusGenerator) {
       radius = this.radiusGenerator(pnt);
     }
+    if (radius <= 0) {
+      continue;
+    }
 		let cl = this.collides(pnt,radius,points,radii);
     //console.log('tries',tries,'collide',cl);
 		if (cl) {

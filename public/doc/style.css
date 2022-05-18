@@ -6,7 +6,7 @@
 .topGrid {
 		display:grid;
 		padding-top:10px;
-		grid-template-columns:4fr 1fr 12fr 1fr 4fr;
+		grid-template-columns:4fr 1fr 11fr 1fr 1fr 4fr;
 	}
   .indent {
 		padding-left:20px;

@@ -14,10 +14,10 @@ rs.setName('web_quad');
 let wd = 100;
 
 //let topParams = {width:wd,height:wd,levels:7,chance:0.8,framePadding:0.1*wd,backFill:'red'}
-let topParams = {width:wd,height:wd,levels:7,chance:0.8,framePadding:0.1*wd,backFill:'red'}
+let topParams = {width:wd,height:wd,levels:6,chance:0.8,framePadding:0.1*wd,backFill:'red'}
 
 //let  topParams = {width:rd,height:rd,framePadding:1.2*rd};
-let  webParams = {webTries:1000,maxLoops:100000,minConnectorLength:0,maxConnectorLength:100};
+let  webParams = {webTries:1000,maxLoops:100000,minConnectorLength:0,maxConnectorLength:10};
 Object.assign(rs,topParams);
 
 rs.initProtos = function () {	
@@ -26,10 +26,11 @@ rs.initProtos = function () {
   this.lineP['stroke-width'] = .1;
   let circleP = this.circleP = circlePP.instantiate();
   this.circleP.fill = 'transparent';
-  this.circleP.stroke = 'white';
+ // this.circleP.fill = 'cyan';
+  this.circleP.stroke = 'cyan';
   this.circleP.dimension = 5;
-  this.circleP.dimension = 1;
-  this.circleP['stroke-width'] = 0.01;
+  this.circleP.dimension = 2;
+  this.circleP['stroke-width'] = 0.02;
 }  
 
 
@@ -47,6 +48,14 @@ const leafPositions = function (qd,depth=0) {
    return (depth > 0)?[qd.rectangle.center()]:[];
 }
      
+rs.pairFilterr = function (i,j) {
+  //let {maxConnectorLength:mxCln,minConnectorLength:mnCln=0,cPoints,numDropped,width} = this;
+  let {cPoints} = this;
+  let pi = cPoints[i];
+  let pj = cPoints[j];
+  let fc = 10;
+  if ((Math.abs(pi.x - pj.x) < fc) || (Math.abs(pi.y - pj.y) < fc)) return 1;
+}
 rs.initialize = function () {
   root.backFill = 'black';
   this.initProtos();
@@ -56,8 +65,8 @@ rs.initialize = function () {
   this.extendQuadNLevels(qd,this);
   
   let points = leafPositions(qd);
-  this.placeShapesAtPoints(points,this.circleP);
- return;
+  //this.placeShapesAtPoints(points,this.circleP);
+ //return;
   this.generateWeb(Object.assign(webParams,{points}));
   this.addFrame();
 }

@@ -17,6 +17,7 @@ let signed = 0
 //let signed = toBoolean(signedstr);
 //let forKOP = toBoolean(forKOPstr);
 let forKOP = kind === 'forKOP';
+let forPJ = kind === 'forPJ';
 let sortByOrder = toBoolean(sortByOrderstr);
 let byKind = kind === 'byKind';
 let alternate = kind === 'alternate';
@@ -79,7 +80,7 @@ if (byLikes) {
   signed = 0;
   imKind = 'sq';
   sectionsPath = './squareSections.js';
-} else if (images || forKOP)  {
+} else if (images || forKOP  || forPJ)  {
   sectionsPath = './gridSections.js';
   imKind = 'g'
 } else if (local_images)  {
@@ -287,22 +288,26 @@ const thingString = function (order,ix,dir,useThumb,ititle,props) {
 	let theImageArg = '';
 	pageNumber++;
 	let lastPageArg = (pageNumber === numPages)?'&lastPage=1':'';
-	let rs;
+	let rs,srcUrl;
 	let astart = `<a style="color:white" href="page.html?image=${vx}&${pageArg}&${kindArg}&${localArg}">`;
   console.log('ASTART',astart);
   let propsStr = `<span style="font-size:10pt">${likes?'Likes '+likes:''} ${posted?"":" NOT POSTED"} ${local_images?'Local':''} ${category}</span><br/>`;
   let sourcenm = `source${sources?'s':''}`;
-	if (forKOP) {
+	if (forKOP || forPJ) {
 		//let titleLink = title?`${astart}${title}</a></p>`:'';
 		let titleLink = title?`${astart}${title}</a>`:'';
 		console.log('forKOP');
-    let srcUrl = (sources)?`https://prototypejungle.net/doc/${path}_sources.html`:`https://prototypejungle.net/${dir}/${path}.${fileExt}`;
-    rs = `<div><p class="centered">${titleLink}</p>
-    <p class="centered"><a href="${srcUrl}">${sourcenm}</a></p>
-    <p class="centered">${astart}<img width="200" src="${thumbsrc}" alt="Image Missing"></a></p></div>
-	`; 
+    srcUrl = (sources)?`https://prototypejungle.net/doc/${path}_sources.html`:`https://prototypejungle.net/${dir}/${path}.${fileExt}`;
+    if (forKOP){
+      rs = `<div><p class="centered">${titleLink}</p>`
+    } else {
+      rs = `<div><p class="centered"><a style="color:white" href="http://localhost:8081/draw.html?source=/${dir}/${path}.${fileExt}${theImageArg}">${title}</a><p/>`;
+    }
+    rs = rs +
+    `<p class="centered"><a style="color:white" href="${srcUrl}">${sourcenm}</a></p>
+    <p class="centered">${astart}<img width="200" src="${thumbsrc}" alt="Image Missing"></a></p></div>`;
 	} else {
-    let srcUrl = (sources)?`doc/${path}_sources.html`:`${dir}/${path}.${fileExt}`;
+    srcUrl = (sources)?`doc/${path}_sources.html`:`${dir}/${path}.${fileExt}`;
 		console.log('not for KOP');
     rs = `<div><p style="text-align:center"><a href="http://localhost:8081/draw.html?source=/${dir}/${path}.${fileExt}${theImageArg}">${title}</a><br/>
     <a href="${srcUrl}">${sourcenm}</a><br/>

@@ -23,68 +23,40 @@ var boilerplate1 =
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="description" content="Diagramming basedd on an open repository of prototype structures.">
+<meta name="description" content="Image Generation via Prototype Trees">
 <title>PrototypeJungle</title>
 <link rel="stylesheet" type="text/css"  href="style.css"/>
 <link rel="stylesheet" type="text/css"  href="spectrum.css"/>
 <link rel="icon" href="/images/favicon.ico" />
 
-<style>
-	.theGrid {
-		display:grid;
-		padding-top:10px;
-		grid-template-columns:1fr 4fr 1fr;
-	}
-  .indent {
-		padding-left:20px;
-	}
-  .indent2 {
-		padding-left:40px;
-	}
-  .codeVar {
-		font-style:italic;
-	}  
-  
-  .textVar {
-		font-weight:bold;
-    font-size:12pt
-	}
-  .plainText {
-		font-weight:normal;
-    font-size:12pt
-	}
-  .title {
-		font-weight:bold;
-    font-size:16pt;
-    text-align:center;
-	}
-  .source {
-    font-size:16pt;
-    text-align:center;
-	}
- .section {
-   padding-top:30px;
-		font-weight:bold;
-    font-size:15pt;
-	}
-  .userDefinedText {
-  	font-weight:bold;
-    font-size:12pt;
-    color:rgb(200,0,0);
-   }
-   .userDefinedCode {
-    font-style:italic;
-    color:rgb(200,0,0);
-   }
-  .blank_row
-{
-    height: 10px !important; /* overwrites any other rules */
-    background-color: #FFFFFF;
-}
-td {
-  padding-left: 20px;
-}
-</style>
+</head>
+<body style="background-color:white;font-size:14pt"> 
+<script src = "docSupport.js"></script>
+
+<div class="topGrid">
+<div></div>
+<div id ="prevDiv"><span style="font-size:16pt;font-weight:bold"> &lt;</span></div>
+<div><span class="textVar">PrototypeJungle</span></div>
+<div></div>
+<div id="nextDiv"><span style="padding-top:0px"> <img  src="logo.svg" width="30" height="30" /></span></div>
+<div <span id="next" style="font-size:14pt;font-weight:bold"> &gt; </span></div>
+</div>
+<hr/>
+<div class="theGrid">
+<div></div>
+<div>
+`;
+var boilerplateIndex = 
+`<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="description" content="Image Generation via Prototype Trees">
+<title>PrototypeJungle</title>
+<link rel="stylesheet" type="text/css"  href="style.css"/>
+<link rel="stylesheet" type="text/css"  href="spectrum.css"/>
+<link rel="icon" href="/images/favicon.ico" />
+
 </head>
 <body style="background-color:white;font-size:14pt"> 
 <div class="theGrid">
@@ -117,6 +89,7 @@ function doSubstitution(s,what,value,withDoubleBracket) {
  
   let irs = doSubstitution(s,'boilerplate0',boilerplate0,1);
   irs = doSubstitution(irs,'boilerplate1',boilerplate1,1);
+  irs = doSubstitution(irs,'boilerplateIndex',boilerplateIndex,1);
     //var irs = doSubstitution(irs,'<precode>','<p style="padding:5px"></p><hr/><pre style="padding-left:20px;font-size:10pt;font-weight:bold" class="code">');
     irs = doSubstitution(irs,'<precode>','<pre style="padding-left:20px;font-size:10pt;font-weight:bold" class="code">');
     irs = doSubstitution(irs,'<preUserDefinedCode>','<pre style="padding-left:20px;font-size:10pt;font-weight:bold;color:rgb(200,0,0)" class="code">');
@@ -194,7 +167,7 @@ var fs = require('fs');
 //xferDir(0,'www','doc');
 xferDir('admin');
 //xferDir('server');
-xferFiles('public',['draw.html','index.html','topdefs.js','style.css','spectrum.css','page.html','pageSupport.js']);
+xferFiles('public',['draw.html','index.html','topdefs.js','style.css','spectrum.css','page.html','pageSupport.js','logo.svg']);
 xferFiles('admin',['genGrids.js','gridSections.js','imageOrder.js']);
 xferDirs(['public/generators','public/instances','public/shape','public/mlib','public/json','public/doc','public/server','public/admin']);
 //xferDirs(['js/core','js/dom','js/geom','js/draw']);

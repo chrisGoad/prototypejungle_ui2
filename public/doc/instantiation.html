@@ -1,27 +1,25 @@
 {{boilerplate1}}
 
-<div class="pageTitle">Instantiation of Prototype Trees</div>
-<div class="tableOfContents"> 
-   <div class="contentsLine"><a href="#definition">1. Definition</a></div>
-     <div class="contentsLine"><a href="#instantiate">2. Instantiation</a></div>
-   <div class="contentsLine"><a href="#ammendment">3. An Ammendment</a></div>
+<div class="title">Instantiation of Prototype Trees</div>
+   <p class="indent"><a href="#definition">1. Definition</a></p>
+   <p class="indent"><a href="#instantiate">2. Instantiation</a></p>
+   <p class="indent"><a href="#ammendment">3. An Ammendment</a></p>
 
         
-</div>
 <div class="section" id="definition">1.Definition</div>
 
 <p>Here is a precise definition of the prototype tree structure.</p>
 
 <p>1) Start with  a JavaScript tree of 
-the kind that is expressable in JSON. Such a structure lacks prototypical inheritance, except from
-the Javascript core items:  <span class="codeWord">Object.prototype </span> and  <span class="codeWord">Array.prototype</span>.<p>
+the kind that is expressable in <a href="https://www.json.org/json-en.html">JSON</a>. Such a structure lacks prototypical inheritance, except from
+the Javascript core items:  <span class="textVar">Object.prototype </span> and  <span class="textVar">Array.prototype</span>.<p>
 
 
 
 <p>2) Next, allow prototype chains in the tree. This places another sort of graph over the first.
 It has the same nodes as the original tree, but adds a new set of edges - 
- edges which join nodes <span class="codeWord">A</span> and <span class="codeWord">B</span> if
-<span class="codeWord">B</span> is the prototype of <span class="codeWord">A</span>.  This second graph is  acyclic too, but is rarely connected. 
+ edges which join nodes <span class="textVar">A</span> and <span class="textVar">B</span> if
+<span class="textVar">B</span> is the prototype of <span class="textVar">A</span>.  This second graph is  acyclic too, but is rarely connected. 
 </p>
 <p>
 3) Introduce a third kind of edge into the data structure: the "cross-tree link", which, as the name
@@ -30,18 +28,18 @@ These, like the tree edges, are represented by JavaScript's object-to-own-proper
 into the mix of possible edges, the tree restriction would vanish. The instantiation  algorithm
 depends on tree structure, so this would not work.  We need a scheme for
 keeping track of what type  (tree or cross-tree) each edge is. This is the scheme:
-Add two special properties to nodes, <span class="codeWord">&lt;node&gt;.__parent</span>, and <span class="codeWord">&lt;node&gt;.__name</span>. Whenever there is a tree-edge from 
-node <span class="codeWord">A</span> to node <span class="codeWord">B</span> labeled P (ie A.P === B), then set
-<span class="codeWord">B.__parent = A</span> and <span class="codeWord">B.__name = P</span>.  So, these  __parent and __name properties effectively pick out which edges are tree edges and which are cross-tree links. They also ease tree navigation. Here is a picture:</p>
+Add two special properties to nodes, <span class="textVar">&lt;node&gt;.__parent</span>, and <span class="textVar">&lt;node&gt;.__name</span>. Whenever there is a tree-edge from 
+node <span class="textVar">A</span> to node <span class="textVar">B</span> labeled P (ie A.P === B), then set
+<span class="textVar">B.__parent = A</span> and <span class="textVar">B.__name = P</span>.  So, these  __parent and __name properties effectively pick out which edges are tree edges and which are cross-tree links. They also ease tree navigation. Here is a picture:</p>
 
  <img src="crossTree.svg" style="border:none" width="700" heightt="200"/>
 
 <!--<img style="border:none" width="700" 
 src="https://firebasestorage.googleapis.com/v0/b/project-5150272850535855811.appspot.com/o/JHtAs2VsGjYCqJmOo39SexGq2Fx1%2Fdoc%2FcrossTree.svg?alt=media"/>-->
 <p>
-In the picture, tree edges A.P = B are those which have __parent edges running the other way, and where B.__name === P.
+In the picture, tree edges <span class="textVar">A.P = B</span> are those which have __parent edges running the other way, and where <span class="textVar">B.__name === P</span>.
 Now that the mechanism is present to pick out tree edges, cross tree links can be introduced simply via
-<span class="codeWord">A.P = B</span> for any two nodes <span class="codeWord">A, B</span> in
+<span class="textVar">A.P = B</span> for any two nodes <span class="textVar">A, B</span> in
 the tree.
 
 </p>
@@ -52,35 +50,35 @@ the tree.
 <p>The algorithm is specified in detail below, but understanding this level of detail is  not required to make use of the operation
 in coding; in practice, one might say, "it does the right thing".</p>
 
-<p>Let <span class="codeWord">T</span>' = <span class="codeWord">T.instantiate()</span>.
-Then <span class="codeWord">T</span>' is a treewise copy of <span class="codeWord">T</span>,
+<p>Let <span class="textVar">T</span>' = <span class="textVar">T.instantiate()</span>.
+Then <span class="textVar">T</span>' is a treewise copy of <span class="textVar">T</span>,
 but initially <!--(see the <a href="#lastStep">step</a> below)--> omits its atomic-valued properties, 
-which <span class="codeWord">T</span>' will acquire by inheritance.  <span class="codeWord">T</span>' also has the same prototype structure as <span class="codeWord">T</span>, except that chains in <span class="codeWord">T</span>' are anchored back in <span class="codeWord">T</span>.
-The exact situation is this: consider corresponding nodes <span class="codeWord">N</span> and <span class="codeWord">N</span>' in <span class="codeWord">T</span> and <span class="codeWord">T</span>', that is, nodes appearing at the same paths from the roots of <span class="codeWord">T</span> and <span class="codeWord">T</span>'.
-Now consider the prototypes <span class="codeWord">P</span> and <span class="codeWord">P</span>' of <span class="codeWord">N</span> and <span class="codeWord">N</span>', that is, <span class="codeWord">P</span> and <span class="codeWord">P</span>' where
-<span class="code">P=Object.getPrototypeOf(N)</span> and <span class="code">P'=Object.getPrototypeOf(N')</span>. There
-are two cases. First, <span class="codeWord">P</span> might lie within <span class="codeWord">T</span>. Then <span class="codeWord">P</span>' is defined to be the corresponding node to <span class="codeWord">P</span>, treewise (ie the one at the same path). Second,
-<span class="codeWord">P</span> might lie outside of the tree <span class="codeWord">T</span>.  Then <span class="codeWord">P</span>' is set to <span class="codeWord">N</span> itself. This is what I mean when I say that prototype chains in <span class="codeWord">T</span>' are anchored in <span class="codeWord">T</span>. If you follow
-a prototype chain <span class="codeWord">C</span>' in <span class="codeWord">T</span>', it will pass through nodes at the same paths as those of the corresponding chain <span class="codeWord">C</span> in <span class="codeWord">T</span>,
+which <span class="textVar">T</span>' will acquire by inheritance.  <span class="textVar">T</span>' also has the same prototype structure as <span class="textVar">T</span>, except that chains in <span class="textVar">T</span>' are anchored back in <span class="textVar">T</span>.
+The exact situation is this: consider corresponding nodes <span class="textVar">N</span> and <span class="textVar">N</span>' in <span class="textVar">T</span> and <span class="textVar">T</span>', that is, nodes appearing at the same paths from the roots of <span class="textVar">T</span> and <span class="textVar">T</span>'.
+Now consider the prototypes <span class="textVar">P</span> and <span class="textVar">P</span>' of <span class="textVar">N</span> and <span class="textVar">N</span>', that is, <span class="textVar">P</span> and <span class="textVar">P</span>' where
+<span class="textVar">P=Object.getPrototypeOf(N)</span> and <span class="textVar">P'=Object.getPrototypeOf(N')</span>. There
+are two cases. First, <span class="textVar">P</span> might lie within <span class="textVar">T</span>. Then <span class="textVar">P</span>' is defined to be the corresponding node to <span class="textVar">P</span>, treewise (ie the one at the same path). Second,
+<span class="textVar">P</span> might lie outside of the tree <span class="textVar">T</span>.  Then <span class="textVar">P</span>' is set to <span class="textVar">N</span> itself. This is what I mean when I say that prototype chains in <span class="textVar">T</span>' are anchored in <span class="textVar">T</span>. If you follow
+a prototype chain <span class="textVar">C</span>' in <span class="textVar">T</span>', it will pass through nodes at the same paths as those of the corresponding chain <span class="textVar">C</span> in <span class="textVar">T</span>,
 as long as it is within the tree, but where it exits the tree, then it is 
-anchored back over in <span class="codeWord">T</span> at the node in <span class="code">T</span> from which the exit node in
-<span class="code">T</span>' was copied. </p>
+anchored back over in <span class="textVar">T</span> at the node in <span class="textVar">T</span> from which the exit node in
+<span class="textVar">T</span>' was copied. </p>
 <p id="lastStep">There is one more step in the algorithm. Consider again the case where
-<span class="codeWord">P</span>, the prototype of <span class="codeWord">N</span>, lies within <span class="codeWord">T</span>.
-Then, as described above, <span class="codeWord">N</span>' will inherit from <span class="codeWord">P</span>', not <span class="codeWord">N</span>.
-In this case, the algorithm specifies that  the own atomic properties of <span class="codeWord">N</span> be copied to <span class="codeWord">N</span>', since
+<span class="textVar">P</span>, the prototype of <span class="textVar">N</span>, lies within <span class="textVar">T</span>.
+Then, as described above, <span class="textVar">N</span>' will inherit from <span class="textVar">P</span>', not <span class="textVar">N</span>.
+In this case, the algorithm specifies that  the own atomic properties of <span class="textVar">N</span> be copied to <span class="textVar">N</span>', since
 otherwise they would be, in a sense, lost.</p> 
 
-<p>Here is a simple example. <span class="codeWord">iii</span> is the initial tree.
+<p>Here is a simple example. <span class="textVar">iii</span> is the initial tree.
 </p>
 <!--<img src="https://firebasestorage.googleapis.com/v0/b/project-5150272850535855811.appspot.com/o/twitter%3A14822695%2FforDocs%2FinstantiateDiagram1.svg?alt=media" style="border:none" width="200" height="140"/> -->
 <img src="tree_1.jpg" style="border:none" width="100" heightt="140"/>
 
 <p>Then after,</p>
-<pre><code>
+<precode>
 jjj = iii.instantiate();
 jjj.a.y = 4;
-</code></pre>
+</pre>
 <p>we have: </p> 
  <img src="tree_3.svg" style="border:none" width="300" heightt="200"/>
  <!--
@@ -88,9 +86,9 @@ jjj.a.y = 4;
 
 <p>
 So, eg,
-<span class="codeWord">jjj.b.x === 1</span>,
-since <span class="codeWord">jjj.b</span> inherits from <span class="codeWord">jjj.a</span>, which in turn inherits from <span class="codeWord">iii.a</span>.
-Note that <span class="codeWord">jjj.b.z</span> has been copied from <span class="codeWord">iii.b.z</span>, by the last-mentioned
+<span class="textVar">jjj.b.x === 1</span>,
+since <span class="textVar">jjj.b</span> inherits from <span class="textVar">jjj.a</span>, which in turn inherits from <span class="textVar">iii.a</span>.
+Note that <span class="textVar">jjj.b.z</span> has been copied from <span class="textVar">iii.b.z</span>, by the last-mentioned
 <a href="#lastStep">step</a> of the algorithm mentioned above.</p>
 
 <p><a href="https://github.com/chrisGoad/prototypejungle/blob/main/js/core/instantiate.js">Here</a> is the implementation.</p>
@@ -104,7 +102,7 @@ contain interior nodes which either inherit prototype-wise from elsewhere in the
 This is not quite right.  Instead of using plain object and arrays,  we instead introduce these prototypes:</p>
 
 
-<pre>
+<precode>
   
 const ObjectNode = {};
 
@@ -114,30 +112,28 @@ const ArrayNode = [];
 <p>
 With these constructors:
 </p>
-<pre>
+<precode>
   
-ObjectNode.mk = function () {return Object.create(pj.Object)}
+ObjectNode.mk = function () {return Object.create(pj.ObjectNode)}
 
-ArrayNode.mk = function () {return Object.create(pj.Array)}
+ArrayNode.mk = function () {return Object.create(pj.ArrayNode)}
 
 </pre>
 <p>	
-(Note that <span class="codeWord">Object.create</span> is used here, and not any form of <span class="codeWord">new</span>.
-This <span class="codeWord">new</span>-avoidance is a general PrototypeJungle policy, as explained
-<a href="/doc/code.html#nonews">here</a>). This means that we can define tree operations on
-<span class="codeWord">ObjectNode</span> and
-<span class="codeWord">ArrayNode</span> without polluting the basic JavaScript name spaces <span class="codeWord">Object.prototype</span> and
-<span class="codeWord">Array.prototype</span>. Such pollution would affect all JavaScript objects and arrays, not just the ones used in the
+ This means that we can define tree operations on
+<span class="textVar">ObjectNode</span> and
+<span class="textVar">ArrayNode</span> without polluting the basic JavaScript name spaces <span class="textVar">Object.prototype</span> and
+<span class="textVar">Array.prototype</span>. Such pollution would affect all JavaScript objects and arrays, not just the ones used in the
 PrototypeJungle implementation.
 </p>
 <!--
 <p id="externals">
 
-A final, and very useful, generalization can be made. A prototype tree defined in the core module, <span class="codeWord">externals</span>, holds a series of objects suitable for instantiation
+A final, and very useful, generalization can be made. A prototype tree defined in the core module, <span class="textVar">externals</span>, holds a series of objects suitable for instantiation
 into other trees.
 The other modules, such as geom, add things to externals as they are loaded.
 When any prototype tree containing an external  is serialized, the external is encoded by its path within the externals tree.
-For example, most of the basic types, such as geom.Point (and ObjectNode!) appear in the externals tree. Consider this code: 
+For example, most of the basic types, such as geom.Point (and ObjectNode!) appear in the externals tree. Consider this textVar: 
 </p>
 <p style="padding:5px"></p><pre style="font-weight:bold" class="code">
 someNode.set('p',geom.Point.mk(1,2));
@@ -156,7 +152,7 @@ defined as a pair of graphs over the same set of nodes, graphs given by two sort
 isPrototypeOf edges.
 The former graph, as always,
 is restricted to be a tree.  Before the ammendment, interior nodes either inherited from another node in a tree,  or from
-<span class="codeWord">Array.prototype</span> or <span class="codeWord">Object.prototype</span>,
+<span class="textVar">Array.prototype</span> or <span class="textVar">Object.prototype</span>,
 or from a component.
 Now, interior nodes can inherit from any object in the externals tree as well.
 </p>

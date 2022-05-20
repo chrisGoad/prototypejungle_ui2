@@ -34,18 +34,19 @@ rs.radiusGenerator= function (p) {
 
 rs.initialize = function () {
   debugger;
+  let {isLight} = this;
   this.initProtos();
   this.setupRandomGridForShapes('radius',{step:10,min:10,max:100});
   this.addFrame();
-  let rwd = (this.isLight?1:1.1)*ht;
+  let rwd = (isLight?1:1.1)*ht;
   this.addRectangle({width:rwd,height:rwd,stroke_width:4,stroke:'white',fill:isLight?'white':'black'});
-   let shapes = this.set('shapes',arrayShape.mk());
+  let shapes = this.set('shapes',arrayShape.mk());
  let drop =  this.generateCircleDrop(dropParams);
   let {points,radii} = drop;
   let ln  = points.length;
   for (let i=0;i<ln;i++) {
     let p = points[i];
-    if ((!this.isLight) && (p.length() > 3000)) {
+    if ((!isLight) && (p.length() > 3000)) {
       continue;
     }
     let crc = this.circleP.instantiate();

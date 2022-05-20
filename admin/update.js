@@ -36,7 +36,7 @@ var boilerplate1 =
 <div class="topGrid">
 <div></div>
 <div ><span id ="prevSpan" class="button"> &lt;</span></div>
-<div><span class="textVar">PrototypeJungle</span></div>
+<div><span class="textVar"><a style="color:black" href="../index.html">PrototypeJungle</a></span></div>
 <div></div>
 <div><span style="padding-top:0px"> <img  src="logo.svg" width="30" height="30" /></span></div>
 <div><span id="nextSpan" class="button"> &gt; </span></div>

@@ -18,7 +18,6 @@ const extension = function (string) {
 }
 
 const getPage = function () {
-  debugger;
 	let c_url = window.location.href;
   let c_file = afterLastChar(c_url,'/');
   let c_name = beforeLastChar(c_file,'.');
@@ -26,53 +25,34 @@ const getPage = function () {
   return c_page;
 }
 
-let cWidth;
 let cPage;
-let lastPage;
-let thePages = ['disclaimer','installation'];
+let thePages = ['disclaimer','installation','conventions','generators','method_modules',
+                'basics','grid','boundedRandomGrids','powerGrid','drop','web','lines','assembly','prototypetrees'];
 const onPrev = function () {
   debugger;
-	let cPage = getPage();
+//	let cPage = getPage();
 	let dest = thePages[cPage-1];
 	window.location.href = dest+'.html';
 }
 
 const onNext = function () {
   debugger;
-  let cPage = getPage();
+ // let cPage = getPage();
 	let dest = thePages[cPage+1];
 	window.location.href = dest+'.html';
 }
 
-const onFull = function () {
-  debugger;
-	window.location.href = imurl;
-}
-
-const onTop = function () {
-  debugger;
-  let dst;
-	if (imKind === 'g') {
-    dst = 'index';
-  } else if (imKind === 'h') {
-    dst = 'horizontal';
-  } else if (imKind === 'hnf') {
-    dst = 'horizontalnf';
-  } else if (imKind === 'v') {
-    dst = 'vertical';
- } else if (imKind === 'sq') {
-    dst = 'square';
- }
-	window.location.href = './'+dst+'.html';
-}
-
-let imKind,imLocalS,theTitles,theLocals,imurl;
 document.addEventListener('DOMContentLoaded', () => {
   debugger;
 	let prevSpan = document.getElementById('prevSpan');
 	let nextSpan = document.getElementById('nextSpan');
-	//prevSpan.addEventListener('click',onPrev);
+  cPage = getPage();
+	prevSpan.addEventListener('click',onPrev);
 	nextSpan.addEventListener('click',onNext);
-  prevSpan.hidden = true;
-	
+  if (cPage === 0) {
+    prevSpan.style.display = "none";
+  }
+  if (cPage === (thePages.length - 1)) {
+	  nextSpan.style.display = "none";
+  } 
 });	

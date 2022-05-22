@@ -46,7 +46,7 @@ rs.initialize = function () {
   let ln  = points.length;
   for (let i=0;i<ln;i++) {
     let p = points[i];
-    if ((!isLight) && (p.length() > 3000)) {
+    if ((0 && !isLight) && (p.length() > 3000)) {
       continue;
     }
     let crc = this.circleP.instantiate();

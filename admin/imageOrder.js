@@ -4,6 +4,8 @@ module.exports = [
 [3,'quad_2_v_2'],
 [4,'web_random_radius_v_2'],
 [5,'lines_chaos_within_order'],
+[26,'drop_hole'],
+[27,'drop_light'],
  [20,'web_diamond'],
 
  [25,'grid_fade'],

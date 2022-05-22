@@ -13,6 +13,7 @@ const toBoolean = (v) => {
     return false;
   }
 }
+
 let signed = 0
 //let signed = toBoolean(signedstr);
 //let forKOP = toBoolean(forKOPstr);
@@ -29,6 +30,15 @@ let horizontalnf = kind === 'horizontalnf'; // horizontal no frame
 let square = kind === 'square';
 let images = kind === 'images';
 let local_images = (kind === 'local_images') || alternate;
+let whichPage = 1;
+let orderMin,orderMax;
+if (forKOP) {
+  orderMin = -1;
+  orderMax = 267;
+} else {
+  orderMin = -1;
+  orderMax = 10000;
+}
 
 console.log('kind','['+kind+']','sortByOrder',sortByOrder,'forKOP',forKOP,'byKind',byKind,'byAspect',byAspect,'byLikes',byLikes,'signed',signed,'horizontal',horizontal,'horizontalnf',horizontalnf);
 //return;
@@ -130,7 +140,7 @@ let pageTop = `
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Kingdom of Pattern</title>
+<title>`+(forKOP?'Kingdom of Pattern':'PrototypeJungle')+`</title>
   <style>
     .theGrid {
       display:grid;
@@ -206,14 +216,14 @@ if (imKind === 'g') {
     if (local_images) {
       pageIntro = 
       `
-      <p class="introLineLarge">PrototypeJungle</p>
+      <p class="introLineLarge"><a href="index.html">PrototypeJungle</a></p>
       <p class="introLineSmall">These are the images that you have rebuilt in your local copy of PrototypeJungle</p>
       <p class="introLineSmall">Initially, no images will appear</p>
       `;
     } else {
        pageIntro = 
       `
-      <p class="introLineLarge">PrototypeJungle</p>
+      <p class="introLineLarge"><a style="color:white" href="index.html">PrototypeJungle</a></p>
       `;
     }
   }
@@ -274,7 +284,7 @@ const thingString = function (order,ix,dir,useThumb,ititle,props) {
 	let thumbsrc = `thumbs/${vpath}.jpg`;
   let localSrc =`public/thumbs/${vpath}.jpg`;
   if (ix === 'drift_web') {
-    console.log('IIIIIXXXX',ix);
+    //console.log('IIIIIXXXX',ix);
   }
   //theLocals.push(localim?1:0);
 
@@ -290,7 +300,7 @@ const thingString = function (order,ix,dir,useThumb,ititle,props) {
 	let lastPageArg = (pageNumber === numPages)?'&lastPage=1':'';
 	let rs,srcUrl;
 	let astart = `<a style="color:white" href="page.html?image=${vx}&${pageArg}&${kindArg}&${localArg}">`;
-  console.log('ASTART',astart);
+  //console.log('ASTART',astart);
   let propsStr = `<span style="font-size:10pt">${likes?'Likes '+likes:''} ${posted?"":" NOT POSTED"} ${local_images?'Local':''} ${category}</span><br/>`;
   let sourcenm = `source${sources?'s':''}`;
 	if (forKOP || forPJ) {
@@ -303,6 +313,7 @@ const thingString = function (order,ix,dir,useThumb,ititle,props) {
     } else {
       rs = `<div><p class="centered"><a style="color:white" href="http://localhost:8081/draw.html?source=/${dir}/${path}.${fileExt}${theImageArg}">${title}</a><p/>`;
     }
+    console.log("RRRRSSS",rs);
     rs = rs +
     `<p class="centered"><a style="color:white" href="${srcUrl}">${sourcenm}</a></p>
     <p class="centered">${astart}<img width="200" src="${thumbsrc}" alt="Image Missing"></a></p></div>`;
@@ -427,12 +438,15 @@ let sectionString = function (things) {
       rs += `</div><br/><div style="text-align:center">${txt}</div><br/><div>`;
     } else {
       let [order,file,directory,useThumb,title,props] = thing;
-      console.log('PROPS',props);
+     // console.log('PROPS',props);
     //  console.log('Order',order,'file',file);
      // let tov = typeof variant;
     //  console.log('is variant',tov);
 
       let ord = getOrder(thing);
+      if ((ord <  orderMin) || (ord > orderMax)) {
+        continue;
+      }
       rs += thingString(ord,file,directory,useThumb,title,props);
       //rs += thingString(file,directory,useThumb,title,image);
       numThingsThisLine++;
@@ -461,7 +475,7 @@ const sectionsString = function (sections) {
 }
 const writeThePages = function () {
 	let js = `let ${pagesVar}= ${JSON.stringify(thePages)};`;
-  console.log('writeThePagess',js,pagesVar,pagesPath);
+  //console.log('writeThePagess',js,pagesVar,pagesPath);
 	fs.writeFileSync(pagesPath,js);
 	//fs.writeFileSync(alternate?'public/altPages.js':(byKind?'public/byKindPages.js':'public/thePages.js'),js);
 }
@@ -487,7 +501,7 @@ const writePage = function (sections) {
   frs += pageScript;
 	let ss =sectionsString(sections);
 	frs +=ss;
-  console.log('sectionsScript',ss);
+ // console.log('sectionsScript',ss);
 	fs.writeFileSync(outPath,frs);
 }
 

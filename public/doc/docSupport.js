@@ -27,7 +27,7 @@ const getPage = function () {
 
 let cPage;
 let thePages = ['disclaimer','installation','conventions','generators','method_modules',
-                'basics','grid','boundedRandomGrids','powerGrid','drop','web','lines','assembly','prototypetrees'];
+                'basics','grid','boundedRandomGrids','powerGrid','drop','web','lines','assembly','prototypetree','geometry','shapes'];
 const onPrev = function () {
   debugger;
 //	let cPage = getPage();

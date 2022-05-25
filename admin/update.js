@@ -27,7 +27,7 @@ var boilerplate1 =
 <title>PrototypeJungle</title>
 <link rel="stylesheet" type="text/css"  href="style.css"/>
 <link rel="stylesheet" type="text/css"  href="spectrum.css"/>
-<link rel="icon" href="/images/favicon.ico" />
+<link rel="icon" href="/favicon.ico" />
 
 </head>
 <body style="background-color:white;font-size:14pt"> 

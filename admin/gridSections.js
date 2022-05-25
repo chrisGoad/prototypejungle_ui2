@@ -5,7 +5,7 @@ sections: [
 
 [
 
- [0,'drop_light','instances',1,'Light',{likes:0,posted:0,category:'quad',variant:0}], 
+ [0,'drop_light','generators',1,'Light',{likes:0,posted:0,category:'quad',variant:0}], 
  [0,'web_random_radius','generators',1,'Scratches',{likes:0,posted:0,category:'quad',variant:2}], 
  [0,'quad_3','generators',1,'Circles',{likes:72,posted:0,category:'quad',variant:2}], 
  //[0,'drop_whorls','generators',1,'Whorls',{likes:45,posted:1,category:'drop'}], 

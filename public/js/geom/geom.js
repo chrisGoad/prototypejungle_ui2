@@ -778,13 +778,18 @@ LineSegment.onOppositeSides = function (line1) { // the ends of line1 are on opp
   let sd1 = dt1 <0;
   return sd0 === sd1;
 }
- 
+/*
 LineSegment.intersectsLineSegment = function (line1) {
   let op1 = this.onOppositeSides(line1);
   let op0 = line1.onOppositeSides(this);
   return op1 && op0;
 } 
+*/
 
+LineSegment.intersectsLineSegment = function (line1) {
+  let isct = this.intersect(line1);
+  return !!isct;
+} 
 LineSegment.intersect = function (line1) {
 	let verbose = false;
   let line0 = this;

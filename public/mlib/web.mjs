@@ -14,7 +14,7 @@ let defaults = {webTries:5,maxLoops:Infinity};//,maxTriesPerEnd:20};
 Object.assign(rs,defaults);
 
 rs.pairFilter = function (i,j) {
-	let {maxConnectorLength:mxCln,minConnectorLength:mnCln=0} = this.webParameters
+	let {maxConnectorLength:mxCln,minConnectorLength:mnCln=0} = this.webParameters;
   let {cPoints} = this;
 	let pi = cPoints[i];
 	let pj = cPoints[j];
@@ -63,7 +63,8 @@ rs.addSegs = function (lineP) {
 			
 	for (let i=0;i<ln;i++) {
 		let sg = connectSegs[i];
-		let ssg = sg.lengthen(lengthenBy);
+		//let ssg = sg.lengthen(lengthenBy);
+		let ssg = sg;
 		ssg.index0 = sg.index0;
 		ssg.index1 = sg.index1;
 	  let line = this.genLine(ssg,lineP);
@@ -122,7 +123,7 @@ rs.generateWeb = function (iparams) {
   core.transferProperties(params,this,props);
   core.transferProperties(params,iparams,props);
   this.webParameters = params;
-	let {points:pnts,lineP,minConnectorLength,maxConnectorLength,webTries,lengthenBy=0,maxLoops=Infinity} = params;
+	let {points:pnts,lineP,minConnectorLength,maxConnectorLength,webTries,lengthenBy=-0.1,maxLoops=Infinity} = params;
     debugger;
 	if (pnts) {
 		this.initWeb(pnts);
@@ -284,7 +285,11 @@ const removeFromNears = function (i,ni) {
 			if ((!rip) || (!rjp)) {
 				debugger;
 			}
-			let rseg  = geom.LineSegment.mk(rip,rjp).lengthen(-0.1);
+			let iseg  = geom.LineSegment.mk(rip,rjp);
+      debugger;
+      //let rseg = iseg.lengthen(-0.1);
+      //let rseg = iseg.lengthen(-0.01);
+      let rseg = iseg.lengthen(lengthenBy);
 			/*if (lineP) {
 				rseg.lineP = lineP;
 			}*/

@@ -57,7 +57,6 @@ rs.collides = function (point,radius,points,radii) {
 
 
 rs.genRandomPoint = function (rect) {
-	//debugger;
   if (rect) {
     let {corner,extent} = rect;
     let lx = corner.x;

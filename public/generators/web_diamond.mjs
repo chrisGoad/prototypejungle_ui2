@@ -1,6 +1,5 @@
 
 import {rs as linePP} from '/shape/line.mjs';
-import {rs as circlePP} from '/shape/circle.mjs';
 import {rs as basicP} from '/generators/basics.mjs';
 import {rs as addPointMethods} from '/mlib/pointGen.mjs';	
 import {rs as addWebMethods} from '/mlib/web.mjs';	
@@ -10,14 +9,13 @@ addPointMethods(rs);
 addWebMethods(rs);
 
 rs.setName('web_diamond');
-let ht= 2000;
-ht = 3000;
+let ht= 3000;
 let nrc=64;
-let mcl = 1.6*(ht/nrc);
-mcl = 50
+let mcl = 50
 let minc = 20;
 
-let  topParams = {frameStroke:'rgb(52,52,52)',framePadding:0.1*ht,width:ht,height:ht,maxFringeTries:100, minConnectorLength:mcl, maxConnectorLength:mcl+minc, webTries:100};
+
+let  topParams = {frameStroke:'rgb(52,52,52)',framePadding:0.1*ht,width:ht,height:ht,webTries:100, minConnectorLength:mcl, maxConnectorLength:mcl+minc, webTries:1000,maxDrops:10000,lengthenBy:-0.01};
 
 Object.assign(rs,topParams);
 

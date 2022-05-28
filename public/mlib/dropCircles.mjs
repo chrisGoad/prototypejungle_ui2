@@ -106,6 +106,7 @@ rs.generateCircleDrop = function (iparams) {
   let points = [];
   let radii = [];
   let numDrops = 0;
+  let fill;
 	while ((cnt < maxLoops) && (numDrops < maxDrops)) {
     cnt++;
 		let pnt = this.genRandomPoint();
@@ -130,7 +131,7 @@ rs.generateCircleDrop = function (iparams) {
       numDrops++;
     }
 	}
-  return {radii,points};
+  return {radii,points,fills};
 }
 }
 

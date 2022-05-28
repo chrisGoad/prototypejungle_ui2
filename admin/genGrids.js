@@ -28,7 +28,9 @@ let vertical = kind === 'vertical';
 let horizontal = kind === 'horizontal';
 let horizontalnf = kind === 'horizontalnf'; // horizontal no frame
 let square = kind === 'square';
-let images = kind === 'images';
+let imagesHere = kind === 'imagesHere';
+let images = (kind === 'images') || imagesHere;
+
 let local_images = (kind === 'local_images') || alternate;
 let whichPage = 1;
 let orderMin,orderMax;
@@ -301,7 +303,7 @@ const thingString = function (order,ix,dir,useThumb,ititle,props) {
 	let rs,srcUrl;
 	let astart = `<a style="color:white" href="page.html?image=${vx}&${pageArg}&${kindArg}&${localArg}">`;
   //console.log('ASTART',astart);
-  let propsStr = `<span style="font-size:10pt">${likes?'Likes '+likes:''} ${posted?"":" NOT POSTED"} ${local_images?'Local':''} ${category}</span><br/>`;
+  let propsStr = imagesHere?'': `<span style="font-size:10pt">${likes?'Likes '+likes:''} ${posted?"":" NOT POSTED"} ${local_images?'Local':''} ${category}</span><br/>`;
   let sourcenm = `source${sources?'s':''}`;
 	if (forKOP || forPJ) {
 		//let titleLink = title?`${astart}${title}</a></p>`:'';

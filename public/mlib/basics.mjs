@@ -2,6 +2,7 @@
 
 var root;
 import {rs as rectPP} from '/shape/rectangle.mjs';
+import {rs as shadedRectPP} from '/shape/shadedRectangle.mjs';
 //import {rs as rectPP} from '/shape/rectangle.js','/shape/textOneLine.js',function (rectPP,textPP) {
 import {rs as textPP} from '/shape/textOneLine.mjs';
 //core.require('/gen0/test.js',function (addRandomMethods) {
@@ -71,24 +72,32 @@ item.addSignature = function() {
 item.numFrames = 0;
 item.numRects =0;
 item.addRectangle  = function (iparams) {
-//	debugger;
+  debugger;
   if (!iparams) {
     return;
   }
   let params = (typeof iparams === 'string')?{fill:iparams}:iparams;
-  let {width,height,fill='transparent',stroke,stroke_width,position} = params;
+  let {width,height,fill='transparent',leftFill,rightFill,stroke,stroke_width,position} = params;
   if (!width) {
     width = this.width;
    }
    if (!height) {
     height = this.height;
    }
-   if (!width || !fill) {
+   if (!width || ((!fill)  && (!leftFill))) {
     return;
    }
-  let rect  = this.set('brect'+this.numRects,rectPP.instantiate());
+  let rect  = this.set('brect'+this.numRects,leftFill?shadedRectPP.instantiate():rectPP.instantiate());
   this.numRects = this.numRects + 1;
-  rect.fill = fill;
+  if (fill) {
+    rect.fill = fill;
+  }
+   if (leftFill) {
+    rect.leftFill = leftFill;
+    rect.rightFill = rightFill;
+  } else {
+    rect.fill = fill;
+  }
   if (stroke) {
     rect.stroke = stroke;
   }

@@ -1,11 +1,29 @@
-
+//active
+//core.require('/shape/rectangle.js',function (addAnimationMethods,rectangleP) {
 const rs = function (item) {
 
-// this is documented at https://prototypejungle.net/doc/lines.html
 
-let defaults = {angleMax:90,angleMin:-90};
+item.width = 200;
+item.height = 200;
+item.interpolate = false;
+item.shapeExpansionFactor = 1;
+/* for lines */
+item.numLines = 2;
+item.angleMax = 90;
+item.angleMin =  -90;
+item.excludeLineFuncton = undefined;
+item.segmentToLineFunction = undefined;
 
-Object.assign(rs,defaults);
+item.backgroundColor = undefined; //undefined if no background wanted
+/* for shapes*/
+item.minRadius = 10;
+item.maxRadius = 20;
+item.numPoints = 3;
+item.maxTries = 100;
+item.margin = 10;
+item.shortenBy = 10;
+/* end */
+
 
 item.segmentToLineFunction = function (seg,lineP) {
   let line = this.genLine(seg,lineP);
@@ -118,6 +136,10 @@ item.addSides = function (rect) {
   let UR = Point.mk(cx+ex,cy)
   let LL = Point.mk(cx,cy+ey)
   let LR  = Point.mk(cx+ex,cy+ey)
+	/* let UL = Point.mk(-hw,hh)
+  let UR = Point.mk(hw,hh)
+  let LL = Point.mk(-hw,-hh)
+  let LR  = Point.mk(hw,-hh)*/
   rect.topSide = geom.LineSegment.mk(UL,UR);
 	rect.rightSide = geom.LineSegment.mk(UR,LR);
   rect.bottomSide = geom.LineSegment.mk(LR,LL);
@@ -188,6 +210,128 @@ const insideXs = function (sg,x0,x1) {
   return (x0 <= e0x) && (e1x <= x1);
 }
  
+  
+// works by side effect; returns "remove" if the segment is entirely on the wrong side
+
+const snipAtX = function (sg,x,direction) {
+  let {end0,end1} = sg;
+  let e0x =end0.x;
+  let e1x = end1.x;
+
+  if (direction == "fromRight") {
+    if (e0x >= x) {
+      return false;
+    }
+ 
+    if (e1x <= x) {
+        return false;
+    }
+  }
+  let intr = intersectSegmentAtX(sg,x);
+  if (intr) {
+    let ix = intr.x;
+    let e0x = end0.x;
+    let e1x = end1.x;
+    if (direction === "fromRight") {
+      if (ix < e0x) {
+        end1.copyto(intr);
+      } else {
+        end0.copyto(intr);
+      }
+    } else {
+       if (ix > e0x) {
+        end1.copyto(intr);
+      } else {
+        end0.copyto(intr);
+      }
+    }
+    return true;
+  }
+}
+
+
+const snipAtXs = function (sg,x0,x1) {
+  let {end0,end1} = sg;
+  let e0x =end0.x;
+  let e1x = end1.x;
+  if (e0x >= x1) {
+    return false;
+  }
+  if (e1x <= x0) {
+    return false;
+  }
+  let notInt;
+  let intrLow,intrHigh;
+  if (e0x >= x0) {
+    notInt = 'x0';
+  }
+  if (e1x <= x1) {
+    notInt = 'x1';
+  }
+  if (notInt !== 'x0') {
+    intrLow = intersectSegmentAtX(sg,x0);
+  }
+  if (notInt !== 'x1') {
+    intrHigh = intersectSegmentAtX(sg,x1);
+  }
+  if (intrLow && intrHigh) {
+    let rs = geom.LineSegment.mk(intrHigh,end1.copy());
+    end1.copyto(intrLow);
+    return rs;
+  }
+  if (intrLow) {
+    end1.copyto(intrLow);
+    return 'ok';
+  }
+  if (intrHigh) {
+    end0.copyto(intrHigh);
+    return 'ok'
+  }
+}
+
+
+item.intersectionsWithLine = function (p,vec,inside) {
+  let boxSeg = this.intersectWithRectangle(p,vec);
+  let boxPoints;
+  if (boxSeg) {
+    boxPoints = [boxSeg.end0,boxSeg.end1];
+  }  else {
+    debugger;
+    return undefined;
+  }	
+ // let boxPoints = this.intersectWithRectangle(p,vec);
+  let {points,radii} = this;
+  let rsOut = [boxPoints[0]];
+  let rsIn = [];
+  let ln = points.length;
+  for (let i=0;i<ln;i++) {
+    let center = points[i];
+    let radius = radii[i]*this.shapeExpansionFactor;
+    let circle = geom.Circle.mk(center,radius);
+    let ints = circle.intersectLine(p,vec);
+    if (!ints) {
+      continue;
+    }
+    let [int0,int1] = ints;
+		if (int0 && int1) {
+			rsOut.push(int0);
+			rsOut.push(int1);
+			if (inside) {
+				rsIn.push(int0);
+				rsIn.push(int1);
+			}
+		}
+  }
+ // this.genSides();
+  rsOut.push(boxPoints[1]);
+  rsOut.sort((p0,p1) => {return (p0.x < p1.x)?-1:1});
+  if (inside) {
+   rsIn.sort((p0,p1) => {return (p0.x < p1.x)?-1:1});
+   return [rsOut,rsIn]
+  }
+  return rsOut;
+}
+
 item.addShortenedLine = function (p0,p1,inside) {
  // let blf = 0.2 + Math.random() * 0.8;
   let {shortenBy,lines} = this;
@@ -273,6 +417,96 @@ item.generateShapes = function (protos,setDimensions,probabilities) {
   }
 }
   
+/* never tested*/
+/*
+item.intersectSegmentWithCircle = function (lsg,circle) {
+	//debugger;
+	let {end0:p,end1} = lsg;
+	let vec = end1.difference(p);
+  let intersections = circle.instersectLine(p,vec);
+	if (!intersections) {
+		return;
+	}
+	let i0 = intersections[0];
+	let i1 = intersections[1];
+	let c = circle.center;
+	const fractionAlong = function (pnt) {
+		let v = pnt.difference(c);
+		let a = Math.atan2(v.y,v.x);
+		return a/(2*Math.PI);
+	}
+	let fr0 = fractionAlong(i0);
+	let fr1 = fractionAlong(i1);
+	let descriptions = [fr0,fr1];
+  let rs =  geom.LineSegment.mk(i0,i1);
+	rs.descriptions = descriptions;
+	return rs;
+}
+
+
+
+item.intersectSegmentWithRectangle = function (lsg,rect) {
+	let end0 = lsg.end0;
+  let intersections = [];
+	let descriptions = [];
+	const fractionAlong = function (seg,p) {
+	  let {end0,end1} = seg;
+		let dp = p.distance(end0);
+		let ln = end1.distance(end0);
+		return dp/ln;
+  }
+  const pushIfNnul = function (sideName,x) {
+    if (x) {
+			let side = rect[sideName];
+      intersections.push(x);
+			descriptions.push([sideName,fractionAlong(side,x)]);;
+    }
+  }
+  pushIfNnul('topSide',rect.topSide.intersect(lsg));
+  pushIfNnul('bottomSide',rect.bottomSide.intersect(lsg));
+  pushIfNnul('leftSide',rect.leftSide.intersect(lsg));
+  pushIfNnul('rightSide',rect.rightSide.intersect(lsg));
+  if (intersections.length < 2) {
+    debugger;//keep
+    return undefined;
+  }
+	//end0 should be closer to int0 than int1
+	
+  let [int0,int1] = intersections;
+	let de0i0 = int0.boxcarDistance(end0);
+	let de0i1 = int1.boxcarDistance(end0);
+  if (de0i0 > de0i1) {
+    let tmp = int0;
+    int0 = int1;
+    int1 = tmp;
+		let d0 = descriptions[0];
+		let d1 = descriptions[1];
+		tmp = d0;
+		d0 = d1;
+		d1 = tmp;
+		descriptions[0] = d0;
+		descriptions[1] = d1;
+  }
+  let rs =  geom.LineSegment.mk(int0,int1);
+	rs.end0.side = descriptions[0][0]
+	rs.end1.side = descriptions[1][0]
+	rs.end0.fractionAlong = descriptions[0][1]
+	rs.end1.fractionAlong = descriptions[1][1]
+	//rs.descriptions = descriptions;
+  rs.whichCircle = lsg.whichCircle;
+  return rs;
+}
+item.intersectWithRectangle = function (p,ivec) {
+	 let vec = ivec.times(this.width * 4);
+  let e0 = p.plus(vec.minus()) ;
+  let e1 = p.plus(vec);
+  let lsg = geom.LineSegment.mk(e0,e1);
+	let rs = this.intersectSegmentWithRectangle(lsg,this.rect);
+	return rs;
+}
+*/
+	
+	
  
 item.randomPointInCircle = function (circle) {	
   let r = circle.radius;
@@ -351,6 +585,7 @@ item.intersectUnitSegment = function(usg,rect) {
     
 
 item.randomSegment = function (src,srcOn,dst,dstOn) {
+//  debugger;
   let srcP;
   let dstP;
   let srcIsRect = geom.Rectangle.isPrototypeOf(src);
@@ -364,6 +599,115 @@ item.randomSegment = function (src,srcOn,dst,dstOn) {
   }
   return seg;
 }
+/*
+  if (srcIsCircle) {
+    srcP = srcOn?this.randomPointOnCircle(src):this.randomPointInCircle(src);
+  } else {
+    srcP = this.randomPoint(src,srcOn);
+  }
+  if (dstIsCircle) {
+    dstP = onCircle?this.randomPointOnCircle(dst):this.randomPointInCircle(dst);
+  } else {
+    dstP = this.randomPoint(dst,dstOn);
+  }
+  let rsg = geom.LineSegment.mk(srcP,dstP,true);// true = don't copy
+  segments.push(rsg);
+  return rsg;
+ } 
+*/
+const putIn0_1 = function (x) {
+	while (x < 0) {
+		x++;
+	}
+	while (x>1) {
+		x--;
+	}
+	return x;
+}
+
+const interpolateValues = function (v0,v1,fr) {
+  let vi = v1-v0;
+  return v0 + (v1-v0) * fr;
+}
+
+const interpolatePoints = function (p0,p1,fr) {
+  let {x:p0x,y:p0y} = p0;
+  let {x:p1x,y:p1y} = p1;
+  let ix = interpolateValues(p0x,p1x,fr);
+  let iy= interpolateValues(p0y,p1y,fr);
+  return Point.mk(ix,iy);
+}
+
+const interpolateUnitSegments = function (sgA,sgB,fr) {
+  let {end0:A0,angle:angleA} = sgA;
+  let {end0:B0,angle:angleB} = sgB;
+  let e0 = interpolatePoints(A0,B0,fr);
+  let angle = interpolateValues(angleA,angleB,fr);
+  let vec = Point.mk(Math.cos(angle),Math.sin(angle));
+  let e1 = e0.plus(vec);
+  let lsg = geom.LineSegment.mk(e0,e1);
+  lsg.angle = angle;
+  return lsg;
+}
+  
+item.snipSegmentsAtX = function (x,direction,fraction) {
+  let segments = this.segments;
+  let cnt = 0;
+  segments.forEach((sg) => {
+    if (sg && (onWrongSideX(sg,x,direction) || intersectSegmentAtX(sg,x))) {
+      cnt++;
+    }
+  });
+  let numToSnip = Math.floor(fraction * cnt);
+  cnt = 0;
+  let idx = -1;
+  while (cnt < numToSnip) {
+    idx++;
+    let sg = segments[idx];
+    if (!sg) {
+      continue;
+    }
+    if (onWrongSideX(sg,x,direction)) {
+      segments[idx] = null;
+      cnt++;
+      continue;
+    }
+    if (snipAtX(sg,x,direction)) {
+      cnt++;
+    }
+  }
+}
+  
+item.snipSegmentsAtXs = function (x0,x1,fraction) {
+  let segments = this.segments;
+  let cnt = 0;
+  segments.forEach((sg) => {
+    if (sg && (insideXs(sg,x0,x1) || intersectSegmentAtX(sg,x0) || intersectSegmentAtX(sg,x1))) {
+      cnt++;
+    }
+  });
+  let numToSnip = Math.floor(fraction * cnt);
+  cnt = 0;
+  let idx = -1;
+  while (cnt < numToSnip) {
+    idx++;
+    let sg = segments[idx];
+    if (!sg) {
+      continue;
+    }
+    if (insideXs(sg,x0,x1)) {
+      segments[idx] = null;
+      cnt++;
+      continue;
+    }
+    let rsg = snipAtXs(sg,x0,x1);
+    cnt++;
+    if (rsg && (rsg!=='ok')) {
+      segments.push(rsg);
+    }
+  }
+}
+    
 
 
 item.genSides = function () {
@@ -409,11 +753,32 @@ item.alongCircle = function (circle,fr) {
 
 
 
+
+item.preliminaries = function (irect) {
+	let {backgroundColor,backgroundPadding,outerBackgroundColor:obc,outerBackgroundPaddingX:obpx,outerBackgroundPaddingY:obpy,width,height} = this;
+	let rect;
+	//debugger;
+	if (irect) {
+		rect = irect;
+	} else {
+		let hw = 0.5 * this.width;
+		let hh = 0.5 * this.height;
+		let corner = Point.mk(-hw,-hh);
+		let extent = Point.mk(width,height);
+	  rect = geom.Rectangle.mk(corner,extent);
+	}
+	this.addSides(rect);
+	this.rect = rect;
+	//this.addBackground();
+	
+}
+	
 item.generateLines = function (iparams) {
+  debugger;
   let params = {};
   let props = ['src','srcOn','dst','dstOn','numLines','lineP','excludeSegFunction'];
-  core.transferProperties(params,this,props);
-  core.transferProperties(params,iparams,props);
+   core.transferProperties(params,this,props);
+   core.transferProperties(params,iparams,props);
   let {src,srcOn,dst,dstOn,numLines,lineP,excludeSegFunction} = params;
   let lines = this.lines;
   if (!lines) {
@@ -426,9 +791,12 @@ item.generateLines = function (iparams) {
     debugger;
     let line = this.segmentToLineFunction(seg,lineP);
     lines.push(line);
+    //  this.addLine({lines:lines,segment:seg,lineP:lineP});
     }
   }
 }
+
+
 	
 };
 

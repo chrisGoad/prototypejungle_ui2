@@ -303,7 +303,7 @@ const thingString = function (order,ix,dir,useThumb,ititle,props) {
 	let rs,srcUrl;
 	let astart = `<a style="color:white" href="page.html?image=${vx}&${pageArg}&${kindArg}&${localArg}">`;
   //console.log('ASTART',astart);
-  let propsStr = imagesHere?'': `<span style="font-size:10pt">${likes?'Likes '+likes:''} ${posted?"":" NOT POSTED"} ${local_images?'Local':''} ${category}</span><br/>`;
+  let propsStr = imagesHere?`<span style="font-size:10pt">${likes?'Likes '+likes:''} ${posted?"":" NOT POSTED"} ${local_images?'Local':''} ${category}</span><br/>`:'';;
   let sourcenm = `source${sources?'s':''}`;
 	if (forKOP || forPJ) {
 		//let titleLink = title?`${astart}${title}</a></p>`:'';

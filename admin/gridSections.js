@@ -5,9 +5,9 @@ sections: [
 
 [
 
- [0,'drop_light','generators',1,'Light',{likes:0,posted:0,category:'quad',variant:0}], 
- [0,'web_random_radius','generators',1,'Scratches',{likes:0,posted:0,category:'quad',variant:2}], 
- [0,'quad_3','generators',1,'Circles',{likes:72,posted:0,category:'quad',variant:2}], 
+ [0,'drop_light','generators',1,'Light',{likes:50,posted:1,category:'dropCircles',variant:0}], 
+ [0,'web_random_radius','generators',1,'Scratches',{likes:36,posted:1,category:'quad',variant:2}], 
+ [0,'quad_3','generators',1,'Circles',{likes:72,posted:1,category:'quad',variant:2}], 
  //[0,'drop_whorls','generators',1,'Whorls',{likes:45,posted:1,category:'drop'}], 
  [0,'grid_fade','generators',1,'Fade',{likes:532,posted:1,category:'grid'}], 
  [0,'grid_comet','generators',1,'Comet',{likes:57,posted:1,category:'grid'}], 
@@ -49,7 +49,7 @@ sections: [
 	 [0,'grid_quilt_3','generators','square','Quilt 3',{likes:45,posted:1,category:'grid'}],
 	 	[0,'grid_metal','generators','square','Metal',{likes:0,posted:0,category:'grid'}],
 	[0,'grid_1','generators','square','Grid 1',{likes:0,posted:0,category:'grid'}],
-	//[0,'grid_droplets','generators','square','Droplets',{likes:130,posted:1,category:'grid'}],
+	[0,'grid_droplets','generators','square','Droplets',{likes:130,posted:1,category:'grid'}],
 	
 	[0,'lines_2','instances','wide2','Lines 2',{likes:0,posted:0,category:'lines',sources:1}],
    [0,'grid_maze','generators','square','Maze',{likes:38,posted:1,category:'grid'}],  // was [0,'grid0_8','final','square','Maze',posted:1,category:'grid'}],

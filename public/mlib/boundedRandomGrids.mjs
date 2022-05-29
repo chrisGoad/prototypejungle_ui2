@@ -1,22 +1,11 @@
-//activeMe
 
 
-//import {rs as addRandomMethods} from '/mlib/dim2dWalker.mjs';
 const rs = function (item) {	
 
 
-//item.randomStep = function (iCorrelated,x,y,step,istepy,min,imax,i,j) {
-//item.randomStep = function (x,y,step,istepy,min,max,i,j) {
 item.randomStep = function (x,y,step,min,max,i,j) {
   let oneWay = 0;
 	let lb,ub,rs;
-  //stepx = istepx;
-  //stepy = istepx;
- // if (stepy && (stepx !== stepy)) {
-  //  debugger;
- // }
-  //min = imin;
-  //max = imax;
   let sumSteps,sumVals,tlb,tub;
 	if (y !==  undefined) { // 2d case	
     sumSteps = 2*step;
@@ -40,45 +29,27 @@ item.randomStep = function (x,y,step,min,max,i,j) {
 	}
 	return rs;
 }
-	/*
-item.scalarRandomStep = function (correlated,c,pv,step,stept,min,max,i,j,rg) {
-	return this.randomStep(correlated,c,undefined,pv,step,undefined,stept,min,max,i,j,rg);
-}
-*/
+
 
 item.scalarRandomStep = function (c,step,min,max,i,j) {
-	//return this.randomStep(c,undefined,step,undefined,min,max,i,j);
 	return this.randomStep(c,undefined,step,min,max,i,j);
 }
 
 
 
-/*
-item.dim2randomStep = function (correlated,x, y,pv, stepx,stepy,stept,min,max,i,j,rg) { 
-	return this.randomStep(correlated,x,y,pv,stepx,stepy,stept,min,max,i,j,rg);
-}
-
-*/
 
 item.dim2randomStep = function (x, y, step,min,max,i,j) { 
 	return this.randomStep(x,y,step,min,max,i,j);
 }
 
-   
-
 item.indexFor = function (numRows,i,j) {
-	
-  let idx = (this.backwards)?numRows*(numRows - i - 1) + j:i*numRows+j;//(numRows - i -1);
+  let idx = (this.backwards)?numRows*(numRows - i - 1) + j:i*numRows+j;
   return idx;
 }
 
-
 item.valueAt = function (grid,i,j) {
-  if (!grid) {
-    debugger;
-  }
 	let {params,values,numRows,numCols} = grid;
-   let idx = this.indexFor(numRows,i,j);
+  let idx = this.indexFor(numRows,i,j);
   let rv =  grid.values[idx];//new 4/26/22
   return rv;
  
@@ -86,7 +57,6 @@ item.valueAt = function (grid,i,j) {
    
     
 item.genRandomGrid = function (numCols,numRows,iparams) {
- // let {numRowsinr,numCols} = this;
 	 let inr = numRows;
    let inc = numCols;
 	debugger;
@@ -117,11 +87,6 @@ item.genRandomGrid = function (numCols,numRows,iparams) {
         computeParams(i,j);
       }
 			let idx = this.indexFor(numRows,i,j);
-			/*if ((i === 0) && cFr) {
-				values[idx] === cFr;
-				j++;
-				continue;
-			}		*/			
 			if ((i === 0) && (j === 0)) {
 				let lb,ub,tlb,tub;
         lb = min;
@@ -141,7 +106,6 @@ item.genRandomGrid = function (numCols,numRows,iparams) {
 			} else {
 				let lftidx = this.indexFor(numRows,i-1,j)
 				let upidx = this.indexFor(numRows,i,goingUp?j-1:j+1)
-				//c = this.dim2randomStep(values[lftidx],values[upidx],stepx,stepy,min,max,i,j);
 				c = this.dim2randomStep(values[lftidx],values[upidx],step,min,max,i,j);
 			}
 			values[idx] = c;
@@ -158,7 +122,6 @@ item.initRandomizer = function () {
 	let rm = this.randomizer;
 	if (!rm) {
 		rm = this.randomizer = {};
-	 // addRandomMethods(rm);
 	  if (!this.randomGridsForShapes) {
 			this.randomGridsForShapes = {};
 		}
@@ -187,10 +150,6 @@ item.setupRandomGridForBoundaries = function (nm,params) {
   return this.setupRandomGrid('randomGridsForBoundaries',nm,params);
 }        		
 
-//addRandomMethods(item);
-
-
-//item.setupColorRandomizer = function (params) {
 item.setupColorGridsForShapes = function (params) {
   this.setupRandomGridForShapes('r',params);
   this.setupRandomGridForShapes('g',params);
@@ -199,7 +158,6 @@ item.setupColorGridsForShapes = function (params) {
 
  
 item.randomValueAtCell = function (randomGrids,prop,i,j) {
-  debugger;
 	if (!randomGrids) {
 		return;
 	}
@@ -218,7 +176,6 @@ item.randomValuesAtCell = function (randomGrids,i,j) {
 		return;
 	}
 	let randomizer = this.initRandomizer();
-  //let {randomizer} = this;  
 	let rs = {}; 
 	for (let prop in randomGrids) {
 	  let randomValues = randomGrids[prop];
@@ -232,26 +189,6 @@ item.randomValuesAtCell = function (randomGrids,i,j) {
 item.rvsAtCell = function (cell) {
 	return this.randomValuesAtCell(this.randomGridsForShapes,cell.x,cell.y);
 }   
-
-
-item.randomizerColor = function (p) {
-  let {randomGridsForShapes} = this;
-  let angle;
-  let cell = this.cellOf(p);
-  let rvs = this.randomValuesAtCell(randomGridsForShapes,cell.x,cell.y);
-  let {r,g,b} =rvs;
-  return {r,g,b}
-}
-
-item.randomColor = function () {
-  const rrgb = () => {
-    return 0 + Math.floor(Math.random()*154);
-  }
-  let r = rrgb();
-  let g = rrgb();
-  let b = rrgb();
-  return {r,g,b}
-}
 
 }
 

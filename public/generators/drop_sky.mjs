@@ -21,9 +21,32 @@ rs.initProtos = function () {
 
 
 rs.radiusGenerator= function (p) {
+ 
+  let ht = this.height;
+  let cfr = 0.05;
+  let seaht = cfr*ht;
+  let ay = Math.abs(p.y);
+  if (ay < seaht) {
+    return -1;
+  }
+  if (0 && (p.y < 0)) {
+    return (Math.random>0.5)?30:60;
+  }
+  let theta = (Math.PI/4)*(ay - seaht)/(ht - seaht);
+  let sint = Math.sin(theta);
+  let dist = 1/sint;
+  let rd = 100/dist;
+  return rd;
+ }
+ 
+ 
+
+rs.radiusGeneratorr= function (p) {
   let lnc = Math.abs(p.y);
   return 0.02*lnc -1;
  }
+
+ 
 
  
 rs.fillGenerator= function (p) {
@@ -49,17 +72,23 @@ rs.initialize = function () {
  // this.addRectangle({width:hwd,height:ht,position:Point.mk(qwd,0),stroke_width:0,fill:'white'});
   this.addRectangle({width:wd,height:hht,position:Point.mk(0,qht),stroke_width:0,fill:'white'});
   let cfr =0.09;
-  this.addRectangle({width:wd,height:cfr*ht,stroke_width:0,fill:'rgb(10,10,40'});
+  this.addRectangle({width:wd,height:cfr*ht,stroke_width:0,fill:'rgb(10,10,80)'});
 //  return;
   let shapes = this.set('shapes',arrayShape.mk());
   let drop =  this.generateCircleDrop(dropParams);
   let {points,radii} = drop;
   let ln  = points.length;
+  
   for (let i=0;i<ln;i++) {
     let p = points[i];
     let fill = this.fillGenerator(p);
     let crc = this.circleP.instantiate();
-    crc.dimension = 1*radii[i];
+    let dim = 1.0*radii[i];
+    if (p.y<0) {
+       crc.dimension = Math.min(4,dim);
+    } else {
+       crc.dimension = dim;
+    }
     crc.fill = fill;
     shapes.push(crc);
     crc.moveto(p);

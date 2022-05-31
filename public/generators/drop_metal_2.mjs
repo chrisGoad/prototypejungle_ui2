@@ -1,5 +1,6 @@
 
 import {rs as linePP} from '/shape/line.mjs';
+import {rs as circlePP} from '/shape/circle.mjs';
 import {rs as basicsP} from '/generators/basics.mjs';
 import {rs as addDropMethods} from '/mlib/drop.mjs';
 import {rs as addSegsetMethods} from '/mlib/segsets.mjs';
@@ -9,7 +10,7 @@ addDropMethods(rs);
 addSegsetMethods(rs);
 rs.setName('drop_metal_2');
 let wd = 400;
-let topParams = {width:wd,height:wd,dropTries:40,numSegs:4,framePadding:0.1*wd}
+let topParams = {width:wd,height:wd,dropTries:40,numSegs:4,frameStroke:'white',framePadding:0.3*wd,circular:false}
 let dropParams = {dropTries:40}
 
 Object.assign(rs,topParams);
@@ -17,6 +18,8 @@ Object.assign(rs,topParams);
 rs.initProtos = function () {
   this.lineP = linePP.instantiate();
   this.lineP['stroke-width'] = .3;
+  this.lineP.stroke = 'transparent';
+  this.circleP = circlePP.instantiate();
 }  
 
 rs.lengthFunction = () => 40;
@@ -39,10 +42,12 @@ rs.strokeFunction = function (p) {
 }
 
 rs.dropAt = function (p) {
-  debugger;
-  let {width,height,lineP,numSegs} = this;
+  let {width,height,lineP,numSegs,circular} = this;
+  if (circular && (p.length() > 0.5*width)) {
+    return;
+  }
   let segWidth = (this.lengthFunction(p))/numSegs;
-  if (segWidth < 4) {
+  if (circular && (segWidth < 4)) {
     return;
   }
   let dir = this.directionFunction(p)
@@ -67,8 +72,16 @@ rs.initialDrop = function () {
 }
 
 rs.initialize = function () {
+  let {circleP,circular} = this;
+  this.setBackgroundColor(circular?'white':'black');
   this.initProtos();
-  this.addFrame();
+  if (circular) {
+    let crc = this.circleP.instantiate();
+    this.set('crc',crc);
+    crc.dimension = this.width;
+    crc.fill = 'black';
+    crc['stroke-width'] = 0;
+  }
   this.generateDrop(dropParams);
 }
 

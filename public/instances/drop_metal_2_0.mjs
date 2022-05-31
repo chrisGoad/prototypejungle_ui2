@@ -1,7 +1,7 @@
 
 import {rs} from '/generators/drop_metal_2.mjs';
 rs.setName('drop_metal_2_0');
- 
+rs.circular = 1;
 const fractionIn = function (p,wd) {
   let d = p.length();
   let fr = d/(0.5*Math.SQRT2*wd);
@@ -28,7 +28,7 @@ rs.strokeFunction = function (p) {
   //return 'red';
   let fr =  fractionIn(p,this.width);
   let v = Math.floor(fr * 255);
-  let clr = `rgb(255,${v},${v})`;
+  let clr = `rgb(${v},${v},255)`;
   return  clr;
 }
 

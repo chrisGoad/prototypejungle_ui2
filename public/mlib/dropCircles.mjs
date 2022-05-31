@@ -1,9 +1,8 @@
+// documented in https://prototypejungle.net/doc/dropCircles.html
 
 const rs = function (rs) {
 
-//  documented in https://prototypejungle.net/doc/dropCircles.html
-
-let defaults = {dropTries:5,maxLoops:Infinity};//,maxTriesPerEnd:20};
+let defaults = {dropTries:5,maxLoops:Infinity};
 
 Object.assign(rs,defaults);
       
@@ -19,8 +18,6 @@ rs.collides0 = function (point1,radius1,point2,radius2) {
   let d= point1.distance(point2);
   return minDist >= d;
 }
-
-
 
 rs.collides = function (point,radius,points,radii) {
   let n = points.length;
@@ -47,58 +44,57 @@ rs.genRandomPoint = function (rect) {
   return Point.mk(rx,ry);
 }
 
-
 rs.via3d = function (p) {
-	if (this.genPoint3d) {
-		let p3d = this.genPoint3d(p);
-		let rs = this.camera.project(p3d);
-		return rs;
-	}
+  if (this.genPoint3d) {
+    let p3d = this.genPoint3d(p);
+    let rs = this.camera.project(p3d);
+    return rs;
+  }
   return p;
 }
-	
+  
 rs.generateCircleDrop = function (iparams) {
   let props = ['radius','maxLoops','maxDrops','dropTries','maxDrops'];
   let params = {};
   core.transferProperties(params,this,props);
   core.transferProperties(params,iparams,props);
   let {radius,maxLoops=Infinity,maxDrops=Infinity,dropTries} = params;
-	let cnt =0;
+  let cnt =0;
   let tries = 0;
   let points = [];
   let radii = [];
   let numDrops = 0;
   let fill;
-	while ((cnt < maxLoops) && (numDrops < maxDrops)) {
+  while ((cnt < maxLoops) && (numDrops < maxDrops)) {
     cnt++;
-		let pnt = this.genRandomPoint();
+    let pnt = this.genRandomPoint();
     if (this.radiusGenerator) {
       radius = this.radiusGenerator(pnt);
     }
     if (radius <= 0) {
       continue;
     }
-		let cl = this.collides(pnt,radius,points,radii);
+    let cl = this.collides(pnt,radius,points,radii);
     //console.log('tries',tries,'collide',cl);
-		if (cl) {
-			tries++;
-			if (tries >= dropTries) {
+    if (cl) {
+      tries++;
+      if (tries >= dropTries) {
         //console.log('dropTries',dropTries,'exceeded');
-				return {radii,points};
-			}
+        return {radii,points};
+      }
     } else {
-			points.push(pnt);
-			radii.push(radius);
-			tries = 0;
+      points.push(pnt);
+      radii.push(radius);
+      tries = 0;
       numDrops++;
     }
-	}
+  }
   return {radii,points,fills};
 }
 }
 
 
-export {rs};			
-		
-  	
+export {rs};      
+    
+    
       

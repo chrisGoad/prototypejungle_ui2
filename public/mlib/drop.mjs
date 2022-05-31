@@ -1,20 +1,17 @@
+// documented in https://prototypejungle.net/doc/drop.html 
+
 const rs = function (item) {
 
-/* documented in https://prototypejungle.net/doc/drop.html */
-
-
-
-let defaults = {maxDrops:Infinity,dropTries:5,maxLoops:Infinity};//,maxTriesPerEnd:20};
+let defaults = {maxDrops:Infinity,dropTries:5,maxLoops:Infinity};
 
 Object.assign(item,defaults);
-
 
 item.generateFan = function (iparams) {
  let params = {};
  let props = ['startingPoint','width','height','lineP','sepNext','splitChance','splitAmount',
 	     'segLength','directionChange','randomDirectionChange','lineExt'];
-   core.transferProperties(params,this,props);
-   core.transferProperties(params,iparams,props);
+  core.transferProperties(params,this,props);
+  core.transferProperties(params,iparams,props);
 	let {startingPoint:p,width,height,lineP,sepNext=0,splitChance,splitAmount,  
 	     segLength:len,directionChange:dc=0,randomDirectionChange:rdc=0,lineExt=0} = params;
   let angle;
@@ -22,27 +19,25 @@ item.generateFan = function (iparams) {
   if (typeof p.direction === 'number') {
    angle = p.direction +  dc + ((rn<0.5)?rdc:-rdc);
   } else{
-    angle = Math.floor(Math.random()*4)*0.25*Math.PI;//(r < 0.5)?0:0.5*Math.PI;
+    angle = Math.floor(Math.random()*4)*0.25*Math.PI;
   }
   let hsa = 0.5 * splitAmount;
   let a0 = angle+splitAmount;
   let a1 = angle-splitAmount;
   if (Math.random() < splitChance ) {
-	  let seg0 = this.genSegment(p,len,a0,sepNext);
-	  let seg1 = this.genSegment(p,len,a1,sepNext);
+    let seg0 = this.genSegment(p,len,a0,sepNext);
+    let seg1 = this.genSegment(p,len,a1,sepNext);
     p.isEnd = 1;
-		let ln0 = this.genLine(seg0,lineP,lineExt);
-		let ln1 = this.genLine(seg1,lineP,lineExt);
-		return [[seg0,seg1],[ln0,ln1]];
+    let ln0 = this.genLine(seg0,lineP,lineExt);
+    let ln1 = this.genLine(seg1,lineP,lineExt);
+    return [[seg0,seg1],[ln0,ln1]];
   } else {
-	  let seg = this.genSegment(p,len,angle,sepNext);
+    let seg = this.genSegment(p,len,angle,sepNext);
     p.isEnd = 1;
-		let ln = this.genLine(seg,lineP,lineExt);
-		return [[seg],[ln]];
+    let ln = this.genLine(seg,lineP,lineExt);
+    return [[seg],[ln]];
   }
-
 }
-
 
  // the following methods generate dropStructs, which are used as the seeds of the drop operation. 
 item.ringSeeds = function (iparams) {
@@ -56,21 +51,22 @@ item.ringSeeds = function (iparams) {
   let delta = (Math.PI*2)/numSeeds;
   for (let j=0;j<numSeeds;j++) {
     let ip = Point.mk(Math.cos(cangle),Math.sin(cangle)).times(radius);
-		let p = ip.plus(center);
-		let dir = cangle+divergence;
-		let seg =  this.genSegment(p,len,dir);
-		let end = seg.end;
-		if (data) {
-			end.data = data;
-		}
-		end.spoke = j;
-		end.seed = end;
-		segs.push(seg); 
+    let p = ip.plus(center);
+    let dir = cangle+divergence;
+    let seg =  this.genSegment(p,len,dir);
+    let end = seg.end;
+    if (data) {
+      end.data = data;
+    }
+    end.spoke = j;
+    end.seed = end;
+    segs.push(seg); 
     cangle += delta;
   }
   let lines = segs.map((sg) => this.genLine(sg,lineP)); 
   return [segs,lines];
 }
+
 item.sideSeeds = function (iparams) {
   let props = ['width','height','lineP','numSeeds','data','sepNext','right']; 
   let params = {};
@@ -79,17 +75,17 @@ item.sideSeeds = function (iparams) {
   let {width,height,lineP,numSeeds,data,sepNext,right} = params; 
   let segs = [];
   let delta  = height/(numSeeds+1);
-	let hw = width/2;
-	let cy = delta-hw;
+  let hw = width/2;
+  let cy = delta-hw;
   for (let j=0;j<numSeeds;j++) {
     let ip = Point.mk(right?hw:-hw,cy);
-		let seg =  this.genSegment(ip,len,right?Math.PI:0,sepNext);
-		let end = seg.end;
-		if (data) {
-			send.data = data;
-		}
-		end.seed = end;
-		segs.push(seg); 
+    let seg =  this.genSegment(ip,len,right?Math.PI:0,sepNext);
+    let end = seg.end;
+    if (data) {
+      send.data = data;
+    }
+    end.seed = end;
+    segs.push(seg); 
     cy += delta;
   }
   let lines = segs.map((sg) => this.genLine(sg,lineP,lineExt)); 
@@ -98,49 +94,42 @@ item.sideSeeds = function (iparams) {
 
 item.leftSideSeeds = function (params) {
   params.right = 0;
-	return this.sideSeeds(params);
+  return this.sideSeeds(params);
 }
+
 item.rightSideSeeds = function (params) {
   params.right = 1;
-	return this.sideSeeds(params);
+  return this.sideSeeds(params);
 }
-
-
 
 item.randomSeeds = function (iparams) {
   let props = ['seedDirections','sepNext','lineP','numSeeds','lineExt','segLength']; 
   let params = {};
   core.transferProperties(params,this,props);
-  core.transferProperties(params,iparams,props);
-  
+  core.transferProperties(params,iparams,props);  
   let {sepNext=0,numSeeds,lineP,seedDirections,segLength:len,lineExt=0} = this;
   let segs = [];
-	let ld;
-	if (seedDirections) {
-	  ld = seedDirections.length;
-	}
+  let ld;
+  if (seedDirections) {
+    ld = seedDirections.length;
+  }
   for (let j=0;j<numSeeds;j++) {
     let ip = this.genRandomPoint();
-		let angle;
-		if (ld) {
-			let ri = Math.floor(Math.random()*ld);
-			angle = seedDirections[ri];
-		} else {
-			angle = 2*Math.random()*Math.PI;
-		}
-		let seg =  this.genSegment(ip,len,angle,sepNext);
-		segs.push(seg); 
+    let angle;
+    if (ld) {
+      let ri = Math.floor(Math.random()*ld);
+      angle = seedDirections[ri];
+    } else {
+      angle = 2*Math.random()*Math.PI;
+    }
+    let seg =  this.genSegment(ip,len,angle,sepNext);
+    segs.push(seg); 
   }
   let lines = segs.map((sg) => this.genLine(sg,lineP,lineExt)); 
   return [segs,lines];
 }
 
-
-
-
-
 item.gridSeeds = function (iparams) {
-     debugger;
     let props = ['width','height','lineP','sepNext','fanAngles','numSeedRows',  
        'numSeedCols','gridPadding','lineExt'];
     let params = {};
@@ -149,7 +138,7 @@ item.gridSeeds = function (iparams) {
   let {width,height,lineP,sepNext=0,fanAngles,numSeedRows:numRows,  
        numSeedCols:numCols,gridPadding:padding=0,lineExt=0} = params;
   let segs = [];
-	let lines = [];
+  let lines = [];
   let iwidth = width - padding;
   let iheight = height - padding;
   let hwd = iwidth/2;
@@ -157,39 +146,35 @@ item.gridSeeds = function (iparams) {
   let angle0 = 0.5*Math.PI;
   let angle1 = -0.5*Math.PI;
   let len = 5;
-	let deltaX = this.deltaX = iwidth/numCols;
-	let deltaY = this.deltaY = iheight/numRows;
-	let ix = (-hwd) + 0.5*deltaX;
-	let yv = (-hht) + 0.5*deltaY;
+  let deltaX = this.deltaX = iwidth/numCols;
+  let deltaY = this.deltaY = iheight/numRows;
+  let ix = (-hwd) + 0.5*deltaX;
+  let yv = (-hht) + 0.5*deltaY;
   for (let j=0;j<numRows;j++) {
     let xv = ix;
-		for (let i=0;i<numCols;i++) {
-			let ip = Point.mk(xv,yv);
-			if (this.genGridSegments) {
-				let cell = {x:i,y:j};
-				let SL = this.genGridSegments(cell,ip);
-				if (SL) {
-					segs.push(...SL[0]);
-				  lines.push(...SL[1]);
-				}
-		  } else {
-				fanAngles.forEach( (angle) => {
-					let seg = this.genSegment(ip,len,angle,sepNext);
-					segs.push(seg);
-					lines.push(this.genLine(seg,lineP,lineExt));
-				});
-			}
-			xv += deltaX;
+    for (let i=0;i<numCols;i++) {
+      let ip = Point.mk(xv,yv);
+      if (this.genGridSegments) {
+        let cell = {x:i,y:j};
+        let SL = this.genGridSegments(cell,ip);
+        if (SL) {
+          segs.push(...SL[0]);
+          lines.push(...SL[1]);
+        }
+      } else {
+        fanAngles.forEach( (angle) => {
+          let seg = this.genSegment(ip,len,angle,sepNext);
+          segs.push(seg);
+          lines.push(this.genLine(seg,lineP,lineExt));
+        });
+      }
+      xv += deltaX;
 
-		}	 
+    }   
     yv += deltaY;
   }
   return [segs,lines];
 }
-
-
-
-
 
 item.extendSegment = function (seg,ln) {
   let {end0,end1} = seg;
@@ -203,8 +188,6 @@ item.extendSegment = function (seg,ln) {
   return LineSegment.mk(e0,e1);
 }
   
-
-
 item.genRandomPoint = function (rect) {
   if (rect) {
     let {corner,extent} = rect;
@@ -224,42 +207,38 @@ item.genRandomPoint = function (rect) {
 // normally sepNext is an invisible distance which prevents the detection of an intersection with the segment which is being continued.
 
 item.genSegment = function (p,ln,angle,sepNext=0) {
-  if (!p) {
-    debugger;
-  }
   let vec = Point.mk(Math.cos(angle),Math.sin(angle));
   let e0,e1,end,rs;
-	e0 = p;
-	p.isEnd = 1;
-	end  = p.plus(vec.times(ln+sepNext));
-	e1  =  p.plus(vec.times(ln));
-	rs = LineSegment.mk(e0,e1);
-	let g = p.generation;
-	if (g === undefined) {
-		g = 0;
-		p.generation = 0;
-	}
-	rs.end = end;
-	if (p.seed) {
-		end.seed = p.seed;
-	}
-	end.generation = g+1;
-	end.direction = angle;		
-	rs.fromEnd = p;
+  e0 = p;
+  p.isEnd = 1;
+  end  = p.plus(vec.times(ln+sepNext));
+  e1  =  p.plus(vec.times(ln));
+  rs = LineSegment.mk(e0,e1);
+  let g = p.generation;
+  if (g === undefined) {
+    g = 0;
+    p.generation = 0;
+  }
+  rs.end = end;
+  if (p.seed) {
+    end.seed = p.seed;
+  }
+  end.generation = g+1;
+  end.direction = angle;    
+  rs.fromEnd = p;
   return rs;
 }
 
 item.insideCanvas = function (p) {
   let {width,height} = this;
-	if ((!width)  || (!height)) {
-		return true;
-	}
+  if ((!width)  || (!height)) {
+    return true;
+  }
   let hw = 0.5*width;  
   let hh = 0.5*height;  
   let {x,y} = p;
   return (-hw < x) && (x < hw) && (-hh < y) && (y < hh);
 }
-
 
 item.segmentIntersects = function (seg) {
   let {segments,width,height} = this;
@@ -268,33 +247,33 @@ item.segmentIntersects = function (seg) {
   if ((!this.insideCanvas(end0)) || (!this.insideCanvas(end1))) {
     return true;
   }
-	if (exclusionZones) {
-		let eln = exclusionZones.length;
-		for (let i=0;i<eln;i++) {
-			let zone = exclusionZones[i];
-			if (zone.contains(end0) || zone.contains(end1)) {
-				return true;
-			}
-		}
-	}
-	if (doNotCross) {
-		let eln = doNotCross.length;
-		for (let i=0;i<eln;i++) {
-			let zone = doNotCross[i];
-			if (zone.contains(end0) !== zone.contains(end1)) {
-				return true;
-			}
-		}
-	}
-	if (doNotExit) {
-		let eln = doNotExit.length;
-		for (let i=0;i<eln;i++) {
-			let zone = doNotExit[i];
-			if ((!zone.contains(end0)) ||  (!zone.contains(end1))) {
-				return true;
-			}
-		}
-	}
+  if (exclusionZones) {
+    let eln = exclusionZones.length;
+    for (let i=0;i<eln;i++) {
+      let zone = exclusionZones[i];
+      if (zone.contains(end0) || zone.contains(end1)) {
+        return true;
+      }
+    }
+  }
+  if (doNotCross) {
+    let eln = doNotCross.length;
+    for (let i=0;i<eln;i++) {
+      let zone = doNotCross[i];
+      if (zone.contains(end0) !== zone.contains(end1)) {
+        return true;
+      }
+    }
+  }
+  if (doNotExit) {
+    let eln = doNotExit.length;
+    for (let i=0;i<eln;i++) {
+      let zone = doNotExit[i];
+      if ((!zone.contains(end0)) ||  (!zone.contains(end1))) {
+        return true;
+      }
+    }
+  }
   let ln = segments.length;
   for (let i=0;i<ln;i++) {  
     let ip = seg.intersects(segments[i]);
@@ -306,25 +285,22 @@ item.segmentIntersects = function (seg) {
 
 item.intersectsSomething = function (g) {
   let {segments,width,height,ignoreBefore:ibf} = this;
-  if (0 && ibf) {
-    debugger;
-  }
   let ln = segments.length;
   let st = (ibf)?ibf:0;
   for (let i=st;i<ln;i++) {  
-	  let seg = segments[i];
-		if (g.intersects(seg)) {
-			return true;
-		}
+    let seg = segments[i];
+    if (g.intersects(seg)) {
+      return true;
+    }
   }
 }
 
 item.activeEnds = function () {
   let ends = this.ends;
   let rs = [];
-	let cnt = 0;
+  let cnt = 0;
   ends.forEach((end) => {
-		cnt++
+    cnt++
     if (!(end.inactive)) {
       rs.push(end);
     }
@@ -339,90 +315,89 @@ item.addSegmentAtThisEnd = function (end) {
     return;
   }
   let tries = 0;
-	let cell,rvs;
-	if (numRows && randomGridsForShapes) {
-	  cell = this.cellOf(end);
+  let cell,rvs;
+  if (numRows && randomGridsForShapes) {
+    cell = this.cellOf(end);
     rvs = this.randomValuesAtCell(randomGridsForShapes,cell.x,cell.y);
-	}
+  }
   while (true) {
-		let dropStruct = this.dropAt(end,rvs);
-		let ifnd = 0;
-		let sln = 0
-		if (dropStruct) {
-			let [segs] = dropStruct;
-			sln = segs.length;
-			for (let i=0;i<sln;i++) {
-				let seg = segs[i];
-				if (this.segmentIntersects(seg)) {				
-					ifnd = true;
-					break;
-				}
-			}
-		} else {
-			ifnd = 1;
-		}
-		if (ifnd) {
-			tries++;
-			if (tries === dropTries) {
+    let dropStruct = this.dropAt(end,rvs);
+    let ifnd = 0;
+    let sln = 0
+    if (dropStruct) {
+      let [segs] = dropStruct;
+      sln = segs.length;
+      for (let i=0;i<sln;i++) {
+        let seg = segs[i];
+        if (this.segmentIntersects(seg)) {        
+          ifnd = true;
+          break;
+        }
+      }
+    } else {
+      ifnd = 1;
+    }
+    if (ifnd) {
+      tries++;
+      if (tries === dropTries) {
         console.log('inactivated - could not find continuation');
         end.inactive = 1;
-				return 0;
-			}
-		} else {
-			this.installDropStruct(dropStruct);
-			return 1;  
+        return 0;
+      }
+    } else {
+      this.installDropStruct(dropStruct);
+      return 1;  
     } 
   }
 }
 
 item.randomArrayElement = function (a) {
-	let ln = a.length;
-	let rni = Math.floor(ln*Math.random());
-	return a[rni]
+  let ln = a.length;
+  let rni = Math.floor(ln*Math.random());
+  return a[rni]
 }
 
 item.lastArrayElement = function (a) {
-  let	ln = a.length;
-	return a[ln-1]
+  let  ln = a.length;
+  return a[ln-1]
 }
 
 item.randomDirection = function (n) {
-	if (n) {
-	  return 2*Math.PI*(Math.floor(n*Math.random())/n);
-	} else {
-		return 2*Math.PI*Math.random();
-	}
+  if (n) {
+    return 2*Math.PI*(Math.floor(n*Math.random())/n);
+  } else {
+    return 2*Math.PI*Math.random();
+  }
 }
-
 
 item.addSegmentAtSomeEnd = function () {
   let {extendWhich} = this.dropParams;
   while (true) {
     let ae = this.activeEnds();
     let end;
-		let ln = ae.length;
-		if (ln > 0) {
+    let ln = ae.length;
+    if (ln > 0) {
       if (extendWhich === 'last') {
-			  end = this.lastArrayElement(ae);
+        end = this.lastArrayElement(ae);
       } else if (extendWhich === 'random') {
-		  	end =  this.randomArrayElement(ae);
+        end =  this.randomArrayElement(ae);
       } else {
         end = ae[0];
       }
-			let ars = this.addSegmentAtThisEnd(end);
+      let ars = this.addSegmentAtThisEnd(end);
       if (ars) {
         return ars;
       }
-		} else {
+    } else {
       return "noEndsLeft";
     }
-	}
+  }
 }
 
 item.addSegmentsAtEnds = function () {
   let maxEndTries = 100;
   let tries = 0; 
-	let maxDrops = this.dropParams.maxDrops;
+  let maxDrops = this.dropParams.maxDrops;
   while (this.numDropped  < maxDrops) {
     let ars = this.addSegmentAtSomeEnd();
     if (ars === 'noEndsLeft') {
@@ -435,15 +410,14 @@ item.addSegmentsAtEnds = function () {
   return ['loopsExceeded',this.numDropped];
 }
        
-
 item.addRandomSegment = function () {
   let {numRows,randomGridsForShapes} = this;
   let rvs;
   let p = this.genRandomPoint(); 
   if (numRows && randomGridsForShapes) {
-	  let cell = this.cellOf(p);
+    let cell = this.cellOf(p);
     rvs = this.randomValuesAtCell(randomGridsForShapes,cell.x,cell.y);
-	}
+  }
   let dropStruct = this.dropAt(p,rvs);
   let ifnd = 0;
   let sln=0;
@@ -483,15 +457,15 @@ item.addNrandomSegments = function (n) {
       }
       continue; 
     }
-		let segsAdded = this.addRandomSegment();
-		if (segsAdded) {
+    let segsAdded = this.addRandomSegment();
+    if (segsAdded) {
       tries = 0;
       numAdded++;
     } else {  
-			tries++;
+      tries++;
       if (tries >= dropTries) {
-				return numAdded;
-			}
+        return numAdded;
+      }
     }
   }
   return numAdded;
@@ -516,33 +490,28 @@ item.addRandomSegments = function () {
            return;
         }
       }
-			return; 
+      return; 
     }
-		let segsAdded = this.addRandomSegment();
-		if (segsAdded) {
+    let segsAdded = this.addRandomSegment();
+    if (segsAdded) {
       tries = 0;
-			if (this.numDropped >= maxDrops) {
-				return this.numDropped;
-			}    
+      if (this.numDropped >= maxDrops) {
+        return this.numDropped;
+      }    
     } else {  
-			tries++;
-			if (tries >= dropTries) {
-				debugger;
-				return this.numDropped;
-			}
+      tries++;
+      if (tries >= dropTries) {
+        return this.numDropped;
+      }
     }
   }
 }
 
-
 item.installShape = function (shape) {
-	if (shape.period) {
-	  debugger;
-	}
   this.shapes.push(shape);
   shape.show();
   shape.update();
-	this.numDropped++;
+  this.numDropped++;
   return shape;
 }
 
@@ -550,48 +519,37 @@ item.installDropStruct = function (dropStruct) {
   let {segments,ends} = this;
   let ln = segments.length;
   let [segs,shapes] = dropStruct;
-	if (0 && (!Array.isArray(segs))) {
-		let rect = segs;
-		let rectShape = shapes;
-		segments.push(rect);
-		this.installShape(rectShape);
-		return;
-	}
-
   segs.forEach( (seg) => {
-		seg.number = ln;
-		let {end0,end1,end} = seg;
-		if (!end0) {
-			debugger;
-		}
-		end0.end0of = ln;
-		end1.end1of = ln;
-		if (end) {
-		  end.isEndOf = ln;
-		}
+    seg.number = ln;
+    let {end0,end1,end} = seg;
+    end0.end0of = ln;
+    end1.end1of = ln;
+    if (end) {
+      end.isEndOf = ln;
+    }
     segments.push(seg);
     if (end) {
       ends.push(end);
       end.isEnd = 1;
     }
-		let fre = seg.fromEnd;
+    let fre = seg.fromEnd;
     if (fre) {
       fre.inactive = 1;
     }
-		ln++;
+    ln++;
   });
   shapes.forEach( (shape) => this.installShape(shape));
 }
 
 item.concatEachArray = function (ays) {
-	let c0 = [];
-	let c1 = [];
-	ays.forEach( (a) => {
-	 let [a0,a1]= a;
-	 c0.push(...a0);
-	 c1.push(...a1);
-  });	 
-	 return [c0,c1];
+  let c0 = [];
+  let c1 = [];
+  ays.forEach( (a) => {
+   let [a0,a1]= a;
+   c0.push(...a0);
+   c1.push(...a1);
+  });   
+   return [c0,c1];
 }
 
 item.generateDrop = function (iparams) {
@@ -601,7 +559,7 @@ item.generateDrop = function (iparams) {
   core.transferProperties(params,iparams,props);
   this.dropParams = params;
   this.segments = [];
-	this.numDropped = 0;
+  this.numDropped = 0;
   this.ends = [];
   if (!this.shapes) {
      this.set('shapes',core.ArrayNode.mk());
@@ -610,22 +568,22 @@ item.generateDrop = function (iparams) {
     let isegs = this.initialDrop();
     this.installDropStruct(isegs);
   }
-	this.addRandomSegments();
+  this.addRandomSegments();
 }
 
 item.inAzone = function (zones,p) {
-	if (!zones) {
-		return 0;
-	}
-	let fnd = false;
-	let eln = zones.length;
-	for (let i=0;i<eln;i++) {
-		let zone = zones[i];
-		if (zone.contains(p)) {
-			return 1;
-		}
-	}
-	return 0;
+  if (!zones) {
+    return 0;
+  }
+  let fnd = false;
+  let eln = zones.length;
+  for (let i=0;i<eln;i++) {
+    let zone = zones[i];
+    if (zone.contains(p)) {
+      return 1;
+    }
+  }
+  return 0;
 }
 }
 export {rs};

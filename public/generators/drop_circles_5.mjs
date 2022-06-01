@@ -5,7 +5,7 @@ import {rs as addDropMethods} from '/mlib/dropCircles.mjs';
 let rs = basicP.instantiate();
 addDropMethods(rs);
 
-rs.setName('drop_circles_4');
+rs.setName('drop_circles_5');
 let ht= 1000;
 //let topParams = {width:ht,height:ht,sizes:[30,10,3.33]}
 //let topParams = {width:ht,height:ht,sizes:[90,30,10]}
@@ -23,15 +23,16 @@ rs.initProtos = function () {
 
 
 
-rs.generateDrop= function (p) {
+rs.radiusGenerator= function (p) {
   let {height:ht,sizes} = this;
   debugger;
   let hht = 0.5*ht;
   //let fr = (p.y + hht)/ht;
   let d = p.length();
   if (d>=hht) {
-    return;
+    return -1;
   }
+  return Math.random() <0.4?40:10;
  // let fr = d/(hht * Math.SQRT2);
   let fr = d/hht;
   let ln =sizes.length;
@@ -42,16 +43,17 @@ rs.generateDrop= function (p) {
   for (let i=0;i<numRings;i++) {
     let inRing = (cT<=fr) && (fr <= (cT+inc));
     let mixedRing = i%2;
-    if (inRing) {
-      let rd;    
-      if (mixedRing) {
+    if (inRing) {  
+     if (mixedRing) {
        let r = Math.random();
-       rd = (r > 0.5)?sizes[szi]:sizes[szi+1];       
-      } else {
-        rd = sizes[szi];
+       let rd = (r > 0.5)?sizes[szi]:sizes[szi+1];
+       console.log('mixed ring','fr',fr,'i',i,'szi',szi,'rd',rd);
+       return rd;
       }
-      console.log('ring','fr',fr,'i',i,'szi',szi,'rd',rd);
-      return {radius:rd}
+      
+      let rs = sizes[szi];
+      console.log('unmixed ring','fr',fr,'i',i,'szi',szi,'rs',rs);
+      return rs;
     }
     cT = cT+inc;
     if (mixedRing) {
@@ -84,16 +86,21 @@ rs.initialize = function () {
   this.initProtos();
   this.addFrame();
   let shapes = this.set('shapes',arrayShape.mk());
-  let drops =  this.generateCircleDrops(dropParams);
-  let ln  = drops.length;
+  let drop =  this.generateCircleDrop(dropParams);
+  let {points,radii} = drop;
+  let ln  = points.length;
   for (let i=0;i<ln;i++) {
-    let {point,radius} = drops[i]
-    //let fill = this.fillGenerator(p);
+    let p = points[i];
+    let fill = this.fillGenerator(p);
+    
     let crc = this.circleP.instantiate();
-    let dim = 1.0*radius;
+    let dim = radii[i];
+    if (dim === 40) { 
+      crc.fill = 'blue';
+    }
     crc.dimension = dim;
     shapes.push(crc);
-    crc.moveto(point);
+    crc.moveto(p);
    }
 }
 

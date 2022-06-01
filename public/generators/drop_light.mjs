@@ -18,23 +18,26 @@ rs.initProtos = function () {
   circleP['stroke-width'] = 0;
 }  
 
-rs.radiusGenerator= function (p) {
+rs.generateDrop= function (p) {
   let ln = p.length()-400;
-  return 0.01*ln;
+  if (ln<=0) {
+    return;
+  }
+  return {radius:0.01*ln};
  }
 
 rs.initialize = function () {
   this.initProtos();
   this.addRectangle({width:ht,height:ht,stroke_width:0,fill:'white'});
   let shapes = this.set('shapes',arrayShape.mk());
-  let drop =  this.generateCircleDrop(dropParams);
-  let {points,radii} = drop;
-  let ln  = points.length;
+  let drops =  this.generateCircleDrops(dropParams);
+  let ln  = drops.length;
   for (let i=0;i<ln;i++) {
+    let {point,radius} = drops[i];
     let crc = this.circleP.instantiate();
-    crc.dimension = 2*radii[i]; 
+    crc.dimension = 2*radius;
     shapes.push(crc);
-    crc.moveto(points[i]);
+    crc.moveto(point);
    }
 }
 

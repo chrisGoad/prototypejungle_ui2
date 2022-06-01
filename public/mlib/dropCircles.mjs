@@ -19,10 +19,12 @@ rs.collides0 = function (point1,radius1,point2,radius2) {
   return minDist >= d;
 }
 
-rs.collides = function (point,radius,points,radii) {
-  let n = points.length;
+
+rs.collides = function (npoint,nradius,drops) {
+  let n = drops.length;
   for (let i=0;i<n;i++) {
-    if (this.collides0(point,radius,points[i],radii[i])) {
+    let {point,radius} = drops[i];
+    if (this.collides0(npoint,nradius,point,radius)) {
       return true;
     }
   }
@@ -53,7 +55,7 @@ rs.via3d = function (p) {
   return p;
 }
   
-rs.generateCircleDrop = function (iparams) {
+rs.generateCircleDrops = function (iparams) {
   let props = ['radius','maxLoops','maxDrops','dropTries','maxDrops'];
   let params = {};
   core.transferProperties(params,this,props);
@@ -61,35 +63,29 @@ rs.generateCircleDrop = function (iparams) {
   let {radius,maxLoops=Infinity,maxDrops=Infinity,dropTries} = params;
   let cnt =0;
   let tries = 0;
-  let points = [];
-  let radii = [];
-  let numDrops = 0;
-  let fill;
-  while ((cnt < maxLoops) && (numDrops < maxDrops)) {
+  let drops = [];
+  while ((cnt < maxLoops) && (drops.length < maxDrops)) {
     cnt++;
     let pnt = this.genRandomPoint();
-    if (this.radiusGenerator) {
-      radius = this.radiusGenerator(pnt);
-    }
-    if (radius <= 0) {
+    let drop = this.generateDrop(pnt);
+    if (!drop) {
       continue;
-    }
-    let cl = this.collides(pnt,radius,points,radii);
-    //console.log('tries',tries,'collide',cl);
+    } 
+    let radius = drop.radius;
+    let cl = this.collides(pnt,radius,drops);
     if (cl) {
       tries++;
       if (tries >= dropTries) {
         //console.log('dropTries',dropTries,'exceeded');
-        return {radii,points};
+        return drops;
       }
     } else {
-      points.push(pnt);
-      radii.push(radius);
+      drop.point = pnt;
+      drops.push(drop);
       tries = 0;
-      numDrops++;
     }
   }
-  return {radii,points,fills};
+  return drops;
 }
 }
 

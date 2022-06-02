@@ -64,6 +64,7 @@ rs.generateCircleDrops = function (iparams) {
   let cnt =0;
   let tries = 0;
   let drops = [];
+  debugger;
   while ((cnt < maxLoops) && (drops.length < maxDrops)) {
     cnt++;
     let pnt = this.genRandomPoint();

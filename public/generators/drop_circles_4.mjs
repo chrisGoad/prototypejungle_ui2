@@ -13,7 +13,7 @@ let ht= 1000;
 let topParams = {width:ht,height:ht,sizes:[27,9,3],framePadding:0.1*ht,frameStrokee:'white'}
 Object.assign(rs,topParams);
 
-let dropParams = {dropTries:150}
+let dropParams = {dropTries:150,maxDropss:50}
 
 rs.initProtos = function () {
   let circleP = this.circleP = circlePP.instantiate();
@@ -85,9 +85,10 @@ rs.initialize = function () {
   this.addFrame();
   let shapes = this.set('shapes',arrayShape.mk());
   let drops =  this.generateCircleDrops(dropParams);
+  debugger;
   let ln  = drops.length;
   for (let i=0;i<ln;i++) {
-    let {point,radius} = drops[i]
+    let {point,radius} = drops[i];
     //let fill = this.fillGenerator(p);
     let crc = this.circleP.instantiate();
     let dim = 1.0*radius;

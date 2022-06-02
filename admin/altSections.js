@@ -8,6 +8,7 @@ sections: [
 // [0,'web_drift','generators',1,'Drift Web',{likes:0,posted:0,category:'drop'}], 
  [0,'quad_2','generators',1,'Circles and Squares',{likes:0,posted:0,category:'quad',version:2}], 
  [0,'drop_circles_4','generators',1,'Circles 4',{likes:0,posted:0,category:'quad'}], 
+ [0,'drop_circles_4_0','instances',1,'Circles 4 0',{likes:0,posted:0,category:'quad'}], 
  [0,'drop_circles3','generators',1,'Circles3',{likes:0,posted:0,category:'quad'}], 
  [0,'drop_night','generators',1,'Night',{likes:0,posted:0,category:'quad'}], 
  [0,'quad_0','generators',1,'Quad 0',{likes:0,posted:0,category:'quad'}], 

@@ -10,7 +10,7 @@ let ht= 6000;
 let topParams = {width:ht,height:ht}
 Object.assign(rs,topParams);
 
-let dropParams = {dropTries:150,radius:60}
+let dropParams = {dropTries:150}
 
 rs.initProtos = function () {
   let circleP = this.circleP = circlePP.instantiate();

@@ -60,7 +60,7 @@ rs.generateCircleDrops = function (iparams) {
   let params = {};
   core.transferProperties(params,this,props);
   core.transferProperties(params,iparams,props);
-  let {radius,maxLoops=Infinity,maxDrops=Infinity,dropTries} = params;
+  let {radius=10,maxLoops=Infinity,maxDrops=Infinity,dropTries} = params;
   let cnt =0;
   let tries = 0;
   let drops = [];

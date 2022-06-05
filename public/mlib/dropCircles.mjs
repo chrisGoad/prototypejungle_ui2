@@ -56,10 +56,13 @@ rs.via3d = function (p) {
 }
   
 rs.generateCircleDrops = function (iparams) {
-  let props = ['radius','maxLoops','maxDrops','dropTries','maxDrops'];
+  let props = ['radius','maxLoops','maxDrops','dropTries','maxDrops','scale'];
   let params = {};
-  core.transferProperties(params,this,props);
-  core.transferProperties(params,iparams,props);
+  debugger;
+  //core.transferProperties(params,this,props);
+  //core.transferProperties(params,iparams,props);
+  Object.assign(params,iparams);
+  this.dropParams = params;
   let {radius=10,maxLoops=Infinity,maxDrops=Infinity,dropTries} = params;
   let cnt =0;
   let tries = 0;
@@ -88,6 +91,34 @@ rs.generateCircleDrops = function (iparams) {
   }
   return drops;
 }
+
+rs.generateDrop = function (p) {
+  return {radius:this.dropParams.radius};
+}
+
+rs.stdInitialize = function (params) {
+    debugger;
+  this.initProtos();
+  let {dropP=this.circleP,scale=1} = params;
+  this.addFrame();
+  let shapes = this.set('shapes',arrayShape.mk());
+  let drops =  this.generateCircleDrops(params);
+  let ln  = drops.length;
+  for (let i=0;i<ln;i++) {
+    let {point,radius,fill} = drops[i];
+    let crc = dropP.instantiate();
+    crc.setDimension(2*scale*radius);
+    if (fill) {
+      crc.fill = fill;
+    }
+    shapes.push(crc);
+    if (crc.initialize) {
+      crc.initialize();
+    }
+    crc.moveto(point);
+   }
+}
+
 }
 
 

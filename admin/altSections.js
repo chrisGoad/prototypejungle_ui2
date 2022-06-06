@@ -6,12 +6,12 @@ sections: [
 [  
 /* Puzzle: Which three of the quadrants are the same, and which is different? Before you saw the differences in what sense did you "see" the quadrants?"*/
 // [0,'web_drift','generators',1,'Drift Web',{likes:0,posted:0,category:'drop'}], 
- [0,'quad_2','generators',1,'Circles and Squares',{likes:0,posted:0,category:'quad',version:2}], 
+ [0,'quad_2_v_2','generators',1,'Circles and Squares',{likes:0,posted:0,category:'quad',version:2}], 
+ [0,'drop_circles_0','generators',1,'Circles 0',{likes:0,posted:0,category:'quad'}], 
  [0,'drop_circles_1','generators',1,'Circles 1',{likes:0,posted:0,category:'quad'}], 
- [0,'drop_circles_0_0','instances',1,'Circles 0 0',{likes:0,posted:0,category:'quad'}], 
- [0,'drop_circles_0_1','instances',1,'Circles 0 1',{likes:0,posted:0,category:'quad'}], 
- [0,'drop_circles_0_2','instances',1,'Circles 0 2',{likes:0,posted:0,category:'quad'}], 
- [0,'drop_circles_0_3','instances',1,'Circles 0 3',{likes:0,posted:0,category:'quad'}], 
+ [0,'drop_circles_2','generators',1,'Circles 2',{likes:0,posted:0,category:'quad'}], 
+ [0,'drop_circles_3','generators',1,'Circles 3',{likes:0,posted:0,category:'quad'}], 
+ [0,'drop_circles_4','generators',1,'Circles 4',{likes:0,posted:0,category:'quad'}], 
  [0,'drop_metal_2_0','instances',1,'Iris',{likes:0,posted:0,category:'quad'}], 
  [0,'drop_circles3','generators',1,'Circles3',{likes:0,posted:0,category:'quad'}], 
  [0,'drop_night','generators',1,'Night',{likes:0,posted:0,category:'quad'}], 

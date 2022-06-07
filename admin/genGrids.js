@@ -36,7 +36,7 @@ let whichPage = 1;
 let orderMin,orderMax;
 if (forKOP) {
   orderMin = -1;
-  orderMax = 267;
+  orderMax = 272;
 } else {
   orderMin = -1;
   orderMax = 10000;
@@ -428,7 +428,7 @@ let sectionString = function (things) {
     things.sort(compareByOrder);
   }
   // console.log('things ordered',things);
- // ln = 2;
+//  ln = 2;
 	for (let i=0;i<ln;i++) {
 		let thing = things[i];
     let tln = thing.length;

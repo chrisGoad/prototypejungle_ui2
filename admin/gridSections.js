@@ -6,6 +6,7 @@ sections: [
 [
 
  [0,'drop_light','generators',1,'Light',{likes:50,posted:1,category:'dropCircles',variant:0}], 
+ [0,'drop_night','generators',1,'Beach At Night',{likes:50,posted:1,category:'dropCircles',variant:0}], 
  [0,'web_random_radius','generators',1,'Scratches',{likes:36,posted:1,category:'quad',variant:2}], 
  [0,'quad_3','generators',1,'Circles',{likes:72,posted:1,category:'quad',variant:2}], 
  //[0,'drop_whorls','generators',1,'Whorls',{likes:45,posted:1,category:'drop'}], 

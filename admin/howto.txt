@@ -41,6 +41,8 @@ node admin/updateKOP
 cd c:\kop
 firebase deploy --only hosting
 
+npm install -g firebase-tools
+
 
 cd c:\prototypejungle
 firebase deploy --only hosting

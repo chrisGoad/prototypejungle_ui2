@@ -28,6 +28,9 @@ git commit -m "misc"
 git push origin main 
 git push -u origin main (first time, maybe)
 
+zip the public directory in c:\prototypejungle
+change its name to prototypejungle.zip
+upload it to the prototypejungle bucket at aws
 
 
 cd c:\prototypejungle_clone

@@ -785,25 +785,6 @@ LineSegment.intersectsLineSegment = function (line1) {
   return op1 && op0;
 } 
 */
-LineSegment.intersectsCircle = function (crc) {
-  let {end0:e0,end1:e1} =this;
-  let {center:c,radius:r}= crc;
-  let vec = e1.difference(e0);
-  let n = vec.normal().normalize();
-  let cvec = c.difference(e0);
-  let d = cvec.dotp(n);
-  if (d>r) {
-    return 0;
-  }
-  let onL = c.plus(n.times(d));
-  let onL2e0 = onL.difference(e0);
-  let onL2e1= onL.difference(e1);
-  let onL2e0D = vec.dotp(onL2e0);
-  let onL2e1D= vec.dotp(onL2e1);
-  return (onL2e0D * onL2e1D) <= 0;
-}
-  
-
 
 LineSegment.intersectsLineSegment = function (line1) {
   let isct = this.intersect(line1);
@@ -1034,12 +1015,7 @@ Circle.intersectsCircle = function (crc) {
 }
 
 Circle.intersects = function (target) {
-  if (Circle.isPrototypeOf(target)) {
-    return this.intersectsCircle(target);
-  }
-  if (LineSegment.isPrototypeOf(target)) {
-    return target.intersectsCircle(this);
-  }
+  return this.intersectsCircle(target);
 }
 	
 Circle.intersectLine = function (point,vec) {
@@ -1275,49 +1251,23 @@ Rectangle.intersectsLineSegment = function (seg) {
  Rectangle.intersects = function (g) {
 	 if (Rectangle.isPrototypeOf(g)) {
 		 return this.intersectsRectangle(g);
-	 } 
-   if (LineSegment.isPrototypeOf(g)) {
+	 } else if (LineSegment.isPrototypeOf(g)) {
 		 return this.intersectsLineSegment(g);
-	 } 
-	 error('unsupported case for Rectangle.intersects');
+	 } else {
+		 error('unsupported case for Rectangle.intersects');
+	 }
  }
 
 LineSegment.intersects = function (g) {
 	 if (Rectangle.isPrototypeOf(g)) {
 		 return g.intersectsRectangle(this);
-	 } 
-   if (LineSegment.isPrototypeOf(g)) {
+	 } else if (LineSegment.isPrototypeOf(g)) {
 		 return this.intersectsLineSegment(g);
-	 } 
-   if (Circle.isPrototypeOf(g)) {
-		 return this.intersectsCircle(g);
-	 }   
-	 error('unsupported case for LineSegment.intersects');
+	 } else {
+		 error('unsupported case for LineSegment.intersects');
+	 }
 }
 
-const geometriesIntersect0 = function (g,gs) {
-  let ln = gs.length;
-  for (let i=0;i<ln;i++) {
-    let gi = gs[i];
-    if (g.intersects(gi)) {
-      return 1;
-    }
-   }
-   return 0;
- }
- 
- 
-const geometriesIntersect = function (gs0,gs1) {
-  let ln = gs0.length;
-  for (let i=0;i<ln;i++) {
-    let gi = gs0[i];
-    if (geometriesIntersect0(gi,gs1)) {
-      return 1;
-    }
-   }
-   return 0;
- }
-   
 
 Rectangle.sides = function () {
   let corners = this.corners();
@@ -1700,26 +1650,6 @@ const transformForGraph = function (coverage,extent) {
   return rs;
 }
 
-const moveBy = function (g,p) {
-  debugger;
-  if (Circle.isPrototypeOf(g)) {
-     let c = g.center;
-     let np = c.plus(p);
-     g.center = np;
-     return g;
-  }
-  if (LineSegment.isPrototypeOf(g)) {
-    let {end0,end1} = g;
-    let ne0 = end0.plus(p);
-    let ne1= end1.plus(p);
-    g.end0 = ne0;
-    g.end1 = ne1;
-    return g;
-  }
-}
-   
-  
-
 const degreesToRadians =  function (n) {return Math.PI * (n/180);}
 
 const radiansToDegrees =  function (n) {return 180 * (n/Math.PI);}
@@ -1734,4 +1664,4 @@ Rectangle.randomPoint = function () {
 
 
 export {rotationMatrix,movetoInGlobalCoords,toOwnCoords,toPoint,angleToDirection,Point,Line,Rectangle,Transform,Ray,degreesToRadians,
-        LineSegment,Circle,Arc,boundsForRectangles,rp_time,pointArrayToLineSegments,geometriesIntersect,moveBy};
+        LineSegment,Circle,Arc,boundsForRectangles,rp_time,pointArrayToLineSegments};

@@ -786,16 +786,33 @@ LineSegment.intersectsLineSegment = function (line1) {
 } 
 */
 LineSegment.intersectsCircle = function (crc) {
+  debugger;
   let {end0:e0,end1:e1} =this;
   let {center:c,radius:r}= crc;
+  let de0 = e0.distance(c);
+  let de1 = e1.distance(c);
+  if ((de0 < r)||(de1<r)) {
+    return 1;
+  }
   let vec = e1.difference(e0);
   let n = vec.normal().normalize();
   let cvec = c.difference(e0);
   let d = cvec.dotp(n);
-  if (d>r) {
+  if (Math.abs(d)>r) {
     return 0;
   }
-  let onL = c.plus(n.times(d));
+  let onL;
+  let onL0 = c.plus(n.times(d));
+  let onL02e0 = onL0.difference(e0);
+  let dp0 = onL02e0.dotp(n);
+  if (Math.abs(dp0) < 0.0001) {
+    onL = onL0;
+  } else {    
+    let onL1 = c.plus(n.times(-d));
+ // let onL12e0 = onL1.difference(e0);
+ // let dp1 = onL12e0.dotp(n); 
+    onL = onL1;
+  }
   let onL2e0 = onL.difference(e0);
   let onL2e1= onL.difference(e1);
   let onL2e0D = vec.dotp(onL2e0);

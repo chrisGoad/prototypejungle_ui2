@@ -71,6 +71,7 @@ rs.generateDrops = function (params) {
         shapes.push(s);
       });
       tgs.forEach((g) => drops.push(g));
+      tries = 0;
     }
   }
 }

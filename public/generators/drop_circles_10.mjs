@@ -15,7 +15,7 @@ rs.dropParams = {dropTries:150}
 
 rs.initProtos = function () {
   let circleP = this.circleP = circlePP.instantiate();
-  circleP.fill = 'white';
+  circleP.fill = 'red';
   circleP['stroke-width'] = 0;
    let lineP = this.lineP = linePP.instantiate();
   lineP.stroke = 'white';
@@ -27,7 +27,9 @@ rs.generateDrop= function (p) {
   let rd;
   let rc0= Point.mk(-300,0);
   let rc1= Point.mk(300,0);
-  let d = p.length();
+  let cpnt = Point.mk(0,-250);
+   cpnt = Point.mk(0,0);
+  let d = p.distance(cpnt);
   if (d>500) {
    return;
   }
@@ -38,10 +40,21 @@ rs.generateDrop= function (p) {
   let orn = 4 - irn;  // ring number with 0 as outermost
   rd = radius_of(orn);
   rd = Math.max(4,rd);
-  rd = 5+Math.random() * radius;
+  //rd = 5+Math.random() * radius;
+  rd = 10 + 2**((500-d)/500)*radius;
   let crc = Circle.mk(Point.mk(0,0),rd);
-  let gs = [crc];
-  let shapes = this.geoms2shapes(gs,null,circleP,0.5);
+  let hsgl = 0.5*radius;
+  let dir = Math.random() * 0.5*Math.PI;
+  let vec = Point.mk(Math.cos(dir),Math.sin(dir)).times(hsgl);
+  let lsg = LineSegment.mk(vec.times(-1),vec);
+  //let lsg = LineSegment.mk(Point.mk(-hsgl,0)),Point.mk(hsgl,0));
+  let gs;
+  if (Math.random()<0.75) {
+    gs = [crc];
+  } else {
+    gs = [lsg]
+  }
+  let shapes = this.geoms2shapes(gs,lineP,circleP,1);
   let drop = {geometries:gs,shapes:shapes}
   return drop;
 }
@@ -49,12 +62,17 @@ rs.generateDrop= function (p) {
 rs.initialize = function () {
   this.initProtos();
   let {circleP,lineP,dropParams,height:ht,radius} = this;
-  let hht = 0.5*ht;
+  let hht = 0.3*ht;
   this.addFrame();
   let drops = this.drops =[];
   let shapes = this.set('shapes',arrayShape.mk());
   let ns = 5;
   let intv = ht/5;
+  let sg = LineSegment.mk(Point.mk(-hht,200),Point.mk(hht,200))
+  let sgs = this.geom2shape(sg,lineP,circleP,1);
+   // shapes.push(sgs);
+
+/*
   for (let i=0;i<ns;i++) {
     let sght = i*intv - hht;
     let sg = LineSegment.mk(Point.mk(-hht,sght),Point.mk(hht,sght))
@@ -65,14 +83,14 @@ rs.initialize = function () {
     let sgs2 = this.geom2shape(sg2,lineP,circleP,1);
     shapes.push(sgs);
     shapes.push(sgs2);
-  }
-  let crc = Circle.mk(Point.mk(0.5*ht,-5),radius);
-  let crcs = this.geom2shape(crc,null,circleP,1);
+  }*/
+  //let crc = Circle.mk(Point.mk(0.5*ht,-5),radius);
+  //let crcs = this.geom2shape(crc,null,circleP,1);
   //let sgs = this.geom2shape(sg,lineP,circleP,1);
-  shapes.push(crcs);
+ // shapes.push(crcs);
   //shapes.push(sgs);
   debugger;
-  let gi = geometriesIntersect([crc],drops)
+  //let gi = geometriesIntersect([crc],drops)
   this.generateDrops(dropParams);
 }
 

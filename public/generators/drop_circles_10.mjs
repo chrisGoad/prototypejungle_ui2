@@ -15,8 +15,9 @@ rs.dropParams = {dropTries:150}
 
 rs.initProtos = function () {
   let circleP = this.circleP = circlePP.instantiate();
-  circleP.fill = 'red';
-  circleP['stroke-width'] = 0;
+  circleP.fill  = 'rgb(0,0,100)';
+  circleP.stroke  = 'red';
+  circleP['stroke-width'] = 1;
    let lineP = this.lineP = linePP.instantiate();
   lineP.stroke = 'white';
   lineP['stroke-width'] = 2;
@@ -41,7 +42,7 @@ rs.generateDrop= function (p) {
   rd = radius_of(orn);
   rd = Math.max(4,rd);
   //rd = 5+Math.random() * radius;
-  rd = 10 + 2**((500-d)/500)*radius;
+  rd = 5 + 2**((500-d)/500)*radius;
   let crc = Circle.mk(Point.mk(0,0),rd);
   let hsgl = 0.5*radius;
   let dir = Math.random() * 0.5*Math.PI;

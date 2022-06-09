@@ -1,31 +1,32 @@
 
 import {rs as linePP} from '/shape/line.mjs';
 import {rs as basicsP} from '/generators/basics.mjs';
-import {rs as addDropMethods} from '/mlib/drop.mjs';
+import {rs as addDropMethods} from '/mlib/newDrop.mjs';
 import {rs as addSegsetMethods} from '/mlib/segsets.mjs';
 let rs = basicsP.instantiate();
 
 addDropMethods(rs);
 addSegsetMethods(rs);
 rs.setName('drop_ice');
-let wd = 200;
+let wd = 100;
 
 let topParams = {width:wd,height:wd,minSeparation:10,framePadding:20}
-let dropParams = {dropTries:100}
+let dropParams = {dropTries:100,maxDrops:4000}
 
 Object.assign(rs,topParams);
 
 rs.initProtos = function () {
   this.lineP = linePP.instantiate();
   this.lineP.stroke = 'yellow';
-  this.lineP['stroke-width'] = .3;
+  this.lineP['stroke-width'] = .15;
 }  
 
 rs.initialDrop = function () {
-  let {width,height,lineP} = this; 
+debugger;
+  let {width,height,lineP} = this;
   let segs = this.rectangleSegments(width,height); // rectangleSegments is defined in segsets.mjs
   let lines = segs.map((sg) => this.genLine(sg,lineP));  
-  return [segs,lines];
+  return {geometries:segs,shapes:lines};
 }
 
 rs.segParams = function () {
@@ -34,22 +35,25 @@ rs.segParams = function () {
   let angle = Math.floor(r*np)* (Math.PI/np)
   let length = 2 + Math.floor(r*np)*4;
   return {angle,length};
-} 
+} 	
 
-rs.dropAt = function (p) {
+rs.generateDrop = function (p) {
+  console.log('p',p);
+  let p0 = Point.mk(0,0);
   let {minSeparation,lineP} = this;
   let {length,angle} = this.segParams();
-  let seg = this.genSegment(p,length,angle);
+  let seg = LineSegment.mkAngled(p0,angle,length);
+  debugger;
+  let lseg = LineSegment.mkAngled(p0,angle,length+minSeparation);
   let ln = this.genLine(seg,lineP);
   // the segment is minSeparation longer than the line, meaning that lines extended by this much
   // which intersect existing dropStructs are rejected as drop candidates
-  let eseg = this.genSegment(p,length+minSeparation,angle);
-  return [[eseg],[ln]];
+  return {geometries:[lseg],shapes:[ln]};
 }
  
 rs.initialize = function () {
   this.initProtos();
-  this.generateDrop(dropParams);
+  this.generateDrops(dropParams);
   this.addFrame();
 }
 

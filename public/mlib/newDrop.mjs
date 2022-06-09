@@ -40,6 +40,12 @@ rs.generateDrops = function (params) {
   if (!drops) {
     drops = this.drops = [];
   }
+  if (this.initialDrop) {
+    let idrop = this.initialDrop();
+    let {geometries:igeoms,shapes:ishapes} =  idrop;
+    drops = this.drops = igeoms;
+    ishapes.forEach(s => shapes.push(s));
+  }
   //core.transferProperties(params,this,props);
   //core.transferProperties(params,iparams,props);
   this.dropParams = params;

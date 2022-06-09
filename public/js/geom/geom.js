@@ -750,6 +750,13 @@ LineSegment.yBounds = function () {
 	return Interval.mk(y1,y0);
 }
 
+LineSegment.mkAngled = function (p,angle,ln) {
+  let vec = Point.mk(Math.cos(angle),Math.sin(angle));
+  let svec = vec.times(ln/2);
+  let e0 = p.difference(svec);
+  let e1 = p.plus(svec);
+  return LineSegment.mk(e0,e1);
+}
 LineSegment.lengthen = function (ln) {
 	let {end0,end1} = this;
 	let cntr = end0.plus(end1).times(0.5);
@@ -786,7 +793,6 @@ LineSegment.intersectsLineSegment = function (line1) {
 } 
 */
 LineSegment.intersectsCircle = function (crc) {
-  debugger;
   let {end0:e0,end1:e1} =this;
   let {center:c,radius:r}= crc;
   let de0 = e0.distance(c);

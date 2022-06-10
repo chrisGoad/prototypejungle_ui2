@@ -32,7 +32,6 @@ rs.via3d = function (p) {
 }
   
 rs.generateDrops = function (params) {
-  debugger;
   let {shapes,drops} = this;
   if (!shapes) { 
     shapes = this.set('shapes',arrayShape.mk());
@@ -52,7 +51,6 @@ rs.generateDrops = function (params) {
   let {maxLoops=Infinity,maxDrops=Infinity,dropTries} = params;
   let cnt =0;
   let tries = 0;
-  debugger;
   while ((cnt < maxLoops) && (drops.length < maxDrops)) {
     cnt++;
     let pnt = this.genRandomPoint();

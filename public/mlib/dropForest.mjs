@@ -14,7 +14,7 @@ item.generateFan = function (p) {
   core.transferProperties(params,iparams,props);*/
   debugger;
 	let {width,height} = this;
-  let {lineP,sepNext=0,splitChance,splitAmount,  
+  let {sepNext=0,splitChance,splitAmount,  
 	     segLength:len,directionChange:dc=0,randomDirectionChange:rdc=0,lineExt=0} = this.dropParams;
   let angle;
 	let rn = Math.random();
@@ -29,15 +29,17 @@ item.generateFan = function (p) {
   if (Math.random() < splitChance ) {
     let seg0 = this.genSegment(p,len,a0,sepNext);
     let seg1 = this.genSegment(p,len,a1,sepNext);
-    p.isEnd = 1;
-    let ln0 = this.genLine(seg0,lineP,lineExt);
-    let ln1 = this.genLine(seg1,lineP,lineExt);
-    return {geometries:[seg0,seg1],shapes:[ln0,ln1]};
+     p.isEnd = 1;
+   // let ln0 = this.genLine(seg0,lineP,lineExt);
+   // let ln1 = this.genLine(seg1,lineP,lineExt);
+   // return {geometries:[seg0,seg1],shapes:[ln0,ln1]};
+    return [seg0,seg1];
   } else {
     let seg = this.genSegment(p,len,angle,sepNext);
     p.isEnd = 1;
-    let ln = this.genLine(seg,lineP,lineExt);
-    return {geometries:[seg],shapes:[ln]};
+   // let ln = this.genLine(seg,lineP,lineExt);
+    return [seg];
+    //return {geometries:[seg],shapes:[ln]};
   }
 }
 
@@ -77,11 +79,11 @@ item.generateFann = function (iparams) {
 
  // the following methods generate dropStructs, which are used as the seeds of the drop operation. 
 item.ringSeeds = function (iparams) {
-  let props = ['center','lineP','numSeeds','ringRadius','segLength','divergence','data']; 
+ /* let props = ['center','lineP','numSeeds','ringRadius','segLength','divergence','data']; 
   let params = {};
   core.transferProperties(params,this,props);
-  core.transferProperties(params,iparams,props);
-  let {center=Point.mk(0,0),lineP,numSeeds,ringRadius:radius,segLength:len,divergence=0,data} = params; 
+  core.transferProperties(params,iparams,props);*/
+  let {center=Point.mk(0,0),numSeeds,ringRadius:radius,segLength:len,divergence=0,data} = iparams; 
   let segs = [];
   let cangle = 0.5* Math.PI;
   let delta = (Math.PI*2)/numSeeds;
@@ -89,7 +91,8 @@ item.ringSeeds = function (iparams) {
     let ip = Point.mk(Math.cos(cangle),Math.sin(cangle)).times(radius);
     let p = ip.plus(center);
     let dir = cangle+divergence;
-    let seg =  this.genSegment(p,len,dir);
+    let seg = this.genOneSegment(p,dir,'white');
+   // let seg =  this.genSegment(p,len,dir);
     let end = seg.end;
     if (data) {
       end.data = data;
@@ -99,8 +102,9 @@ item.ringSeeds = function (iparams) {
     segs.push(seg); 
     cangle += delta;
   }
-  let lines = segs.map((sg) => this.genLine(sg,lineP)); 
-  return {geometries:segs,shapes:lines};
+  return segs;
+  //let lines = segs.map((sg) => this.genLine(sg,lineP)); 
+ // return {geometries:segs,shapes:lines};
 }
 
 item.sideSeeds = function (iparams) {
@@ -139,11 +143,11 @@ item.rightSideSeeds = function (params) {
 }
 
 item.randomSeeds = function (iparams) {
-  let props = ['seedDirections','sepNext','lineP','numSeeds','lineExt','segLength']; 
+  /*let props = ['seedDirections','sepNext','lineP','numSeeds','lineExt','segLength']; 
   let params = {};
   core.transferProperties(params,this,props);
-  core.transferProperties(params,iparams,props);  
-  let {sepNext=0,numSeeds,lineP,seedDirections,segLength:len,lineExt=0} = this;
+  core.transferProperties(params,iparams,props); */ 
+  let {sepNext=0,numSeeds,lineP,seedDirections,segLength:len,lineExt=0} = iparams;
   let segs = [];
   let ld;
   if (seedDirections) {
@@ -166,13 +170,13 @@ item.randomSeeds = function (iparams) {
 }
 
 item.gridSeeds = function (iparams) {
-    let props = ['width','height','lineP','sepNext','fanAngles','numSeedRows',  
+   /* let props = ['width','height','lineP','sepNext','fanAngles','numSeedRows',  
        'numSeedCols','gridPadding','lineExt'];
     let params = {};
     core.transferProperties(params,this,props);
-   core.transferProperties(params,iparams,props);
+   core.transferProperties(params,iparams,props);*/
   let {width,height,lineP,sepNext=0,fanAngles,numSeedRows:numRows,  
-       numSeedCols:numCols,gridPadding:padding=0,lineExt=0} = params;
+       numSeedCols:numCols,gridPadding:padding=0,lineExt=0} = iparams;
   let segs = [];
   let lines = [];
   let iwidth = width - padding;
@@ -243,6 +247,7 @@ item.genRandomPoint = function (rect) {
 // normally sepNext is an invisible distance which prevents the detection of an intersection with the segment which is being continued.
 
 item.genSegment = function (p,ln,angle,sepNext=0) {
+  debugger;
   let vec = Point.mk(Math.cos(angle),Math.sin(angle));
   let e0,e1,end,rs;
   e0 = p;
@@ -263,6 +268,15 @@ item.genSegment = function (p,ln,angle,sepNext=0) {
   end.direction = angle;    
   rs.fromEnd = p;
   return rs;
+}
+
+
+
+item.genOneSegment = function (p,direction) {
+  let {sepNext,segLength:len,lineExt=0} = this.dropParams;
+  debugger;
+	let seg = this.genSegment(p,len,direction,sepNext);
+  return seg;
 }
 
 item.insideCanvas = function (p) {

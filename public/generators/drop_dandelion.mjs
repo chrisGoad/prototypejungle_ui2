@@ -1,7 +1,7 @@
 
 import {rs as linePP} from '/shape/line.mjs';
 import {rs as basicP} from '/generators/basics.mjs';
-import {rs as addDropMethods} from '/mlib/drop.mjs';
+import {rs as addDropMethods} from '/mlib/dropForest.mjs';
 
 let rs = basicP.instantiate();
 addDropMethods(rs);
@@ -10,9 +10,10 @@ rs.setName('drop_dandelion');
 let ht = 360;
 let wd = 1* ht;
 
-let topParams = {width:wd,height:ht,framePadding:0.15*ht,segLength:5,sepNext:0.01};  
+let topParams = {width:wd,height:ht,framePadding:0.15*ht,segLength:5,sepNextt:0.01};  
 //parameters to generateDrop 
-let dropParams = {fromEnds:1,extendWhich:'first',sepNext:0.01,dropTries:10,maxDrops:Infinity,doNotExit:[geom.Circle.mk(Point.mk(0,0),0.5*ht)]};
+let dropParams = {fromEnds:1,extendWhich:'first',sepNext:0.01,dropTries:10,sepNext:0.1,maxDrops:Infinity,doNotExit:[geom.Circle.mk(Point.mk(0,0),0.5*ht)], splitChance:.40, splitAmount:0.05*Math.PI,directionChange:0.0*Math.PI,randomDirectionChange:0.025*Math.PI,segLength:5};
+
 //parameters to generateFan
 let fanParams = {splitChance:.40,splitAmount:0.05 *Math.PI,directionChange:0.0*Math.PI,randomDirectionChange:0.025*Math.PI};
 // parameters to ringSeeds
@@ -31,18 +32,23 @@ rs.initProtos = function () {
 }
 
 rs.initialDrop = function () {
-  return this.ringSeeds(ringParams);  
+debugger;
+  let segs = this.ringSeeds(ringParams); 
+  let lines = segs.map((sg) => this.genLine(sg,this.lineP)); 
+  return {geometries:segs,shapes:lines};
 }
 
-rs.dropAt = function (p) {
-  return this.generateFan(Object.assign({startingPoint:p},fanParams));
+rs.generateDrop = function (p) {
+  let segs = this.generateFan(p);
+  let lines = segs.map( s => this.genLine(s,this.lineP,dropParams.lineExt));
+  return {geometries:segs,shapes:lines};
 }
 
 rs.initialize = function () {
   this.initProtos();
   ringParams.lineP = this.linePinvisible;
   this.addFrame();
-  this.generateDrop(dropParams);
+  this.generateDrops(dropParams);
 }
 
 export {rs};

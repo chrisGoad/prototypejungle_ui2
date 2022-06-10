@@ -14,7 +14,7 @@ rs.setName('drop_leaves');
 let ht = 300;
 let wd = 1.5 * ht;
 
-let topParams = {width:wd,height:ht,framePadding:0.17*ht,segLength:5,sepNext:0.01};
+let topParams = {width:wd,height:ht,framePadding:0.17*ht,segLength:5};
 
 let dropParams = {dropTries:500,sepNext:5,maxDrops:10000, fromEnds:1,extendWhich:'first',splitChance:.10,splitAmount:0.005 * Math.PI, directionChange:0.0*Math.PI, randomDirectionChange:0.051*Math.PI, segLength:5};
 let fanParams = {splitChance:.10,splitAmount:0.005 * Math.PI,directionChange:0.0*Math.PI,sepNextt:0.1,randomDirectionChange:0.051*Math.PI};
@@ -47,19 +47,18 @@ rs.initialDrop = function () {
   return {geometries:segs,shapes:lines};
 }
 
-rs.generateDropp = function (p) {
-  return this.generateFan(Object.assign({startingPoint:p},dropParams));
-}
 rs.generateDrop = function (p) {
   debugger;
-  return this.generateFan(p);
+  let segs =  this.generateFan(p);
+  let lines = segs.map( s => this.genLine(s,this.lineP,dropParams.lineExt));
+  return {geometries:segs,shapes:lines};
 }
 
 rs.initialize = function () {
   debugger;
   this.addFrame();
   this.initProtos();
-  dropParams.lineP = this.lineP;
+ // dropParams.lineP = this.lineP;
   this.generateDrops(dropParams);
 }
 

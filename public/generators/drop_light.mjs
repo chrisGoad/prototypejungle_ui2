@@ -1,6 +1,6 @@
 import {rs as circlePP} from '/shape/circle.mjs';
 import {rs as basicP} from '/generators/basics.mjs';
-import {rs as addDropMethods} from '/mlib/newDrop.mjs';
+import {rs as addDropMethods} from '/mlib/drop.mjs';
 
 let rs = basicP.instantiate();
 addDropMethods(rs);
@@ -29,6 +29,7 @@ rs.generateDrop= function (p) {
  }
 
 rs.initialize = function () {
+  debugger;
   this.addRectangle({width:ht,height:ht,stroke_width:0,fill:'white'});
   this.initProtos();
   this.addFrame();

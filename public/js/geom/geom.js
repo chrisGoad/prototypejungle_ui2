@@ -1732,7 +1732,6 @@ const transformForGraph = function (coverage,extent) {
 }
 
 const moveBy = function (g,p) {
-  debugger;
   if (Circle.isPrototypeOf(g)) {
      let c = g.center;
      let np = c.plus(p);

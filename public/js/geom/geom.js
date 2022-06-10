@@ -1042,7 +1042,15 @@ Line.sortIntersections = function (intrs,orderBy) {
 let Circle = geomr.set("Circle",core.ObjectNode.mk()).__namedType();
 
 
-Circle.mk = function(center,radius) {
+Circle.mk = function(icenter,iradius) {
+  let center,radius;
+  if (iradius === undefined) {
+    radius = icenter;
+    center = Point.mk(0,0);
+  } else {
+    center = icenter;
+    radius = iradius;
+  }
   let rs = Object.create(Circle);
   rs.set('center',center.copy());
   rs.radius = radius;

@@ -797,7 +797,10 @@ LineSegment.intersectsCircle = function (crc) {
   let {center:c,radius:r}= crc;
   let de0 = e0.distance(c);
   let de1 = e1.distance(c);
-  if ((de0 < r)||(de1<r)) {
+  let e0in = de0<r;
+  let e1in = de1<r;
+  
+  if (e0in !== e1in) {
     return 1;
   }
   let vec = e1.difference(e0);
@@ -1061,7 +1064,7 @@ Circle.intersectsCircle = function (crc) {
 	let {center:tc,radius:tr} = this;
 	let {center:cc,radius:cr} = crc;
 	let d = tc.distance(cc);
-	return d <(tr + cr);
+	return (d <(tr + cr))&&((d+cr)>tr) && ((d+tr)>cr);
 }
 
 Circle.intersects = function (target) {

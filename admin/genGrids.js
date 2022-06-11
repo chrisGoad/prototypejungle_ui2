@@ -31,7 +31,7 @@ let square = kind === 'square';
 let imagesHere = kind === 'imagesHere';
 let images = (kind === 'images') || imagesHere;
 
-let local_images = (kind === 'local_images') || alternate;
+let local_images = (kind === 'local_images') || alternate ;
 let whichPage = 1;
 let orderMin,orderMax;
 if (forKOP) {
@@ -290,13 +290,13 @@ const thingString = function (order,ix,dir,useThumb,ititle,props) {
   }
   //theLocals.push(localim?1:0);
 
-  if (!local_images) {
+  if (!(local_images || imagesHere)) {
 	  thumbsrc = `https://kingdomofpattern.com/thumbs/${vpath}.jpg`;
   }
 //console.log('thumbsrc',thumbsrc);
 	let pageArg = 'page='+pageNumber;
   let kindArg = 'imKind='+imKind;
-  let localArg = 'local='+(local_images?1:0);
+  let localArg = 'local='+(local_images||imagesHere?1:0);
 	let theImageArg = '';
 	pageNumber++;
 	let lastPageArg = (pageNumber === numPages)?'&lastPage=1':'';

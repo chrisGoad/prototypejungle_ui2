@@ -274,7 +274,7 @@ item.genSegment = function (p,ln,angle,sepNext=0) {
 
 item.genOneSegment = function (p,direction) {
   let {sepNext,segLength:len,lineExt=0} = this.dropParams;
-  debugger;
+  //debugger;
 	let seg = this.genSegment(p,len,direction,sepNext);
   return seg;
 }
@@ -371,7 +371,7 @@ item.addSegmentAtThisEnd = function (end) {
     rvs = this.randomValuesAtCell(randomGridsForShapes,cell.x,cell.y);
   }
   while (true) {
-  debugger;
+ // debugger;
     loopCnt++;
     console.log('loops',loopCnt);	
     let dropStruct = this.generateDrop(end,rvs);
@@ -529,7 +529,7 @@ rs.generateDrop = function (p) {
 }
 
 item.addRandomSegments = function () {
-debugger;
+//debugger;
   let {segments,ends} = this;
   let {maxDrops=Infinity,dropTries,maxLoops=Infinity,segLength,fromEnds} = this.dropParams;
   if (!this.generateDrop) {

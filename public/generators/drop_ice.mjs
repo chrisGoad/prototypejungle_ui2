@@ -43,11 +43,10 @@ rs.generateDrop = function (p) {
   let {minSeparation,lineP} = this;
   let {length,angle} = this.segParams();
   let seg = LineSegment.mkAngled(p0,angle,length);
-  debugger;
-  let lseg = LineSegment.mkAngled(p0,angle,length+minSeparation);
-  let ln = this.genLine(seg,lineP);
-  // the segment is minSeparation longer than the line, meaning that lines extended by this much
+  let line = this.genLine(seg,lineP);
+  // lseg is minSeparation longer than the seg and line, meaning that lines extended by this much
   // which intersect existing dropStructs are rejected as drop candidates
+  let lseg = LineSegment.mkAngled(p0,angle,length+minSeparation);
   return {geometries:[lseg],shapes:[ln]};
 }
  

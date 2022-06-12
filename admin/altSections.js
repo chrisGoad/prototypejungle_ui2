@@ -9,6 +9,8 @@ sections: [
  [0,'quad_2_v_2','generators',1,'Circles and Squares',{likes:0,posted:0,category:'quad',version:2}], 
  [0,'drop_leaves','generators',1,'Leaves',{likes:0,posted:0,category:'drop'}], 
  [0,'drop_square','generators',1,'Square',{likes:0,posted:0,category:'drop'}], 
+ [0,'drop_semi_ordered','generators',1,'Semi Ordered',{likes:0,posted:0,category:'quad'}], 
+ [0,'drop_hole','generators',1,'Hole',{likes:0,posted:0,category:'quad'}], 
  [0,'drop_circles_0','generators',1,'Circles 0',{likes:0,posted:0,category:'quad'}], 
  [0,'drop_circles_1','generators',1,'Circles 1',{likes:0,posted:0,category:'quad'}], 
  [0,'drop_circles_2','generators',1,'Circles 2',{likes:0,posted:0,category:'quad'}], 

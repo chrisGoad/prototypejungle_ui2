@@ -799,8 +799,14 @@ LineSegment.intersectsCircle = function (crc) {
   let de1 = e1.distance(c);
   let e0in = de0<r;
   let e1in = de1<r;
-  
+  if ((!crc.isDisk) && e0in && e1in) {
+    debugger;
+    return 0;  // crc contains this
+  }
   if (e0in !== e1in) {
+    return 1;
+  }
+  if (crc.isDisk && (e0in || e1in)) {
     return 1;
   }
   let vec = e1.difference(e0);
@@ -1057,6 +1063,7 @@ Circle.mk = function(icenter,iradius) {
   let rs = Object.create(Circle);
   rs.set('center',center.copy());
   rs.radius = radius;
+  rs.isDisk = 1;
   return rs;
 }
 
@@ -1064,8 +1071,18 @@ Circle.intersectsCircle = function (crc) {
 	let {center:tc,radius:tr} = this;
 	let {center:cc,radius:cr} = crc;
 	let d = tc.distance(cc);
-	return (d <(tr + cr))&&((d+cr)>tr) && ((d+tr)>cr);
+	if (d > (tr + cr)) {
+    return 0;
+  }
+  if ((!crc.isDisk) && ((d+cr)<tr)) {
+    return 0; // crc contains this
+  }
+   if ((!this.isDisk) && ((d+tr)<cr)) {
+    return 0; // this contains crc
+  }
+  return 1;
 }
+    
 
 Circle.intersects = function (target) {
   if (Circle.isPrototypeOf(target)) {
@@ -1745,8 +1762,8 @@ const moveBy = function (g,p) {
     let {end0,end1} = g;
     let ne0 = end0.plus(p);
     let ne1= end1.plus(p);
-    g.end0 = ne0;
-    g.end1 = ne1;
+    g.end0.copyto(ne0);
+    g.end1.copyto(ne1);
     return g;
   }
 }

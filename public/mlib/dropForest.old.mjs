@@ -7,14 +7,16 @@ let defaults = {maxDrops:Infinity,dropTries:5,maxLoops:Infinity};
 Object.assign(item,defaults);
 
 item.generateFan = function (p) {
+/* let params = {};
+ let props = ['startingPoint','width','height','lineP','sepNext','splitChance','splitAmount',
+	     'segLength','directionChange','randomDirectionChange','lineExt'];
+  core.transferProperties(params,this,props);
+  core.transferProperties(params,iparams,props);*/
+  debugger;
 	let {width,height} = this;
   let {sepNext=0,splitChance,splitAmount,  
 	     segLength:len,directionChange:dc=0,randomDirectionChange:rdc=0,lineExt=0} = this.dropParams;
-  debugger;
   let angle;
-  //p.x = 0;
-  //p.y = 0;
-  let p0 = Point.mk(0,0);
 	let rn = Math.random();
   if (typeof p.direction === 'number') {
    angle = p.direction +  dc + ((rn<0.5)?rdc:-rdc);
@@ -25,20 +27,62 @@ item.generateFan = function (p) {
   let a0 = angle+splitAmount;
   let a1 = angle-splitAmount;
   if (Math.random() < splitChance ) {
-    let seg0 = this.genSegment(p0,len,a0,sepNext);
-    let seg1 = this.genSegment(p0,len,a1,sepNext);
+    let seg0 = this.genSegment(p,len,a0,sepNext);
+    let seg1 = this.genSegment(p,len,a1,sepNext);
      p.isEnd = 1;
+   // let ln0 = this.genLine(seg0,lineP,lineExt);
+   // let ln1 = this.genLine(seg1,lineP,lineExt);
+   // return {geometries:[seg0,seg1],shapes:[ln0,ln1]};
     return [seg0,seg1];
   } else {
-    let seg = this.genSegment(p0,len,angle,sepNext);
+    let seg = this.genSegment(p,len,angle,sepNext);
     p.isEnd = 1;
+   // let ln = this.genLine(seg,lineP,lineExt);
     return [seg];
+    //return {geometries:[seg],shapes:[ln]};
   }
 }
 
 
+item.generateFann = function (iparams) {
+ let params = {};
+ let props = ['startingPoint','width','height','lineP','sepNext','splitChance','splitAmount',
+	     'segLength','directionChange','randomDirectionChange','lineExt'];
+  core.transferProperties(params,this,props);
+  core.transferProperties(params,iparams,props);
+	let {startingPoint:p,width,height,lineP,sepNext=0,splitChance,splitAmount,  
+	     segLength:len,directionChange:dc=0,randomDirectionChange:rdc=0,lineExt=0} = this.dropParams;
+  let angle;
+	let rn = Math.random();
+  if (typeof p.direction === 'number') {
+   angle = p.direction +  dc + ((rn<0.5)?rdc:-rdc);
+  } else{
+    angle = Math.floor(Math.random()*4)*0.25*Math.PI;
+  }
+  let hsa = 0.5 * splitAmount;
+  let a0 = angle+splitAmount;
+  let a1 = angle-splitAmount;
+  if (Math.random() < splitChance ) {
+    let seg0 = this.genSegment(p,len,a0,sepNext);
+    let seg1 = this.genSegment(p,len,a1,sepNext);
+    p.isEnd = 1;
+    let ln0 = this.genLine(seg0,lineP,lineExt);
+    let ln1 = this.genLine(seg1,lineP,lineExt);
+    return {geometries:[seg0,seg1],shapes:[ln0,ln1]};
+  } else {
+    let seg = this.genSegment(p,len,angle,sepNext);
+    p.isEnd = 1;
+    let ln = this.genLine(seg,lineP,lineExt);
+    return {geometries:[seg],shapes:[ln]};
+  }
+}
+
  // the following methods generate dropStructs, which are used as the seeds of the drop operation. 
 item.ringSeeds = function (iparams) {
+ /* let props = ['center','lineP','numSeeds','ringRadius','segLength','divergence','data']; 
+  let params = {};
+  core.transferProperties(params,this,props);
+  core.transferProperties(params,iparams,props);*/
   let {center=Point.mk(0,0),numSeeds,ringRadius:radius,segLength:len,divergence=0,data} = iparams; 
   let segs = [];
   let cangle = 0.5* Math.PI;
@@ -48,6 +92,7 @@ item.ringSeeds = function (iparams) {
     let p = ip.plus(center);
     let dir = cangle+divergence;
     let seg = this.genOneSegment(p,dir,'white');
+   // let seg =  this.genSegment(p,len,dir);
     let end = seg.end;
     if (data) {
       end.data = data;
@@ -58,6 +103,8 @@ item.ringSeeds = function (iparams) {
     cangle += delta;
   }
   return segs;
+  //let lines = segs.map((sg) => this.genLine(sg,lineP)); 
+ // return {geometries:segs,shapes:lines};
 }
 
 item.sideSeeds = function (iparams) {
@@ -95,7 +142,11 @@ item.rightSideSeeds = function (params) {
   return this.sideSeeds(params);
 }
 
-item.randomSeeds = function (iparams) { 
+item.randomSeeds = function (iparams) {
+  /*let props = ['seedDirections','sepNext','lineP','numSeeds','lineExt','segLength']; 
+  let params = {};
+  core.transferProperties(params,this,props);
+  core.transferProperties(params,iparams,props); */ 
   let {sepNext=0,numSeeds,lineP,seedDirections,segLength:len,lineExt=0} = iparams;
   let segs = [];
   let ld;
@@ -196,7 +247,7 @@ item.genRandomPoint = function (rect) {
 // normally sepNext is an invisible distance which prevents the detection of an intersection with the segment which is being continued.
 
 item.genSegment = function (p,ln,angle,sepNext=0) {
-  //debugger;
+  debugger;
   let vec = Point.mk(Math.cos(angle),Math.sin(angle));
   let e0,e1,end,rs;
   e0 = p;
@@ -223,6 +274,7 @@ item.genSegment = function (p,ln,angle,sepNext=0) {
 
 item.genOneSegment = function (p,direction) {
   let {sepNext,segLength:len,lineExt=0} = this.dropParams;
+  //debugger;
 	let seg = this.genSegment(p,len,direction,sepNext);
   return seg;
 }
@@ -239,7 +291,7 @@ item.insideCanvas = function (p) {
 }
 
 item.segmentIntersects = function (seg) {
-  let {shapes,width,height} = this;
+  let {segments,width,height} = this;
   let {exclusionZones,doNotCross,doNotExit} = this.dropParams;
   let {end0,end1} = seg;
   if ((!this.insideCanvas(end0)) || (!this.insideCanvas(end1))) {
@@ -272,9 +324,9 @@ item.segmentIntersects = function (seg) {
       }
     }
   }
-  let ln = shapes.length;
+  let ln = segments.length;
   for (let i=0;i<ln;i++) {  
-    let ip = seg.intersects(shapes[i]);
+    let ip = seg.intersects(segments[i]);
     if (ip) {
       return true;
     }
@@ -282,11 +334,11 @@ item.segmentIntersects = function (seg) {
 }
 
 item.intersectsSomething = function (g) {
-  let {shapes,width,height,ignoreBefore:ibf} = this;
-  let ln = shapes.length;
+  let {segments,width,height,ignoreBefore:ibf} = this;
+  let ln = segments.length;
   let st = (ibf)?ibf:0;
   for (let i=st;i<ln;i++) {  
-    let seg = shapes[i];
+    let seg = segments[i];
     if (g.intersects(seg)) {
       return true;
     }
@@ -307,7 +359,7 @@ item.activeEnds = function () {
 }
 let loopCnt = 0;
 item.addSegmentAtThisEnd = function (end) {
-  let {shapes,ends,numRows,randomGridsForShapes,drops} = this;
+  let {segments,ends,numRows,randomGridsForShapes} = this;
   let {maxDrops=Infinity,segLength,dropTries} = this.dropParams;
   if (!this.generateDrop) {
     return;
@@ -319,25 +371,18 @@ item.addSegmentAtThisEnd = function (end) {
     rvs = this.randomValuesAtCell(randomGridsForShapes,cell.x,cell.y);
   }
   while (true) {
+ // debugger;
     loopCnt++;
     console.log('loops',loopCnt);	
     let dropStruct = this.generateDrop(end,rvs);
     let ifnd = 0;
     let sln = 0
     if (dropStruct) {
-        //if (LineSegment.isPrototypeOf(g))
-
       let segs = dropStruct.geometries;
       sln = segs.length;
       for (let i=0;i<sln;i++) {
         let seg = segs[i];
-        debugger;
-        geom.moveBy(seg,end);
-        let nend = seg.end.plus(end);
-        seg.end.copyto(nend);
-       
-        //  if (this.segmentIntersects(seg)) {        
-      if (geometriesIntersect([seg],drops)) {
+        if (this.segmentIntersects(seg)) {        
           ifnd = true;
           break;
         }
@@ -353,8 +398,6 @@ item.addSegmentAtThisEnd = function (end) {
         return 0;
       }
     } else {
-      let shapes = dropStruct.shapes;
-      shapes.forEach( (s) => s.moveto(end));
       this.installDropStruct(dropStruct);
       return 1;  
     } 
@@ -420,7 +463,7 @@ item.addSegmentsAtEnds = function () {
   return ['loopsExceeded',this.numDropped];
 }
        
-item.addRandomSegmenttt = function () {
+item.addRandomSegment = function () {
   let {numRows,randomGridsForShapes} = this;
   let rvs;
   let p = this.genRandomPoint(); 
@@ -450,7 +493,7 @@ item.addRandomSegmenttt = function () {
 }
     
 item.addNrandomSegments = function (n) {
-  let {shapes,ends} = this;
+  let {segments,ends} = this;
   let {maxDrops=Infinity,dropTries,maxLoops=Infinity,segLength,fromEnds} = this.dropParams;
   if (!this.generateDrop) {
     return;
@@ -467,6 +510,16 @@ item.addNrandomSegments = function (n) {
       }
       continue; 
     }
+  /*  let segsAdded = this.addRandomSegment();
+    if (segsAdded) {
+      tries = 0;
+      numAdded++;
+    } else {  
+      tries++;
+      if (tries >= dropTries) {
+        return numAdded;
+      }
+    }*/
   }
   return numAdded;
 } 
@@ -476,7 +529,8 @@ rs.generateDrop = function (p) {
 }
 
 item.addRandomSegments = function () {
-  let {shapes,ends} = this;
+//debugger;
+  let {segments,ends} = this;
   let {maxDrops=Infinity,dropTries,maxLoops=Infinity,segLength,fromEnds} = this.dropParams;
   if (!this.generateDrop) {
     return;
@@ -496,12 +550,22 @@ item.addRandomSegments = function () {
       }
       return; 
     }
- //   let segsAdded = this.addRandomSegment();
+    let segsAdded = this.addRandomSegment();
+ /*   if (segsAdded) {
+      tries = 0;
+      if (this.numDropped >= maxDrops) {
+        return this.numDropped;
+      }    
+    } else {  
+      tries++;
+      if (tries >= dropTries) {
+        return this.numDropped;
+      }
+    }*/
   }
 }
 
 item.installShape = function (shape) {
- // debugger;fro
   this.shapes.push(shape);
   shape.show();
   shape.update();
@@ -510,10 +574,9 @@ item.installShape = function (shape) {
 }
 
 item.installDropStruct = function (dropStruct) {
-  debugger;
-  let {drops,ends} = this;
+  let {segments,ends} = this;
+  let ln = segments.length;
   let {geometries:segs,shapes} = dropStruct;
-  let ln = drops.length;
   segs.forEach( (seg) => {
     seg.number = ln;
     let {end0,end1,end} = seg;
@@ -522,7 +585,7 @@ item.installDropStruct = function (dropStruct) {
     if (end) {
       end.isEndOf = ln;
     }
-    drops.push(seg);
+    segments.push(seg);
     if (end) {
       ends.push(end);
       end.isEnd = 1;
@@ -548,8 +611,12 @@ item.concatEachArray = function (ays) {
 }
 
 item.generateDrops = function (iparams) {
+ /* let params = {};
+  let props = ['fromEnds','extendWhich','sepNext','segLength','dropTries','maxDrops','maxLoops','doNotExit','exclusionZones','doNotCross'];
+  core.transferProperties(params,this,props);
+  core.transferProperties(params,iparams,props);*/
   this.dropParams =iparams;
-  this.drops = [];
+  this.segments = [];
   this.numDropped = 0;
   this.ends = [];
   if (!this.shapes) {

@@ -54,7 +54,7 @@ rs.generateDrop = function (p) {
   // lseg is minSeparation longer than the seg and line, meaning that lines extended by this much
   // which intersect existing dropStructs are rejected as drop candidates
   let lseg = LineSegment.mkAngled(p0,angle,length+minSeparation);
-  return {geometries:[lseg],shapes:[ln]};
+  return {geometries:[lseg],shapes:[line]};
 }
  
 rs.initialize = function () {
@@ -68,11 +68,9 @@ export {rs};
 
 </precode>
  
-<span class="userDefinedText">  generateDrop(p:Point)</span> returns a structure  of the form 
-{geometries:arrayOf(geometricObject), shapes:arrayOf(shape)} Usually, as in this example, the shapes constitute the visible form of the geometric objects. The algorithm<span class="textVar">generateDrops</span> calls <span class="userDefinedText">  generateDrop</span> repeatedly on randomly selected points  on the canvas. It checks whether any of the geometries in the current drop collide with the set of all geometries already dropped. If so the drop is rejected. If not the geometries are added to the array of all geometries dropped so far, and the shapes are added to the visible world. Both the shapes and geometries should be returned in their zero position; <span class="textVar">generateDrops</span> moves them into position p. The <span class="textVar">generateDrops</span>reason that geometries and shapes are generated separately is that it allows the coder full control of how the geometries are made visible. The argument dropParams to <span class="textVar">generateDrops</span> has the form 
-<p> The circleDrop algorithm drops  circles at random positions on the canvas. If a circle lands on top of another, it is thrown away, otherwise it is added.   
-If defined, <span class="userDefinedText">this.generateDrop(p:Point)</span>  computes whatever properties are of interest, for example radius or fill, and should return an object with those properties. If the drop passes the no-intersection test, it is added to the  drop array (the point at which it was dropped is added by the <span class="textVar">generateCircleDrops</span> method).   If <span class="userDefinedText">this.generateDrop</span> returns a null value, no drop attempt is made. If <span class="userDefinedText">this.generateDrop</span> is not defined,  then  the radius of each circle is the same, namely the value specified by the radius parameter passed to <span class="textVar">generateCircleDrop</span>.</p>
-<p><span class="textVar">generateCircleDrop</span> returns an object of the form <span class="textVar">{points:array of Point,radii:array of number}</span>, specifying the successful drops. The algorithm terminates when <span class="textVar">dropTries</span> successive attempts at a drop fail.</p>
+<span class="userDefinedText">  generateDrop(p:Point)</span> should return a structure  of the form 
+<span class="textVar">{geometries:arrayOf(geometricObject), shapes:arrayOf(shape)}</span> The shapes constitute the visible form of the geometric objects. The algorithm <span class="textVar">generateDrops</span> calls <span class="userDefinedText">generateDrop</span> repeatedly on randomly selected points  on the canvas. It checks whether any of the geometries in the current drop collide with any of the geometries already dropped. If so the drop is rejected. If not the geometries are added to the array of all geometries dropped so far, and the shapes are added to the visible world. Both the shapes and geometries should be returned in their zero position; <span class="textVar">generateDrops</span> moves them into position. The reason that geometries and shapes are generated separately is that it allows the coder full control of how the geometries are made visible. The argument <span class="textVar">dropParams</span> to <span class="textVar">generateDrops</span> has the form <span class="textVar">{dropTries:number,maxDrops=Infinity:number}</span>. If <span class="textVar">generateDrops</span> encounters  <span class="textVar">dropTries</span> sequential failures to drop due to collision, the algorithm terminates. It also terminates once there have been <span class="textVar">maxDrops</span> successful drops.</p>
+<p> The three geometric types that can be droppped are LineSegment,Rectangle, and Circle.</p>
 
 
 </div>

@@ -33,7 +33,7 @@ rs.initProtos = function () {
 rs.generateDrop= function (p) {
   let {width:wd,dropParams,circleP,lineP,minSeparation,numRings:nr} = this;
   debugger;
-  if (Math.random() <0.2) {
+  if (Math.random() <0.6) {
     let crc = Circle.mk(20);
     let crcs = this.genCircle(crc,this.circleP);
     return {geometries:[crc],shapes:[crcs]}; 

@@ -1125,13 +1125,34 @@ Circle.intersectLine = function (point,vec) {
   return [s0,s1];
 }
 
-Circle.contains = function (point) {
+Circle.containsPoint = function (point) {
   let v = point.difference(this.center);
   let {x,y}= v;
   let r = this.radius;
   return (x*x + y*y) < r*r;
 }
 
+Circle.containsLineSegment = function (s,p) {
+  if (p) {
+    return this.contains(s.end0.plus(p)) && this.contains(s.end1.plus(p));
+  }
+  return this.contains(s.end0) && this.contains(s.end1);
+}
+
+
+
+Circle.contains = function (g,p) {
+debugger;
+ if (Point.isPrototypeOf(g)) {
+   return this.containsPoint(g);
+ }
+ if (LineSegment.isPrototypeOf(g)) {
+   return this.containsLineSegment(g,p);
+ }
+ /*if (Rectangle.isPrototypeOf(g)) {
+   return this.containsRectangle(g);
+ }*/
+}
 geomr.set("Arc",core.ObjectNode.mk()).__namedType();
 let Arc = geomr.Arc;
  
@@ -1519,7 +1540,7 @@ Rectangle.plus = function (p) { // __translate
   return rs;
 }
 
-Rectangle.contains = function (p) {
+Rectangle.containsPoint = function (p) {
   let c = this.corner;
   let px = p.x;
   let py,ex;
@@ -1616,7 +1637,24 @@ Rectangle.lowerRight = function () {
 
 
 Rectangle.containsRectangle = function (r) {
-  return this.contains(r.upperLeft()) && this.contains(r.lowerRight());
+  return this.containsPoint(r.upperLeft()) && this.containsPoint(r.lowerRight());
+}
+ 
+ 
+Rectangle.containsLineSegment = function (s) {
+  return this.containsPoint(s.end0) && this.containsPoint(s.end1);
+}
+
+Rectangle.contains = function (g) {
+ if (Point.isPrototypeOf(g)) {
+   return this.containsPoint(g);
+ }
+ if (LineSegment.isPrototypeOf(g)) {
+   return this.containsRectangle(g);
+ }
+ if (Rectangle.isPrototypeOf(g)) {
+   return this.containsRectangle(g);
+ }
 }
  
 //  does not work with rotations

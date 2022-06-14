@@ -10,6 +10,7 @@ sections: [
  [0,'drop_leaves','generators',1,'Leaves',{likes:0,posted:0,category:'drop'}], 
  [0,'drop_square','generators',1,'Square',{likes:0,posted:0,category:'drop'}], 
  [0,'drop_semi_ordered','generators',1,'Semi Ordered',{likes:0,posted:0,category:'quad'}], 
+ [0,'drop_dandelion_with_circles','generators',1,'Dandelion with Circles',{likes:0,posted:0,category:'quad'}], 
  [0,'drop_hole','generators',1,'Hole',{likes:0,posted:0,category:'quad'}], 
  [0,'drop_circles_0','generators',1,'Circles 0',{likes:0,posted:0,category:'quad'}], 
  [0,'drop_circles_1','generators',1,'Circles 1',{likes:0,posted:0,category:'quad'}], 

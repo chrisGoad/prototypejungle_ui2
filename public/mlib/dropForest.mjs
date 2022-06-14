@@ -9,7 +9,7 @@ Object.assign(item,defaults);
 item.generateFan = function (p) {
 	let {width,height} = this;
   let {sepNext=0,splitChance,splitAmount,  
-	     segLength:len,directionChange:dc=0,randomDirectionChange:rdc=0,lineExt=0} = this.dropParams;
+	     segLength:len,directionChange:dc=0,randomDirectionChange:rdc=0,lineExt=0} = this.forestDropParams;
   debugger;
   let angle;
   //p.x = 0;
@@ -25,12 +25,12 @@ item.generateFan = function (p) {
   let a0 = angle+splitAmount;
   let a1 = angle-splitAmount;
   if (Math.random() < splitChance ) {
-    let seg0 = this.genSegment(p0,len,a0,sepNext);
-    let seg1 = this.genSegment(p0,len,a1,sepNext);
+    let seg0 = this.genForestSegment(p0,len,a0,sepNext);
+    let seg1 = this.genForestSegment(p0,len,a1,sepNext);
      p.isEnd = 1;
     return [seg0,seg1];
   } else {
-    let seg = this.genSegment(p0,len,angle,sepNext);
+    let seg = this.genForestSegment(p0,len,angle,sepNext);
     p.isEnd = 1;
     return [seg];
   }
@@ -72,7 +72,7 @@ item.sideSeeds = function (iparams) {
   let cy = delta-hw;
   for (let j=0;j<numSeeds;j++) {
     let ip = Point.mk(right?hw:-hw,cy);
-    let seg =  this.genSegment(ip,len,right?Math.PI:0,sepNext);
+    let seg =  this.genForestSegment(ip,len,right?Math.PI:0,sepNext);
     let end = seg.end;
     if (data) {
       send.data = data;
@@ -111,7 +111,7 @@ item.randomSeeds = function (iparams) {
     } else {
       angle = 2*Math.random()*Math.PI;
     }
-    let seg =  this.genSegment(ip,len,angle,sepNext);
+    let seg =  this.genForestSegment(ip,len,angle,sepNext);
     segs.push(seg); 
   }
   let lines = segs.map((sg) => this.genLine(sg,lineP,lineExt)); 
@@ -152,7 +152,7 @@ item.gridSeeds = function (iparams) {
         }
       } else {
         fanAngles.forEach( (angle) => {
-          let seg = this.genSegment(ip,len,angle,sepNext);
+          let seg = this.genForestSegment(ip,len,angle,sepNext);
           segs.push(seg);
           lines.push(this.genLine(seg,lineP,lineExt));
         });
@@ -164,7 +164,7 @@ item.gridSeeds = function (iparams) {
   }
   return {geometries:segs,shapes:lines};
 }
-
+/*
 item.extendSegment = function (seg,ln) {
   let {end0,end1} = seg;
   let cnt= end0.plus(end1).times(0.5);
@@ -176,7 +176,7 @@ item.extendSegment = function (seg,ln) {
   let e1 = cnt.plus(hnvec);
   return LineSegment.mk(e0,e1);
 }
-  
+*/
 item.genRandomPoint = function (rect) {
   if (rect) {
     let {corner,extent} = rect;
@@ -195,7 +195,7 @@ item.genRandomPoint = function (rect) {
 // When in fromEnds mode, the segment has an "end" which is sepNext beyond end1, this end is where the next segment can be droppe
 // normally sepNext is an invisible distance which prevents the detection of an intersection with the segment which is being continued.
 
-item.genSegment = function (p,ln,angle,sepNext=0) {
+item.genForestSegment = function (p,ln,angle,sepNext=0) {
   //debugger;
   let vec = Point.mk(Math.cos(angle),Math.sin(angle));
   let e0,e1,end,rs;
@@ -222,8 +222,8 @@ item.genSegment = function (p,ln,angle,sepNext=0) {
 
 
 item.genOneSegment = function (p,direction) {
-  let {sepNext,segLength:len,lineExt=0} = this.dropParams;
-	let seg = this.genSegment(p,len,direction,sepNext);
+  let {sepNext,segLength:len,lineExt=0} = this.forestDropParams;
+	let seg = this.genForestSegment(p,len,direction,sepNext);
   return seg;
 }
 
@@ -240,7 +240,7 @@ item.insideCanvas = function (p) {
 
 item.segmentIntersects = function (seg) {
   let {shapes,width,height} = this;
-  let {exclusionZones,doNotCross,doNotExit} = this.dropParams;
+  let {exclusionZones,doNotCross,doNotExit} = this.forestDropParams;
   let {end0,end1} = seg;
   if ((!this.insideCanvas(end0)) || (!this.insideCanvas(end1))) {
     return true;
@@ -281,7 +281,7 @@ item.segmentIntersects = function (seg) {
   }
 }
 
-item.intersectsSomething = function (g) {
+item.intersectsSomethingggg = function (g) {
   let {shapes,width,height,ignoreBefore:ibf} = this;
   let ln = shapes.length;
   let st = (ibf)?ibf:0;
@@ -308,8 +308,8 @@ item.activeEnds = function () {
 let loopCnt = 0;
 item.addSegmentAtThisEnd = function (end) {
   let {shapes,ends,numRows,randomGridsForShapes,drops} = this;
-  let {maxDrops=Infinity,segLength,dropTries} = this.dropParams;
-  if (!this.generateDrop) {
+  let {maxDrops=Infinity,segLength,dropTries} = this.forestDropParams;
+  if (!this.generateForestDrop) {
     return;
   }
   let tries = 0;
@@ -321,10 +321,10 @@ item.addSegmentAtThisEnd = function (end) {
   while (true) {
     loopCnt++;
     console.log('loops',loopCnt);	
-    let dropStruct = this.generateDrop(end,rvs);
+    let dropStruct = this.generateForestDrop(end,rvs);
     let ifnd = 0;
     let sln = 0
-    if (dropStruct) {
+    if (dropStruct && (dropStruct.geometries.length>0)) {
         //if (LineSegment.isPrototypeOf(g))
 
       let segs = dropStruct.geometries;
@@ -381,7 +381,7 @@ item.randomDirection = function (n) {
 }
 
 item.addSegmentAtSomeEnd = function () {
-  let {extendWhich} = this.dropParams;
+  let {extendWhich} = this.forestDropParams;
   while (true) {
     let ae = this.activeEnds();
     let end;
@@ -407,7 +407,7 @@ item.addSegmentAtSomeEnd = function () {
 item.addSegmentsAtEnds = function () {
   let maxEndTries = 100;
   let tries = 0; 
-  let {maxDrops=Infinity} = this.dropParams;
+  let {maxDrops=Infinity} = this.forestDropParams;
   while (this.numDropped  < maxDrops) {
     let ars = this.addSegmentAtSomeEnd();
     if (ars === 'noEndsLeft') {
@@ -451,7 +451,7 @@ item.addRandomSegmenttt = function () {
     
 item.addNrandomSegments = function (n) {
   let {shapes,ends} = this;
-  let {maxDrops=Infinity,dropTries,maxLoops=Infinity,segLength,fromEnds} = this.dropParams;
+  let {maxDrops=Infinity,dropTries,maxLoops=Infinity,segLength,fromEnds} = this.forestDropParams;
   if (!this.generateDrop) {
     return;
   }
@@ -472,13 +472,13 @@ item.addNrandomSegments = function (n) {
 } 
 
 rs.generateDrop = function (p) {
-  return this.generateFan(Object.assign({startingPoint:p},this.dropParams));
+  return this.generateFan(Object.assign({startingPoint:p},this.forestDropParams));
 }
 
 item.addRandomSegments = function () {
   let {shapes,ends} = this;
-  let {maxDrops=Infinity,dropTries,maxLoops=Infinity,segLength,fromEnds} = this.dropParams;
-  if (!this.generateDrop) {
+  let {maxDrops=Infinity,dropTries,maxLoops=Infinity,segLength,fromEnds} = this.forestDropParams;
+  if (!this.generateForestDrop) {
     return;
   }
   this.numDropped = 0;
@@ -547,16 +547,18 @@ item.concatEachArray = function (ays) {
    return [c0,c1];
 }
 
-item.generateDrops = function (iparams) {
-  this.dropParams =iparams;
-  this.drops = [];
+item.generateForestDrops = function (iparams) {
+  this.forestDropParams =iparams;
+  if (!this.drops) {
+    this.drops = [];
+  }
   this.numDropped = 0;
   this.ends = [];
   if (!this.shapes) {
      this.set('shapes',core.ArrayNode.mk());
   }
-  if (this.initialDrop) {
-    let isegs = this.initialDrop();
+  if (this.initialForestDrop) {
+    let isegs = this.initialForestDrop();
     this.installDropStruct(isegs);
   }
   this.addRandomSegments();

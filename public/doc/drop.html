@@ -29,7 +29,6 @@ rs.initProtos = function () {
 }  
 
 rs.initialDrop = function () {
-debugger;
   let {width,height,lineP} = this;
   let segs = this.rectangleSegments(width,height); // rectangleSegments is defined in segsets.mjs
   let lines = segs.map((sg) => this.genLine(sg,lineP));  
@@ -45,7 +44,6 @@ rs.segParams = function () {
 } 	
 
 rs.generateDrop = function (p) {
-  console.log('p',p);
   let p0 = Point.mk(0,0);
   let {minSeparation,lineP} = this;
   let {length,angle} = this.segParams();
@@ -68,10 +66,11 @@ export {rs};
 
 </precode>
  
-<span class="userDefinedText">  generateDrop(p:Point)</span> should return a structure  of the form 
+<span class="userDefinedText">  rs.generateDrop(p:Point)</span> should return a structure  of the form 
 <span class="textVar">{geometries:arrayOf(geometricObject), shapes:arrayOf(shape)}</span> The shapes constitute the visible form of the geometric objects. The algorithm <span class="textVar">generateDrops</span> calls <span class="userDefinedText">generateDrop</span> repeatedly on randomly selected points  on the canvas. It checks whether any of the geometries in the current drop collide with any of the geometries already dropped. If so the drop is rejected. If not the geometries are added to the array of all geometries dropped so far, and the shapes are added to the visible world. Both the shapes and geometries should be returned in their zero position; <span class="textVar">generateDrops</span> moves them into position. The reason that geometries and shapes are generated separately is that it allows the coder full control of how the geometries are made visible. The argument <span class="textVar">dropParams</span> to <span class="textVar">generateDrops</span> has the form <span class="textVar">{dropTries:number,maxDrops=Infinity:number}</span>. If <span class="textVar">generateDrops</span> encounters  <span class="textVar">dropTries</span> sequential failures to drop due to collision, the algorithm terminates. It also terminates once there have been <span class="textVar">maxDrops</span> successful drops.</p>
-<p> The three geometric types that can be droppped are LineSegment,Rectangle, and Circle.</p>
-
+<p> The geometric types that can be droppped are LineSegment, and Circle.</p>
+<p> If <span class="userDefinedText">  rs.initialDrop()</span> is defined it should return structure of the same form as  <span class="userDefinedText">  rs.generateDrop(p:Point)</span>. 
+If defined, it is called first, and initializes the dropped geometries and visible world.</p>
 
 </div>
 </div>

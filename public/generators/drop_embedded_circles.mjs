@@ -41,6 +41,7 @@ rs.nextCircle = function (crc) {
   let cvec = vec.times(dist);
   let newCenter = center.plus(cvec);
   let rs = Circle.mk(newCenter,nr);
+  rs.isDisk = 0;
   return rs;
 }
   
@@ -48,6 +49,7 @@ rs.allCircles= function() {
   let {numCircles} = this;
   let shapes = [];
   let cc = Circle.mk(ht/2);
+  cc.isDisk = 0;
   shapes.push(cc);
   for (let i=0;i<numCircles;i++) {
      cc  = this.nextCircle(cc);
@@ -57,7 +59,7 @@ rs.allCircles= function() {
 }
 
 rs.whichRing = function (circles,p) {
-  debugger;
+  //debugger;
   let {numCircles} = this;
   for (let i=0;i<numCircles;i++) {
     let crc = circles[i];
@@ -68,7 +70,7 @@ rs.whichRing = function (circles,p) {
     let ncrc = circles[i+1];
     let ncc = ncrc.contains(p)
     if (!ncrc) {
-      debugger;
+    // debugger;
     }
     
     if (cc && !ncc) {
@@ -77,7 +79,7 @@ rs.whichRing = function (circles,p) {
    }
 }
 rs.generateDrop = function (p) {
-   debugger;
+ //  debugger;
    let p0 = Point.mk(0,0);
    if (p.length() > 0.5*this.height) {
      return;
@@ -93,6 +95,7 @@ rs.generateDrop = function (p) {
    crcs.fill = 'white';
    crcs.stroke = 'blue';
   if (wr%2) {
+    debugger;
     return {geometries:[crc],shapes:[crcs]};
   } else {
    return {geometries:[lseg],shapes:[ln]};
@@ -107,7 +110,7 @@ rs.initialize = function () {
   let circles = this.allCircles();
   let drops = this.drops = [];
   this.circles = circles;
-  circles.forEach((c) => drops.push(c));
+ circles.forEach((c) => drops .push(c));
   circles.forEach((c) => {
     let circs = this.genCircle(c,circleP);
     shapes.push(circs);

@@ -88,7 +88,7 @@ rs.generateDrop = function (p,rvs) {
   let {minSeparation,lineP} = this;
   let {length,angle} = this.segParams(md?2:(Math.abs(y)>0.125*wd?-1:1));
   //if (cross &&  !md) {
-  if (0 && (vcross || hcross)) { // &&  !md) {
+  if (1 && (vcross || hcross)) { // &&  !md) {
     let seg = LineSegment.mkAngled(p0,angle,length);
     debugger;
     let lseg = LineSegment.mkAngled(p0,angle,length+minSeparation);

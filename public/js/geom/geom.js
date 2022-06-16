@@ -654,7 +654,7 @@ Line.toEquation = function () {
 }
 // needs fixing - does not work
 Line.nearestPoint = function (p) {
-	debugger;
+	//debugger;
 	let {point} = this;
   let {direction} = this;
 	let tpnt = point.plus(direction);
@@ -800,7 +800,7 @@ LineSegment.intersectsCircle = function (crc) {
   let e0in = de0<r;
   let e1in = de1<r;
   if ((!crc.isDisk) && e0in && e1in) {
-    debugger;
+    //debugger;
     return 0;  // crc contains this
   }
   if (e0in !== e1in) {
@@ -1074,10 +1074,12 @@ Circle.intersectsCircle = function (crc) {
 	if (d > (tr + cr)) {
     return 0;
   }
-  if ((!crc.isDisk) && ((d+cr)<tr)) {
+  //if ((!crc.isDisk) && ((d+cr)<tr)) {
+  if ((!crc.isDisk) && ((d+tr)<cr)) {
     return 0; // crc contains this
   }
-   if ((!this.isDisk) && ((d+tr)<cr)) {
+  // if ((!this.isDisk) && ((d+tr)<cr)) {
+   if ((!this.isDisk) && ((d+cr)<tr)) {
     return 0; // this contains crc
   }
   return 1;
@@ -1142,7 +1144,7 @@ Circle.containsLineSegment = function (s,p) {
 
 
 Circle.contains = function (g,p) {
-debugger;
+//debugger;
  if (Point.isPrototypeOf(g)) {
    return this.containsPoint(g);
  }
@@ -1318,7 +1320,7 @@ Rectangle.intersectsRectangle = function (rect) {
 	let yi = yb0.intersectsInterval(yb1);
 	let rs = xi && yi;
 	if (!rs) {
-		debugger;
+	//	debugger;
 		xi = xb0.intersectsInterval(xb1);
 	 yi = yb0.intersectsInterval(yb1);
 		
@@ -1650,7 +1652,7 @@ Rectangle.contains = function (g) {
    return this.containsPoint(g);
  }
  if (LineSegment.isPrototypeOf(g)) {
-   return this.containsRectangle(g);
+   return this.containsLineSegment(g);
  }
  if (Rectangle.isPrototypeOf(g)) {
    return this.containsRectangle(g);

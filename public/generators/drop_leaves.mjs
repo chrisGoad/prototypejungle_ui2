@@ -16,8 +16,8 @@ let wd = 1.5 * ht;
 
 let topParams = {width:wd,height:ht,framePadding:0.17*ht,segLength:5};
 
-let dropParams = {dropTries:500,sepNext:5,maxDrops:10000, fromEnds:1,extendWhich:'first',splitChance:.10,splitAmount:0.005 * Math.PI, directionChange:0.01*Math.PI, randomDirectionChange:0.051*Math.PI, segLength:5};
-let fanParams = {splitChance:.10,splitAmount:0.005 * Math.PI,directionChange:0.0*Math.PI,sepNextt:0.1,randomDirectionChange:0.051*Math.PI};
+let dropParams = {dropTries:100,maxTotalTries:200000,sepNext:5,maxDrops:10000, fromEnds:1,extendWhich:'first',splitChance:.10,splitAmount:0.005 * Math.PI, directionChange:0.01*Math.PI, randomDirectionChange:0.051*Math.PI, segLength:5};
+//let fanParams = {splitChance:.10,splitAmount:0.005 * Math.PI,directionChange:0.0*Math.PI,sepNextt:0.1,randomDirectionChange:0.051*Math.PI};
 
 Object.assign(rs,topParams);
 
@@ -27,7 +27,7 @@ rs.initProtos = function () {
   this.lineP['stroke-width'] = .5;
 }  
 
-rs.initialDrop = function () {
+rs.initialForestDrop = function () {
   let {width,height,lineP} = this;
   let hw = 0.5 * width;
   let hh = 0.5 * height;
@@ -47,7 +47,7 @@ rs.initialDrop = function () {
   return {geometries:segs,shapes:lines};
 }
 
-rs.generateDrop = function (p) {
+rs.generateForestDrop = function (p) {
   debugger;
   let segs =  this.generateFan(p);
   let lines = segs.map( s => this.genLine(s,this.lineP,dropParams.lineExt));
@@ -59,7 +59,7 @@ rs.initialize = function () {
   this.addFrame();
   this.initProtos();
  // dropParams.lineP = this.lineP;
-  this.generateDrops(dropParams);
+  this.generateForestDrops(dropParams);
 }
 
 export {rs};

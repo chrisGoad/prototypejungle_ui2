@@ -1,6 +1,6 @@
 
 import {rs} from '/generators/drop_metal_2.mjs';
-rs.setName('drop_metal_2_0');
+rs.setName('drop_metal_2_iris');
 rs.circular = 1;
 const fractionIn = function (p,wd) {
   let d = p.length();

@@ -60,29 +60,35 @@ item.ringSeeds = function (iparams) {
   return segs;
 }
 
-item.sideSeeds = function (iparams) {
-  let props = ['width','height','lineP','numSeeds','data','sepNext','right']; 
-  let params = {};
-  core.transferProperties(params,this,props);
-  core.transferProperties(params,iparams,props);
-  let {width,height,lineP,numSeeds,data,sepNext,right} = params; 
+item.sideSeeds = function (params) {
+  let {width,height} = this;
+  let {numSeeds,data,sepNext,segLength:len,whichSide} = params; 
   let segs = [];
   let delta  = height/(numSeeds+1);
   let hw = width/2;
-  let cy = delta-hw;
-  for (let j=0;j<numSeeds;j++) {
-    let ip = Point.mk(right?hw:-hw,cy);
-    let seg =  this.genForestSegment(ip,len,right?Math.PI:0,sepNext);
-    let end = seg.end;
-    if (data) {
-      send.data = data;
+  const mkSeeds =  (side) => {
+   let cy = delta-hw;
+   let right = side === 'right';
+   for (let j=0;j<numSeeds;j++) {
+      let ip = Point.mk(right?hw:-hw,cy);
+      let seg =  this.genForestSegment(ip,len,right?Math.PI:0,sepNext);
+      let end = seg.end;
+      if (data) {
+        send.data = data;
+      }
+      end.seed = end;
+      segs.push(seg); 
+      cy += delta;
     }
-    end.seed = end;
-    segs.push(seg); 
-    cy += delta;
   }
-  let lines = segs.map((sg) => this.genLine(sg,lineP,lineExt)); 
-  return {geometries:segs,shapes:lines};
+  if (whichSide === 'both') {
+    mkSeeds('left');
+    mkSeeds('right');
+  } else {
+   mkSeeds(whichSide);
+  }
+ // let lines = segs.map((sg) => this.genLine(sg,lineP,lineExt)); 
+  return segs;
 }
 
 item.leftSideSeeds = function (params) {

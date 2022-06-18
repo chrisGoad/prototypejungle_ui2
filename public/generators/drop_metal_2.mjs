@@ -2,7 +2,7 @@
 import {rs as linePP} from '/shape/line.mjs';
 import {rs as circlePP} from '/shape/circle.mjs';
 import {rs as basicsP} from '/generators/basics.mjs';
-import {rs as addDropMethods} from '/mlib/newDrop.mjs';
+import {rs as addDropMethods} from '/mlib/drop.mjs';
 import {rs as addSegsetMethods} from '/mlib/segsets.mjs';
 let rs = basicsP.instantiate();
 

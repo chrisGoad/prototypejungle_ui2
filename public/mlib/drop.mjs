@@ -39,11 +39,14 @@ rs.generateDrops = function (params) {
   if (!drops) {
     drops = this.drops = [];
   }
+  let initialDropsLn = drops.length;
   if (this.initialDrop) {
     let idrop = this.initialDrop();
-    let {geometries:igeoms,shapes:ishapes} =  idrop;
-    drops = this.drops = igeoms;
-    ishapes.forEach((s) => shapes.push(s));
+    if (idrop) {
+      let {geometries:igeoms,shapes:ishapes} =  idrop;
+      drops = this.drops = igeoms;
+      ishapes.forEach((s) => shapes.push(s));
+    }
   }
   //core.transferProperties(params,this,props);
   //core.transferProperties(params,iparams,props);
@@ -53,7 +56,7 @@ rs.generateDrops = function (params) {
   let tries = 0;
   let rvs;
 
-  while ((cnt < maxLoops) && (drops.length < maxDrops)) {
+  while ((cnt < maxLoops) && ((drops.length-initialDropsLn) < maxDrops)) {
     cnt++;
     let pnt = this.genRandomPoint();
     if (numRows && randomGridsForShapes) {

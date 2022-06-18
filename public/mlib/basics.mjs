@@ -49,7 +49,7 @@ item.addRectangle  = function (iparams) {
   if (stroke) {
     rect.stroke = stroke;
   }
-  if (stroke_width) {
+  if (typeof stroke_width === 'number') {
     rect['stroke-width'] = stroke_width;
   } 
   rect.width = width;

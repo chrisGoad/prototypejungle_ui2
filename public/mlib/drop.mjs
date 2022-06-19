@@ -30,6 +30,12 @@ rs.via3d = function (p) {
   }
   return p;
 }
+ 
+rs.dropCenters = function () {
+  let drops= this.drops;
+  let rs = drops.map((d) => d.center);
+  return rs;
+ }
   
 rs.generateDrops = function (params) {
   let {shapes,drops,numRows,randomGridsForShapes} = this;

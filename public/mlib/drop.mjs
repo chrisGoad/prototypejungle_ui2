@@ -38,7 +38,7 @@ rs.dropCenters = function () {
  }
   
 rs.generateDrops = function (params) {
-  let {shapes,drops,numRows,randomGridsForShapes} = this;
+  let {shapes,drops,numRows,randomGridsForShapes,positions,saveState} = this;
   if (!shapes) { 
     shapes = this.set('shapes',arrayShape.mk());
   }
@@ -54,45 +54,70 @@ rs.generateDrops = function (params) {
       ishapes.forEach((s) => shapes.push(s));
     }
   }
-  //core.transferProperties(params,this,props);
-  //core.transferProperties(params,iparams,props);
   this.dropParams = params;
   let {maxLoops=Infinity,maxDrops=Infinity,dropTries} = params;
   let cnt =0;
   let tries = 0;
   let rvs;
-
-  while ((cnt < maxLoops) && ((drops.length-initialDropsLn) < maxDrops)) {
-    cnt++;
-    let pnt = this.genRandomPoint();
+  let tgs;
+  const dropAt = (pnt) => {
     if (numRows && randomGridsForShapes) {
       let cell = this.cellOf(pnt);
       rvs = this.randomValuesAtCell(randomGridsForShapes,cell.x,cell.y);
     }
     let drop = this.generateDrop(pnt,rvs);
     if (!drop) {
-      continue;
+      return;
     } 
     let gs = drop.geometries;
-    let tgs = gs.map((g) => geom.moveBy(g,pnt));
+    tgs = gs.map((g) => geom.moveBy(g,pnt));
+    return drop;
+  }
+  const installDrop = (drop,pnt) => {
+    let moveNeeded = 1;
+    positions.push(pnt);
+    let newShapes = drop.shapes; 
+    newShapes.forEach((s) => {
+      let sp = s.getTranslation();
+      s.moveto(pnt.plus(sp));
+      shapes.push(s);
+    });
+    tgs.forEach((g) => drops.push(g));
+    tries = 0;
+  }
+  if (!saveState) {
+    // drop points were stored in this.positions
+    debugger;
+    positions.forEach((ipnt) => {
+      let pnt = Point.mk(ipnt.x,ipnt.y);
+      let drop = dropAt(pnt);
+      if (drop) {
+        installDrop(drop,pnt);
+      }
+     });
+     return;
+  }
+  // the live drop collision  detection is done
+  while ((cnt < maxLoops) && ((drops.length-initialDropsLn) < maxDrops)) {
+    cnt++;
+    let pnt = this.genRandomPoint();
+    let drop = dropAt(pnt);
+    if (!drop) {
+      continue;
+    } 
     if (geometriesIntersect(tgs,drops)) {
       tries++;
       if (tries >= dropTries) {
         //console.log('dropTries',dropTries,'exceeded');
+        debugger;
         return drops;
       }
     } else {
-      let moveNeeded = 1;
-      let newShapes = drop.shapes; 
-      newShapes.forEach((s) => {
-        let sp = s.getTranslation();
-        s.moveto(pnt.plus(sp));
-        shapes.push(s);
-      });
-      tgs.forEach((g) => drops.push(g));
+      installDrop(drop,pnt);
       tries = 0;
     }
   }
+  debugger;
 }
       
 }

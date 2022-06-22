@@ -116,6 +116,18 @@ item.genCircle = function (crc,circleP,scale=1) {
    rs.moveto(center);
    return rs;
  }
+ 
+ 
+item.genRectangle = function (rect,rectP,scale=1) {
+   let {corner,extent} = rect;
+   let hext = extent.times(0.5);
+   let center = corner.plus(hext);
+   let rs = rectP.instantiate();
+   rs.width = scale*extent.x;
+   rs.height = scale*extent.y;
+   rs.moveto(center);
+   return rs;
+ }
 
 item.genLine = function (sg,lineP,ext=0) {
   let {end0,end1} = sg;

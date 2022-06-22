@@ -48,6 +48,8 @@ npm install -g firebase-tools
 
 
 cd c:\prototypejungle
+node admin/genGrids forPJ
+
 firebase deploy --only hosting
 
 cd c:\prototypejungle

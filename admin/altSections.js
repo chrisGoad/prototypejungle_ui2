@@ -13,6 +13,8 @@ sections: [
  [0,'drop_semi_ordered','generators',1,'Semi Ordered',{likes:0,posted:0,category:'quad'}], 
  [0,'drop_dandelion_with_circles','generators',1,'Dandelion with Circles',{likes:0,posted:0,category:'quad'}], 
  [0,'drop_hole','generators',1,'Hole',{likes:0,posted:0,category:'quad'}], 
+ [0,'drop_on_top','generators',1,'On Top',{likes:0,posted:0,category:'quad'}], 
+ [0,'web_grid','generators',1,'Web Grid',{likes:0,posted:0,category:'quad'}], 
  [0,'drop_circles_0','generators',1,'Circles 0',{likes:0,posted:0,category:'quad'}], 
  [0,'drop_circles_1','generators',1,'Circles 1',{likes:0,posted:0,category:'quad'}], 
  [0,'drop_circles_2','generators',1,'Circles 2',{likes:0,posted:0,category:'quad'}], 
@@ -21,6 +23,8 @@ sections: [
  [0,'drop_circles_11','generators',1,'Circles 11',{likes:0,posted:0,category:'quad'}], 
  [0,'drop_circles_12','generators',1,'Circles 12',{likes:0,posted:0,category:'quad'}], 
  [0,'drop_circles_13','generators',1,'Circles 13',{likes:0,posted:0,category:'quad'}], 
+  [0,'drop_circles_14','generators',1,'Circles 14',{likes:0,posted:0,category:'quad'}], 
+
  [0,'drop_channels','generators',1,'Channels',{likes:0,posted:0,category:'quad'}], 
  [0,'drop_concentric','generators',1,'Concentric',{likes:0,posted:0,category:'quad'}], 
  [0,'drop_many_textures','generators',1,'Many Textures',{likes:0,posted:0,category:'quad'}], 

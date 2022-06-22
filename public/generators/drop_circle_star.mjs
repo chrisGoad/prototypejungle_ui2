@@ -1,12 +1,17 @@
 
+import {rs as rectPP} from '/shape/rectangle.mjs';
 import {rs as linePP} from '/shape/line.mjs';
 import {rs as circlePP} from '/shape/circle.mjs';
 import {rs as basicsP} from '/generators/basics.mjs';
 import {rs as addDropMethods} from '/mlib/drop.mjs';
+//import {rs as addSegsetMethods} from '/mlib/segsets.mjs';
+//import {rs as addRandomMethods} from '/mlib/boundedRandomGrids.mjs';
 let rs = basicsP.instantiate();
 addDropMethods(rs);
+//addRandomMethods(rs);
+//addSegsetMethods(rs);
 
-rs.setName('drop_channels');
+rs.setName('drop_circle_star');
 let ht = 100;
 let wd = ht;
 
@@ -20,36 +25,58 @@ rs.initProtos = function () {
   this.lineP = linePP.instantiate();
   this.lineP.stroke = 'white';
   this.lineP['stroke-width'] = .15;
-  let circleP = this.circleP = circlePP.instantiate();
-  circleP.fill = 'blue';
+   let circleP = this.circleP = circlePP.instantiate();
+  circleP.fill = 'transparent';
+  circleP.fill = 'black';
   circleP.stroke = 'white';
-  circleP['stroke-width'] = 0;
+  circleP['stroke-width'] = 0;//.25;
+  let circleP2 = this.circleP2 = circlePP.instantiate();
+  circleP2.fill = 'blue';
+  circleP2.stroke = 'white';
+  circleP2['stroke-width'] = 0;//.25;
 }  
 
 let whichDrops = 0;
 
-rs.segParams = function (p,np,delta) {
-  let {width:wd} = this;
+
+
+
+rs.segParams = function (np) {
   let r = Math.random();
-  let fr = (p.x+0.5*wd)/wd;
-  let bangle = 0.15*Math.PI*fr;
+ // let np = 4;
   let angle = (np === -1)?Math.PI/2:Math.floor(r*np)* (Math.PI/np)
-  let length = 2;
-  return {angle:delta+angle+bangle,length};
+  let length = 2;// + Math.floor(r*np)*4;
+  return {angle,length};
 } 	
-
-
 rs.generateDrop = function (p) {
+  //debugger;
   let {drops} = this;
    let p0 = Point.mk(0,0); 
-  let {circleP,circles,lineP} = this;
+  let {circleP2,circles,lineP} = this;
+ /* let numCircles = circles.length;
+  const inAcircle = (p) => {
+    for (let i=0;i<numCircles;i++) {
+      let c = circles[i];
+      let cc = c.contains;
+      if (typeof cc !== 'function') {
+        debugger;
+      }
+      if (c.contains(p)) {
+        return 1;
+      }
+    }
+  }*/
+  //if (inAcircle(p)) {  
+ 
   if (whichDrops) {
+    debugger;
+    //let crc = Circle.mk(2.5);
     let crc = Circle.mk(1);
-    let crcs = this. genCircle(crc,circleP,1);
+    let crcs = this. genCircle(crc,circleP2,1);
     return {geometries:[crc],shapes:[crcs]};
   }
   
-  let sp = this.segParams(p,2,0);
+  let sp = this.segParams(2);
   let {angle,length} = sp;
   let seg = LineSegment.mkAngled(p0,angle,length);
   let lseg = LineSegment.mkAngled(p0,angle,length+10);
@@ -59,8 +86,11 @@ rs.generateDrop = function (p) {
 }
 
 rs.initialize = function () {
+  debugger;
   this.addFrame();
   this.initProtos();
+ // dropParams.lineP = this.lineP;
+ // this.initialForestDrop();
   this.generateDrops(dropParams);
   whichDrops = 1;
   let drops = this.drops;

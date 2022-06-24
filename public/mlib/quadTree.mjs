@@ -5,27 +5,46 @@ rs.extendQuadOneLevel = function (qd) {
    if (qd.UL) {
      return;
    }
+   let where = qd.where
    let rect = qd.rectangle;
    let {corner,extent} = rect;
    let {x:cx,y:cy} = corner;
    let hxt = extent.times(0.5);
    let {x:ex,y:ey} = hxt;
-   qd.UL = {rectangle:Rectangle.mk(corner.copy(),hxt)};
-   qd.UR = {rectangle:Rectangle.mk(Point.mk(cx+ex,cy),hxt.copy())};
-   qd.LL = {rectangle:Rectangle.mk(Point.mk(cx,cy+ey),hxt.copy())};
-   qd.LR = {rectangle:Rectangle.mk(Point.mk(cx+ex,cy+ey),hxt.copy())};
+   qd.UL = {rectangle:Rectangle.mk(corner.copy(),hxt),where:[...where,'UL']};
+   qd.UR = {rectangle:Rectangle.mk(Point.mk(cx+ex,cy),hxt.copy()),where:[...where,'UR']};
+   qd.LL = {rectangle:Rectangle.mk(Point.mk(cx,cy+ey),hxt.copy()),where:[...where,'LL']};
+   qd.LR = {rectangle:Rectangle.mk(Point.mk(cx+ex,cy+ey),hxt.copy()),where:[...where,'LR']};
  }
  
  
+rs.randomSplit = function (qd,params,i) {
+  let {chance,alwaysSplitBefore,levels} = params;
+  let d = qd.where.length;
+  return (d<levels) && ((Math.random()<chance) || (d<alwaysSplitBefore));
+}
+
+rs.splitHere = function (qd,params) {
+  return this.randomSplit(qd,params);
+}
+  
 rs.extendQuadNLevels = function (qd,params,i=0) {
-   let {levels,chance} = params;
-   if ((Math.random()>chance)&&(i>=3)) {
+   let {levels,chance,startSplit=3} = params;
+   let {shapes} = this;
+   if (!shapes) {
+     shapes = this.set('shapes',arrayShape.mk());
+   }
+   if (i===0){
+     qd.where = [];
+   }
+   let split = this.splitHere(qd,params,i);
+   if (!split) {
      return;
    }
    this.extendQuadOneLevel(qd);
-   if ((i+1) >= levels) {
-     return;
-   }
+ //  if ((i+1) >= levels) {
+ //    return;
+ //  }
    this.extendQuadNLevels(qd.UL,params,i+1);
    this.extendQuadNLevels(qd.UR,params,i+1);
    this.extendQuadNLevels(qd.LL,params,i+1);
@@ -105,6 +124,10 @@ rs.rectangleToShape  = function (r,depth) {
    this.rectangleToRectangle(r,depth);
   }
 }
+
+ rs.displayCell = function (qd,depth) {
+   this.rectangleToCircle(qd.rectangle,depth);
+ }
  
  rs.displayQuad = function (qd,depth=0) {
    let {shapes} = this;
@@ -115,7 +138,8 @@ rs.rectangleToShape  = function (r,depth) {
      this.displayQuad(qd.LR,depth+1);
      return;
    }
-   this.rectangleToShape(qd.rectangle,depth);
+   this.displayCell(qd,depth);
+   //this.rectangleToShape(qd.rectangle,depth);
 }
 }
 

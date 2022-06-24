@@ -176,6 +176,13 @@ Interval.intersectsInterval = function (intv) {
 	return !ni;
 }
 
+Interval.containsInterval = function (intv) {
+	let {lb,ub} = this;
+	let {lb:lb1,ub:ub1} = intv;
+	let rs = (lb <= lb1) && (ub1 <= ub);
+	return rs;
+}
+
 Point.setCoords = function (x,y) {
   this.set("x",x);
   this.set("y",y);
@@ -1142,6 +1149,16 @@ Circle.containsPoint = function (point) {
   return (x*x + y*y) < r*r;
 }
 
+Circle.containsRectangle = function (rect) {
+  let corners = rect.corners();
+  for (let i=0;i<4;i++) {
+    if (!this.containsPoint(corners[i])) {
+      return 0;
+    } 
+  }
+  return 1;
+ }
+ 
 Circle.containsLineSegment = function (s,p) {
   if (p) {
     return this.contains(s.end0.plus(p)) && this.contains(s.end1.plus(p));
@@ -1326,13 +1343,14 @@ Rectangle.intersectsRectangle = function (rect) {
 	let yb1 = rect.yBounds();
 	let xi = xb0.intersectsInterval(xb1);
 	let yi = yb0.intersectsInterval(yb1);
-	let rs = xi && yi;
-	if (!rs) {
-	//	debugger;
-		xi = xb0.intersectsInterval(xb1);
-	 yi = yb0.intersectsInterval(yb1);
-		
-	}
+  let rs;
+  if (this.isSolid) {
+	  rs = xi && yi;
+    return rs;
+  }
+  let thisContainsRect = xb0.containsInterval(xb1) && yb0.containsInterval(yb1);
+  let rectContainsThis = xb1.containsInterval(xb0) && yb1.containsInterval(yb0);
+  rs = xi && yi && !thisContainsRect && !rectContainsThis;
 	return rs;
 }
 
@@ -1348,6 +1366,10 @@ Rectangle.intersectsCircle = function (crc) {
      return 1;
     }    
   } */ 
+  let cr = crc.containsRectangle(this);
+  if (cr) {
+    return  crc.isSolid;
+  }
   let {center,radius} = crc;
   let {x:cx,y:cy} = center;
   let {corner,extent}  = this;
@@ -1376,8 +1398,8 @@ Rectangle.intersectsCircle = function (crc) {
   let abvlby = lcy > lby;
   let blwubx = ucx < ubx;
   let blwuby = ucy < uby;
-    console.log('lbx',lbx,'ubx',ubx,'lcx',lcx,'ucx',ucx,'lby',lby,'uby',uby,'lcy',lcy,'ucy',ucy);
-  debugger;
+ 
+   // console.log('lbx',lbx,'ubx',ubx,'lcx',lcx,'ucx',ucx,'lby',lby,'uby',uby,'lcy',lcy,'ucy',ucy);
   return !(abvlbx && abvlby && blwubx && blwuby); // the circle is not inside the rectangle
   //return !abvx && !abvy && !blwx && !blwy; // the circle is inside the rectangle
 }

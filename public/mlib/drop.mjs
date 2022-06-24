@@ -75,7 +75,9 @@ rs.generateDrops = function (params) {
   }
   const installDrop = (drop,pnt) => {
     let moveNeeded = 1;
-    positions.push(pnt);
+    if (positions) {
+      positions.push(pnt);
+    }
     let newShapes = drop.shapes; 
     newShapes.forEach((s) => {
       let sp = s.getTranslation();
@@ -85,7 +87,7 @@ rs.generateDrops = function (params) {
     tgs.forEach((g) => drops.push(g));
     tries = 0;
   }
-  if (!saveState) {
+  if (!saveState && (saveState !== undefined)) {
     // drop points were stored in this.positions
     debugger;
     positions.forEach((ipnt) => {

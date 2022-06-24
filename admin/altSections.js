@@ -6,6 +6,7 @@ sections: [
 [  
 /* Puzzle: Which three of the quadrants are the same, and which is different? Before you saw the differences in what sense did you "see" the quadrants?"*/
 // [0,'web_drift','generators',1,'Drift Web',{likes:0,posted:0,category:'drop'}], 
+ [0,'quad_drop','generators',1,'Quad Drop',{likes:0,posted:0,category:'quad',version:2}], 
  [0,'quad_2_v_2','generators',1,'Circles and Squares',{likes:0,posted:0,category:'quad',version:2}], 
  [0,'drop_leaves','generators',1,'Leaves',{likes:0,posted:0,category:'drop'}], 
  [0,'drop_square','generators',1,'Square',{likes:0,posted:0,category:'drop'}], 
@@ -24,6 +25,7 @@ sections: [
  [0,'drop_circles_12','generators',1,'Circles 12',{likes:0,posted:0,category:'quad'}], 
  [0,'drop_circles_13','generators',1,'Circles 13',{likes:0,posted:0,category:'quad'}], 
   [0,'drop_circles_14','generators',1,'Circles 14',{likes:0,posted:0,category:'quad'}], 
+  [0,'drop_triptych','generators',1,'Triptych',{likes:0,posted:0,category:'quad'}], 
 
  [0,'drop_channels','generators',1,'Channels',{likes:0,posted:0,category:'quad'}], 
  [0,'drop_concentric','generators',1,'Concentric',{likes:0,posted:0,category:'quad'}], 

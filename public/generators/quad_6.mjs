@@ -17,10 +17,7 @@ let nr  =20;
 let topParams = {width:wd,height:wd,numRows:nr,numCols:nr,framePadding:0.1*wd}
 Object.assign(rs,topParams);
 
-let quadParams = {levels:8,alwaysSplitBefore:4}
-
-rs.dropParams = {dropTries:3500,maxDrops:1000000}
-rs.dropParams = {dropTries:35,maxDrops:10000}
+let quadParams = {levels:7,alwaysSplitBefore:4}
 
 rs.initProtos = function () {
   this.circleP =  circlePP.instantiate();
@@ -38,18 +35,26 @@ rs.initProtos = function () {
   this.lineP['stroke-width'] =1;//.15;
 } 
 
+
+rs.computeFill = function () { 
+   const shade = ()=> Math.floor(255*Math.random());
+   let v = shade();
+   let fill = `rgb(${v},0,${v})`;
+   return fill;
+}
 rs.displayCell = function (qd,depth) {
   let {shapes,cells,rectP} = this;    
   let rect = qd.rectangle;
   let rs = this.genRectangle(rect,rectP,0.8);
+  rs.fill = this.computeFill();
   shapes.push(rs);
   
 }
 
-rs.splitHere = function (qd,params,pnt,rvs) {
+rs.splitHere = function (qd,rvs) {
   debugger;
   let  chance = rvs.splitChance;
-  return rs.randomSplit(qd,params,chance);
+  return rs.randomSplit(qd,chance);
 }
 
 rs.showQuad = function() {
@@ -65,7 +70,7 @@ rs.showQuad = function() {
 
 rs.initialize = function () {
   let {width:wd,height:ht,dropParams} = this;
-  this.setupRandomGridForShapes('splitChance',{step:.1,min:.6,max:1});
+  this.setupRandomGridForShapes('splitChance',{step:.05,min:.6,max:1});
 
   this.addFrame();
   this.initProtos();

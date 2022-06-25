@@ -43,8 +43,9 @@ const URish = function (where) {
  let lst = where[ln-1];
  return (lst ==='UL')||(lst === 'LR');
 }
-rs.splitHere = function (qd,params) {
+rs.splitHere = function (qd) {
   debugger;
+  let params = qd.root.params;
   let {fractal} = this;
   if (!fractal) {
     return this.randomSplit(qd,params);

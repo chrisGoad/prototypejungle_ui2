@@ -1,31 +1,42 @@
 
 import {rs as circlePP} from '/shape/circle.mjs';
+import {rs as rectPP} from '/shape/rectangle.mjs';
 import {rs as basicP} from '/generators/basics.mjs';
 import {rs as addQuadMethods} from '/mlib/quadTree.mjs';	
 
 let rs = basicP.instantiate();
 addQuadMethods(rs);
-rs.setName('quad_3',2);
+rs.setName('quad_4');
 
 let wd = 100;
-let topParams = {width:wd,height:wd,levels:7,chance:0.8,framePadding:0.1*wd}
+let topParams = {width:wd,height:wd,framePadding:0.1*wd}
 Object.assign(rs,topParams);
+let quadParams = {chance:0.8,levels:7, alwaysSplitBefore:3};
 
 rs.initProtos = function () {
   this.circleP =  circlePP.instantiate();
   this.circleP.stroke = 'white';
-  this.circleP['stroke-width'] =.15;
-} 
+  this.circleP['stroke-width'] =.15; 
+  this.rectP =  rectPP.instantiate();
+  this.rectP.stroke = 'white';
+  this.rectP['stroke-width'] =.15;
+}
 
-rs.computeFill = function (depth) { 
+rs.computeFill = function () { 
    const shade = ()=> Math.floor(255*Math.random());
    let v = shade();
    let fill = `rgb(${v},0,${v})`;
    return fill;
 }
 
-rs.chooseCircle = function () {
-  return 0;
+
+rs.displayCell = function (qd) {
+  debugger;
+  let {shapes,rectP} = this;
+  let rect = qd.rectangle;
+  let rs = this.genRectangle(rect,rectP,0.8);
+  rs.fill = this.computeFill();
+  shapes.push(rs);
 }
 
 rs.initialize = function () {
@@ -34,7 +45,7 @@ rs.initialize = function () {
   this.initProtos();
   let r = Rectangle.mk(Point.mk(-0.5*wd,-0.5*ht),Point.mk(wd,ht));
   let qd = {rectangle:r};
-  this.extendQuadNLevels(qd,this);
+  this.extendQuadNLevels(qd,quadParams);
   this.displayQuad(qd);
 }	
 

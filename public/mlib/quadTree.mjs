@@ -18,8 +18,11 @@ rs.extendQuadOneLevel = function (qd) {
  }
  
  
-rs.randomSplit = function (qd,params,i) {
+rs.randomSplit = function (qd,params,ichance) {
   let {chance,alwaysSplitBefore,levels} = params;
+  if (!chance) {
+    chance = ichance;
+  }
   let d = qd.where.length;
   return (d<levels) && ((Math.random()<chance) || (d<alwaysSplitBefore));
 }
@@ -28,16 +31,28 @@ rs.splitHere = function (qd,params) {
   return this.randomSplit(qd,params);
 }
   
-rs.extendQuadNLevels = function (qd,params,i=0) {
+rs.extendQuadNLevels = function (qd,params) {
+  debugger;
    let {levels,chance,startSplit=3} = params;
-   let {shapes} = this;
+   let {shapes,numRows,randomGridsForShapes} = this;
+   let {where} = qd;
    if (!shapes) {
      shapes = this.set('shapes',arrayShape.mk());
    }
-   if (i===0){
-     qd.where = [];
+   if (!where) {
+     where = qd.where = [];
    }
-   let split = this.splitHere(qd,params,i);
+ //  if (i===0){
+  //   qd.where = [];
+ //  }
+    let rect = qd.rectangle;
+    let pnt = rect.center();
+    let rvs;
+    if (numRows && randomGridsForShapes) {
+      let cell = this.cellOf(pnt);
+      rvs = this.randomValuesAtCell(randomGridsForShapes,cell.x,cell.y);
+    }
+   let split = this.splitHere(qd,params,pnt,rvs);
    if (!split) {
      return;
    }
@@ -45,10 +60,10 @@ rs.extendQuadNLevels = function (qd,params,i=0) {
  //  if ((i+1) >= levels) {
  //    return;
  //  }
-   this.extendQuadNLevels(qd.UL,params,i+1);
-   this.extendQuadNLevels(qd.UR,params,i+1);
-   this.extendQuadNLevels(qd.LL,params,i+1);
-   this.extendQuadNLevels(qd.LR,params,i+1);
+   this.extendQuadNLevels(qd.UL,params);//,i+1);
+   this.extendQuadNLevels(qd.UR,params);//,i+1);
+   this.extendQuadNLevels(qd.LL,params);//,i+1);
+   this.extendQuadNLevels(qd.LR,params);//,i+1);
  }
  
  rs.rectangleToRectangle  = function (r,depth) {

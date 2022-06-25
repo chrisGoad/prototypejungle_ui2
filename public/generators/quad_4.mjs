@@ -30,13 +30,28 @@ rs.computeFill = function () {
 }
 
 
-rs.displayCell = function (qd) {
+rs.displayCellAsRectangle = function (qd) {
   debugger;
   let {shapes,rectP} = this;
   let rect = qd.rectangle;
-  let rs = this.genRectangle(rect,rectP,0.8);
+  //let rs = rect.toShape(rectP,0.8);
+  let rs = rect.toShape(rectP,0.8);
   rs.fill = this.computeFill();
   shapes.push(rs);
+}
+
+
+rs.displayCellAsCircle = function (qd) {
+  debugger;
+  let {shapes,circleP} = this;
+  let rect = qd.rectangle;
+  let rs = rect.toCircleShape(circleP,0.8);
+  rs.fill = this.computeFill();
+  shapes.push(rs);
+}
+
+rs.displayCell = function (qd) {
+  this.displayCellAsCircle(qd);
 }
 
 rs.initialize = function () {

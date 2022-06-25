@@ -59,7 +59,7 @@ rs.generateDrop = function (p) {
   //params2.direction = 0;
   //let segs = (Math.random() < 0.5)?this.wigglySegments(params):this.wigglySegments(params2);
   let segs = this.wigglySegments(params);
-  let lines = segs.map((sg) => this.genLine(sg,lineP));
+  let lines = segs.map((sg) => sg.toShape(lineP));
   let clr = this.strokeFunction(p);
   lines.forEach( (line) => line.stroke = clr);
   return {geometries:segs,shapes:lines};
@@ -68,7 +68,7 @@ rs.generateDrop = function (p) {
 rs.initialDrop = function () {
   let {width,height,lineP} = this; 
   let segs = this.rectangleSegments(width,height);
-  let lines = segs.map((sg) => this.genLine(sg,lineP)); 
+  let lines = segs.map((sg) => sg.toShape(lineP)); 
   return {geometries:segs,shapes:lines};
 }
 

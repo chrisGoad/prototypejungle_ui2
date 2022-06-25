@@ -39,13 +39,13 @@ rs.initProtos = function () {
 rs.computeFill = function () { 
    const shade = ()=> Math.floor(255*Math.random());
    let v = shade();
-   let fill = `rgb(${v},0,${v})`;
+   let fill = `rgb(${v},${v},${v})`;
    return fill;
 }
 rs.displayCell = function (qd,depth) {
   let {shapes,cells,rectP} = this;    
   let rect = qd.rectangle;
-  let rs = this.genRectangle(rect,rectP,0.8);
+  let rs = rect.toShape(rectP,0.8);
   rs.fill = this.computeFill();
   shapes.push(rs);
   
@@ -70,7 +70,7 @@ rs.showQuad = function() {
 
 rs.initialize = function () {
   let {width:wd,height:ht,dropParams} = this;
-  this.setupRandomGridForShapes('splitChance',{step:.05,min:.6,max:1});
+  this.setupRandomGridForShapes('splitChance',{step:.02,min:.6,max:1});
 
   this.addFrame();
   this.initProtos();

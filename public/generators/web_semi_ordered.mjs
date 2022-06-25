@@ -84,8 +84,8 @@ rs.generateDrop = function (p) {
   }
   let rd = 4 + df*6;;
   let crc = Circle.mk(rd);
- // let crcs = this.genCircle(crc,this.circleP,0.8);
-  let crcs = this.genCircle(crc,this.circleP,0.8);
+ // let crcs = crc.toShape(this.circleP,0.8);
+  let crcs = crc.toShape(this.circleP,0.8);
   crcs.fill = clr;
   crcs.fill = 'transparent';
   return {geometries:[crc],shapes:[crcs]};

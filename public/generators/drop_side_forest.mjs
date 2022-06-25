@@ -32,7 +32,7 @@ rs.initProtos = function () {
 rs.initialForestDrop = function () {
 debugger;
   let segs= this.sideSeeds(sideParams); 
- let lines = segs.map((sg) => this.genLine(sg,this.lineP)); 
+ let lines = segs.map((sg) => sg.toShape(this.lineP)); 
   return {geometries:segs,shapes:lines};  
 }
 

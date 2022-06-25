@@ -91,7 +91,7 @@ rs.initialDrop = function () {
       let ccrcs = this.genCCircles(cr,ps); 
       ccrcs.forEach( (crc) => {
         acrc.push(crc);
-        let crcs = this.genCircle(crc,circleP);
+        let crcs = crc.toShape(circleP);
         acrcs.push(crcs);
       });        
       let nr = fc*cr;
@@ -138,7 +138,7 @@ rs.generateDrop = function (p) {
  
     debugger;
     let crc = Circle.mk(2.5);
-    let crcs = this. genCircle(crc,circleP2,1);
+    let crcs = crc.toShape(circleP2,1);
     return {geometries:[crc],shapes:[crcs]};
   }
   return;
@@ -146,7 +146,7 @@ rs.generateDrop = function (p) {
   let {angle,length} = sp;
   let seg = LineSegment.mkAngled(p0,angle,length);
   let lseg = LineSegment.mkAngled(p0,angle,length+10);
-  let ln = this.genLine(seg,this.lineP);
+  let ln = seg.toShape(this.lineP);
   return {geometries:[lseg],shapes:[ln]};
 
 }

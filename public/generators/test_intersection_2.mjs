@@ -36,14 +36,14 @@ rs.initialize = function () {
   //let crc = Circle.mk(Point.mk(0,16),10);
   // geom.moveBy(rect,Point.mk(5,0));
   //let crc = Circle.mk(Point.mk(0,16),10);
-   // let ln = this.genLine(sg,this.lineP);
+   // let ln = sg.toShape(this.lineP);
 
   
   let crc = Circle.mk(Point.mk(0,-6),5); //intersects
   let rect = Rectangle.mk(Point.mk(-10,-10),Point.mk(20,20));
  
-  let rects = this.genRectangle(rect,this.rectP);
-  let crcs = this.genCircle(crc,this.circleP);	
+  let rects = rect.toShape(this.rectP);
+  let crcs = crc.toShape(this.circleP);	
   //crcs.moveto(Point.mk(-20,-20));
 
   let shapes = this.set('shapes',ArrayNode.mk());

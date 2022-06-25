@@ -43,7 +43,7 @@ rs.initialDropp= function () {
       let crc = Circle.mk(ps,cr);
       crc.isDisk = 0;
       acrc.push(crc);
-      let crcs = this.genCircle(crc,circleP);
+      let crcs = crc.toShape(circleP);
       acrcs.push(crcs);     
       let nr = fc*cr;
       d = d + cr + nr + gapfac*cr;
@@ -73,7 +73,7 @@ rs.generateDrop= function (p) {
     return;
   } 
   let crc = Circle.mk(radius);
-  let crcs = this.genCircle(crc,circleP2,1-fr);
+  let crcs = crc.toShape(circleP2,1-fr);
   crcs . fill = clr;
   return {geometries:[crc],shapes:[crcs]}
 }

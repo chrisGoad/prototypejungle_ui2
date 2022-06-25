@@ -73,7 +73,7 @@ rs.generateDrop = function (p) {
   let clr = whichDrops?'blue':'white';
     /*let crc = Circle.mk(2.5);
     let crc = Circle.mk(1);
-    let crcs = this. genCircle(crc,circleP2,1);
+    let crcs = crc.toShape(circleP2,1);
     return {geometries:[crc],shapes:[crcs]};
   } */
   //clr = 'white';
@@ -82,7 +82,7 @@ rs.generateDrop = function (p) {
   let len = whichDrops?1:2;
   let seg = LineSegment.mkAngled(p0,angle,len);
   let lseg = LineSegment.mkAngled(p0,angle,len+10);
-  let ln = this.genLine(seg,this.lineP);
+  let ln = seg.toShape(this.lineP);
   ln.stroke = clr;
   return {geometries:[whichDrops?seg:lseg],shapes:[ln]};
 

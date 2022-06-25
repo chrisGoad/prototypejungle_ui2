@@ -33,7 +33,7 @@ rs.computeFill = function (depth) {
    let {extent} = rect;
    let {x:ex,y:ey} = extent;
    let crc = Circle.mk(0.4*ex);
-   let shape = this.genCircle(crc,circleP);
+   let shape = crc.toShape(circleP);
    //shape.dimension = 0.7*ex;
    shape.fill = this.computeFill();
    this.shapes.push(shape);

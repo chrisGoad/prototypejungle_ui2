@@ -35,7 +35,7 @@ rs.initProtos = function () {
 rs.initialDrop = function () {
   let crc = Circle.mk(0.8*0.5*this.height);
   crc.isDisk = 0;
-  let crcs = this.genCircle(crc,this.circleP);
+  let crcs = crc.toShape(this.circleP);
   //return {geometries:[crc],shapes:[crcs]};
   return {geometries:[crc],shapes:[]};
 }
@@ -56,8 +56,8 @@ rs.generateDrop= function (p,rvs) {
   let crc = Circle.mk(r);
   let rect = Rectangle.mk(Point.mk(-r,-r),Point.mk(2*r,2*r))
   crc.isDisk = 0;
-  let crcs = this.genCircle(crc,this.circleP);
-  let rects = this.genRectangle(rect,this.rectP);
+  let crcs = crc.toShape(this.circleP);
+  let rects = rect.toShape(this.rectP);
   crcs.stroke = 'white';
   crcs['stroke-width'] = fr;
   rects['stroke-width'] = fr;

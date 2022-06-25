@@ -47,14 +47,16 @@ rs.initialForestDrop = function () {
   let LRS = this.genOneSegment(LR,Math.PI,'white');
   segs.push(LRS);
   let rsegs = this.rectangleSegments(width,height);
-  let lines = segs.map((sg) => this.genLine(sg,lineP));  
+  let lines = segs.map((sg) => sg.toShape(lineP));  
+ // let lines = segs.map((sg) => sg.toShape(lineP));  
   return {geometries:segs,shapes:lines};
 }
 
 rs.generateForestDrop = function (p) {
   debugger;
   let segs =  this.generateFan(p);
-  let lines = segs.map( s => this.genLine(s,this.lineP,dropParams.lineExt));
+  let lines = segs.map( s => s.toShape(this.lineP,dropParams.lineExt));
+//  let lines = segs.map( s => this.genLine(sthis.lineP,dropParams.lineExt));
   return {geometries:segs,shapes:lines};
 }
 

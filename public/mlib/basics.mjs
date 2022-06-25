@@ -108,7 +108,7 @@ item.cellOf  = function (p) {
   let iy = Math.floor(((y+hh)/height) * numRows);
   return {x:ix,y:iy};
 }
-
+/*
 item.genCircle = function (crc,circleP,scale=1) {
    let {center,radius} = crc;
    let rs = circleP.instantiate();
@@ -116,8 +116,16 @@ item.genCircle = function (crc,circleP,scale=1) {
    rs.moveto(center);
    return rs;
  }
+ */
  
- 
+Circle.toShape = function (circleP,scale=1) {
+   let {center,radius} = this;
+   let rs = circleP.instantiate();
+   rs.radius = scale*radius;
+   rs.moveto(center);
+   return rs;
+ }
+ /*
 item.genRectangle = function (rect,rectP,scale=1) {
    let {corner,extent} = rect;
    let hext = extent.times(0.5);
@@ -128,7 +136,32 @@ item.genRectangle = function (rect,rectP,scale=1) {
    rs.moveto(center);
    return rs;
  }
+ */
+ 
+Rectangle.toShape = function (rectP,scale=1) {
+   let {corner,extent} = this;
+   let hext = extent.times(0.5);
+   let center = corner.plus(hext);
+   let rs = rectP.instantiate();
+   rs.width = scale*extent.x;
+   rs.height = scale*extent.y;
+   rs.moveto(center);
+   return rs;
+ }
+ 
+Rectangle.toCircleShape = function (circleP,scale=1) {
+   let {corner,extent} = this;
+   let hext = extent.times(0.5);
+   let center = corner.plus(hext);
+   let {x:wd,y:ht} = extent;
+   let d = scale*Math.min(wd,ht);
+   let rs = circleP.instantiate();
+   rs.dimension = d;
+   rs.moveto(center);
+   return rs;
+ }
 
+/*
 item.genLine = function (sg,lineP,ext=0) {
   let {end0,end1} = sg;
   if (!lineP) {
@@ -153,13 +186,40 @@ item.genLine = function (sg,lineP,ext=0) {
   }
   return line;
 }
+*/
 
+LineSegment.toShape = function (lineP,scale=1) {
+  let {end0,end1} = this;
+  if (!lineP) {
+    debugger;
+  }
+  if (scale!==1) {
+    let vec = end1.difference(end0);
+    let ln = vec.length();
+    let nvec = vec.normalize();
+    let center = end0.plus(end1).times(0.5);
+    end1 = center.plus(nvec.times(0.5*scale*ln));
+    end0 = center.plus(nvec.times(-0.5*scale*ln));
+  }
+  let line = lineP.instantiate();
+  if (!line.setEnds) {
+    debugger;
+  }
+  if (this.genPoint3d) {
+    let e03d = this.via3d(end0);
+    let e13d = this.via3d(end1);
+    line.setEnds(e03d,e13d);
+  } else {
+    line.setEnds(end0,end1);
+  }
+  return line;
+}
 item.geom2shape = function (g,lineP,circleP,scale=1) {
   if (Circle.isPrototypeOf(g)) {
-    return this.genCircle(g,circleP,scale);
+    return g.toShape(circleP,scale);
   }
    if (LineSegment.isPrototypeOf(g)) {
-    return this.genLine(g,lineP);
+    return g.toShape(lineP,scale);
   }
 }
 

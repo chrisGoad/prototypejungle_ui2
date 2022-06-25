@@ -53,8 +53,8 @@ rs.generateDrop = function (p) {
    let crc = Circle.mk((wc+1)*10);
    let seg = LineSegment.mkAngled(p0,angle,length);
    let lseg = LineSegment.mkAngled(p0,angle,length+10);
-   let ln = this.genLine(seg,this.lineP);
-   let crcs = this.genCircle(crc,this.circleP,0.5);
+   let ln = seg.toShape(this.lineP);
+   let crcs = crc.toShape(this.circleP,0.5);
    crcs.fill = 'white';
    crcs.stroke = 'blue';
   if ((wr+wc)%2) {

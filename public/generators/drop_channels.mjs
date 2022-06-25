@@ -45,7 +45,7 @@ rs.generateDrop = function (p) {
   let {circleP,circles,lineP} = this;
   if (whichDrops) {
     let crc = Circle.mk(1);
-    let crcs = this. genCircle(crc,circleP,1);
+    let crcs = crc.toShape(circleP,1);
     return {geometries:[crc],shapes:[crcs]};
   }
   
@@ -53,7 +53,7 @@ rs.generateDrop = function (p) {
   let {angle,length} = sp;
   let seg = LineSegment.mkAngled(p0,angle,length);
   let lseg = LineSegment.mkAngled(p0,angle,length+10);
-  let ln = this.genLine(seg,this.lineP);
+  let ln = seg.toShape(this.lineP);
   return {geometries:[lseg],shapes:[ln]};
 
 }

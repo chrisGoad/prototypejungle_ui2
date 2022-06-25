@@ -40,7 +40,7 @@ rs.displayCell = function (qd,depth) {
   let {ishapes,cells,rectP} = this;
   cells.push(qd);
   let rect = qd.rectangle;
-  let rs = this.genRectangle(rect,rectP,0.8);
+  let rs = rect.toShape(rectP,0.8);
   ishapes.push(rs);
 }
 
@@ -102,11 +102,11 @@ rs.generateDrop = function (p) {
   let dp = where.length;
   let {circleP} = this;
   let crc = Circle.mk((dp%3)?5:10);
-  let crcs = this.genCircle(crc,circleP,.5);
+  let crcs = crc.toShape(circleP,.5);
   let seg = LineSegment.mkAngled(p0,0,5);
   let angle = 0;
   let lseg = LineSegment.mkAngled(p0,angle,length+10);
-  let ln = this.genLine(seg,this.lineP);
+  let ln = seg.toShape(this.lineP);
   //crcs.fill = URish(where)?'white':'white';
   //ln.stroke = URish(where)?'white':'white';
   return URish(where)?{geometries:[lseg],shapes:[ln]}:{geometries:[crc],shapes:[crcs]};

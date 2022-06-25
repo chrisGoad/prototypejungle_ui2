@@ -40,7 +40,8 @@ rs.generateForestDrop = function (p,rvs) {
   let segs = this.generateFan(p);
   let isegs = segs.filter( (s)=>  sw.contains(s,p));
   let osegs = isegs.filter( (s)=>  !so.contains(s,p));
-  let lines = osegs.map( s => this.genLine(s,this.lineP,dropParams.lineExt));
+  let lines = osegs.map( s => s.toShape(this.lineP,dropParams.lineExt));
+  //let lines = osegs.map( s => this.genLine(s,this.lineP,dropParams.lineExt));
   lines.forEach((line) => line.stroke = clr);
   return {geometries:osegs,shapes:lines};
 }
@@ -53,7 +54,7 @@ rs.initialForestDrop = function () {
   let dnc = geom.Circle.mk(Point.mk(0,0),3*rad);
   this.doNotExit= [dnc];*/
   let segs= this.ringSeeds(ringParams); 
- let lines = segs.map((sg) => this.genLine(sg,this.lineP)); 
+ let lines = segs.map((sg) => sg.toShape(this.lineP)); 
   return {geometries:segs,shapes:lines};  
 }
 
@@ -67,7 +68,7 @@ debugger;
   this.initProtos();
   ringParams.lineP = this.lineP;
   this.addFrame();
-  this.set('crc',this.genCircle(stayWithin,this.circleP));
+  this.set('crc',stayWithin.toShape(this.circleP));
   if (this.saveState  || stateOpsDisabled) {
     this.setupColorGridsForShapes({step:10,min:100,max:240});
     this.saveTheState();

@@ -120,7 +120,8 @@ item.randomSeeds = function (iparams) {
     let seg =  this.genForestSegment(ip,len,angle,sepNext);
     segs.push(seg); 
   }
-  let lines = segs.map((sg) => this.genLine(sg,lineP,lineExt)); 
+  let lines = segs.map((sg) => sg.toShape(lineP,lineExt)); 
+  //let lines = segs.map((sg) => this.genLine(sg,lineP,lineExt)); 
   return {geometries:segs,shapes:lines};
 }
 
@@ -160,7 +161,7 @@ item.gridSeeds = function (iparams) {
         fanAngles.forEach( (angle) => {
           let seg = this.genForestSegment(ip,len,angle,sepNext);
           segs.push(seg);
-          lines.push(this.genLine(seg,lineP,lineExt));
+          lines.push(seg.toShape(lineP,lineExt));
         });
       }
       xv += deltaX;

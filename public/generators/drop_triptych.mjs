@@ -38,12 +38,12 @@ rs.initialDrop = function () {
   let left = Rectangle.mk(Point.mk(-hwd,-hht),Point.mk(twd,ht));
   let middle = Rectangle.mk(Point.mk(twd-hwd,-hht),Point.mk(twd,ht));
   let right = Rectangle.mk(Point.mk(2*twd-hwd,-hht),Point.mk(twd,ht));
-  let lefts  = this.genRectangle(left,this.rectP);
+  let lefts  = left.toShape(this.rectP);
   lefts.fill = 'rgba(0,0,100,0.3)';
-  let middles  = this.genRectangle(middle,this.rectP);
+  let middles  = middle.toShape(this.rectP);
   middles.fill = 'rgba(0,0,0,0.3)';
 
-  let rights  = this.genRectangle(right,this.rectP);
+  let rights  = right.toShape(this.rectP);
   return {geometries:[left,middle,right],shapes:[lefts,middles,rights]};
 }
 
@@ -65,21 +65,21 @@ rs.generateDrop= function (p,rvs) {
   if (left) {
     geom = Circle.mk(r);
     geom.isDisk = 0;
-    shp = this.genCircle(geom,this.circleP);
+    shp = geom.toShape(this.circleP);
   }
   if (middle) {
      if (Math.random() < 0.5) {
        geom = Circle.mk(r);
        geom.isDisk = 0;
-       shp = this.genCircle(geom,this.circleP);
+       shp = geom.toShape(this.circleP);
      } else {
        geom = Rectangle.mk(Point.mk(-r,-r),Point.mk(2*r,2*r))
-       shp = this.genRectangle(geom,this.rectP);
+       shp = geom.toShape(this.rectP);
      }
    }
    if (right) {
      geom = Rectangle.mk(Point.mk(-r,-r),Point.mk(2*r,2*r))
-     shp = this.genRectangle(geom,this.rectP);
+     shp = geom.toShape(this.rectP);
    }
    return {geometries:[geom],shapes:[shp]}
  }
@@ -97,8 +97,8 @@ rs.generateDrop= function (p,rvs) {
   let crc = Circle.mk(r);
   let rect = Rectangle.mk(Point.mk(-r,-r),Point.mk(2*r,2*r))
   crc.isDisk = 0;
-  let crcs = this.genCircle(crc,this.circleP);
-  let rects = this.genRectangle(rect,this.rectP);
+  let crcs = crc.toShape(this.circleP);
+  let rects = rect.toShape(this.rectP);
   crcs.stroke = 'white';
   crcs['stroke-width'] = fr;
   rects['stroke-width'] = fr;

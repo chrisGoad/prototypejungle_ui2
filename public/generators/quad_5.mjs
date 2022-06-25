@@ -50,7 +50,7 @@ rs.displayCell = function (qd,depth) {
   let urish = URish(qd.where);
   if (urish) {
     let rect = qd.rectangle;
-    let rs = this.genRectangle(rect,rectP,0.8);
+    let rs = rect.toShape(rectP,0.8);
     shapes.push(rs);
   }
 }

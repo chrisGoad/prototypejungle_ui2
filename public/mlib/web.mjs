@@ -21,7 +21,6 @@ rs.pairFilter = function (i,j) {
   if ((d < mnCln) || (mxCln < d)) {
     return;
   }
-  debugger;
   if (typeof angleMin === 'number') {
     let ar = Math.atan2(vec.y,vec.x);
     let a = ar*this.r2a;
@@ -72,7 +71,7 @@ rs.addSegs = function (lineP) {
     let ssg = sg;
     ssg.index0 = sg.index0;
     ssg.index1 = sg.index1;
-    let line = this.genLine(ssg,lineP);
+    let line = ssg.toShape(lineP);
     let {end0,end1} = ssg;
     if (this.colorFromPoint) {
       line.stroke = this.colorFromPoint(end0);

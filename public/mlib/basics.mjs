@@ -232,7 +232,7 @@ item.addLine = function (params)  {
 	if (!lines) {
 		lines = this.lines =this.set('lines',core.ArrayNode.mk());
 	}
-  let oline=line?line:(end0?this.genLine(LineSegment.mk(end0,end1),lineP):this.genLine(segment,lineP));
+  let oline=line?line:(end0?LineSegment.mk(end0,end1).toShape(lineP):segment.toShape(lineP));
   oline.show();
   lines.push(oline);
   oline.update();

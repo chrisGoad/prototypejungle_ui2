@@ -56,7 +56,7 @@ rs.initWeb = function (pnts) {
 }
 
 rs.addSegs = function (lineP) {
-  let {connectSegs,webParameters} = this;
+  let {connectSegs,webParameters,shapes} = this;
   let {lengthenBy=0}  = webParameters;
   let ln = connectSegs.length;
   for (let i=0;i<ln;i++) {
@@ -76,7 +76,7 @@ rs.addSegs = function (lineP) {
     if (this.colorFromPoint) {
       line.stroke = this.colorFromPoint(end0);
     }
-    this.installLine(line);    
+    shapes.push(line);
   }
 }  
 

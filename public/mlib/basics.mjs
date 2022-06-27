@@ -89,16 +89,6 @@ item.addFrame = function (params) {
 }
 
 
-item.installLine = function (line) {
-  this.shapes.push(line);
-  line.show();
-  line.update();
-  this.numDropped++;
-  return line;
-}
-
-
-
 item.cellOf  = function (p) {
   let {x,y} = p;
   let {width,height,numRows,numCols} = this;
@@ -108,16 +98,7 @@ item.cellOf  = function (p) {
   let iy = Math.floor(((y+hh)/height) * numRows);
   return {x:ix,y:iy};
 }
-/*
-item.genCircle = function (crc,circleP,scale=1) {
-   let {center,radius} = crc;
-   let rs = circleP.instantiate();
-   rs.radius = scale*radius;
-   rs.moveto(center);
-   return rs;
- }
- */
- 
+
 Circle.toShape = function (circleP,scale=1) {
    let {center,radius} = this;
    let rs = circleP.instantiate();
@@ -125,18 +106,7 @@ Circle.toShape = function (circleP,scale=1) {
    rs.moveto(center);
    return rs;
  }
- /*
-item.genRectangle = function (rect,rectP,scale=1) {
-   let {corner,extent} = rect;
-   let hext = extent.times(0.5);
-   let center = corner.plus(hext);
-   let rs = rectP.instantiate();
-   rs.width = scale*extent.x;
-   rs.height = scale*extent.y;
-   rs.moveto(center);
-   return rs;
- }
- */
+
  
 Rectangle.toShape = function (rectP,scale=1) {
    let {corner,extent} = this;
@@ -161,32 +131,6 @@ Rectangle.toCircleShape = function (circleP,scale=1) {
    return rs;
  }
 
-/*
-item.genLine = function (sg,lineP,ext=0) {
-  let {end0,end1} = sg;
-  if (!lineP) {
-    debugger;
-  }
-  if (ext) {
-    let vec = end1.difference(end0);
-    let nvec = vec.normalize();
-    end1 = end1.plus(nvec.times(ext));
-  }
-  let theLineP = lineP;
-  let line = theLineP.instantiate();
-  if (!line.setEnds) {
-    debugger;
-  }
-  if (this.genPoint3d) {
-    let e03d = this.via3d(end0);
-    let e13d = this.via3d(end1);
-    line.setEnds(e03d,e13d);
-  } else {
-    line.setEnds(end0,end1);
-  }
-  return line;
-}
-*/
 
 LineSegment.toShape = function (lineP,scale=1) {
   let {end0,end1} = this;
@@ -214,17 +158,20 @@ LineSegment.toShape = function (lineP,scale=1) {
   }
   return line;
 }
-item.geom2shape = function (g,lineP,circleP,scale=1) {
+item.toShape = function (g,shapeDict,scale=1) {
   if (Circle.isPrototypeOf(g)) {
-    return g.toShape(circleP,scale);
+    return g.toShape(shapeDict.circleP,scale);
   }
-   if (LineSegment.isPrototypeOf(g)) {
-    return g.toShape(lineP,scale);
+   if (LineSegment.isPrototypeOf(g)) {	
+    return g.toShape(shapeDict.lineP,scale);
+  }
+  if (Rectangle.isPrototypeOf(g)) {
+    return g.toShape(shapeDict.rectP,scale);
   }
 }
 
-item.geoms2shapes = function (gs,lineP,circleP,scale=1) {
-  return gs.map((g) => this.geom2shape(g,lineP,circleP,scale));
+item.geoms2shapes = function (gs,shapeDict,scale=1) {
+  return gs.map((g) => this.geom2shape(g,shapeDict,scale));
 }
    
 item.addLine = function (params)  {

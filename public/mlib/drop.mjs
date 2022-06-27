@@ -74,6 +74,7 @@ rs.generateDrops = function (params) {
     return drop;
   }
   const installDrop = (drop,pnt) => {
+    debugger;
     let moveNeeded = 1;
     if (positions) {
       positions.push(pnt);

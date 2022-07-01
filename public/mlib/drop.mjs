@@ -76,7 +76,7 @@ rs.generateDrops = function (params) {
   const installDrop = (drop,pnt) => {
     debugger;
     let moveNeeded = 1;
-    if (positions) {
+    if (saveState) {
       positions.push(pnt);
     }
     let newShapes = drop.shapes; 

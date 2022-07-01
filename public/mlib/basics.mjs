@@ -228,7 +228,9 @@ item.assignValues = function (vls) {
 }
     
 item.getTheState = function (cb) {
-  let {path} = this;
+  let {path:ipath} = this;
+  let idx = ipath.indexOf('_i_');
+  let path = (idx>0)? ipath.substring(0,idx)+'.json':ipath;
   debugger;
   core.httpGet(path, (error,json) => {
     debugger;

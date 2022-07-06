@@ -22,6 +22,7 @@ sections: [
  [0,'drop_on_top_i_3','instances',1,'On Top 3',{likes:0,posted:0,category:'quad'}], 
  [0,'drop_on_top_i_4','instances',1,'On Top 4',{likes:0,posted:0,category:'quad'}], 
  [0,'web_grid','generators',1,'Web Grid',{likes:0,posted:0,category:'quad'}], 
+ [0,'drop_all_0','generators',1,'All 0',{likes:0,posted:0,category:'quad'}], 
  [0,'drop_circles_0','generators',1,'Circles 0',{likes:0,posted:0,category:'quad'}], 
  [0,'drop_circles_1','generators',1,'Circles 1',{likes:0,posted:0,category:'quad'}], 
  [0,'drop_circles_2','generators',1,'Circles 2',{likes:0,posted:0,category:'quad'}], 

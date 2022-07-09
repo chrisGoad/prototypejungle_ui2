@@ -1356,16 +1356,6 @@ Rectangle.intersectsRectangle = function (rect) {
 
 Rectangle.intersectsCircle = function (crc) {
   let corners = this.corners();
-/*  let cc0 = crc.containsPoint(corners[0]);
-  if (cc0 && crc.isDisk) {
-    return 1;
-  }
-  for (let i=1;i<4;i++) {
-    let diffv = crc.containsPoint(corners[i]) !== cc0;
-    if (diffv) {
-     return 1;
-    }    
-  } */ 
   let cr = crc.containsRectangle(this);
   if (cr) {
     return  crc.isSolid;

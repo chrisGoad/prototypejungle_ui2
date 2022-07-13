@@ -1,0 +1,158 @@
+
+import {rs as linePP} from '/shape/line.mjs';
+import {rs as circlePP} from '/shape/circle.mjs';
+import {rs as basicsP} from '/generators/basics.mjs';
+import {rs as addDropMethods} from '/mlib/drop.mjs';
+import {rs as addSegsetMethods} from '/mlib/segsets.mjs';
+import {rs as addRandomMethods} from '/mlib/boundedRandomGrids.mjs';
+import {rs as addWebMethods} from '/mlib/web.mjs';	
+
+let rs = basicsP.instantiate();
+
+addDropMethods(rs);
+addRandomMethods(rs);
+addSegsetMethods(rs);
+addWebMethods(rs);
+rs.setName('drop_on_top_4');
+let ht = 160;
+ht = 320;
+let nr = 100;
+nr = 200;
+nr = 70;
+nr = 20;
+let wd = 2*ht;
+let topParams = {width:wd,height:ht,numRows:nr,numCols:nr,frameStroke:'white',framePadding:20,circleScale:.5,//};
+ //initialDropColor:'rgb(200,200,255)',finalDropColor:'rgb(0,0,100,255)'};
+ initialDropColor:'rgb(255,255,255)',finalDropColor:'rgb(255,255,255)'};
+//let dropParams = {dropTries:100,maxDrops:4000}
+let dropParams = {dropTries:100,maxDrops:10000};
+//dropParams = {dropTries:0,maxDrops:0}
+let  webParams = {webTries:1000,minConnectorLength:0,maxConnectorLength:2*(wd/nr)};
+
+Object.assign(rs,topParams);
+
+
+rs.initProtos = function () {
+  this.lineP = linePP.instantiate();
+  this.lineP.stroke = 'white';
+  this.lineP.stroke = 'transparent';
+  this.lineP.stroke = 'rgb(200,200,200)';
+  this.lineP['stroke-width'] = .6; 
+  this.circleP = circlePP.instantiate();
+  this.circleP.fill = 'white';
+  this.circleP['stroke-width'] = 0;
+}  
+
+//const interpolate = function (fr,domainL,domainH,rangeL,rangeH) {
+const interpolate = function (fr,rangeL,rangeH) {
+//  let fr = (cDomain-domainL)/(domainH-domainL);
+  return rangeL + fr*(rangeH-rangeL);
+}
+
+//left and right are vertical segments
+const mkAGrid = function (left,right,numCols,numRows) {
+  let {end0:ll,end1:lh} = left;
+  let {end0:rl,end1:rh} = right;
+  let {x:lx,y:lly} = ll;
+  let {y:lhy} = lh;
+  let {x:rx,y:rly} = rl;
+  let {y:rhy} = rh;
+  let x = lx;
+  let pnts = [];
+  for (let i = 0;i<numCols;i++) {
+    let xfr = i/(numCols-1);
+    //let x = interpolate(xfr,lx,rx); 
+    let ly = interpolate(xfr,lly,rly);
+    let hy = interpolate(xfr,lhy,rhy);
+    let yi =Math.abs((hy-ly)/numCols);
+    
+    for (let j = 0;j<numRows;j++) {
+      let yfr = j/(numRows-1);
+      //let ly = interpolate(yfr,lly,lhy);
+     // let ry = interpolate(yfr,rly,rhy);
+     // let y = interpolate(xfr,ly,ry);
+      let y = interpolate(yfr,ly,hy);
+      pnts.push(Point.mk(x,y));
+    }
+    x = x+yi;
+  }
+  return pnts;
+ }
+  
+
+rs.initialDrop = function (side) {
+  let {circleScale:cs,numRows:nr,numCols:nc,lineP} = this;
+  let crca = [];
+  let crcsa = [];
+  let delta =40;
+  debugger;
+  let llseg = LineSegment.mk(Point.mk(-wd/2,-ht/8),Point.mk(-wd/2,ht/8));
+  let lrseg = LineSegment.mk(Point.mk(-wd/4,-ht/2),Point.mk(-wd/4,ht/2));  
+  let mlseg = LineSegment.mk(Point.mk(-wd/4,-ht/2),Point.mk(-wd/4,ht/2));
+  let mrseg = LineSegment.mk(Point.mk(wd/4,-ht/2),Point.mk(wd/4,ht/2));
+  let rlseg = LineSegment.mk(Point.mk(wd/4-delta,-ht/2),Point.mk(wd/4-delta,ht/2));
+  let rrseg = LineSegment.mk(Point.mk(wd/2,-ht/8),Point.mk(wd/2,ht/8));
+  let llsegs = llseg.toShape(lineP);
+  let lrsegs = lrseg.toShape(lineP);
+  crcsa.push(llsegs);
+ // crcsa.push(lrsegs); 
+  let mlsegs = mlseg.toShape(lineP);
+  let mrsegs = mrseg.toShape(lineP);
+  //crcsa.push(mlsegs);
+  //crcsa.push(mrsegs);
+  let lpnts = mkAGrid(llseg,lrseg,nr,nc);
+  lpnts = lpnts.filter( (p) => p.x < -wd/4-20);
+  let mpnts = mkAGrid(mlseg,mrseg,nr,nc);
+  let rpnts = mkAGrid(rlseg,rrseg,nr,nc);
+  rpnts = rpnts.filter( (p) => p.x > wd/4);
+
+  let pnts = mpnts.concat(lpnts,rpnts);
+  let {circleP,initialDropColor} = this;
+  pnts.forEach( (ip) => {
+    let p = Point.mk(ip.x,ip.y);
+    let crc = Circle.mk(p,4);
+    let crcs = crc.toShape(circleP,cs);
+    crcs.fill = initialDropColor;
+    crca.push(crc);
+    crcsa.push(crcs);
+  });
+  return {geometries:crca,shapes:crcsa};
+ } 
+
+/*
+rs.initialDrop = function () {
+  this.initialDrop0('left');
+ // this.initialDrop0('right');
+  return {geometries:crca,shapes:crcsa};
+
+}*/
+rs.segParams = function (np) {
+  let r = Math.random();
+ // let np = 4;
+  let angle = (np === -1)?Math.PI/2:Math.floor(r*np)* (Math.PI/np)
+  let length = 2;// + Math.floor(r*np)*4;
+  return {angle,length};
+} 	
+
+  
+rs.generateDrop = function (p) {
+  let {finalDropColor,circleScale:cs} = this;
+  let crc = Circle.mk(4);
+  let crcs = crc.toShape(this.circleP,cs);
+  	crcs . fill = finalDropColor;
+  return {geometries:[crc],shapes:[crcs]}
+}
+
+
+
+
+rs.initialize = function () {
+  this.initProtos();
+  this.addFrame();
+   this.generateDrops(dropParams);
+}
+
+export {rs};
+
+
+

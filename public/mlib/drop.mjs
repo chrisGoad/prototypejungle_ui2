@@ -87,6 +87,9 @@ rs.generateDrops = function (params) {
     tgs.forEach((g) => drops.push(g));
     tries = 0;
   }
+  if (!this.generateDrop) {
+    return;
+  }
   if (!saveState && (saveState !== undefined)) {
     // drop points were stored in this.positions
     debugger;

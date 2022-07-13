@@ -13,9 +13,12 @@ addDropMethods(rs);
 addRandomMethods(rs);
 addSegsetMethods(rs);
 addWebMethods(rs);
-rs.setName('drop_on_top_2');
+rs.setName('drop_on_top_3');
 let wd = 160;
+wd = 320;
 let nr = 100;
+nr = 200;
+nr = 70;
 let topParams = {saveState:1,stateOpsDisabled:0,width:wd,height:wd,numRows:nr,numCols:nr,minSeparation:2,frameStrokee:'white',framePadding:20,circleScale:.5,//};
  //initialDropColor:'rgb(200,200,255)',finalDropColor:'rgb(0,0,100,255)'};
  initialDropColor:'rgb(255,255,255)',finalDropColor:'rgb(255,255,255)'};
@@ -32,7 +35,7 @@ rs.initProtos = function () {
   this.lineP.stroke = 'white';
   this.lineP.stroke = 'transparent';
   this.lineP.stroke = 'rgb(200,200,200)';
-  this.lineP['stroke-width'] = .3; 
+  this.lineP['stroke-width'] = .6; 
   this.circleP = circlePP.instantiate();
   this.circleP.fill = 'white';
   this.circleP['stroke-width'] = 0;
@@ -46,7 +49,6 @@ rs.initialDrop = function (side) {
   let crcsa = [];
 debugger;
   if (this.ipositions) {
-    debugger;
     let {positions,ipositions,circleP,initialDropColor} = this;
     ipositions.forEach( (ip) => {
       let p = Point.mk(ip.x,ip.y);
@@ -69,7 +71,8 @@ debugger;
   let nc = 20;
   let ss = 0.5;
   let iss = 0.5;
-  let intv =  wd/nc;
+  //let intv =  wd/nc;
+  let intv =  wd/nr;
   //let hwd = 0.5*wd;
   const addCircle = (c) => {
     let {x,y} = c;
@@ -85,22 +88,20 @@ debugger;
     ipositions.push(p);
     let crc = Circle.mk(p,1);
     let crcs = crc.toShape(circleP,cs);
-    debugger;
     crcs.fill = this.initialDropColor;
     //crc.aboriginal = 1;
     crca.push(crc);
     crcsa.push(crcs);
   }
-  for (let i = 0;i<nc;i++) {
+  for (let i = 0;i<nr;i++) {
     let x = -0.5*wd + i*intv; + disp;
-    for (let j=0;j<nc;j++) {
+    for (let j=0;j<nr;j++) {
       let y = -0.5*wd + j*intv;
       let c = Point.mk(x,y);
       addCircle(c);
     }
   }
-  debugger;
-  //return {geometries:crca,shapes:crcsa};
+ return {geometries:crca,shapes:crcsa};
   return {geometries:crca,shapes:[]};
 }
 /*
@@ -133,10 +134,23 @@ rs.generateDrop= function (p) {
   let crc = Circle.mk(1);
   let crcs = crc.toShape(this.circleP,cs);
   	crcs . fill = finalDropColor;
-  //return {geometries:[crc],shapes:[crcs]}
+  return {geometries:[crc],shapes:[crcs]}
   return {geometries:[crc],shapes:[]}
 }
+rs.blackRect = Rectangle.mkCentered(Point.mk(0.5*wd,0.5*wd));
+rs.colorFromPoint = function (p) {
+  debugger;
+  let fr = p.length()/(0.5*wd);
+  let rect = this.blackRect;
+  let inner = rect.containsPoint(p);
+  let th = inner?0.2:0.8;
+  th =  fr;
+  if (Math.random()<th) {
+    return 'transparent';
+  }
 
+  return inner?'white':'white'
+}
 
 
 rs.computeState  = function () {
@@ -150,18 +164,19 @@ rs.initialize = function () {
   this.addFrame();
  //  this.addRectangle({width:0.5*wd,height:wd,position:Point.mk(-0.25*wd,0),stroke_width:0,fill:'rgb(0,0,100)'});
   // this.addRectangle({width:0.5*wd,height:wd,position:Point.mk(0.25*wd,0),stroke_width:0,fill:'rgb(100,0,0)'});
-   this.addRectangle({width:wd,height:wd,position:Point.mk(0,0),stroke_width:0,fill:'rgb(0,0,100)'});
-   this.addRectangle({width:0.666*wd,height:0.666*wd,position:Point.mk(0,0),stroke_width:0,fill:'rgb(40,40,140)'});
+   this.addRectangle({width:wd,height:wd,position:Point.mk(0,0),stroke_width:0,fill:'rgb(0,0,0)'});
+   //this.addRectangle({width:0.666*wd,height:0.666*wd,position:Point.mk(0,0),stroke_width:0,fill:'rgb(40,40,140)'});
+   this.addRectangle({width:0.5*wd,height:0.5*wd,position:Point.mk(0,0),stroke_width:0,fill:'rgb(0,0,0)'});
   // this.addRectangle({width:0.333*wd,height:0.333*wd,position:Point.mk(0,0),stroke_width:0,fill:'rgb(200,100,0)'});
    //this.addRectangle({width:0.333*wd,height:0.333*wd,position:Point.mk(0,0),stroke_width:0,fill:'rgb(80,80,180)'});
-   this.addRectangle({width:0.333*wd,height:0.333*wd,position:Point.mk(0,0),stroke_width:0,fill:'rgb(0,0,180)'});
+   //this.addRectangle({width:0.333*wd,height:0.333*wd,position:Point.mk(0,0),stroke_width:0,fill:'rgb(0,0,180)'});
   //this.setupRandomGridForShapes('v',{step:10,min:160,max:255});
   //this.setupRandomGridForShapes('which',{step:0.3,min:0,max:1});
  if (this.saveState) {
     this.positions = [];
     this.generateDrops(dropParams);
     let points = this.ipositions.concat(this.positions);  
-    this.generateWeb(Object.assign(webParams,{points}));
+   // this.generateWeb(Object.assign(webParams,{points}));
 
     debugger;
     this.saveTheState();
@@ -175,5 +190,6 @@ rs.initialize = function () {
 }
 
 export {rs};
+
 
 

@@ -9,7 +9,7 @@ addDropMethods(rs);
 
 rs.setName('drop_all_0');
 let ht= 1000;
-let topParams = {width:ht,height:ht,framePadding:0.1*ht,frameStrokee:'white',sqdim:0.14*ht,sqoff:0.14*ht,sqfill:'rgba(30,30,60)'}
+let topParams = {width:ht,height:ht,framePadding:0.1*ht,sqdim:0.14*ht,sqoff:0.14*ht,sqfill:'rgba(30,30,60)'}
 Object.assign(rs,topParams);
 
 rs.dropParams = {dropTries:150,scale:0.5,maxDrops:10000,radius:50}
@@ -48,11 +48,7 @@ rs.generateDrop= function (p) {
   let ya = y + hht;
   let hSizes = [0,3,0,5,0,9,0];
   let vSizes = [0,9,0,5,0,3,0];
-  //let hTypes = [0,'rect',0,'srect',0,'hline'];
- // let hTypes = [0,'hline',0,'srect',0,'hline'];
   let hTypes = [0,'hline',0,'hline',0,'hline'];
- // let vTypes = [0,'circle',0,'scircle',0,'vline'];
-  //let vTypes = [0,'vline',0,'scircle',0,'vline'];
   let vTypes = [0,'vline',0,'vline',0,'vline'];
   let numS = hSizes.length;
   let strh = Math.floor((numS*ya)/ht);
@@ -96,7 +92,7 @@ rs.generateDrop= function (p) {
   }  else {
     return;
   }
-  console.log('xa',xa,'ya',ya,'strh',strh,'strv',strv,'hsz',hsz,'vsz',vsz,'radius',rd);
+  //console.log('xa',xa,'ya',ya,'strh',strh,'strv',strv,'hsz',hsz,'vsz',vsz,'radius',rd);
   let geom,shp;
    if ((tp === 'hline')||(tp==='vline')) {
     debugger;
@@ -125,9 +121,7 @@ rs.initialize = function () {
   this.addRectangle({width:sqdim,height:sqdim,position:Point.mk(sqoff,-sqoff),stroke_width:0,fill:sqfill});
   this.addRectangle({width:sqdim,height:sqdim,position:Point.mk(-sqoff,sqoff),stroke_width:0,fill:sqfill});
   this.addRectangle({width:sqdim,height:sqdim,position:Point.mk(sqoff,sqoff),stroke_width:0,fill:sqfill});
-
   let drops =  this.generateDrops(dropParams);
-  //this.installCircleDrops(drops,circleP);
 }
 
 export {rs};

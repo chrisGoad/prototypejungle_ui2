@@ -59,3 +59,5 @@ node admin/genGrids images
 
 cd c:\prototypejungle\public
 node server/server
+
+cd c:\prototypejungle

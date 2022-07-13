@@ -1254,7 +1254,15 @@ Rectangle.mk = function (a0,a1) {
   return rs;
 }
 
-Rectangle.mkCentered = function (center,extent) {
+Rectangle.mkCentered = function (icenter,iextent) {
+  let center,extent;
+  if (iextent === undefined) {
+    center = Point.mk(0,0);
+    extent = icenter;
+  } else {
+    center = icenter;
+    extent = iextent;
+  }
 	let {x,y} = extent;
 	let {x:cx,y:cy} = center;
 	let corner = Point.mk(cx-0.5*x,cy - 0.5*y);

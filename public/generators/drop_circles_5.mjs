@@ -1,6 +1,6 @@
 import {rs as circlePP} from '/shape/circle.mjs';
 import {rs as basicP} from '/generators/basics.mjs';
-import {rs as addDropMethods} from '/mlib/dropCircles.mjs';
+import {rs as addDropMethods} from '/mlib/drop.mjs';
 
 let rs = basicP.instantiate();
 addDropMethods(rs);
@@ -86,7 +86,7 @@ rs.initialize = function () {
   this.initProtos();
   this.addFrame();
   let shapes = this.set('shapes',arrayShape.mk());
-  let drop =  this.generateCircleDrop(dropParams);
+  let drop =  this.generateDrops(dropParams);
   let {points,radii} = drop;
   let ln  = points.length;
   for (let i=0;i<ln;i++) {

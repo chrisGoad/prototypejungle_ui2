@@ -39,6 +39,7 @@ rs.dropCenters = function () {
   
 rs.generateDrops = function (params) {
   let {shapes,drops,numRows,randomGridsForShapes,positions,saveState} = this;
+  debugger;
   if (!shapes) { 
     shapes = this.set('shapes',arrayShape.mk());
   }
@@ -55,7 +56,7 @@ rs.generateDrops = function (params) {
     }
   }
   this.dropParams = params;
-  let {maxLoops=Infinity,maxDrops=Infinity,dropTries} = params;
+  let {maxLoops=Infinity,maxDrops=Infinity,dropTries,mustIntersect,numIntersections=1} = params;
   let cnt =0;
   let tries = 0;
   let rvs;
@@ -69,19 +70,22 @@ rs.generateDrops = function (params) {
     if (!drop) {
       return;
     } 
+    let dpnt = drop.pos?drop.pos:pnt;
     let gs = drop.geometries;
-    tgs = gs.map((g) => geom.moveBy(g,pnt));
+    tgs = gs.map((g) => geom.moveBy(g,dpnt));
     return drop;
   }
   const installDrop = (drop,pnt) => {
     let moveNeeded = 1;
+    let dpnt = drop.pos?drop.pos:pnt;
+
     if (saveState) {
-      positions.push(pnt);
+      positions.push(dpnt);
     }
     let newShapes = drop.shapes; 
     newShapes.forEach((s) => {
       let sp = s.getTranslation();
-      s.moveto(pnt.plus(sp));
+      s.moveto(dpnt.plus(sp));
       shapes.push(s);
     });
     tgs.forEach((g) => drops.push(g));
@@ -110,7 +114,13 @@ rs.generateDrops = function (params) {
     if (!drop) {
       continue;
     } 
-    if (geometriesIntersect(tgs,drops)) {
+    if (mustIntersect) {
+       let doesIntersect = geometriesIntersect(tgs,mustIntersect);
+       if (!doesIntersect) {
+         continue;
+       }
+    }
+    if (geometriesIntersect(tgs,drops,numIntersections-1)) {
       tries++;
       if (tries >= dropTries) {
         //console.log('dropTries',dropTries,'exceeded');

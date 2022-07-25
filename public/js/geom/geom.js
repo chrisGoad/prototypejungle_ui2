@@ -1366,7 +1366,7 @@ Rectangle.intersectsCircle = function (crc) {
   let corners = this.corners();
   let cr = crc.containsRectangle(this);
   if (cr) {
-    return  crc.isSolid;
+    return  this.isSolid;
   }
   let {center,radius} = crc;
   let {x:cx,y:cy} = center;
@@ -1445,7 +1445,7 @@ LineSegment.intersects = function (g) {
 	 }   
 	 error('unsupported case for LineSegment.intersects');
 }
-
+/*
 const geometriesIntersect0 = function (g,gs) {
   let ln = gs.length;
   for (let i=0;i<ln;i++) {
@@ -1457,16 +1457,35 @@ const geometriesIntersect0 = function (g,gs) {
    return 0;
  }
  
+ */
+ /* g must interesect at least n+ 1 member of gs for a non-zero result to be returned */
+const geometriesIntersect0 = function (g,gs,n=0) {
+  let ln = gs.length;
+  let cnt = 0;
+  for (let i=0;i<ln;i++) {
+    let gi = gs[i];
+    if (g.intersects(gi)) {
+      cnt ++;
+    }
+    if (cnt>n) {
+      return cnt;
+    }
+  }
+  return 0;
+ }
+  // return the min(number of intersections,n+1)
  
-const geometriesIntersect = function (gs0,gs1) {
+const geometriesIntersect = function (gs0,gs1,n=0) {
   let ln = gs0.length;
+  let cnt = 0;
   for (let i=0;i<ln;i++) {
     let gi = gs0[i];
-    if (geometriesIntersect0(gi,gs1)) {
-      return 1;
+    cnt += geometriesIntersect0(gi,gs1,n-cnt);
+    if (cnt > n) {
+      return cnt;
     }
-   }
-   return 0;
+  }
+  return 0;
  }
    
 

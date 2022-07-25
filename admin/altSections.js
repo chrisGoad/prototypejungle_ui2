@@ -22,6 +22,8 @@ sections: [
  [0,'drop_on_top_i_2','instances',1,'On Top 2',{likes:0,posted:0,category:'quad'}], 
  [0,'drop_on_top_i_3','instances',1,'On Top 3',{likes:0,posted:0,category:'quad'}], 
  [0,'drop_on_top_i_4','instances',1,'On Top 4',{likes:0,posted:0,category:'quad'}], 
+  [0,'drop_on_top_5','generators',1,'On Top 5',{likes:0,posted:0,category:'quad'}], 
+
  [0,'web_grid','generators',1,'Web Grid',{likes:0,posted:0,category:'quad'}], 
  [0,'drop_all_0','generators',1,'All 0',{likes:0,posted:0,category:'quad'}], 
  [0,'drop_all_1','generators',1,'All 1',{likes:0,posted:0,category:'quad'}], 
@@ -31,6 +33,7 @@ sections: [
  [0,'drop_circles_2','generators',1,'Circles 2',{likes:0,posted:0,category:'quad'}], 
  [0,'drop_circles_3','generators',1,'Circles 3',{likes:0,posted:0,category:'quad'}], 
  [0,'drop_circles_4','generators',1,'Circles 4',{likes:0,posted:0,category:'quad'}], 
+ [0,'drop_circles_7','generators',1,'Circles 7',{likes:0,posted:0,category:'quad'}], 
  [0,'drop_circles_9','generators',1,'Circles 9',{likes:0,posted:0,category:'quad'}], 
  [0,'drop_circles_10','generators',1,'Circles 10',{likes:0,posted:0,category:'quad'}], 
  [0,'drop_circles_11','generators',1,'Circles 11',{likes:0,posted:0,category:'quad'}], 

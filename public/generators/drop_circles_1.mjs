@@ -1,22 +1,23 @@
 import {rs as circlePP} from '/shape/circle.mjs';
 import {rs as basicP} from '/generators/basics.mjs';
 import {rs as addDropMethods} from '/mlib/drop.mjs';
-import {rs as innerDrop} from '/generators/drop_circles_0.mjs';
+//import {rs as innerDrop} from '/generators/drop_circles_0.mjs';
 
 let rs = basicP.instantiate();
 addDropMethods(rs);
 
 rs.setName('drop_circles_1');
 let ht= 2000;
-let topParams = {width:ht,height:ht,radius:100,framePadding:0.1*ht,frameStrokee:'white'}
+let topParams = {width:ht,height:ht,radius:50,framePadding:0.1*ht,frameStrokee:'white'}
 Object.assign(rs,topParams);
 
-rs.dropParams = {dropTries:150}
+rs.dropParams = {dropTries:150,numIntersections:5}
 
 rs.initProtos = function () {
   let circleP = this.circleP = circlePP.instantiate();
-  circleP.fill = 'white';
-  circleP['stroke-width'] = 0;
+  circleP.fill = 'rgba(255,255,0,0.1)';
+  circleP.stroke = 'white';
+  circleP['stroke-width'] = 1;
 }  
 
 rs.generateDrop= function (p) {
@@ -28,7 +29,10 @@ rs.generateDrop= function (p) {
   if (d>=hht) {
     return;
   } 
-  let crc = Circle.mk(radius);
+  let fr= d/hht;
+  let rad = 5 + (1-fr) * radius;
+  let crc = Circle.mk(rad);
+  //let crc = Circle.mk(10+Math.random()*radius);
   let crcs = crc.toShape(this.circleP);
   return {geometries:[crc],shapes:[crcs]}
 }

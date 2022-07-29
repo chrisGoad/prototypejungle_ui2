@@ -111,6 +111,33 @@ item.addFrame = function (params) {
 }
 
 
+rs.drawGrid = function (lineP) {
+  let {numRows,numCols,width:wd,height:ht} = this;
+  let deltaX = wd/numCols;
+  let deltaY = ht/numRows;
+  let hwd = 0.5*wd;
+  let hht = 0.5*ht;
+  let cx = -hwd;
+  let cy = -hht;
+  let lines = this.set("lines",arrayShape.mk());
+  for (let i=0;i<=numRows;i++) {
+    let top = Point.mk(cx,-hht);
+    let bot = Point.mk(cx,hht);
+    let sg = LineSegment.mk(bot,top)
+    let ln = sg.toShape(lineP);
+    lines.push(ln);
+    cx += deltaX;
+  }
+  for (let i=0;i<=numCols;i++) {
+    let left = Point.mk(-hwd,cy);
+    let right = Point.mk(hwd,cy);
+    let sg = LineSegment.mk(left,right)
+    let ln = sg.toShape(lineP);
+    lines.push(ln);
+    cy += deltaY;
+  }
+}
+
 item.cellOf  = function (p) {
   let {x,y} = p;
   let {width,height,numRows,numCols} = this;

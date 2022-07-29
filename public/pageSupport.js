@@ -134,7 +134,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	let im = getArgs.image;
 	let ext = extension(im);
 	//let dir = (ext==='jpg')?'images/':'videos/';
-	let dir = imLocal?'./images/':'https://kingdomofpattern.com/images/';
+	let dir = imLocal?'./images/std_size/':'https://kingdomofpattern.com/images/std_size/';
    imurl = dir+'/'+im;
  debugger;
   //console.log('DIR ',dir);

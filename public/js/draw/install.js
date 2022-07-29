@@ -243,7 +243,7 @@ const saveTheImage = function (forMpix) {
   }
   //dialog('Variant',setTheVariant);
 
-	let dst = forMpix?`images_hi_res/${wts}.jpg`:`images/${wts}.jpg`;
+	let dst = forMpix?`images/hi_res/${wts}.jpg`:`images/std_size/${wts}.jpg`;
 	convertToJpeg(dst,function () {
 		alert((forMpix?'saved the image in high res at ':'saved the image at ')+dst);
 		if (!forMpix) {
@@ -259,7 +259,7 @@ const saveTheThumb = function () {
 	jpgSizeFactor = jpgThumbFactor;
 	let wts = core.vars.whereToSave;// + '.jpg';
 	if (wts) {
-		let dst = `www/thumbs/${wts}.jpg`;
+		let dst = `images/thumbs/${wts}.jpg`;
 	  convertToJpeg(dst,function () {
 		  alert('saved the thumb at '+dst);
 	  });	

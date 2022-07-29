@@ -282,16 +282,16 @@ const thingString = function (order,ix,dir,useThumb,ititle,props) {
   //console.log('vpath',vpath);
   let vx = vpath+'.'+ext;
   thePages.push(vx);
-	let imsrc = `images/${vpath}.jpg`;
-	let thumbsrc = `thumbs/${vpath}.jpg`;
-  let localSrc =`public/thumbs/${vpath}.jpg`;
+	let imsrc = `images/std_size/${vpath}.jpg`;
+	let thumbsrc = `images/thumbs/${vpath}.jpg`;
+  let localSrc =`public/images/thumbs/${vpath}.jpg`;
   if (ix === 'drift_web') {
     //console.log('IIIIIXXXX',ix);
   }
   //theLocals.push(localim?1:0);
 
   if (!(local_images || imagesHere)) {
-	  thumbsrc = `https://kingdomofpattern.com/thumbs/${vpath}.jpg`;
+	  thumbsrc = `https://kingdomofpattern.com/images/thumbs/${vpath}.jpg`;
   }
 //console.log('thumbsrc',thumbsrc);
 	let pageArg = 'page='+pageNumber;

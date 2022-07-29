@@ -28,6 +28,8 @@ sections: [
  [0,'drop_all_0','generators',1,'All 0',{likes:0,posted:0,category:'quad'}], 
  [0,'drop_all_1','generators',1,'All 1',{likes:0,posted:0,category:'quad'}], 
  [0,'drop_all_2','generators',1,'All 2',{likes:0,posted:0,category:'quad'}], 
+  [0,'drop_rects_1','generators',1,'Rects 1',{likes:0,posted:0,category:'quad'}], 
+
  [0,'drop_circles_0','generators',1,'Circles 0',{likes:0,posted:0,category:'quad'}], 
  [0,'drop_circles_1','generators',1,'Circles 1',{likes:0,posted:0,category:'quad'}], 
  [0,'drop_circles_2','generators',1,'Circles 2',{likes:0,posted:0,category:'quad'}], 

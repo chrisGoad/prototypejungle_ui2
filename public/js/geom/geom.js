@@ -1331,6 +1331,15 @@ Rectangle.corners = function () {
   return rs;
 }
 
+
+Rectangle.labeledCorners = function () {
+  let c = this.corner;
+  let {cx,cy} = this.corner;
+  let {ex,ey} = this.extent;
+  let rs = {UL:Point.mk(cx,cy),UR:Point.mk(cx+ex,cy),LL:Point.mk(cx,cy+ey),LR:Point.mk(cx+ex,cy+ey)};
+  return rs;
+}
+
 Rectangle.xBounds = function () {
 	let {corner,extent} = this
 	let lb = corner.x;
@@ -1498,6 +1507,19 @@ Rectangle.sides = function () {
   rs.push(LineSegment.mk(corners[3].copy(),corners[0].copy()));
   return rs;
 }
+
+
+
+Rectangle.labeledSides = function () {
+  let corners = this.labeledCorners();
+  let sides = {};
+  sides.right = LineSegment.mk(corners.UR,corners.LR);
+  sides.left = LineSegment.mk(corners.UL,corners.LL);
+  sides.top = LineSegment.mk(corners.UL,corners.UR);
+  sides.bottom = LineSegment.mk(corners.LL,corners.LR);
+  return sides;
+}
+  
 const pointArrayToLineSegments = function (ar) {
   let ln = ar.length;
 	let rs = [];

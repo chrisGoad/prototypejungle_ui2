@@ -24,7 +24,7 @@ nr = 20;
 //nr = 40;
 let wd = 2*ht;
 let gv =60;
-let topParams = {width:wd,height:ht,numRows:nr,numCols:2*nr,frameStroke:'white',framePadding:20,circleScale:1,circleSize:0.2,
+let topParams = {width:wd,height:ht,numRows:nr,numCols:2*nr,frameStroke:'white',framePadding:0.1*ht,circleScale:1,circleSize:0.2,
  initialDropColor:[0,0,0,0],middleDropColor:[255,255,255,1],finalDropColor:[0,0,0,0],
  initialGridColor:[0,0,255,1],middleGridColor:[255,255,255,1],finalGridColor:[255,0,0,1]};
 //let dropParams = {dropTries:100,maxDrops:4000}

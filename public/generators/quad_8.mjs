@@ -6,14 +6,14 @@ import {rs as addQuadMethods} from '/mlib/quadTree.mjs';
 
 let rs = basicP.instantiate();
 addQuadMethods(rs);
-rs.setName('quad_7');
+rs.setName('quad_8');
 
 let wd = 100;
 let topParams = {width:wd,height:wd,framePadding:0.1*wd}
 Object.assign(rs,topParams);
 //let quadParams = {chance:0.1,levels:7, alwaysSplitBefore:3};
-let quadParams = {chance:.97,levels:8, alwaysSplitBefore:3};
-//let quadParams = {chance:97,levels:4, alwaysSplitBefore:3};
+let quadParams = {chance:1,levels:8, alwaysSplitBefore:3};
+//let quadParams = {chance:1,levels:4, alwaysSplitBefore:3};
 
 rs.initProtos = function () {
   this.circleP =  circlePP.instantiate();
@@ -58,11 +58,20 @@ rs.displayCell = function (qd) {
 }
 
 rs.computeSplitParams = function (qd) {
-  let jf = 0.1;
+debugger;
+  let {rectangle:rect} = qd;
+  let cnt = rect.center();
+  let {corner} = rect;
+  //let {x,y} = corner;
+  let {x,y} = cnt;
+  let {width:wd} = this;
+  let fr = x/wd;
+  let bfr = (0.9*fr)+0.45;
+  console.log('x',x,'fr',fr,'bfr',bfr);
+  let jf = 0.00;
   const jiggle = (v) => v + jf * (Math.random() -0.5);
   //return ['h',jiggle(0.45),jiggle(0.45),jiggle(0.3)];
-  return ['h',jiggle(0.5),jiggle(0.5),jiggle(0.3)];
-  return ['h',jiggle(0.45),jiggle(0.45),jiggle(0.3)];
+  return ['h',jiggle(bfr),jiggle(bfr),jiggle(bfr)];
 }
 
 rs.initialize = function () {

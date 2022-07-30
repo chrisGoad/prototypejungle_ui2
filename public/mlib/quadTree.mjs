@@ -1,7 +1,7 @@
 // a quad tree node has the form {rectangle,UL:quadNode,UR:quadNode,LL:quadNode,QLR
 const rs =function (rs) {
 
-rs.extendQuadOneLevel = function (qd,iparams) {
+rs.extendQuadOneLevel = function (qd) {
    if (qd.UL) {
      return;
    }
@@ -9,7 +9,10 @@ rs.extendQuadOneLevel = function (qd,iparams) {
    let root = qd.root;
    //let params = iparams?iparams:root.splitParams;
   // let {splitType,fr0,fr1,fr2} = params;
-   let [fr0,fr1,fr2] = [0.45,0.45,0.3];
+   
+ //  let [fr0,fr1,fr2] = [0.45,0.45,0.3];
+   let sp=(this.computeSplitParams)?this.computeSplitParams(qd):['h',0.5,0.5,0.5];
+   let [ornt,fr0,fr1,fr2] = sp;
    let rect = qd.rectangle;
    let {corner,extent} = rect;
    let {x:cx,y:cy} = corner;

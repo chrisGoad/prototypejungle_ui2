@@ -12,8 +12,8 @@ let wd = 100;
 let topParams = {width:wd,height:wd,framePadding:0.1*wd}
 Object.assign(rs,topParams);
 //let quadParams = {chance:0.1,levels:7, alwaysSplitBefore:3};
-let quadParams = {chance:.97,levels:8, alwaysSplitBefore:3};
-//let quadParams = {chance:97,levels:4, alwaysSplitBefore:3};
+let quadParams = {chance:.9,levels:8, alwaysSplitBefore:3};
+//let quadParams = {chance:1,levels:4, alwaysSplitBefore:3};
 
 rs.initProtos = function () {
   this.circleP =  circlePP.instantiate();
@@ -58,11 +58,10 @@ rs.displayCell = function (qd) {
 }
 
 rs.computeSplitParams = function (qd) {
-  let jf = 0.1;
+  let jf = 0.02;
   const jiggle = (v) => v + jf * (Math.random() -0.5);
   //return ['h',jiggle(0.45),jiggle(0.45),jiggle(0.3)];
-  return ['h',jiggle(0.5),jiggle(0.5),jiggle(0.3)];
-  return ['h',jiggle(0.45),jiggle(0.45),jiggle(0.3)];
+  return ['h',jiggle(0.48),jiggle(0.48),jiggle(0.3)];
 }
 
 rs.initialize = function () {

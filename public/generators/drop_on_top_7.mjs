@@ -25,10 +25,10 @@ nr = 20;
 let wd = 2*ht;
 let gv =60;
 let topParams = {width:wd,height:ht,numRows:nr,numCols:2*nr,frameStroke:'white',framePadding:20,circleScale:1,circleSize:0.2,
- initialDropColor:[255,255,255],finalDropColor:[0,0,255],
- initialGridColor:[255,255,255],finalGridColor:[255,0,0]};
+ initialDropColor:[0,0,0,0],middleDropColor:[255,255,255,1],finalDropColor:[0,0,0,0],
+ initialGridColor:[0,0,255,1],middleGridColor:[255,255,255,1],finalGridColor:[255,0,0,1]};
 //let dropParams = {dropTries:100,maxDrops:4000}
-let dropParams = {dropTries:100,maxDrops:10000,numIntersections:2};
+let dropParams = {dropTries:100,maxDrops:10000,numIntersectionss:1};
 //dropParams = {dropTries:0,maxDrops:0}
 
 Object.assign(rs,topParams);
@@ -54,12 +54,13 @@ const interpolate = function (fr,rangeL,rangeH) {
 
 
 rs.interpolateColor = function (fra,ic,fc) {
-  let [ir,ig,ib] = ic;
-  let [fr,fg,fb] = fc;
+  let [ir,ig,ib,ia] = ic;
+  let [fr,fg,fb,fa] = fc;
   let r = interpolate(fra,ir,fr);
   let g = interpolate(fra,ig,fg);
   let b = interpolate(fra,ib,fb);
-  let cl = `rgb(${r},${g},${b})`;
+  let a = interpolate(fra,ia,fa);
+  let cl = `rgba(${r},${g},${b},${a})`;
   return cl;
 }
 //left and right are vertical segments
@@ -96,7 +97,8 @@ const mkAGrid = function (left,right,numCols,numRows) {
 
 rs.initialDrop = function (side) {
   let {circleP,circleScale:cs,circleSize:csz,width:wd,height:ht,numRows:nr,numCols:nc,lineP,
-  initialGridColor:ic,finalGridColor:fc} = this;
+  initialGridColor:ic,middleGridColor:mc,finalGridColor:fc} = this;
+  let hwd = 0.5*wd;
   let crca = [];
   let crcsa = [];
   let delta = wd/nc;
@@ -110,11 +112,16 @@ rs.initialDrop = function (side) {
 
   let pnts = mkAGrid(lseg,rseg,nc,nr);
  // let {circleP,initialDropColor} = this;
+  let fr,cl;
   pnts.forEach( (ip) => {
     let {x,y} = ip;
-    let fr = (x+0.5*wd)/wd;
-    let cl = this.interpolateColor(fr,ic,fc);
-
+    if (x < 0) {
+      fr = (x+0.5*wd)/hwd;
+      cl = this.interpolateColor(fr,ic,mc);
+    } else {
+      fr = x/hwd;
+      cl = this.interpolateColor(fr,mc,fc);
+    }
     let p = Point.mk(x,y);
  //   let crc = Circle.mk(p,4);
     let crc = Circle.mk(p,csz*delta);
@@ -128,12 +135,19 @@ rs.initialDrop = function (side) {
 
   
 rs.generateDrop = function (p) {
-  let {initialDropColor:ic,finalDropColor:fc,circleScale:cs,circleSize:csz,width:wd,numCols:nc} = this;
+  let {initialDropColor:ic,middleDropColor:mc,finalDropColor:fc,circleScale:cs,circleSize:csz,width:wd,numCols:nc} = this;
   debugger;
+  let hwd = 0.5*wd;
   let delta = wd/nc;
   let {x,y} = p;
-  let fr = (x+0.5*wd)/wd;
-  let cl = this.interpolateColor(fr,ic,fc);
+  let fr,cl;
+  if (x < 0) {
+    fr = (x+0.5*wd)/hwd;
+    cl = this.interpolateColor(fr,ic,mc);
+  } else {
+    fr = x/hwd;
+    cl = this.interpolateColor(fr,mc,fc);
+  }
   let crc = Circle.mk(csz*delta);
   let crcs = crc.toShape(this.circleP,cs);
   crcs.dropped = 1;

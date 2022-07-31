@@ -14,7 +14,8 @@ let images = [];
 let thumbs = [];
 
   let orderMin = -1;
-  let orderMax = 272;
+  //let orderMax = 272;
+  let orderMax = 20000;
 
 const thingString = function (ix,dir,order,variant) {
 	debugger;

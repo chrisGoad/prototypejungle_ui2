@@ -24,7 +24,7 @@ sections: [
   [0,'web_aphelion','generators',1,'Aphelion',{likes:31,posted:1,category:'web'}],
   [0,'web_wheel','generators',1,'Wheel',{likes:30,posted:1,category:'web'}],
   [0,'drop_arrows','generators',1,'Arrows',{likes:27,posted:1,category:'drop'}],  //was [0,'drop0_1_21','final',1,'Leaves']
-  [0,'drop_leaves','generators',1,'Leaves',{likes:0,posted:0,category:'drop'}],  //was [0,'drop0_1_21','final',1,'Leaves']
+  //[0,'drop_leaves','generators',1,'Leaves',{likes:0,posted:0,category:'drop'}],  //was [0,'drop0_1_21','final',1,'Leaves']
   [0,'drop_dandelion','generators',1,'Dandelion',{likes:78,posted:1,category:'drop'}],// was [0,'drop0_1_24','final',1,'Dandelion',posted:1,category:'grid'}],
   [0,'drop_metal_2','generators',1,'Metal 2',{likes:0,posted:0,category:'drop'}], // was [0,'drop0_5','final',1,'Metal 2',posted:1,category:'grid'}],
 		// [0,'grid_bubbles','generators','square','Bubbles',{likes:101,posted:1,category:'grid'}],

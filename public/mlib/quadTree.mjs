@@ -12,26 +12,30 @@ rs.extendQuadOneLevel = function (qd) {
    
  //  let [fr0,fr1,fr2] = [0.45,0.45,0.3];
    let sp=(this.computeSplitParams)?this.computeSplitParams(qd):['h',0.5,0.5,0.5];
+   if (!sp) {
+     return;
+   }
    let [ornt,fr0,fr1,fr2] = sp;
+   let h = ornt === 'h';
    let rect = qd.rectangle;
    let {corner,extent} = rect;
    let {x:cx,y:cy} = corner;
    let {x:ex,y:ey} = extent;
    let ULcorner = corner;
-   let ULextentX = fr1*ex;
-   let ULextentY = fr0*ey;
-   let URcornerX = cx + fr1*ex;
+   let ULextentX = h?fr1*ex:fr0*ex;
+   let ULextentY = h?fr0*ey:fr1*ey;
+   let URcornerX = h?cx + fr1*ex:cx + fr0*ex;
    let URcornerY = cy;
-   let URextentX = (1-fr1)*ex;
-   let URextentY = ULextentY;
+   let URextentX = h?(1-fr1)*ex:(1-fr0)*ex;
+   let URextentY = h?ULextentY:fr2*ey;
    let LLcornerX = cx;
-   let LLcornerY = cy + fr0 * ey;
-   let LLextentX = fr2 * ex;
-   let LLextentY = (1-fr0) * ey;
-   let LRcornerX = cx + fr2*ex;
-   let LRcornerY = LLcornerY;
-   let LRextentX = (1-fr2) * ex;
-   let LRextentY = LLextentY
+   let LLcornerY = h?cy + fr0 * ey:cy+fr1*ey;
+   let LLextentX = h?fr2 * ex:fr0*ex;
+   let LLextentY = h?(1-fr0) * ey:(1-fr1)*ey;
+   let LRcornerX = h?cx + fr2*ex:URcornerX;
+   let LRcornerY = h?LLcornerY:cy+fr2*ey;
+   let LRextentX = h?(1-fr2) * ex:(1-fr0)*ex;
+   let LRextentY = h?LLextentY:(1-fr2)*ey;
    let ULextent = Point.mk(ULextentX,ULextentY);
    let URextent = Point.mk(URextentX,URextentY);
    let LRextent = Point.mk(LRextentX,LRextentY);
@@ -51,7 +55,7 @@ rs.extendQuadOneLevel = function (qd) {
    nextQuad('UR',URcorner,URextent);
    nextQuad('LR',LRcorner,LRextent);
    nextQuad('LL',LLcorner,LLextent);
- 
+   return 1;
  }
  
  
@@ -99,14 +103,15 @@ rs.extendQuadNLevels = function (qd,params) {
    if (!split) {
      return;
    }
-   this.extendQuadOneLevel(qd);
+   if (this.extendQuadOneLevel(qd)) {
  //  if ((i+1) >= levels) {
  //    return;
  //  }
-   this.extendQuadNLevels(qd.UL);//,i+1);
-   this.extendQuadNLevels(qd.UR);//,i+1);
-   this.extendQuadNLevels(qd.LL);//,i+1);
-   this.extendQuadNLevels(qd.LR);//,i+1);
+     this.extendQuadNLevels(qd.UL);//,i+1);
+     this.extendQuadNLevels(qd.UR);//,i+1);
+     this.extendQuadNLevels(qd.LL);//,i+1);
+     this.extendQuadNLevels(qd.LR);//,i+1);
+  }
  }
 
  rs.displayQuad = function (qd,depth=0) {

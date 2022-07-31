@@ -20,7 +20,7 @@ let topParams = {width:ht,height:ht,framePadding:0.1*ht,radius:30};
 
 let dropParams = {dropTries:10};
 
-let webParams = {webTries:1000,minConnectorLength:300,maxConnectorLength:600,lengthenBy:-0.2}
+let webParams = {webTries:2000,minConnectorLength:300,maxConnectorLength:600,lengthenBy:-0.2}
 
 let sphereParams ={sphereCenter:Point3d.mk(0,0,-0.4*wd), sphereDiameter:0.5*wd, focalPoint:Point3d.mk(0,0,wd), focalLength:10, cameraScaling:1000}
 
@@ -31,7 +31,7 @@ Object.assign(rs,sphereParams);
 rs.initProtos = function () {
   let lineP = this.lineP = linePP.instantiate();
   this.lineP.stroke = 'yellow';
-  this.lineP['stroke-width'] = 15;
+  this.lineP['stroke-width'] = 6;
   let circleP = this.circleP = circlePP.instantiate();
 
 }  

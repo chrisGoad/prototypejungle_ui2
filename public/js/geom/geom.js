@@ -1776,6 +1776,18 @@ Rectangle.contains = function (g) {
    return this.containsRectangle(g);
  }
 }
+
+
+geomr.set("Polygon",core.ObjectNode.mk()).__namedType();
+let Polygon = geomr.Polygon;
+// takes corner,extent or {corner:c,extent:e,style:s} style being optional, or no args
+// Rectangles without styles are often used for purely computational purpose - never drawn.
+Polygon.mk = function (corners) {
+  let rs = Object.create(Polygon);
+  rs.set('corners',corners);
+  return rs;
+}
+
  
 //  does not work with rotations
 Transform.times = function (tr) {
@@ -1947,5 +1959,5 @@ Rectangle.randomPoint = function () {
 }
 
 
-export {rotationMatrix,movetoInGlobalCoords,toOwnCoords,toPoint,angleToDirection,Point,Line,Rectangle,Transform,Ray,degreesToRadians,
+export {rotationMatrix,movetoInGlobalCoords,toOwnCoords,toPoint,angleToDirection,Point,Line,Rectangle,Polygon,Transform,Ray,degreesToRadians,
         LineSegment,Circle,Arc,boundsForRectangles,rp_time,pointArrayToLineSegments,geometriesIntersect,moveBy};

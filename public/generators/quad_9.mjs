@@ -12,7 +12,7 @@ let wd = 100;
 let topParams = {width:wd,height:wd,framePadding:0.1*wd}
 Object.assign(rs,topParams);
 //let quadParams = {chance:0.1,levels:7, alwaysSplitBefore:3};
-let quadParams = {chance:0.97,levels:8, alwaysSplitBefore:7};
+let quadParams = {chance:0.94,levels:8, alwaysSplitBefore:8};
 //let quadParams = {chance:97,levels:4, alwaysSplitBefore:3};
 
 rs.initProtos = function () {
@@ -29,7 +29,7 @@ rs.computeFill = function () {
    let v = shade();
    let fill = `rgb(${v},${v},${v})`;
  // return 'rgb(0,0,100)';
-   return fill;
+   return 'black';
 }
 
 

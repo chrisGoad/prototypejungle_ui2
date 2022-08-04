@@ -1333,9 +1333,8 @@ Rectangle.corners = function () {
 
 
 Rectangle.labeledCorners = function () {
-  let c = this.corner;
-  let {cx,cy} = this.corner;
-  let {ex,ey} = this.extent;
+  let {x:cx,y:cy} = this.corner;
+  let {x:ex,y:ey} = this.extent;
   let rs = {UL:Point.mk(cx,cy),UR:Point.mk(cx+ex,cy),LL:Point.mk(cx,cy+ey),LR:Point.mk(cx+ex,cy+ey)};
   return rs;
 }
@@ -1788,7 +1787,33 @@ Polygon.mk = function (corners) {
   return rs;
 }
 
+// in its own coords
+Polygon.center = function () {
+  let {corners} = this;
+  let tx =0;
+  let ty = 0;
+  corners.forEach( (c) => {
+    tx+=c.x;
+    ty+=c.y;
+  });
+  let ln = corners.length;
+  return Point.mk(tx/ln,ty/ln);
+}
+
+Polygon.dimension = function () { // longest side length
+  let c = this.corners;
+  let d0 = c[0].distance(c[1]);
+  return d0;
+}
+
+Rectangle.toPolygon = function () {
+  let lc = this.labeledCorners();
+  let corners = arrayShape.mk([lc.UL,lc.UR,lc.LR,lc.LL]);
+  let rs = Polygon.mk(corners);
+  return rs;
+}
  
+
 //  does not work with rotations
 Transform.times = function (tr) {
   let sc0 = this.scale;

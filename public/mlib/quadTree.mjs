@@ -1,6 +1,11 @@
 // a quad tree node has the form {rectangle,UL:quadNode,UR:quadNode,LL:quadNode,QLR
 const rs =function (rs) {
 
+const interpolatePoints = function (p0,p1,fr)  {
+  let vec = p1.difference(p0);
+  return p0.plus(vec.times(fr));
+}
+
 rs.extendQuadOneLevel = function (qd) {
    if (qd.UL) {
      return;
@@ -15,15 +20,14 @@ rs.extendQuadOneLevel = function (qd) {
    if (!sp) {
      return;
    }
-   debugger;
+ // debugger;
    let {rectangle:rect,polygon:pgon} = qd;
-   let [ornt,fr0,fr1,fr2] = sp;
-   let h = ornt === 'h';
    if (rect) {
-     let {corner,extent} = rect;
+     let [ornt,fr0,fr1,fr2] = sp;
+     let h = ornt === 'h';   let {corner,extent} = rect;
      let {x:cx,y:cy} = corner;
      let {x:ex,y:ey} = extent;
-     let ULcorner = corner;
+     let ULcorner = corner.copy();
      let ULextentX = h?fr1*ex:fr0*ex;
      let ULextentY = h?fr0*ey:fr1*ey;
      let URcornerX = h?cx + fr1*ex:cx + fr0*ex;
@@ -62,13 +66,13 @@ rs.extendQuadOneLevel = function (qd) {
      let {corners} = pgon;
      let [center,fr0,fr1,fr2,fr3] = sp;
      let ONtop = interpolatePoints(corners[0],corners[1],fr0);
-     let ONright = interpolatePoints(corners[1],corners[2],fr0);
-     let ONbot = interpolatePoints(corners[2],corners[3],fr0);
-     let ONleft= interpolatePoints(corners[3],corners[0],fr0);
+     let ONright = interpolatePoints(corners[1],corners[2],fr1);
+     let ONbot = interpolatePoints(corners[2],corners[3],fr2);
+     let ONleft= interpolatePoints(corners[3],corners[0],fr3);
      let ULgon = Polygon.mk([corners[0].copy(),ONtop.copy(),center.copy(),ONleft.copy()]);
      let URgon = Polygon.mk([ONtop.copy(),corners[1].copy(),ONright.copy(),center.copy()]);
      let LRgon = Polygon.mk([center.copy(),ONright.copy(),corners[2].copy(),ONbot.copy()]);
-     let LLgon = Polygon.mk([onLeft.copy(),center.copy(),ONbot.copy(),corners[3].copy()]);  
+     let LLgon = Polygon.mk([ONleft.copy(),center.copy(),ONbot.copy(),corners[3].copy()]);  
      const addQuad = (nm,pgon) => {
        qd[nm] = {polygon:pgon,where:[...where,nm],root};
      }
@@ -76,6 +80,7 @@ rs.extendQuadOneLevel = function (qd) {
      addQuad('UR',URgon);
      addQuad('LR',LRgon);
      addQuad('LL',LLgon);
+     return 1;
   }
 }
   
@@ -97,7 +102,7 @@ rs.splitHere = function (qd) {
 }
   
 rs.extendQuadNLevels = function (qd,params) {
-  debugger;
+ // debugger;
    let {shapes,numRows,randomGridsForShapes} = this;
    let {where} = qd;
    if (!shapes) {
@@ -115,9 +120,9 @@ rs.extendQuadNLevels = function (qd,params) {
   //   qd.where = [];
  //  }
     let {rectangle:rect,polygon:pgon} = qd;
-    let pnt = rect?rect.center():polygonCenter(pgon);
     let rvs;
     if (numRows && randomGridsForShapes) {
+      let pnt = rect?rect.center():pgon.center();
       let cell = this.cellOf(pnt);
       rvs = this.randomValuesAtCell(randomGridsForShapes,cell.x,cell.y);
     }
@@ -137,6 +142,7 @@ rs.extendQuadNLevels = function (qd,params) {
  }
  rs.displayQuad = function (qd,depth=0) {
    let {shapes} = this;
+    this.displayCell(qd,depth);
    if (qd.UL) {
      this.displayQuad(qd.UL,depth+1);
      this.displayQuad(qd.UR,depth+1);
@@ -144,9 +150,19 @@ rs.extendQuadNLevels = function (qd,params) {
      this.displayQuad(qd.LR,depth+1);
      return;
    }
-   this.displayCell(qd,depth);
    //this.rectangleToShape(qd.rectangle,depth);
 }
+
+
+rs.computeExponentials = function (n,fc,root) {
+  let rs = [];
+  for (let i=0;i<=n;i++) {
+    let cv = fc*Math.pow(root,i);
+    rs.push(cv);
+  }
+  return rs;
+}
+  
 }
 
 export {rs};	

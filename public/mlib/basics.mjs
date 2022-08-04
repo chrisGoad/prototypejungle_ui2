@@ -168,6 +168,16 @@ Rectangle.toShape = function (rectP,scale=1) {
    return rs;
  }
  
+ 
+Polygon.toShape = function (polygonP) {
+   let {corners} = this;
+   let rs = polygonP.instantiate();
+   let pcorners = arrayShape.mk();
+   corners.forEach((c) => {pcorners.push(c.copy())});
+   rs.corners = pcorners;
+   return rs;
+}
+
 Rectangle.toCircleShape = function (circleP,scale=1) {
    let {corner,extent} = this;
    let hext = extent.times(0.5);

@@ -191,7 +191,22 @@ rs.placeShapesAtPoints = function (pnts,shapeP) {
 		shape.moveto(p);
 	});
 }
+// constructors for 1Dfs (one dimensional functions)
 
+rs.mkStraight1Df  = function (p0,p1) {
+   let vec = p1.difference(p0);
+   let ln = vec.length();
+   let nvec = vec.times(1/ln);
+   let f = (v) => p0.plus(nvec.times(v*ln);
+   return f;
+ }
+ 
+ rs.randomPointOn = function (f) {
+  let rv = Math.random();
+  let ov = f(rv);
+  return ov;
+}
+     
 
 }
 

@@ -1,29 +1,78 @@
-
 import {rs as generatorP} from '/generators/quad_11.mjs';
 
-let rs = generatorP.instantiate();
+import {rs as addPointGenMethods} from '/mlib/pointGen.mjs';
+import {rs as basicP} from '/generators/basics.mjs';
 
-rs.setName('quad_11_1');
+let rs = basicP.instantiate();
 
-rs.circular = 1;
+addPointGenMethods(rs);
+rs.setName('quad_11_combo_1');
 
-/*
 
-rs.computeSplitParams = function (qd) {
-  let pgon = qd.polygon;
-  let c = pgon.center();
-  let d = pgon.dimension();
-  let rd = (c.x>0?-0.25:-0.25)*Math.PI;
-  //let rd = (Math.random()>0.5?0.25:0.5)*Math.PI;
-  //2*Math.PI*Math.random();
-  let rp = c.plus(Point.mk(Math.cos(rd),Math.sin(rd)).times(d*0.2));
-   return [rp,.4,.5,0.5,0.4];
-   return [rp,.5,.5,0.5,0.5];
 
-  //return [c,.7,.3,0.7,.3];
-  return [c,.55,.52,0.52,0.52];
+let quads = rs.set('quads',arrayShape.mk());
+for (let i=0;i<7;i++) {
+ quads.push(generatorP.instantiate());
 }
-*/
+
+let wd = quads[0].width;
+
+let pnts = rs.ringPoints({radius:wd,numRings:2,ringSeparation:0.5*wd,numPointsPerRing:6});
+
+const ringPointsToPolygons = function (pnts) {
+  let ppr = 0.5*(pnts.length);
+  let rs = [];
+  for (let i=0;i<ppr;i++) {
+    let p0 = pnts[i].copy();
+    let p1 = pnts[(i+1)%ppr].copy();
+    let p2 = pnts[ppr + (i+1)%ppr].copy();
+    let p3 = pnts[ppr + i].copy();
+    let corners = arrayShape.mk([p0,p1,p2,p3]);
+    let pgon = Polygon.mk(corners)
+    rs.push(pgon);
+  }
+  return rs;
+}
+debugger;
+    
+let pgons = ringPointsToPolygons(pnts);
+  
+  
+rs.initialize = function () {
+  debugger;
+   quads[0].initProtos();
+   let polygonP = quads[0].polygonP;
+  let pgonshs =  this.set('pgons',arrayShape.mk());
+  pgons.forEach((pgon) => {
+    let pgonsh = pgon.toShape(polygonP);
+    pgonsh['stroke-width'] = 1;
+    //pgonsh.fill = 'transparent';
+    pgonshs.push(pgonsh);
+  });
+  const addQuad = (qdIdx,pgIdx,offc) => {
+    let qd = quads[qdIdx];
+    let pgon = pgons[pgIdx];
+    qd.initialPolygon = pgon;
+    qd.quadParams.levels = 7;
+    qd.offCenter = offc;
+    qd.initialize();
+   }
+  addQuad(0,4,0);
+  addQuad(1,5,0);//.075);
+  addQuad(2,0,0);//.13);
+  addQuad(3,1,0);//.2);
+  addQuad(4,2,0.0);//75);
+  addQuad(5,3,0)//.13);
+  quads[6].levels = 7;
+  quads[6].initialize();
+  //return;
+ 
+  
+     
+/*  p2.initialize();
+  p1.moveto(Point.mk(0,-mv));
+  p2.moveto(Point.mk(0,mv));*/
+}
 export {rs};
 
 

@@ -7,14 +7,21 @@ let defaults = {dropTries:5,maxLoops:Infinity};
 Object.assign(rs,defaults);
       
 
-rs.genRandomPoint = function (rect) {
-  if (rect) {
-    let {corner,extent} = rect;
-    let lx = corner.x;
-    let ly = corner.y;
-    let x = Math.random() * extent.x + lx;
-    let y = Math.random() * extent.y + ly;
-    return Point.mk(x,y);
+rs.genRandomPoint = function (onw) {
+  if (onw) {
+    if (Rectangle.isPrototypeOf(onw)) {
+      let {corner,extent} = onw;
+      let lx = corner.x;
+      let ly = corner.y;
+      let x = Math.random() * extent.x + lx;
+      let y = Math.random() * extent.y + ly;
+      return Point.mk(x,y);
+    }
+    if (oneDf.isPrototypeOf(onw)) {
+      let rpnt = onw.randomPoint();
+      return rpnt;
+    }
+
   }
   let {width,height} = this;
   let rx = (Math.random()-0.5) * width;
@@ -56,17 +63,25 @@ rs.generateDrops = function (params) {
     }
   }
   this.dropParams = params;
-  let {maxLoops=Infinity,maxDrops=Infinity,dropTries,mustIntersect,numIntersections=1} = params;
+  let {maxLoops=Infinity,maxDrops=Infinity,dropTries,mustIntersect,numIntersections=1,oneD} = params;
   let cnt =0;
   let tries = 0;
   let rvs;
   let tgs;
-  const dropAt = (pnt) => {
+  const dropAt = (ipnt) => {
+     let pnt;
+     if (ipnt) {
+      if (ipnt.value) {
+        pnt = ipnt.value;
+      } else {
+        pnt = ipnt;
+      }
+    }
     if (numRows && randomGridsForShapes) {
       let cell = this.cellOf(pnt);
       rvs = this.randomValuesAtCell(randomGridsForShapes,cell.x,cell.y);
     }
-    let drop = this.generateDrop(pnt,rvs);
+    let drop = this.generateDrop(ipnt,rvs);
     if (!drop) {
       return;
     } 
@@ -75,8 +90,16 @@ rs.generateDrops = function (params) {
     tgs = gs.map((g) => geom.moveBy(g,dpnt));
     return drop;
   }
-  const installDrop = (drop,pnt) => {
+  const installDrop = (drop,ipnt) => {
     let moveNeeded = 1;
+    let pnt;
+    if (ipnt) {
+      if (ipnt.value) {
+        pnt = ipnt.value;
+      } else {
+        pnt = ipnt;
+      }
+    }
     let dpnt = drop.pos?drop.pos:pnt;
 
     if (saveState) {
@@ -109,7 +132,7 @@ rs.generateDrops = function (params) {
   // the live drop collision  detection is done
   while ((cnt < maxLoops) && ((drops.length-initialDropsLn) < maxDrops)) {
     cnt++;
-    let pnt = this.genRandomPoint();
+    let pnt = this.genRandomPoint(oneD);
     let drop = dropAt(pnt);
     if (!drop) {
       continue;

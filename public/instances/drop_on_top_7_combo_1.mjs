@@ -2,9 +2,9 @@
 import {rs as generatorP} from '/generators/drop_on_top_7.mjs';
 import {rs as basicP} from '/generators/basics.mjs';
 let v2 = 255;
-let v = 150;
-let p2params = {initialDropColor:[v,0,0,1],middleDropColor:[v,0,0,1],finalDropColor:[v,0,0,1],
-                initialGridColor:[0,0,v2,1],middleGridColor:[0,0,v2,1],finalGridColor:[0,0,v2,1]};
+let v = 200;
+let p2params = {initialDropColor:[0,0,v,1],middleDropColor:[v,0,v,1],finalDropColor:[v,0,0,1],
+                initialGridColor:[v2,v2,v2,1],middleGridColor:[v2,v2,v2,1],finalGridColor:[v2,v2,v2,1]};
 let rs = basicP.instantiate();
 rs.setName('drop_on_top_7_combo_1');
 let p1 = generatorP.instantiate();

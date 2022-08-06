@@ -1983,6 +1983,57 @@ Rectangle.randomPoint = function () {
   return Point.mk(x,y);
 }
 
+geomr.set("oneDf",core.ObjectNode.mk()).__namedType();
+let oneDf = geomr.oneDf;
+
+
+oneDf.applY = function (v) {
+  let f = this.f;
+  let ov = f(v);
+  return ov;
+}
+oneDf.mk = function () {
+  return Object.create(oneDf);
+}
+
+oneDf.mkStraight = function (p0,p1) {
+   let vec = p1.difference(p0);
+   let ln = vec.length();
+   let nvec = vec.times(1/ln);
+   let f = (v) => p0.plus(nvec.times(v*ln));
+   let ov = Object.create(oneDf);
+   ov.f = f;
+   return ov;
+ }
+ 
+ oneDf.mixin = function (a) {
+  let ln = a.length;
+  //let fs = this.f?[this.f]:[];
+  let parts = this.f?[this.f]:[];
+ // a.forEach((oneD) => fs.push(oneD.f));
+  a.forEach((oneD) => parts.push(oneD));
+  oneDf.parts = parts;
+//  oneDf.fs = fs;
+}
+  
+ 
+ oneDf.randomPoint = function () {
+  let rv = Math.random();
+  let f = this.f;
+  let parts = this.parts;
+  if (parts) {
+    let ln = parts.length;
+    let wh = Math.floor(ln*Math.random());
+    let part  = parts[wh];
+    f = part.f;
+    let ov = f(rv);
+    return {value:ov,part:part};
+  }
+  let ov = f(rv);
+  return {value:ov}
+}
+
+
 
 export {rotationMatrix,movetoInGlobalCoords,toOwnCoords,toPoint,angleToDirection,Point,Line,Rectangle,Polygon,Transform,Ray,degreesToRadians,
-        LineSegment,Circle,Arc,boundsForRectangles,rp_time,pointArrayToLineSegments,geometriesIntersect,moveBy};
+        LineSegment,Circle,Arc,boundsForRectangles,rp_time,pointArrayToLineSegments,geometriesIntersect,moveBy,oneDf};

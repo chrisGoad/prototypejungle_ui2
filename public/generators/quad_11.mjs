@@ -37,7 +37,7 @@ rs.computeFill = function (qd) {
 rs.displayCell = function (qd) {
   let {shapes,polygonP,width:wd,circular} = this;
   let pgon = qd.polygon;
-  let rs = pgon.toShape(polygonP,1);
+  let pgons = pgon.toShape(polygonP,1);
   let c = pgon.center();
   if ((c.length()>0.5*wd) && circular) {
     return;
@@ -47,9 +47,10 @@ rs.displayCell = function (qd) {
     return;
   }
   let strokew = this.strokeWidths[lnw];
-  rs['stroke-width'] = strokew;
-  rs.fill = this.computeFill();
-  shapes.push(rs);
+  pgons['stroke-width'] = strokew;
+  pgons.fill = this.computeFill();
+  pgons.update();
+  shapes.push(pgons);
 }
 
 
@@ -62,17 +63,13 @@ rs.computeSplitParams = function (qd) {
   //let rd = (Math.random()>0.5?0.25:0.5)*Math.PI;
   //2*Math.PI*Math.random();
   let rp = c.plus(Point.mk(Math.cos(rd),Math.sin(rd)).times(d*this.offCenter));
-  // return [rp,.3,.5,0.5,0.3];
    return [rp,.5,.5,0.5,0.5];
-
-  //return [c,.7,.3,0.7,.3];
-  return [c,.55,.52,0.52,0.52];
 }
 
 rs.initialPolygon = Rectangle.mk(Point.mk(-0.5*wd,-0.5*wd),Point.mk(wd,wd)).toPolygon();
 rs.initialize = function () {
   let {width:wd,height:ht,quadParams,initialPolygon:pgon} = this;
-  this.addFrame();
+  //this.addFrame();
   this.initProtos();
   this.strokeWidths = this.computeExponentials(quadParams.levels,0.1,0.9);
  // this.strokeWidths[0] = 0;

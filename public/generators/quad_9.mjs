@@ -10,7 +10,7 @@ rs.setName('quad_9');
 let wd = 100;
 let topParams = {width:wd,height:wd,framePadding:0.1*wd}
 Object.assign(rs,topParams);
-let quadParams = {chance:1,levels:8};
+rs.quadParams = {chance:1,levels:8};
 
 rs.initProtos = function () {
   this.rectP =  rectPP.instantiate();
@@ -30,16 +30,20 @@ rs.displayCell = function (qd) {
   shapes.push(rs);
 }
 
-
+rs.fr0 = 0.5;
+rs.fr1 = 0.5;
+rs.fr2 = 0.2;
 rs.computeSplitParams = function (qd) {
+  let {fr0,fr1,fr2} = this;
   let c = qd.rectangle.center();
   let {x,y} = c;
   let ornt = Math.random()<0.5?'h':'v';
-  return [ornt,0.5,0.5,0.2];
+  return [ornt,fr0,fr1,fr2];
 }
 
 rs.initialize = function () {
-  let {width:wd,height:ht} = this;
+  let {width:wd,height:ht,quadParams} = this;
+  debugger;
   this.addFrame();
   this.initProtos();
   this.strokeWidths = this.computeExponentials(quadParams.levels,0.1,0.9);

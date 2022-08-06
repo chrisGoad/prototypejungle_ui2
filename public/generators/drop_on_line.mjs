@@ -8,8 +8,8 @@ let rs = basicP.instantiate();
 addDropMethods(rs);
 
 rs.setName('drop_on_line');
-let ht= 6000;
-let topParams = {width:ht,height:ht}
+let ht= 3200;
+let topParams = {width:ht,height:ht,framePadding:0.2*ht,frameStroke:'white'}
 Object.assign(rs,topParams);
 
 let dropParams = {dropTries:150,numIntersections:1}
@@ -26,18 +26,19 @@ rs.generateDrop= function (oneD) {
   let p = oneD.value;
   let ln = Math.max(20,p.length());
   //let crc = Circle.mk(.01*ln);
-  let crc = Circle.mk(15);
+  let crc = Circle.mk(10);
   let crcs = crc.toShape(this.circleP,1);
   let ornt = oneD.part.ornt;
   //let fill = (ornt === 'h')?'rgba(0,0,255,0.5)':'rgba(255,0,0,0.5)';
-  let v=255;
-  let fill = (ornt === 'h')?`rgba(${v},${v},${v},0.9)`:`rgba(${v},${v},${v},0.9)`;
+  let v=200;
+  let fill = (ornt === 'h')?`rgba(${v},${v},${v},0.2)`:`rgba(${v},${v},${v},0.2)`;
   crcs.fill = fill;
   return {geometries:[crc],shapes:[crcs]}; 
  }
 
 rs.initialize = function () {
   debugger;
+  this.setBackgroundColor('white');
   //this.addRectangle({width:ht,height:ht,stroke_width:0,fill:'white'});
   this.initProtos();
   this.addFrame();
@@ -64,11 +65,11 @@ rs.initialize = function () {
     return hline;
   }
   let lines = [];
-  for (let i=-20;i<21;i++) {
+  for (let i=-9;i<10;i++) {
     let x = 80*i;
     lines.push(mkVline(x));
   }
-   for (let i=-20;i<21;i++) {
+   for (let i=-9;i<10;i++) {
     let y = 80*i;
     lines.push(mkHline(y));
   }

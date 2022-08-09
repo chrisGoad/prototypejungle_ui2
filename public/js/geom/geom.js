@@ -769,15 +769,27 @@ LineSegment.lengthen = function (ln) {
 	let cntr = end0.plus(end1).times(0.5);
 	let vc= end1.difference(end0);
   let vln = vc.length();
-	let hvc = vc.times(0.5);
+	let hvc = vc.times(ln*0.5);
 	//let nvc = vc.normalize();
 	let nvc = vc.times(1/vln);
 	let nhvc = hvc.plus(nvc.times(0.5*ln));
-	let nend0 = cntr.difference(nhvc);
-	let nend1 = cntr.plus(nhvc);
+	let nend0 = cntr.difference(hvc);
+	let nend1 = cntr.plus(hvc);
+	return LineSegment.mk(nend0,nend1);
+ }
+
+LineSegment.twist = function (da) {
+	let {end0,end1} = this;
+	let vc= end1.difference(end0);
+  let cntr = end0.plus(end1).times(0.5);
+  let a = Math.atan2(vc.y,vc.x);
+  let vln = vc.length();
+  let na = a + da;
+  let hvc = Point.mk(Math.cos(na),Math.sin(na)). times(0.5*vln);
+	let nend0 = cntr.difference(hvc);
+	let nend1 = cntr.plus(hvc);
 	return LineSegment.mk(nend0,nend1);
 }
-  
 LineSegment.onOppositeSides = function (line1) { // the ends of line1 are on opposite sides of this
   let line0 = this;
   let e00 = line0.end0;
@@ -1551,6 +1563,53 @@ Rectangle.peripheryAtDirection = function(direction) {
   }
 }
 
+Rectangle.intersectLineSegment = function (ls) {
+  let {end0,end1} = ls;
+  let c0 = this.containsPoint(end0);
+  let c1 = this.containsPoint(end1);
+  if (c0&&c1) {
+    return ls;
+  }
+ // if (!(c0 || c1)) {
+  //   return ls;
+ // }
+  debugger;
+  let sides = this.sides();
+  let icnt = 0;
+  const toLS = function (intersection) {
+    let e0 = c0?end0:end1;
+    let e1 = intersection;
+    let rs = LineSegment.mk(e0,e1);
+    return rs;
+  }
+  if (c0 !== c1) {
+    for (let i=0;i<4;i++) {
+      let intr = ls.intersect(sides[i]);
+      if (intr) {
+        return toLS(intr);
+      }
+    }
+  }
+  let cnt = 0;
+  let i0,i1;
+  for (let i=0;i<4;i++) {
+    let intr = ls.intersect(sides[i]);
+    if (intr) {
+      if (cnt === 0) {
+        i0 = intr;
+        cnt = 1;
+      } else {
+        i1 = intr;
+        return LineSegment.mk(i0,i1);
+      }
+    }
+  }
+  return ls;
+}
+
+   
+  
+  
 Rectangle.alongPeriphery = function (edge,fraction) {
   let sides = this.sides();
   let side = sides[edge];
@@ -2001,6 +2060,19 @@ oneDf.mkStraight = function (p0,p1) {
    let ln = vec.length();
    let nvec = vec.times(1/ln);
    let f = (v) => p0.plus(nvec.times(v*ln));
+   let ov = Object.create(oneDf);
+   ov.f = f;
+   return ov;
+ }
+ 
+oneDf.mkArc = function (cntr,radius,fromAngle=0,toAngle=2*Math.PI) {
+   let f = (v) => {
+     let ac = toAngle-fromAngle;
+     let a = fromAngle + v*ac;
+     let vec = Point.mk(Math.cos(a),Math.sin(a)).times(radius);
+     let pv = cntr.plus(vec);
+     return pv;
+   }
    let ov = Object.create(oneDf);
    ov.f = f;
    return ov;

@@ -33,7 +33,7 @@ rs.initProtos = function () {
 }
 
 rs.mangleRectangle = function (rect,ln,tw) {
-debugger;
+//debugger;
   let orect = this.orect; 
   let sides = rect.labeledSides();
   let {left,right,top,bottom} = sides;
@@ -125,7 +125,7 @@ rs.initialize = function () {
 
   this.addFrame();
   this.initProtos();
-  this.strokeWidths = this.computeExponentials(quadParams.levels,0.1,0.9);
+  //this.strokeWidths = this.computeExponentials(quadParams.levels,0.1,0.9);
   let r = Rectangle.mk(Point.mk(-0.5*wd,-0.5*ht),Point.mk(wd,ht));
   let qd = {rectangle:r};
   this.extendQuadNLevels(qd,quadParams);

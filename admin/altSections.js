@@ -14,6 +14,7 @@ sections: [
   [0,'quad_9_1','instances',1,'Quad 9 1',{likes:0,posted:0,category:'quad'}], 
  [0,'quad_9_2','instances',1,'Quad 9 2',{likes:0,posted:0,category:'quad'}], 
  [0,'quad_9_3','instances',1,'Quad 9 3',{likes:0,posted:0,category:'quad'}], 
+ [0,'quad_9_4','instances',1,'Quad 9 4',{likes:0,posted:0,category:'quad'}], 
 
  [0,'quad_10','generators',1,'Quad 10',{likes:0,posted:0,category:'quad'}], 
  [0,'quad_11','generators',1,'Quad 11',{likes:0,posted:0,category:'quad'}], 
@@ -21,7 +22,7 @@ sections: [
  [0,'quad_11_2','instances',1,'Quad 11 2',{likes:0,posted:0,category:'quad'}], 
  [0,'quad_11_3','instances',1,'Quad 11 3',{likes:0,posted:0,category:'quad'}], 
  [0,'quad_11_combo_1','instances',1,'Quad 11 Combo 1',{likes:0,posted:0,category:'quad'}], 
- [0,'quad_2_v_2','generators',1,'Circles and Squares',{likes:0,posted:0,category:'quad',version:2}], 
+ //[0,'quad_2_v_2','generators',1,'Circles and Squares',{likes:0,posted:0,category:'quad',version:2}], 
  [0,'drop_on_line','generators',1,'Drop on Line',{likes:0,posted:0,category:'drop'}], 
  [0,'drop_on_circles','generators',1,'Drop on Circles',{likes:0,posted:0,category:'drop'}], 
  [0,'drop_leaves','generators',1,'Leaves',{likes:0,posted:0,category:'drop'}], 

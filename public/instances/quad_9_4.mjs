@@ -3,7 +3,7 @@ import {rs as generatorP} from '/generators/quad_9.mjs';
 
 let rs = generatorP.instantiate();
 
-rs.setName('quad_9_2');
+rs.setName('quad_9_4');
 let levels = 7;
 rs.quadParams.levels = levels;
 levels++;
@@ -18,13 +18,13 @@ let visibles = rs.visibles = [];
 rs.addToArray(visibles,0,levels-1);
 rs.addToArray(visibles,1,levels);
 let lengthenings = rs.lengthenings = [];
-rs.addToArray(lengthenings,5.5,levels);
+rs.addToArray(lengthenings,.5,levels);
 let twists = rs.twists = [];
 //rs.addToArray(twists,0,2);
 rs.addToArray(twists,0.05*Math.PI,levels);
 let strokeWidths = rs.strokeWidths = [];
 //strokeWidths = rs.computeExponentials(quadParams.levels,0.1,0.9);
-rs.addToArray(strokeWidths,.05,levels);
+rs.addToArray(strokeWidths,.1,levels);
 
 export {rs};
 

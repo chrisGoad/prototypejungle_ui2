@@ -1436,7 +1436,7 @@ Rectangle.intersectsLineSegment = function (seg) {
 	}
 // now the hard case
   let sides = this.sides();
-	debugger;
+	//debugger;
 	let rs = seg.intersect(sides[0])&& seg.intersect(sides[1])&& seg.intersect(sides[2])&& seg.intersect(sides[3]);
   return rs;
 }
@@ -1573,7 +1573,7 @@ Rectangle.intersectLineSegment = function (ls) {
  // if (!(c0 || c1)) {
   //   return ls;
  // }
-  debugger;
+  //debugger;
   let sides = this.sides();
   let icnt = 0;
   const toLS = function (intersection) {

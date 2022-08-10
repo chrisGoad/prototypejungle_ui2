@@ -23,7 +23,7 @@ nr = 70;
 nr = 30;
 //nr = 40;
 let wd = 2*ht;
-let gv =60;
+let gv =90;
 let topParams = {width:wd,height:ht,numRows:nr,numCols:nr,frameStroke:'white',framePadding:20,circleScale:.5,//};
  //initialDropColor:'rgb(200,200,255)',finalDropColor:'rgb(0,0,100,255)'};
  initialDropColor:'rgb(255,255,255)',finalDropColor:`rgb(${gv},${gv},${gv}`};

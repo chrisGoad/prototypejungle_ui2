@@ -10,7 +10,7 @@ addWebMethods(rs);
 rs.setName('web_grid');
 let ht= 1000;
 let wd = ht;
-let  topParams = {width:wd,height:ht,framePadding:1.2*ht};
+let  topParams = {width:wd,height:ht,framePadding:.1*ht,frameStrokee:'white'};
 let  webParams = {webTries:1000,minConnectorLength:0,maxConnectorLength:400,angleMin:-10,angleMax:10};
 let gridParams = {width:ht,height:ht,numRows:20,numCols:20};
 Object.assign(rs,topParams);

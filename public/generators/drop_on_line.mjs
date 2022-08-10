@@ -27,8 +27,8 @@ rs.generateDrop= function (oneD) {
   let p = oneD.value;
   let fr = (2*p.length())/lnLen;
   //let crc = Circle.mk(.01*ln);
-  let crc = Circle.mk(5+(1-fr)*20);
-  //let crc = Circle.mk(10);
+  //let crc = Circle.mk(5+(1-fr)*20);
+  let crc = Circle.mk(10);
   let crcs = crc.toShape(this.circleP,1);
   let ornt = oneD.part.ornt;
   //let fill = (ornt === 'h')?'rgba(0,0,255,0.5)':'rgba(255,0,0,0.5)';

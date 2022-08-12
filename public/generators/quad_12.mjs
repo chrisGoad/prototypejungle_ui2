@@ -11,7 +11,7 @@ rs.setName('quad_9');
 
 let wd = 100;
 let hwd = 0.5*wd;
-let topParams = {width:wd,height:wd,framePadding:0.1*wd,frameStrokee:'white',lengthenings:undefined,twists:undefined,emitLineSegs:undefined}
+let topParams = {width:wd,height:wd,framePadding:0.1*wd,frameStrokee:'white',lengthenings:undefined,twists:undefined}
 Object.assign(rs,topParams);
 rs.quadParams = {chance:1,levels:7};
 
@@ -25,7 +25,7 @@ rs.initProtos = function () {
   this.lineP =  linePP.instantiate();
   this.lineP.stroke = 'white';
   this.lineP.fill = 'black';
-  this.lineP['stroke-width'] =.1;
+  this.lineP['stroke-width'] =.05;
   this.circleP =  circlePP.instantiate();
   this.circleP.stroke = 'white';
   this.circleP.fill = 'blue';
@@ -47,7 +47,7 @@ rs.mangleRectangle = function (rect,ln,tw) {
   return rs;
 }
   
-  /*
+  
 rs.displayCell = function (qd) {
   let {shapes,rectP,lineP} = this;
   let rect = qd.rectangle;
@@ -58,7 +58,7 @@ rs.displayCell = function (qd) {
   shapes.push(rs);
 }
 
-*/
+
 rs.quadVisible = function (qd) {
   let {visibles} = this;
   if (!visibles) {
@@ -68,36 +68,30 @@ rs.quadVisible = function (qd) {
   return visibles[lv];
 }
 
-rs.displayCell = function (qd,toSegs) {
-  let {shapes,lineSegs,lineP,mangles,lengthenings,twists,strokeWidths,orect} = this;
-  debugger;
+rs.displayCell = function (qd) {
+  let {shapes,rectP,lineP,mangles,lengthenings,twists,strokeWidths} = this;
   let vs = this.quadVisible(qd);
   if (!vs) {
     return;
   }
+  debugger;
   let rect = qd.rectangle; 
   let lv = qd.where.length;
   let mng = mangles?mangles[lv]:0;
-  let mangled;
+  let mangled,proto;
   if (mng) {  
     let ln = lengthenings?lengthenings[lv]:1;
     let tw = twists?twists[lv]:0;
  // let mangled =(wh > 0)?this.mangleRectangle(rect,ln,tw):[rect];
-    //mangled = this.mangleRectangle(rect,ln,tw);
-    mangled = rect.mangle({within:orect,lengthen:ln,twist:tw});
- //   proto = lineP;
+    mangled = this.mangleRectangle(rect,ln,tw);
+    proto = lineP;
   } else {
-    mangled = rect.sides();
- //   proto = rectP;
+    mangled = [rect];
+    proto = rectP;
   }
   mangled.forEach((seg) => {
-     if (toSegs) {
-      lineSegs.push(seg);
-      return;
-    }
-    let segs = seg.toShape(lineP);
+    let segs = seg.toShape(proto);
     let  lnw = qd.where.length;
-    
     let strokew = strokeWidths[lnw];
     segs['stroke-width'] = strokew;
     shapes.push(segs);
@@ -122,7 +116,7 @@ rs.addToArray = function (a,v,n) {
 }
 
 rs.initialize = function () {
-  let {width:wd,height:ht,quadParams,emitLineSegs,dropParams} = this;
+  let {width:wd,height:ht,quadParams} = this;
   debugger;
  // this.setBackgroundColor('white');
  // this.addRectangle({width:wd,height:wd,fill:'gray'});
@@ -131,17 +125,11 @@ rs.initialize = function () {
 
   this.addFrame();
   this.initProtos();
-  if (!this.strokeWidths) {
-    this.strokeWidths = this.computeExponentials(quadParams.levels,0.1,0.9);
-  }
+  //this.strokeWidths = this.computeExponentials(quadParams.levels,0.1,0.9);
   let r = Rectangle.mk(Point.mk(-0.5*wd,-0.5*ht),Point.mk(wd,ht));
   let qd = {rectangle:r};
   this.extendQuadNLevels(qd,quadParams);
-  this.displayQuad(qd,emitLineSegs);
-  if (emitLineSegs) {
-    this.generateDrops(dropParams);
-  }
-
+  this.displayQuad(qd);
 }	
 
 export {rs};

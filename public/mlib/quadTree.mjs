@@ -6,6 +6,9 @@ const interpolatePoints = function (p0,p1,fr)  {
   return p0.plus(vec.times(fr));
 }
 
+const switchToPolygon = function (qd) {
+  return 0;
+}
 rs.extendQuadOneLevel = function (qd) {
    if (qd.UL) {
      return;
@@ -22,7 +25,16 @@ rs.extendQuadOneLevel = function (qd) {
    }
  // debugger;
    let {rectangle:rect,polygon:pgon} = qd;
-   if (rect) {
+   let swtp = switchToPolygon(qd);
+   if (rect && swtp) {
+     pgon = rect.toPolygon();
+   }
+   /*  the parameters ornt,fr0,fr1,fr2 determine how the rectangle is split up in to 4 smaller rectangles.
+   If ornt === 'v', the rectangle is first split at the fr0 mark into left and right rects RL and RR.
+    Then RL is split at the fr1 mark and RR and the fr2 mark;
+     If ornt === 'h', the rectangle is first split at the fr0 mark into top and bottom rects RT and RB.
+    Then RT is split at the fr1 mark and RB and the fr2 mark;*/
+   if (rect && !swtp) {
      let [ornt,fr0,fr1,fr2] = sp;
      let h = ornt === 'h';   let {corner,extent} = rect;
      let {x:cx,y:cy} = corner;
@@ -88,6 +100,9 @@ rs.extendQuadOneLevel = function (qd) {
  
  
 rs.randomSplit = function (qd,ichance) {
+  if (!qd) {
+    debugger;
+  }
   let params = qd.root.params;
   let {chance,alwaysSplitBefore,levels} = params;
   if (!chance) {
@@ -140,20 +155,41 @@ rs.extendQuadNLevels = function (qd,params) {
      this.extendQuadNLevels(qd.LR);//,i+1);
   }
  }
- rs.displayQuad = function (qd,depth=0) {
-   let {shapes} = this;
-    this.displayCell(qd,depth);
+ 
+ 
+ rs.displayQuad = function (qd,emitLineSegs) {
+   let {shapes,lineSegs} = this;
+   if (emitLineSegs && (!lineSegs)) {
+    this.lineSegs = [];
+   }
+   this.displayCell(qd,emitLineSegs);
    if (qd.UL) {
-     this.displayQuad(qd.UL,depth+1);
-     this.displayQuad(qd.UR,depth+1);
-     this.displayQuad(qd.LL,depth+1);
-     this.displayQuad(qd.LR,depth+1);
+     this.displayQuad(qd.UL,emitLineSegs);
+     this.displayQuad(qd.UR,emitLineSegs);
+     this.displayQuad(qd.LL,emitLineSegs);
+     this.displayQuad(qd.LR,emitLineSegs);
      return;
    }
-   //this.rectangleToShape(qd.rectangle,depth);
+}
+/*
+rs.cellAsLineSegs = function(qd) ={
+  this.displayCell(qd,1);
 }
 
-
+rs.quadAsLineSegs = function (qd) {
+ let {lineSegs} = this;
+ if (!lineSegs) {
+   this.lineSegs = [];
+  this.cellAsLineSegs(qd,depth);
+ if (qd.UL) {
+   this.quadAsLineSegs(qd.UL,depth+1);
+   this.quadAsLineSegs(qd.UR,depth+1);
+   this.quadAsLineSegs(qd.LL,depth+1);
+   this.quadAsLineSegs(qd.LR,depth+1);
+   return;
+ }
+}
+*/
 rs.computeExponentials = function (n,fc,root) {
   let rs = [];
   for (let i=0;i<=n;i++) {

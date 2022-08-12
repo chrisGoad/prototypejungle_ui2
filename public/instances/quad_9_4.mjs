@@ -5,6 +5,7 @@ let rs = generatorP.instantiate();
 
 rs.setName('quad_9_4');
 let levels = 7;
+
 rs.quadParams.levels = levels;
 levels++;
 rs.fr0 = 0.5;

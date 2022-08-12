@@ -7,6 +7,13 @@ let defaults = {dropTries:5,maxLoops:Infinity};
 Object.assign(rs,defaults);
       
 
+rs.genRandomLineSeg = function () {
+  let {lineSegs} =this;
+  let llns = lineSegs.length;
+  let rv = Math.floor(Math.random()*llns);
+  return lineSegs[rv];
+}
+
 rs.genRandomPoint = function (onw) {
   if (onw) {
     if (Rectangle.isPrototypeOf(onw)) {
@@ -63,7 +70,7 @@ rs.generateDrops = function (params) {
     }
   }
   this.dropParams = params;
-  let {maxLoops=Infinity,maxDrops=Infinity,dropTries,mustIntersect,numIntersections=1,oneD} = params;
+  let {maxLoops=Infinity,maxDrops=Infinity,dropTries,mustIntersect,numIntersections=1,oneD,dropOnLineSegs} = params;
   let cnt =0;
   let tries = 0;
   let rvs;
@@ -76,6 +83,11 @@ rs.generateDrops = function (params) {
       } else {
         pnt = ipnt;
       }
+    }
+    let seg;
+    if (LineSegment.isPrototypeOf(pnt)) {
+      let seg = pnt;
+      pnt = seg.center();
     }
     if (numRows && randomGridsForShapes) {
       let cell = this.cellOf(pnt);
@@ -132,8 +144,15 @@ rs.generateDrops = function (params) {
   // the live drop collision  detection is done
   while ((cnt < maxLoops) && ((drops.length-initialDropsLn) < maxDrops)) {
     cnt++;
-    let pnt = this.genRandomPoint(oneD);
-    let drop = dropAt(pnt);
+    let drop,pnt;
+    if (dropOnLineSegs) {
+      let seg = this.genRandomLineSeg();
+      pnt = seg.center();
+      drop = dropAt(seg);
+    } else {
+      pnt = this.genRandomPoint(oneD);
+       drop = dropAt(pnt);
+    }
     if (!drop) {
       continue;
     } 

@@ -7,13 +7,14 @@ import {rs as addQuadMethods} from '/mlib/quadTree.mjs';
 
 let rs = basicP.instantiate();
 addQuadMethods(rs);
-rs.setName('quad_9');
+rs.setName('quad_13');
 
 let wd = 100;
 let hwd = 0.5*wd;
 let topParams = {width:wd,height:wd,framePadding:0.1*wd,frameStrokee:'white',lengthenings:undefined,twists:undefined,emitLineSegs:undefined}
 Object.assign(rs,topParams);
 rs.quadParams = {chance:1,levels:7};
+rs.quadParams = {chance:1,levels:2};
 
 rs.orect = Rectangle.mk(Point.mk(-hwd,-hwd),Point.mk(wd,wd));
 
@@ -69,8 +70,7 @@ rs.quadVisible = function (qd) {
 }
 
 rs.displayCell = function (qd,toSegs) {
-  let {shapes,lineSegs,lineP,mangles,lengthenings,twists,strokeWidths,orect} = this;
-  debugger;
+  let {shapes,lineSegs,lineP,mangles,lengthenings,twists,strokeWidths} = this;
   let vs = this.quadVisible(qd);
   if (!vs) {
     return;
@@ -83,8 +83,7 @@ rs.displayCell = function (qd,toSegs) {
     let ln = lengthenings?lengthenings[lv]:1;
     let tw = twists?twists[lv]:0;
  // let mangled =(wh > 0)?this.mangleRectangle(rect,ln,tw):[rect];
-    //mangled = this.mangleRectangle(rect,ln,tw);
-    mangled = rect.mangle({within:orect,lengthen:ln,twist:tw});
+    mangled = this.mangleRectangle(rect,ln,tw);
  //   proto = lineP;
   } else {
     mangled = rect.sides();
@@ -97,7 +96,6 @@ rs.displayCell = function (qd,toSegs) {
     }
     let segs = seg.toShape(lineP);
     let  lnw = qd.where.length;
-    
     let strokew = strokeWidths[lnw];
     segs['stroke-width'] = strokew;
     shapes.push(segs);
@@ -105,13 +103,13 @@ rs.displayCell = function (qd,toSegs) {
 }
 
 rs.fr0 = 0.5;
-rs.fr1 = 0.5;
+rs.fr1 = 0.4;
 rs.fr2 = 0.2;
 rs.computeSplitParams = function (qd) {
   let {fr0,fr1,fr2} = this;
   let c = qd.rectangle.center();
   let {x,y} = c;
-  let ornt = Math.random()<0.5?'h':'v';
+  let ornt = Math.random()<0?'h':'v';
   return [ornt,fr0,fr1,fr2];
 }
 

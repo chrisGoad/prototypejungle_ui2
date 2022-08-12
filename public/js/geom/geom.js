@@ -708,6 +708,14 @@ LineSegment.mk = function (end0,end1,dontCopy) {
   return rs;
 }
 
+
+LineSegment.center = function () {
+  debugger;
+	let {end0,end1} = this;
+  let rs = end0.plus(end1).times(0.5);
+  return rs;
+}
+
 LineSegment.toLine = function () {
 	let {end0,end1} = this;
 	let vec = end1.difference(end0);
@@ -2041,6 +2049,32 @@ Rectangle.randomPoint = function () {
   let y = c.y +(ex.y)*Math.random();
   return Point.mk(x,y);
 }
+
+Rectangle.mangle = function (params) {
+//rs.mangleRectangle = function (rect,ln,tw) {
+ let {twist:tw=0,lengthen:ln=1,within} = params;
+//debugger;
+ // let orect = this.orect; 
+  let sides = this.labeledSides();
+  let {left,right,top,bottom} = sides;
+  let mleft = left.lengthen(ln).twist(tw);
+  let mright = right.lengthen(ln).twist(tw);
+  let mtop = top.lengthen(ln).twist(tw);
+  let mbottom = bottom.lengthen(ln).twist(tw);
+  if (within) {
+   
+    //let ln = 1.2;
+    //let tw = 0.1*Math.PI;
+    let ileft = within.intersectLineSegment(mleft);
+    let iright = within.intersectLineSegment(mright);
+    let itop = within.intersectLineSegment(mtop);
+    let ibottom = within.intersectLineSegment(mbottom);
+    return [ileft,iright,itop,ibottom];
+  }
+  return [mleft,mright,mtop,mbottom];
+}
+  
+  
 
 geomr.set("oneDf",core.ObjectNode.mk()).__namedType();
 let oneDf = geomr.oneDf;

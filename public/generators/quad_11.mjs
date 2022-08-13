@@ -10,8 +10,9 @@ rs.setName('quad_11');
 let wd = 100;
 let topParams = {width:wd,height:wd,framePadding:0.2*wd}
 Object.assign(rs,topParams);
-rs.quadParams = {chance:1,levels:8};
-
+rs.quadParams = {chance:1,levels:8,polygonal:1};
+let strokeWidths = rs.quadParams.strokeWidths = [];
+rs.computeExponentials(strokeWidths,rs.quadParams.levels,0.1,.9);
 rs.initProtos = function () {
   this.polygonP =  polygonPP.instantiate();
   this.polygonP.stroke = 'white';
@@ -46,7 +47,7 @@ rs.displayCell = function (qd) {
   if ((lnw <7 ) && circular) {
     return;
   }
-  let strokew = this.strokeWidths[lnw];
+  let strokew = this.quadParams.strokeWidths[lnw];
   pgons['stroke-width'] = strokew;
   pgons.fill = this.computeFill();
   pgons.update();
@@ -55,7 +56,7 @@ rs.displayCell = function (qd) {
 
 
 rs.offCenter = 0.2;
-rs.computeSplitParams = function (qd) {
+rs.quadSplitParams = function (qd) {
   let pgon = qd.polygon;
   let c = pgon.center();
   let d = pgon.dimension();
@@ -63,11 +64,11 @@ rs.computeSplitParams = function (qd) {
   //let rd = (Math.random()>0.5?0.25:0.5)*Math.PI;
   //2*Math.PI*Math.random();
   let rp = c.plus(Point.mk(Math.cos(rd),Math.sin(rd)).times(d*this.offCenter));
-   return [rp,.5,.5,0.5,0.5];
+   return {center:rp,pfr0:.5,pfr1:.5,pfr2:0.5,pfr3:0.5};
 }
 
 rs.initialPolygon = Rectangle.mk(Point.mk(-0.5*wd,-0.5*wd),Point.mk(wd,wd)).toPolygon();
-rs.initialize = function () {
+rs.initializee = function () {
   let {width:wd,height:ht,quadParams,initialPolygon:pgon} = this;
   //this.addFrame();
   this.initProtos();

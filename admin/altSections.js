@@ -11,6 +11,7 @@ sections: [
  [0,'quad_6','generators',1,'Quad 6',{likes:0,posted:0,category:'quad',version:2}], 
  [0,'quad_7','generators',1,'Quad 7',{likes:0,posted:0,category:'quad'}], 
  [0,'quad_9','generators',1,'Quad 9',{likes:0,posted:0,category:'quad'}], 
+  [0,'quad_9_0','instances',1,'Quad 9 0',{likes:0,posted:0,category:'quad'}], 
   [0,'quad_9_1','instances',1,'Quad 9 1',{likes:0,posted:0,category:'quad'}], 
  [0,'quad_9_2','instances',1,'Quad 9 2',{likes:0,posted:0,category:'quad'}], 
  [0,'quad_9_3','instances',1,'Quad 9 3',{likes:0,posted:0,category:'quad'}], 

@@ -2,9 +2,24 @@
 import {rs as generatorP} from '/generators/quad_9.mjs';
 import {rs as addDropMethods} from '/mlib/drop.mjs';
 
-
-
 let rs = generatorP.instantiate();
+
+
+rs.setName('quad_9_5');
+let levels = 5;
+rs.quadParams.mangle = {lengthen:5.5,twist:.05*Math.PI};
+rs.quadParams.emitLineSegs =1;
+
+rs.quadParams.levels = levels;
+levels++;
+rs.splitParams = {fr0:0.5,fr1:0.5,fr2:0.2};
+rs.quadSplitParams = function (qd) {
+  let ornt = Math.random() < 0.5?'h':'v';
+  let rs = this.splitParams;
+  rs.ornt = ornt;
+  return rs;
+}
+
 addDropMethods(rs);
 
 rs.generateDrop = function (seg) {
@@ -24,30 +39,7 @@ rs.generateDrop = function (seg) {
   return {geometries:[nseg],shapes:[shp]};
 }
 
-rs.dropParams = {dropTries:150,maxDrops:5000,dropOnLineSegs:1,numIntersections:10};
-
-rs.setName('quad_9_5');
-let levels = 5;
-rs.quadParams.levels = levels;
-levels++;
-rs.fr0 = 0.5;
-rs.fr1 = 0.5;
-rs.fr2 = 0.2;
-rs.emitLineSegs = 1;
-let mangles = rs.mangles = [];
-rs.addToArray(mangles,1,levels);
-
-let visibles = rs.visibles = [];
-rs.addToArray(visibles,0,levels-1);
-rs.addToArray(visibles,1,levels);
-let lengthenings = rs.lengthenings = [];
-rs.addToArray(lengthenings,.5,levels);
-let twists = rs.twists = [];
-//rs.addToArray(twists,0,2);
-rs.addToArray(twists,0.05*Math.PI,levels);
-let strokeWidths = rs.strokeWidths = [];
-//strokeWidths = rs.computeExponentials(quadParams.levels,0.1,0.9);
-rs.addToArray(strokeWidths,.1,levels);
+rs.dropParams = {dropTries:150,maxDrops:5000,dropOnLineSegs:1,numIntersections:2};
 
 export {rs};
 

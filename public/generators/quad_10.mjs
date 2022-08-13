@@ -10,7 +10,7 @@ rs.setName('quad_10');
 let wd = 100;
 let topParams = {width:wd,height:wd,framePadding:0.1*wd}
 Object.assign(rs,topParams);
-let quadParams = {chance:1,levels:8};
+rs.quadParams = {chance:1,levels:8};
 
 rs.initProtos = function () {
   this.rectP =  rectPP.instantiate();
@@ -35,11 +35,12 @@ rs.displayCell = function (qd) {
   shapes.push(rs);
 }
 
-rs.computeSplitParams = function (qd) {
+rs.quadSplitParams = function (qd) {
+  debugger;
   let {where} = qd;
   let lnw = where.length;
   if (lnw===0) {
-    return ['h',0.5,0.5,0.5];
+    return {ornt:'h',fr0:0.5,fr1:0.5,fr2:0.5};
   }
   if (lnw) {
     let fw =  where[0];
@@ -54,7 +55,7 @@ rs.computeSplitParams = function (qd) {
       }
     }  else if (fw === 'LR')  {
        if (lnw===1) {                
-         return ['h',0.5,0.5,0.5];
+         return {ornt:'h',fr0:0.5,fr1:0.5,fr2:0.5};
        } else {
          let sw = where[1];
          if (sw === 'UL') {
@@ -72,14 +73,15 @@ rs.computeSplitParams = function (qd) {
   let c = qd.rectangle.center();
   let {x,y} = c;
   let ornt = Math.random()<0.5?'h':'v';
-  return [ornt,0.5,0.5,0.3];
+  return {ornt,fr0:0.5,fr1:0.5,fr2:0.3};
 }
 
 rs.initialize = function () {
-  let {width:wd,height:ht} = this;
+  let {width:wd,height:ht,quadParams} = this;
   this.addFrame();
   this.initProtos();
-  this.strokeWidths = this.computeExponentials(quadParams.levels,0.1,0.9);
+  let stw = this.strokeWidths = [];
+  this.computeExponentials(stw,quadParams.levels,0.1,0.9);
   let r = Rectangle.mk(Point.mk(-0.5*wd,-0.5*ht),Point.mk(wd,ht));
   let qd = {rectangle:r};
   this.extendQuadNLevels(qd,quadParams);

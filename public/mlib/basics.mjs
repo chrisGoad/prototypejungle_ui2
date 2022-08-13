@@ -380,7 +380,21 @@ item.circleToCircleShape = function (nm,c,circleP) {
   crc.moveto(center);
   return crc;
 }
- 
+
+item.addToArray = function (a,v,n) {
+  for (let i=0;i<n;i++) {
+    a.push(v);
+  }
+}
+
+
+item.computeExponentials = function (a,n,fc,root) {
+  for (let i=0;i<=n;i++) {
+    let cv = fc*Math.pow(root,i);
+    console.log('cv',cv);
+    a.push(cv);
+  }
+}
 core.root.backgroundColor = 'black';
 item.setBackgroundColor = (clr) => core.root.backgroundColor = clr; 
 }

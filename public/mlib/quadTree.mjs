@@ -9,6 +9,17 @@ const interpolatePoints = function (p0,p1,fr)  {
 const switchToPolygon = function (qd) {
   return 0;
 }
+rs.quadSplitParams = function (qd) {
+  let {quadParams} = this;
+  let {splitParams,splitParamsByLevel} = quadParams;
+  if (splitParams) {
+    return splitParams;
+  } 
+  if (splitParamsByLevel) {
+    let lv = qd.where.length;
+    return splitParamsByLevel[lv];
+  }
+}
 rs.extendQuadOneLevel = function (qd) {
    if (qd.UL) {
      return;
@@ -19,13 +30,15 @@ rs.extendQuadOneLevel = function (qd) {
   // let {splitType,fr0,fr1,fr2} = params;
    
  //  let [fr0,fr1,fr2] = [0.45,0.45,0.3];
-   let sp=(this.computeSplitParams)?this.computeSplitParams(qd):['h',0.5,0.5,0.5];
+  // let sp=(this.computeSplitParams)?this.computeSplitParams(qd):['h',0.5,0.5,0.5];
+   let sp=this.quadSplitParams(qd);
    if (!sp) {
      return;
    }
+   let {switchToPolygon:swtp,ornt,fr0,fr1,fr2,center,pfr0,pfr1,pfr2,pfr3} = sp;
+
  // debugger;
    let {rectangle:rect,polygon:pgon} = qd;
-   let swtp = switchToPolygon(qd);
    if (rect && swtp) {
      pgon = rect.toPolygon();
    }
@@ -35,7 +48,7 @@ rs.extendQuadOneLevel = function (qd) {
      If ornt === 'h', the rectangle is first split at the fr0 mark into top and bottom rects RT and RB.
     Then RT is split at the fr1 mark and RB and the fr2 mark;*/
    if (rect && !swtp) {
-     let [ornt,fr0,fr1,fr2] = sp;
+    // let [ornt,fr0,fr1,fr2] = sp;
      let h = ornt === 'h';   let {corner,extent} = rect;
      let {x:cx,y:cy} = corner;
      let {x:ex,y:ey} = extent;
@@ -76,11 +89,11 @@ rs.extendQuadOneLevel = function (qd) {
      return 1;
    } else {
      let {corners} = pgon;
-     let [center,fr0,fr1,fr2,fr3] = sp;
-     let ONtop = interpolatePoints(corners[0],corners[1],fr0);
-     let ONright = interpolatePoints(corners[1],corners[2],fr1);
-     let ONbot = interpolatePoints(corners[2],corners[3],fr2);
-     let ONleft= interpolatePoints(corners[3],corners[0],fr3);
+    // let [center,fr0,fr1,fr2,fr3] = sp;
+     let ONtop = interpolatePoints(corners[0],corners[1],pfr0);
+     let ONright = interpolatePoints(corners[1],corners[2],pfr1);
+     let ONbot = interpolatePoints(corners[2],corners[3],pfr2);
+     let ONleft= interpolatePoints(corners[3],corners[0],pfr3);
      let ULgon = Polygon.mk([corners[0].copy(),ONtop.copy(),center.copy(),ONleft.copy()]);
      let URgon = Polygon.mk([ONtop.copy(),corners[1].copy(),ONright.copy(),center.copy()]);
      let LRgon = Polygon.mk([center.copy(),ONright.copy(),corners[2].copy(),ONbot.copy()]);
@@ -159,6 +172,7 @@ rs.extendQuadNLevels = function (qd,params) {
  
  rs.displayQuad = function (qd,emitLineSegs) {
    let {shapes,lineSegs} = this;
+   debugger;
    if (emitLineSegs && (!lineSegs)) {
     this.lineSegs = [];
    }
@@ -171,34 +185,123 @@ rs.extendQuadNLevels = function (qd,params) {
      return;
    }
 }
-/*
-rs.cellAsLineSegs = function(qd) ={
-  this.displayCell(qd,1);
+
+rs.quadVisible = function (qd) {
+  let {visibles} = this.quadParams;
+  if (!visibles) {
+    return 1;
+  }
+  let lv = qd.where.length;
+  if (lv >= 6) {
+    debugger;
+  }
+  return visibles[lv];
 }
 
-rs.quadAsLineSegs = function (qd) {
- let {lineSegs} = this;
- if (!lineSegs) {
-   this.lineSegs = [];
-  this.cellAsLineSegs(qd,depth);
- if (qd.UL) {
-   this.quadAsLineSegs(qd.UL,depth+1);
-   this.quadAsLineSegs(qd.UR,depth+1);
-   this.quadAsLineSegs(qd.LL,depth+1);
-   this.quadAsLineSegs(qd.LR,depth+1);
-   return;
- }
+rs.quadMangle = function (qd) {
+  let {mangles,mangle} = this.quadParams;
+  if (mangles) {
+    let lv =  qd.where.length;
+    return mangles[lv];
+  } else if (mangle) {
+    return mangle;
+  }
 }
-*/
-rs.computeExponentials = function (n,fc,root) {
-  let rs = [];
+
+rs.quadStrokeWidth = function (qd) {
+  let {strokeWidths} = this.quadParams;
+  debugger;
+  if (strokeWidths) {
+    let lv =  qd.where.length;
+    let sw =strokeWidths[lv];
+   // console.log('lv',lv,'sw',sw);
+    return sw;
+  }
+}
+
+
+rs.quadSplitParms = function (qd) {
+  let {splitParams,splitParamsByLevel} = this.quadParams;
+  if (splitParams) {
+    return splitParams;
+  }
+  let lv =  qd.where.length;
+  return splitParamsByLevel[lv];
+}
+
+rs.displayCell = function (qd,toSegs) {	
+  let {shapes,lineSegs,lineP,mangles,lengthenings,twists,strokeWidths,orect} = this;
+  let vs = this.quadVisible(qd);
+  if (!vs) {
+    return;
+  }
+  debugger;
+  let rect = qd.rectangle; 
+  let lv = qd.where.length;
+  //let mng = mangles?mangles[lv]:0;
+  let mng = this.quadMangle(qd);
+  let mangled;
+  if (mng) {
+    let {lengthen:ln,twist:tw} = mng;
+   // let ln = lengthenings?lengthenings[lv]:1;
+   // let tw = twists?twists[lv]:0;
+ // let mangled =(wh > 0)?this.mangleRectangle(rect,ln,tw):[rect];
+    //mangled = this.mangleRectangle(rect,ln,tw);
+    mangled = rect.mangle({within:orect,lengthen:ln,twist:tw});
+ //   proto = lineP;
+  } else {
+    mangled = rect.sides();
+ //   proto = rectP;
+  }
+  mangled.forEach((seg) => {
+     if (toSegs) {
+      lineSegs.push(seg);
+      return;
+    }
+    let segs = seg.toShape(lineP);
+    let  lnw = qd.where.length;
+    
+    let strokew = this.quadStrokeWidth(qd);//strokeWidths[lnw];
+    if (strokew) {
+      segs['stroke-width'] = strokew;
+    }
+    shapes.push(segs);
+  });
+}
+
+/*
+rs.computeExponentials = function (rs,n,fc,root) {
   for (let i=0;i<=n;i++) {
     let cv = fc*Math.pow(root,i);
+    console.log('cv',cv);
     rs.push(cv);
   }
-  return rs;
 }
-  
+*/
+
+rs.initialize = function () {
+  let {width:wd,height:ht,quadParams,dropParams} = this;
+  debugger;
+  let {emitLineSegs,polygonal} = quadParams;
+  this.addFrame();
+  this.initProtos();
+ // if (!this.strokeWidths) {
+  //  this.strokeWidths = this.computeExponentials(quadParams.levels,0.1,0.9);
+  //}
+  let r = Rectangle.mk(Point.mk(-0.5*wd,-0.5*ht),Point.mk(wd,ht));
+  let qd;
+  if (polygonal) {
+     let p = r.toPolygon();
+     qd ={polygon:p};
+  } else {
+    qd = {rectangle:r};
+  }
+  this.extendQuadNLevels(qd,quadParams);
+  this.displayQuad(qd,emitLineSegs);
+  if (quadParams.emitLineSegs) {
+    this.generateDrops(dropParams);
+  }
+}
 }
 
-export {rs};	
+export {rs};

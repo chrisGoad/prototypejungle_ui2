@@ -43,7 +43,7 @@ rs.extendQuadOneLevel = function (qd) {
      pgon = rect.toPolygon();
    }
    /*  the parameters ornt,fr0,fr1,fr2 determine how the rectangle is split up in to 4 smaller rectangles.
-   If ornt === 'v', the rectangle is first split at the fr0 mark into left and right rects RL and RR.
+   If ornt === 'v' on falsy, the rectangle is first split at the fr0 mark into left and right rects RL and RR.
     Then RL is split at the fr1 mark and RR and the fr2 mark;
      If ornt === 'h', the rectangle is first split at the fr0 mark into top and bottom rects RT and RB.
     Then RT is split at the fr1 mark and RB and the fr2 mark;*/
@@ -236,23 +236,18 @@ rs.displayCell = function (qd,toSegs) {
     return;
   }
   debugger;
-  let rect = qd.rectangle; 
-  let lv = qd.where.length;
+  let {where,rectangle:rect,polygon:pgon} = qd;
+  let lv = where.length;
   //let mng = mangles?mangles[lv]:0;
   let mng = this.quadMangle(qd);
   let mangled;
+  let shp = rect?rect:pgon;
   if (mng) {
     let {lengthen:ln,twist:tw} = mng;
-   // let ln = lengthenings?lengthenings[lv]:1;
-   // let tw = twists?twists[lv]:0;
- // let mangled =(wh > 0)?this.mangleRectangle(rect,ln,tw):[rect];
-    //mangled = this.mangleRectangle(rect,ln,tw);
-    mangled = rect.mangle({within:orect,lengthen:ln,twist:tw});
- //   proto = lineP;
+     mangled = shp.mangle({within:orect,lengthen:ln,twist:tw});
   } else {
-    mangled = rect.sides();
- //   proto = rectP;
-  }
+    mangled = shp.sides();
+  } 
   mangled.forEach((seg) => {
      if (toSegs) {
       lineSegs.push(seg);

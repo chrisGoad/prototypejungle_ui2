@@ -16,7 +16,7 @@ rs.computeFill = function (qd) {
    return 'rgb(0,0,0)'
 }
 
-rs.computeSplitParams = function (qd) {
+rs.quadSplitParams = function (qd) {
   let pgon = qd.polygon;
   let c = pgon.center();
   let d = pgon.dimension();
@@ -25,7 +25,7 @@ rs.computeSplitParams = function (qd) {
   //2*Math.PI*Math.random();
   let rp = c.plus(Point.mk(Math.cos(rd),Math.sin(rd)).times(d*0.2));
    //return [rp,.5,0.1,0.4,.1];
-   return [rp,.1,.5,0.1,0.4];
+   return {center:rp,pfr0:.1,pfr1:.5,pfr2:0.1,pfr3:0.4};
    return [rp,.5,.5,0.5,0.5];
 
   //return [c,.7,.3,0.7,.3];

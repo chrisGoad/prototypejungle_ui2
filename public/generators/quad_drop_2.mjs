@@ -15,7 +15,7 @@ let wd = 1000;
 let topParams = {width:wd,height:wd,framePadding:0.1*wd}
 Object.assign(rs,topParams);
 
-let quadParams = {levels:4,chance:0.8,alwaysSplitBefore:3}
+rs.quadParams = {levels:4,chance:0.8,alwaysSplitBefore:3}
 
 rs.dropParams = {dropTries:3500,maxDrops:1000000}
 rs.dropParams = {dropTries:35,maxDrops:10000}

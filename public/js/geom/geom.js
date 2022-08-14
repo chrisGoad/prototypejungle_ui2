@@ -1867,6 +1867,43 @@ Polygon.center = function () {
   return Point.mk(tx/ln,ty/ln);
 }
 
+Polygon.left = function () {
+  let {corners} = this;
+  let rs = Infinity;
+  corners.forEach( (c) => {
+    let cx = c.x;
+    if (cx < rs) {
+      rs = cx;
+    }
+  });
+  return rs;
+}
+
+Polygon.sides = function () {
+  let rs = [];
+  let corners = this.corners;
+  let ln = corners.length;
+  for (let i=0;i<ln;i++) {
+    let seg = LineSegment.mk(corners[i],corners[(i+1)%ln]);;
+    rs.push(seg);
+  }
+  return rs;
+}
+
+
+Polygon.mangle = function (params) {
+ let {twist:tw=0,lengthen:ln=1,within} = params;
+//debugger;
+ // let orect = this.orect; 
+  let sides = this.sides();
+  let msides = sides.map( (s) => s.lengthen(ln).twist(tw));
+  if (within) {
+    let csides = msides.map((s) => within.intersectLineSegment(s));
+    return csides;
+  }
+  return msides;
+}
+  
 Polygon.dimension = function () { // longest side length
   let c = this.corners;
   let d0 = c[0].distance(c[1]);

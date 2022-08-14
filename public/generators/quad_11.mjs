@@ -1,5 +1,6 @@
 
 import {rs as polygonPP} from '/shape/polygon.mjs';
+import {rs as linePP} from '/shape/line.mjs';
 import {rs as basicP} from '/generators/basics.mjs';
 import {rs as addQuadMethods} from '/mlib/quadTree.mjs';	
 
@@ -10,7 +11,7 @@ rs.setName('quad_11');
 let wd = 100;
 let topParams = {width:wd,height:wd,framePadding:0.2*wd}
 Object.assign(rs,topParams);
-rs.quadParams = {chance:1,levels:8,polygonal:1};
+rs.quadParams = {chance:1,levels:7,polygonal:1};
 let strokeWidths = rs.quadParams.strokeWidths = [];
 rs.computeExponentials(strokeWidths,rs.quadParams.levels,0.1,.9);
 rs.initProtos = function () {
@@ -18,9 +19,13 @@ rs.initProtos = function () {
   this.polygonP.stroke = 'white';
   this.polygonP.fill = 'black';
   this.polygonP['stroke-width'] =0 ;
+  this.lineP =  linePP.instantiate();
+  this.lineP.stroke = 'white';
+  this.lineP['stroke-width'] =0 ;
 }
 
 
+rs.quadParams.mangle = {'lengthen':.2,'twist':0.05*Math.PI,within:rs.canvasToRectangle()};
 
 rs.computeFill = function (qd) { 
    const shade = ()=> Math.floor(0*Math.random());
@@ -35,7 +40,7 @@ rs.computeFill = function (qd) {
  
  rs.circular = 0;
 
-rs.displayCell = function (qd) {
+rs.displayCellll = function (qd) {
   let {shapes,polygonP,width:wd,circular} = this;
   let pgon = qd.polygon;
   let pgons = pgon.toShape(polygonP,1);

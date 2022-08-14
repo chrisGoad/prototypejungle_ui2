@@ -11,7 +11,9 @@ rs.setName('quad_4');
 let wd = 100;
 let topParams = {width:wd,height:wd,framePadding:0.1*wd}
 Object.assign(rs,topParams);
-let quadParams = {chance:0.8,levels:7, alwaysSplitBefore:3};
+rs.quadParams = {chance:0.6,levels:7,alwaysSplitBefore:4,splitParams:{fr0:0.5,fr1:0.5,fr2:0.4}};
+
+//rs.quadParams = {chance:0.8,levels:7, alwaysSplitBefore:3};
 
 rs.initProtos = function () {
   this.circleP =  circlePP.instantiate();
@@ -51,10 +53,13 @@ rs.displayCellAsCircle = function (qd) {
 }
 
 rs.displayCell = function (qd) {
+  if (qd.UL) {
+    return;
+  }
   this.displayCellAsCircle(qd);
 }
 
-rs.initialize = function () {
+rs.initializee = function () {
   let {width:wd,height:ht} = this;
   this.addFrame();
   this.initProtos();

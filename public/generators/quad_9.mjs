@@ -35,13 +35,11 @@ rs.initProtos = function () {
 
 
 
-rs.computeSplitParams = function (qd) {
-  let {fr0,fr1,fr2} = this;
-  let c = qd.rectangle.center();
-  let {x,y} = c;
+rs.quadSplitParams = function (qd) {
   let ornt = Math.random()<0.5?'h':'v';
-  return [ornt,fr0,fr1,fr2];
+  return {ornt,fr0:0.5,fr1:0.5,fr2:0.2};
 }
+
 
 
 

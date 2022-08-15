@@ -2,10 +2,11 @@
 let kind = process.argv[2];
 //let forKOPstr = process.argv[3];
 let sortByOrderstr = "1";
+/*
 if (process.argv[3]==="0") {
   sortByOrderstr = "0";
 }
-
+*/
 const toBoolean = (v) => {
   if (typeof v === 'string') {
     return (v==='0')?false:true;
@@ -19,6 +20,11 @@ let signed = 0
 //let forKOP = toBoolean(forKOPstr);
 let forKOP = kind === 'forKOP';
 let forPJ = kind === 'forPJ';
+let drop = kind === 'drop';
+let grid = kind === 'grid';
+let lines = kind === 'lines';
+let quad = kind === 'quad';
+let web = kind === 'web';
 let sortByOrder = toBoolean(sortByOrderstr);
 let byKind = kind === 'byKind';
 let alternate = kind === 'alternate';
@@ -92,7 +98,7 @@ if (byLikes) {
   signed = 0;
   imKind = 'sq';
   sectionsPath = './squareSections.js';
-} else if (images || forKOP  || forPJ)  {
+} else if (images || forKOP  || forPJ || drop || grid || lines || quad || web)  {
   sectionsPath = './gridSections.js';
   imKind = 'g'
 } else if (local_images)  {
@@ -114,6 +120,18 @@ if (byLikes) {
 let outPath;
 if (alternate) {
   outPath = 'public/altImages.html';
+} else if (alternate) {
+  outPath = 'public/altImages.html';
+} else if (drop) {
+  outPath = 'public/dropImages.html';
+} else if (grid) {
+  outPath = 'public/gridImages.html';
+} else if (lines) {
+  outPath = 'public/linesImages.html';
+} else if (quad) {
+  outPath = 'public/quadImages.html';
+} else if (web) {
+  outPath = 'public/webImages.html';
 } else if (byKind) {
   outPath = 'public/byKind.html';
 } else if (byAspect) {
@@ -270,7 +288,10 @@ let numPages = 0;
 const thingString = function (order,ix,dir,useThumb,ititle,props) {
 	debugger;
   let {variant,likes,posted,category,sources} = props;
-  console.log('POSTED',posted);
+  console.log('POSTED',posted,'category',category,'kind',kind);
+  if (category !==  kind) {
+    return '</div>';
+  }
 	let spix = ix.split('.');
 	let path = spix[0];
 	let ext = (spix.length === 1)?'jpg':spix[1];
@@ -449,9 +470,12 @@ let sectionString = function (things) {
       if ((ord <  orderMin) || (ord > orderMax)) {
         continue;
       }
-      rs += thingString(ord,file,directory,useThumb,title,props);
-      //rs += thingString(file,directory,useThumb,title,image);
-      numThingsThisLine++;
+      let ts = thingString(ord,file,directory,useThumb,title,props);
+      if (ts!=='</div>') {
+        rs+=ts;
+       //rs += thingString(file,directory,useThumb,title,image);
+       numThingsThisLine++;
+      }
     }
 	//	console.log('numThingsThisLine',numThingsThisLine,'i',i,'ln',ln);
 		if ((numThingsThisLine === numThingsPerLine) && (i<(ln-1))) {

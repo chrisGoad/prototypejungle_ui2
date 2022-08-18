@@ -35,7 +35,7 @@ rs.extendQuadOneLevel = function (qd) {
    if (!sp) {
      return;
    }
-   let {switchToPolygon:swtp,ornt,fr0,fr1,fr2,center,pfr0,pfr1,pfr2,pfr3} = sp;
+   let {switchToPolygon:swtp,ornt,fr0,fr1,fr2,fr3,fr4,fr5,center,pfr0,pfr1,pfr2,pfr3} = sp;
 
  // debugger;
    let {rectangle:rect,polygon:pgon} = qd;
@@ -43,13 +43,14 @@ rs.extendQuadOneLevel = function (qd) {
      pgon = rect.toPolygon();
    }
    /*  the parameters ornt,fr0,fr1,fr2 determine how the rectangle is split up in to 4 smaller rectangles.
-   If ornt === 'v' on falsy, the rectangle is first split at the fr0 mark into left and right rects RL and RR.
+   If ornt === 'h' is falsy, the rectangle is first split at the fr0 mark into left and right rects RL and RR.
     Then RL is split at the fr1 mark and RR and the fr2 mark;
      If ornt === 'h', the rectangle is first split at the fr0 mark into top and bottom rects RT and RB.
     Then RT is split at the fr1 mark and RB and the fr2 mark;*/
    if (rect && !swtp) {
     // let [ornt,fr0,fr1,fr2] = sp;
-     let h = ornt === 'h';   let {corner,extent} = rect;
+     let h = ornt === 'h';   
+     let {corner,extent} = rect;
      let {x:cx,y:cy} = corner;
      let {x:ex,y:ey} = extent;
      let ULcorner = corner.copy();
@@ -87,7 +88,7 @@ rs.extendQuadOneLevel = function (qd) {
      nextQuad('LR',LRcorner,LRextent);
      nextQuad('LL',LLcorner,LLextent);
      return 1;
-   } else {
+   } else if (center) {
      let {corners} = pgon;
     // let [center,fr0,fr1,fr2,fr3] = sp;
      let ONtop = interpolatePoints(corners[0],corners[1],pfr0);
@@ -105,6 +106,78 @@ rs.extendQuadOneLevel = function (qd) {
      addQuad('UR',URgon);
      addQuad('LR',LRgon);
      addQuad('LL',LLgon);
+     return 1;
+  } else {
+   /*  the parameters ornt,fr0,fr1,fr2,fr3,fr4,fr5 determine how the quadrangle is split up in to 4 smaller quadrangles.
+   If ornt === 'h' is falsy, the quadrangle is first split at the fr0 mark (at top) and fr1 (at bottom into left and right quadrangles QL and QR, .
+    Then QL is split at the fr2 ,fr3 marks and QR at the fr4, fr5 marks;
+     If ornt === 'h', the quadrangle is first split at the fr0,fr1 marks into top and bottom quadrangles QT and QB.
+    Then QT is split at the fr2, fr3 marks and QB at the fr4, fr5  marks.*/
+     let v = ornt !== 'h'; 
+     let sides =  pgon.sides();
+     let top = sides[0];    
+     let right = sides[1];     
+     let bot = sides[2];     
+     let left = sides[3];
+     let corners = pgon.corners;
+     let ULC = corners[0];
+     let URC = corners[1];
+     let LRC = corners[2];
+     let LLC = corners[3];
+     let ULQ_ULC,ULQ_URC,ULQ_LRC,ULQ_LLC, URQ_ULC,URQ_URC,URQ_LRC,URQ_LLC, LRQ_ULC,LRQ_URC,LRQ_LRC,LRQ_LLC, LLQ_ULC,LLQ_URC,LLQ_LRC,LLQ_LLC;
+     if (v) {
+       ULQ_ULC = ULC.copy();
+       ULQ_URC = top.along(fr0);
+       LRQ_LLC = bot.along(fr1);
+       let Central_split = LineSegment.mk(ULQ_URC,LRQ_LLC);
+       ULQ_LRC =Central_split.along(fr3);
+       ULQ_LLC =left.along(fr2);
+       URQ_ULC= ULQ_URC;
+       URQ_URC = URC;
+       URQ_LRC = right.along(fr5);
+       URQ_LLC = Central_split.along(fr4);
+       LRQ_ULC = URQ_LLC;
+       LRQ_URC = URQ_LRC;
+       LRQ_LRC = LRC;
+       //LRQ_LLC already defined
+       LLQ_ULC = ULQ_LLC;
+       LLQ_URC = Central_split.along(fr3);
+       LLQ_LRC = LRQ_LLC;
+       LLQ_LLC = LLC;
+     } else {
+       ULQ_ULC = ULC.copy();
+       ULQ_URC = top.along(fr2);
+       ULQ_LLC = left.along(fr0);
+       URQ_LRC = right.along(fr1);
+       let Central_split = LineSegment.mk(ULQ_LLC,URQ_LRC);
+       ULQ_LRC = left.along(fr0);
+       
+       URQ_ULC= ULQ_URC;
+       URQ_URC = URC;
+       URQ_LLC = Central_split.along(fr3);
+       
+       LRQ_ULC = Central_split.along(fr5);
+       LRQ_URC = URQ_LRC;
+       LRQ_LRC = LRC;
+       LRQ_LLC = bot.along(fr4);
+       
+       LLQ_ULC = ULQ_LLC;
+       LLQ_URC = Central_split.along(fr3);
+       LLQ_LRC = LRQ_LLC;
+       LLQ_LLC = LLC;
+     }
+     const nextQuad = (nm,UL,UR,LR,LL) => {
+       
+       let corners = [UL,UR,LR,LL];
+       let newgon = Polygon.mk(corners);
+       qd[nm] = {polygon:newgon,where:[...where,nm],root};
+     }
+     
+     nextQuad('UL',ULQ_ULC,ULQ_URC,ULQ_LRC,ULQ_LLC);
+     nextQuad('UR',URQ_ULC,URQ_URC,URQ_LRC,URQ_LLC);
+     nextQuad('LR',LRQ_ULC,LRQ_URC,LRQ_LRC,LRQ_LLC);
+     nextQuad('LL',LLQ_ULC,LLQ_URC,LLQ_LRC,LLQ_LLC);
+    
      return 1;
   }
 }
@@ -172,7 +245,7 @@ rs.extendQuadNLevels = function (qd,params) {
  
  rs.displayQuad = function (qd,emitLineSegs) {
    let {shapes,lineSegs} = this;
-   debugger;
+   //debugger;
    if (emitLineSegs && (!lineSegs)) {
     this.lineSegs = [];
    }
@@ -192,9 +265,9 @@ rs.quadVisible = function (qd) {
     return 1;
   }
   let lv = qd.where.length;
-  if (lv >= 6) {
+ /* if (lv >= 6) {
     debugger;
-  }
+  }*/
   return visibles[lv];
 }
 
@@ -210,7 +283,7 @@ rs.quadMangle = function (qd) {
 
 rs.quadStrokeWidth = function (qd) {
   let {strokeWidths} = this.quadParams;
-  debugger;
+  //debugger;
   if (strokeWidths) {
     let lv =  qd.where.length;
     let sw =strokeWidths[lv];
@@ -230,7 +303,8 @@ rs.quadSplitParms = function (qd) {
 }
 
 rs.displayCell = function (qd,toSegs) {	
-  let {shapes,lineSegs,lineP,mangles,lengthenings,twists,strokeWidths,orect} = this;
+  let {shapes,lineSegs,lineP,circleP,mangles,lengthenings,twists,strokeWidths,orect} = this;
+  let {circleScale} = qd.root.params;
   let vs = this.quadVisible(qd);
   if (!vs) {
     return;
@@ -262,6 +336,16 @@ rs.displayCell = function (qd,toSegs) {
     }
     shapes.push(segs);
   });
+  if (circleScale) {
+    debugger;
+    let c = rect.center();
+   let ext = rect.extent;
+   let r = 0.5*circleScale*Math.min(ext.x,ext.y);
+   let crc = Circle.mk(c,r);
+   
+   let crcs =  crc.toShape(circleP);
+   shapes.push(crcs);
+  }
 }
 
 /*

@@ -716,6 +716,19 @@ LineSegment.center = function () {
   return rs;
 }
 
+
+
+
+LineSegment.along = function (fraction) {
+	let {end0,end1} = this;
+  let vec = end1.difference(end0);
+  let rs = end0.plus(vec.times(fraction));
+ // let rs2 = end0.plus(end1).times(fraction);
+  //console.log('rs1',rs1.x,rs1.y,'rs2',rs2.x,rs2.y);
+  console.log('rs',rs.x,rs.y);
+  return rs;
+}
+
 LineSegment.toLine = function () {
 	let {end0,end1} = this;
 	let vec = end1.difference(end0);

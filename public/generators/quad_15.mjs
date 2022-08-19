@@ -11,7 +11,7 @@ rs.setName('quad_15');
 let wd = 100;
 let topParams = {width:wd,height:wd,framePadding:0.2*wd}
 Object.assign(rs,topParams);
-rs.quadParams = {chance:1,levels:4,polygonal:1};
+rs.quadParams = {chance:1,levels:7,polygonal:1};
 let strokeWidths = rs.quadParams.strokeWidths = [];
 rs.computeExponentials(strokeWidths,rs.quadParams.levels,0.1,.9);
 rs.initProtos = function () {
@@ -31,7 +31,9 @@ rs.initProtos = function () {
 rs.offCenter = 0.2;
 rs.quadSplitParams = function (qd) {
    let v = 0.7;
-   return {ornt:'h',fr0:v,fr1:v,fr2:v,fr3:v,fr4:0.3,fr5:v};
+   //return {ornt:'v',fr0:.6,fr1:.3,fr2:.3,fr3:.6,fr4:.3,fr5:.2};
+  // return {ornt:'v',fr0:v,fr1:v,fr2:v,fr3:v,fr4:v,fr5:v};
+   return {ornt:'h',fr0:.2,fr1:.2,fr2:.2,fr3:.6,fr4:0.3,fr5:.2};
 }
 /*
 rs.initialPolygon = Rectangle.mk(Point.mk(-0.5*wd,-0.5*wd),Point.mk(wd,wd)).toPolygon();

@@ -131,7 +131,8 @@ rs.extendQuadOneLevel = function (qd) {
        LRQ_LLC = bot.along(fr1);
        let Central_split = LineSegment.mk(ULQ_URC,LRQ_LLC);
        ULQ_LRC =Central_split.along(fr3);
-       ULQ_LLC =left.along(fr2);
+       ULQ_LLC =left.along(fr0);
+       
        URQ_ULC= ULQ_URC;
        URQ_URC = URC;
        URQ_LRC = right.along(fr5);
@@ -150,7 +151,7 @@ rs.extendQuadOneLevel = function (qd) {
        ULQ_LLC = left.along(fr0);
        URQ_LRC = right.along(fr1);
        let Central_split = LineSegment.mk(ULQ_LLC,URQ_LRC);
-       ULQ_LRC = Central_split.along(fr3);
+       ULQ_LRC = left.along(fr0);
        
        URQ_ULC= ULQ_URC;
        URQ_URC = URC;
@@ -162,7 +163,7 @@ rs.extendQuadOneLevel = function (qd) {
        LRQ_LLC = bot.along(fr4);
        
        LLQ_ULC = ULQ_LLC;
-       LLQ_URC = LRQ_ULC
+       LLQ_URC = Central_split.along(fr3);
        LLQ_LRC = LRQ_LLC;
        LLQ_LLC = LLC;
      }
@@ -252,9 +253,9 @@ rs.extendQuadNLevels = function (qd,params) {
    this.displayCell(qd,emitLineSegs);
    if (qd.UL) {
      this.displayQuad(qd.UL,emitLineSegs);
-     this.displayQuad(qd.UR,emitLineSegs);
-     this.displayQuad(qd.LL,emitLineSegs);
-     this.displayQuad(qd.LR,emitLineSegs);
+     //this.displayQuad(qd.UR,emitLineSegs);
+     //this.displayQuad(qd.LL,emitLineSegs);
+     //this.displayQuad(qd.LR,emitLineSegs);
      return;
    }
 }

@@ -395,6 +395,44 @@ item.computeExponentials = function (a,n,fc,root) {
     a.push(cv);
   }
 }
+
+item.randomBetween = function (lh) {
+  let {low,high} = lh;
+  let d = high-low;
+  let rs = low + Math.random() * d;
+  return rs;
+}
+
+item.randomAmong = function (a) {
+  let ln = a.length;
+  let ri = Math.floor(ln * Math.random());
+  let rs = a[ri];
+  return rs;
+}
+
+item.randomizeFrom = function (o) {
+  let ks = Object.keys(o);
+  let rs = {};
+  ks.forEach((k)=>{
+    let v = o[k];
+    let rv;
+    if (Array.isArray(v)) {
+      rv = this.randomAmong(v);
+    } else if (typeof v === 'object') {
+      rv = this.randomBetween(v);
+    } else {
+      rv = v;
+    }
+    rs[k] = rv;
+  });
+  return rs;
+}
+    
+  
+
+
+
+
 core.root.backgroundColor = 'black';
 item.setBackgroundColor = (clr) => core.root.backgroundColor = clr; 
 }

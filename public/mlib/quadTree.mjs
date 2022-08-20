@@ -249,12 +249,17 @@ rs.extendQuadNLevels = function (qd,params) {
    if (emitLineSegs && (!lineSegs)) {
     this.lineSegs = [];
    }
-   this.displayCell(qd,emitLineSegs);
+   let lev = qd.where.length;
+   if (lev > -1) {
+     this.displayCell(qd,emitLineSegs);
+   }
    if (qd.UL) {
      this.displayQuad(qd.UL,emitLineSegs);
-     this.displayQuad(qd.UR,emitLineSegs);
-     this.displayQuad(qd.LL,emitLineSegs);
-     this.displayQuad(qd.LR,emitLineSegs);
+     if (lev > -1) {
+       this.displayQuad(qd.UR,emitLineSegs);
+       this.displayQuad(qd.LL,emitLineSegs);
+       this.displayQuad(qd.LR,emitLineSegs);
+     }
      return;
    }
 }
@@ -293,6 +298,18 @@ rs.quadStrokeWidth = function (qd) {
 }
 
 
+rs.quadStroke = function (qd) {
+  let {strokes} = this.quadParams;
+  //debugger;
+  if (strokes) {
+    let lv =  qd.where.length;
+    let s =strokes[lv];
+   // console.log('lv',lv,'sw',sw);
+    return s;
+  }
+}
+
+
 rs.quadSplitParms = function (qd) {
   let {splitParams,splitParamsByLevel} = this.quadParams;
   if (splitParams) {
@@ -303,7 +320,7 @@ rs.quadSplitParms = function (qd) {
 }
 
 rs.displayCell = function (qd,toSegs) {	
-  let {shapes,lineSegs,lineP,circleP,mangles,lengthenings,twists,strokeWidths,orect} = this;
+  let {shapes,lineSegs,lineP,circleP,polygonP,mangles,lengthenings,twists,strokeWidths,orect} = this;
   let {circleScale} = qd.root.params;
   let vs = this.quadVisible(qd);
   if (!vs) {
@@ -315,34 +332,54 @@ rs.displayCell = function (qd,toSegs) {
   //let mng = mangles?mangles[lv]:0;
   let mng = this.quadMangle(qd);
   let mangled;
-  let shp = rect?rect:pgon;
+  let geom = rect?rect:pgon;
+  let shps;
+  let strokew = this.quadStrokeWidth(qd);//strokeWidths[lnw];
+  let stroke = this.quadStroke(qd);
+  const styleShape = (shp) => {
+     if (strokew) {
+       shp['stroke-width'] = strokew;
+     }
+     if (stroke) {
+       shp.stroke = stroke;
+     }
+  }
   if (mng) {
     let {lengthen:ln,twist:tw} = mng;
-     mangled = shp.mangle({within:orect,lengthen:ln,twist:tw});
+     mangled = geom.mangle({within:orect,lengthen:ln,twist:tw});
+     mangled.forEach((seg) => {
+      if (toSegs) {
+        lineSegs.push(seg);
+        return;
+      }
+      let segs = seg.toShape(lineP);
+      let  lnw = qd.where.length;
+      styleShape(segs);
+      shapes.push(segs);
+    });
   } else {
-    mangled = shp.sides();
-  } 
-  mangled.forEach((seg) => {
-     if (toSegs) {
-      lineSegs.push(seg);
-      return;
+    if (rect) {
+      shps = rect.toShape(rectP);
+    } else {
+      shps = pgon.toShape(polygonP);
     }
-    let segs = seg.toShape(lineP);
-    let  lnw = qd.where.length;
-    
-    let strokew = this.quadStrokeWidth(qd);//strokeWidths[lnw];
-    if (strokew) {
-      segs['stroke-width'] = strokew;
-    }
-    shapes.push(segs);
-  });
+   // mangled = geom.sides();
+    styleShape(shps);
+    shapes.push(shps);
+
+  }
+  
   if (circleScale) {
     debugger;
-    let c = rect.center();
-   let ext = rect.extent;
-   let r = 0.5*circleScale*Math.min(ext.x,ext.y);
+    let c = geom.center();
+    let r;
+    if (rect) {
+     let ext = rect.extent;
+     r = 0.5*circleScale*Math.min(ext.x,ext.y);
+   } else {
+     r = 0.5*circleScale*pgon.minDimension();
+   }
    let crc = Circle.mk(c,r);
-   
    let crcs =  crc.toShape(circleP);
    shapes.push(crcs);
   }

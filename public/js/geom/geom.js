@@ -725,7 +725,7 @@ LineSegment.along = function (fraction) {
   let rs = end0.plus(vec.times(fraction));
  // let rs2 = end0.plus(end1).times(fraction);
   //console.log('rs1',rs1.x,rs1.y,'rs2',rs2.x,rs2.y);
-  console.log('rs',rs.x,rs.y);
+ // console.log('rs',rs.x,rs.y);
   return rs;
 }
 
@@ -1880,16 +1880,36 @@ Polygon.center = function () {
   return Point.mk(tx/ln,ty/ln);
 }
 
-Polygon.left = function () {
+Polygon.min_or_max = function (x_or_y,min_or_max) {
+  let isX = x_or_y === 'x';
+  let isMin = min_or_max === 'min';
   let {corners} = this;
-  let rs = Infinity;
+  let rs = isMin?Infinity:-Infinity;
   corners.forEach( (c) => {
-    let cx = c.x;
-    if (cx < rs) {
-      rs = cx;
+    let cv = isX?c.x:c.y;
+    if (isMin?cv < rs:cv > rs) {
+      rs = cv
     }
   });
   return rs;
+}
+
+
+Polygon.left = function () {
+  return this.min_or_max('x','min');
+}
+
+Polygon.right = function () {
+  return this.min_or_max('x','max');
+}
+
+Polygon.top = function () {
+  return this.min_or_max('y','max');
+}
+
+
+Polygon.bottom = function () {
+  return this.min_or_max('y','min');
 }
 
 Polygon.sides = function () {
@@ -1917,10 +1937,14 @@ Polygon.mangle = function (params) {
   return msides;
 }
   
-Polygon.dimension = function () { // longest side length
-  let c = this.corners;
-  let d0 = c[0].distance(c[1]);
-  return d0;
+Polygon.minDimension = function () {
+  let minx = this.left();
+  let maxx = this.right();
+  let miny = this.bottom();
+  let maxy = this.top();
+  let dimx = maxx - minx;
+  let dimy = maxy - miny;
+  return Math.min(dimx,dimy);
 }
 
 Rectangle.toPolygon = function () {

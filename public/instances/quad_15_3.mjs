@@ -3,8 +3,8 @@ import {rs as generatorP} from '/generators/quad_15.mjs';
 
 let rs = generatorP.instantiate();
 
-rs.setName('quad_15_2');
-let levels = 3;
+rs.setName('quad_15_3');
+let levels = 7;
 rs.quadParams.levels = levels;
 //rs.quadParams.circleScale = 0.25;
 
@@ -17,6 +17,7 @@ rs.addToArray(visibles,1,levels);
 rs.quadParams.manglee = {'lengthen':.3,'twist':0.05*Math.PI,within:rs.canvasToRectangle()}
 rs.quadParams.chance = 0.95;
 rs.quadParams.chance = 0.7;
+rs.quadParams.chance = 1;
 
 rs.quadFill = function (qd) {
   let rb= Math.random() > 0.5;

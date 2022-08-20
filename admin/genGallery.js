@@ -29,7 +29,8 @@ let web = kind === 'web';
 let top =  kind === 'top';
 let sortByOrder = toBoolean(sortByOrderstr);
 let byKind = kind === 'byKind';
-let alternate = kind === 'alternate';
+//let alternate = kind === 'alternate';
+let alternate = kind === 'alt';
 let byLikes = kind === 'byLikes';
 let byAspect = kind === 'byAspect';
 let vertical = kind === 'vertical';
@@ -114,12 +115,14 @@ if (byLikes) {
   return;
 }
 
- pagesPath = `public/${imKind}Pages.js`;
-  pagesVar = `${imKind}Pages`;
-  titlesPath = `public/${imKind}Titles.js`;
-  titlesVar = `${imKind}Titles`;
-  localsPath = `public/${imKind}Locals.js`;
-  localsVar = `${imKind}Locals`;
+let pathKind = (drop || grid || lines || quad || web)?kind:imKind;  
+pagesPath = `public/${pathKind}Pages.js`;
+pagesVar = `${pathKind}Pages`;
+titlesPath = `public/${pathKind}Titles.js`;
+titlesVar = `${pathKind}Titles`;
+localsPath = `public/${pathKind}Locals.js`;
+localsVar = `${pathKind}Locals`;
+
   
  console.log('pagesPath',pagesPath)
 let outPath;
@@ -302,29 +305,32 @@ const thingString = function (order,ix,dir,useThumb,ititle,props) {
 	let ext = (spix.length === 1)?'jpg':spix[1];
 	let x = path + '.'+ ext;
   let title=ititle?ititle:pageNumber+'';
-  theTitles.push(ititle?ititle:pageNumber+'');
   let vpath = (variant?path+'_v_'+variant:path);
   //console.log('variant',variant);
   //console.log('vpath',vpath);
   let vx = vpath+'.'+ext;
-  thePages.push(vx);
-  if ((kind!== 'alternate') && (category !==  kind)) {
+  //if ((kind!== 'alternate') && (category !==  kind)) {
+  if ((kind!== 'alt') && (category !==  kind)) {
     return '</div>';
   }
+  thePages.push(vx);
+  theTitles.push(ititle?ititle:pageNumber+'');
+
 	let imsrc = `images/std_size/${vpath}.jpg`;
 	let thumbsrc = `images/thumbs/${vpath}.jpg`;
   let localSrc =`public/images/thumbs/${vpath}.jpg`;
   if (ix === 'drift_web') {
     //console.log('IIIIIXXXX',ix);
   }
-  //theLocals.push(localim?1:0);
+ // theLocals.push(localim?1:0);
 
   if (!(local_images || imagesHere)) {
 	  thumbsrc = `https://kingdomofpattern.com/images/thumbs/${vpath}.jpg`;
   }
 //console.log('thumbsrc',thumbsrc);
 	let pageArg = 'page='+pageNumber;
-  let kindArg = 'imKind='+imKind;
+ // let kindArg = 'imKind='+imKind;
+  let kindArg = 'imKind='+kind;
   let localArg = 'local='+(local_images||imagesHere?1:0);
 	let theImageArg = '';
 	pageNumber++;

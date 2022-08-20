@@ -98,8 +98,23 @@ document.addEventListener('DOMContentLoaded', () => {
   } else if (imKind === 'alt') {
     thePages = altPages;
     theTitles = altTitles;
-    theLocals = altLocals;
+   // theLocals = altLocals;
 
+  } else if (imKind === 'drop') {
+    thePages = dropPages;
+    theTitles = dropTitles;
+  } else if (imKind === 'lines') {
+    thePages = linesPages;
+    theTitles = linesTitles;
+  } else if (imKind === 'grid') {
+    thePages = gridPages;
+    theTitles = gridTitles;
+  } else if (imKind === 'quad') {
+    thePages = quadPages;
+    theTitles = quadTitles;
+  } else if (imKind === 'web') {
+    thePages = webPages;
+    theTitles = webTitles;
   }
 	//lastPage = getArgs.lastPage;
 	let title = theTitles[cPage];

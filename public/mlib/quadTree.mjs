@@ -189,6 +189,7 @@ rs.randomSplit = function (qd,ichance) {
   if (!qd) {
     debugger;
   }
+  debugger;
   let params = qd.root.params;
   let {chance,alwaysSplitBefore,levels} = params;
   if (!chance) {
@@ -319,6 +320,9 @@ rs.quadSplitParms = function (qd) {
   return splitParamsByLevel[lv];
 }
 
+rs.quadFill = function (qd) {
+}
+
 rs.displayCell = function (qd,toSegs) {	
   let {shapes,lineSegs,lineP,circleP,polygonP,mangles,lengthenings,twists,strokeWidths,orect} = this;
   let {circleScale} = qd.root.params;
@@ -336,12 +340,16 @@ rs.displayCell = function (qd,toSegs) {
   let shps;
   let strokew = this.quadStrokeWidth(qd);//strokeWidths[lnw];
   let stroke = this.quadStroke(qd);
+  let fill = this.quadFill(qd);
   const styleShape = (shp) => {
      if (strokew) {
        shp['stroke-width'] = strokew;
      }
      if (stroke) {
        shp.stroke = stroke;
+     }
+     if (fill) {
+       shp.fill = fill;
      }
   }
   if (mng) {

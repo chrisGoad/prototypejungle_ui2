@@ -28,15 +28,15 @@ let quad = kind === 'quad';
 let web = kind === 'web';
 let top =  kind === 'top';
 let sortByOrder = toBoolean(sortByOrderstr);
-let byKind = kind === 'byKind';
+//let byKind = kind === 'byKind';
 //let alternate = kind === 'alternate';
 let alternate = kind === 'alt';
-let byLikes = kind === 'byLikes';
-let byAspect = kind === 'byAspect';
-let vertical = kind === 'vertical';
-let horizontal = kind === 'horizontal';
-let horizontalnf = kind === 'horizontalnf'; // horizontal no frame
-let square = kind === 'square';
+//let byLikes = kind === 'byLikes';
+//let byAspect = kind === 'byAspect';
+//let vertical = kind === 'vertical';
+//let horizontal = kind === 'horizontal';
+//let horizontalnf = kind === 'horizontalnf'; // horizontal no frame
+//let square = kind === 'square';
 let imagesHere = kind === 'imagesHere';
 let images = (kind === 'images') || imagesHere;
 
@@ -51,56 +51,15 @@ if (forKOP) {
   orderMax = 10000;
 }
 
-console.log('kind','['+kind+']','sortByOrder',sortByOrder,'forKOP',forKOP,'byKind',byKind,'byAspect',byAspect,'byLikes',byLikes,'signed',signed,'horizontal',horizontal,'horizontalnf',horizontalnf);
+console.log('kind','['+kind+']','sortByOrder',sortByOrder,'forKOP',forKOP);
 //return;
 //let alternate = 0;
 let sectionsPath;
 let imKind;
-if (byLikes) {
-  sectionsPath = './images.js';
-  imKind = 'g';
-} else if (alternate) {
+if (alternate) {
   sectionsPath = './altSections.js';
   sortByOrder = 0;
   imKind = 'alt';
-} else if (byKind) {
-  sectionsPath = './byKindSections.js';
-  imKind = 'g';
-} else if (byAspect) {
-  sectionsPath = './byAspectSections.js'
-} else if (vertical) {
-  signed = 0;
-  imKind = 'v';
-  sectionsPath = './verticalSections.js';
-  pagesPath = 'public/vPages.js';
-  pagesVar = 'vPages';
-  titlesPath = 'public/vTitles.js';
-  titlesVar = 'vTitles';
-} else if (horizontal) {
-
-  signed = 0;
-    console.log('HORIZONTAL');
-
-  imKind = 'h';
-  sectionsPath = './horizontalSections.js';
-  pagesPath = 'public/hPages.js';
-  pagesVar = 'hPages';
-  titlesPath = 'public/hTitles.js';
-  titlesVar = 'hTitles';
-
-} else if (horizontalnf) {
-  console.log('HORIZONTALNF');
-  imKind = 'hnf';
-  sectionsPath = './horizontalnfSections.js';
-  pagesPath = 'public/hnfPages.js';
-  pagesVar = 'hnfPages';
-  titlesPath = 'public/hnfTitles.js';
-  titlesVar = 'hnfTitles';
-
-} else if (square) {
-  signed = 0;
-  imKind = 'sq';
-  sectionsPath = './squareSections.js';
 } else if (images || forKOP  || forPJ || drop || grid || lines || quad || web) {
   sectionsPath = './images.js';
   imKind = 'g'
@@ -465,22 +424,7 @@ let sectionString = function (things) {
     }
     return -1;
   }
-  if (byLikes) {
-    things.sort(compareLikes);
-  }
-  /*const compareByOrder = function (thing1,thing2) {
-    let order1 = thing1[0];
-    let order2 = thing2[0];
-    if (order1 === order2) {
-      return 0;
-    }
-    if (order1 > order2) { 
-      return 1;
-    }
-    return -1;
-  }*/
-  
-  //console.log('things unordered',things);
+ 
   if (sortByOrder) {
     things.sort(compareByOrder);
   }

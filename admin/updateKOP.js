@@ -22,8 +22,17 @@ const xferFiles = function (dir,files) {
   files.forEach( (file) => xferFile(dir,file));
 }
 
-xferFile('public','images.html','index.html');
-xferFiles('public',['gPages.js','gTitles.js','gLocals.js','page.html','pageSupport.js']);
+xferFile('public','galleries.html','index.html');
+xferFile('public','reallySetAtKOP.js','setAtKOP.js');
+//xferFile('public','galleries.html','index.html');
+//xferFile('public','images.html','index.html');
+xferFiles('public',['dropPages.js','dropTitles.js','dropImages.html',
+                     'linesPages.js','linesTitles.js','linesImages.html',
+                     'gridPages.js','gridTitles.js','gridImages.html',
+                     'quadPages.js','quadTitles.js','quadImages.html',
+                     'webPages.js','webTitles.js','webImages.html',
+                     'page.html','pageSupport.js']);
+//xferFiles('public',['gPages.js','gTitles.js','gLocals.js','page.html','pageSupport.js']);
 
  
 

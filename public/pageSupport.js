@@ -48,21 +48,9 @@ const onFull = function () {
   debugger;
 	window.location.href = imurl;
 }
-
 const onTop = function () {
   debugger;
-  let dst;
-	if (imKind === 'g') {
-    dst = 'index';
-  } else if (imKind === 'h') {
-    dst = 'horizontal';
-  } else if (imKind === 'hnf') {
-    dst = 'horizontalnf';
-  } else if (imKind === 'v') {
-    dst = 'vertical';
- } else if (imKind === 'sq') {
-    dst = 'square';
- }
+  let dst = atKOP?'index':'galleries';
 	window.location.href = './'+dst+'.html';
 }
 

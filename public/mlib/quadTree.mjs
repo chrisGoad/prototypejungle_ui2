@@ -189,7 +189,7 @@ rs.randomSplit = function (qd,ichance) {
   if (!qd) {
     debugger;
   }
-  debugger;
+//  debugger;
   let params = qd.root.params;
   let {chance,alwaysSplitBefore,levels} = params;
   if (!chance) {
@@ -323,6 +323,11 @@ rs.quadSplitParms = function (qd) {
 rs.quadFill = function (qd) {
 }
 
+
+rs.quadFillScale = function (qd) {
+ return 0;
+}
+
 rs.displayCell = function (qd,toSegs) {	
   let {shapes,lineSegs,lineP,circleP,polygonP,mangles,lengthenings,twists,strokeWidths,orect} = this;
   let {circleScale} = qd.root.params;
@@ -341,6 +346,7 @@ rs.displayCell = function (qd,toSegs) {
   let strokew = this.quadStrokeWidth(qd);//strokeWidths[lnw];
   let stroke = this.quadStroke(qd);
   let fill = this.quadFill(qd);
+  let fillScale = this.quadFillScale(qd);
   const styleShape = (shp) => {
      if (strokew) {
        shp['stroke-width'] = strokew;
@@ -351,6 +357,15 @@ rs.displayCell = function (qd,toSegs) {
      if (fill) {
        shp.fill = fill;
      }
+  }
+  const addShape = (sc) => {
+    if (rect) {
+      shps = rect.toShape(rectP,sc);
+    } else {
+      shps = pgon.toShape(polygonP,sc);
+    }
+    styleShape(shps);
+    shapes.push(shps);
   }
   if (mng) {
     let {lengthen:ln,twist:tw} = mng;
@@ -365,8 +380,22 @@ rs.displayCell = function (qd,toSegs) {
       styleShape(segs);
       shapes.push(segs);
     });
+    //stroke1
+     if (fill && fillScale) {
+       addShape(fillScale);
+       /*
+       if (rect) {
+        shps = rect.toShape(rectP,fillScale);
+      } else {
+        shps = pgon.toShape(polygonP,fillScale);
+      }
+      styleShape(shps);
+      shapes.push(shps);
+     */
+    }
   } else {
-    if (rect) {
+    addShape();
+  /*  if (rect) {
       shps = rect.toShape(rectP);
     } else {
       shps = pgon.toShape(polygonP);
@@ -374,7 +403,7 @@ rs.displayCell = function (qd,toSegs) {
    // mangled = geom.sides();
     styleShape(shps);
     shapes.push(shps);
-
+*/
   }
   
   if (circleScale) {

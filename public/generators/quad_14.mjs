@@ -13,7 +13,7 @@ let topParams = {width:wd,height:wd,framePadding:0.2*wd}
 Object.assign(rs,topParams);
 rs.quadParams = {chance:1,levels:4,polygonal:1,splitByCenter:1};
 let strokeWidths = rs.quadParams.strokeWidths = [];
-rs.computeExponentials(strokeWidths,rs.quadParams.levels,0.1,.9);
+rs.computeExponentials(strokeWidths,rs.quadParams.levels,0.4,.9);
 rs.initProtos = function () {
   this.polygonP =  polygonPP.instantiate();
   this.polygonP.stroke = 'white';
@@ -27,6 +27,20 @@ rs.initProtos = function () {
 
 rs.quadParams.mangle = {'lengthen':.3,'twist':0.05*Math.PI,within:rs.canvasToRectangle()};
 
+rs.quadFill = function (qd) {
+ //		 return null;
+  let lev = qd.where.length;
+  return lev?'yellow':null;
+  return 'rgb(0,0,200)';
+  return 'rgb(200,200,200)';
+  return 'black';//rgb(200,200,200)';
+}
+
+
+rs.quadFillScale = function (qd) {
+  let lev = qd.where.length;
+  return 0.1;
+}
 
 rs.offCenter = 0.2;
 rs.quadSplitParams = function (qd) {

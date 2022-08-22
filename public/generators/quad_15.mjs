@@ -18,7 +18,7 @@ rs.computeExponentials(strokeWidths,rs.quadParams.levels,0.1,.9);
 rs.initProtos = function () {
   this.polygonP =  polygonPP.instantiate();
   this.polygonP.stroke = 'white';
-  this.polygonP.fill = 'blue';
+  this.polygonP.fill = 'black';
   this.polygonP['stroke-width'] =0 ;
   this.lineP =  linePP.instantiate();
   this.lineP.stroke = 'white';

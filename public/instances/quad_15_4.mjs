@@ -3,7 +3,7 @@ import {rs as generatorP} from '/generators/quad_15.mjs';
 
 let rs = generatorP.instantiate();
 
-rs.setName('quad_15_1');
+rs.setName('quad_15_4');
 let levels = 7;
 rs.quadParams.levels = levels;
 //rs.quadParams.circleScale = 0.25;
@@ -17,7 +17,7 @@ rs.addToArray(visibles,1,levels);
 rs.quadParams.mangle = {'lengthen':.3,'twist':0.05*Math.PI,within:rs.canvasToRectangle()}
 
 let strokeWidths = rs.quadParams.strokeWidths = [];
-rs.computeExponentials(strokeWidths,rs.quadParams.levels,0.2,.9);
+rs.computeExponentials(strokeWidths,rs.quadParams.levels,0.3,.9);
 
 rs.quadStroke = function (qd) {
   debugger;
@@ -47,11 +47,11 @@ rs.quadSplitParams = function (qd) {
    //v= 0.4;
    let rs = this.randomizeFrom({ornt:['h','v'],fr0:v,fr1:v,fr2:v,fr3:v,fr4:v,fr5:v});
    //let rs = this.randomizeFrom({ornt:['h','v'],fr0:{low:.2,high:.8},fr1:{low:.2,high:.8},fr2:{low:.2,high:.8},fr3:{low:.2,high:.8},fr4:{low:.2,high:.8},fr5:{low:.2,high:.8}});
-   return rs;
+  // return rs;
 
    this.sp = rs;
    rs = this.randomizeFrom({ornt:['h','h'],fr0:{low:.6,high:.6},fr1:.2,fr2:.2,fr3:.6,fr4:0.3,fr5:.2});
-  // return rs;
+  //return rs;
    fr0 = 0.8
    rs = this.randomizeFrom({ornt:['h','h'],fr0:fr0,fr1:.2,fr2:.2,fr3:.6,fr4:0.3,fr5:.2});
    //console.log('ornt',rs.ornt,'fr0',rs.fr0);

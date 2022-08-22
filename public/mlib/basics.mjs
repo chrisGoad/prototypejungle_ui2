@@ -169,11 +169,19 @@ Rectangle.toShape = function (rectP,scale=1) {
  }
  
  
-Polygon.toShape = function (polygonP) {
+Polygon.toShape = function (polygonP,scale=1) {
    let {corners} = this;
    let rs = polygonP.instantiate();
    let pcorners = arrayShape.mk();
-   corners.forEach((c) => {pcorners.push(c.copy())});
+   if (scale) {
+     let cnt = this.center();
+     corners.forEach((c) => {
+        let vec = c.difference(cnt);
+        pcorners.push(cnt.plus(vec.times(scale)));
+      })
+   } else {
+     corners.forEach((c) => {pcorners.push(c.copy())});
+   }
    rs.corners = pcorners;
    return rs;
 }

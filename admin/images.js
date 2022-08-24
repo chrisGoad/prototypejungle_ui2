@@ -6,9 +6,23 @@ sections: [
 [
 [0,'quad_9_2','instances',1,'Quad 9 2',{likes:0,posted:0,category:'quad'}], 
  [0,'quad_9_3','instances',1,'Quad 9 3',{likes:0,posted:0,category:'quad'}], 
- [0,'quad_9_4','instances',1,'Quad 9 4',{likes:0,posted:0,category:'quad'}], 
+ //[0,'quad_9_4','instances',1,'Quad 9 4',{likes:0,posted:0,category:'quad'}], 
+ [0,'quad_9_6','instances',1,'Quad 9 6',{likes:0,posted:0,category:'quad'}], 
+ [0,'quad_11','instances',1,'Quad 11',{likes:0,posted:0,category:'quad'}], 
+ [0,'quad_11_2','instances',1,'Quad 11 2',{likes:0,posted:0,category:'quad'}], 
+ [0,'quad_11_4','instances',1,'Quad 11 4',{likes:0,posted:0,category:'quad'}], 
+ [0,'quad_15_1','instances',1,'Quad 15 1',{likes:0,posted:0,category:'quad'}], 
+ [0,'quad_15_3','instances',1,'Quad 15 3',{likes:0,posted:0,category:'quad'}], 
+ [0,'drop_space_junk','generators',1,'Space Junk',{likes:50,posted:1,category:'drop',variant:0}], 
  [0,'drop_light','generators',1,'Light',{likes:50,posted:1,category:'dropCircles',variant:0}], 
  [0,'drop_night','generators',1,'Beach At Night',{likes:50,posted:1,category:'dropCircles',variant:0}], 
+  [0,'drop_all_0','generators',1,'Thatch',{likes:0,posted:0,category:'drop'}], 
+  [0,'drop_circles_14','generators',1,'Circles',{likes:0,posted:0,category:'drop'}], 
+ [0,'drop_circles_3','generators',1,'Circles 3',{likes:0,posted:0,category:'drop'}], 
+ [0,'drop_circles_10','generators',1,'Circles 10',{likes:0,posted:0,category:'drop'}], 
+ [0,'drop_night','generators',1,'Beach At Night',{likes:0,posted:0,category:'drop'}], 
+  [0,'drop_rects_1','generators',1,'Rects 1',{likes:0,posted:0,category:'drop'}], 
+
  [0,'web_random_radius','generators',1,'Scratches',{likes:36,posted:1,category:'drop',variant:2}], 
  [0,'quad_3','generators',1,'Circles',{likes:72,posted:1,category:'quad',variant:2}], 
  //[0,'drop_whorls','generators',1,'Whorls',{likes:45,posted:1,category:'drop'}], 
@@ -34,7 +48,7 @@ sections: [
 	    [0,'drop_ice','generators',1,'Ice',{likes:44,posted:1,category:'drop'}], // was   [0,'drop0_0','final',1,'Ice',posted:1,category:'grid'}],
     [0,'grid_bump','generators',1,'Bump',{likes:0,posted:0,category:'grid'}],
     [0,'drop_clouds','generators',1,'Clouds',{likes:7,posted:1,category:'drop'}], // was [0,'drop0_0_1','final',1,'Clouds',posted:1,category:'grid'}],
-[0,'drop_horizon','generators',1,'Horizon',{likes:0,posted:0,category:'drop'}], //was  [0,'drop0_3','final',1,'Horizon']
+//[0,'drop_horizon','generators',1,'Horizon',{likes:0,posted:0,category:'drop'}], //was  [0,'drop0_3','final',1,'Horizon']
     [0,'drop_starry_night','generators',1,'Starry Night',{likes:47,posted:1,category:'drop'}], // was [0,'drop0__13','final',1,'Starry Night']
    [0,'grid_sphere','generators',1,'Sphere',{likes:4,posted:1,category:'grid'}],
     [0,'grid_distortion_field_warped','instances',1,'Distortion Field',{likes:11,posted:1,category:'grid',sources:1}],  // was [0,'grid0_28','final',1,'Distortion Field',posted:1,category:'grid'}],

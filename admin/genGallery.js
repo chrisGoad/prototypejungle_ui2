@@ -290,6 +290,7 @@ const thingString = function (order,ix,dir,useThumb,ititle,props) {
 	let pageArg = 'page='+pageNumber;
  // let kindArg = 'imKind='+imKind;
   let kindArg = 'imKind='+kind;
+  console.log('kindArg',kindArg);
   let localArg = 'local='+(local_images||imagesHere?1:0);
 	let theImageArg = '';
 	pageNumber++;

@@ -50,8 +50,16 @@ const onFull = function () {
 }
 const onTop = function () {
   debugger;
-  let dst = atKOP?'index':'galleries';
-	window.location.href = './'+dst+'.html';
+  let dst = imKind + 'Images.html';
+ /* switch (imKind) {
+  case'quad'
+    dst = 'quadImages';
+    break;
+  case'dr'
+    dst = 'quadImages';
+    break;*/
+  //let dst = atKOP?'index':'galleries';
+	window.location.href = './'+dst;
 }
 
 let imKind,imLocalS,thePages,theTitles,theLocals,imurl;

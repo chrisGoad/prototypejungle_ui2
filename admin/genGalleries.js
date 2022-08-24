@@ -2,6 +2,7 @@
 let kind = process.argv[2];
 //let forKOPstr = process.argv[3];
 let sortByOrderstr = "1";
+let alwaysLocal = 1;
 /*
 if (process.argv[3]==="0") {
   sortByOrderstr = "0";
@@ -37,7 +38,7 @@ let square = kind === 'square';
 let imagesHere = kind === 'imagesHere';
 let images = (kind === 'images') || imagesHere;
 
-let local_images = (kind === 'local_images') || alternate ;
+let local_images = alwaysLocal || (kind === 'local_images') || alternate ;
 let whichPage = 1;
 let orderMin,orderMax;
 if (forKOP) {
@@ -110,9 +111,13 @@ if (byLikes) {
 }
 
  pagesPath = `public/${imKind}Pages.js`;
+ pagesPath = `public/${kind}Pages.js`;
   pagesVar = `${imKind}Pages`;
+  pagesVar = `${kind}Pages`;
   titlesPath = `public/${imKind}Titles.js`;
+  titlesPath = `public/${kind}Titles.js`;
   titlesVar = `${imKind}Titles`;
+  titlesVar = `${kind}Titles`;
   localsPath = `public/${imKind}Locals.js`;
   localsVar = `${imKind}Locals`;
   
@@ -288,7 +293,7 @@ let numPages = 0;
 const thingString = function (order,ix,dir,useThumb,ititle,props) {
 	debugger;
   let {variant,likes,posted,category,sources} = props;
-  console.log('POSTED',posted,'category',category,'kind',kind);
+ // console.log('POSTED',posted,'category',category,'kind',kind);
   if (category !==  kind) {
     return '</div>';
   }
@@ -316,7 +321,8 @@ const thingString = function (order,ix,dir,useThumb,ititle,props) {
   }
 //console.log('thumbsrc',thumbsrc);
 	let pageArg = 'page='+pageNumber;
-  let kindArg = 'imKind='+imKind;
+  //let kindArg = 'imKind='+imKind;
+  let kindArg = 'imKind='+kind;
   let localArg = 'local='+(local_images||imagesHere?1:0);
 	let theImageArg = '';
 	pageNumber++;
@@ -336,20 +342,20 @@ const thingString = function (order,ix,dir,useThumb,ititle,props) {
     } else {
       rs = `<div><p class="centered"><a style="color:white" href="http://localhost:8081/draw.html?source=/${dir}/${path}.${fileExt}${theImageArg}">${title}</a><p/>`;
     }
-    console.log("RRRRSSS",rs);
+ //   console.log("RRRRSSS",rs);
     rs = rs +
     `<p class="centered"><a style="color:white" href="${srcUrl}">${sourcenm}</a></p>
     <p class="centered">${astart}<img width="200" src="${thumbsrc}" alt="Image Missing"></a></p></div>`;
 	} else {
     srcUrl = (sources)?`doc/${path}_sources.html`:`${dir}/${path}.${fileExt}`;
-		console.log('not for KOP');
+	//	console.log('not for KOP');
     rs = `<div><p style="text-align:center"><a href="http://localhost:8081/draw.html?source=/${dir}/${path}.${fileExt}${theImageArg}">${title}</a><br/>
     <a href="${srcUrl}">${sourcenm}</a><br/>
     ${propsStr}
     ${astart}<img width="200" src="${thumbsrc}"></a></p></div>
     `;
 	}
-  console.log ('rs = ',rs);
+ // console.log ('rs = ',rs);
 	return rs;
 }
 

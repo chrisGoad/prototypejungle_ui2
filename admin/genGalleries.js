@@ -28,7 +28,7 @@ let quad = kind === 'quad';
 let web = kind === 'web';
 let sortByOrder = toBoolean(sortByOrderstr);
 let byKind = kind === 'byKind';
-let alternate = kind === 'alternate';
+let alternate = kind === 'alt';
 let byLikes = kind === 'byLikes';
 let byAspect = kind === 'byAspect';
 let vertical = kind === 'vertical';
@@ -58,7 +58,7 @@ if (byLikes) {
   sectionsPath = './images.js';
   imKind = 'g';
 } else if (alternate) {
-  sectionsPath = './altSections.js';
+ sectionsPath = './altSections.js';
   sortByOrder = 0;
   imKind = 'alt';
 } else if (byKind) {
@@ -294,7 +294,7 @@ const thingString = function (order,ix,dir,useThumb,ititle,props) {
 	debugger;
   let {variant,likes,posted,category,sources} = props;
  // console.log('POSTED',posted,'category',category,'kind',kind);
-  if (category !==  kind) {
+  if ((kind !== 'alt') && (category !==  kind)) {
     return '</div>';
   }
 	let spix = ix.split('.');
@@ -379,7 +379,7 @@ const stripOrnt = function (str) {
     return rs;
   }
  const getOrder = function (thing) {
- // console.log('getOrder',thing);
+  //console.log('getOrder',thing);
     let file = stripOrnt(thing[1]);
     let props = thing[5];
     let vr = props.variant;
@@ -391,7 +391,7 @@ const stripOrnt = function (str) {
  
     
   const compareByOrder = function (thing1,thing2) {
-  //  console.log('compareByOrder',thing1,thing2);
+    console.log('compareByOrder',thing1,thing2);
     if ((thing1.length === 1) || (thing2.length ===1)) {
       return 0;
     }
@@ -414,6 +414,7 @@ const stripOrnt = function (str) {
       
  
 let sectionString = function (things) {
+  //console.log('things',things);
 	let numThingsThisLine = 0;
 	let startLine =  `
 <div class="theGrid">
@@ -424,6 +425,7 @@ let sectionString = function (things) {
   <div></div>
   `;
 	let ln = things.length;
+  //console.log('ln',ln);
   const compareLikes = function (thing1,thing2) {
     let likes1 = (thing1.length >= 6)?thing1[5]:0;
     let likes2 = (thing1.length >= 6)?thing2[5]:0;
@@ -436,7 +438,7 @@ let sectionString = function (things) {
     return -1;
   }
   if (byLikes) {
-    things.sort(compareLikes);
+   // things.sort(compareLikes);
   }
   /*const compareByOrder = function (thing1,thing2) {
     let order1 = thing1[0];
@@ -458,6 +460,7 @@ let sectionString = function (things) {
 //  ln = 2;
 	for (let i=0;i<ln;i++) {
 		let thing = things[i];
+   // console.log('thing',thing,'i',i);
     let tln = thing.length;
     if (tln === 1) {
    //   console.log("Section");
@@ -477,6 +480,7 @@ let sectionString = function (things) {
         continue;
       }
       let ts = thingString(ord,file,directory,useThumb,title,props);
+//console.log('ts',ts);
       if (ts!=='</div>') {
         rs+=ts;
        //rs += thingString(file,directory,useThumb,title,image);
@@ -501,7 +505,8 @@ let sectionString = function (things) {
 
 const sectionsString = function (sections) {
 	let rs = '';
-	sections.forEach((section) => rs += sectionString(section));
+	//sections.forEach((section) => rs += sectionString(section));
+	rs += sectionString(sections);
 	return rs;
 
 }
@@ -540,7 +545,7 @@ const writePage = function (sections) {
 //let sectionsC = require(alternate?'./altSections.js':'./gridSections.js');
 let sectionsC = require(sectionsPath);
 let imageOrder  = require('./imageOrder.js');
-//console.log('imageOrder',imageOrder);
+//console.log('sectionsC', sectionsC);
 
 const order2dict = function (order) {
   let rs = {};
@@ -563,7 +568,7 @@ const countPages = function (sections) {
 	return rs;
 }
 		
-numPages = countPages(sectionsC.sections);
+//numPages = countPages(sectionsC);
 
  writePage(sectionsC.sections);
  writeThePages();

@@ -1,7 +1,7 @@
 /*
 */
 module.exports = {
-sections: [
+sections: 
 
 [  
 /* Puzzle: Which three of the quadrants are the same, and which is different? Before you saw the differences in what sense did you "see" the quadrants?"*/
@@ -32,7 +32,8 @@ sections: [
 [0,'quad_15_1','instances',1,'Quad 15 1',{likes:0,posted:0,category:'quad'}], 
 [0,'quad_15_2','instances',1,'Quad 15 2',{likes:0,posted:0,category:'quad'}], 
 [0,'quad_15_3','instances',1,'Quad 15 3',{likes:0,posted:0,category:'quad'}], 
-[0,'quad_15_4','instances',1,'Quad 15 4',{likes:0,posted:0,category:'quad'}], 
+//[0,'quad_15_4','instances',1,'Quad 15 4',{likes:0,posted:0,category:'quad'}], 
+[0,'quad_15_5','instances',1,'Quad 15 5',{likes:0,posted:0,category:'quad'}], 
 
  [0,'quad_11_combo_1','instances',1,'Quad 11 Combo 1',{likes:0,posted:0,category:'quad'}], 
  //[0,'quad_2_v_2','generators',1,'Circles and Squares',{likes:0,posted:0,category:'quad',version:2}], 
@@ -255,7 +256,7 @@ sections: [
 		 	 [0,'multgrid1','gen2',1],
 		 	 [0,'rwGrid2','gen2',1],
 		 	 [0,'grid_zigzag','generators',1],*/
-]]
+]
 };
 	
  

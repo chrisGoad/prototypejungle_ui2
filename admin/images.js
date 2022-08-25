@@ -14,7 +14,7 @@ sections: [
  [0,'quad_15_1','instances',1,'Quad 15 1',{likes:0,posted:0,category:'quad'}], 
  [0,'quad_15_3','instances',1,'Quad 15 3',{likes:0,posted:0,category:'quad'}], 
  [0,'drop_space_junk','generators',1,'Space Junk',{likes:50,posted:1,category:'drop',variant:0}], 
- [0,'drop_light','generators',1,'Light',{likes:50,posted:1,category:'dropCircles',variant:0}], 
+ [0,'drop_light','generators',1,'Light',{likes:50,posted:1,category:'drop',variant:0}], 
  [0,'drop_night','generators',1,'Beach At Night',{likes:50,posted:1,category:'dropCircles',variant:0}], 
   [0,'drop_all_0','generators',1,'Thatch',{likes:0,posted:0,category:'drop'}], 
   [0,'drop_circles_14','generators',1,'Circles',{likes:0,posted:0,category:'drop'}], 

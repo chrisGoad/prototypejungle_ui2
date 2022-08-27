@@ -335,7 +335,6 @@ rs.displayCell = function (qd,toSegs) {
   if (!vs) {
     return;
   }
-  debugger;
   let {where,rectangle:rect,polygon:pgon} = qd;
   let lv = where.length;
   //let mng = mangles?mangles[lv]:0;
@@ -434,7 +433,7 @@ rs.computeExponentials = function (rs,n,fc,root) {
 
 rs.initialize = function () {
   let {width:wd,height:ht,quadParams,dropParams} = this;
-  debugger;
+ // debugger;
   let {emitLineSegs,polygonal} = quadParams;
   this.addFrame();
   this.initProtos();

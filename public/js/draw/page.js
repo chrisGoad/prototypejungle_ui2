@@ -1,13 +1,16 @@
 
 let bkColor = "white";
-let topbarDiv,cols,svgDiv,saveBut,saveMpixBut,ctopDiv,svgMessageDiv;
+let topbarDiv,cols,svgDiv,saveBut,saveMpixBut,stepBut,ctopDiv,svgMessageDiv,nextBut;;
 
 let mpg;
 const buildPage = function () {
 saveBut = document.getElementById('saveButton');
 saveMpixBut = document.getElementById('saveMpixButton');
+stepBut = document.getElementById('stepButton');
 saveBut.addEventListener("click", () => saveTheImage(0));
 saveMpixBut.addEventListener("click", () => saveTheImage(1));
+stepBut.addEventListener("click", stepAnimation);
+
 mpg =  html.wrap("main",'div',{style:{position:"absolute","margin":"0px",padding:"0px",display:"none"}}).
 __addChildren([
   topbarDiv = html.wrap('topbar','div',{style:{position:"absolute",height:"10px",left:"0px","background-color":bkColor,margin:"0px",padding:"0px"}}).

@@ -125,6 +125,7 @@ const pauseAnimation = function () {
 
 
 const stepAnimation = function () {
+  debugger;
 	let main = core.root.main;
 	if (main.oneStep) {
 		main.oneStep(true);

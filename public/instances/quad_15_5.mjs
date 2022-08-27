@@ -20,23 +20,86 @@ let strokeWidths = rs.quadParams.strokeWidths = [];
 rs.computeExponentials(strokeWidths,rs.quadParams.levels,0.2,.9);
 
 rs.quadStroke = function (qd) {
-  debugger;
   return Math.random() > 0.5?'rgb(150,150,250)':'rgb(250,150,150)';
 }
 
+
+let aminv = 20;
+let amaxv = 80;
+let astep  = 10;
+
+let ar = [aminv,aminv];
+let maxIndex = ar.length-1;
+const stepArray = function (index) {
+  if (index>maxIndex) {
+    return 0;
+  }
+  let v = ar[index];
+  let nv = v + astep;
+  if (nv > amaxv) {
+    for (let i=index;i<=maxIndex;i++) {
+      ar[i] = aminv;
+    }
+    return 0;
+   }
+  
+   if (stepArray(index+1)) {
+     return 0;
+   } 
+   ar[index] = nv;
+   for (let i=index+1;i<=maxIndex;i++) {
+      ar[i] = aminv;
+   }
+   return 1;
+ }
+ 
+ 
+let qdp = {ornt:'v',fr0:0.2,fr1:0.2,fr2:0.2,fr3:0.2,fr4:0.2,fr5:0.2};
+let whichToStep = [[1,3],[0,4]];
+ar = [];
+let wln = whichToStep.length;
+for (let i=0;i<wln;i++) {
+  ar.push(aminv);
+}
+rs.stepQuadParams = function () {
+  debugger;
+  /*
+  let v = [0.2,0.8];
+  qdp = this.randomizeFrom({ornt:['h','h'],fr0:v,fr1:v,fr2:v,fr3:v,fr4:v,fr5:v});
+  return qdp;
+  */
+  let ln = whichToStep.length;
+  stepArray(0);
+  for (let i=0;i<ln;i++) {
+    let wts = whichToStep[i];
+    wts.forEach((idx) => {
+      let frnm = 'fr'+wts[i];
+      let av = ar[i];
+      qdp[frnm] = 0.01*av;
+     });
+  }
+ }
+ 
+ /*
+ let cqdpv = 0.2;
+  let qdp = initQdp(cqdpv);
+
+ rs.stepAllQuadParams = () => {
+   cqdpv = cqdpv + qfrstep;
+   qdp = initQdp(cqdpv);
+ }
+ */
 rs.quadSplitParams = function (qd) {
-   //let v = 0.7;
-   debugger;
+   return qdp;
    let wd = this.width;
    let hwd = 0.5*wd;
    let pgon = qd.polygon;
    let lft = pgon.left();
    let fr = (lft + hwd) / wd;
-   console.log('fr',fr);
+  // console.log('fr',fr);
    let fr0 = 0.3+fr * 2 * 0.6;
-      console.log('fr0',fr0);
+    //  console.log('fr0',fr0);
 
-   debugger;
    if (1 && this.sp) {
      return this.sp;
    }
@@ -46,10 +109,11 @@ rs.quadSplitParams = function (qd) {
    v = {low:-.5,high:1.5};
    v = {low:.2,high:.8};
    //v= 0.4;
-   let rs = this.randomizeFrom({ornt:['h','h'],fr0:v,fr1:v,fr2:v,fr3:v,fr4:v,fr5:v});
+   //lrs = this.randomizeFrom({ornt:['h','h'],fr0:v,fr1:v,fr2:v,fr3:v,fr4:v,fr5:v});
       this.sp = rs;
+   console.log('rs',JSON.stringify(rs));
 
-   //let rs = this.randomizeFrom({ornt:['h'],fr0:{low:.2,high:.8},fr1:{low:.2,high:.8},fr2:{low:.2,high:.8},fr3:{low:.2,high:.8},fr4:{low:.2,high:.8},fr5:{low:.2,high:.8}});
+   
    return rs;
 
    this.sp = rs;
@@ -60,6 +124,23 @@ rs.quadSplitParams = function (qd) {
    //console.log('ornt',rs.ornt,'fr0',rs.fr0);
    console.log('rs',rs);
   return rs;
+}
+rs.oneStep = function () {
+ //alert('one step');
+ /* debugger;
+  console.log('ar',JSON.stringify(ar));
+  stepArray(0);
+  return;*/
+  this.shapes.remove();
+  this.set('shapes',arrayShape.mk());
+  this.sp = undefined;
+  this.initialize();
+  draw.refresh();
+     console.log('qdp',JSON.stringify(qdp));
+  debugger;
+  
+  this.stepQuadParams();
+
 }
 /*
 fr0: 0.5669432372599208

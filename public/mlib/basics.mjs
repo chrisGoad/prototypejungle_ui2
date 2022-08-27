@@ -399,7 +399,6 @@ item.addToArray = function (a,v,n) {
 item.computeExponentials = function (a,n,fc,root) {
   for (let i=0;i<=n;i++) {
     let cv = fc*Math.pow(root,i);
-    console.log('cv',cv);
     a.push(cv);
   }
 }

@@ -1,7 +1,7 @@
 /* wall driftweb shelter
 */
 module.exports = {
-sections: [
+sections: 
 
 [
 [0,'quad_9_2','instances',1,'Quad 9 2',{likes:0,posted:0,category:'quad'}], 
@@ -86,9 +86,9 @@ sections: [
 		   [0,'grid_4','generators','square','Grid 4',{likes:0,posted:0,category:'grid'}],// was [0,'grid_0_5','final','square','Grid 4']
 		 	[0,'grid_void','generators','wide1','Void',{likes:100,posted:1,category:'grid'}], // was [0,'grid0_8_18','final','wide1','Void'], 
       
-],
-
 ]
+
+
 };
 	
  

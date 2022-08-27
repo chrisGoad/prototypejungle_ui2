@@ -1,7 +1,7 @@
 /* wall driftweb shelter
 */
 module.exports = {
-sections: [
+sections: 
 
 [
 
@@ -13,7 +13,7 @@ sections: [
  [0,'lines_chaos_within_order','generators',1,'Lines',{likes:532,posted:1,category:'top'}]
 ],
 
-]
+
 };
 	
  

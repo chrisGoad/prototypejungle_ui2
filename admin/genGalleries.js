@@ -19,8 +19,9 @@ const toBoolean = (v) => {
 let signed = 0
 //let signed = toBoolean(signedstr);
 //let forKOP = toBoolean(forKOPstr);
-let forKOP = kind === 'forKOP';
+let forKOP = 1;
 let forPJ = kind === 'forPJ';
+let top = kind === 'top';
 let drop = kind === 'drop';
 let grid = kind === 'grid';
 let lines = kind === 'lines';
@@ -99,10 +100,13 @@ if (byLikes) {
   signed = 0;
   imKind = 'sq';
   sectionsPath = './squareSections.js';
+}  else if (top)  {
+  sectionsPath = './galleries.js';
+  imKind = 'g'
 } else if (images || forKOP  || forPJ || drop || grid || lines || quad || web)  {
   sectionsPath = './images.js';
   imKind = 'g'
-} else if (local_images)  {
+}  else if (local_images)  {
   sectionsPath = './images.js';
   imKind = 'g'
 } else {
@@ -128,8 +132,10 @@ if (alternate) {
 } else if (alternate) {
   outPath = 'public/altImages.html';
 } else if (drop) {
-  outPath = 'public/dropImages.html';
-} else if (grid) {
+   outPath = 'public/dropImages.html';
+} else if (top) {
+   outPath = 'public/galleries.html';
+}  else if (grid) {
   outPath = 'public/gridImages.html';
 } else if (lines) {
   outPath = 'public/linesImages.html';
@@ -150,7 +156,8 @@ if (alternate) {
 } else if (square) {
   outPath = 'public/square.html';
 } else {
-  outPath = (local_images)?"public/local_images.html":'public/images.html';
+  //outPath = (local_images)?"public/local_images.html":'public/images.html';
+  outPath = 'public/images.html';
 }
 console.log('sectionsPath', sectionsPath,'outPath',outPath);
 
@@ -322,6 +329,7 @@ const thingString = function (order,ix,dir,useThumb,ititle,props) {
 //console.log('thumbsrc',thumbsrc);
 	let pageArg = 'page='+pageNumber;
   //let kindArg = 'imKind='+imKind;
+  console.log('kind',kind);
   let kindArg = 'imKind='+kind;
   let localArg = 'local='+(local_images||imagesHere?1:0);
 	let theImageArg = '';
@@ -329,10 +337,28 @@ const thingString = function (order,ix,dir,useThumb,ititle,props) {
 	let lastPageArg = (pageNumber === numPages)?'&lastPage=1':'';
 	let rs,srcUrl;
 	let astart = `<a style="color:white" href="page.html?image=${vx}&${pageArg}&${kindArg}&${localArg}">`;
+  	let galURL,galStartgalLink;
+  if (top) {
+    if (title === 'Drops') {
+      galURL = "dropImages.html";
+    } else if (title === 'Lines') {
+      galURL = "linesImages.html";
+    } else if (title === 'Quad Trees') {
+      galURL = "quadImages.html";
+    } else if (title === 'Grids') {
+      galURL = "gridImages.html";
+    } else if (title === 'Webs') {
+      galURL = "webImages.html";
+    } 
+
+    galStart = `<a style="color:white" href="${galURL}">`;
+    galLink = `${galStart}${title}</a>`
+  }
   //console.log('ASTART',astart);
   let propsStr = imagesHere?`<span style="font-size:10pt">${likes?'Likes '+likes:''} ${posted?"":" NOT POSTED"} ${local_images?'Local':''} ${category}</span><br/>`:'';;
   let sourcenm = `source${sources?'s':''}`;
-	if (forKOP || forPJ) {
+	//if (forKOP || forPJ) {
+	if ( forPJ) {
 		//let titleLink = title?`${astart}${title}</a></p>`:'';
 		let titleLink = title?`${astart}${title}</a>`:'';
 		console.log('forKOP');
@@ -346,6 +372,12 @@ const thingString = function (order,ix,dir,useThumb,ititle,props) {
     rs = rs +
     `<p class="centered"><a style="color:white" href="${srcUrl}">${sourcenm}</a></p>
     <p class="centered">${astart}<img width="200" src="${thumbsrc}" alt="Image Missing"></a></p></div>`;
+	} else if (top) {
+		console.log('top');
+    rs = `<div><p class="centered">${galLink}</p>`;
+
+    rs = rs +
+    `<p class="centered">${galStart}<img width="200" src="${thumbsrc}" alt="Image Missing"></a></p></div>`;
 	} else {
     srcUrl = (sources)?`doc/${path}_sources.html`:`${dir}/${path}.${fileExt}`;
 	//	console.log('not for KOP');
@@ -391,7 +423,7 @@ const stripOrnt = function (str) {
  
     
   const compareByOrder = function (thing1,thing2) {
-    console.log('compareByOrder',thing1,thing2);
+   // console.log('compareByOrder',thing1,thing2);
     if ((thing1.length === 1) || (thing2.length ===1)) {
       return 0;
     }

@@ -55,19 +55,22 @@ const stepArray = function (index) {
  
  
 let qdp = {ornt:'v',fr0:0.2,fr1:0.2,fr2:0.2,fr3:0.2,fr4:0.2,fr5:0.2};
-let whichToStep = [[1,3],[0,4]];
+let whichToStep = [[0,2,4],[1,3,5]];
+whichToStep = [[0,1,2],[3,4,5]];
 ar = [];
 let wln = whichToStep.length;
 for (let i=0;i<wln;i++) {
   ar.push(aminv);
 }
+let randomQP = 0;
 rs.stepQuadParams = function () {
   debugger;
-  /*
-  let v = [0.2,0.8];
-  qdp = this.randomizeFrom({ornt:['h','h'],fr0:v,fr1:v,fr2:v,fr3:v,fr4:v,fr5:v});
-  return qdp;
-  */
+  if (randomQP) {
+    let v = [0.2,0.8];
+    		v = {low:0.2,high:0.8};
+    qdp = this.randomizeFrom({ornt:['h','h'],fr0:v,fr1:v,fr2:v,fr3:v,fr4:v,fr5:v});
+    return qdp;
+  }
   let ln = whichToStep.length;
   stepArray(0);
   for (let i=0;i<ln;i++) {

@@ -407,6 +407,7 @@ item.randomBetween = function (lh) {
   let {low,high} = lh;
   let d = high-low;
   let rs = low + Math.random() * d;
+  rs = 0.01 * Math.floor(100*rs);
   return rs;
 }
 

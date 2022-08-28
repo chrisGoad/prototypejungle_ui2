@@ -437,7 +437,54 @@ item.randomizeFrom = function (o) {
 }
     
   
+// Stepper 
 
+item.Stepper = {};
+
+item.mkStepper = function () {
+  return Object.create(this.Stepper);
+}
+
+item.Stepper.min = 10;
+item.Stepper.max = 90;
+item.Stepper.stepSize  = 10;
+
+item.Stepper.init = function (n) {
+  let ar = [];
+  for (let i=0;i<n;i++) {
+    ar[i] = this.min;
+   }
+  this.ar = ar;
+  this.maxIndex = n-1;
+}
+
+item.Stepper.step = function (index) {
+  let {ar,min,max,stepSize,maxIndex} = this;
+  debugger;
+  if (!ar) {
+    ar = rs.ar = [min,max];
+    rs.maxIndex = ar.length-1;
+  }
+  if (index>maxIndex) {
+    return 0;
+  }
+  let v = ar[index];
+  let nv = v + stepSize;
+  if (nv > max) {
+    for (let i=index;i<=maxIndex;i++) {
+      ar[i] = min;
+    }
+    return 0;
+   }
+   if (this.step(index+1)) {
+     return 0;
+   } 
+   ar[index] = nv;
+   for (let i=index+1;i<=maxIndex;i++) {
+      ar[i] = min;
+   }
+   return 1;
+ }
 
 
 

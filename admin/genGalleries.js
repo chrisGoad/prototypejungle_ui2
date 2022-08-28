@@ -44,7 +44,7 @@ let whichPage = 1;
 let orderMin,orderMax;
 if (forKOP) {
   orderMin = -1;
-  orderMax = 272;
+  orderMax = 10000;
 } else {
   orderMin = -1;
   orderMax = 10000;
@@ -300,7 +300,7 @@ let numPages = 0;
 const thingString = function (order,ix,dir,useThumb,ititle,props) {
 	debugger;
   let {variant,likes,posted,category,sources} = props;
- // console.log('POSTED',posted,'category',category,'kind',kind);
+  console.log('POSTED',posted,'category',category,'kind',kind);
   if ((kind !== 'alt') && (category !==  kind)) {
     return '</div>';
   }

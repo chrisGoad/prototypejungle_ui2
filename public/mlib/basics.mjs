@@ -450,42 +450,45 @@ item.Stepper.max = 90;
 item.Stepper.stepSize  = 10;
 
 item.Stepper.init = function (n) {
-  let ar = [];
+  let ar = this.ar = [];
+  let loopIndices = this.loopIndices = [];
+
   for (let i=0;i<n;i++) {
     ar[i] = this.min;
+    loopIndices[i] = 0;  
    }
-  this.ar = ar;
   this.maxIndex = n-1;
 }
+  
 
 item.Stepper.step = function (index) {
-  let {ar,min,max,stepSize,maxIndex} = this;
-  debugger;
-  if (!ar) {
-    ar = rs.ar = [min,max];
-    rs.maxIndex = ar.length-1;
-  }
+  let {ar,min,max,stepSize,maxIndex,loopIndices} = this;
+  let loopOdd=0;
+  let loopIndex;
+  loopIndex = loopIndices[index];
+  loopOdd = loopIndex%2;
   if (index>maxIndex) {
-    return 0;
+    return 1;
   }
-  let v = ar[index];
-  let nv = v + stepSize;
-  if (nv > max) {
-    for (let i=index;i<=maxIndex;i++) {
-      ar[i] = min;
-    }
-    return 0;
+  if (this.step(index+1)) {
+    let v = ar[index];
+    let nv = v + (loopOdd?-stepSize:stepSize);
+    if ((nv > max) || (nv< min)) {
+      this.loopIndices[index] =  loopIndex+1;
+      return 1;
+    } else {
+      ar[index] =nv;
+      return;
+     }
    }
-   if (this.step(index+1)) {
-     return 0;
-   } 
-   ar[index] = nv;
-   for (let i=index+1;i<=maxIndex;i++) {
-      ar[i] = min;
-   }
-   return 1;
  }
 
+item.resetShapes = function () {
+  this.shapes.remove();
+  this.set('shapes',arrayShape.mk());
+  this.initialize();
+  draw.refresh();
+}
 
 
 core.root.backgroundColor = 'black';

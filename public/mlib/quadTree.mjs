@@ -421,15 +421,29 @@ rs.displayCell = function (qd,toSegs) {
   }
 }
 
-/*
-rs.computeExponentials = function (rs,n,fc,root) {
-  for (let i=0;i<=n;i++) {
-    let cv = fc*Math.pow(root,i);
-    console.log('cv',cv);
-    rs.push(cv);
+rs.stepQuadParams = function (params) {
+  debugger;
+  let {randomize,quadParams:qdp,whichToStep,range:v,stepper} = params;
+  if (randomize) {
+    let rs = this.randomizeFrom({ornt:['h','v'],fr0:v,fr1:v,fr2:v,fr3:v,fr4:v,fr5:v});
+    return rs;
   }
-}
-*/
+  let ln = whichToStep.length;
+ // let qdp = {ornt};
+  stepper.step(0);
+  console.log(JSON.stringify(this.ar));
+  for (let i=0;i<ln;i++) {
+    let wts = whichToStep[i];
+    let wtsln = wts.length;
+    for (let j=0;j<wtsln;j++) {
+      let idx = wts[j];
+      let frnm = 'fr'+idx;
+      let av = stepper.ar[i];
+      qdp[frnm] = 0.01*av;
+     };
+  }
+ // return qdp;
+ }
 
 rs.initialize = function () {
   let {width:wd,height:ht,quadParams,dropParams} = this;

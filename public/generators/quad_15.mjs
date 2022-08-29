@@ -8,13 +8,14 @@ import {rs as addQuadMethods} from '/mlib/quadTree.mjs';
 let rs = basicP.instantiate();
 addQuadMethods(rs);
 rs.setName('quad_15');
-
+debugger;
 let wd = 100;
 let topParams = {width:wd,height:wd,framePadding:0.2*wd}
 Object.assign(rs,topParams);
 rs.quadParams = {chance:1,levels:7,polygonal:1};
-let strokeWidths = rs.quadParams.strokeWidths = [];
-rs.computeExponentials(strokeWidths,rs.quadParams.levels,0.1,.9);
+//let strokeWidths = rs.quadParams.strokeWidths = [];
+//rs.computeExponentials(strokeWidths,levels,0.1,0.9);
+
 rs.initProtos = function () {
   this.polygonP =  polygonPP.instantiate();
   this.polygonP.stroke = 'white';
@@ -31,8 +32,8 @@ rs.initProtos = function () {
 
 
 //rs.quadParams.mangle = {'lengthen':.3,'twist':0.05*Math.PI,within:rs.canvasToRectangle()}
-rs.offCenter = 0.2;
-rs.quadSplitParams = function (qd) {
+//rs.offCenter = 0.2;
+rs.quadSplitParamss = function (qd) {
    //let v = 0.7;
    debugger;
    if (this.sp) {
@@ -48,34 +49,8 @@ rs.quadSplitParams = function (qd) {
    console.log('ornt',rs.ornt,'fr0',rs.fr0);
   return rs;
 }
-/*
-rs.initialPolygon = Rectangle.mk(Point.mk(-0.5*wd,-0.5*wd),Point.mk(wd,wd)).toPolygon();
-rs.initializee = function () {
-  let {width:wd,height:ht,quadParams,initialPolygon:pgon} = this;
-  //this.addFrame();
-  this.initProtos();
-  this.strokeWidths = this.computeExponentials(quadParams.levels,0.1,0.9);
- // this.strokeWidths[0] = 0;
- // this.strokeWidths[1] = 0;
- // this.strokeWidths[2] = 0;
-  //let r = Rectangle.mk(Point.mk(-0.5*wd,-0.5*ht),Point.mk(wd,ht));
-  //debugger;
- //let p = r.toPolygon();
-  //let qd = {polygon:p};
-  let qd = {polygon:pgon};
-  this.extendQuadNLevels(qd,quadParams);
-  this.displayQuad(qd);
-}	
-*/
-rs.initializee = function () {
-  debugger;
-  let e0 =  Point.mk(-5,-10);
-  let e1 =  Point.mk(15,10);
-  let seg = LineSegment.mk(e0,e1);
-  let a0 = seg.along(0.25);
-  let a1 = seg.along(0.5);
-  let a2 = seg.along(0.75);
-}
+
+
 export {rs};
 
       

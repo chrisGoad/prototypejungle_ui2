@@ -29,11 +29,13 @@ sections:
  [0,'quad_11_4','instances',1,'Quad 11 4',{likes:0,posted:0,category:'quad'}], 
   [0,'quad_14','generators',1,'Quad 14',{likes:0,posted:0,category:'quad'}], 
   [0,'quad_15','generators',1,'Quad 15',{likes:0,posted:0,category:'quad'}], 
+[0,'quad_15_0','instances',1,'Quad 15 0',{likes:0,posted:0,category:'quad'}], 
 [0,'quad_15_1','instances',1,'Quad 15 1',{likes:0,posted:0,category:'quad'}], 
 [0,'quad_15_2','instances',1,'Quad 15 2',{likes:0,posted:0,category:'quad'}], 
 [0,'quad_15_3','instances',1,'Quad 15 3',{likes:0,posted:0,category:'quad'}], 
 //[0,'quad_15_4','instances',1,'Quad 15 4',{likes:0,posted:0,category:'quad'}], 
 [0,'quad_15_5','instances',1,'Quad 15 5',{likes:0,posted:0,category:'quad'}], 
+[0,'quad_15_6','instances',1,'Quad 15 6',{likes:0,posted:0,category:'quad'}], 
 
  [0,'quad_11_combo_1','instances',1,'Quad 11 Combo 1',{likes:0,posted:0,category:'quad'}], 
  //[0,'quad_2_v_2','generators',1,'Circles and Squares',{likes:0,posted:0,category:'quad',version:2}], 

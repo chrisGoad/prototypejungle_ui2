@@ -444,6 +444,15 @@ rs.stepQuadParams = function (params) {
   }
  // return qdp;
  }
+ 
+ 
+rs.whereName = function (w) {
+  let rs = '_';
+  w.forEach( (v) => {
+    rs = rs+v+'_';
+  });
+  return rs;
+}
 
 rs.initialize = function () {
   let {width:wd,height:ht,quadParams,dropParams} = this;

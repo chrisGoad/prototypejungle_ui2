@@ -3,19 +3,19 @@
 
 //return;
 //let alternate = 0;
-let sectionsPath = './gridSections.js';
+let sectionsPath = './images.js';
 
 var fs = require('fs');
 
 let sectionsC = require(sectionsPath);
-let imageOrder  = require('./imageOrder.js');
+//let imageOrder  = require('./imageOrder.js');
 
 let images = [];
 let thumbs = [];
 
-  let orderMin = -1;
+  //let orderMin = -1;
   //let orderMax = 272;
-  let orderMax = 20000;
+  //let orderMax = 20000;
 
 const thingString = function (ix,dir,order,variant) {
 	debugger;
@@ -29,14 +29,15 @@ const thingString = function (ix,dir,order,variant) {
   //console.log('variant',variant);
   //console.log('vpath',vpath);
   let vx = vpath+'.'+ext;
-	let imsrc = `public/images/std_size/${vpath}.jpg`;
-	let thumbsrc = `public/images/thumbs/${vpath}.jpg`;
+	//let imsrc = `public/images/std_size/${vpath}.jpg`;
+	let imsrc = `${vpath}.jpg`;
+	let thumbsrc = `${vpath}.jpg`;
   images.push(imsrc);
   thumbs.push(thumbsrc);
   //console.log ('imsrc ',imsrc);
   //console.log ('thumbsrc ',thumbsrc);
 }
- 
+/*
 const order2dict = function (order) {
   let rs = {};
   order.forEach( (ln) => {
@@ -59,7 +60,7 @@ const getOrder = function (thing) {
    // console.log('getOrder',order,ffile,typeof order);
     return order?order:1000;
  }
- 
+ */
  /*
     
   const compareByOrder = function (thing1,thing2) {
@@ -86,16 +87,16 @@ const getOrder = function (thing) {
       
   */  
  
-let sectionString = function (things) {
+let sectionsString = function (things) {
   //things.sort(compareByOrder);
   let ln =  things.length;
 	for (let i=0;i<ln;i++) {
 		let thing = things[i];
-    let ord = getOrder(thing);
+  /*  let ord = getOrder(thing);
 
     if ((ord <  orderMin) || (ord > orderMax)) {
       continue;
-    }
+    } */
     let tln = thing.length;
     if (tln > 1) {
    //   console.log("Section");
@@ -113,7 +114,7 @@ let sectionString = function (things) {
 
 
 
-const sectionsString = function (sections) {
+const sectionsStringgg = function (sections) {
 	let rs = '';
 	sections.forEach((section) => rs += sectionString(section));
 	return rs;
@@ -121,17 +122,28 @@ const sectionsString = function (sections) {
 }
 
 sectionsString(sectionsC.sections);
-let kopimdir = '../kop/';//public/images/std_size/';
+//let kopimdir = '../kop/';//public/images/std_size/';
+let kopimdir = '../kop/public/images/std_size/';
+let imdir = 'public/images/std_size/';
+//let kopimdir = '../kop/public/images/';
+let kopthumbdir = '../kop/public/images/thumbs/';
+let thumbdir = 'public/images/thumbs/';
+
+console.log('images',JSON.stringify(images));
+console.log('thumbs',JSON.stringify(thumbs));
+
 
 const copyImages = function () {
-  images.forEach((im) => {
-    console.log('copying ',im);
-    let dst = kopimdir + im;
+  images.forEach((iim) => {
+    let im = imdir +  iim;
+    let dst = kopimdir +  iim;   
+    console.log('copying ',im,'to',dst);
     fs.copyFileSync(im, dst)
   });
-   thumbs.forEach((im) => {
-    console.log('copying ',im);
-    let dst = kopimdir + im;
+   thumbs.forEach((iim) => {
+    let im = thumbdir +  iim;
+    let dst = kopthumbdir +  iim;   
+    console.log('copying ',im,'to',dst);
     fs.copyFileSync(im, dst)
   });
 }

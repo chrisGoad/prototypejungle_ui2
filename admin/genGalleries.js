@@ -229,21 +229,40 @@ let headLine = '<p class="introLineLarge"><a style="color:white" href="https://k
 let pageIntro;
 if (imKind === 'g') {
   if (forKOP) {
-    pageIntro = 
+    let kindTitle;
+    if (top) {
+      pageIntro = 
+      `
+      <p class="introLineLarge">Kingdom of Pattern</p>
+      <p class="introLineLarge">Theory (<a style="color:white;text-decoration:underline" href="essay.html">here</a>)
+       and Practice (below). </p>
+
+      <p  class="introLineSmall">As you will see from <a style="color:white;text-decoration:underline" href="essay.html">theory</a>, the phrase "Kingdom of Pattern" is not a claim to grandeur.</p>
+      <p class="introLineSmall">Images by Chris Goad, via the JavaScript library at <a style="color:white" href="https://prototypejungle.net">prototypejungle.net</a>.</p> 
+
+    
+
+
+      <p class="introLineSmall">To expand the images below, click on them.</p>
     `
-    <p class="introLineLarge">Kingdom of Pattern</p>
-    <p class="introLineLarge">Theory (<a style="color:white;text-decoration:underline" href="essay.html">here</a>)
-     and Practice (below). </p>
-
-    <p  class="introLineSmall">As you will see from <a style="color:white;text-decoration:underline" href="essay.html">theory</a>, the phrase "Kingdom of Pattern" is not a claim to grandeur.</p>
-    <p class="introLineSmall">Images by Chris Goad, via the JavaScript library at <a style="color:white" href="https://prototypejungle.net">prototypejungle.net</a>.</p> 
-
-  
-
-
-    <p class="introLineSmall">To expand the images below, click on them.</p>
-  `
-   <!-- <p class="introLineSmall">Click <a style="color:white;text-decoration:underline" href="https://public.etsy.com/shop/KingdomOfPattern"> here </a> if  you'd like a print of one of these images for your wall.</p>-->
+   } else if (quad) {
+      kindTitle = 'Quadtrees';
+    } else if (drop) {
+      kindTitle = 'Drops';
+    } else if (web) {
+      kindTitle = 'Webs';
+    } else if (grid) {
+      kindTitle = 'Grids';
+    } else if (lines) {
+      kindTitle = 'Lines'
+    }
+    if (!top) {
+      pageIntro = 
+      `
+      <p class="introLineLarge">Kingdom of Pattern</p>
+      <p class="introLineLarge">${kindTitle}</p>     
+    `
+    } 
    } else  {
     if (local_images) {
       pageIntro = 

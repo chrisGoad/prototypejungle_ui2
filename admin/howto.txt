@@ -44,6 +44,7 @@ node admin/genGalleries quad
 node admin/genGalleries lines
 node admin/genGalleries grid
 node admin/updateKOP
+node admin/imagesToKop
 
 cd c:\kop
 firebase deploy --only hosting

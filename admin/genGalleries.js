@@ -226,6 +226,7 @@ let pageTop = `
 `;
 
 let headLine = '<p class="introLineLarge"><a style="color:white" href="https://kingdomofpattern.com">Kingdom of Pattern</a></p>';
+headLine = '<p class="introLineLarge"><a style="color:white" href="index.html">Kingdom of Pattern</a></p>';
 let pageIntro;
 if (imKind === 'g') {
   if (forKOP) {
@@ -259,7 +260,7 @@ if (imKind === 'g') {
     if (!top) {
       pageIntro = 
       `
-      <p class="introLineLarge">Kingdom of Pattern</p>
+      ${headLine}
       <p class="introLineLarge">${kindTitle}</p>     
     `
     } 
@@ -319,7 +320,7 @@ let numPages = 0;
 const thingString = function (order,ix,dir,useThumb,ititle,props) {
 	debugger;
   let {variant,likes,posted,category,sources} = props;
-  console.log('POSTED',posted,'category',category,'kind',kind);
+  //console.log('POSTED',posted,'category',category,'kind',kind);
   if ((kind !== 'alt') && (category !==  kind)) {
     return '</div>';
   }
@@ -360,9 +361,10 @@ const thingString = function (order,ix,dir,useThumb,ititle,props) {
   if (top) {
     if (title === 'Drops') {
       galURL = "dropImages.html";
+      console.log('galURL');
     } else if (title === 'Lines') {
       galURL = "linesImages.html";
-    } else if (title === 'Quad Trees') {
+    } else if (title === 'Quadtrees') {
       galURL = "quadImages.html";
     } else if (title === 'Grids') {
       galURL = "gridImages.html";
@@ -377,7 +379,7 @@ const thingString = function (order,ix,dir,useThumb,ititle,props) {
   let propsStr = imagesHere?`<span style="font-size:10pt">${likes?'Likes '+likes:''} ${posted?"":" NOT POSTED"} ${local_images?'Local':''} ${category}</span><br/>`:'';;
   let sourcenm = `source${sources?'s':''}`;
 	//if (forKOP || forPJ) {
-	if ( forPJ) {
+	if (forKOP) {
 		//let titleLink = title?`${astart}${title}</a></p>`:'';
 		let titleLink = title?`${astart}${title}</a>`:'';
 		console.log('forKOP');
@@ -391,7 +393,8 @@ const thingString = function (order,ix,dir,useThumb,ititle,props) {
     rs = rs +
     `<p class="centered"><a style="color:white" href="${srcUrl}">${sourcenm}</a></p>
     <p class="centered">${astart}<img width="200" src="${thumbsrc}" alt="Image Missing"></a></p></div>`;
-	} else if (top) {
+	} 
+  if (top) {
 		console.log('top');
     rs = `<div><p class="centered">${galLink}</p>`;
 
@@ -429,7 +432,7 @@ const stripOrnt = function (str) {
    // console.log('stripOrnt','lst',lst,str,' = ',rs);
     return rs;
   }
- const getOrder = function (thing) {
+ /*const getOrder = function (thing) {
   //console.log('getOrder',thing);
     let file = stripOrnt(thing[1]);
     let props = thing[5];
@@ -462,7 +465,7 @@ const stripOrnt = function (str) {
     return rs;
 
   }
-      
+   */   
  
 let sectionString = function (things) {
   //console.log('things',things);
@@ -491,7 +494,7 @@ let sectionString = function (things) {
   if (byLikes) {
    // things.sort(compareLikes);
   }
-  /*const compareByOrder = function (thing1,thing2) {
+  const compareByOrder = function (thing1,thing2) {
     let order1 = thing1[0];
     let order2 = thing2[0];
     if (order1 === order2) {
@@ -501,13 +504,13 @@ let sectionString = function (things) {
       return 1;
     }
     return -1;
-  }*/
-  
+  }
   //console.log('things unordered',things);
   if (sortByOrder) {
+    console.log('sortByOrder',JSON.stringify(things));
     things.sort(compareByOrder);
   }
-  // console.log('things ordered',things);
+   console.log('things ordered',things);
 //  ln = 2;
 	for (let i=0;i<ln;i++) {
 		let thing = things[i];
@@ -525,11 +528,11 @@ let sectionString = function (things) {
     //  console.log('Order',order,'file',file);
      // let tov = typeof variant;
     //  console.log('is variant',tov);
-
-      let ord = getOrder(thing);
+      let ord = thing[0];
+     /* let ord = getOrder(thing);
       if ((ord <  orderMin) || (ord > orderMax)) {
         continue;
-      }
+      }*/
       let ts = thingString(ord,file,directory,useThumb,title,props);
 //console.log('ts',ts);
       if (ts!=='</div>') {

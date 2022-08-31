@@ -19,7 +19,7 @@ rs.computeFill = function (qd) {
 rs.quadSplitParams = function (qd) {
   let pgon = qd.polygon;
   let c = pgon.center();
-  let d = pgon.dimension();
+  let d = pgon.minDimension();
   let rd = (c.x>0?-0.25:-0.25)*Math.PI;
   //let rd = (Math.random()>0.5?0.25:0.5)*Math.PI;
   //2*Math.PI*Math.random();

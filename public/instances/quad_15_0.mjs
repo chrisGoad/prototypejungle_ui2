@@ -12,7 +12,7 @@ Object.assign(rs,topParams);
 rs.quadParams = {chance:1,levels:levels,polygonal:1};
 let strokeWidths = rs.quadParams.strokeWidths = [];
 rs.computeExponentials(strokeWidths,rs.quadParams.levels,0.1,.9);
-rs.quadParams.mangle = {'lengthen':.2,'twist':0.0*Math.PI};
+//rs.quadParams.mangle = {'lengthen':.2,'twist':0.0*Math.PI};
 
 rs.quadSplitParams = function (qd) {
   debugger; 

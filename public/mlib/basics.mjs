@@ -490,6 +490,13 @@ item.resetShapes = function () {
   draw.refresh();
 }
 
+item.callIfDefined = function (nm) {
+  let fn = this[nm];
+  if (fn) {
+    fn.call(this);
+  }
+}
+
 
 core.root.backgroundColor = 'black';
 item.setBackgroundColor = (clr) => core.root.backgroundColor = clr; 

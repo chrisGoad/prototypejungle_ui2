@@ -29,8 +29,20 @@ let twists = rs.twists = [];
 rs.addToArray(twists,0.05*Math.PI,levels);
 
 */
+
+rs.quadStrokeWidth = function () {
+ return 0.00001;
+ }
+rs.quadFill = function (qd) {
+  let  lnw = qd.where.length;
+  let fill = Math.random()>0.5?'red':'blue';
+  if (lnw === (levels-1)) {
+    return fill;
+  }
+   // shapes.push(crcs);
+} 
   
-rs.displayCell = function (qd) {
+rs.displayCelll = function (qd) {
   let {shapes,rectP,lineP,circleP} = this;
   let  lnw = qd.where.length;
 if (lnw ===  levels) {

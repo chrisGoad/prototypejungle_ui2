@@ -1,3 +1,4 @@
+import {rs as polygonPP} from '/shape/polygon.mjs';
 
 import {rs as rectPP} from '/shape/rectangle.mjs';
 import {rs as basicP} from '/generators/basics.mjs';
@@ -10,35 +11,29 @@ rs.setName('quad_10');
 let wd = 100;
 let topParams = {width:wd,height:wd,framePadding:0.1*wd}
 Object.assign(rs,topParams);
-rs.quadParams = {chance:1,levels:8};
+rs.quadParams = {chance:1,levels:8,rectangular:1};
 
 rs.initProtos = function () {
   this.rectP =  rectPP.instantiate();
   this.rectP.stroke = 'white';
+   this.polygonP =  polygonPP.instantiate();
+  this.polygonP.stroke = 'white';
+  this.polygonP['stroke-width'] = 0.05;
 }
 
-rs.computeFill = function (qd) { 
+rs.quadFill = function (qd) { 
    const shade = ()=> Math.floor(40*Math.random());
    let v = shade();
    let fill = `rgb(${v},${v},${v})`;
    return fill;
 }
-  
-rs.displayCell = function (qd) {
-  let {shapes,rectP} = this;
-  let rect = qd.rectangle;
-  let rs = rect.toShape(rectP,1);
-  let  lnw = qd.where.length;
-  let strokew = this.strokeWidths[lnw];
-  rs['stroke-width'] = strokew;
-  rs.fill = this.computeFill(qd);
-  shapes.push(rs);
-}
-
+ 
 rs.quadSplitParams = function (qd) {
-  debugger;
   let {where} = qd;
   let lnw = where.length;
+  let v = {low:0.2,high:0.8}
+  let vv = {low:0.6,high:0.6}
+  let o = 'h';
   if (lnw===0) {
     return {ornt:'h',fr0:0.5,fr1:0.5,fr2:0.5};
   }
@@ -55,7 +50,7 @@ rs.quadSplitParams = function (qd) {
       }
     }  else if (fw === 'LR')  {
        if (lnw===1) {                
-         return {ornt:'h',fr0:0.5,fr1:0.5,fr2:0.5};
+         return this.randomizeFrom({ornt:['h','v'],fr0:.5,fr1:.5,fr2:.5});
        } else {
          let sw = where[1];
          if (sw === 'UL') {
@@ -70,23 +65,12 @@ rs.quadSplitParams = function (qd) {
        } 
      }       
   }
-  let c = qd.rectangle.center();
+  //let c = qd.rectangle.center();
+  let c = qd.polygon.center();
   let {x,y} = c;
   let ornt = Math.random()<0.5?'h':'v';
-  return {ornt,fr0:0.5,fr1:0.5,fr2:0.3};
+  return this.randomizeFrom({ornt:['h','v'],fr0:.5,fr1:v,fr2:v});
 }
-
-rs.initialize = function () {
-  let {width:wd,height:ht,quadParams} = this;
-  this.addFrame();
-  this.initProtos();
-  let stw = this.strokeWidths = [];
-  this.computeExponentials(stw,quadParams.levels,0.1,0.9);
-  let r = Rectangle.mk(Point.mk(-0.5*wd,-0.5*ht),Point.mk(wd,ht));
-  let qd = {rectangle:r};
-  this.extendQuadNLevels(qd,quadParams);
-  this.displayQuad(qd);
-}	
 
 export {rs};
 

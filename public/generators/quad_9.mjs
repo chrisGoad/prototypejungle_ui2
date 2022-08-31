@@ -1,4 +1,5 @@
 
+import {rs as polygonPP} from '/shape/polygon.mjs';
 import {rs as linePP} from '/shape/line.mjs';
 import {rs as rectPP} from '/shape/rectangle.mjs';
 import {rs as circlePP} from '/shape/circle.mjs';
@@ -14,7 +15,7 @@ let wd = 100;
 let hwd = 0.5*wd;
 let topParams = {width:wd,height:wd,framePadding:0.1*wd,frameStrokee:'white',lengthenings:undefined,twists:undefined,emitLineSegs:undefined}
 Object.assign(rs,topParams);
-rs.quadParams = {chance:1,levels:7};
+rs.quadParams = {chance:1,levels:7,rectangular:1};
 
 rs.orect = Rectangle.mk(Point.mk(-hwd,-hwd),Point.mk(wd,wd));
 
@@ -31,6 +32,9 @@ rs.initProtos = function () {
   this.circleP.stroke = 'white';
   this.circleP.fill = 'blue';
   this.circleP['stroke-width'] =.05;
+  this.polygonP =  polygonPP.instantiate();
+  this.polygonP.stroke = 'white';
+  this.polygonP['stroke-width'] = 0.01;
 }
 
 

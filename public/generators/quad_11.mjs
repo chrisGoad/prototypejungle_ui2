@@ -25,7 +25,7 @@ rs.initProtos = function () {
 }
 
 
-rs.quadParams.mangle = {'lengthen':.2,'twist':0.05*Math.PI,within:rs.canvasToRectangle()};
+//rs.quadParams.mangle = {'lengthen':.2,'twist':0.05*Math.PI,within:rs.canvasToRectangle()};
 
 rs.computeFill = function (qd) { 
    const shade = ()=> Math.floor(0*Math.random());

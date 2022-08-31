@@ -21,11 +21,13 @@ rs.quadSplitParams = function (qd) {
   }
 }
 rs.extendQuadOneLevel = function (qd) {
+debugger;
    if (qd.UL) {
      return;
    }
    let where = qd.where;
    let root = qd.root;
+   let rr = root.params.rectangular;
    //let params = iparams?iparams:root.splitParams;
   // let {splitType,fr0,fr1,fr2} = params;
    
@@ -35,8 +37,27 @@ rs.extendQuadOneLevel = function (qd) {
    if (!sp) {
      return;
    }
-   let {switchToPolygon:swtp,ornt,fr0,fr1,fr2,fr3,fr4,fr5,center,pfr0,pfr1,pfr2,pfr3} = sp;
-
+   let {rectangular,switchToPolygon:swtp,ornt,fr0,fr1,fr2,fr3,fr4,fr5,center,pfr0,pfr1,pfr2,pfr3} = sp;
+   if (rr || rectangular) {
+     let ifr2 = fr2;
+     let ifr1 = fr1;
+     let ifr0 = fr0;
+     if (ornt === 'h') {
+       fr0 = ifr0
+       fr1 = 1 - ifr0;
+       fr2 = ifr1;
+       fr3 = ifr1;
+       fr4  = 1 - ifr2;
+       fr5  = ifr2;
+     } else {
+       fr0 = ifr0
+       fr1 = 1 - ifr0;
+       fr2 =  ifr1;
+       fr3 = 1-  ifr1;
+       fr4  = 1-  ifr2;
+       fr5  = 1 - ifr2;     
+     }
+   }
  // debugger;
    let {rectangle:rect,polygon:pgon} = qd;
    if (rect && swtp) {
@@ -47,7 +68,7 @@ rs.extendQuadOneLevel = function (qd) {
     Then RL is split at the fr1 mark and RR and the fr2 mark;
      If ornt === 'h', the rectangle is first split at the fr0 mark into top and bottom rects RT and RB.
     Then RT is split at the fr1 mark and RB and the fr2 mark;*/
-   if (rect && !swtp) {
+   if (0 && rect && !swtp) {
     // let [ornt,fr0,fr1,fr2] = sp;
      let h = ornt === 'h';   
      let {corner,extent} = rect;
@@ -310,8 +331,8 @@ rs.quadStroke = function (qd) {
   }
 }
 
-
-rs.quadSplitParms = function (qd) {
+/*
+rs.quadSplitParams = function (qd) {
   let {splitParams,splitParamsByLevel} = this.quadParams;
   if (splitParams) {
     return splitParams;
@@ -319,7 +340,7 @@ rs.quadSplitParms = function (qd) {
   let lv =  qd.where.length;
   return splitParamsByLevel[lv];
 }
-
+*/
 rs.quadFill = function (qd) {
 }
 
@@ -358,6 +379,7 @@ rs.displayCell = function (qd,toSegs) {
      }
   }
   const addShape = (sc) => {
+    debugger;
     if (rect) {
       shps = rect.toShape(rectP,sc);
     } else {
@@ -458,8 +480,10 @@ rs.initialize = function () {
   let {width:wd,height:ht,quadParams,dropParams} = this;
  // debugger;
   let {emitLineSegs,polygonal} = quadParams;
+  polygonal = 1;
   this.addFrame();
   this.initProtos();
+  this.callIfDefined('adjustProtos');
  // if (!this.strokeWidths) {
   //  this.strokeWidths = this.computeExponentials(quadParams.levels,0.1,0.9);
   //}

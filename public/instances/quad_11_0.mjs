@@ -3,12 +3,13 @@ import {rs as generatorP} from '/generators/quad_11.mjs';
 
 let rs = generatorP.instantiate();
 
-rs.setName('quad_11_4');
+rs.setName('quad_11_0');
 
 
+rs.quadParams.mangle = {'lengthen':.2,'twist':0.05*Math.PI,within:rs.canvasToRectangle()};
 
-//rs.quadParams.mangle = {'lengthen':5,'twist':0.05*Math.PI};
-rs.quadSplitParams = function (qd) {
+//rs.quadParams.mangle = {'lengthen':.5,'twist':0.05*Math.PI};
+rs.quadSplitParamsss = function (qd) {
   let {width:wd} = this;
   let pgon = qd.polygon;
   let minx = pgon.left();

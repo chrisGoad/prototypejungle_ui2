@@ -14,7 +14,8 @@ rs.quadSplitParams = function (qd) {
   let rs;
   if (1 || (lv ===(levels-1))) {
     debugger;
-    let cx = qd.rectangle.corner.x;
+   // let cx = qd.rectangle.corner.x;
+    let cx = qd.polygon.left();
     let fr0 = Math.sqrt((cx + 0.5*wd)/wd);
     let fr2 = 0.5 - 0.4*fr0;
         console.log('lv',lv,'cx',cx,'fr0',fr0,'fr2',fr2);

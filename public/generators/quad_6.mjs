@@ -1,4 +1,5 @@
 
+import {rs as polygonPP} from '/shape/polygon.mjs';
 import {rs as circlePP} from '/shape/circle.mjs';
 import {rs as linePP} from '/shape/line.mjs';
 import {rs as rectPP} from '/shape/rectangle.mjs';
@@ -17,7 +18,7 @@ let nr  =20;
 let topParams = {width:wd,height:wd,numRows:nr,numCols:nr,framePadding:0.1*wd}
 Object.assign(rs,topParams);
 
-rs.quadParams = {chance:0.6,levels:7,alwaysSplitBefore:4,splitParams:{fr0:0.5,fr1:0.5,fr2:0.4}};
+rs.quadParams = {chance:0.6,levels:7,alwaysSplitBefore:4,splitParams:{ornt:'h',fr0:0.5,fr1:0.5,fr2:0.4},rectangular:1};
 
 rs.initProtos = function () {
   this.circleP =  circlePP.instantiate();
@@ -30,19 +31,22 @@ rs.initProtos = function () {
   this.rectP.fill = 'transparent';
   this.rectP['stroke-width'] = 1.15;
    this.lineP =  linePP.instantiate();
-  this.lineP.stroke = 'black';
+  this.lineP.stroke = 'white';
   this.lineP.fill = 'transparent';
   this.lineP['stroke-width'] =.15;
+   this.polygonP =  polygonPP.instantiate();
+  this.polygonP.stroke = 'white';
+  this.polygonP['stroke-width'] = 0.4;
 } 
 
 
-rs.computeFill = function () { 
+rs.quadFill = function () { 
    const shade = ()=> Math.floor(255*Math.random());
    let v = shade();
    let fill = `rgb(${v},${v},${v})`;
    return fill;
 }
-rs.displayCell = function (qd,depth) {
+rs.displayCellll = function (qd,depth) {
   let {shapes,cells,rectP} = this;    
   let rect = qd.rectangle;
   let rs = rect.toShape(rectP,.99);

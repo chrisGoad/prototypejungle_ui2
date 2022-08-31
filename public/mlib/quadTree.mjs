@@ -38,7 +38,7 @@ debugger;
      return;
    }
    let {rectangular,switchToPolygon:swtp,ornt,fr0,fr1,fr2,fr3,fr4,fr5,center,pfr0,pfr1,pfr2,pfr3} = sp;
-   if (rr || rectangular) {
+   if (rr) {
      let ifr2 = fr2;
      let ifr1 = fr1;
      let ifr0 = fr0;
@@ -59,16 +59,17 @@ debugger;
      }
    }
  // debugger;
-   let {rectangle:rect,polygon:pgon} = qd;
-   if (rect && swtp) {
-     pgon = rect.toPolygon();
-   }
+  // let {rectangle:rect,polygon:pgon} = qd;
+   let {polygon:pgon} = qd;
+ //  if (rect) {
+ //    pgon = rect.toPolygon();
+ //  }
    /*  the parameters ornt,fr0,fr1,fr2 determine how the rectangle is split up in to 4 smaller rectangles.
    If ornt === 'h' is falsy, the rectangle is first split at the fr0 mark into left and right rects RL and RR.
     Then RL is split at the fr1 mark and RR and the fr2 mark;
      If ornt === 'h', the rectangle is first split at the fr0 mark into top and bottom rects RT and RB.
     Then RT is split at the fr1 mark and RB and the fr2 mark;*/
-   if (0 && rect && !swtp) {
+   /*if (0 && rect && !swtp) {
     // let [ornt,fr0,fr1,fr2] = sp;
      let h = ornt === 'h';   
      let {corner,extent} = rect;
@@ -109,7 +110,7 @@ debugger;
      nextQuad('LR',LRcorner,LRextent);
      nextQuad('LL',LLcorner,LLextent);
      return 1;
-   } else if (center) {
+   } else*/ if (center) {
      let {corners} = pgon;
     // let [center,fr0,fr1,fr2,fr3] = sp;
      let ONtop = interpolatePoints(corners[0],corners[1],pfr0);
@@ -356,12 +357,14 @@ rs.displayCell = function (qd,toSegs) {
   if (!vs) {
     return;
   }
+  //let {where,rectangle:rect,polygon:pgon} = qd;
   let {where,rectangle:rect,polygon:pgon} = qd;
   let lv = where.length;
   //let mng = mangles?mangles[lv]:0;
   let mng = this.quadMangle(qd);
   let mangled;
-  let geom = rect?rect:pgon;
+ //let geom = rect?rect:pgon;
+  let geom = pgon;
   let shps;
   let strokew = this.quadStrokeWidth(qd);//strokeWidths[lnw];
   let stroke = this.quadStroke(qd);
@@ -380,11 +383,11 @@ rs.displayCell = function (qd,toSegs) {
   }
   const addShape = (sc) => {
     debugger;
-    if (rect) {
-      shps = rect.toShape(rectP,sc);
-    } else {
+   // if (rect) {
+   //   shps = rect.toShape(rectP,sc);
+   // } else {
       shps = pgon.toShape(polygonP,sc);
-    }
+   // }
     styleShape(shps);
     shapes.push(shps);
   }

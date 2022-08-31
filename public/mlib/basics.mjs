@@ -198,6 +198,16 @@ Rectangle.toCircleShape = function (circleP,scale=1) {
    return rs;
  }
 
+Polygon.toCircleShape = function (circleP,scale=1) {
+   let dim = this.minDimension();
+   let center = this.center();
+   let d = scale*dim;
+   let rs = circleP.instantiate();
+   rs.dimension = d;
+   rs.moveto(center);
+   return rs;
+ }
+
 
 LineSegment.toShape = function (lineP,scale=1) {
   let {end0,end1} = this;

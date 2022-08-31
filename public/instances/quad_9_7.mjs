@@ -13,7 +13,8 @@ rs.quadMangle = function (qd) {
   let rs;
   if (0 || (lv ===levels)) {
     debugger;
-    let cx = qd.rectangle.corner.x;
+    //et cx = qd.rectangle.corner.x;
+    let cx = qd.polygon.left();
     let fr0 = Math.sqrt((cx + 0.5*wd)/wd);
     let lengthen  = 1 - 1*fr0;
     let twist = fr0*.05*Math.PI

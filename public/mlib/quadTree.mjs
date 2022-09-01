@@ -481,7 +481,7 @@ rs.whereName = function (w) {
 
 rs.initialize = function () {
   let {width:wd,height:ht,quadParams,dropParams} = this;
- // debugger;
+ debugger;
   let {emitLineSegs,polygonal} = quadParams;
   polygonal = 1;
   this.addFrame();
@@ -503,6 +503,8 @@ rs.initialize = function () {
   if (quadParams.emitLineSegs) {
     this.generateDrops(dropParams);
   }
+  this.callIfDefined('afterInitialize');
+
 }
 }
 

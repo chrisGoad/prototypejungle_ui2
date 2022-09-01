@@ -1,3 +1,4 @@
+import {rs as textPP} from '/shape/textOneLine.mjs';
 
 import {rs as circlePP} from '/shape/circle.mjs';
 import {rs as polygonPP} from '/shape/polygon.mjs';
@@ -10,7 +11,7 @@ addQuadMethods(rs);
 rs.setName('quad_15');
 debugger;
 let wd = 100;
-let topParams = {width:wd,height:wd,framePadding:0.1*wd,frameStrokee:'white'}
+let topParams = {width:wd,height:wd,framePadding:0.1*wd,frameStroke:'white'}
 Object.assign(rs,topParams);
 rs.quadParams = {chance:1,levels:7,polygonal:1};
 //let strokeWidths = rs.quadParams.strokeWidths = [];
@@ -28,6 +29,12 @@ rs.initProtos = function () {
   this.circleP.stroke = 'white';
   this.circleP.fill = 'blue';
   this.circleP['stroke-width'] =.05;
+   let textP = this.textP =  textPP.instantiate();
+  textP["font-size"] = "12";
+  textP["font-style"] = "normal";
+  textP["font-family"] = "arial";
+  textP["font-weight"] = "normal";
+  textP.stroke = 'white';
 }
 
 

@@ -407,10 +407,12 @@ item.addToArray = function (a,v,n) {
 
 
 item.computeExponentials = function (a,n,fc,root) {
-  for (let i=0;i<=n;i++) {
+  //a.push(root);
+  for (let i=0;i<n;i++) {
     let cv = fc*Math.pow(root,i);
     a.push(cv);
   }
+  debugger;
 }
 
 item.randomBetween = function (lh) {
@@ -507,6 +509,16 @@ item.callIfDefined = function (nm) {
   }
 }
 
+
+item.addText = function (textP,rt,n,p) {
+  let nm = 'txt'+rt+n;
+  let theText = rt+n;
+  let txt = textP.instantiate();
+  txt.text = theText,
+  this.set(nm,txt);
+  txt.moveto(p);
+  return txt;
+}
 
 core.root.backgroundColor = 'black';
 item.setBackgroundColor = (clr) => core.root.backgroundColor = clr; 

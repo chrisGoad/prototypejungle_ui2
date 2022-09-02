@@ -21,7 +21,7 @@ rs.quadSplitParams = function (qd) {
   }
 }
 rs.extendQuadOneLevel = function (qd) {
-debugger;
+//debugger;
    if (qd.UL) {
      return;
    }
@@ -294,7 +294,7 @@ rs.quadVisible = function (qd) {
   }
   let lv = qd.where.length;
  /* if (lv >= 6) {
-    debugger;
+  //  debugger;
   }*/
   return visibles[lv];
 }
@@ -312,9 +312,13 @@ rs.quadMangle = function (qd) {
 rs.quadStrokeWidth = function (qd) {
   let {strokeWidths} = this.quadParams;
   //debugger;
+  let lv,sw;
   if (strokeWidths) {
-    let lv =  qd.where.length;
-    let sw =strokeWidths[lv];
+    lv =  qd.where.length;
+    if (lv > 2) {
+      debugger;
+    }
+    sw =strokeWidths[lv];
    // console.log('lv',lv,'sw',sw);
     return sw;
   }
@@ -357,7 +361,6 @@ rs.displayCell = function (qd,toSegs) {
   if (!vs) {
     return;
   }
-  //let {where,rectangle:rect,polygon:pgon} = qd;
   let {where,rectangle:rect,polygon:pgon} = qd;
   let lv = where.length;
   //let mng = mangles?mangles[lv]:0;
@@ -382,7 +385,7 @@ rs.displayCell = function (qd,toSegs) {
      }
   }
   const addShape = (sc) => {
-    debugger;
+  //  debugger;
    // if (rect) {
    //   shps = rect.toShape(rectP,sc);
    // } else {
@@ -431,7 +434,7 @@ rs.displayCell = function (qd,toSegs) {
   }
   
   if (circleScale) {
-    debugger;
+   // debugger;
     let c = geom.center();
     let r;
     if (rect) {
@@ -447,7 +450,7 @@ rs.displayCell = function (qd,toSegs) {
 }
 
 rs.stepQuadParams = function (params) {
-  debugger;
+ // debugger;
   let {randomize,quadParams:qdp,whichToStep,range:v,stepper} = params;
   if (randomize) {
     let rs = this.randomizeFrom({ornt:['h','v'],fr0:v,fr1:v,fr2:v,fr3:v,fr4:v,fr5:v});

@@ -38,6 +38,12 @@ sections:
 [0,'quad_15_5','instances',1,'Quad 15 5',{likes:0,posted:0,category:'quad'}], 
 [0,'quad_15_6','instances',1,'Quad 15 6',{likes:0,posted:0,category:'quad'}], 
 [0,'quad_15_7','instances',1,'Quad 15 7',{likes:0,posted:0,category:'quad'}], 
+[0,'quad_15_7_0','instances',1,'Quad 15 7 0',{likes:0,posted:0,category:'quad'}], 
+[0,'quad_15_7_1','instances',1,'Quad 15 7 1',{likes:0,posted:0,category:'quad'}], 
+[0,'quad_15_7_2','instances',1,'Quad 15 7 2',{likes:0,posted:0,category:'quad'}], 
+[0,'quad_15_7_3','instances',1,'Quad 15 7 3',{likes:0,posted:0,category:'quad'}], 
+[0,'quad_15_7_4','instances',1,'Quad 15 7 4',{likes:0,posted:0,category:'quad'}], 
+[0,'quad_15_7_5','instances',1,'Quad 15 7 5',{likes:0,posted:0,category:'quad'}], 
 [0,'quad_15_8','instances',1,'Quad 15 8',{likes:0,posted:0,category:'quad'}], 
 [0,'textTest','generators',1,'textTest',{likes:0,posted:0,category:'test'}], 
 

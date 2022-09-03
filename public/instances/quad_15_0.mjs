@@ -6,12 +6,12 @@ let rs = generatorP.instantiate();
 rs.setName('quad_15_0');
 
 let wd = 100;
-let levels = 7;
+let levels = 9;
 let topParams = {width:wd,height:wd,framePadding:0.2*wd}
 Object.assign(rs,topParams);
 rs.quadParams = {chance:1,levels:levels,polygonal:1};
 let strokeWidths = rs.quadParams.strokeWidths = [];
-rs.computeExponentials(strokeWidths,rs.quadParams.levels,0.1,.9);
+rs.computeExponentials(strokeWidths,rs.quadParams.levels,0.2,.9);
 //rs.quadParams.mangle = {'lengthen':.2,'twist':0.0*Math.PI};
 
 rs.quadSplitParams = function (qd) {
@@ -36,7 +36,7 @@ rs.quadSplitParams = function (qd) {
   if (0 && this.qdp) {
     return this.qdp;
   }
-  let v = {low:.45,high:.55};
+  let v = {low:.3,high:.7};
   let prs = this.randomizeFrom({ornt:['h','v'],fr0:v,fr1:v,fr2:v,fr3:v,fr4:v,fr5:v});
 
   this.qdp = prs;

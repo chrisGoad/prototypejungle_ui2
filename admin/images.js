@@ -14,6 +14,7 @@ sections:
  [0,'quad_11_4','instances',1,'Quad 11 4',{likes:0,posted:0,category:'quad'}], 
  [0,'quad_15_1','instances',1,'Quad 15 1',{likes:0,posted:0,category:'quad'}], 
  [0,'quad_15_3','instances',1,'Quad 15 3',{likes:0,posted:0,category:'quad'}], 
+ [0,'quad_skein','instances',1,'Quad Skein',{likes:0,posted:0,category:'quad'}], 
  
  [100,'drop_space_junk','generators',1,'Space Junk',{likes:50,posted:1,category:'drop',variant:0}], 
  [10,'drop_light','generators',1,'Light',{likes:50,posted:1,category:'drop',variant:0}], 

@@ -1,14 +1,9 @@
 
 
-let docImagess = process.argv[2];
 
-console.log('docImagess',docImagess);
-
-let docImages = docImagess === 'doc';
-console.log('docImages',docImages);
-
+//return;
 //let alternate = 0;
-let sectionsPath = docImages?'./docImages.js':'./images.js';
+let sectionsPath = './images.js';
 
 var fs = require('fs');
 

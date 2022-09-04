@@ -213,7 +213,7 @@ rs.randomSplit = function (qd,ichance) {
   }
 //  debugger;
   let params = qd.root.params;
-  let {chance,alwaysSplitBefore,levels} = params;
+  let {chance=1,alwaysSplitBefore=100,levels} = params;
   if (!chance) {
     chance = ichance;
   }

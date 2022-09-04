@@ -1,57 +1,43 @@
+import {rs as textPP} from '/shape/textOneLine.mjs';
+
 import {rs as circlePP} from '/shape/circle.mjs';
-import {rs as rectPP} from '/shape/rectangle.mjs';
+import {rs as polygonPP} from '/shape/polygon.mjs';
+import {rs as linePP} from '/shape/line.mjs';
 import {rs as basicP} from '/generators/basics.mjs';
 import {rs as addQuadMethods} from '/mlib/quadTree.mjs';	
 
 let rs = basicP.instantiate();
 addQuadMethods(rs);
-rs.setName('quad_0',16);
-
+rs.setName('quad_0');
+debugger;
 let wd = 100;
-let topParams = {width:wd,height:wd,levels:7,chance:0.8,framePadding:0.1*wd,backFill:'red'}
+let topParams = {width:wd,height:wd,framePadding:0.1*wd,frameStrokee:'white'}
 Object.assign(rs,topParams);
+//rs.quadParams = {chance:1,levels:7,polygonal:1};
+//let strokeWidths = rs.quadParams.strokeWidths = [];
+//rs.computeExponentials(strokeWidths,levels,0.1,0.9);
 
 rs.initProtos = function () {
-  this.rectP =  rectPP.instantiate();
-  this.rectP.stroke = 'blue';
-  this.rectP.stroke = 'white';
- this.rectP.stroke = 'yellow';
-  this.rectP.fill = 'transparent';
-  this.rectP['stroke-width'] = .1; 	
+  this.polygonP =  polygonPP.instantiate();
+  this.polygonP.stroke = 'white';
+  this.polygonP.fill = 'black';
+  this.polygonP['stroke-width'] =.1;
+  this.lineP =  linePP.instantiate();
+  this.lineP.stroke = 'white';
+  this.lineP['stroke-width'] =.1 ;
     this.circleP =  circlePP.instantiate();
-  this.circleP.stroke = 'blue';
-  this.circleP.stroke = 'yellow';
-    this.circleP['stroke-width'] = .1; 	
-}  
-
-
-
-rs.computeFill = function (depth) { 
-   const shade = ()=> Math.floor(255*Math.random());
-   let v = shade();
-   let fill = `rgb(${v},0,${v})`;
-   return fill;
+  this.circleP.stroke = 'white';
+  this.circleP.fill = 'blue';
+  this.circleP['stroke-width'] =.05;
+   let textP = this.textP =  textPP.instantiate();
+  textP["font-size"] = "12";
+  textP["font-style"] = "normal";
+  textP["font-family"] = "arial";
+  textP["font-weight"] = "normal";
+  textP.stroke = 'white';
 }
 
-rs.chooseCircle = function (r,depth) {
-  return 1;
-  return Math.random() > 0.5;
-}
 
-rs.initialize = function () {
-  let {width:wd,height:ht} = this;
-  this.addFrame();
-    //  this.addRectangle(this.backFill);
-
-  this.initProtos();
-  let r = Rectangle.mk(Point.mk(-0.5*wd,-0.5*ht),Point.mk(wd,ht));
-  debugger;
-  let qd = {rectangle:r};
-  this.extendQuadNLevels(qd,this);
-  
-  this.displayQuad(qd,this.rectP);
-  console.log(this.shapes.length,' squares ');
-}	
 
 export {rs};
 

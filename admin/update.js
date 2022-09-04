@@ -44,8 +44,31 @@ var boilerplate1 =
 <hr/>
 <div class="theGrid">
 <div></div>
-<div>
-`;
+<div>`
+;
+var boilerplate_kop = 
+`<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="description" content="Kingdom of Pattern">
+<title>Kingdom of Pattern</title>
+<link rel="stylesheet" type="text/css"  href="style.css"/>
+<link rel="stylesheet" type="text/css"  href="spectrum.css"/>
+<link rel="icon" href="/favicon.ico" />
+
+</head>
+<body style="background-color:black;color:white;font-size:14pt"> 
+
+<div class="theGrid">
+<div></div>
+<div><span class="textVar"><a style="color:black" href="../index.html">Kingdom of Pattern</a></span></div>
+<div></div>
+</div>
+<div class="theGrid">
+<div></div>`
+
+;
 var boilerplateIndex = 
 `<!DOCTYPE html>
 <html lang="en">
@@ -87,6 +110,7 @@ function doSubstitution(s,what,value,withDoubleBracket) {
   function insertBoilerplate(s,scripts) {
  
   let irs = doSubstitution(s,'boilerplate0',boilerplate0,1);
+   irs = doSubstitution(irs,'boilerplate_kop',boilerplate_kop,1);
   irs = doSubstitution(irs,'boilerplate1',boilerplate1,1);
   irs = doSubstitution(irs,'boilerplateIndex',boilerplateIndex,1);
     //var irs = doSubstitution(irs,'<precode>','<p style="padding:5px"></p><hr/><pre style="padding-left:20px;font-size:10pt;font-weight:bold" class="code">');

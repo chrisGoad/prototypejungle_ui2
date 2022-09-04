@@ -5,7 +5,7 @@ let rs = generatorP.instantiate();
 
 rs.setName('quad_15_2');
 let levels = 3;
-rs.quadParams.levels = levels;
+rs.quadParams = {levels};
 //rs.quadParams.circleScale = 0.25;
 
 

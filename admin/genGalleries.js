@@ -362,7 +362,7 @@ const thingString = function (order,ix,dir,useThumb,ititle,props) {
 //console.log('thumbsrc',thumbsrc);
 	let pageArg = 'page='+pageNumber;
   //let kindArg = 'imKind='+imKind;
-  console.log('kind',kind);
+//  console.log('kind',kind);
   let kindArg = 'imKind='+kind;
   let localArg = 'local='+(local_images||imagesHere?1:0);
 	let theImageArg = '';
@@ -374,7 +374,7 @@ const thingString = function (order,ix,dir,useThumb,ititle,props) {
   if (top) {
     if (title === 'Drops') {
       galURL = "dropImages.html";
-      console.log('galURL');
+     // console.log('galURL');
     } else if (title === 'Lines') {
       galURL = "linesImages.html";
     } else if (title === 'Quadtrees') {
@@ -395,7 +395,7 @@ const thingString = function (order,ix,dir,useThumb,ititle,props) {
 	if (forKOP) {
 		//let titleLink = title?`${astart}${title}</a></p>`:'';
 		let titleLink = title?`${astart}${title}</a>`:'';
-		console.log('forKOP');
+		//console.log('forKOP');
     srcUrl = (sources)?`https://prototypejungle.net/doc/${path}_sources.html`:`https://prototypejungle.net/${dir}/${path}.${fileExt}`;
     if (forKOP){
       rs = `<div><p class="centered">${titleLink}</p>`

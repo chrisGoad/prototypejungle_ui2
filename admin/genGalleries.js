@@ -3,6 +3,8 @@ let kind = process.argv[2];
 //let forKOPstr = process.argv[3];
 let sortByOrderstr = "1";
 let alwaysLocal = 1;
+let forKOP = 1;
+
 /*
 if (process.argv[3]==="0") {
   sortByOrderstr = "0";
@@ -19,7 +21,6 @@ const toBoolean = (v) => {
 let signed = 0
 //let signed = toBoolean(signedstr);
 //let forKOP = toBoolean(forKOPstr);
-let forKOP = 1;
 let forPJ = kind === 'forPJ';
 let top = kind === 'top';
 let drop = kind === 'drop';
@@ -113,6 +114,7 @@ if (byLikes) {
   console.log("unrecognized kind ","'"+kind+"'");
   return;
 }
+console.log('imKind',imKind);
 
  pagesPath = `public/${imKind}Pages.js`;
  pagesPath = `public/${kind}Pages.js`;
@@ -230,7 +232,7 @@ headLine = '<p class="introLineLarge"><a style="color:white" href="index.html">K
 let pageIntro;
 if (imKind === 'g') {
   if (forKOP) {
-    let kindTitle;
+    let kindTitle,aboutUrl;
     if (top) {
       pageIntro = 
       `
@@ -247,22 +249,33 @@ if (imKind === 'g') {
       <p class="introLineSmall">To expand the images below, click on them.</p>
     `
    } else if (quad) {
+
       kindTitle = 'Quadtrees';
+      aboutURL = "kop_quad.html";
     } else if (drop) {
       kindTitle = 'Drops';
+      aboutURL = "kop_drop.html";
     } else if (web) {
       kindTitle = 'Webs';
+      aboutURL = "kop_web.html";
     } else if (grid) {
       kindTitle = 'Grids';
+      aboutURL = "kop_grid.html";
     } else if (lines) {
       kindTitle = 'Lines'
+      aboutURL = "kop_lines.html";
     }
     if (!top) {
+    
+      aboutStart = `<a style="color:white" href="doc/${aboutURL}">`;
+      aboutLink = `${aboutStart}about ${kindTitle}</a>`
       pageIntro = 
       `
       ${headLine}
-      <p class="introLineLarge">${kindTitle}</p>     
-    `
+      <p class="introLineLarge">${kindTitle}</p>    
+      <p class="introLineLarge">${aboutLink}</p>       
+    `;
+     console.log('pageIntro',pageIntro);
     } 
    } else  {
     if (local_images) {
@@ -355,7 +368,7 @@ const thingString = function (order,ix,dir,useThumb,ititle,props) {
 	let theImageArg = '';
 	pageNumber++;
 	let lastPageArg = (pageNumber === numPages)?'&lastPage=1':'';
-	let rs,srcUrl;
+	let rs,srcUrl,aboutURL,aboutStart,aboutLink;
 	let astart = `<a style="color:white" href="page.html?image=${vx}&${pageArg}&${kindArg}&${localArg}">`;
   	let galURL,galStartgalLink;
   if (top) {
@@ -507,10 +520,10 @@ let sectionString = function (things) {
   }
   //console.log('things unordered',things);
   if (sortByOrder) {
-    console.log('sortByOrder',JSON.stringify(things));
+    //console.log('sortByOrder',JSON.stringify(things));
     things.sort(compareByOrder);
   }
-   console.log('things ordered',things);
+  // console.log('things ordered',things);
 //  ln = 2;
 	for (let i=0;i<ln;i++) {
 		let thing = things[i];
@@ -585,7 +598,7 @@ const writeTheLocals = function () {
 
 		
 const writePage = function (sections) {
-	
+	 console.log('Page Intro',pageIntro);
 	let frs = '';
 	frs += pageTop;
   frs += pageIntro;

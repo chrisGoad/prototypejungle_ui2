@@ -62,7 +62,7 @@ var boilerplate_kop =
 
 <div class="theGrid">
 <div></div>
-<div><span class="textVar"><a style="color:black" href="../index.html">Kingdom of Pattern</a></span></div>
+<div><p class="title"><a style="color:white" href="../index.html">Kingdom of Pattern</a></p></div>
 <div></div>
 </div>
 <div class="theGrid">

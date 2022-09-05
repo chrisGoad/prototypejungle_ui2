@@ -2,9 +2,10 @@
 <div>
 <p class="title">drop</p>
 
-<p>A user-defined JavaScript function <span class="userDefinedText">generateDrop(p:Point)</span> returns a structure  of the form 
-<span class="textVar">{geometries:arrayOf(geometricObject), shapes:arrayOf(shape)}</span> The shapes constitute the visible form of the geometric objects. The main drop image generator   calls <span class="userDefinedText">generateDrop</span> repeatedly on randomly selected points  on the canvas. It checks whether any of the geometries in the current drop collide with any of the geometries already dropped. If so the drop is rejected. If not the geometries are added to the array of all geometries dropped so far, and the shapes are added to the visible world.The reason that geometries and shapes are generated separately is that it allows the coder full control of how the geometries are made visible. 
+<p> The main image generator   calls the user defined JavaScript method <span class="textVar">generateDrop(p:Point)</span> repeatedly on randomly selected points  on the canvas.  <span class="textVar">generateDrop</span> returns a structure  of the form 
+<p class="textVar">{geometries:arrayOf(geometricObject), shapes:arrayOf(shape)}</p> or <span class="textVar">null</span> if no shape is to be displayed at the given point. The shapes constitute the visible form of the geometric objects. The image generator checks whether any of the geometries in the current drop collide with any of the geometries already dropped. If so the drop is rejected. If not the geometries are added to the array of all geometries dropped so far, and the shapes are added to the visible world.The reason that geometries and shapes are generated separately is that it allows the coder full control of how the geometries are made visible. 
 </p>
+</div>
 </div>
 </body>
 </html>

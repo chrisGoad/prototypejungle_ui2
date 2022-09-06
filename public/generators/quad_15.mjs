@@ -13,6 +13,7 @@ debugger;
 let wd = 100;
 let topParams = {width:wd,height:wd,framePadding:0.1*wd,frameStrokee:'white'}
 Object.assign(rs,topParams);
+rs.quadParams = {};
 //rs.quadParams = {chance:1,levels:7,polygonal:1};
 //let strokeWidths = rs.quadParams.strokeWidths = [];
 //rs.computeExponentials(strokeWidths,levels,0.1,0.9);

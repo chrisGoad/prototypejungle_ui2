@@ -78,14 +78,20 @@ rs.quadSplitParams = function (qd) {
    return {center:rp,pfr0:.5,pfr1:.5,pfr2:0.5,pfr3:0.5};
    
 }
+
+rs.numSteps =67;
+rs.ns = 0;
 rs.oneStep = function () {
   debugger;
+  draw.saveFrame(this.ns)
   stepper.step(0);
   dir = stepper.ar[0];
 
   this.resetShapes();
-
-  setTimeout(() => this.oneStep(),50);
+  this.ns = this.ns + 1;
+  if (this.ns < this.numSteps) {
+    setTimeout(() => this.oneStep(),50);
+  }
 
 }
 

@@ -1,15 +1,4 @@
 
-let kind = process.argv[2];
-//let forKOPstr = process.argv[3];
-let sortByOrderstr = "1";
-let alwaysLocal = 1;
-let forKOP = 1;
-
-/*
-if (process.argv[3]==="0") {
-  sortByOrderstr = "0";
-}
-*/
 const toBoolean = (v) => {
   if (typeof v === 'string') {
     return (v==='0')?false:true;
@@ -17,6 +6,18 @@ const toBoolean = (v) => {
     return false;
   }
 }
+
+let kind = process.argv[2];
+let forKOP = toBoolean(process.argv[3]);
+let sortByOrderstr = "1";
+let alwaysLocal = 1;
+
+console.log 
+/*
+if (process.argv[3]==="0") {
+  sortByOrderstr = "0";
+}
+*/
 
 let signed = 0
 //let signed = toBoolean(signedstr);
@@ -392,6 +393,7 @@ const thingString = function (order,ix,dir,useThumb,ititle,props) {
   let propsStr = imagesHere?`<span style="font-size:10pt">${likes?'Likes '+likes:''} ${posted?"":" NOT POSTED"} ${local_images?'Local':''} ${category}</span><br/>`:'';;
   let sourcenm = `source${sources?'s':''}`;
 	//if (forKOP || forPJ) {
+  console.log('forKOP',forKOP,'astart',astart);
 	if (forKOP) {
 		//let titleLink = title?`${astart}${title}</a></p>`:'';
 		let titleLink = title?`${astart}${title}</a>`:'';
@@ -402,10 +404,9 @@ const thingString = function (order,ix,dir,useThumb,ititle,props) {
     } else {
       rs = `<div><p class="centered"><a style="color:white" href="http://localhost:8081/draw.html?source=/${dir}/${path}.${fileExt}${theImageArg}">${title}</a><p/>`;
     }
- //   console.log("RRRRSSS",rs);
-    rs = rs +
-    `<p class="centered"><a style="color:white" href="${srcUrl}">${sourcenm}</a></p>
-    <p class="centered">${astart}<img width="200" src="${thumbsrc}" alt="Image Missing"></a></p></div>`;
+   console.log("RRRRSSS",rs);
+  //rs = rs +`<p class="centered"><a style="color:white" href="${srcUrl}">${sourcenm}</a></p>`;
+    rs = rs +`<p class="centered">${astart}<img width="200" src="${thumbsrc}" alt="Image Missing"></a></p></div>`;
 	} 
   if (top) {
 		console.log('top');
@@ -413,7 +414,7 @@ const thingString = function (order,ix,dir,useThumb,ititle,props) {
 
     rs = rs +
     `<p class="centered">${galStart}<img width="200" src="${thumbsrc}" alt="Image Missing"></a></p></div>`;
-	} else {
+	} else if (!forKOP) {
     srcUrl = (sources)?`doc/${path}_sources.html`:`${dir}/${path}.${fileExt}`;
 	//	console.log('not for KOP');
     rs = `<div><p style="text-align:center"><a href="http://localhost:8081/draw.html?source=/${dir}/${path}.${fileExt}${theImageArg}">${title}</a><br/>

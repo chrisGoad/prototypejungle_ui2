@@ -1,0 +1,89 @@
+ffmpeg-20200809-6e951d0-win64-static.zip
+
+c:\ffmpeg\bin\ffmpeg -f image2 -framerate 12 -i foo-%03d.jpeg -s WxH foo.avi
+c:\ffmpeg\bin\ffmpeg  -framerate 10 -i wander0_1_f%03d.jpg -s 800x400 foo2.mp4
+c:\ffmpeg\bin\ffmpeg  -framerate 10 -i wander0_1_2_f%03d.jpg -s 1600x800 wander0_1_2_0.mp4
+c:\ffmpeg\bin\ffmpeg  -framerate 10 -i wander0_1_2_f%03d.jpg -s 1600x800 wander0_1_2_0.mp4
+c:\ffmpeg\bin\ffmpeg  -framerate 10 -i grid0_9_f%03d.jpg -s 800x800 grid0_9_0.mp4
+rm wander0_3_f*
+c:\ffmpeg\bin\ffmpeg  -framerate 10 -i wander0_3_f%03d.jpg -s 1600x800 wander0_3.mp4
+c:\ffmpeg\bin\ffmpeg  -framerate 10 -i wander0_3_f%03d.jpg -s 1600x800 wander0_3.gif
+c:\ffmpeg\bin\ffmpeg  -framerate 10 -i mlines0_0_f%03d.jpg -s 1600x800 mlines0_0.mp4
+c:\ffmpeg\bin\ffmpeg  -framerate 10 -i mlines0_0_f%03d.jpg -s 800x400 mlines0_0_1.gif
+c:\ffmpeg\bin\ffmpeg  -framerate 10 -i grid0_21_f%03d.jpg -s 800x400 mlines0_0_1.gif
+
+cd c:\prototypejungle
+
+c:\ffmpeg\bin\ffmpeg  -framerate 10 -i animations/mlines0_0_f%03d.jpg -s 800x400  export/mlines0_3_1.gif
+c:\ffmpeg\bin\ffmpeg  -framerate 10 -i animations/mlines0_2_f%03d.jpg -s 800x400  export/mlines0_2.gif
+c:\ffmpeg\bin\ffmpeg  -framerate 10 -i animations/mlines0_3_f%03d.jpg -s 800x400  export/mlines0_3.gif
+c:\ffmpeg\bin\ffmpeg  -framerate 10 -i animations/mlines0_4_f%03d.jpg -s 800x400  export/mlines0_4.mp4
+c:\ffmpeg\bin\ffmpeg  -framerate 10 -i animations/mlines0_5_f%03d.jpg -s 1200x600  export/mlines0_5.mp4
+c:\ffmpeg\bin\ffmpeg  -framerate 10 -i animations/mlines0_5_f%03d.jpg -s 800x400  export/mlines0_5.gif
+c:\ffmpeg\bin\ffmpeg   -i export/mlines0_3_1.gif -vf reverse export/rmlines0_3_1.gif
+c:\ffmpeg\bin\ffmpeg  -framerate 10 -i animations/mlines0_7_f%03d.jpg -s 1200x600  export/mlines0_7.mp4
+c:\ffmpeg\bin\ffmpeg  -framerate 10 -i animations/mlines0_7_f%03d.jpg -s 1000x1000  export/mlines0_7.mp4
+c:\ffmpeg\bin\ffmpeg  -framerate 10 -i animations/mlines0_8_f%03d.jpg -s 1200x600  export/mlines0_8.mp4
+c:\ffmpeg\bin\ffmpeg  -framerate 10 -i animations/pulse0_3_f%03d.jpg -s 1000x500  export/pulse0_3.mp4
+
+
+cd c:\prototypejungle
+c:\ffmpeg\bin\ffmpeg  -framerate 10 -i animations/spatter0_6_f%03d.jpg -s 1000x1000  export/spatter0_6.mp4
+c:\ffmpeg\bin\ffmpeg  -framerate 15 -i animations/spatter0_7_f%03d.jpg -s 1000x1000  export/spatter0_7.gif
+c:\ffmpeg\bin\ffmpeg  -framerate 15 -i animations/broken1_1_f%03d.jpg -s 1000x1000  export/broken1_1.gif
+c:\ffmpeg\bin\ffmpeg  -framerate 15 -i animations/broken1_2_f%03d.jpg -s 1000x1000  export/broken1_2.gif
+c:\ffmpeg\bin\ffmpeg  -framerate 15 -i animations/broken1_0_f%03d.jpg -s 1200x600  export/broken1_0.gif
+c:\ffmpeg\bin\ffmpeg  -framerate 15 -i animations/broken1_0_f%03d.jpg -s 1200x600  www/export/broken1_0.gif
+c:\ffmpeg\bin\ffmpeg  -framerate 15 -i animations/broken1_4_f%03d.jpg -s 1200x600  www/export/broken1_4.gif
+c:\ffmpeg\bin\ffmpeg  -framerate 10 -i animations/broken1_5_f%03d.jpg -s 1000x1000  www/export/broken1_5.gif
+c:\ffmpeg\bin\ffmpeg  -framerate 10 -i animations/broken1_6_f%03d.jpg -s 1000x1000  www/export/broken1_6.gif
+c:\ffmpeg\bin\ffmpeg  -framerate 10 -i animations/lines0_3_f%03d.jpg -s 1000x1000  www/export/lines0_3.gif
+c:\ffmpeg\bin\ffmpeg  -framerate 20 -i animations/lines0_5_f%03d.jpg -s 1000x1000  www/export/lines0_5.gif
+c:\ffmpeg\bin\ffmpeg  -framerate 10 -i animations/grid_1_3_f%03d.jpg -s 1000x1000  www/export/grid_1_3.gif
+c:\ffmpeg\bin\ffmpeg  -framerate 15 -i animations/grid_1_6_f%03d.jpg -s 1000x1000  www/export/grid_1_6.gif
+c:\ffmpeg\bin\ffmpeg  -framerate 15 -i animations/grid_1_7_f%03d.jpg -s 1000x1000  www/export/grid_1_7.gif
+c:\ffmpeg\bin\ffmpeg  -framerate 15 -i animations/grid_1_9_f%03d.jpg -s 1000x1000  www/export/grid_1_9.gif
+c:\ffmpeg\bin\ffmpeg  -framerate 15 -i animations/grid_1_10_f%03d.jpg -s 1000x1000  www/export/grid_1_10.gif
+c:\ffmpeg\bin\ffmpeg  -framerate 15 -i animations/grid0_21_f%03d.jpg -s 1000x1000  www/export/grid0_21.gif
+c:\ffmpeg\bin\ffmpeg  -framerate 15 -i animations/grid_1_16_f%03d.jpg -s 1000x1000  www/export/grid_1_16.gif
+c:\ffmpeg\bin\ffmpeg  -framerate 15 -i animations/grid0_8_7_f%03d.jpg -s 1000x1000  www/export/grid0_8_7.gif
+c:\ffmpeg\bin\ffmpeg  -framerate 15 -i animations/grid0_8_3_f%03d.jpg -s 1000x1000  www/export/grid0_8_3.gif
+c:\ffmpeg\bin\ffmpeg  -framerate 15 -i animations/sphere2_1_f%03d.jpg -s 1000x1000  export/sphere2_1.gif
+
+c:\ffmpeg\bin\ffmpeg  -framerate 15 -i animations/lines0_15e_f%03d.jpg -s 500x500  export/lines0_15e.gif
+c:\ffmpeg\bin\ffmpeg  -framerate 10 -i animations/lines0_15f_f%03d.jpg -s 700x700  export/lines0_15f.gif
+c:\ffmpeg\bin\ffmpeg  -framerate 10 -i animations/grid0_20_3_f%03d.jpg -s 500x500  export/grid0_20_3.gif
+c:\ffmpeg\bin\ffmpeg  -framerate 10 -i animations/grid0_20_6_f%03d.jpg -s 500x500  export/grid0_20_6.gif
+c:\ffmpeg\bin\ffmpeg  -framerate 15 -i animations/grid0_20_7_f%03d.jpg -s 500x500  export/grid0_20_7.gif
+c:\ffmpeg\bin\ffmpeg  -framerate 15 -i animations/grid0_20_8_f%03d.jpg -s 1000x500  export/grid0_20_8.gif
+c:\ffmpeg\bin\ffmpeg  -framerate 15 -i animations/grid0_20_9_f%03d.jpg -s 500x500  export/grid0_20_9.gif
+c:\ffmpeg\bin\ffmpeg  -framerate 15 -i animations/grid0_20_11_f%03d.jpg -s 500x500  export/grid0_20_11.gif
+c:\ffmpeg\bin\ffmpeg  -framerate 15 -i animations/grid0_20_12_f%03d.jpg -s 500x500  export/grid0_20_12.gif
+c:\ffmpeg\bin\ffmpeg  -framerate 15 -i animations/drop0__14.anim_f%03d.jpg -s 1000x1000  export/drop0__14.anim.gif
+c:\ffmpeg\bin\ffmpeg  -framerate 15 -i animations/drop0__15.anim_f%03d.jpg -s 1000x1000  export/drop0__15.anim.gif
+c:\ffmpeg\bin\ffmpeg  -framerate 20 -i animations/drop0_1_23.anim_f%03d.jpg -s 1000x1000  export/drop0_1_23.anim.gif
+c:\ffmpeg\bin\ffmpeg  -framerate 20 -i animations/grid_simple_example_f%03d.jpg -s 1000x1000  export/grid_simple_example.anim.gif
+c:\ffmpeg\bin\ffmpeg  -framerate 10 -i animations/random_stripes_f%03d.jpg -s 500x500  export/random_stripes2.anim.gif
+c:\ffmpeg\bin\ffmpeg  -framerate 10 -i animations/random_stripes_f%03d.jpg -s 500x500  export/random_stripes3.anim.gif
+c:\ffmpeg\bin\ffmpeg  -framerate 10 -i animations/random_stripes_f%03d.jpg -s 500x500  export/random_stripes4.anim.gif
+c:\ffmpeg\bin\ffmpeg  -framerate 10 -i animations/drop_move_f%03d.jpg -s 500x500  export/drop_move.anim.gif
+c:\ffmpeg\bin\ffmpeg  -framerate 10 -i animations/drop_move_f%03d.jpg -s 500x500  export/drop_move2.anim.gif
+c:\ffmpeg\bin\ffmpeg  -framerate 10 -i animations/drop_rain_f%03d.jpg -s 500x500  export/drop_rain.anim.gif
+c:\ffmpeg\bin\ffmpeg  -framerate 10 -i animations/drop_fade_f%03d.jpg -s 500x500  export/drop_fade.anim.gif
+c:\ffmpeg\bin\ffmpeg  -framerate 10 -i animations/random_cross_hatch_f%03d.jpg -s 500x500  export/random_cross_hatch.anim.gif
+c:\ffmpeg\bin\ffmpeg  -framerate 30 -i animations/basic_move_f%03d.jpg -s 500x500  export/basic_move.anim.gif
+c:\ffmpeg\bin\ffmpeg  -framerate 30 -i animations/basic_move2_f%03d.jpg -s 500x500  export/basic_move2.anim.gif
+c:\ffmpeg\bin\ffmpeg  -framerate 20 -i animations/basic_move2_f%03d.jpg -s 700x700  export/basic_move2.anim.mp4
+c:\ffmpeg\bin\ffmpeg  -framerate 20 -i animations/basic_move_f%03d.jpg -s 500x500  export/basic_move.anim.mp4
+c:\ffmpeg\bin\ffmpeg  -framerate 20 -i animations/basic_move2_f%03d.jpg -s 500x500  export/basic_move.anim.gif
+c:\ffmpeg\bin\ffmpeg  -framerate 10 -i animations/quad_15_6_f%03d.jpg -s 500x500  export/quad_15_5.anim.gif
+
+
+
+rm animations/spatter0_7*
+c:\ffmpeg\bin\ffmpeg  -framerate 10 -i animations/spatter0_6_f%03d.jpg -s 1000x1000  export/spatter0_6_1.mp4
+
+
+ffmpeg -i animation/frameCount.mp4 -vf reverse reversed.mp4
+
+c:\ffmpeg\bin\ffmpeg  -framerate 10 -i animations/mlines0_7_f%03d.jpg -s 750x750  export/mlines0_7_1.mp4

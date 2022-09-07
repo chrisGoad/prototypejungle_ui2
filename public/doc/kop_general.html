@@ -1,0 +1,13 @@
+{{boilerplate_kop}}
+<div>
+<p class="title">General Considerations</p>
+<p> The software which generated these images consists of a series of JavaScript modules, one for each type of image: drop,quadtree, grid, web, and lines. Each module exports a function that adds the relevant set of methods to a  JavaScript object. For each individual image, a "generator" loads and applies the needed modules to an object which it creates, sets the parameters for that image, and finally, applies the top level image generation method. More than one module and toplevel generation method might be involved.</p>
+<p> The software includes base capabilites, regardless of the image modules loaded.  These include methods for geometry and  "shapes". A shape is a JavaScript object which includes a link to an SVG representation used for its display.</p>
+ 
+</div>
+</div>
+</body>
+</html>
+
+
+

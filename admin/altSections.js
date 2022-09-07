@@ -48,6 +48,9 @@ sections:
 //[0,'quad_15_8','instances',1,'Quad 15 8',{likes:0,posted:0,category:'quad'}],  
 //[0,'quad_15_7_6','instances',1,'Quad 15 7 6',{likes:0,posted:0,category:'quad'}], 
 [0,'textTest','generators',1,'textTest',{likes:0,posted:0,category:'test'}], 
+[0,'web_wheel','generators',1,'web wheel',{likes:0,posted:0,category:'test'}], 
+[0,'web_thing_0','generators',1,'web thing 0',{likes:0,posted:0,category:'test'}], 
+[0,'web_thing_1','generators',1,'web thing 1',{likes:0,posted:0,category:'test'}], 
 
  [0,'quad_11_combo_1','instances',1,'Quad 11 Combo 1',{likes:0,posted:0,category:'quad'}], 
  //[0,'quad_2_v_2','generators',1,'Circles and Squares',{likes:0,posted:0,category:'quad',version:2}], 

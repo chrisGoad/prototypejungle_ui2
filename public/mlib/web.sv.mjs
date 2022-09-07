@@ -56,7 +56,6 @@ rs.initWeb = function (pnts) {
 }
 
 rs.addSegs = function (lineP) {
-  debugger;
   let {connectSegs,webParameters,shapes} = this;
   let {lengthenBy=0}  = webParameters;
   let ln = connectSegs.length;
@@ -127,9 +126,8 @@ rs.generateWeb = function (params) {
   let params = {};
   core.transferProperties(params,this,props);
   core.transferProperties(params,iparams,props);*/
-  debugger;
   this.webParameters = params;
-  let {points:pnts,lineP,minConnectorLength,maxConnectorLength,webTries,lengthenBy=1,maxLoops=Infinity,checkCollide=1} = params;
+  let {points:pnts,lineP,minConnectorLength,maxConnectorLength,webTries,lengthenBy=-0.1,maxLoops=Infinity} = params;
   if (pnts) {
     this.initWeb(pnts);
   }
@@ -284,16 +282,14 @@ const removeFromNears = function (i,ni) {
       end1.gridc = rjp.gridc;
       let lnc = connectSegs.length;
       let fnd = 0;
-      if (checkCollide) {
-        for (let i = 0;i<lnc;i++) {
-          let csg = connectSegs[i];
-          if (rseg.intersects(csg)) {// <= changed
-            fnd = 1;
-            //console.log('intersects');
-            break;
-          }
-          //console.log('does not intersect');
+      for (let i = 0;i<lnc;i++) {
+        let csg = connectSegs[i];
+        if (0 && rseg.intersects(csg)) {// <= changed
+          fnd = 1;
+          console.log('intersects');
+          break;
         }
+        console.log('does not intersect');
       }
       if ( !fnd) {
       //  console.log('added segment',this.numDropped);

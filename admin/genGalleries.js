@@ -216,7 +216,7 @@ let pageTop = `
       text-align:center;
       padding-bottom:5px;
       padding-top:5px;
-      font-size:10pt;
+      font-size:12pt;
     }
       
   </style>
@@ -274,7 +274,7 @@ if (imKind === 'g') {
       `
       ${headLine}
       <p class="introLineLarge">${kindTitle}</p>    
-      <p class="introLineLarge">${aboutLink}</p>       
+      <p class="introLineSmall">${aboutLink}</p>       
     `;
      console.log('pageIntro',pageIntro);
     } 
@@ -333,7 +333,7 @@ let pageNumber = 0;
 let numPages = 0;
 const thingString = function (order,ix,dir,useThumb,ititle,props) {
 	debugger;
-  let {variant,likes,posted,category,sources} = props;
+  let {variant,likes,posted,category,sources,noTitle} = props;
   //console.log('POSTED',posted,'category',category,'kind',kind);
   if ((kind !== 'alt') && (category !==  kind)) {
     return '</div>';
@@ -342,7 +342,7 @@ const thingString = function (order,ix,dir,useThumb,ititle,props) {
 	let path = spix[0];
 	let ext = (spix.length === 1)?'jpg':spix[1];
 	let x = path + '.'+ ext;
-  let title=ititle?ititle:pageNumber+'';
+  let title=ititle?(noTitle?'':ititle):pageNumber+'';
   theTitles.push(ititle?ititle:pageNumber+'');
   let vpath = (variant?path+'_v_'+variant:path);
   //console.log('variant',variant);
@@ -365,12 +365,13 @@ const thingString = function (order,ix,dir,useThumb,ititle,props) {
   //let kindArg = 'imKind='+imKind;
 //  console.log('kind',kind);
   let kindArg = 'imKind='+kind;
+  let noTitleArg = noTitle?'&noTitle=1':'';
   let localArg = 'local='+(local_images||imagesHere?1:0);
 	let theImageArg = '';
 	pageNumber++;
 	let lastPageArg = (pageNumber === numPages)?'&lastPage=1':'';
 	let rs,srcUrl,aboutURL,aboutStart,aboutLink;
-	let astart = `<a style="color:white" href="page.html?image=${vx}&${pageArg}&${kindArg}&${localArg}">`;
+	let astart = `<a style="color:white" href="page.html?image=${vx}&${pageArg}&${kindArg}&${localArg}${noTitleArg}">`;
   	let galURL,galStartgalLink;
   if (top) {
     if (title === 'Drops') {

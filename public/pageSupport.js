@@ -30,8 +30,8 @@ const onPrev = function () {
   debugger;
 	
 	let dest = thePages[cPage-1];
-	  
-		window.location.href = `./page.html?image=${dest}&page=${cPage-1}&imKind=${imKind}&local=${imLocalS}`;
+	let noTitleArg = noTitle?'&noTitle=1':'';
+		window.location.href = `./page.html?image=${dest}&page=${cPage-1}&imKind=${imKind}&local=${imLocalS}${noTitleArg}`;
 
 	//window.location.href = `./page.html?image=${dest}&page=${cPage-1}&imKind=${imKind}`;
 }
@@ -40,8 +40,8 @@ const onNext = function () {
 	
 	let dest = thePages[cPage+1];
 	let lastPageArg = (cPage === (thePages.length - 2))?'&lastPage=1':'';
-
-	window.location.href = `./page.html?image=${dest}&page=${cPage+1}${lastPageArg}&imKind=${imKind}&local=${imLocalS}`;
+  let noTitleArg = noTitle?'&noTitle=1':'';
+	window.location.href = `./page.html?image=${dest}&page=${cPage+1}${lastPageArg}&imKind=${imKind}&local=${imLocalS}${noTitleArg}`;
 }
 
 const onFull = function () {
@@ -62,7 +62,7 @@ const onTop = function () {
 	window.location.href = './'+dst;
 }
 
-let imKind,imLocalS,thePages,theTitles,theLocals,imurl;
+let imKind,imLocalS,thePages,theTitles,theLocals,imurl,noTitle;
 document.addEventListener('DOMContentLoaded', () => {
   debugger;
 	let cWidth =document.documentElement.clientWidth;
@@ -72,6 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	let getArgs = parseQuerystring();
 	cPage = Number(getArgs.page);
   imKind = getArgs.imKind;
+  noTitle = getArgs.noTitle;
   debugger;
   imLocalS = getArgs.local;
   imLocal = (imLocalS==='0')?0:1;
@@ -137,7 +138,11 @@ document.addEventListener('DOMContentLoaded', () => {
 	topDiv.addEventListener('click',onTop);
 	fullDiv.addEventListener('click',onFull);
 	if (title) {
-	  titleDiv.innerHTML = decodeURI(title);
+    if (noTitle) {
+     // titleDiv.hide();
+    } else {
+	    titleDiv.innerHTML = decodeURI(title);
+    }
 	}
 	
 	//imageEl.width = 0.9*Math.min(cWidth,cHeight);

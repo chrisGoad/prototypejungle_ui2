@@ -4,17 +4,17 @@ module.exports = {
 sections: 
 
 [
- [0,'quad_3','generators',1,'Circles',{likes:72,posted:1,category:'quad',variant:2}], 
-[0,'quad_9_2','instances',1,'Quad 9 2',{likes:0,posted:0,category:'quad'}], 
- [0,'quad_9_3','instances',1,'Quad 9 3',{likes:0,posted:0,category:'quad'}], 
+ [0,'quad_3','generators',1,'Circles',{likes:72,posted:1,noTitle:1,category:'quad',variant:2}], 
+[0,'quad_9_2','instances',1,'Quad 9 2',{likes:0,posted:0,noTitle:1,category:'quad'}], 
+ [0,'quad_9_3','instances',1,'Quad 9 3',{likes:0,posted:0,noTitle:1,category:'quad'}], 
  //[0,'quad_9_4','instances',1,'Quad 9 4',{likes:0,posted:0,category:'quad'}], 
- [0,'quad_9_6','instances',1,'Quad 9 6',{likes:0,posted:0,category:'quad'}], 
- [0,'quad_11','instances',1,'Quad 11',{likes:0,posted:0,category:'quad'}], 
- [0,'quad_11_2','instances',1,'Quad 11 2',{likes:0,posted:0,category:'quad'}], 
- [0,'quad_11_4','instances',1,'Quad 11 4',{likes:0,posted:0,category:'quad'}], 
- [0,'quad_15_1','instances',1,'Quad 15 1',{likes:0,posted:0,category:'quad'}], 
- [0,'quad_15_3','instances',1,'Quad 15 3',{likes:0,posted:0,category:'quad'}], 
- [0,'quad_skein','instances',1,'Quad Skein',{likes:0,posted:0,category:'quad'}], 
+ [0,'quad_9_6','instances',1,'Quad 9 6',{likes:0,posted:0,noTitle:1,category:'quad'}], 
+ [0,'quad_11','instances',1,'Quad 11',{likes:0,posted:0,noTitle:1,category:'quad'}], 
+ [0,'quad_11_2','instances',1,'Quad 11 2',{likes:0,posted:0,noTitle:1,category:'quad'}], 
+ [0,'quad_11_4','instances',1,'Quad 11 4',{likes:0,posted:0,noTitle:1,category:'quad'}], 
+ [0,'quad_15_1','instances',1,'Quad 15 1',{likes:0,posted:0,noTitle:1,category:'quad'}], 
+ [0,'quad_15_3','instances',1,'Quad 15 3',{likes:0,posted:0,noTitle:1,category:'quad'}], 
+ [0,'quad_skein','instances',1,'Quad Skein',{likes:0,posted:0,noTitle:1,category:'quad'}], 
  
  [100,'drop_space_junk','generators',1,'Space Junk',{likes:50,posted:1,category:'drop',variant:0}], 
  [10,'drop_light','generators',1,'Light',{likes:50,posted:1,category:'drop',variant:0}], 
@@ -42,6 +42,8 @@ sections:
   [0,'web_diamond','generators',1,'Diamond',{likes:137,posted:1,category:'web'}],
   [40,'web_aphelion','generators',1,'Aphelion',{likes:31,posted:1,category:'web'}],
    [20,'web_wheel','generators',1,'Wheel',{likes:30,posted:1,category:'web'}],
+   [25,'web_thing_0','generators',1,'Web Thing',{likes:0,posted:0,category:'web'}], 
+
    
  [0,'lines_chaos_within_order','generators','wide2','Chaos Within Order',{likes:152,posted:1,category:'lines'}],
 		 //	 [0,'lines_1','generators','square','Lines 1',{likes:31,posted:1,category:'lines',sources:1}],

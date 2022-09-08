@@ -14,7 +14,8 @@
   <p><img  src="https://kingdomofpattern.com/images/thumbs/quad_0_8_3.jpg" style="cursor:pointer"  width="400" height="400"/></p>
 <p> There are two other ways of partitioning a convex quadrangle into four parts. The first is analogous to the case we have just described, but with the initial partition applied horizontally rather than vertically. That is the first partition is into top and bottom rather than left and right. Here's a picture:</p>
   <p><img  src="https://kingdomofpattern.com/images/thumbs/quad_0_8_4.jpg" style="cursor:pointer"  width="400" height="400"/></p>
-And finally, the partition can involve specifying a center point around which the partition is done, together with the distance along each side that the partitioning lines connect to:
+  
+<p>And finally, the partition can involve specifying a center point around which the partition is done, together with the distance along each side that the partitioning lines connect to:
 </p>
   <p><img  src="https://kingdomofpattern.com/images/thumbs/quad_0_8_5.jpg" style="cursor:pointer"  width="400" height="400"/></p>
 <p> In the implementation, the partitioning method used for each quadrangle can be chosen programatically, so that the partitioning method varies at different parts of the hierarchy. An example appears below. In this case the partitioning rule varies from center-partition at odd levels, and a random choice between vertical-first and horizontal-first partitions at even. Also, there is randomness in the new center point chosen for center-partitions and in the partitioning parameters for vertical and horizontal partitions. There are eight levels.</p>

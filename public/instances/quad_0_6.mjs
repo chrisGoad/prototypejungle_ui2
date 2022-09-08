@@ -4,7 +4,7 @@ import {rs as generatorP} from '/generators/quad_0.mjs';
 let rs = generatorP.instantiate();
 
 rs.setName('quad_0_6');
-let levels = 4;
+let levels = 5;
 rs.quadParams.levels = levels;
 
 

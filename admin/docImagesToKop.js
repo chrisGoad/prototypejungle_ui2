@@ -3,7 +3,7 @@
 
 //return;
 //let alternate = 0;
-let sectionsPath = './images.js';
+let sectionsPath = './docImages.js';
 
 var fs = require('fs');
 

@@ -76,16 +76,16 @@ rs.showLabelsC = function () {
   const addT = (rt,n,p) => {
     this.addText(textP,rt,n,p);
   }
-  addT('pfr',0,Point.mk(6*ff-hwd,-(hwd+ff)));
+  addT('fr',0,Point.mk(6*ff-hwd,-(hwd+ff)));
   addT('Q',0,Point.mk(3*ff-hwd,-5*ff));
-  addT('pfr',2,Point.mk(0.0*ff,hwd+ff));
-  addT('pfr',3,Point.mk(-(hwd+1.5*ff),-2*ff));
+  addT('fr',2,Point.mk(0.0*ff,hwd+ff));
+  addT('fr',3,Point.mk(-(hwd+1.5*ff),-2*ff));
   addT('Q',2,Point.mk(-5*ff,hwd-5.5*ff));
   addT('Q',3,Point.mk(5*ff,hwd-5.5*ff));
   //addT('fr',3,Point.mk(-5*ff,-0.0*ff));
   //addT('fr',5,Point.mk(0*ff,1*ff));
   addT('Q',1,Point.mk(4*ff,-5*ff));
-  addT('pfr',1,Point.mk(hwd+1.5*ff,-2*ff));
+  addT('fr',1,Point.mk(hwd+1.5*ff,-2*ff));
 }
 
 export {rs};

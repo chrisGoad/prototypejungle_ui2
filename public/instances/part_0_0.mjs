@@ -4,21 +4,23 @@ import {rs as generatorP} from '/generators/part_0.mjs';
 let rs = generatorP.instantiate();
 
 rs.setName('part_0_0');
-let levels = 8;
+let levels = 7;
 
 rs.partParams.levels = levels;
 rs.partParams.rectangular = 1;
 levels++;
-rs.splitParams = {fr0:0.5,fr1:0.5,fr2:0.2};
-rs.partSplitParams = function (qd) {
-  let ornt = Math.random() < 0.5?'h':'v';
+rs.splitParams = {vertexNum:0,fr0:0.5,fr1:0.5};
+rs.splitParams = {vertexNum:0,fr0:0.3};
+rs.partSplitParams = function (prt) {
   let rs = this.splitParams;
-  rs.ornt = ornt;
+  let lev = prt.where.length;
+  rs. vertexNum = lev%2;
+    
   return rs;
 }
 
 let visibles = rs.partParams.visibles = [];
-rs.addToArray(visibles,0,levels-1);
+rs.addToArray(visibles,1,levels-1);
 rs.addToArray(visibles,1,levels);
 //let lengthenings = rs.lengthenings = [];
 //s.addToArray(lengthenings,.5,levels);

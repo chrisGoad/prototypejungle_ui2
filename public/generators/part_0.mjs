@@ -7,7 +7,7 @@ import {rs as basicP} from '/generators/basics.mjs';
 import {rs as addPartMethods} from '/mlib/partTree.mjs';	
 
 let rs = basicP.instantiate();
-addQuadMethods(rs);
+addPartMethods(rs);
 rs.setName('part_0');
 debugger;
 let wd = 100;

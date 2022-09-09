@@ -14,44 +14,48 @@ rs.partSplitParams = function (prt) {
 }
 
 rs.extendTriOneLevel = function (prt) {
-  
-   let {polygon:pgon} = prt;
+   debugger;
+   let {polygon:pgon,where,root} = prt;
    let {corners} = pgon;
    let sp=this.partSplitParams(prt);
-   let {vertexNum,fr0,fr1} = sp;
-   const addPart = (pn,vn,pgon) => {
-     prt[nm] = {polygon:pgon,where:[...where,[pn,vn],root};
-   }
-   if (fr1) {
-     seg0e0 = corners[vertexNum];
-     seg0e1 = corners[(vertexNum+1)%3];
-     seg1e0 = corners[(vertexNum+2)%3];
-     seg1e1 = seg0e0;
-
-     seg0 = LineSegment.mk(seg0e0,seg0e1);
-     seg1 = LineSegment.mk(seg1e1,seg1e0);
-     e0 = seg0.along(fr0);
-     e1 = seg1.along(fr1);
-     let p0corners =[seg0e0,e0,e1];
-     let p1corners = [e0,seg0e1,seg1e0,e1];
-     p0pgon = Polygon.mk(p0corners);
-     p1pgon = Polygon.mk(p1corners);
-     addPart(p0pgon,0,vertexNum);
-     addPart(p1pgon1,1,vertexNum);
+   if (!sp) {
      return;
    }
+   let {vertexNum,fr0,fr1} = sp;
+   const addPart = (pn,vn,pgon) => {
+     prt[pn] = {polygon:pgon,where:[...where,[pn,vn]],root};
+   }
+   let e0,e1,p0corners,p1corners,p0pgon,p1pgon;
+   if (fr1) {
+     let seg0e0 = corners[vertexNum];
+     let seg0e1 = corners[(vertexNum+1)%3];
+     let seg1e0 = corners[(vertexNum+2)%3];
+     let seg1e1 = seg0e0;
+
+     let seg0 = LineSegment.mk(seg0e0,seg0e1);
+     let seg1 = LineSegment.mk(seg1e1,seg1e0);
+     e0 = seg0.along(fr0);
+     e1 = seg1.along(fr1);
+     p0corners =[seg0e0,e0,e1];
+     p1corners = [e0,seg0e1,seg1e0,e1];
+     p0pgon = Polygon.mk(p0corners);
+     p1pgon = Polygon.mk(p1corners);
+     addPart('P0',0,p0pgon);
+     addPart('P1',0,p1pgon);
+     return 1;
+   }
    e0 = corners[vertexNum];
-   sege0 = corners[(vertexNum+1)%3];
-   sege1 = corners[(vertexNum+2)%3];
-   seg = LineSegment.mk(sege0,sege1);
-   e1 = seg.along(fr1);
-   let p0corners =[e0,sege0];
-   let p1corners = [e0,e1,sege1,e1];
+   let sege0 = corners[(vertexNum+1)%3];
+   let sege1 = corners[(vertexNum+2)%3];
+   let seg = LineSegment.mk(sege0,sege1);
+   e1 = seg.along(fr0);
+   p0corners =[e0,sege0,e1];
+   p1corners = [e0,e1,sege1];
    p0pgon = Polygon.mk(p0corners);
    p1pgon = Polygon.mk(p1corners);
-   addPart(p0pgon,0,vertexNum);
-   addPart(p1pgon1,1,vertexNum);
-   return;
+   addPart('P0',0,p0pgon);
+   addPart('P1',0,p1pgon);
+   return 1;
  }
    
 rs.extendPartOneLevel = function (prt) {
@@ -61,7 +65,7 @@ rs.extendPartOneLevel = function (prt) {
    let {polygon:pgon} = prt;
    let {corners} = pgon;
    if (corners.length === 3) {
-     this.extendTriOneLevel(prt);
+     return this.extendTriOneLevel(prt);
   }
 }
      
@@ -69,17 +73,23 @@ rs.extendPartOneLevel = function (prt) {
  
  
   
-rs.extendPartNLevels = function (prt,params) {
- // debugger;
+rs.extendPartNLevels = function (prt,iparams) {
+   debugger;
+   if (!prt) {
+     return;
+   }
    let {shapes,numRows,randomGridsForShapes} = this;
    let {where} = prt;
    if (!shapes) {
      shapes = this.set('shapes',arrayShape.mk());
    }
-   if (!where) {
+   let params;
+   if (where) {
+     params = prt.root.params;
+   } else {
      where = prt.where = [];
      prt.root = prt;
-     prt.params = params;
+     params = prt.params = iparams;
    }
    let lv =  where.length;
    let {levels} = params;
@@ -93,12 +103,12 @@ rs.extendPartNLevels = function (prt,params) {
       let cell = this.cellOf(pnt);
       rvs = this.randomValuesAtCell(randomGridsForShapes,cell.x,cell.y);
     }
-   let split = this.splitHere(prt,rvs);
+  /* let split = this.splitHere(prt,rvs);
    if (!split) {
      return;
-   }
+   }*/
    if (this.extendPartOneLevel(prt)) {
-     this.extendPartNLevels(prt.P0));//,i+1);
+     this.extendPartNLevels(prt.P0);//,i+1);
      this.extendPartNLevels(prt.P1);//,i+1);
      this.extendPartNLevels(prt.P2);//,i+1);
      this.extendPartNLevels(prt.P3);//,i+1);
@@ -107,6 +117,7 @@ rs.extendPartNLevels = function (prt,params) {
  
  
  rs.displayPart = function (prt,emitLineSegs) {
+   debugger;
    let {shapes,lineSegs} = this;
    //debugger;
    if (!prt) {
@@ -119,12 +130,12 @@ rs.extendPartNLevels = function (prt,params) {
    if (lev > -1) {
      this.displayCell(prt,emitLineSegs);
    }
-   if (prt.UL) {
-     this.displayPart(prt.UL,emitLineSegs);
+   if (prt.P0) {
+     this.displayPart(prt.P0,emitLineSegs);
      if (lev > -1) {
-       this.displayPart(prt.UR,emitLineSegs);
-       this.displayPart(prt.LL,emitLineSegs);
-       this.displayPart(prt.LR,emitLineSegs);
+       this.displayPart(prt.P1,emitLineSegs);
+       this.displayPart(prt.P2,emitLineSegs);
+       this.displayPart(prt.P3,emitLineSegs);
      }
      return;
    }
@@ -328,6 +339,8 @@ rs.whereName = function (w) {
 rs.initialize = function () {
   let {width:wd,height:ht,partParams,dropParams} = this;
  debugger;
+  let hwd = 0.5*wd;
+  let hht = 0.5*ht;
   let {emitLineSegs,polygonal} = partParams;
   polygonal = 1;
   this.addFrame();
@@ -338,9 +351,9 @@ rs.initialize = function () {
   //}
   let p0 = Point.mk(-hwd,hht);
   let p1 = Point.mk(0,-hht);
-  let p1 = Point.mk(hwd,hht);
+  let p2 = Point.mk(hwd,hht);
   let pgon = Polygon.mk([p0,p1,p2]);
-  prt ={polygon:pgon};
+  let prt ={polygon:pgon};
   this.extendPartNLevels(prt,partParams);
   this.displayPart(prt,emitLineSegs);
   if (partParams.emitLineSegs) {

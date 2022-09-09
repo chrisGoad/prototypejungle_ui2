@@ -242,7 +242,7 @@ if (imKind === 'g') {
        and Practice (below). </p>
 
       <p  class="introLineSmall">As you will see from <a style="color:white;text-decoration:underline" href="essay.html">theory</a>, the phrase "Kingdom of Pattern" is not a claim to grandeur.</p>
-      <p class="introLineSmall">Images by Chris Goad, via the JavaScript library at <a style="color:white" href="https://prototypejungle.net">prototypejungle.net</a>.</p> 
+      <p class="introLineSmall">Images by Chris Goad, via JavaScript and <a style="color:white" href="https://developer.mozilla.org/en-US/docs/Web/SVG">SVG</a>.</p> 
 
     
 

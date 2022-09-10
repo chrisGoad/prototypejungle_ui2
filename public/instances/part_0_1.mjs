@@ -4,7 +4,7 @@ import {rs as generatorP} from '/generators/part_0.mjs';
 let rs = generatorP.instantiate();
 
 rs.setName('part_0_1');
-let levels = 1;
+let levels = 10;
 
 rs.partParams.levels = levels;
 rs.partParams.rectangular = 1;

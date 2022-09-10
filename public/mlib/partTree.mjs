@@ -101,8 +101,9 @@ rs.extendQuadOneLevel = function (prt) {
      addPart('P0',0,p0pgon);
      addPart('P1',0,p1pgon);
      if (p2corners) {
+     debugger;
        p2pgon = Polygon.mk(p2corners);
-       addPart('P2',p2pgon);
+       addPart('P2',0,p2pgon);
      }
      return 1;
    }

@@ -57,6 +57,56 @@ rs.extendTriOneLevel = function (prt) {
    addPart('P1',0,p1pgon);
    return 1;
  }
+ 
+ 
+rs.extendQuadOneLevel = function (prt) {
+   debugger;
+   let {polygon:pgon,where,root} = prt;
+   let {corners} = pgon;
+   let sp=this.partSplitParams(prt);
+   if (!sp) {
+     return;
+   }
+   let {vertexNum,Case,fr0,fr1} = sp;
+   const addPart = (pn,vn,pgon) => {
+     prt[pn] = {polygon:pgon,where:[...where,[pn,vn]],root};
+   }
+   let e0,e1,p0corners,p1corners,p2corners,p0pgon,p1pgon,p2pgon;
+   const vertex = (n) =>  corners[(vertexNum+n)%4];
+   let v0 = vertex(0);
+   let v1 = vertex(1);
+   let v2 = vertex(2);
+   let v3 = vertex(3);
+   if (Case === 1) {
+     let bisect  = (fr0===0) && (fr1 === 1);
+     if (bisect) {
+       p0corners =[v0,v1,v2];
+       p1corners =[v0,v2,v3];
+     } else if (fr0===0)  {
+       let seg1 = LineSegment.mk(v1,v2);
+       e1 = seg1.along(fr1);
+       p0corners =[v0,v1,e1];
+       p1corners = [v0,e1,v2,v3];
+     } else {
+       let seg0 = LineSegment.mk(v0,v1);
+       let seg1 = LineSegment.mk(v1,v2);
+       e0 = seg0.along(fr0); 
+       e1 = seg1.along(fr1); 
+       p0corners =[e0,v1,e1];
+       p1corners =[v0,e0,e1,v2];
+       p2corners =[v0,v2,v3];
+     }
+     p0pgon = Polygon.mk(p0corners);
+     p1pgon = Polygon.mk(p1corners);
+     addPart('P0',0,p0pgon);
+     addPart('P1',0,p1pgon);
+     if (p2corners) {
+       p2pgon = Polygon.mk(p2corners);
+       addPart('P2',p2pgon);
+     }
+     return 1;
+   }
+}
    
 rs.extendPartOneLevel = function (prt) {
    if (!prt) {
@@ -66,7 +116,10 @@ rs.extendPartOneLevel = function (prt) {
    let {corners} = pgon;
    if (corners.length === 3) {
      return this.extendTriOneLevel(prt);
+  } else {
+     return this.extendQuadOneLevel(prt);
   }
+  
 }
      
 
@@ -341,18 +394,28 @@ rs.initialize = function () {
  debugger;
   let hwd = 0.5*wd;
   let hht = 0.5*ht;
-  let {emitLineSegs,polygonal} = partParams;
-  polygonal = 1;
+  //let {emitLineSegs,polygonal} = partParams;
+  let {emitLineSegs,rectangular} = partParams;
+//  polygonal = 1;
   this.addFrame();
   this.initProtos();
   this.callIfDefined('adjustProtos');
  // if (!this.strokeWidths) {
   //  this.strokeWidths = this.computeExponentials(partParams.levels,0.1,0.9);
   //}
-  let p0 = Point.mk(-hwd,hht);
-  let p1 = Point.mk(0,-hht);
-  let p2 = Point.mk(hwd,hht);
-  let pgon = Polygon.mk([p0,p1,p2]);
+  let pgon;
+  if (rectangular) {
+    let p0 = Point.mk(-hwd,hht);
+    let p1 = Point.mk(-hwd,-hht);
+    let p2 = Point.mk(hwd,-hht);
+    let p3 = Point.mk(hwd,hht);
+    pgon = Polygon.mk([p0,p1,p2,p3]);
+  } else {
+    let p0 = Point.mk(-hwd,hht);
+    let p1 = Point.mk(0,-hht);
+    let p2 = Point.mk(hwd,hht);
+    pgon = Polygon.mk([p0,p1,p2]);
+  }
   let prt ={polygon:pgon};
   this.extendPartNLevels(prt,partParams);
   this.displayPart(prt,emitLineSegs);

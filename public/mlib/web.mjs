@@ -129,7 +129,7 @@ rs.generateWeb = function (params) {
   core.transferProperties(params,iparams,props);*/
   debugger;
   this.webParameters = params;
-  let {points:pnts,lineP,minConnectorLength,maxConnectorLength,webTries,lengthenBy=1,maxLoops=Infinity,checkCollide=1} = params;
+  let {points:pnts,lineP,minConnectorLength,maxConnectorLength,webTries,lengthenBy=1,maxLoops=Infinity,checkCollisions=1} = params;
   if (pnts) {
     this.initWeb(pnts);
   }
@@ -284,7 +284,7 @@ const removeFromNears = function (i,ni) {
       end1.gridc = rjp.gridc;
       let lnc = connectSegs.length;
       let fnd = 0;
-      if (checkCollide) {
+      if (checkCollisions) {
         for (let i = 0;i<lnc;i++) {
           let csg = connectSegs[i];
           if (rseg.intersects(csg)) {// <= changed

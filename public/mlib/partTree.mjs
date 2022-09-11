@@ -14,7 +14,7 @@ rs.partSplitParams = function (prt) {
 }
 
 rs.extendTriOneLevel = function (prt) {
-   debugger;
+  debugger;
    let {polygon:pgon,where,root} = prt;
    let {corners} = pgon;
    let sp=this.partSplitParams(prt);
@@ -23,7 +23,7 @@ rs.extendTriOneLevel = function (prt) {
    }
    let {vertexNum,fr0,fr1} = sp;
    const addPart = (pn,vn,pgon) => {
-     prt[pn] = {polygon:pgon,where:[...where,[pn,vn]],root};
+     prt[pn] = {polygon:pgon,where:[...where,[pn,vn]],root,parent:prt};
    }
    let e0,e1,p0corners,p1corners,p0pgon,p1pgon;
    if (fr1) {
@@ -60,18 +60,18 @@ rs.extendTriOneLevel = function (prt) {
  
  
 rs.extendQuadOneLevel = function (prt) {
-   debugger;
+ //  debugger;
    let {polygon:pgon,where,root} = prt;
    let {corners} = pgon;
    let sp=this.partSplitParams(prt);
    if (!sp) {
      return;
    }
-   let {vertexNum,Case,fr0,fr1} = sp;
+   let {vertexNum,Case,fr0,fr1,fr2,fr3} = sp;
    const addPart = (pn,vn,pgon) => {
-     prt[pn] = {polygon:pgon,where:[...where,[pn,vn]],root};
+     prt[pn] = {polygon:pgon,where:[...where,[pn,vn]],root,parent:prt};
    }
-   let e0,e1,p0corners,p1corners,p2corners,p0pgon,p1pgon,p2pgon;
+   let e0,e1,e2,e3,p0corners,p1corners,p2corners,p3corners,p4corners,p0pgon,p1pgon,p2pgon,p3pgon,p4pgon;
    const vertex = (n) =>  corners[(vertexNum+n)%4];
    let v0 = vertex(0);
    let v1 = vertex(1);
@@ -96,17 +96,40 @@ rs.extendQuadOneLevel = function (prt) {
        p1corners =[v0,e0,e1,v2];
        p2corners =[v0,v2,v3];
      }
-     p0pgon = Polygon.mk(p0corners);
-     p1pgon = Polygon.mk(p1corners);
-     addPart('P0',0,p0pgon);
-     addPart('P1',0,p1pgon);
-     if (p2corners) {
-     debugger;
-       p2pgon = Polygon.mk(p2corners);
-       addPart('P2',0,p2pgon);
-     }
-     return 1;
-   }
+  } else if (Case === 2) {
+     let seg0 = LineSegment.mk(v0,v1);
+     let seg1 = LineSegment.mk(v2,v3);
+     e0 = seg0.along(fr0); 
+     e1 = seg1.along(fr1); 
+     p0corners =[e0,v1,v2,e1];
+     p1corners =[v0,e0,e1,v3];
+  }   else if (Case === 3) {
+  //   debugger;
+     let seg0 = LineSegment.mk(v0,v1);
+     let seg1 = LineSegment.mk(v1,v2);
+     let seg2 = LineSegment.mk(v2,v3);
+     let seg3 = LineSegment.mk(v3,v0);
+     e0 = seg0.along(fr0); 
+     e1 = seg1.along(fr1); 
+     e2 = seg2.along(fr2); 
+     e3 = seg3.along(fr1); 
+     p0corners =[e0,v1,e1];
+     p1corners =[e1,v2,e2];
+     p2corners =[e2,v3,e3];
+     p3corners =[e3,v0,e0];
+     p4corners =[e0,e1,e2,e3];
+  }          
+  p0pgon = Polygon.mk(p0corners);
+  p1pgon = Polygon.mk(p1corners);
+  p2pgon = Polygon.mk(p2corners);
+  p3pgon = Polygon.mk(p3corners);
+  p4pgon = Polygon.mk(p4corners);
+  addPart('P0',0,p0pgon);
+  addPart('P1',0,p1pgon);
+  addPart('P2',0,p2pgon);
+  addPart('P3',0,p3pgon);
+  addPart('P4',0,p4pgon);
+  return 1;
 }
    
 rs.extendPartOneLevel = function (prt) {
@@ -128,7 +151,7 @@ rs.extendPartOneLevel = function (prt) {
  
   
 rs.extendPartNLevels = function (prt,iparams) {
-   debugger;
+   //debugger;
    if (!prt) {
      return;
    }
@@ -166,12 +189,13 @@ rs.extendPartNLevels = function (prt,iparams) {
      this.extendPartNLevels(prt.P1);//,i+1);
      this.extendPartNLevels(prt.P2);//,i+1);
      this.extendPartNLevels(prt.P3);//,i+1);
+     this.extendPartNLevels(prt.P4);//,i+1);
   }
  }
  
  
  rs.displayPart = function (prt,emitLineSegs) {
-   debugger;
+  // debugger;
    let {shapes,lineSegs} = this;
    //debugger;
    if (!prt) {
@@ -190,6 +214,7 @@ rs.extendPartNLevels = function (prt,iparams) {
        this.displayPart(prt.P1,emitLineSegs);
        this.displayPart(prt.P2,emitLineSegs);
        this.displayPart(prt.P3,emitLineSegs);
+       this.displayPart(prt.P4,emitLineSegs);
      }
      return;
    }
@@ -265,6 +290,7 @@ rs.partFillScale = function (prt) {
 rs.displayCell = function (prt,toSegs) {	
   let {shapes,lineSegs,lineP,circleP,polygonP,mangles,lengthenings,twists,strokeWidths,orect} = this;
   let {circleScale} = prt.root.params;
+  debugger;
   let vs = this.partVisible(prt);
   if (!vs) {
     return;
@@ -303,8 +329,9 @@ rs.displayCell = function (prt,toSegs) {
     shapes.push(shps);
   }
   if (mng) {
-    let {lengthen:ln,twist:tw} = mng;
-     mangled = geom.mangle({within:orect,lengthen:ln,twist:tw});
+    //let {lengthen:ln,twist:tw} = mng;
+     //mangled = geom.mangle({within:orect,lengthen:ln,twist:tw});
+     mangled = geom.mangle(mng);
      mangled.forEach((seg) => {
       if (toSegs) {
         lineSegs.push(seg);

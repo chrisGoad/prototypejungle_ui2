@@ -395,8 +395,12 @@ rs.displayCell = function (qd,toSegs) {
     shapes.push(shps);
   }
   if (mng) {
-    let {lengthen:ln,twist:tw} = mng;
-     mangled = geom.mangle({within:orect,lengthen:ln,twist:tw});
+    let {lengthen:ln,twist:tw,within} = mng;
+   // let {lengthen:l,twist:tw,within} = mng;
+   // console.log('mng',mng);
+     //mangled = geom.mangle({within:orect,lengthen:ln,twist:tw});
+     //mangled = geom.mangle({within,lengthen:ln,twist:tw});
+     mangled = geom.mangle(mng);
      mangled.forEach((seg) => {
       if (toSegs) {
         lineSegs.push(seg);

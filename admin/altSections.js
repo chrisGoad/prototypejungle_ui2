@@ -77,6 +77,8 @@ sections:
  [0,'part_0_0','instances',1,'Part 0 0',{likes:0,posted:0,category:'quad'}], 
  [0,'part_0_1','instances',1,'Part 0 1',{likes:0,posted:0,category:'quad'}], 
  [0,'part_0_2','instances',1,'Part 0 2',{likes:0,posted:0,category:'quad'}], 
+ [0,'part_0_3','instances',1,'Part 0 3',{likes:0,posted:0,category:'quad'}], 
+ [0,'part_0_4','instances',1,'Part 0 4',{likes:0,posted:0,category:'quad'}], 
  
 
 //[0,'quad_15_8','instances',1,'Quad 15 8',{likes:0,posted:0,category:'quad'}],  

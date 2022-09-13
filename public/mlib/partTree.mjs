@@ -14,43 +14,75 @@ rs.partSplitParams = function (prt) {
 }
 
 rs.extendTriOneLevel = function (prt) {
-  debugger;
+  //debugger;
    let {polygon:pgon,where,root} = prt;
    let {corners} = pgon;
    let sp=this.partSplitParams(prt);
    if (!sp) {
      return;
    }
-   let {vertexNum,fr0,fr1} = sp;
+   let {Case,vertexNum,fr0,fr1,fr2,fr3} = sp;
    const addPart = (pn,vn,pgon) => {
-     prt[pn] = {polygon:pgon,where:[...where,[pn,vn]],root,parent:prt};
+     if (pgon) {
+       prt[pn] = {polygon:pgon,where:[...where,[pn,vn]],root,parent:prt};
+     }
    }
-   let e0,e1,p0corners,p1corners,p0pgon,p1pgon;
-   if (fr1) {
-     let seg0e0 = corners[vertexNum];
-     let seg0e1 = corners[(vertexNum+1)%3];
-     let seg1e0 = corners[(vertexNum+2)%3];
-     let seg1e1 = seg0e0;
+   let e0,e1,e2,e3,p0corners,p1corners,p2corners,p3corners,p0pgon,p1pgon,p2pgon,p3pgon;
+   const vertex = (n) =>  corners[(vertexNum+n)%3]; 
+   let v0 = vertex(0);
+   let v1 = vertex(1);
+   let v2 = vertex(2);
 
-     let seg0 = LineSegment.mk(seg0e0,seg0e1);
-     let seg1 = LineSegment.mk(seg1e1,seg1e0);
+   if (Case ===  1) {
+     let seg0 = LineSegment.mk(v0,v1);
+     let seg1 = LineSegment.mk(v2,v0);
      e0 = seg0.along(fr0);
      e1 = seg1.along(fr1);
-     p0corners =[seg0e0,e0,e1];
-     p1corners = [e0,seg0e1,seg1e0,e1];
+     p0corners =[v0,e0,e1];
+     p1corners = [e0,v1,v2,e1];
      p0pgon = Polygon.mk(p0corners);
      p1pgon = Polygon.mk(p1corners);
      addPart('P0',0,p0pgon);
      addPart('P1',0,p1pgon);
      return 1;
    }
+  if ((Case ===  2) || (Case === 3)) {
+     //debugger;
+     let seg0 = LineSegment.mk(v0,v1);
+     let seg1 = LineSegment.mk(v1,v2);
+     let seg2 = LineSegment.mk(v2,v0);
+     e0 = seg0.along(fr0);
+     e1 = seg0.along(fr1);
+     e2 = seg1.along(fr2);
+     e3 = seg2.along(fr3);
+     p0corners =[e0,e1,e2,e3];
+     if (Case === 3) {
+      p1corners = [e1,v1,e2];
+      p2corners = [e2,v2,e3];
+      p3corners = [v0,e0,e3];
+     }
+     p0pgon = Polygon.mk(p0corners);
+     if (Case === 3) {
+         p1pgon = Polygon.mk(p1corners);
+        p2pgon = Polygon.mk(p2corners);
+        p3pgon = Polygon.mk(p3corners);
+     }
+     addPart('P0',0,p0pgon);
+     addPart('P1',0,p1pgon);
+     addPart('P2',0,p2pgon);
+     addPart('P3',0,p3pgon);
+     return 1;
+   }
+
    e0 = corners[vertexNum];
    let sege0 = corners[(vertexNum+1)%3];
    let sege1 = corners[(vertexNum+2)%3];
-   let seg = LineSegment.mk(sege0,sege1);
+   let seg = LineSegment.mk(v1,v2);
    e1 = seg.along(fr0);
-   p0corners =[e0,sege0,e1];
-   p1corners = [e0,e1,sege1];
+  // p0corners =[e0,sege0,e1];
+   p0corners =[v0,v1,e1];
+   //p1corners = [e0,e1,sege1];
+   p1corners = [v0,e0,v2];
    p0pgon = Polygon.mk(p0corners);
    p1pgon = Polygon.mk(p1corners);
    addPart('P0',0,p0pgon);
@@ -69,7 +101,9 @@ rs.extendQuadOneLevel = function (prt) {
    }
    let {vertexNum,Case,fr0,fr1,fr2,fr3} = sp;
    const addPart = (pn,vn,pgon) => {
-     prt[pn] = {polygon:pgon,where:[...where,[pn,vn]],root,parent:prt};
+     if (pgon && pgon.corners) {
+       prt[pn] = {polygon:pgon,where:[...where,[pn,vn]],root,parent:prt};
+     }
    }
    let e0,e1,e2,e3,p0corners,p1corners,p2corners,p3corners,p4corners,p0pgon,p1pgon,p2pgon,p3pgon,p4pgon;
    const vertex = (n) =>  corners[(vertexNum+n)%4];
@@ -195,7 +229,7 @@ rs.extendPartNLevels = function (prt,iparams) {
  
  
  rs.displayPart = function (prt,emitLineSegs) {
-  // debugger;
+  debugger;
    let {shapes,lineSegs} = this;
    //debugger;
    if (!prt) {
@@ -249,7 +283,7 @@ rs.partStrokeWidth = function (prt) {
   if (strokeWidths) {
     lv =  prt.where.length;
     if (lv > 2) {
-      debugger;
+     // debugger;
     }
     sw =strokeWidths[lv];
    // console.log('lv',lv,'sw',sw);
@@ -286,17 +320,28 @@ rs.partFill = function (prt) {
 rs.partFillScale = function (prt) {
  return 0;
 }
-
+rs.displayCnt = 0;
 rs.displayCell = function (prt,toSegs) {	
-  let {shapes,lineSegs,lineP,circleP,polygonP,mangles,lengthenings,twists,strokeWidths,orect} = this;
+  let {shapes,lineSegs,lineP,circleP,polygonP,mangles,lengthenings,twists,strokeWidths,orect,displayCnt} = this;
   let {circleScale} = prt.root.params;
-  debugger;
   let vs = this.partVisible(prt);
   if (!vs) {
     return;
   }
   let {where,polygon:pgon} = prt;
+ 
+  console.log(' display ',displayCnt,this.whereName(where));
+  this.displayCnt = displayCnt+1;
+ // debugger;
+  if (0 && (displayCnt>400)) {
+    return;
+  }
   let lv = where.length;
+  /*let isP0;
+  if (lv === 1) {
+    isP0 = (where[0][0] === 'P0');//&&(where[1][0] === 'P0');
+    debugger;
+  }*/
   //let mng = mangles?mangles[lv]:0;
   let mng = this.partMangle(prt);
   let mangled;
@@ -305,6 +350,7 @@ rs.displayCell = function (prt,toSegs) {
   let shps;
   let strokew = this.partStrokeWidth(prt);//strokeWidths[lnw];
   let stroke = this.partStroke(prt);
+  //let fill = isP0?'yellow':this.partFill(prt);
   let fill = this.partFill(prt);
   let fillScale = this.partFillScale(prt);
   const styleShape = (shp) => {
@@ -412,7 +458,7 @@ rs.stepPartParams = function (params) {
 rs.whereName = function (w) {
   let rs = '_';
   w.forEach( (v) => {
-    rs = rs+v+'_';
+    rs = rs+v[0]+'_';
   });
   return rs;
 }

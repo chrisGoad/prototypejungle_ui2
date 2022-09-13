@@ -7,14 +7,15 @@ rs.setName('part_0_0');
 let levels = 1;
 
 rs.partParams.levels = levels;
-rs.partParams.rectangular = 1;
+rs.partParams.rectangular = 0;
 levels++;
-rs.splitParams = {vertexNum:0,fr0:0.5,fr1:0.5};
+rs.splitParams = {Case:2,vertexNum:1,fr0:0.2,fr1:0.8,fr2:0.5,fr3:0.5};
 //rs.splitParams = {vertexNum:0,fr0:0.3};
 rs.partSplitParams = function (prt) {
+  debugger;
   let rs = this.splitParams;
   let lev = prt.where.length;
-  rs. vertexNum = lev%2;
+  //rs. vertexNum = lev%2;
     
   return rs;
 }

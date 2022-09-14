@@ -27,7 +27,8 @@ rs.extendTriOneLevel = function (prt) {
    } else {
      sp = psp;
    }
-   let {Case,vertexNum,fr0,fr1,fr2,fr3} = sp;
+   let {Case,vertexNum:ivertexNum,fr0,fr1,fr2,fr3} = sp;
+   let vertexNum = ivertexNum?ivertexNum:0;
    const addPart = (pn,vn,pgon) => {
      let nprt = {polygon:pgon,where:[...where,[pn,vn]],root,parent:prt};
      prt[pn]= nprt;
@@ -115,7 +116,9 @@ rs.extendQuadOneLevel = function (prt,sep) {
    } else {
      sp = psp;
    }
-   let {vertexNum,Case,ornt,fr0,fr1,fr2,fr3} = sp;
+   let {vertexNum:ivertexNum,Case,ornt,fr0,fr1,fr2,fr3} = sp;
+   let vertexNum = ivertexNum?ivertexNum:0;
+
    const addPart = (pn,vn,pgon) => {
      if (pgon && pgon.corners) {
        let nprt = {polygon:pgon,where:[...where,[pn,vn]],root,parent:prt};

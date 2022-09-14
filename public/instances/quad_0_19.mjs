@@ -4,11 +4,12 @@ import {rs as generatorP} from '/generators/quad_0.mjs';
 let rs = generatorP.instantiate();
 
 rs.setName('quad_0_19');
-
-
-
+debugger;
+rs.quadParams.levels = 7;
+rs.offCenter = 0.2;
 //rs.quadParams.mangle = {'lengthen':5,'twist':0.05*Math.PI};
 rs.quadSplitParams = function (qd) {
+  debugger;
   let {width:wd} = this;
   let pgon = qd.polygon;
   let minx = pgon.left();

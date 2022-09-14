@@ -17,15 +17,25 @@ rs.extendTriOneLevel = function (prt) {
   //debugger;
    let {polygon:pgon,where,root} = prt;
    let {corners} = pgon;
-   let sp=this.partSplitParams(prt);
-   if (!sp) {
+   let sp;
+   let psp=this.partSplitParams(prt);
+   if (!psp) {
      return;
+   }
+   if (psp.TOP) {// mutlilevel split
+      sp = psp.TOP;
+   } else {
+     sp = psp;
    }
    let {Case,vertexNum,fr0,fr1,fr2,fr3} = sp;
    const addPart = (pn,vn,pgon) => {
-     if (pgon) {
-       prt[pn] = {polygon:pgon,where:[...where,[pn,vn]],root,parent:prt};
+     let nprt = {polygon:pgon,where:[...where,[pn,vn]],root,parent:prt};
+     prt[pn]= nprt;
+     let ep = psp[pn];
+     if (ep) {
+       this.extendPartOneLevel(nprt,ep);
      }
+     return nprt;
    }
    let e0,e1,e2,e3,p0corners,p1corners,p2corners,p3corners,p0pgon,p1pgon,p2pgon,p3pgon;
    const vertex = (n) =>  corners[(vertexNum+n)%3]; 
@@ -82,7 +92,7 @@ rs.extendTriOneLevel = function (prt) {
   // p0corners =[e0,sege0,e1];
    p0corners =[v0,v1,e1];
    //p1corners = [e0,e1,sege1];
-   p1corners = [v0,e0,v2];
+   p1corners = [v0,e1,v2];
    p0pgon = Polygon.mk(p0corners);
    p1pgon = Polygon.mk(p1corners);
    addPart('P0',0,p0pgon);
@@ -91,18 +101,30 @@ rs.extendTriOneLevel = function (prt) {
  }
  
  
-rs.extendQuadOneLevel = function (prt) {
- //  debugger;
+rs.extendQuadOneLevel = function (prt,sep) {
+   debugger;
    let {polygon:pgon,where,root} = prt;
    let {corners} = pgon;
-   let sp=this.partSplitParams(prt);
-   if (!sp) {
+   let sp;
+   let psp=sep?sep:this.partSplitParams(prt);
+   if (!psp) {
      return;
    }
-   let {vertexNum,Case,fr0,fr1,fr2,fr3} = sp;
+   if (psp.TOP) {// mutlilevel split
+      sp = psp.TOP;
+   } else {
+     sp = psp;
+   }
+   let {vertexNum,Case,ornt,fr0,fr1,fr2,fr3} = sp;
    const addPart = (pn,vn,pgon) => {
      if (pgon && pgon.corners) {
-       prt[pn] = {polygon:pgon,where:[...where,[pn,vn]],root,parent:prt};
+       let nprt = {polygon:pgon,where:[...where,[pn,vn]],root,parent:prt};
+       prt[pn]= nprt;
+       let ep = psp[pn];
+       if (ep) {
+         this.extendPartOneLevel(nprt,ep);
+       }
+       return nprt;
      }
    }
    let e0,e1,e2,e3,p0corners,p1corners,p2corners,p3corners,p4corners,p0pgon,p1pgon,p2pgon,p3pgon,p4pgon;
@@ -131,12 +153,21 @@ rs.extendQuadOneLevel = function (prt) {
        p2corners =[v0,v2,v3];
      }
   } else if (Case === 2) {
-     let seg0 = LineSegment.mk(v0,v1);
-     let seg1 = LineSegment.mk(v2,v3);
-     e0 = seg0.along(fr0); 
-     e1 = seg1.along(fr1); 
-     p0corners =[e0,v1,v2,e1];
-     p1corners =[v0,e0,e1,v3];
+     if (ornt === 'v') {
+       let seg0 = LineSegment.mk(v1,v2);
+       let seg1 = LineSegment.mk(v3,v0);
+       e0 = seg0.along(fr0); 
+       e1 = seg1.along(fr1); 
+       p0corners =[v0,v1,e0,e1];
+       p1corners =[e1,e0,v2,v3];
+     } else{
+       let seg0 = LineSegment.mk(v0,v1);
+       let seg1 = LineSegment.mk(v2,v3);
+       e0 = seg0.along(fr0); 
+       e1 = seg1.along(fr1); 
+       p0corners =[e0,v1,v2,e1];
+       p1corners =[v0,e0,e1,v3];
+     }
   }   else if (Case === 3) {
   //   debugger;
      let seg0 = LineSegment.mk(v0,v1);
@@ -166,16 +197,24 @@ rs.extendQuadOneLevel = function (prt) {
   return 1;
 }
    
-rs.extendPartOneLevel = function (prt) {
+rs.extendPartOneLevel = function (prt,sep) {
    if (!prt) {
      return;
+   }
+   if (prt.P0) { // already extended 
+     let ext = this.extendPartOneLevel(prt.P0,sep);
+     this.extendPartOneLevel(prt.P1,sep);
+     this.extendPartOneLevel(prt.P2,sep);
+     this.extendPartOneLevel(prt.P3,sep);
+     this.extendPartOneLevel(prt.P4,sep);
+     return ext;
    }
    let {polygon:pgon} = prt;
    let {corners} = pgon;
    if (corners.length === 3) {
-     return this.extendTriOneLevel(prt);
+     return this.extendTriOneLevel(prt,sep);
   } else {
-     return this.extendQuadOneLevel(prt);
+     return this.extendQuadOneLevel(prt,sep);
   }
   
 }
@@ -322,6 +361,7 @@ rs.partFillScale = function (prt) {
 }
 rs.displayCnt = 0;
 rs.displayCell = function (prt,toSegs) {	
+debugger;
   let {shapes,lineSegs,lineP,circleP,polygonP,mangles,lengthenings,twists,strokeWidths,orect,displayCnt} = this;
   let {circleScale} = prt.root.params;
   let vs = this.partVisible(prt);

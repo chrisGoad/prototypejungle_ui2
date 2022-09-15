@@ -8,7 +8,7 @@ rs.setName('part_0_D');
 let wd = 100;
 let topParams = {width:wd,height:wd,framePadding:0.2*wd,frameStroke:undefined}
 Object.assign(rs,topParams);
-rs.partParams.levels = 2;
+rs.partParams.levels = 1;
 
 rs.partSplitParams = function (prt) {
   return this.splitParams;

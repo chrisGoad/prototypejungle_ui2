@@ -22,14 +22,14 @@ rs.partParams.rectangular = 1;
 rs.splitParams = {TOP:{Case:2,vertexNum:0,fr0:0.7,fr1:0.7},P0:{Case:2,ornt:'v',vertexNum:0,fr0:0.45,fr1:0.65},P1:{Case:2,ornt:'v',vertexNum:0,fr0:0.45,fr1:0.65}};
 rs.splitParams = rs.quad2part(quadParams);
 
-rs.partParams.levels = 2;
+rs.partParams.levels = 1;
 
 rs.partSplitParams = function (prt) {
   let levs = prt.where.length;
   console.log('levs',levs);
-  if (levs<2) {
+ // if (levs<2) {
     return this.splitParams;
-  }
+ // }
 }
 rs.afterInitialize =function ()  {
 debugger;

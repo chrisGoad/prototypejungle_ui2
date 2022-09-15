@@ -14,7 +14,7 @@ rs.partSplitParams = function (prt) {
 }
 
 rs.extendTriOneLevel = function (prt) {
-  //debugger;
+  debugger;
    let {polygon:pgon,where,root} = prt;
    let {corners} = pgon;
    let sp;
@@ -30,6 +30,9 @@ rs.extendTriOneLevel = function (prt) {
    let {Case,vertexNum:ivertexNum,fr0,fr1,fr2,fr3} = sp;
    let vertexNum = ivertexNum?ivertexNum:0;
    const addPart = (pn,vn,pgon) => {
+     if (!pgon) {
+       return;
+     }
      let nprt = {polygon:pgon,where:[...where,[pn,vn]],root,parent:prt};
      prt[pn]= nprt;
      let ep = psp[pn];
@@ -78,6 +81,8 @@ rs.extendTriOneLevel = function (prt) {
         p2pgon = Polygon.mk(p2corners);
         p3pgon = Polygon.mk(p3corners);
      }
+     this.checkPolygon(p0pgon);
+     this.checkPolygon(p1pgon);
      addPart('P0',0,p0pgon);
      addPart('P1',0,p1pgon);
      addPart('P2',0,p2pgon);
@@ -103,7 +108,7 @@ rs.extendTriOneLevel = function (prt) {
  
  
 rs.extendQuadOneLevel = function (prt,sep) {
-   debugger;
+   //debugger;
    let {polygon:pgon,where,root} = prt;
    let {corners} = pgon;
    let sp;
@@ -192,6 +197,8 @@ rs.extendQuadOneLevel = function (prt,sep) {
   p2pgon = Polygon.mk(p2corners);
   p3pgon = Polygon.mk(p3corners);
   p4pgon = Polygon.mk(p4corners);
+  this.checkPolygon(p0pgon);
+  this.checkPolygon(p1pgon);
   addPart('P0',0,p0pgon);
   addPart('P1',0,p1pgon);
   addPart('P2',0,p2pgon);
@@ -271,7 +278,7 @@ rs.extendPartNLevels = function (prt,iparams) {
  
  
  rs.displayPart = function (prt,emitLineSegs) {
-  debugger;
+  //debugger;
    let {shapes,lineSegs} = this;
    //debugger;
    if (!prt) {
@@ -363,6 +370,22 @@ rs.partFillScale = function (prt) {
  return 0;
 }
 rs.displayCnt = 0;
+rs.checkPolygon = function (pgon) {
+  if (!pgon) {
+    return 0;
+  }
+  let {corners} = pgon;
+  let ln = corners.length;
+  for (let i=0;i<ln;i++) {
+    let crn = corners[i];
+    if (isNaN(crn.x)||isNaN(crn.y)) {
+      debugger;
+      return 1;
+    }
+  }
+  return 0;
+}
+
 rs.displayCell = function (prt,toSegs) {	
 debugger;
   let {shapes,lineSegs,lineP,circleP,polygonP,mangles,lengthenings,twists,strokeWidths,orect,displayCnt} = this;
@@ -372,6 +395,9 @@ debugger;
     return;
   }
   let {where,polygon:pgon} = prt;
+  if (this.checkPolygon(pgon)) {
+    console.log('checkPolygon failed');
+  }
  
   console.log(' display ',displayCnt,this.whereName(where));
   this.displayCnt = displayCnt+1;
@@ -412,6 +438,9 @@ debugger;
    // if (rect) {
    //   shps = rect.toShape(rectP,sc);
    // } else {
+      if (!pgon) {
+        debugger;
+      }
       shps = pgon.toShape(polygonP,sc);
    // }
     styleShape(shps);
@@ -503,6 +532,34 @@ rs.whereName = function (w) {
   w.forEach( (v) => {
     rs = rs+v[0]+'_';
   });
+  return rs;
+}
+
+rs.quad2part = function (params) { 
+  let {iornt,fr0,fr1,fr2,fr3,fr4,fr5} = params;
+  let ornt = iornt?iornt:'h';
+  let oornt = ornt === 'h'?'v':'h';
+  let efr0,efr1,efr2,efr3,efr4,efr5;
+  if (!fr3) { //rectangular case
+    efr0 = fr0;
+    efr1 = fr0;
+    efr2 = fr1;
+    efr3 = fr1;
+    efr4 = fr2;
+    efr5 = 1-fr2;
+  } else {
+    efr0 = fr0;
+    efr1 = fr1;
+    efr2 = fr2;
+    efr3 = fr3;
+    efr4 = fr4;
+    efr5 = fr5;
+  }
+  let p0p = {Case:2,ornt:oornt,fr0:efr2,fr1:1-efr3};
+  let p1p = {Case:2,ornt:oornt,fr0:efr4,fr1:efr5};
+  let tp = {Case:2,ornt:ornt,fr0:efr0,fr1:efr1};
+  let rs = {TOP:tp,P0:p0p,P1:p1p}
+  debugger;
   return rs;
 }
 

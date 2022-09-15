@@ -23,8 +23,10 @@ sections:
     [0,'quad_0_13','instances',1,'Quad 0 13',{likes:0,posted:0,category:'quad'}], 
  [0,'quad_9_6','instances',1,'Quad 9 6',{likes:0,posted:0,category:'quad'}], 
     [0,'quad_0_14','instances',1,'Quad 0 14',{likes:0,posted:0,category:'quad'}], 
+    [0,'part_0_14','instances',1,'Part 0 14',{likes:0,posted:0,category:'part'}], 
  [0,'quad_9_7','instances',1,'Quad 9 7',{likes:0,posted:0,category:'quad'}], 
      [0,'quad_0_15','instances',1,'Quad 0 15',{likes:0,posted:0,category:'quad'}], 
+     [0,'part_0_15','instances',1,'Part 0 15',{likes:0,posted:0,category:'quad'}], 
  
   [0,'quad_9_4','instances',1,'Quad 9 4',{likes:0,posted:0,category:'quad'}], 
 [0,'quad_9_8','instances',1,'Quad 9 8',{likes:0,posted:0,category:'quad'}], 

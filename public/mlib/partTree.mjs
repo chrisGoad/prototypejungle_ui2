@@ -1,6 +1,32 @@
 // a part tree node has the form {polygn,P0:quadNode,UR:quadNode,LL:quadNode,QLR
 const rs =function (rs) {
 
+rs.wLevelOf = function (where,n) {
+  if (n<0) {
+    return 0;
+  }
+  let h = where[n];
+  let isInner = h[2];
+  let plv = this.wLevelOf(where,n-1);
+  let lv = isInner?plv:plv+1
+  return lv;
+}
+
+rs.levelOf = function (prt) {
+  debugger;
+  let {where} = prt;
+  let ln = where.length;
+  return this.wLevelOf(where,ln-1);
+}
+rs.isInner = function (prt) {
+  let {where} = prt;
+  let ln = where.length;
+  if (ln === 0) {
+    return 0;
+  }
+  let h = where[ln-1];
+  return h[2]
+}
 rs.partSplitParams = function (prt) {
   let {partParams} = this;
   let {splitParams,splitParamsByLevel} = partParams;
@@ -14,9 +40,11 @@ rs.partSplitParams = function (prt) {
 }
 
 rs.extendTriOneLevel = function (prt) {
-  debugger;
+ // debugger;
    let {polygon:pgon,where,root} = prt;
    let {corners} = pgon;
+   let innerPart = sep?1:0;
+
    let sp;
    let psp=this.partSplitParams(prt);
    if (!psp) {
@@ -33,7 +61,7 @@ rs.extendTriOneLevel = function (prt) {
      if (!pgon) {
        return;
      }
-     let nprt = {polygon:pgon,where:[...where,[pn,vn]],root,parent:prt};
+     let nprt = {polygon:pgon,where:[...where,[pn,vn,innerPart]],root,parent:prt};
      prt[pn]= nprt;
      let ep = psp[pn];
      if (ep) {
@@ -108,10 +136,11 @@ rs.extendTriOneLevel = function (prt) {
  
  
 rs.extendQuadOneLevel = function (prt,sep) {
-   //debugger;
+  // debugger;
    let {polygon:pgon,where,root} = prt;
    let {corners} = pgon;
    let sp;
+   let innerPart = sep?1:0;
    let psp=sep?sep:this.partSplitParams(prt);
    if (!psp) {
      return;
@@ -121,12 +150,19 @@ rs.extendQuadOneLevel = function (prt,sep) {
    } else {
      sp = psp;
    }
-   let {vertexNum:ivertexNum,Case,ornt,fr0,fr1,fr2,fr3} = sp;
+   let levels = this.partParams.levels;
+   let lv = this.levelOf(prt);
+   if ((lv >= levels) && !innerPart) {
+     return;
+   }
+   console.log('quad split','level',this.levelOf(prt),'inner',innerPart);
+
+   let {vertexNum:ivertexNum,center,Case,ornt,fr0,fr1,fr2,fr3} = sp;
    let vertexNum = ivertexNum?ivertexNum:0;
 
    const addPart = (pn,vn,pgon) => {
      if (pgon && pgon.corners) {
-       let nprt = {polygon:pgon,where:[...where,[pn,vn]],root,parent:prt};
+       let nprt = {polygon:pgon,where:[...where,[pn,vn,innerPart]],root,parent:prt};
        prt[pn]= nprt;
        let ep = psp[pn];
        if (ep) {
@@ -191,7 +227,21 @@ rs.extendQuadOneLevel = function (prt,sep) {
      p2corners =[e2,v3,e3];
      p3corners =[e3,v0,e0];
      p4corners =[e0,e1,e2,e3];
-  }          
+  } else if (center) {
+    let seg0 = LineSegment.mk(v0,v1);
+    let seg1 = LineSegment.mk(v1,v2);
+    let seg2 = LineSegment.mk(v2,v3);
+    let seg3 = LineSegment.mk(v3,v0);
+    e0 = seg0.along(fr0); 
+    e1 = seg1.along(fr1); 
+    e2 = seg2.along(fr2); 
+    e3 = seg3.along(fr3); 
+    let c = center;
+    p0corners = [e0,v1,e1,c];
+    p1corners = [e1,v2,e2,c];
+    p2corners = [c,e2,v3,e3];
+    p3corners = [v0,e0,c,e3];
+  }  
   p0pgon = Polygon.mk(p0corners);
   p1pgon = Polygon.mk(p1corners);
   p2pgon = Polygon.mk(p2corners);
@@ -235,6 +285,8 @@ rs.extendPartOneLevel = function (prt,sep) {
   
 rs.extendPartNLevels = function (prt,iparams) {
    //debugger;
+   
+    
    if (!prt) {
      return;
    }
@@ -251,7 +303,9 @@ rs.extendPartNLevels = function (prt,iparams) {
      prt.root = prt;
      params = prt.params = iparams;
    }
-   let lv =  where.length;
+      let lv =  this.levelOf(prt);
+      console.log('extendPartNLevels',lv,'where=',where);
+  // let lv =  where.length;
    let {levels} = params;
    if (lv >= levels) {
      return;
@@ -287,7 +341,8 @@ rs.extendPartNLevels = function (prt,iparams) {
    if (emitLineSegs && (!lineSegs)) {
     this.lineSegs = [];
    }
-   let lev = prt.where.length;
+  // let lev = prt.where.length;
+   let lev = this.levelOf(prt);
    if (lev > -1) {
      this.displayCell(prt,emitLineSegs);
    }
@@ -308,7 +363,8 @@ rs.partVisible = function (prt) {
   if (!visibles) {
     return 1;
   }
-  let lv = prt.where.length;
+ // let lv = prt.where.length;
+  let lv = this.levelOf(prt);
  /* if (lv >= 6) {
   //  debugger;
   }*/
@@ -318,7 +374,8 @@ rs.partVisible = function (prt) {
 rs.partMangle = function (prt) {
   let {mangles,mangle} = this.partParams;
   if (mangles) {
-    let lv =  prt.where.length;
+    //let lv =  prt.where.length;
+    let lv =  this.levelOf(prt);
     return mangles[lv];
   } else if (mangle) {
     return mangle;
@@ -330,7 +387,8 @@ rs.partStrokeWidth = function (prt) {
   //debugger;
   let lv,sw;
   if (strokeWidths) {
-    lv =  prt.where.length;
+    //lv =  prt.where.length;
+    lv =  this.levelOf(prt);
     if (lv > 2) {
      // debugger;
     }
@@ -345,7 +403,8 @@ rs.partStroke = function (prt) {
   let {strokes} = this.partParams;
   //debugger;
   if (strokes) {
-    let lv =  prt.where.length;
+    let lv =  this.levelOf(prt);
+    //let lv =  prt.where.length;
     let s =strokes[lv];
    // console.log('lv',lv,'sw',sw);
     return s;
@@ -358,7 +417,8 @@ rs.partSplitParams = function (prt) {
   if (splitParams) {
     return splitParams;
   }
-  let lv =  prt.where.length;
+  let lv =  this.levelOf(prt);
+  //let lv =  prt.where.length;
   return splitParamsByLevel[lv];
 }
 */
@@ -387,25 +447,25 @@ rs.checkPolygon = function (pgon) {
 }
 
 rs.displayCell = function (prt,toSegs) {	
-debugger;
   let {shapes,lineSegs,lineP,circleP,polygonP,mangles,lengthenings,twists,strokeWidths,orect,displayCnt} = this;
   let {circleScale} = prt.root.params;
   let vs = this.partVisible(prt);
   if (!vs) {
     return;
   }
+  //debugger;
   let {where,polygon:pgon} = prt;
   if (this.checkPolygon(pgon)) {
     console.log('checkPolygon failed');
   }
  
-  console.log(' display ',displayCnt,this.whereName(where));
+  //console.log(' display ',displayCnt,this.whereName(where));
   this.displayCnt = displayCnt+1;
  // debugger;
   if (0 && (displayCnt>400)) {
     return;
   }
-  let lv = where.length;
+  //let lv = where.length;
   /*let isP0;
   if (lv === 1) {
     isP0 = (where[0][0] === 'P0');//&&(where[1][0] === 'P0');
@@ -456,7 +516,7 @@ debugger;
         return;
       }
       let segs = seg.toShape(lineP);
-      let  lnw = prt.where.length;
+     // let  lnw = prt.where.length;
       styleShape(segs);
       shapes.push(segs);
     });
@@ -559,7 +619,7 @@ rs.quad2part = function (params) {
   let p1p = {Case:2,ornt:oornt,fr0:efr4,fr1:efr5};
   let tp = {Case:2,ornt:ornt,fr0:efr0,fr1:efr1};
   let rs = {TOP:tp,P0:p0p,P1:p1p}
-  debugger;
+  //debugger;
   return rs;
 }
 

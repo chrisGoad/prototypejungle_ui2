@@ -1,4 +1,5 @@
 
+
 import {rs as generatorP} from '/generators/quad_0.mjs';
 
 let rs = generatorP.instantiate();
@@ -40,5 +41,4 @@ let strokeWidths = rs.quadParams.strokeWidths = [];
 rs.addToArray(strokeWidths,.05,20);
 
 export {rs};
-
 

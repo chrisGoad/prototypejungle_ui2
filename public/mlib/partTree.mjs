@@ -226,13 +226,13 @@ rs.extendQuadOneLevel = function (prt,sep) {
       p2corners = [ce1,e1,v2,e2];
       p3corners = [e3,ce0,e2,v3];
     } else if (Case===4) {
-      let cseg = LineSegment.mk(e1,e3);
+      let cseg = LineSegment.mk(e0,e2);
       let ce0 = cseg.along(fr4);
       let ce1 = cseg.along(fr5);
       p0corners = [v0,e0,ce0,e3];
-      p1corners = [e0,v1,e1,ce0];
+      p1corners = [e0,v1,e1,ce1];
       p2corners = [ce1,e1,v2,e2];
-      p3corners = [e3,ce1,e2,v3];   
+      p3corners = [e3,ce0,e2,v3];   
     }
   } else if (center) {
     let seg0 = LineSegment.mk(v0,v1);

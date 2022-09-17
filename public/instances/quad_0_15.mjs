@@ -5,14 +5,14 @@ import {rs as generatorP} from '/generators/quad_0.mjs';
 let rs = generatorP.instantiate();
 
 rs.setName('quad_0_15');
-let levels = 6;
+let levels = 1;
 rs.quadParams.levels = levels;
 rs.splitParams = {ornt:'h',	fr0:0.5,fr1:0.5,fr2:0.2};
 rs.quadSplitParams = function (qd) {
   rs = this.splitParams;
   return rs;
 }
-rs.quadMangle = function (qd) {
+rs.quadManglee = function (qd) {
   let {width:wd} = this;
   let lv = qd.where.length;
   let rs;

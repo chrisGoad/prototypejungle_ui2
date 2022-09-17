@@ -1,13 +1,32 @@
 // a part tree node has the form {polygn,P0:quadNode,UR:quadNode,LL:quadNode,QLR
 const rs =function (rs) {
 
+rs.wLevelOf = function (where,n) {
+  if (n<0) {
+    return 0;
+  }
+  let h = where[n];
+  let isInner = h[2];
+  let plv = this.wLevelOf(where,n-1);
+  let lv = isInner?plv:plv+1
+  return lv;
+}
 
 rs.levelOf = function (prt) {
  // debugger;
   let {where} = prt;
-  return where.length;
+  let ln = where.length;
+  return this.wLevelOf(where,ln-1);
 }
-
+rs.isInner = function (prt) {
+  let {where} = prt;
+  let ln = where.length;
+  if (ln === 0) {
+    return 0;
+  }
+  let h = where[ln-1];
+  return h[2]
+}
 rs.partSplitParams = function (prt) {
   let {partParams} = this;
   let {splitParams,splitParamsByLevel} = partParams;
@@ -24,6 +43,8 @@ rs.extendTriOneLevel = function (prt) {
  // debugger;
    let {polygon:pgon,where,root} = prt;
    let {corners} = pgon;
+   let innerPart = sep?1:0;
+
    let sp;
    let psp=this.partSplitParams(prt);
    if (!psp) {
@@ -40,7 +61,7 @@ rs.extendTriOneLevel = function (prt) {
      if (!pgon) {
        return;
      }
-     let nprt = {polygon:pgon,where:[...where,[pn,vn]],root,parent:prt,stop};
+     let nprt = {polygon:pgon,where:[...where,[pn,vn,innerPart]],root,parent:prt,stop};
      prt[pn]= nprt;
      let ep = psp[pn];
      if (ep) {
@@ -119,6 +140,7 @@ rs.extendQuadOneLevel = function (prt,sep) {
    let {polygon:pgon,where,root} = prt;
    let {corners} = pgon;
    let sp;
+   let innerPart = sep?1:0;
    let psp=sep?sep:this.partSplitParams(prt);
    if (!psp) {
      return;
@@ -133,17 +155,17 @@ rs.extendQuadOneLevel = function (prt,sep) {
    }
    let levels = this.partParams.levels;
    let lv = this.levelOf(prt);
-   if (lv >= levels) {
+   if ((lv >= levels) && !innerPart) {
      return;
    }
-   console.log('quad split','level',this.levelOf(prt));
+   console.log('quad split','level',this.levelOf(prt),'inner',innerPart);
 
-   let {vertexNum:ivertexNum,center,Case,ornt,fr0,fr1,fr2,fr3,fr4,fr5,stop} = sp;
+   let {vertexNum:ivertexNum,center,Case,ornt,fr0,fr1,fr2,fr3,stop} = sp;
    let vertexNum = ivertexNum?ivertexNum:0;
 
    const addPart = (pn,vn,pgon) => {
      if (pgon && pgon.corners) {
-       let nprt = {polygon:pgon,where:[...where,[pn,vn]],root,parent:prt};
+       let nprt = {polygon:pgon,where:[...where,[pn,vn,innerPart]],root,parent:prt};
        prt[pn]= nprt;
        let ep = psp[pn];
        if (ep) {
@@ -224,7 +246,7 @@ rs.extendQuadOneLevel = function (prt,sep) {
     p0corners = [v0,e0,ce0,e3];
     p1corners = [e0,v1,e1,ce1];
     p2corners = [ce1,e1,v2,e2];
-    p3corners = [e3,ce0,e2,v3];
+    p2corners = [e3,ce0,e2,v3];
   } else if (center) {
     let seg0 = LineSegment.mk(v0,v1);
     let seg1 = LineSegment.mk(v1,v2);
@@ -235,7 +257,7 @@ rs.extendQuadOneLevel = function (prt,sep) {
     e2 = seg2.along(fr2); 
     e3 = seg3.along(fr3); 
     let c = center;
-    p0corners = [v0,e0,c,e3];
+    p0corners = [v0,e0,ce0,e3];
     p1corners = [e0,v1,e1,c];
     p2corners = [e1,v2,e2,c];
     p3corners = [c,e2,v3,e3];

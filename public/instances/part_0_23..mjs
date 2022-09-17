@@ -10,9 +10,9 @@ let w0 = {where:[[0,0,0],[0,0,1],[0,0,0]]};
 console.log('w',w0,'lv',rs.levelOf(w0));
 rs.partParams.rectangular = 1;
 rs.splitParams = {ornt:'h',	fr0:0.5,fr1:0.5,fr2:0.2};
-rs.splitParams = {Case:4,ornt:'h',	fr0:0.5,fr1:0.5,fr2:0.5,fr3:0.8,fr4:0.2,fr5:0.5};
 rs.partSplitParams = function (qd) {
-  return this.splitParams;
+  rs = this.splitParams;
+  return this.quad2part(rs);
 }
 
 let strokeWidths = rs.partParams.strokeWidths = []
@@ -24,7 +24,7 @@ rs.partMangle = function (qd) {
   let lv = this.levelOf(qd);
  // console.log('lv',lv,'lvln',lvln)
   let rs;
-  if (lv ===levels) {
+  if (1 || (0 &&(lv ===levels) && !h[2]) || ((lv = levels+1) && h[2])) {
     debugger;
     //et cx = qd.rectangle.corner.x;
     let cx = qd.polygon.left();
@@ -45,7 +45,7 @@ rs.partMangle = function (qd) {
 rs.partVisible = function (prt) {
   let lv = this.levelOf(prt);
   let levels = this.partParams.levels;
-  return (lv === levels); 
+  return (lv === levels) && this.isInner(prt);
 }
 /*
 let visibles = rs.partParams.visibles = [];

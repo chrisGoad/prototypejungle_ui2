@@ -16,6 +16,8 @@ debugger;
   const addT = (rt,n,p) => {
     this.addText(textP,rt,n,p);
   }
+    addT('Case ',2,Point.mk(0*ff,-(hwd+3*ff)));
+
   addT('P',1,Point.mk(2*ff,hwd-5.5*ff));
   addT('P',4,Point.mk(-4*ff,hwd-7.5*ff));
   addT('P',0,Point.mk(-0*ff,-7.5*ff));

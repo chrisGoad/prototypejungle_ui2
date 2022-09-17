@@ -158,19 +158,24 @@ rs.extendQuadOneLevel = function (prt,sep) {
    let v1 = vertex(1);
    let v2 = vertex(2);
    let v3 = vertex(3);
+   let seg0 = LineSegment.mk(v0,v1);
+   let seg1 = LineSegment.mk(v1,v2);
+   let seg2 = LineSegment.mk(v2,v3);
+   let seg3 = LineSegment.mk(v3,v0);
+   debugger;
    if (Case === 1) {
      let bisect  = (fr0===0) && (fr1 === 1);
      if (bisect) {
        p0corners =[v0,v1,v2];
        p1corners =[v0,v2,v3];
      } else if (fr0===0)  {
-       let seg1 = LineSegment.mk(v1,v2);
+      // let seg1 = LineSegment.mk(v1,v2);
        e1 = seg1.along(fr1);
        p0corners =[v0,v1,e1];
        p1corners = [v0,e1,v2,v3];
      } else {
-       let seg0 = LineSegment.mk(v0,v1);
-       let seg1 = LineSegment.mk(v1,v2);
+       //let seg0 = LineSegment.mk(v0,v1);
+       //let seg1 = LineSegment.mk(v1,v2);
        e0 = seg0.along(fr0); 
        e1 = seg1.along(fr1); 
        p0corners =[e0,v1,e1];
@@ -178,53 +183,57 @@ rs.extendQuadOneLevel = function (prt,sep) {
        p2corners =[v0,v2,v3];
      }
   } else if (Case === 2) {
-     if (ornt === 'v') {
-       let seg0 = LineSegment.mk(v1,v2);
-       let seg1 = LineSegment.mk(v3,v0);
+          debugger;
+    if (fr0) {
+      // let seg0 = LineSegment.mk(v1,v2);
+      // let seg1 = LineSegment.mk(v3,v0);
        e0 = seg0.along(fr0); 
+       e2 = seg2.along(fr2); 
+      // e1 = seg3.along(fr2); 
+       p0corners =[v0,e0,e2,v3];
+       p1corners =[e0,v1,v2,e2];
+     } else {
+       //let seg0 = LineSegment.mk(v0,v1);
+       //let seg1 = LineSegment.mk(v2,v3);
        e1 = seg1.along(fr1); 
-       p0corners =[v0,v1,e0,e1];
-       p1corners =[e1,e0,v2,v3];
-     } else{
-       let seg0 = LineSegment.mk(v0,v1);
-       let seg1 = LineSegment.mk(v2,v3);
-       e0 = seg0.along(fr0); 
-       e1 = seg1.along(fr1); 
-       p0corners =[e0,v1,v2,e1];
-       p1corners =[v0,e0,e1,v3];
+       e3 = seg3.along(fr3); 
+       p0corners =[v0,v1,e1,e3];
+       p1corners =[e3,e1,v2,v3];
      }
-  }   else if (Case === 3) {
+  }   else if ((Case === 3) || (Case === 4) ||(Case === 5)) {
   //   debugger;
-     let seg0 = LineSegment.mk(v0,v1);
+  /*   let seg0 = LineSegment.mk(v0,v1);
      let seg1 = LineSegment.mk(v1,v2);
      let seg2 = LineSegment.mk(v2,v3);
-     let seg3 = LineSegment.mk(v3,v0);
+     let seg3 = LineSegment.mk(v3,v0);*/
      e0 = seg0.along(fr0); 
      e1 = seg1.along(fr1); 
      e2 = seg2.along(fr2); 
-     e3 = seg3.along(fr1); 
-     p0corners =[e0,v1,e1];
-     p1corners =[e1,v2,e2];
-     p2corners =[e2,v3,e3];
-     p3corners =[e3,v0,e0];
-     p4corners =[e0,e1,e2,e3];
-     
-  } else if (Case===4) {
-    let seg0 = LineSegment.mk(v0,v1);
-    let seg1 = LineSegment.mk(v1,v2);
-    let seg2 = LineSegment.mk(v2,v3);
-    let seg3 = LineSegment.mk(v3,v0);
-    e0 = seg0.along(fr0); 
-    e1 = seg1.along(fr1); 
-    e2 = seg2.along(fr2); 
-    e3 = seg3.along(fr3); 
-    let cseg = LineSegment.mk(e0,e2);
-    let ce0 = cseg.along(fr4);
-    let ce1 = cseg.along(fr5);
-    p0corners = [v0,e0,ce0,e3];
-    p1corners = [e0,v1,e1,ce1];
-    p2corners = [ce1,e1,v2,e2];
-    p3corners = [e3,ce0,e2,v3];
+     e3 = seg3.along(fr3); 
+     if (Case === 3) {
+       p0corners =[e0,v1,e1];
+       p1corners =[e1,v2,e2];
+       p2corners =[e2,v3,e3];
+       p3corners =[e3,v0,e0];
+       p4corners =[e0,e1,e2,e3];
+     } else if (Case===5) {
+      debugger;
+      let cseg = LineSegment.mk(e1,e3);
+      let ce0 = cseg.along(fr4);
+      let ce1 = cseg.along(fr5);
+      p0corners = [v0,e0,ce0,e3];
+      p1corners = [e0,v1,e1,ce1];
+      p2corners = [ce1,e1,v2,e2];
+      p3corners = [e3,ce0,e2,v3];
+    } else if (Case===4) {
+      let cseg = LineSegment.mk(e1,e3);
+      let ce0 = cseg.along(fr4);
+      let ce1 = cseg.along(fr5);
+      p0corners = [v0,e0,ce0,e3];
+      p1corners = [e0,v1,e1,ce0];
+      p2corners = [ce1,e1,v2,e2];
+      p3corners = [e3,ce1,e2,v3];   
+    }
   } else if (center) {
     let seg0 = LineSegment.mk(v0,v1);
     let seg1 = LineSegment.mk(v1,v2);
@@ -245,8 +254,8 @@ rs.extendQuadOneLevel = function (prt,sep) {
   p2pgon = Polygon.mk(p2corners);
   p3pgon = Polygon.mk(p3corners);
   p4pgon = Polygon.mk(p4corners);
-  this.checkPolygon(p0pgon);
-  this.checkPolygon(p1pgon);
+  //this.checkPolygon(p0pgon);
+ // this.checkPolygon(p1pgon);
   addPart('P0',0,p0pgon);
   addPart('P1',0,p1pgon);
   addPart('P2',0,p2pgon);

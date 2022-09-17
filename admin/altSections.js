@@ -83,7 +83,7 @@ sections:
 
 [0,'quad_15_7_5','instances',1,'Quad 15 7 5',{likes:0,posted:0,category:'quad'}],
  [0,'quad_0_8_5','instances',1,'Quad 0 8 5',{likes:0,posted:0,category:'quad'}], 
- [0,'part_0_D_4','instances',1,'Part 0 D 4',{likes:0,posted:0,category:'quad'}], 
+ 
  [0,'part_0_0','instances',1,'Part 0 0',{likes:0,posted:0,category:'quad'}], 
  [0,'part_0_1','instances',1,'Part 0 1',{likes:0,posted:0,category:'quad'}], 
  [0,'part_0_2','instances',1,'Part 0 2',{likes:0,posted:0,category:'quad'}], 
@@ -94,7 +94,12 @@ sections:
  [0,'part_0_D_1','instances',1,'Part 0 D 1',{likes:0,posted:0,category:'quad'}], 
  [0,'part_0_D_2','instances',1,'Part 0 D 2',{likes:0,posted:0,category:'quad'}], 
  [0,'part_0_D_3','instances',1,'Part 0 D 3',{likes:0,posted:0,category:'quad'}], 
- [0,'part_0_D_M0','instances',1,'Part 0 D M0',{likes:0,posted:0,category:'quad'}], 
+  [0,'part_0_D_4','instances',1,'Part 0 D 4',{likes:0,posted:0,category:'quad'}], 
+ [0,'part_0_D_6','instances',1,'Part 0 D 6',{likes:0,posted:0,category:'quad'}], 
+ [0,'part_0_D_5','instances',1,'Part 0 D 5',{likes:0,posted:0,category:'quad'}],
+ [0,'part_0_D_7','instances',1,'Part 0 D 7',{likes:0,posted:0,category:'quad'}], 
+ [0,'part_0_D_8','instances',1,'Part 0 D 8',{likes:0,posted:0,category:'quad'}], 
+ //[0,'part_0_D_M0','instances',1,'Part 0 D M0',{likes:0,posted:0,category:'quad'}], 
  
 
 //[0,'quad_15_8','instances',1,'Quad 15 8',{likes:0,posted:0,category:'quad'}],  

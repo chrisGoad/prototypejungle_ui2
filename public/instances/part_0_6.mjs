@@ -3,21 +3,22 @@ import {rs as generatorP} from '/generators/part_0.mjs';
 
 let rs = generatorP.instantiate();
 
-rs.setName('part_0_4');
+rs.setName('part_0_6');
 let levels = 7;
-rs.quadParams.levels = levels;
+rs.partParams.levels = levels;
+rs.partParams.rectangular = 1;
 //rs.quadParams.circleScale = 0.25;
 
 
 
-let visibles = rs.quadParams.visibles = [];
+let visibles = rs.partParams.visibles = [];
 rs.addToArray(visibles,1,levels);
 rs.addToArray(visibles,1,levels);
 
-rs.quadParams.manglee = {'lengthen':.3,'twist':0.05*Math.PI,within:rs.canvasToRectangle()}
-rs.quadParams.chance = 0.95;
-rs.quadParams.chance = 0.7;
-rs.quadParams.chance = 1;
+rs.partParams.manglee = {'lengthen':.3,'twist':0.05*Math.PI,within:rs.canvasToRectangle()}
+rs.partParams.chance = 0.95;
+rs.partParams.chance = 0.7;
+rs.partParams.chance = 1;
 
 rs.partFill = function (qd) {
   let rb= Math.random() > 0.5;
@@ -26,14 +27,15 @@ rs.partFill = function (qd) {
   let r = `rgb(${v},0,0)`;
   return rb?r:b;
 }
-let strokeWidths = rs.quadParams.strokeWidths = [];
+let strokeWidths = rs.partParams.strokeWidths = [];
 
-rs.computeExponentials(strokeWidths,rs.quadParams.levels,0.14,.9);
+//rs.computeExponentials(strokeWidths,20,0,.9);
+rs.computeExponentials(strokeWidths,20,0.14,.9);
 
-let strokes = rs.quadParams.strokes = [];
-rs.addToArray(strokes,'black',levels);
+let strokes = rs.partParams.strokes = [];
+rs.addToArray(strokes,'white',levels);
 
-rs.quadSplitParams = function (qd) {
+rs.partSplitParams = function (qd) {
    //let v = 0.7;
    debugger;
    if (0 && this.sp) {
@@ -44,10 +46,12 @@ rs.quadSplitParams = function (qd) {
   let v = {low:.4,high:.6};
    v = {low:.3,high:.7};
    //v= 0.4;
-   let rs = this.randomizeFrom({ornt:['h','v'],fr0:v,fr1:v,fr2:v,fr3:v,fr4:v,fr5:v});
+   let rs = this.randomizeFrom({Case:['h','v'],fr0:v,fr1:v,fr2:v,fr3:v,fr4:v,fr5:v});
    //let rs = this.randomizeFrom({ornt:['h','v'],fr0:{low:.2,high:.8},fr1:{low:.2,high:.8},fr2:{low:.2,high:.8},fr3:{low:.2,high:.8},fr4:{low:.2,high:.8},fr5:{low:.2,high:.8}});
    this.sp = rs;
-   rs = this.randomizeFrom({ornt:['h','v'],fr0:.4,fr1:.4,fr2:.4,fr3:.6,fr4:0.4,fr5:.3});
+   rs = this.randomizeFrom({Case:[4,6],fr0:.4,fr1:.4,fr2:.4,fr3:.6,fr4:0.4,fr5:.3});
+   rs = this.randomizeFrom({Case:[4,6],fr0:.4,fr1:.5,fr2:.4,fr3:.5,fr4:0.4,fr5:.3});
+
    //console.log('ornt',rs.ornt,'fr0',rs.fr0);
    console.log('rs',rs);
   return rs;

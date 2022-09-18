@@ -6,6 +6,7 @@ let rs = generatorP.instantiate();
 rs.setName('part_0_4');
 let levels = 10;
 levels = 8;
+levels = 6;
 
 rs.partParams.levels = levels;
 rs.partParams.rectangular = 1;

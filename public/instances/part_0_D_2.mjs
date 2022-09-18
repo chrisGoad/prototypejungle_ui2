@@ -7,7 +7,7 @@ rs.setName('part_0_D_2');
 
 rs.partParams.rectangular = 0;
 rs.splitParams = {Case:2,vertexNum:0,fr0:0.2,fr1:0.8,fr2:0.2,fr3:.8};
-
+rs.splitParams ={Case:3,vertexNum:0,fr0:0.2,fr1:0.8,fr2:0.5,fr3:0.5}
 rs.afterInitialize =function ()  {
 debugger;
   let {textP,width:wd} = this;

@@ -4,7 +4,7 @@ import {rs as generatorP} from '/generators/quad_0.mjs';
 let rs = generatorP.instantiate();
 
 rs.setName('quad_0_11');
-let levels = 7;
+let levels = 1;
 rs.quadParams.levels = levels;
 levels++;
 rs.splitParams = {fr0:0.5,fr1:0.5,fr2:0.2};
@@ -14,7 +14,7 @@ rs.quadSplitParams = function (qd) {
   rs.ornt = ornt;
   return rs;
 }
-rs.quadParams.mangle = {lengthen:5.5,twist:.05*Math.PI,within:rs.canvasToRectangle()}
+rs.quadParams.manglee = {lengthen:5.5,twist:.05*Math.PI,within:rs.canvasToRectangle()}
 
 
 let visibles = rs.quadParams.visibles = [];

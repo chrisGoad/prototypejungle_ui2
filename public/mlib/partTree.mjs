@@ -24,8 +24,8 @@ rs.extendTriOneLevel = function (prt) {
  // debugger;
    let {polygon:pgon,where,root} = prt;
    let {corners} = pgon;
-   let sp;
-   let psp=this.partSplitParams(prt);
+   let sp= this.partSplitParams(prt);
+  /* let psp=this.partSplitParams(prt);
    if (!psp) {
      return;
    }
@@ -33,7 +33,7 @@ rs.extendTriOneLevel = function (prt) {
       sp = psp.TOP;
    } else {
      sp = psp;
-   }
+   }*/
    let {Case,vertexNum:ivertexNum,fr0,fr1,fr2,fr3,stop} = sp;
    let vertexNum = ivertexNum?ivertexNum:0;
    const addPart = (pn,vn,pgon) => {
@@ -42,10 +42,10 @@ rs.extendTriOneLevel = function (prt) {
      }
      let nprt = {polygon:pgon,where:[...where,[pn,vn]],root,parent:prt,stop};
      prt[pn]= nprt;
-     let ep = psp[pn];
+    /* let ep = psp[pn];
      if (ep) {
        this.extendPartOneLevel(nprt,ep);
-     }
+     }*/
      return nprt;
    }
    let e0,e1,e2,e3,p0corners,p1corners,p2corners,p3corners,p0pgon,p1pgon,p2pgon,p3pgon;
@@ -114,12 +114,12 @@ rs.extendTriOneLevel = function (prt) {
  }
  
  
-rs.extendQuadOneLevel = function (prt,sep) {
+rs.extendQuadOneLevel = function (prt) {
   // debugger;
    let {polygon:pgon,where,root} = prt;
    let {corners} = pgon;
-   let sp;
-   let psp=sep?sep:this.partSplitParams(prt);
+   let sp = this.partSplitParams(prt);
+   /*let psp=sep?sep:this.partSplitParams(prt);
    if (!psp) {
      return;
    }
@@ -127,7 +127,7 @@ rs.extendQuadOneLevel = function (prt,sep) {
       sp = psp.TOP;
    } else {
      sp = psp;
-   }
+   }*/
    if (sp.stop) {
      return;
    }
@@ -145,15 +145,23 @@ rs.extendQuadOneLevel = function (prt,sep) {
      if (pgon && pgon.corners) {
        let nprt = {polygon:pgon,where:[...where,[pn,vn]],root,parent:prt};
        prt[pn]= nprt;
-       let ep = psp[pn];
+      /* let ep = psp[pn];
        if (ep) {
          this.extendPartOneLevel(nprt,ep);
-       }
+       }*/
        return nprt;
      }
    }
    let e0,e1,e2,e3,p0corners,p1corners,p2corners,p3corners,p4corners,p0pgon,p1pgon,p2pgon,p3pgon,p4pgon;
    const vertex = (n) =>  corners[(vertexNum+n)%4];
+   let case1 = Case === 1;
+   let case2 = Case === 2;
+   let case3 = Case === 3;
+   let case4 = Case === 4;
+   let case5 = Case === 5;
+   let case6 = Case === 6;
+   let case7 = Case === 7;
+   let case8 = Case === 8;
    let v0 = vertex(0);
    let v1 = vertex(1);
    let v2 = vertex(2);
@@ -200,7 +208,7 @@ rs.extendQuadOneLevel = function (prt,sep) {
        p0corners =[v0,v1,e1,e3];
        p1corners =[e3,e1,v2,v3];
      }
-  }   else if ((Case === 3) || (Case === 4) ||(Case === 5)) {
+  }   else if (case3||case4||case5||case6||case7||case8) {
   //   debugger;
   /*   let seg0 = LineSegment.mk(v0,v1);
      let seg1 = LineSegment.mk(v1,v2);
@@ -210,13 +218,13 @@ rs.extendQuadOneLevel = function (prt,sep) {
      e1 = seg1.along(fr1); 
      e2 = seg2.along(fr2); 
      e3 = seg3.along(fr3); 
-     if (Case === 3) {
+     if (case3) {
        p0corners =[e0,v1,e1];
        p1corners =[e1,v2,e2];
        p2corners =[e2,v3,e3];
        p3corners =[e3,v0,e0];
        p4corners =[e0,e1,e2,e3];
-     } else if (Case===5) {
+     } else if (case5) {
       debugger;
       let cseg = LineSegment.mk(e1,e3);
       let ce0 = cseg.along(fr4);
@@ -225,7 +233,7 @@ rs.extendQuadOneLevel = function (prt,sep) {
       p1corners = [e0,v1,e1,ce1];
       p2corners = [ce1,e1,v2,e2];
       p3corners = [e3,ce0,e2,v3];
-    } else if (Case===4) {
+    } else if (case4) {
       let cseg = LineSegment.mk(e0,e2);
       let ce0 = cseg.along(fr4);
       let ce1 = cseg.along(fr5);
@@ -233,6 +241,14 @@ rs.extendQuadOneLevel = function (prt,sep) {
       p1corners = [e0,v1,e1,ce1];
       p2corners = [ce1,e1,v2,e2];
       p3corners = [e3,ce0,e2,v3];   
+    } else if (case6) {
+      let cseg = LineSegment.mk(e1,e3);
+      let ce0 = cseg.along(fr4);
+      let ce1 = cseg.along(fr5);
+      p0corners = [v0,e0,ce0,e3];
+      p1corners = [e0,v1,e1,ce0];
+      p2corners = [ce1,e1,v2,e2];
+      p3corners = [e3,ce1,e2,v3];  
     }
   } else if (center) {
     let seg0 = LineSegment.mk(v0,v1);

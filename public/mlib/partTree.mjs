@@ -21,16 +21,20 @@ rs.partSplitParams = function (prt) {
 }
 
 rs.extendTriOneLevel = function (prt) {
-  debugger;
+ //debugger;
    let {polygon:pgon,where,root} = prt;
    let {corners} = pgon;
    let sp= this.partSplitParams(prt);
-   let {Case,vertexNum:ivertexNum,fr0,fr1,fr2,fr3,stop} = sp;
+   let {Case,vertexNum:ivertexNum,fr0,fr1,fr2,fr3,p0stop,p1stop,p2stop,p3stop,p4stop} = sp;
    let vertexNum = ivertexNum?ivertexNum:0;
-   const addPart = (pn,vn,pgon) => {
+   const addPart = (pn,vn,pgon,stop) => {
      if (!pgon) {
        return;
      }
+     if (!(pgon.corners)) {
+       return;
+     }
+     
      let nprt = {polygon:pgon,where:[...where,[pn,vn]],root,parent:prt,stop};
      prt[pn]= nprt;
   
@@ -50,7 +54,7 @@ rs.extendTriOneLevel = function (prt) {
    let case3 = Case === 3;
    let case4 = Case === 4;
    if (case1) {
-     debugger;
+  //   debugger;
      if (fr0 === 0){
        e1 = seg1.along(fr1);
        p0corners = [v0,e1,v2];
@@ -61,64 +65,41 @@ rs.extendTriOneLevel = function (prt) {
        p0corners =[v0,e0,e1,v2];
        p1corners = [e0,v1,e1];
      }
-     p0pgon = Polygon.mk(p0corners);
-     p1pgon = Polygon.mk(p1corners);
-     addPart('P0',0,p0pgon);
-     addPart('P1',0,p1pgon);
-     return 1;
   }
-  if ((case2) || (case3)) {
-     //debugger;
-     /*let seg0 = LineSegment.mk(v0,v1);
-     let seg1 = LineSegment.mk(v1,v2);
-     let seg2 = LineSegment.mk(v2,v0);*/
+  if (case2) {
+      e0 = seg0.along(fr0);
+      e1 = seg0.along(fr1);
+      e2 = seg1.along(fr2);
+      e3 = seg2.along(fr3);
+      p0corners =[e0,e1,e2,e3];
+      p1corners = [v0,e0,e3];
+      p2corners = [e1,v1,e2];
+      p3corners = [e3,e2,v2];
+  
+   } 
+   if (case3) {
      e0 = seg0.along(fr0);
-     e1 = seg0.along(fr1);
-     e2 = seg1.along(fr2);
-     e3 = seg2.along(fr3);
-     p0corners =[e0,e1,e2,e3];
-     if (case3) {
-      p1corners = [e1,v1,e2];
-      p2corners = [e2,v2,e3];
-      p3corners = [v0,e0,e3];
-      p4corners = [e0,e1,e2,e3];
-     }
-     p0pgon = Polygon.mk(p0corners);
-     if (case3) {
-         p1pgon = Polygon.mk(p1corners);
-        p2pgon = Polygon.mk(p2corners);
-        p3pgon = Polygon.mk(p3corners);
-        p4pgon = Polygon.mk(p4corners);
-     }
-     //this.checkPolygon(p0pgon);
-     //this.checkPolygon(p1pgon);
-     addPart('P0',0,p0pgon);
-     addPart('P1',0,p1pgon);
-     addPart('P2',0,p2pgon);
-     addPart('P3',0,p3pgon);
-     addPart('P4',0,p4pgon);
-     return 1;
-   } else if (case4) {
-     e0 = corners[vertexNum];
-     let sege0 = corners[(vertexNum+1)%3];
-     let sege1 = corners[(vertexNum+2)%3];
-     let seg = LineSegment.mk(v1,v2);
-     e1 = seg.along(fr0);
-    // p0corners =[e0,sege0,e1];
-     p0corners =[v0,v1,e1];
-     //p1corners = [e0,e1,sege1];
-     p1corners = [v0,e1,v2];
-     p0pgon = Polygon.mk(p0corners);
-     p1pgon = Polygon.mk(p1corners);
-     addPart('P0',0,p0pgon);
-     addPart('P1',0,p1pgon);
-     return 1;
+     e1 = seg1.along(fr1);
+     e2 = seg2.along(fr1);
+     let p0corners = [e0,e1,e2];
+     let p1corners = [v0,e0,e2];
+     let p2corners = [e0,v1,e1];
+     let p3corners = [e2,e1,v2];
    }
+  p0pgon = Polygon.mk(p0corners);
+  p1pgon = Polygon.mk(p1corners);
+  p2pgon = Polygon.mk(p2corners);
+  p3pgon = Polygon.mk(p3corners);
+  addPart('P0',0,p0pgon,p0stop);
+  addPart('P1',0,p1pgon,p1stop);
+  addPart('P2',0,p2pgon,p2stop);
+  addPart('P3',0,p3pgon,p3stop);
+  return 1; 
  }
  
  
 rs.extendQuadOneLevel = function (prt) {
-  // debugger;
+   debugger;
    let {polygon:pgon,where,root} = prt;
    let {corners} = pgon;
    let sp = this.partSplitParams(prt);
@@ -131,12 +112,13 @@ rs.extendQuadOneLevel = function (prt) {
      return;
    }
    console.log('quad split','level',this.levelOf(prt));
-   let {vertexNum:ivertexNum,center,Case,ornt,fr0,fr1,fr2,fr3,fr4,fr5,stop} = sp;
+   let {vertexNum:ivertexNum,center,Case,ornt,fr0,fr1,fr2,fr3,fr4,fr5,p0stop,p1stop,p2stop,p3stop,p4stop,p5stop} = sp;
    let vertexNum = ivertexNum?ivertexNum:0;
 
-   const addPart = (pn,vn,pgon) => {
+   const addPart = (pn,vn,pgon,stop) => {
+    //S debugger;
      if (pgon && pgon.corners) {
-       let nprt = {polygon:pgon,where:[...where,[pn,vn]],root,parent:prt};
+       let nprt = {polygon:pgon,where:[...where,[pn,vn]],root,parent:prt,stop};
        prt[pn]= nprt;
        return nprt;
      }
@@ -159,7 +141,7 @@ rs.extendQuadOneLevel = function (prt) {
    let seg1 = LineSegment.mk(v1,v2);
    let seg2 = LineSegment.mk(v2,v3);
    let seg3 = LineSegment.mk(v3,v0);
-   debugger;
+ //  debugger;
    if (Case === 1) {
      let bisect  = (fr0===0) && (fr1 === 1);
      if (bisect) {
@@ -177,7 +159,7 @@ rs.extendQuadOneLevel = function (prt) {
        p2corners =[v0,v2,v3];
      }
   } else if (case2) {
-          debugger;
+ //         debugger;
     if (fr0) {
        e0 = seg0.along(fr0); 
        e2 = seg2.along(fr2); 
@@ -279,31 +261,36 @@ rs.extendQuadOneLevel = function (prt) {
   p4pgon = Polygon.mk(p4corners);
   //this.checkPolygon(p0pgon);
  // this.checkPolygon(p1pgon);
-  addPart('P0',0,p0pgon);
-  addPart('P1',0,p1pgon);
-  addPart('P2',0,p2pgon);
-  addPart('P3',0,p3pgon);
-  addPart('P4',0,p4pgon);
+  addPart('P0',0,p0pgon,p0stop);
+  addPart('P1',0,p1pgon,p1stop);
+  addPart('P2',0,p2pgon,p2stop);
+  addPart('P3',0,p3pgon,p3stop);
+  addPart('P4',0,p4pgon,p4stop);
   return 1;
 }
    
 rs.extendPartOneLevel = function (prt,sep) {
+  // debugger;
    if (!prt) {
      return;
    }
-   if (prt.P0) { // already extended 
+ /*  if (prt.P0) { // already extended 
      let ext = this.extendPartOneLevel(prt.P0,sep);
      this.extendPartOneLevel(prt.P1,sep);
      this.extendPartOneLevel(prt.P2,sep);
      this.extendPartOneLevel(prt.P3,sep);
      this.extendPartOneLevel(prt.P4,sep);
      return ext;
-   }
+   }*/
    if (sep && sep.stop) {
      console.log('stop');
      return;
    }
-   let {polygon:pgon} = prt;
+   let {polygon:pgon,stop} = prt;
+   if (stop) {
+     debugger;
+     return 0;
+   }
    let {corners} = pgon;
    if (corners.length === 3) {
      return this.extendTriOneLevel(prt,sep);

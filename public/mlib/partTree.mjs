@@ -163,7 +163,7 @@ rs.extendQuadOneLevel = function (prt) {
        p2corners =[v0,v2,v3];
      }
   } else if (case2) {
- //         debugger;
+          debugger;
     if (fr0) {
        e0 = seg0.along(fr0); 
        e2 = seg2.along(fr2); 
@@ -171,9 +171,9 @@ rs.extendQuadOneLevel = function (prt) {
        p1corners =[e0,v1,v2,e2];
      } else {
        e1 = seg1.along(fr1); 
-       e3 = seg3.along(fr3); 
-       p0corners =[v0,v1,e1,e3];
-       p1corners =[e3,e1,v2,v3];
+       e2 = seg3.along(fr2); 
+       p0corners =[v0,v1,e1,e2];
+       p1corners =[e2,e1,v2,v3];
      }
   }   else if (case3||case4||case5||case6||case7||case8) {
   //   debugger;
@@ -182,21 +182,21 @@ rs.extendQuadOneLevel = function (prt) {
      e2 = seg2.along(fr2); 
      e3 = seg3.along(fr3); 
      if (case3) {
-       p0corners =[e0,v1,e1];
-       p1corners =[e1,v2,e2];
-       p2corners =[e2,v3,e3];
-       p3corners =[e3,v0,e0];
-       p4corners =[e0,e1,e2,e3];
+       p2corners =[e0,v1,e1];
+       p3corners =[e1,v2,e2];
+       p4corners =[e2,v3,e3];
+       p1corners =[e3,v0,e0];
+       p0corners =[e0,e1,e2,e3];
      } else if (case5) {
       debugger;
       let cseg = LineSegment.mk(e1,e3);
       let c0 = cseg.along(fr4);
       let c1 = cseg.along(fr5);
-      p0corners = [e0,c1,e2,c0];
+      p4corners = [e0,c1,e2,c0];
       p1corners = [v0,e0,c0,e3];
       p2corners = [e0,v1,e1,c1];
       p3corners = [c1,e1,v2,e2];
-      p4corners = [e3,c0,e2,v3];
+      p0corners = [e3,c0,e2,v3];
     } else if (case4 || case7) {
       debugger;
       if (case7) {

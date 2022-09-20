@@ -27,16 +27,16 @@ rs.afterInitialize = function () {
   let ff = 0.05*wd;
   this.addT('fr',1,Point.mk(8*ff-hwd,-(hwd+ff)));
   this.addT('Case ',7,Point.mk(0*ff,-(hwd+3*ff)));
-  this.addT('P',1,Point.mk(3*ff-hwd,-5*ff));
+ // this.addT('P',1,Point.mk(3*ff-hwd,-5*ff));
   this.addT('fr',3,Point.mk(1.50*ff,hwd+ff));
   //this.addT('fr',5,Point.mk(.5*ff,-3*ff));
   this.addT('fr',0,Point.mk(-(hwd+1.5*ff),1.8*ff));
  // this.addT('fr',4,Point.mk(-1*ff,2.8*ff));
-  this.addT('P',0,Point.mk(-5*ff,hwd-5.5*ff));
-  this.addT('P',3,Point.mk(5*ff,hwd-5.5*ff));
+  //this.addT('P',0,Point.mk(-5*ff,hwd-5.5*ff));
+  //this.addT('P',3,Point.mk(5*ff,hwd-5.5*ff));
   //this.addT('fr',3,Point.mk(-5*ff,-0.0*ff));
   //this.addT('fr',5,Point.mk(0*ff,1*ff));
-  this.addT('P',2,Point.mk(4*ff,-5*ff));
+ //this.addT('P',2,Point.mk(4*ff,-5*ff));
  // this.addT('fr',2,Point.mk(hwd+1.5*ff,-2*ff));
 }
 

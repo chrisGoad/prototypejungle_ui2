@@ -18,14 +18,14 @@ rs.afterInitialize =function ()  {
   let ff = 0.05*wd;
   this.addT('Case',2,Point.mk(0*ff,-(hwd+3*ff)));
 
-  this.addT('P',1,Point.mk(2*ff,hwd-5.5*ff));
-  this.addT('P',4,Point.mk(-4*ff,hwd-7.5*ff));
-  this.addT('P',0,Point.mk(-0*ff,-7.5*ff));
-  this.addT('fr',1,Point.mk(-3.5*ff,-6*ff));
-  this.addT('fr',2,Point.mk(3.5*ff,-6*ff));
-  this.addT('fr',0,Point.mk(-9.5*ff,6*ff));
-  this.addT('fr',3,Point.mk(-6*ff,11*ff));
-  this.addT('P',3,Point.mk(-8*ff,8.5*ff));
+  //this.addT('P',1,Point.mk(2*ff,hwd-5.5*ff));
+  //this.addT('P',4,Point.mk(-4*ff,hwd-7.5*ff));
+  //this.addT('P',0,Point.mk(-0*ff,-7.5*ff));
+  this.addT('fr',2,Point.mk(-6.5*ff,-0*ff));
+  this.addT('fr',3,Point.mk(6.5*ff,-0*ff));
+  this.addT('fr',0,Point.mk(6*ff,11*ff));
+  this.addT('fr',1,Point.mk(-6*ff,11*ff));
+  //this.addT('P',3,Point.mk(-8*ff,8.5*ff));
  // this.addT('fr',1,Point.mk(8*ff,hwd+1*ff));
 }
 

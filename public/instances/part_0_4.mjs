@@ -17,7 +17,7 @@ rs.quadSplitParams = {Case:3,vertexNum:0,fr0:0.4,fr1:0.4,fr2:.6,fr3:0.4};
 //rs.quadSplitParams = {Case:3,vertexNum:0,fr0:0.5,fr1:0.5,fr2:.9,fr3:0.1};
 //rs.quadSplitParams = {Case:3,vertexNum:0,fr0:0.4,fr1:0.4,fr2:.6,fr3:0.4};
 rs.triSplitParams1 = {Case:1,vertexNum:0,fr0:0.3,fr1:0.3,p1stop:1,p2stop:1,p3stop:1};
-rs.triSplitParams2 =  {Case:2,vertexNum:0,fr0:0.2,fr1:0.8,fr2:0.5,fr3:0.5,p1stop:1,p2stop:1,p3stop:10};
+rs.triSplitParams2 =  {Case:2,vertexNum:1,fr0:0.2,fr1:0.8,fr2:0.5,fr3:0.5,p1stop:1,p2stop:1,p3stop:10};
 rs.partSplitParams = function (prt) {
 //debugger;
   let ln = prt.polygon.corners.length;

@@ -22,26 +22,22 @@ rs.partSplitParams = function (qd) {
 
 //rs.adjustProtos = function () {this.showLabelsV()};
 rs.afterInitialize = function () {
- debugger;
-  let {textP} = this;
+   let {width:wd} = this;
   let hwd = 0.5*wd;
   let ff = 0.05*wd;
-  const addT = (rt,n,p) => {
-    this.addText(textP,rt,n,p);
-  }
-  addT('fr',1,Point.mk(8*ff-hwd,-(hwd+ff)));
-  addT('Case ',4,Point.mk(0*ff,-(hwd+3*ff)));
-  addT('Q',0,Point.mk(3*ff-hwd,-5*ff));
-  addT('fr',3,Point.mk(1.50*ff,hwd+ff));
-  addT('fr',4,Point.mk(4.0*ff,-2*ff));
-  addT('fr',0,Point.mk(-(hwd+1.5*ff),1.8*ff));
-  addT('fr',5,Point.mk(-4*ff,1.8*ff));
-  addT('Q',2,Point.mk(-5*ff,hwd-5.5*ff));
-  addT('Q',3,Point.mk(5*ff,hwd-5.5*ff));
-  //addT('fr',3,Point.mk(-5*ff,-0.0*ff));
-  //addT('fr',5,Point.mk(0*ff,1*ff));
-  addT('Q',1,Point.mk(4*ff,-5*ff));
-  addT('fr',2,Point.mk(hwd+1.5*ff,-2*ff));
+  this.addT('fr',1,Point.mk(8*ff-hwd,-(hwd+ff)));
+  this.addT('Case ',4,Point.mk(0*ff,-(hwd+3*ff)));
+  this.addT('P',0,Point.mk(3*ff-hwd,-5*ff));
+  this.addT('fr',3,Point.mk(1.50*ff,hwd+ff));
+  this.addT('fr',4,Point.mk(4.0*ff,-2*ff));
+  this.addT('fr',0,Point.mk(-(hwd+1.5*ff),1.8*ff));
+  this.addT('fr',5,Point.mk(-4*ff,1.8*ff));
+  this.addT('P',2,Point.mk(-5*ff,hwd-5.5*ff));
+  this.addT('P',3,Point.mk(5*ff,hwd-5.5*ff));
+  //this.addT('fr',3,Point.mk(-5*ff,-0.0*ff));
+  //this.addT('fr',5,Point.mk(0*ff,1*ff));
+  this.addT('P',1,Point.mk(4*ff,-5*ff));
+  this.addT('fr',2,Point.mk(hwd+1.5*ff,-2*ff));
 }
 
 export {rs};

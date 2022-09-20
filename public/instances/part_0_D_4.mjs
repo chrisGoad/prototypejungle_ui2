@@ -16,7 +16,6 @@ let c = Point.mk(Math.cos(dir),Math.sin(dir)).times(wd*0.2);
 //rs.computeExponentials(strokeWidths,10,0.05,.9);
 
 rs.partSplitParams = function (qd) {
-  debugger;
   let pgon = qd.polygon;
   let c = pgon.center();
   let d = pgon.minDimension();
@@ -29,24 +28,20 @@ rs.partSplitParams = function (qd) {
 
 //rs.adjustProtos = function () {this.showLabelsV()};
 rs.afterInitialize = function () {
- debugger;
-  let {textP} = this;
+  let {width:wd} = this;
   let hwd = 0.5*wd;
   let ff = 0.05*wd;
-  const addT = (rt,n,p) => {
-    this.addText(textP,rt,n,p);
-  }
-  addT('Case ',9,Point.mk(0*ff,-(hwd+3*ff)));
-  addT('fr',1,Point.mk(6*ff-hwd,-(hwd+ff)));
-  addT('Q',0,Point.mk(3*ff-hwd,-5*ff));
-  addT('fr',3,Point.mk(0.0*ff,hwd+ff));
-  addT('fr',0,Point.mk(-(hwd+1.5*ff),-2*ff));
-  addT('Q',2,Point.mk(-5*ff,hwd-5.5*ff));
-  addT('Q',3,Point.mk(5*ff,hwd-5.5*ff));
-  //addT('fr',3,Point.mk(-5*ff,-0.0*ff));
-  //addT('fr',5,Point.mk(0*ff,1*ff));
-  addT('Q',1,Point.mk(4*ff,-5*ff));
-  addT('fr',2,Point.mk(hwd+1.5*ff,-2*ff));
+  this.addT('Case',9,Point.mk(0*ff,-(hwd+3*ff)));
+  this.addT('fr',1,Point.mk(6*ff-hwd,-(hwd+ff)));
+  this.addT('P',0,Point.mk(3*ff-hwd,-5*ff));
+  this.addT('fr',3,Point.mk(0.0*ff,hwd+ff));
+  this.addT('fr',0,Point.mk(-(hwd+1.5*ff),-2*ff));
+  this.addT('P',2,Point.mk(-5*ff,hwd-5.5*ff));
+  this.addT('P',3,Point.mk(5*ff,hwd-5.5*ff));
+  //this.addT('fr',3,Point.mk(-5*ff,-0.0*ff));
+  //this.addT('fr',5,Point.mk(0*ff,1*ff));
+  this.addT('P',1,Point.mk(4*ff,-5*ff));
+  this.addT('fr',2,Point.mk(hwd+1.5*ff,-2*ff));
 }
 
 export {rs};

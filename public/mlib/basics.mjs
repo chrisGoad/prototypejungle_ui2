@@ -510,11 +510,14 @@ item.callIfDefined = function (nm) {
 }
 
 
-item.addText = function (textP,rt,n,p) {
+item.addText = function (textP,rt,n,p,color) {
   let nm = 'txt'+rt+n;
   let theText = rt+n;
   let txt = textP.instantiate();
-  txt.text = theText,
+  txt.text = theText;
+  if (color) {
+   txt.stroke = color;
+  }
   this.set(nm,txt);
   txt.moveto(p);
   return txt;

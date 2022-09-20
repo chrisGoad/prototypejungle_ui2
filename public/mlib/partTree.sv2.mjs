@@ -8,25 +8,20 @@ rs.levelOf = function (prt) {
   return where.length;
 }
 
-rs.partName = function (prt) {
-  let {where} = prt;
-  let ln = where.length;
-  if (ln === 0) {
-    return 'top';
-  }
-  return where[ln-1][0];
-}
-
 rs.partSplitParams = function (prt) {
   let {partParams} = this;
   let {splitParams,splitParamsByLevel} = partParams;
   if (splitParams) {
     return splitParams;
   } 
+  if (splitParamsByLevel) {
+    let lv = prt.where.length;
+    return splitParamsByLevel[lv];
+  }  
 }
 
 rs.extendTriOneLevel = function (prt) {
- debugger;
+ //debugger;
    let {polygon:pgon,where,root} = prt;
    let {corners} = pgon;
    let sp= this.partSplitParams(prt);
@@ -39,6 +34,7 @@ rs.extendTriOneLevel = function (prt) {
      if (!(pgon.corners)) {
        return;
      }
+     
      let nprt = {polygon:pgon,where:[...where,[pn,vn]],root,parent:prt,stop};
      prt[pn]= nprt;
   
@@ -71,24 +67,24 @@ rs.extendTriOneLevel = function (prt) {
      }
   }
   if (case2) {
-      e0 = seg2.along(fr0);
-      e1 = seg2.along(fr1);
-      e2 = seg0.along(fr2);
-      e3 = seg1.along(fr3);
+      e0 = seg0.along(fr0);
+      e1 = seg0.along(fr1);
+      e2 = seg1.along(fr2);
+      e3 = seg2.along(fr3);
       p0corners =[e0,e1,e2,e3];
-      p1corners = [v0,e2,e1];
-      p2corners = [e2,v1,e3];
-      p3corners = [e0,e3,v2];
+      p1corners = [v0,e0,e3];
+      p2corners = [e1,v1,e2];
+      p3corners = [e3,e2,v2];
   
    } 
    if (case3) {
      e0 = seg0.along(fr0);
      e1 = seg1.along(fr1);
-     e2 = seg2.along(fr2);
-     p0corners = [e0,e1,e2];
-     p1corners = [v0,e0,e2];
-     p2corners = [e0,v1,e1];
-     p3corners = [e2,e1,v2];
+     e2 = seg2.along(fr1);
+     let p0corners = [e0,e1,e2];
+     let p1corners = [v0,e0,e2];
+     let p2corners = [e0,v1,e1];
+     let p3corners = [e2,e1,v2];
    }
   p0pgon = Polygon.mk(p0corners);
   p1pgon = Polygon.mk(p1corners);
@@ -190,13 +186,12 @@ rs.extendQuadOneLevel = function (prt) {
      } else if (case5) {
       debugger;
       let cseg = LineSegment.mk(e1,e3);
-      let c0 = cseg.along(fr4);
-      let c1 = cseg.along(fr5);
-      p0corners = [e0,c1,e2,c0];
-      p1corners = [v0,e0,c0,e3];
-      p2corners = [e0,v1,e1,c1];
-      p3corners = [c1,e1,v2,e2];
-      p4corners = [e3,c0,e2,v3];
+      let ce0 = cseg.along(fr4);
+      let ce1 = cseg.along(fr5);
+      p0corners = [v0,e0,ce0,e3];
+      p1corners = [e0,v1,e1,ce1];
+      p2corners = [ce1,e1,v2,e2];
+      p3corners = [e3,ce0,e2,v3];
     } else if (case4 || case7) {
       debugger;
       if (case7) {
@@ -207,12 +202,12 @@ rs.extendQuadOneLevel = function (prt) {
         e3 = seg3.along(fr3);
       }        
       let cseg = LineSegment.mk(e0,e2);
-      let c0 = cseg.along(fr4);
-      let c1 = cseg.along(fr5);
-      p0corners = [v0,e0,c0,e3];
-      p1corners = [e0,v1,e1,c1];
-      p2corners = [c1,e1,v2,e2];
-      p4corners = [e3,c0,e2,v3];
+      let ce0 = cseg.along(fr4);
+      let ce1 = cseg.along(fr5);
+      p0corners = [v0,e0,ce0,e3];
+      p1corners = [e0,v1,e1,ce1];
+      p2corners = [ce1,e1,v2,e2];
+      p3corners = [e3,ce0,e2,v3];
     } else if (0 && case7) {
       debugger;
       e2 = Point.mk(e2.x,e0.y);
@@ -259,7 +254,6 @@ rs.extendQuadOneLevel = function (prt) {
     p2corners = [e1,v2,e2,c];
     p3corners = [c,e2,v3,e3];
   }  
-  debugger;
   p0pgon = Polygon.mk(p0corners);
   p1pgon = Polygon.mk(p1corners);
   p2pgon = Polygon.mk(p2corners);
@@ -438,15 +432,17 @@ rs.partStroke = function (prt) {
   }
 }
 
-
+/*
 rs.partSplitParams = function (prt) {
-  let {splitParams} = this.partParams;
+  let {splitParams,splitParamsByLevel} = this.partParams;
   if (splitParams) {
     return splitParams;
   }
-  core.error('No splitParams');
+  let lv =  this.levelOf(prt);
+  //let lv =  prt.where.length;
+  return splitParamsByLevel[lv];
 }
-
+*/
 rs.partFill = function (prt) {
 }
 

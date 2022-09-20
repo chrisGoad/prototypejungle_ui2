@@ -10,9 +10,6 @@ let topParams = {width:wd,height:wd,framePadding:0.2*wd,frameStroke:undefined}
 Object.assign(rs,topParams);
 rs.partParams.levels = 1;
 
-rs.partSplitParams = function (prt) {
-  return this.splitParams;
-}
 /*
 rs.quadParams = {chance:1,levels:levels,polygonal:1,splitParams:{ornt:'v',fr0:0.4,fr1:0.4,fr2:0.4,fr3:0.4,fr4:0.4,fr5:0.3}};
 rs.quadParams = {chance:1,levels:levels,polygonal:1,splitParams:{ornt:'v',fr0:0.1,fr1:0.2,fr2:0.3,fr3:0.4,fr4:0.6,fr5:0.7}};
@@ -32,15 +29,26 @@ rs.adjustProtos = function () {
   this.textP["font-size"] = "6";
 }
 
-rs.partSplitParams = function (prt) {
-  return this.splitParams;
+rs.addT = function (rt,n,p) {
+  debugger;
+  let color = (rt==='P')?'black':'white';   
+  this.addText(this.textP,rt,n,p,color);
 }
 
 let visibles = rs.partParams.visibles = [];
 rs.addToArray(visibles,1,100);
 let strokeWidths = rs.partParams.strokeWidths = [];
-rs.addToArray(strokeWidths,0.4,100);
+rs.addToArray(strokeWidths,2,100);
 
+rs.theFills = {P0:'rgb(255,0,0)',P1:'rgb(200,200,0)',P2:'rgb(0,255,0)',P3:'rgb(0,255,255)',P4:'rgb(0,0,255)',P5:'rgb(100,100,100)'};
+rs.partFill = function (prt) {
+  let nm = this.partName(prt);
+  let fill = this.theFills[nm];
+  if (fill) {
+    return fill;
+  }
+}
+ 
 rs.showLabelsV = function () {
  debugger;
   let {textP} = this;

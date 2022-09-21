@@ -65,4 +65,9 @@ node admin/genGrids images
 cd c:\prototypejungle\public
 node server/server
 
+
+cd c:\prototypejungle\public
+node admin/assemble geom
+
+
 cd c:\prototypejungle

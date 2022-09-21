@@ -164,12 +164,12 @@ rs.extendQuadOneLevel = function (prt) {
      }
   } else if (case2) {
           debugger;
-    if (fr0) {
+    if (fr0 || 1) {
        e0 = seg0.along(fr0); 
        e2 = seg2.along(fr2); 
        p0corners =[v0,e0,e2,v3];
        p1corners =[e0,v1,v2,e2];
-     } else {
+     } else if (0) {
        e1 = seg1.along(fr1); 
        e2 = seg3.along(fr2); 
        p0corners =[v0,v1,e1,e2];

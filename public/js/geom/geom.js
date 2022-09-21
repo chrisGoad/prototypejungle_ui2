@@ -29,6 +29,12 @@ Point.mk = function (x,y) {
   return rs;
 }
 
+Point.equals = function (p) {
+   let {x:thx,y:thy} = this;
+   let {x,y} = p;
+   return (x===thx) && (y===thy);
+}
+
 const rotationMatrix  = function (th) {
 	let r00 = Math.cos(th);
 	let r10 = -Math.sin(th);
@@ -1861,9 +1867,40 @@ geomr.set("Polygon",core.ObjectNode.mk()).__namedType();
 let Polygon = geomr.Polygon;
 // takes corner,extent or {corner:c,extent:e,style:s} style being optional, or no args
 // Rectangles without styles are often used for purely computational purpose - never drawn.
+Polygon.reduce = function() {
+ // debugger;
+  let {corners} = this;
+  if (!corners) {
+    return;
+  }
+  let ln = corners.length;
+  if (ln < 3) {
+    return;
+  }
+  let newCorners = arrayShape.mk();
+  let reduced = 0;
+  for (let i=0;i<ln;i++) {
+    let cc = corners[i];
+    let ni = (i+1)%ln;
+    let nc = corners[ni];
+    if (!cc.equals(nc)) {
+      newCorners.push(cc);
+    } else {
+      console.log('Reduced a polygon');
+      reduced = 1;
+    }
+  } 
+  if (reduced) {
+    this.set('corners',newCorners);
+    debugger;
+    return 1;
+  }
+}  
+    
 Polygon.mk = function (corners) {
   let rs = Object.create(Polygon);
   rs.set('corners',corners);
+  rs.reduce();
   return rs;
 }
 

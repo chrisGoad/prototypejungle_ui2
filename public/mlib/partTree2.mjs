@@ -24,13 +24,14 @@ rs.partSplitParams = function (prt) {
     return splitParams;
   } 
 }
+ 
 
 rs.extendTriOneLevel = function (prt) {
  debugger;
    let {polygon:pgon,where,root} = prt;
    let {corners} = pgon;
    let sp= this.partSplitParams(prt);
-   let {Case,vertexNum:ivertexNum,fr0,fr1,fr2,fr3,p0stop,p1stop,p2stop,p3stop,p4stop} = sp;
+   let {Case,vertexNum:ivertexNum,pc0,pc1,p0stop,p1stop} = sp;
    let vertexNum = ivertexNum?ivertexNum:0;
    const addPart = (pn,vn,pgon,stop) => {
      if (!pgon) {
@@ -41,63 +42,49 @@ rs.extendTriOneLevel = function (prt) {
      }
      let nprt = {polygon:pgon,where:[...where,[pn,vn]],root,parent:prt,stop};
      prt[pn]= nprt;
-  
      return nprt;
    }
-   let e0,e1,e2,e3,p0corners,p1corners,p2corners,p3corners,p4corners;
-   let p0pgon,p1pgon,p2pgon,p3pgon,p4pgon;
+   let side0 = Math.floor(pc0);
+   let side1 = Math.floor(pc1); 
+   if (side1 <= side0) {
+     core.error('bad sides');
+   }
+   let np0 = pgon.pc2point(pc0+vertexNum);
+   let np1 = pgon.pc2point(pc1+vertexNum);
+   let p0corners,p1corners;
+   let p0pgon,p1pgon;
+   let p00,p01,p02,p03,p10,p11,p12,p13;
    const vertex = (n) =>  corners[(vertexNum+n)%3]; 
    let v0 = vertex(0);
    let v1 = vertex(1);
    let v2 = vertex(2);
-   let seg0 = LineSegment.mk(v0,v1);
-   let seg1 = LineSegment.mk(v1,v2);
-   let seg2 = LineSegment.mk(v2,v0);
-   let case1 = Case === 1;
-   let case2 = Case === 2;
-   let case3 = Case === 3;
-   let case4 = Case === 4;
-   if (case1) {
-  //   debugger;
-     if (fr0 === 0){
-       e1 = seg1.along(fr1);
-       p0corners = [v0,e1,v2];
-       p1corners = [v0,v1,e1];
-     } else {
-       e0 = seg0.along(fr0);
-       e1 = seg1.along(fr1);
-       p0corners =[v0,e0,e1,v2];
-       p1corners = [e0,v1,e1];
-     }
+   if (side0 === 0) {
+     if (side1 === 1) {
+       p00 = v0
+       p01 = np0;
+       p02 = np1;
+       p03 = v2;
+       p0corners = [p00,p01,p02,p03];
+       p10 = np0;
+       p11 = v1
+       p12 = np1;
+       p1corners = [p10,p11,p12];
+    } else if (side1 === 2) {
+       p00 = v0
+       p01 = np0;
+       p02 = np1;
+       p0corners = [p00,p01,p02];
+       p10 = np0;
+       p11 = v1;
+       p12 = v2
+       p13 = np1;
+       p1corners = [p10,p11,p12,p13];
+    }
   }
-  if (case2) {
-      e0 = seg2.along(fr0);
-      e1 = seg2.along(fr1);
-      e2 = seg0.along(fr2);
-      e3 = seg1.along(fr3);
-      p0corners =[e0,e1,e2,e3];
-      p1corners = [v0,e2,e1];
-      p2corners = [e2,v1,e3];
-      p3corners = [e0,e3,v2];
-  
-   } 
-   if (case3) {
-     e0 = seg0.along(fr0);
-     e1 = seg1.along(fr1);
-     e2 = seg2.along(fr2);
-     p0corners = [e0,e1,e2];
-     p1corners = [v0,e0,e2];
-     p2corners = [e0,v1,e1];
-     p3corners = [e2,e1,v2];
-   }
   p0pgon = Polygon.mk(p0corners);
   p1pgon = Polygon.mk(p1corners);
-  p2pgon = Polygon.mk(p2corners);
-  p3pgon = Polygon.mk(p3corners);
   addPart('P0',0,p0pgon,p0stop);
   addPart('P1',0,p1pgon,p1stop);
-  addPart('P2',0,p2pgon,p2stop);
-  addPart('P3',0,p3pgon,p3stop);
   return 1; 
  }
  

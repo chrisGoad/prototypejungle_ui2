@@ -1892,7 +1892,6 @@ Polygon.reduce = function() {
   } 
   if (reduced) {
     this.set('corners',newCorners);
-    debugger;
     return 1;
   }
 }  
@@ -1903,6 +1902,30 @@ Polygon.mk = function (corners) {
   rs.reduce();
   return rs;
 }
+
+
+/* a place on periphery of a polygon is specified by a pc (periphery coord).
+This is a real number less that the number of its sides. 
+If Math.floor(pc) === n, it specifiesa spot on the nth side,  the spot which is a fraction  pc-n of the way along the side. 
+Thus if pc <1 it specifies a spot on the  first side, if 1 <= pc < 2, on the second, and so on */
+
+Polygon.pc2point = function (pc) {
+  let {corners} = this;
+  let ln = corners.length;
+ /* if (pc >= ln) {
+    core.error('pc (periphery coordinate) is too large');
+    returnS
+  }*/
+  let sideNum= Math.floor(pc);
+  let along = pc-sideNum;
+  let aSideNum = sideNum%ln;
+  let v0 = corners[aSideNum];
+  let v1 = corners[(aSideNum+1)%ln];
+  let vec = v1.difference(v0);
+  let rs = v0.plus(vec.times(along));
+  return rs;
+}
+  
 
 // in its own coords
 Polygon.center = function () {

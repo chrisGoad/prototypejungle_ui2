@@ -58,7 +58,7 @@ rs.extendTriOneLevel = function (prt) {
    let v0 = vertex(0);
    let v1 = vertex(1);
    let v2 = vertex(2);
-   if (side0 === 0) {
+    if (side0 === 0) {
      if (side1 === 1) {
        p00 = v0
        p01 = np0;
@@ -103,7 +103,7 @@ rs.extendQuadOneLevel = function (prt) {
      return;
    }
    console.log('quad split','level',this.levelOf(prt));
-   let {vertexNum:ivertexNum,center,Case,ornt,fr0,fr1,fr2,fr3,fr4,fr5,p0stop,p1stop,p2stop,p3stop,p4stop,p5stop} = sp;
+   let {vertexNum:ivertexNum,center,Case,ornt,pc0,pc1,pc2,pc3,pc4,pc5,p0stop,p1stop,p2stop,p3stop,p4stop,p5stop} = sp;
    let vertexNum = ivertexNum?ivertexNum:0;
 
    const addPart = (pn,vn,pgon,stop) => {
@@ -115,6 +115,8 @@ rs.extendQuadOneLevel = function (prt) {
      }
    }
    let e0,e1,e2,e3,p0corners,p1corners,p2corners,p3corners,p4corners,p0pgon,p1pgon,p2pgon,p3pgon,p4pgon;
+   let p00,p01,p02,p03,p10,p11,p12,p13;
+
    const vertex = (n) =>  corners[(vertexNum+n)%4];
    let case1 = Case === 1;
    let case2 = Case === 2;
@@ -128,120 +130,33 @@ rs.extendQuadOneLevel = function (prt) {
    let v1 = vertex(1);
    let v2 = vertex(2);
    let v3 = vertex(3);
-   let seg0 = LineSegment.mk(v0,v1);
-   let seg1 = LineSegment.mk(v1,v2);
-   let seg2 = LineSegment.mk(v2,v3);
-   let seg3 = LineSegment.mk(v3,v0);
+   let np0 = pgon.pc2point(pc0+vertexNum);
+   let np1 = pgon.pc2point(pc1+vertexNum);
+   let np2 = pc2?pgon.pc2point(pc2+vertexNum):null;
+   let np3 = pc3?pgon.pc2point(pc3+vertexNum):null;
+   let np4 = pc4?pgon.pc2point(pc4+vertexNum):null;
+   let side0 = Math.floor(pc0);
+   let side1 = Math.floor(pc1);
+   let side2 = pc2?Math.floor(pc2):null;
+   let side3 = pc2?Math.floor(pc3):null;
+   let side4 = pc2?Math.floor(pc4):null;
  //  debugger;
-   if (Case === 1) {
-     let bisect  = (fr0===0) && (fr1 === 1);
-     if (bisect) {
-       p0corners =[v0,v1,v2];
-       p1corners =[v0,v2,v3];
-     } else if (fr0===0)  {
-       e1 = seg1.along(fr1);
-       p0corners =[v0,v1,e1];
-       p1corners = [v0,e1,v2,v3];
+   if (case1) {
+     if ((side0 === 0) && (side1 === 2)) {
+       p00 = v0;
+       p01 = np0;
+       p02 = np1;
+       p03 = v3;
+       p0corners = [p00,p01,p02,p03];
+       p10 = np0;
+       p11 = v1;
+       p12 = v2;
+       p13 = np1;
+       p1corners = [p10,p11,p12,p13];
      } else {
-       e0 = seg0.along(fr0); 
-       e1 = seg1.along(fr1); 
-       p0corners =[e0,v1,e1];
-       p1corners =[v0,e0,e1,v2];
-       p2corners =[v0,v2,v3];
-     }
-  } else if (case2) {
-          debugger;
-    //if (fr0 || 1) {
-     e0 = seg0.along(fr0); 
-     e2 = seg2.along(fr2); 
-     p0corners =[v0,e0,e2,v3];
-     p1corners =[e0,v1,v2,e2];
-   //} 
-  }   else if (case3||case4||case5||case6||case7||case8) {
-  //   debugger;
-     e0 = seg0.along(fr0); 
-     e1 = seg1.along(fr1); 
-     e2 = seg2.along(fr2); 
-     e3 = seg3.along(fr3); 
-     if (case3) {
-       p2corners =[e0,v1,e1];
-       p3corners =[e1,v2,e2];
-       p4corners =[e2,v3,e3];
-       p1corners =[e3,v0,e0];
-       p0corners =[e0,e1,e2,e3];
-     } else if (case5) {
-      debugger;
-      let cseg = LineSegment.mk(e1,e3);
-      let c0 = cseg.along(fr4);
-      let c1 = cseg.along(fr5);
-      p4corners = [e0,c1,e2,c0];
-      p1corners = [v0,e0,c0,e3];
-      p2corners = [e0,v1,e1,c1];
-      p3corners = [c1,e1,v2,e2];
-      p0corners = [e3,c0,e2,v3];
-    } else if (case4 || case7) {
-      debugger;
-      if (case7) {
-        e2 = Point.mk(seg2.end0.x,e0.y);
-       // e2 = Point.mk(e2.x,e0.y);
-        fr5 = fr1;
-        fr4 = 1-fr3;
-        e3 = seg3.along(fr3);
-      }        
-      let cseg = LineSegment.mk(e0,e2);
-      let c0 = cseg.along(fr4);
-      let c1 = cseg.along(fr5);
-      p0corners = [v0,e0,c0,e3];
-      p1corners = [e0,v1,e1,c1];
-      p2corners = [c1,e1,v2,e2];
-      p4corners = [e3,c0,e2,v3];
-    } else if (0 && case7) {
-      debugger;
-      e2 = Point.mk(e2.x,e0.y);
-      let cseg = LineSegment.mk(e0,e2);
-      fr5 = fr1;
-      fr4 = 1-fr3;
-      e3 = seg3.along(fr3);
-    //  fr5 = 1-fr3;
-      let ce0 = cseg.along(fr4);
-      let ce1 = cseg.along(fr5);
-      p0corners = [v0,e0,ce0,e3];
-      p1corners = [e0,v1,e1,ce1];
-      p2corners = [ce1,e1,v2,e2];
-      p3corners = [e3,ce0,e2,v3];       
-    } else if (case6 || case8) {
-      debugger;
-      if (case8) {
-        //e3 = Point.mk(e1.x,e3.y);
-        e3 = Point.mk(e1.x,seg3.end0.y);
-        fr5 = fr2;
-        fr4 = 1-fr0;
-        //e3 = seg3.along(fr3);
-      }                
-      let cseg = LineSegment.mk(e1,e3);
-      let ce0 = cseg.along(fr4);
-      let ce1 = cseg.along(fr5);
-      p0corners = [v0,e0,ce0,e3];
-      p1corners = [e0,v1,e1,ce0];
-      p2corners = [ce1,e1,v2,e2];
-      p3corners = [e3,ce1,e2,v3];  
-    }
-  } else if (center) {
-    /*let seg0 = LineSegment.mk(v0,v1);
-    let seg1 = LineSegment.mk(v1,v2);
-    let seg2 = LineSegment.mk(v2,v3);
-    let seg3 = LineSegment.mk(v3,v0);*/
-    e0 = seg0.along(fr0); 
-    e1 = seg1.along(fr1); 
-    e2 = seg2.along(fr2); 
-    e3 = seg3.along(fr3); 
-    let c = center;
-    p0corners = [v0,e0,c,e3];
-    p1corners = [e0,v1,e1,c];
-    p2corners = [e1,v2,e2,c];
-    p3corners = [c,e2,v3,e3];
-  }  
-  debugger;
+        core.error('bad case1 for quad');   
+     }  
+  }     
   p0pgon = Polygon.mk(p0corners);
   p1pgon = Polygon.mk(p1corners);
   p2pgon = Polygon.mk(p2corners);

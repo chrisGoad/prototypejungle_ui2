@@ -172,6 +172,7 @@ Rectangle.toShape = function (rectP,scale=1) {
 Polygon.toShape = function (polygonP,scale=1) {
    let {corners} = this;
    let rs = polygonP.instantiate();
+   rs.fromGeom = this;
    let pcorners = arrayShape.mk();
    if (scale) {
      let cnt = this.center();

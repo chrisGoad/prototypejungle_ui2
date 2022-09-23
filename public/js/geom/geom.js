@@ -1910,6 +1910,9 @@ If Math.floor(pc) === n, it specifiesa spot on the nth side,  the spot which is 
 Thus if pc <1 it specifies a spot on the  first side, if 1 <= pc < 2, on the second, and so on */
 
 Polygon.pc2point = function (pc) {
+  if (isNaN(pc)) {
+    return;
+  }
   let {corners} = this;
   let ln = corners.length;
  /* if (pc >= ln) {
@@ -1921,6 +1924,9 @@ Polygon.pc2point = function (pc) {
   let aSideNum = sideNum%ln;
   let v0 = corners[aSideNum];
   let v1 = corners[(aSideNum+1)%ln];
+  if (!v1) {
+    debugger;
+  }
   let vec = v1.difference(v0);
   let rs = v0.plus(vec.times(along));
   return rs;

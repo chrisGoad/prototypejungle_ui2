@@ -27,11 +27,13 @@ rs.partSplitParams = function (prt) {
  
 
 rs.extendTriOneLevel = function (prt) {
- debugger;
+// debugger;
    let {polygon:pgon,where,root} = prt;
    let {corners} = pgon;
    let sp= this.partSplitParams(prt);
-   let {Case,vertexNum:ivertexNum,pc0,pc1,p0stop,p1stop} = sp;
+   let {Case,vertexNum:ivertexNum,pc0,pc1,pc2,pc3,p0stop,p1stop,p2stop,p3stop} = sp;
+   let case1 = Case === 1;
+   let case2 = Case === 2;
    let vertexNum = ivertexNum?ivertexNum:0;
    const addPart = (pn,vn,pgon,stop) => {
      if (!pgon) {
@@ -49,48 +51,50 @@ rs.extendTriOneLevel = function (prt) {
    if (side1 <= side0) {
      core.error('bad sides');
    }
-   let np0 = pgon.pc2point(pc0+vertexNum);
-   let np1 = pgon.pc2point(pc1+vertexNum);
-   let p0corners,p1corners;
-   let p0pgon,p1pgon;
+   let n0 = pgon.pc2point(pc0+vertexNum);
+   let n1 = pgon.pc2point(pc1+vertexNum);
+   let n2 = pgon.pc2point(pc2+vertexNum);
+   let n3 = pgon.pc2point(pc3+vertexNum);
+   let p0corners,p1corners,p2corners,p3corners;
+   let p0pgon,p1pgon,p2pgon,p3pgon;
    let p00,p01,p02,p03,p10,p11,p12,p13;
    const vertex = (n) =>  corners[(vertexNum+n)%3]; 
    let v0 = vertex(0);
    let v1 = vertex(1);
    let v2 = vertex(2);
+   if (case1) {
+     if (side0 === 0) {
+       if (side1 === 1) {
+         p0corners = [v0,n0,n1,v2];
+         p1corners = [n0,v1,n1];
+      } else if (side1 === 2) {
+         p0corners = [v0,n0,n1];
+         p1corners = [n0,v1,v2,n1];
+      } 
+    } 
+  } else if (case2) {
     if (side0 === 0) {
-     if (side1 === 1) {
-       p00 = v0
-       p01 = np0;
-       p02 = np1;
-       p03 = v2;
-       p0corners = [p00,p01,p02,p03];
-       p10 = np0;
-       p11 = v1
-       p12 = np1;
-       p1corners = [p10,p11,p12];
-    } else if (side1 === 2) {
-       p00 = v0
-       p01 = np0;
-       p02 = np1;
-       p0corners = [p00,p01,p02];
-       p10 = np0;
-       p11 = v1;
-       p12 = v2
-       p13 = np1;
-       p1corners = [p10,p11,p12,p13];
+      p0corners = [n3,n0,n1,n2];
+      p1corners = [v0,n0,n3];
+     p2corners = [n0,v1,n1];
+      p3corners = [n2,n1,v2];
+     // p1corners = [];
     }
   }
   p0pgon = Polygon.mk(p0corners);
   p1pgon = Polygon.mk(p1corners);
+  p2pgon = Polygon.mk(p2corners);
+  p3pgon = Polygon.mk(p3corners);
   addPart('P0',0,p0pgon,p0stop);
   addPart('P1',0,p1pgon,p1stop);
+  addPart('P2',0,p2pgon,p2stop);
+  addPart('P3',0,p3pgon,p3stop);
   return 1; 
  }
  
  
 rs.extendQuadOneLevel = function (prt) {
-   debugger;
+  // debugger;
    let {polygon:pgon,where,root} = prt;
    let {corners} = pgon;
    let sp = this.partSplitParams(prt);
@@ -139,7 +143,7 @@ rs.extendQuadOneLevel = function (prt) {
    let side2 = pc2?Math.floor(pc2):null;
    let side3 = pc3?Math.floor(pc3):null;
    let side4 = pc4?Math.floor(pc4):null;
-   debugger;
+  // debugger;
    if (case1) {
      if ((side0 === 0) && (side1 === 2)) {
        p0corners = [v0,n0,n1,v3];
@@ -147,7 +151,17 @@ rs.extendQuadOneLevel = function (prt) {
      } else {
         core.error('bad case1 for quad');   
      }  
-  }  else if (case4) {
+  }  else if (case2) {
+     if ((side0 === 0) && (side1 === 1) && (side2 === 2) && (side3 === 3)) {
+       p0corners = [n0,n1,n2,n3];
+       p1corners = [v0,n0,n3];
+       p2corners = [n0,v1,n1];
+       p3corners = [n1,v2,n2];
+       p4corners = [n3,n2,v3];
+     } else {
+        core.error('bad case4 for quad');
+     }
+   } else if (case4) {
      if ((side0 === 0) && (side1 === 1) && (side2 === 2) && (side3 === 3)) {
        let cseg = LineSegment.mk(n0,n2);
        let c0 = cseg.along(fr0);
@@ -156,6 +170,51 @@ rs.extendQuadOneLevel = function (prt) {
        p1corners = [n0,v1,n1,c1];
        p2corners = [c1,n1,v2,n2];
        p3corners = [n3,c0,n2,v3];
+     } else {
+        core.error('bad case4 for quad');
+     }
+  } else if (case5) {
+    if ((side0 === 0) && (side1 === 1) && (side2 === 2) && (side3 === 3)) {
+      // debugger;
+       let cseg = LineSegment.mk(n1,n3);
+       let c0 = cseg.along(fr0);
+       let c1 = cseg.along(fr1);
+       p0corners = [v0,n0,c0,n3];
+       p1corners = [n0,v1,n1,c0];
+       p2corners = [c1,n1,v2,n2];
+       p3corners = [n3,c1,n2,v3];
+     } else {
+        core.error('bad case4 for quad');
+     }
+   } else if (case6) {
+     if ((side0 === 0) && (side1 === 1)&& (side3 === 3))  {
+    // debugger;
+       let n2 = pgon.pc2point(2+(1-pc0)+vertexNum);
+       let cseg = LineSegment.mk(n0,n2);
+       let fr0 =pc1-1; 
+       let fr1 = (1-(pc3-3));
+       let c0 = cseg.along(fr0);
+       let c1 = cseg.along(fr1);
+       p0corners = [v0,n0,c1,n3];
+       p1corners = [n0,v1,n1,c0];
+       p2corners = [c0,n1,v2,n2];
+       p3corners = [n3,c1,n2,v3];
+     } else {
+        core.error('bad case4 for quad');
+     } 
+   } else if (case7) {
+       if ((side0 === 0) && (side1 === 1)&& (side2 === 2))  {
+    // debugger;
+       let n3 = pgon.pc2point(3+(1-(pc1-1))+vertexNum);
+       let cseg = LineSegment.mk(n1,n3);
+       let fr0 =1-pc0; 
+       let fr1 = (pc2-2);
+       let c0 = cseg.along(fr0);
+       let c1 = cseg.along(fr1);
+       p0corners = [v0,n0,c1,n3];
+       p1corners = [n0,v1,n1,c0];
+       p2corners = [c1,n1,v2,n2];
+       p3corners = [n3,c1,n2,v3];
      } else {
         core.error('bad case4 for quad');
      }
@@ -364,7 +423,7 @@ rs.checkPolygon = function (pgon) {
   for (let i=0;i<ln;i++) {
     let crn = corners[i];
     if (isNaN(crn.x)||isNaN(crn.y)) {
-      debugger;
+      debugger;//keep
       return 1;
     }
   }
@@ -424,7 +483,7 @@ rs.displayCell = function (prt,toSegs) {
    //   shps = rect.toShape(rectP,sc);
    // } else {
       if (!pgon) {
-        debugger;
+        debugger; // keep
       }
       shps = pgon.toShape(polygonP,sc);
    // }
@@ -550,7 +609,7 @@ rs.quad2part = function (params) {
 
 // for illustrations of the partitions (eg instances/part_0_D_0.mjc)
 rs.displayPc = function (n) {  //display periphery coordinate
-  debugger;
+  //debugger;
   let topP = this.shapes[0].fromGeom;
   let pc = rs.partParams.splitParams['pc'+n];
   let fpc = Math.floor(pc);

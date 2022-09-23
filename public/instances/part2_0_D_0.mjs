@@ -14,11 +14,15 @@ debugger;
   let {width:wd} = this;
   let hwd = 0.5*wd;
   let ff = 0.05*wd;
-  this.addT('Part2_T',1,Point.mk(0*ff,-(hwd+3*ff)));
+  
+  this.displayTitle('Part2 T C 1 C 0');
+  this.displayPc(0);
+  this.displayPc(1);
+ /* this.addT('Part2_T',1,Point.mk(0*ff,-(hwd+3*ff)));
   //this.addT('P',0,Point.mk(-1*ff,hwd-5.5*ff));
   //this.addT('P',1,Point.mk(-0*ff,-4.5*ff));
   this.addT('fr',1,Point.mk(4.5*ff,-4*ff));
-  this.addT('fr',0,Point.mk(-5.5*ff,-2*ff));
+  this.addT('fr',0,Point.mk(-5.5*ff,-2*ff));*/
 }
 
 export {rs};

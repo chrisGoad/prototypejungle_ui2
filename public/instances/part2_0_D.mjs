@@ -31,7 +31,7 @@ rs.adjustProtos = function () {
 
 rs.addT = function (rt,n,p) {
   debugger;
-  let color = (rt==='P')?'black':'white';   
+  let color = (rt==='fr')?'black':'white';   
   this.addText(this.textP,rt,n,p,color);
 }
 

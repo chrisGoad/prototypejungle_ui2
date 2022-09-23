@@ -512,7 +512,8 @@ item.callIfDefined = function (nm) {
 
 
 item.addText = function (textP,rt,n,p,color) {
-  let nm = 'txt'+rt+n;
+  let isTitle = n==='';
+  let nm = isTitle?'txtTitle':'txt'+rt+n;
   let theText = rt+n;
   let txt = textP.instantiate();
   txt.text = theText;

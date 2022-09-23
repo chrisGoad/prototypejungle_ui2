@@ -88,6 +88,7 @@ sections:
  
   [0,'part2_0_D_0','instances',1,'T ',{likes:0,posted:0,category:'quad'}], 
   [0,'part2_0_D_1','instances',1,'Q Case1',{likes:0,posted:0,category:'quad'}], 
+  [0,'part2_0_D_2','instances',1,'Q Case 4',{likes:0,posted:0,category:'quad'}], 
 
  //[0,'part_0_0','instances',1,'Part 0 0',{likes:0,posted:0,category:'quad'}], 
  [0,'part_0_1','instances',1,'Part 0 1',{likes:0,posted:0,category:'quad'}], 

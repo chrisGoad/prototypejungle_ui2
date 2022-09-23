@@ -103,7 +103,7 @@ rs.extendQuadOneLevel = function (prt) {
      return;
    }
    console.log('quad split','level',this.levelOf(prt));
-   let {vertexNum:ivertexNum,center,Case,ornt,pc0,pc1,pc2,pc3,pc4,pc5,p0stop,p1stop,p2stop,p3stop,p4stop,p5stop} = sp;
+   let {vertexNum:ivertexNum,center,Case,ornt,pc0,pc1,pc2,pc3,pc4,pc5,p0stop,p1stop,p2stop,p3stop,p4stop,p5stop,fr0,fr1} = sp;
    let vertexNum = ivertexNum?ivertexNum:0;
 
    const addPart = (pn,vn,pgon,stop) => {
@@ -115,7 +115,6 @@ rs.extendQuadOneLevel = function (prt) {
      }
    }
    let e0,e1,e2,e3,p0corners,p1corners,p2corners,p3corners,p4corners,p0pgon,p1pgon,p2pgon,p3pgon,p4pgon;
-   let p00,p01,p02,p03,p10,p11,p12,p13;
 
    const vertex = (n) =>  corners[(vertexNum+n)%4];
    let case1 = Case === 1;
@@ -130,33 +129,37 @@ rs.extendQuadOneLevel = function (prt) {
    let v1 = vertex(1);
    let v2 = vertex(2);
    let v3 = vertex(3);
-   let np0 = pgon.pc2point(pc0+vertexNum);
-   let np1 = pgon.pc2point(pc1+vertexNum);
-   let np2 = pc2?pgon.pc2point(pc2+vertexNum):null;
-   let np3 = pc3?pgon.pc2point(pc3+vertexNum):null;
-   let np4 = pc4?pgon.pc2point(pc4+vertexNum):null;
+   let n0 = pgon.pc2point(pc0+vertexNum);
+   let n1 = pgon.pc2point(pc1+vertexNum);
+   let n2 = pc2?pgon.pc2point(pc2+vertexNum):null;
+   let n3 = pc3?pgon.pc2point(pc3+vertexNum):null;
+   let n4 = pc4?pgon.pc2point(pc4+vertexNum):null;
    let side0 = Math.floor(pc0);
    let side1 = Math.floor(pc1);
    let side2 = pc2?Math.floor(pc2):null;
-   let side3 = pc2?Math.floor(pc3):null;
-   let side4 = pc2?Math.floor(pc4):null;
- //  debugger;
+   let side3 = pc3?Math.floor(pc3):null;
+   let side4 = pc4?Math.floor(pc4):null;
+   debugger;
    if (case1) {
      if ((side0 === 0) && (side1 === 2)) {
-       p00 = v0;
-       p01 = np0;
-       p02 = np1;
-       p03 = v3;
-       p0corners = [p00,p01,p02,p03];
-       p10 = np0;
-       p11 = v1;
-       p12 = v2;
-       p13 = np1;
-       p1corners = [p10,p11,p12,p13];
+       p0corners = [v0,n0,n1,v3];
+       p1corners = [n0,v1,v2,n1];
      } else {
         core.error('bad case1 for quad');   
      }  
-  }     
+  }  else if (case4) {
+     if ((side0 === 0) && (side1 === 1) && (side2 === 2) && (side3 === 3)) {
+       let cseg = LineSegment.mk(n0,n2);
+       let c0 = cseg.along(fr0);
+       let c1 = cseg.along(fr1);
+       p0corners = [v0,n0,c0,n3];
+       p1corners = [n0,v1,n1,c1];
+       p2corners = [c1,n1,v2,n2];
+       p3corners = [n3,c0,n2,v3];
+     } else {
+        core.error('bad case4 for quad');
+     }
+  }
   p0pgon = Polygon.mk(p0corners);
   p1pgon = Polygon.mk(p1corners);
   p2pgon = Polygon.mk(p2corners);
@@ -544,6 +547,39 @@ rs.quad2part = function (params) {
   //debugger;
   return rs;
 }
+
+// for illustrations of the partitions (eg instances/part_0_D_0.mjc)
+rs.displayPc = function (n) {  //display periphery coordinate
+  debugger;
+  let topP = this.shapes[0].fromGeom;
+  let pc = rs.partParams.splitParams['pc'+n];
+  let fpc = Math.floor(pc);
+  let ps = topP.pc2point(pc);
+  let {width:wd} = this;
+  let hwd = 0.5*wd;
+  let ff = 0.05*wd;
+  let sdisp = 1.2*ff;
+  let disp;
+  if (fpc===0) {
+    disp = Point.mk(-sdisp,0);
+  } else if (fpc ===1) {
+    disp = Point.mk(0,-sdisp);
+   } else if (fpc ===2) {
+    disp = Point.mk(sdisp,0);
+   } else if (fpc ===3) {
+    disp = Point.mk(0,sdisp);
+   }
+  this.addT('pc',n,ps.plus(disp));
+}
+
+rs.displayTitle = function (nm) {
+ let {width:wd} = this;
+  let hwd = 0.5*wd;
+  let ff = 0.05*wd;
+  let disp = 1.2*ff;
+  this.addT(nm,'',Point.mk(0*ff,-(hwd+3*ff)));
+}
+
 
 rs.initialize = function () {
   let {width:wd,height:ht,partParams,dropParams} = this;

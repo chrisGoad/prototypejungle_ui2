@@ -94,7 +94,7 @@ rs.extendTriOneLevel = function (prt) {
  
  
 rs.extendQuadOneLevel = function (prt) {
-  // debugger;
+   debugger;
    let {polygon:pgon,where,root} = prt;
    let {corners} = pgon;
    let sp = this.partSplitParams(prt);
@@ -154,10 +154,12 @@ rs.extendQuadOneLevel = function (prt) {
   }  else if (case2) {
      if ((side0 === 0) && (side1 === 1) && (side2 === 2) && (side3 === 3)) {
        p0corners = [n0,n1,n2,n3];
-       p1corners = [v0,n0,n3];
+      // p1corners = [v0,n0,n3];
+       p1corners = [n3,v0,n0];
        p2corners = [n0,v1,n1];
        p3corners = [n1,v2,n2];
-       p4corners = [n3,n2,v3];
+     //  p4corners = [n3,n2,v3];
+       p4corners = [n2,v3,n3];
      } else {
         core.error('bad case4 for quad');
      }

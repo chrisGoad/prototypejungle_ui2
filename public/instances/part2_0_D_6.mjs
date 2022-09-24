@@ -6,13 +6,13 @@ let rs = generatorP.instantiate();
 rs.setName('part2_0_D_6');
 
 rs.partParams.rectangular = 1;
-let sp = rs.partParams.splitParams = {Case:2,pc0:.4,pc1:1.4,pc2:2.4,pc3:3.4};
+let sp = rs.partParams.splitParams = {Case:3,pc0:.4,pc1:1.4,pc2:2.4,pc3:3.4};
 
 rs.afterInitialize =function ()  {
   let ff = (this.width)*0.05;
     let topP = this.shapes[0].fromGeom;
 
-  this.displayTitle('Part2 Q C 2 C 0');
+  this.displayTitle('Part2 Q C 3 C 0');
   this.displayPc(0);
   this.displayPc(1);
  // let n2 = topP.pc2point(2+(1-sp.pc0));

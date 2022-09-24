@@ -5,8 +5,8 @@ let rs = generatorP.instantiate();
 
 rs.setName('part_0_D_1');
 
-rs.partParams.rectangular = 0;
-rs.splitParams = {Case:1,vertexNum:0,fr0:0.7,fr1:0.1};
+rs.partParams.rectangular = 1;
+rs.partParams.splitParams = {Case:2,vertexNum:0,fr0:0.7,fr1:0.1};
 
 rs.afterInitialize =function ()  {
 debugger;

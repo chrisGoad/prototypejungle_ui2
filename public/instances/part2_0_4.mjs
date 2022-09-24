@@ -11,7 +11,7 @@ levels = 6;
 rs.partParams.levels = levels;
 rs.partParams.rectangular = 1;
 
-rs.quadSplitParams = {Case:2,vertexNum:0,pc0:0.4,pc1:1.4,pc2:2.6,pc3:3.4};
+rs.quadSplitParams = {Case:3,vertexNum:0,pc0:0.4,pc1:1.4,pc2:2.6,pc3:3.4};
 
 rs.triSplitParams2 =  {Case:2,vertexNum:1,pc0:0.2,pc1:1.8,pc2:2.5,pc3:3.5,p1stop:1,p2stop:0,p3stop:1};
 rs.partSplitParams = function (prt) {

@@ -86,14 +86,14 @@ sections:
 [0,'quad_15_7_5','instances',1,'Quad 15 7 5',{likes:0,posted:0,category:'quad'}],
  [0,'quad_0_8_5','instances',1,'Quad 0 8 5',{likes:0,posted:0,category:'quad'}], 
  
-  [0,'part2_0_D_0','instances',1,'T ',{likes:0,posted:0,category:'quad'}], 
-  [0,'part2_0_D_1','instances',1,'Q Case1',{likes:0,posted:0,category:'quad'}], 
-  [0,'part2_0_D_2','instances',1,'Q Case 4',{likes:0,posted:0,category:'quad'}], 
-  [0,'part2_0_D_3','instances',1,'Q Case 5',{likes:0,posted:0,category:'quad'}], 
-  [0,'part2_0_D_4','instances',1,'Q Case 6',{likes:0,posted:0,category:'quad'}], 
-  [0,'part2_0_D_5','instances',1,'Q Case 7',{likes:0,posted:0,category:'quad'}], 
-  [0,'part2_0_D_6','instances',1,'Q Case 2',{likes:0,posted:0,category:'quad'}], 
-  [0,'part2_0_D_7','instances',1,'T Case 2',{likes:0,posted:0,category:'quad'}], 
+  [0,'part2_0_D_0','instances',1,'P2 T 1',{likes:0,posted:0,category:'quad'}], 
+  [0,'part2_0_D_1','instances',1,'P2 Q C 2',{likes:0,posted:0,category:'quad'}], 
+  [0,'part2_0_D_2','instances',1,'P2 Q C 4',{likes:0,posted:0,category:'quad'}], 
+  [0,'part2_0_D_3','instances',1,'P2 Q C 6',{likes:0,posted:0,category:'quad'}], 
+  [0,'part2_0_D_4','instances',1,'P2 Q C 7',{likes:0,posted:0,category:'quad'}], 
+  [0,'part2_0_D_5','instances',1,'P2 Q C 8',{likes:0,posted:0,category:'quad'}], 
+  [0,'part2_0_D_6','instances',1,'P2 Q C 3',{likes:0,posted:0,category:'quad'}], 
+  [0,'part2_0_D_7','instances',1,'P2 T C 2',{likes:0,posted:0,category:'quad'}], 
 
  //[0,'part_0_0','instances',1,'Part 0 0',{likes:0,posted:0,category:'quad'}], 
  [0,'part_0_1','instances',1,'Part 0 1',{likes:0,posted:0,category:'quad'}], 
@@ -105,20 +105,35 @@ sections:
  [0,'part_0_5','instances',1,'Part 0 5',{likes:0,posted:0,category:'quad'}], 
  [0,'part_0_6','instances',1,'Part 0 6',{likes:0,posted:0,category:'quad'}], 
  [0,'part2_0_6','instances',1,'Part2 0 6',{likes:0,posted:0,category:'quad'}], 
- [0,'part_0_D_0','instances',1,'Case T 1',{likes:0,posted:0,category:'quad'}], 
+ [0,'part_0_D_0','instances',1,'Case T 1',{likes:0,posted:0,category:'quad'}],
+  [0,'part2_0_D_0','instances',1,'P2 T 1',{likes:0,posted:0,category:'quad'}], 
+ 
  [0,'part_0_D_12','instances',1,'Case T 1',{likes:0,posted:0,category:'quad'}], 
  //[0,'part_0_D_1','instances',1,'Case T 1',{likes:0,posted:0,category:'quad'}], 
  [0,'part_0_D_2','instances',1,'Case T 2',{likes:0,posted:0,category:'quad'}], 
+   [0,'part2_0_D_7','instances',1,'P2 T C 2',{likes:0,posted:0,category:'quad'}], 
+
  [0,'part_0_D_13','instances',1,'Case T 3',{likes:0,posted:0,category:'quad'}], 
  [0,'part_0_D_3','instances',1,'Case Q 2',{likes:0,posted:0,category:'quad'}], 
-  [0,'part_0_D_4','instances',1,'Case Q 9',{likes:0,posted:0,category:'quad'}], 
+   [0,'part2_0_D_1','instances',1,'P2 Q C 2',{likes:0,posted:0,category:'quad'}], 
+ [0,'part_0_D_4','instances',1,'Case Q 9',{likes:0,posted:0,category:'quad'}], 
  //[0,'part_0_D_6','instances',1,'Case Q 2',{likes:0,posted:0,category:'quad'}], 
  [0,'part_0_D_5','instances',1,'Case Q 4',{likes:0,posted:0,category:'quad'}],
+   [0,'part2_0_D_2','instances',1,'P2 Q C 4',{likes:0,posted:0,category:'quad'}], 
+
  [0,'part_0_D_7','instances',1,'Case Q 6',{likes:0,posted:0,category:'quad'}], 
- [0,'part_0_D_8','instances',1,'Case Q 5',{likes:0,posted:0,category:'quad'}], 
+   [0,'part2_0_D_3','instances',1,'P2 Q C 6',{likes:0,posted:0,category:'quad'}], 
+
+ [0,'part_0_D_8','instances',1,'Case Q 5',{likes:0,posted:0,category:'quad'}],
+ 
  [0,'part_0_D_9','instances',1,'Case Q 3',{likes:0,posted:0,category:'quad'}], 
+   [0,'part2_0_D_6','instances',1,'P2 Q C 3',{likes:0,posted:0,category:'quad'}], 
+
  [0,'part_0_D_10','instances',1,'Case Q 7',{likes:0,posted:0,category:'quad'}], 
- [0,'part_0_D_11','instances',1,'Case Q 8',{likes:0,posted:0,category:'quad'}], 
+   [0,'part2_0_D_4','instances',1,'P2 Q C 7',{likes:0,posted:0,category:'quad'}], 
+[0,'part_0_D_11','instances',1,'Case Q 8',{likes:0,posted:0,category:'quad'}], 
+  [0,'part2_0_D_5','instances',1,'P2 Q C 8',{likes:0,posted:0,category:'quad'}], 
+
  //[0,'part_0_D_M0','instances',1,'Part 0 D M0',{likes:0,posted:0,category:'quad'}], 
  
 

@@ -38,7 +38,7 @@ rs.addToArray(strokes,'white',levels);
 rs.partSplitParams = function (qd) {
    //let v = 0.7;
    debugger;
-   let rs = this.randomizeFrom({Case:[6,7],pc0:.4,pc1:1.5,pc2:2.4,pc3:3.5});
+   let rs = this.randomizeFrom({Case:[4,6],pc0:.4,pc1:1.5,pc2:2.4,pc3:3.5,fr0:0.4,fr1:.3});
 
    //console.log('ornt',rs.ornt,'fr0',rs.fr0);
    console.log('rs',rs);

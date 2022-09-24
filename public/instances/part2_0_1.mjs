@@ -11,7 +11,7 @@ rs.partParams.levels = levels;
 rs.partParams.rectangular = 1;
 levels++;
 
-rs.quadSplitParams = {Case:2,vertexNum:0,pc0:0.4,pc1:1.4,pc2:2.6,pc3:3.4};
+rs.quadSplitParams = {Case:3,vertexNum:0,pc0:0.4,pc1:1.4,pc2:2.6,pc3:3.4};
 rs.triSplitParams = {Case:1,vertexNum:0,pc0:0.3,pc1:1.3};
 rs.partSplitParams = function (prt) {
   let ln = prt.polygon.corners.length;

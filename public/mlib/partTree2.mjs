@@ -144,14 +144,14 @@ rs.extendQuadOneLevel = function (prt) {
    let side3 = pc3?Math.floor(pc3):null;
    let side4 = pc4?Math.floor(pc4):null;
   // debugger;
-   if (case1) {
+   if (case2) {
      if ((side0 === 0) && (side1 === 2)) {
        p0corners = [v0,n0,n1,v3];
        p1corners = [n0,v1,v2,n1];
      } else {
         core.error('bad case1 for quad');   
      }  
-  }  else if (case2) {
+  }  else if (case3) {
      if ((side0 === 0) && (side1 === 1) && (side2 === 2) && (side3 === 3)) {
        p0corners = [n0,n1,n2,n3];
       // p1corners = [v0,n0,n3];
@@ -175,7 +175,7 @@ rs.extendQuadOneLevel = function (prt) {
      } else {
         core.error('bad case4 for quad');
      }
-  } else if (case5) {
+  } else if (case6) {
     if ((side0 === 0) && (side1 === 1) && (side2 === 2) && (side3 === 3)) {
       // debugger;
        let cseg = LineSegment.mk(n1,n3);
@@ -188,7 +188,7 @@ rs.extendQuadOneLevel = function (prt) {
      } else {
         core.error('bad case4 for quad');
      }
-   } else if (case6) {
+   } else if (case7) {
      if ((side0 === 0) && (side1 === 1)&& (side3 === 3))  {
     // debugger;
        let n2 = pgon.pc2point(2+(1-pc0)+vertexNum);
@@ -204,7 +204,7 @@ rs.extendQuadOneLevel = function (prt) {
      } else {
         core.error('bad case4 for quad');
      } 
-   } else if (case7) {
+   } else if (case8) {
        if ((side0 === 0) && (side1 === 1)&& (side2 === 2))  {
     // debugger;
        let n3 = pgon.pc2point(3+(1-(pc1-1))+vertexNum);

@@ -6,11 +6,11 @@ let rs = generatorP.instantiate();
 rs.setName('part2_0_D_3');
 
 rs.partParams.rectangular = 1;
-let sp = rs.partParams.splitParams = {Case:5,pc0:.4,pc1:1.4,pc2:2.4,pc3:3.4,fr1:0.3,fr0:0.7};
+let sp = rs.partParams.splitParams = {Case:6,pc0:.4,pc1:1.4,pc2:2.4,pc3:3.4,fr1:0.3,fr0:0.7};
 
 rs.afterInitialize =function ()  {
   let ff = (this.width)*0.05;
-  this.displayTitle('Part2 Q C 5 C 0');
+  this.displayTitle('Part2 Q C 6 C 0');
   this.displayPc(0);
   this.displayPc(1);
   this.displayPc(2);

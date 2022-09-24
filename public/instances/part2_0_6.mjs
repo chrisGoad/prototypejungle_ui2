@@ -1,9 +1,9 @@
 
-import {rs as generatorP} from '/generators/part_0.mjs';
+import {rs as generatorP} from '/generators/part2_0.mjs';
 
 let rs = generatorP.instantiate();
 
-rs.setName('part_0_6');
+rs.setName('part2_0_6');
 let levels = 7;
 rs.partParams.levels = levels;
 rs.partParams.rectangular = 1;
@@ -38,14 +38,7 @@ rs.addToArray(strokes,'white',levels);
 rs.partSplitParams = function (qd) {
    //let v = 0.7;
    debugger;
-   if (0 && this.sp) {
-     return this.sp;
-   }
-   //return {ornt:'v',fr0:.6,fr1:.3,fr2:.3,fr3:.6,fr4:.3,fr5:.2};
-  // return {ornt:'v',fr0:v,fr1:v,fr2:v,fr3:v,fr4:v,fr5:v};
-  let v = {low:.4,high:.6};
-  
-   rs = this.randomizeFrom({Case:[4,6],fr0:.4,fr1:.5,fr2:.4,fr3:.5,fr4:0.4,fr5:.3});
+   let rs = this.randomizeFrom({Case:[6,7],pc0:.4,pc1:1.5,pc2:2.4,pc3:3.5});
 
    //console.log('ornt',rs.ornt,'fr0',rs.fr0);
    console.log('rs',rs);

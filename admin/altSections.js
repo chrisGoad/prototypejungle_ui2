@@ -104,6 +104,7 @@ sections:
  [0,'part2_0_4','instances',1,'Part2 0 4',{likes:0,posted:0,category:'quad'}], 
  [0,'part_0_5','instances',1,'Part 0 5',{likes:0,posted:0,category:'quad'}], 
  [0,'part_0_6','instances',1,'Part 0 6',{likes:0,posted:0,category:'quad'}], 
+ [0,'part2_0_6','instances',1,'Part2 0 6',{likes:0,posted:0,category:'quad'}], 
  [0,'part_0_D_0','instances',1,'Case T 1',{likes:0,posted:0,category:'quad'}], 
  [0,'part_0_D_12','instances',1,'Case T 1',{likes:0,posted:0,category:'quad'}], 
  //[0,'part_0_D_1','instances',1,'Case T 1',{likes:0,posted:0,category:'quad'}], 

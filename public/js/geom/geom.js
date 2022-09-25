@@ -1900,6 +1900,7 @@ Polygon.mk = function (corners) {
   let rs = Object.create(Polygon);
   rs.set('corners',corners);
   rs.reduce();
+  //rs.reorderFromLL();
   return rs;
 }
 
@@ -1931,7 +1932,44 @@ Polygon.pc2point = function (pc) {
   let rs = v0.plus(vec.times(along));
   return rs;
 }
+
+Polygon.lowerLeftCorner = function () {
+  let {corners} = this;
+  if (!corners) {
+    return;
+  }
+  let rsv = -Infinity;
+  let rsi;
+  let ln = corners.length;
+  for (let i=0;i<ln;i++) {
+    let c = corners[i]
+    let cv = c.y-c.x
+    if (cv > rsv) {
+      rsv = cv;
+      rsi = i;
+    }
+  }
+  return rsi;
+}
+
+Polygon.reorderFromLL = function () {
+  debugger;
+  let {corners} = this;
+  if (!corners) {
+    return;
+  }
+  let lli = this.lowerLeftCorner();
+  if (lli === 0) {
+    return;
+  }
+  let a0 = corners.slice(0,lli)
+  let a1 = corners.slice(lli);
+  corners.length = 0;
+  a1.forEach( (c) => {corners.push(c)});
+  a0.forEach( (c) => {corners.push(c)});
+}
   
+    
 
 // in its own coords
 Polygon.center = function () {

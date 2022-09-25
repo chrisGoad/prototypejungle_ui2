@@ -25,6 +25,7 @@ sections:
  [0,'quad_9_6','instances',1,'Quad 9 6',{likes:0,posted:0,category:'quad'}], 
     [0,'quad_0_14','instances',1,'Quad 0 14',{likes:0,posted:0,category:'quad'}], 
     [0,'part_0_14','instances',1,'Part 0 14',{likes:0,posted:0,category:'part'}], 
+    [0,'part2_0_14','instances',1,'Part2 0 14',{likes:0,posted:0,category:'part'}], 
  [0,'quad_9_7','instances',1,'Quad 9 7',{likes:0,posted:0,category:'quad'}], 
      [0,'quad_0_15','instances',1,'Quad 0 15',{likes:0,posted:0,category:'quad'}], 
      [0,'part_0_15','instances',1,'Part 0 15',{likes:0,posted:0,category:'quad'}], 
@@ -46,6 +47,7 @@ sections:
  [0,'quad_11_4','instances',1,'Quad 11 4',{likes:0,posted:0,category:'quad'}],
   [0,'quad_0_19','instances',1,'Quad 0 19',{likes:0,posted:0,category:'quad'}], 
   [0,'part_0_19','instances',1,'Part 0 19',{likes:0,posted:0,category:'part'}], 
+  [0,'part2_0_19','instances',1,'Part2 0 19',{likes:0,posted:0,category:'part'}], 
  
   [0,'quad_14','generators',1,'Quad 14',{likes:0,posted:0,category:'quad'}], 
    [0,'quad_0_20','instances',1,'Quad 0 20',{likes:0,posted:0,category:'quad'}], 
@@ -94,10 +96,12 @@ sections:
   [0,'part2_0_D_5','instances',1,'P2 Q C 8',{likes:0,posted:0,category:'quad'}], 
   [0,'part2_0_D_6','instances',1,'P2 Q C 3',{likes:0,posted:0,category:'quad'}], 
   [0,'part2_0_D_7','instances',1,'P2 T C 2',{likes:0,posted:0,category:'quad'}], 
+  [0,'part2_0_D_8','instances',1,'P2 Q C 9',{likes:0,posted:0,category:'quad'}], 
 
  //[0,'part_0_0','instances',1,'Part 0 0',{likes:0,posted:0,category:'quad'}], 
  [0,'part_0_1','instances',1,'Part 0 1',{likes:0,posted:0,category:'quad'}], 
  [0,'part2_0_1','instances',1,'Part2 0 1',{likes:0,posted:0,category:'quad'}], 
+ [0,'part2_0_2','instances',1,'Part2 0 2',{likes:0,posted:0,category:'quad'}], 
  [0,'part_0_2','instances',1,'Part 0 2',{likes:0,posted:0,category:'quad'}], 
  [0,'part_0_3','instances',1,'Part 0 3',{likes:0,posted:0,category:'quad'}], 
  [0,'part_0_4','instances',1,'Part 0 4',{likes:0,posted:0,category:'quad'}], 
@@ -117,6 +121,8 @@ sections:
  [0,'part_0_D_3','instances',1,'Case Q 2',{likes:0,posted:0,category:'quad'}], 
    [0,'part2_0_D_1','instances',1,'P2 Q C 2',{likes:0,posted:0,category:'quad'}], 
  [0,'part_0_D_4','instances',1,'Case Q 9',{likes:0,posted:0,category:'quad'}], 
+   [0,'part2_0_D_8','instances',1,'P2 Q C 9',{likes:0,posted:0,category:'quad'}], 
+
  //[0,'part_0_D_6','instances',1,'Case Q 2',{likes:0,posted:0,category:'quad'}], 
  [0,'part_0_D_5','instances',1,'Case Q 4',{likes:0,posted:0,category:'quad'}],
    [0,'part2_0_D_2','instances',1,'P2 Q C 4',{likes:0,posted:0,category:'quad'}], 

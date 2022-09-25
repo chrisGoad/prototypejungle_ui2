@@ -107,7 +107,7 @@ rs.extendQuadOneLevel = function (prt) {
      return;
    }
    console.log('quad split','level',this.levelOf(prt));
-   let {vertexNum:ivertexNum,center,Case,ornt,pc0,pc1,pc2,pc3,pc4,pc5,p0stop,p1stop,p2stop,p3stop,p4stop,p5stop,fr0,fr1} = sp;
+   let {vertexNum:ivertexNum,center,direction,radius,Case,ornt,pc0,pc1,pc2,pc3,pc4,pc5,p0stop,p1stop,p2stop,p3stop,p4stop,p5stop,fr0,fr1} = sp;
    let vertexNum = ivertexNum?ivertexNum:0;
 
    const addPart = (pn,vn,pgon,stop) => {
@@ -129,6 +129,7 @@ rs.extendQuadOneLevel = function (prt) {
    let case6 = Case === 6;
    let case7 = Case === 7;
    let case8 = Case === 8;
+   let case9 = Case === 9;
    let v0 = vertex(0);
    let v1 = vertex(1);
    let v2 = vertex(2);
@@ -220,6 +221,17 @@ rs.extendQuadOneLevel = function (prt) {
      } else {
         core.error('bad case4 for quad');
      }
+  } else if (case9) {
+    let cnt = center;
+    if  (!cnt) { 
+      let c = pgon.center();
+      let d = pgon.minDimension();
+      cnt = c.plus(Point.mk(Math.cos(direction),Math.sin(direction)).times(d*radius));
+   }
+    p0corners = [n3,v0,n0,cnt];
+    p1corners = [n0,v1,n1,cnt];
+    p2corners = [n1,v2,n2,cnt];
+    p3corners = [n2,v3,n3,cnt];
   }
   p0pgon = Polygon.mk(p0corners);
   p1pgon = Polygon.mk(p1corners);
@@ -439,12 +451,17 @@ rs.displayCell = function (prt,toSegs) {
   if (!vs) {
     return;
   }
+  console.log('DISPLAY CELL')
   //debugger;
   let {where,polygon:pgon} = prt;
   if (this.checkPolygon(pgon)) {
     console.log('checkPolygon failed');
   }
- 
+  let nc = pgon.corners.length;
+  if (Math.random() >0.2) {
+    console.log('BAIL');
+    return;
+   }
   //console.log(' display ',displayCnt,this.whereName(where));
   this.displayCnt = displayCnt+1;
  // debugger;

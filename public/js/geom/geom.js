@@ -1883,6 +1883,9 @@ Polygon.reduce = function() {
     let cc = corners[i];
     let ni = (i+1)%ln;
     let nc = corners[ni];
+    if (!nc) {
+      debugger;
+    }
     if (!cc.equals(nc)) {
       newCorners.push(cc);
     } else {
@@ -1890,7 +1893,7 @@ Polygon.reduce = function() {
       reduced = 1;
     }
   } 
-  if (reduced) {
+  if (reduced&&(newCorners.length > 2)) {
     this.set('corners',newCorners);
     return 1;
   }

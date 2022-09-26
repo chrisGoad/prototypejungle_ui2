@@ -19,15 +19,10 @@ rs.partSplitParams = function (qd) {
   let pgon = qd.polygon;
   let minx = pgon.left();
   let c = pgon.center();
-  let d = pgon.minDimension();
   let fr0 = Math.sqrt((minx + 0.5*wd)/wd);
-  let lv = qd.where.length;
-  console.log('lv',lv, 'd',d,'fr0',fr0);
   let rd = (c.x>0?-0.25:-0.25)*Math.PI;
-  //let rd = (Math.random()>0.5?0.25:0.5)*Math.PI;
-  //2*Math.PI*Math.random();
-  let rp = c.plus(Point.mk(Math.cos(rd),Math.sin(rd)).times(2*fr0*d*this.offCenter));
-   return {Case:9,center:rp,pc0:.5,pc1:1.5,pc2:2.5,pc3:3.5};
+  let radius = 2*fr0*this.offCenter
+   return {Case:9,direction:rd,radius,pcs:[.5,1.5,2.5,3.5]};
 }
 
 rs.adjustProtos = function () {

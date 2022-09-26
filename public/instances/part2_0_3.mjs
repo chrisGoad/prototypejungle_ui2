@@ -4,10 +4,10 @@ let rs = generatorP.instantiate();
 
 rs.setName('part2_0_3');
 let levels = 9;
-//levels = 8;
+//levels = 7;
 
 rs.partParams.levels = levels;
-rs.partParams.rectangular = 0;
+rs.partParams.rectangular = 1;
 
 rs.qspa = [];
 let stops0 = [0,1,0,0];
@@ -15,13 +15,13 @@ stops0 = [];
 let stops1 = [2];
 //rs.qspa.push({Case:3,vertexNum:0,pc0:0.4,pc1:1.4,pc2:2.6,pc3:3.4,stops:stops0});
 //rs.qspa.push({Case:3,vertexNum:0,pc0:0.3,pc1:1.3,pc2:2.7,pc3:3.3,stops:stops0});
-rs.qspa.push({Case:3,vertexNum:0,pc0:0.45,pc1:1.45,pc2:2.55,pc3:3.45,stops:stops0});
-rs.qspa.push({Case:4,vertexNum:0,pc0:0.4,pc1:1.4,pc2:2.6,pc3:3.4,fr0:.3,fr1:0.6,stops:stops0});
-rs.qspa.push({Case:6,vertexNum:0,pc0:0.4,pc1:1.4,pc2:2.6,pc3:3.4,fr0:.3,fr1:0.6,stops:stops0});
-rs.qspa.push({Case:7,pc0:0.4,pc1:1.4,pc2:2.6,pc3:3.4,stops:stops0});
-//rs.qspa.push({Case:9,radius:.2,direction:0.25*Math.PI,pc0:0.4,pc1:1.4,pc2:2.6,pc3:3.4,stops:stops[0]});
+rs.qspa.push({Case:3,vertexNum:0,pcs:[0.45,1.45,2.55,3.45],stops:stops0});
+rs.qspa.push({Case:4,vertexNum:0,pcs:[0.4,1.4,2.6,3.4],frs:[.3,0.6],stops:stops0});
+rs.qspa.push({Case:6,vertexNum:0,pcs:[0.4,1.4,2.6,3.4],frs:[.3,0.6],stops:stops0});
+rs.qspa.push({Case:7,pcs:[0.4,1.4,2.6,3.4],stops:stops0});
+//rs.qspa.push({Case:9,radius:.2,direction:0.25*Math.PI,pcs:[0.4,1.4,2.6,3.4],stops:stops0});
 
-rs.triSplitParams1 = {Case:1,vertexNum:0,pc0:0.3,pc1:1.3,stopss:stops0};
+rs.triSplitParams1 = {Case:1,vertexNum:0,pcs:[0.3,1.3],stopss:stops0};
 rs.wps = [0,0,0,2,3,2,3,2,3,2];
 rs.wps = [0,0,0,1,3,1,3,1,3,1];
 rs.partSplitParams = function (prt) {

@@ -6,7 +6,7 @@ let rs = generatorP.instantiate();
 rs.setName('part2_0_D_7');
 
 rs.partParams.rectangular = 0;
-let sp = rs.partParams.splitParams = {Case:2,pc0:.4,pc1:1.4,pc2:2.2,pc3:2.4};
+let sp = rs.partParams.splitParams = {Case:2,vertexNum:1,pcs:[.4,1.4,2.2,2.4]};
 
 rs.afterInitialize =function ()  {
   let ff = (this.width)*0.05;

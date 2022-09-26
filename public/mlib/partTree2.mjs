@@ -34,7 +34,13 @@ rs.extendTriOneLevel = function (prt) {
    if ((!sp)  || (prt.stop)) {
      return;
    }
-   let {Case,vertexNum:ivertexNum,pc0,pc1,pc2,pc3,stops=[]} = sp;
+   let {Case,vertexNum:ivertexNum,pcs = [],pc0,pc1,pc2,pc3,stops=[]} = sp;
+   if (!pc0) {
+     pc0 = pcs[0]; 
+     pc1 = pcs[1]; 
+     pc2 = pcs[2];
+     pc3 = pcs[3]; 
+   }
    let case1 = Case === 1;
    let case2 = Case === 2;
    let vertexNum = ivertexNum?ivertexNum:0;
@@ -97,7 +103,7 @@ rs.extendTriOneLevel = function (prt) {
  
  
 rs.extendQuadOneLevel = function (prt) {
-   debugger;
+   //debugger;
    let {polygon:pgon,where,root} = prt;
    let {corners} = pgon;
    let sp = this.partSplitParams(prt);
@@ -110,8 +116,18 @@ rs.extendQuadOneLevel = function (prt) {
      return;
    }
    console.log('quad split','level',this.levelOf(prt));
-   let {vertexNum:ivertexNum,center,direction,radius,Case,ornt,pc0,pc1,pc2,pc3,pc4,pc5,stops=[],fr0,fr1} = sp;
+   let {vertexNum:ivertexNum,center,direction,radius,Case,ornt,pcs = [],pc0,pc1,pc2,pc3,pc4,pc5,stops=[],frs=[]} = sp;//fr0,fr1} = sp;
    let vertexNum = ivertexNum?ivertexNum:0;
+   if (!pc0) {
+     pc0 = pcs[0]; 
+     pc1 = pcs[1]; 
+     pc2 = pcs[2];
+     pc3 = pcs[3]; 
+     pc4 = pcs[4]; 
+     pc5 = pcs[5]; 
+   }
+   let fr0 = frs[0];
+   let fr1 = frs[1];
 
    const addPart = (pn,vn,pgon,stop) => {
     //S debugger;
@@ -241,8 +257,11 @@ rs.extendQuadOneLevel = function (prt) {
   p2pgon = Polygon.mk(p2corners);
   p3pgon = Polygon.mk(p3corners);
   p4pgon = Polygon.mk(p4corners);
-  //this.checkPolygon(p0pgon);
- // this.checkPolygon(p1pgon);
+  this.checkPolygon(p0pgon);
+  this.checkPolygon(p1pgon);
+  this.checkPolygon(p2pgon);
+  this.checkPolygon(p3pgon);
+  this.checkPolygon(p4pgon);
   addPart('P0',0,p0pgon,stops[0]);
   addPart('P1',0,p1pgon,stops[1]);
   addPart('P2',0,p2pgon,stops[2]);
@@ -270,7 +289,7 @@ rs.extendPartOneLevel = function (prt,sep) {
    }
    let {polygon:pgon,stop} = prt;
    if (stop) {
-     debugger;
+     //debugger;
      return 0;
    }
    let {corners} = pgon;
@@ -436,6 +455,9 @@ rs.checkPolygon = function (pgon) {
     return 0;
   }
   let {corners} = pgon;
+  if (!corners) {
+    return 0;
+  }
   let ln = corners.length;
   for (let i=0;i<ln;i++) {
     let crn = corners[i];
@@ -461,7 +483,8 @@ rs.displayCell = function (prt,toSegs) {
     console.log('checkPolygon failed');
   }
   let nc = pgon.corners.length;
-  if (Math.random() >1.2) {
+  let pod = this.partParams.displayProbability;
+  if (pod && (Math.random() < (1-pod))) {
     console.log('BAIL');
     return;
    }
@@ -631,9 +654,10 @@ rs.quad2part = function (params) {
 
 // for illustrations of the partitions (eg instances/part_0_D_0.mjc)
 rs.displayPc = function (n) {  //display periphery coordinate
-  //debugger;
+  debugger;
   let topP = this.shapes[0].fromGeom;
-  let pc = rs.partParams.splitParams['pc'+n];
+  //let pc = rs.partParams.splitParams['pc'+n];
+  let pc = this.partParams.splitParams.pcs[n];
   let fpc = Math.floor(pc);
   let ps = topP.pc2point(pc);
   let {width:wd} = this;

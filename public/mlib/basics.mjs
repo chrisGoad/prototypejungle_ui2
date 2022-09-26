@@ -438,7 +438,11 @@ item.randomizeFrom = function (o) {
     let v = o[k];
     let rv;
     if (Array.isArray(v)) {
-      rv = this.randomAmong(v);
+      if (v.length === 1) {
+        rv = v[0];
+      } else {
+        rv = this.randomAmong(v);
+      }
     } else if (typeof v === 'object') {
       rv = this.randomBetween(v);
     } else {

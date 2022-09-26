@@ -8,7 +8,7 @@ let levels = 7;
 rs.partParams.levels = levels;
 rs.partParams.rectangular = 1;
 //levels++;
-rs.splitParams = {Case:7,	pc0:0.5,pc1:0.5,pc2:0.5};
+rs.splitParams = {Case:7,	pcs:[0.5,0.5,0.5]};
 rs.partSplitParams = function (qd) {
   let {width:wd} = this;
   let lv = qd.where.length;

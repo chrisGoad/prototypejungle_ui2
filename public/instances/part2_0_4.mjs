@@ -11,9 +11,9 @@ levels = 6;
 rs.partParams.levels = levels;
 rs.partParams.rectangular = 1;
 
-rs.quadSplitParams = {Case:3,vertexNum:0,pc0:0.4,pc1:1.4,pc2:2.6,pc3:3.4};
+rs.quadSplitParams = {Case:3,vertexNum:0,pcs:[0.4,1.4,2.6,3.4]};
 
-rs.triSplitParams2 =  {Case:2,vertexNum:1,pc0:0.2,pc1:1.8,pc2:2.5,pc3:3.5,p1stop:1,p2stop:0,p3stop:1};
+rs.triSplitParams2 =  {Case:2,vertexNum:1,pcs:[0.2,1.8,2.5,3.5],stops:[1,0,1]};
 rs.partSplitParams = function (prt) {
 //debugger;
   let ln = prt.polygon.corners.length;
@@ -23,8 +23,8 @@ rs.partSplitParams = function (prt) {
   } else {
     rs =Object.assign({},this.quadSplitParams);
     let v = .0;//0.0*Math.random();
-    rs.pc2 = 2.5+v;
-    rs.pc3 = 3.5-v;
+    rs.pcs[2] = 2.5+v;
+    rs.pcs[3] = 3.5-v;
   }
  // let rs = (ln === 3)?(Math.random()<0.7?this.triSplitParams1:this.triSplitParams2):this.quadSplitParams
   //let rs = (ln === 3)?null:this.quadSplitParams

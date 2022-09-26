@@ -452,7 +452,10 @@ item.randomizeFrom = function (o) {
   });
   return rs;
 }
-    
+   
+item.anyUndefined = function (a) {
+  return a.includes(undefined);
+}
   
 // Stepper 
 

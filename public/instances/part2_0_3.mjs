@@ -37,6 +37,35 @@ rs.partSplitParams = function (prt) {
   return rs;
 }
 
+rs.firstNvaluesEqual = function (a,n,v) {
+  let ln = a.length;
+  if (ln < n) {
+    return false;
+  }
+    debugger;
+
+  for (let i=0;i<n;i++) {
+    let cv = a[i][0];
+    if (cv !== v) {
+      return false;
+    }
+  }
+  return true;
+}
+rs.partFill = function (prt) {
+   let lev = prt.where.length;
+   let fnv =this.firstNvaluesEqual(prt.where,3,'P0')
+   //let fnv =this.firstNvaluesEqual(prt.where,2,'P0')
+
+   console.log('lev',lev,'where',prt.where,'fnv',fnv);
+   if (fnv) {
+        debugger;
+
+     return 'black';
+   }
+   return 'rgb(50,50,50)';
+}
+
 let visibles = rs.partParams.visibles = [];
 rs.addToArray(visibles,1,20);
 

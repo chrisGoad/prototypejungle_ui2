@@ -101,7 +101,7 @@ rs.extendTriOneLevel = function (prt) {
   return 1; 
  }
  
- 
+
 rs.extendQuadOneLevel = function (prt) {
    //debugger;
    let {polygon:pgon,where,root} = prt;
@@ -197,7 +197,10 @@ rs.extendQuadOneLevel = function (prt) {
      }
   } else if (case6) {
     if ((side0 === 0) && (side1 === 1) && (side2 === 2) && (side3 === 3)) {
-      // debugger;
+      debugger;
+       if ([fr0,fr1].includes(undefined)) {
+         core.error('case 6 undefined parameters');
+       }
        let cseg = LineSegment.mk(n1,n3);
        let c0 = cseg.along(fr0);
        let c1 = cseg.along(fr1);
@@ -476,7 +479,7 @@ rs.displayCell = function (prt,toSegs) {
   if (!vs) {
     return;
   }
-  console.log('DISPLAY CELL')
+  //console.log('DISPLAY CELL')
   //debugger;
   let {where,polygon:pgon} = prt;
   if (this.checkPolygon(pgon)) {

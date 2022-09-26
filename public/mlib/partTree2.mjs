@@ -31,7 +31,10 @@ rs.extendTriOneLevel = function (prt) {
    let {polygon:pgon,where,root} = prt;
    let {corners} = pgon;
    let sp= this.partSplitParams(prt);
-   let {Case,vertexNum:ivertexNum,pc0,pc1,pc2,pc3,p0stop,p1stop,p2stop,p3stop} = sp;
+   if ((!sp)  || (prt.stop)) {
+     return;
+   }
+   let {Case,vertexNum:ivertexNum,pc0,pc1,pc2,pc3,stops=[]} = sp;
    let case1 = Case === 1;
    let case2 = Case === 2;
    let vertexNum = ivertexNum?ivertexNum:0;
@@ -85,10 +88,10 @@ rs.extendTriOneLevel = function (prt) {
   p1pgon = Polygon.mk(p1corners);
   p2pgon = Polygon.mk(p2corners);
   p3pgon = Polygon.mk(p3corners);
-  addPart('P0',0,p0pgon,p0stop);
-  addPart('P1',0,p1pgon,p1stop);
-  addPart('P2',0,p2pgon,p2stop);
-  addPart('P3',0,p3pgon,p3stop);
+  addPart('P0',0,p0pgon,stops[0]);
+  addPart('P1',0,p1pgon,stops[1]);
+  addPart('P2',0,p2pgon,stops[2]);
+  addPart('P3',0,p3pgon,stops[3]);
   return 1; 
  }
  
@@ -98,7 +101,7 @@ rs.extendQuadOneLevel = function (prt) {
    let {polygon:pgon,where,root} = prt;
    let {corners} = pgon;
    let sp = this.partSplitParams(prt);
-   if (sp.stop) {
+   if ((!sp)  || (prt.stop)) {
      return;
    }
    let levels = this.partParams.levels;
@@ -107,7 +110,7 @@ rs.extendQuadOneLevel = function (prt) {
      return;
    }
    console.log('quad split','level',this.levelOf(prt));
-   let {vertexNum:ivertexNum,center,direction,radius,Case,ornt,pc0,pc1,pc2,pc3,pc4,pc5,p0stop,p1stop,p2stop,p3stop,p4stop,p5stop,fr0,fr1} = sp;
+   let {vertexNum:ivertexNum,center,direction,radius,Case,ornt,pc0,pc1,pc2,pc3,pc4,pc5,stops=[],fr0,fr1} = sp;
    let vertexNum = ivertexNum?ivertexNum:0;
 
    const addPart = (pn,vn,pgon,stop) => {
@@ -240,11 +243,11 @@ rs.extendQuadOneLevel = function (prt) {
   p4pgon = Polygon.mk(p4corners);
   //this.checkPolygon(p0pgon);
  // this.checkPolygon(p1pgon);
-  addPart('P0',0,p0pgon,p0stop);
-  addPart('P1',0,p1pgon,p1stop);
-  addPart('P2',0,p2pgon,p2stop);
-  addPart('P3',0,p3pgon,p3stop);
-  addPart('P4',0,p4pgon,p4stop);
+  addPart('P0',0,p0pgon,stops[0]);
+  addPart('P1',0,p1pgon,stops[1]);
+  addPart('P2',0,p2pgon,stops[2]);
+  addPart('P3',0,p3pgon,stops[3]);
+  addPart('P4',0,p4pgon,stops[4]);
   return 1;
 }
    
@@ -458,7 +461,7 @@ rs.displayCell = function (prt,toSegs) {
     console.log('checkPolygon failed');
   }
   let nc = pgon.corners.length;
-  if (Math.random() >0.2) {
+  if (Math.random() >1.2) {
     console.log('BAIL');
     return;
    }

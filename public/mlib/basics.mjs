@@ -452,6 +452,24 @@ item.randomizeFrom = function (o) {
   });
   return rs;
 }
+
+
+item.randomizeArrayFrom = function (a) {
+  let rs = a.map((v) => {
+    if (Array.isArray(v)) {
+       if (v.length === 1) {
+        return v[0];
+      } else {
+        return this.randomAmong(v);
+      }
+    } else if (typeof v === 'object') {
+      return this.randomBetween(v);
+    } else {
+      return v;
+    }
+  });
+  return rs;
+}
    
 item.anyUndefined = function (a) {
   return a.includes(undefined);

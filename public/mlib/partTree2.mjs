@@ -236,7 +236,7 @@ rs.extendQuadOneLevel = function (prt) {
        let fr1 = (pc2-2);
        let c0 = cseg.along(fr0);
        let c1 = cseg.along(fr1);
-       p0corners = [v0,n0,c1,n3];
+       p0corners = [v0,n0,c0,n3];
        p1corners = [n0,v1,n1,c0];
        p2corners = [c1,n1,v2,n2];
        p3corners = [n3,c1,n2,v3];
@@ -472,8 +472,19 @@ rs.checkPolygon = function (pgon) {
   return 0;
 }
 
+rs.whereString = function (where) {
+  let rs ='';
+  where.forEach((w) => { 
+    rs+=' ';
+    rs+=w[0];
+  });
+  return rs;
+}
+
 rs.displayCell = function (prt,toSegs) {	
   let {shapes,lineSegs,lineP,circleP,polygonP,mangles,lengthenings,twists,strokeWidths,orect,displayCnt} = this;
+  let {where} = prt;
+  console.log('displayCell',this.whereString(where));
   let {circleScale} = prt.root.params;
   let vs = this.partVisible(prt);
   if (!vs) {
@@ -481,7 +492,7 @@ rs.displayCell = function (prt,toSegs) {
   }
   //console.log('DISPLAY CELL')
   //debugger;
-  let {where,polygon:pgon} = prt;
+  let {polygon:pgon} = prt;
   if (this.checkPolygon(pgon)) {
     console.log('checkPolygon failed');
   }
@@ -497,21 +508,12 @@ rs.displayCell = function (prt,toSegs) {
   if (0 && (displayCnt>400)) {
     return;
   }
-  //let lv = where.length;
-  /*let isP0;
-  if (lv === 1) {
-    isP0 = (where[0][0] === 'P0');//&&(where[1][0] === 'P0');
-    debugger;
-  }*/
-  //let mng = mangles?mangles[lv]:0;
   let mng = this.partMangle(prt);
   let mangled;
- //let geom = rect?rect:pgon;
   let geom = pgon;
   let shps;
   let strokew = this.partStrokeWidth(prt);//strokeWidths[lnw];
   let stroke = this.partStroke(prt);
-  //let fill = isP0?'yellow':this.partFill(prt);
   let fill = this.partFill(prt);
   let fillScale = this.partFillScale(prt);
   const styleShape = (shp) => {
@@ -526,21 +528,14 @@ rs.displayCell = function (prt,toSegs) {
      }
   }
   const addShape = (sc) => {
-  //  debugger;
-   // if (rect) {
-   //   shps = rect.toShape(rectP,sc);
-   // } else {
       if (!pgon) {
         debugger; // keep
       }
       shps = pgon.toShape(polygonP,sc);
-   // }
     styleShape(shps);
     shapes.push(shps);
   }
   if (mng) {
-    //let {lengthen:ln,twist:tw} = mng;
-     //mangled = geom.mangle({within:orect,lengthen:ln,twist:tw});
      mangled = geom.mangle(mng);
      mangled.forEach((seg) => {
       if (toSegs) {
@@ -555,27 +550,9 @@ rs.displayCell = function (prt,toSegs) {
     //stroke1
      if (fill && fillScale) {
        addShape(fillScale);
-       /*
-       if (rect) {
-        shps = rect.toShape(rectP,fillScale);
-      } else {
-        shps = pgon.toShape(polygonP,fillScale);
-      }
-      styleShape(shps);
-      shapes.push(shps);
-     */
     }
   } else {
     addShape();
-  /*  if (rect) {
-      shps = rect.toShape(rectP);
-    } else {
-      shps = pgon.toShape(polygonP);
-    }
-   // mangled = geom.sides();
-    styleShape(shps);
-    shapes.push(shps);
-*/
   }
   
   if (circleScale) {
@@ -591,6 +568,9 @@ rs.displayCell = function (prt,toSegs) {
    let crc = Circle.mk(c,r);
    let crcs =  crc.toShape(circleP);
    shapes.push(crcs);
+  }
+  if (this.afterDisplayCell) {
+    this.afterDisplayCell(prt)
   }
 }
 
@@ -717,6 +697,7 @@ rs.initialize = function () {
     pgon = Polygon.mk([p0,p1,p2]);
   }
   let prt ={polygon:pgon};
+  this.topPart = prt;
   this.extendPartNLevels(prt,partParams);
   this.displayPart(prt,emitLineSegs);
   if (partParams.emitLineSegs) {

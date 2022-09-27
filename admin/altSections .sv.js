@@ -6,8 +6,8 @@ sections:
 [  
 /* Puzzle: Which three of the quadrants are the same, and which is different? Before you saw the differences in what sense did you "see" the quadrants?"*/
 // [0,'web_drift','generators',1,'Drift Web',{likes:0,posted:0,category:'drop'}], 
- //[0,'quad_drop','generators',1,'Quad Drop',{likes:0,posted:0,category:'quad',version:2}], 
- /*[0,'quad_4','generators',1,'Quad 4',{likes:0,posted:0,category:'quad',version:2}], 
+ [0,'quad_drop','generators',1,'Quad Drop',{likes:0,posted:0,category:'quad',version:2}], 
+ [0,'quad_4','generators',1,'Quad 4',{likes:0,posted:0,category:'quad',version:2}], 
  [0,'part2_0_8','instances',1,'Part 2 0 8',{likes:0,posted:0,category:'quad',version:2}], 
  [0,'quad_6','generators',1,'Quad 6',{likes:0,posted:0,category:'quad',version:2}], 
  [0,'quad_7','generators',1,'Quad 7',{likes:0,posted:0,category:'quad'}], 
@@ -16,23 +16,23 @@ sections:
 [0,'quad_9_0','instances',1,'Quad 9 0',{likes:0,posted:0,category:'quad'}], 
   [0,'quad_0_10','instances',1,'Quad 0 10',{likes:0,posted:0,category:'quad'}], 
  // [0,'quad_9_1','instances',1,'Quad 9 1',{likes:0,posted:0,category:'quad'}], 
- [0,'quad_9_2','instances',1,'Quad 9 2',{likes:0,posted:0,category:'quad'}], */
+ [0,'quad_9_2','instances',1,'Quad 9 2',{likes:0,posted:0,category:'quad'}], 
    [0,'quad_0_11','instances',1,'Quad 0 11',{likes:0,posted:0,category:'quad'}], 
    [0,'part_0_7','instances',1,'Part 0 7',{likes:0,posted:0,category:'quad'}], 
    [0,'part2_0_7','instances',1,'Part2 0 7',{likes:0,posted:0,category:'quad'}], 
-/*[0,'quad_9_3','instances',1,'Quad 9 3',{likes:0,posted:0,category0_:'quad'}], 
+[0,'quad_9_3','instances',1,'Quad 9 3',{likes:0,posted:0,category0_:'quad'}], 
     [0,'quad_0_12','instances',1,'Quad 0 12',{likes:0,posted:0,category:'quad'}], 
 [0,'quad_9_5','instances',1,'Quad 9 5',{likes:0,posted:0,category:'quad'}], 
     [0,'quad_0_13','instances',1,'Quad 0 13',{likes:0,posted:0,category:'quad'}], 
- [0,'quad_9_6','instances',1,'Quad 9 6',{likes:0,posted:0,category:'quad'}], */
+ [0,'quad_9_6','instances',1,'Quad 9 6',{likes:0,posted:0,category:'quad'}], 
     [0,'quad_0_14','instances',1,'Quad 0 14',{likes:0,posted:0,category:'quad'}], 
     [0,'part_0_14','instances',1,'Part 0 14',{likes:0,posted:0,category:'part'}], 
     [0,'part2_0_14','instances',1,'Part2 0 14',{likes:0,posted:0,category:'part'}], 
- //[0,'quad_9_7','instances',1,'Quad 9 7',{likes:0,posted:0,category:'quad'}], 
+ [0,'quad_9_7','instances',1,'Quad 9 7',{likes:0,posted:0,category:'quad'}], 
      [0,'quad_0_15','instances',1,'Quad 0 15',{likes:0,posted:0,category:'quad'}], 
      [0,'part_0_15','instances',1,'Part 0 15',{likes:0,posted:0,category:'quad'}], 
  
-/*  [0,'quad_9_4','instances',1,'Quad 9 4',{likes:0,posted:0,category:'quad'}], 
+  [0,'quad_9_4','instances',1,'Quad 9 4',{likes:0,posted:0,category:'quad'}], 
 [0,'quad_9_8','instances',1,'Quad 9 8',{likes:0,posted:0,category:'quad'}], 
     [0,'quad_0_16','instances',1,'Quad 0 16',{likes:0,posted:0,category:'quad'}], 
 
@@ -46,18 +46,18 @@ sections:
  [0,'quad_11_3','instances',1,'Quad 11 3',{likes:0,posted:0,category:'quad'}], 
   [0,'quad_0_18','instances',1,'Quad 0 18',{likes:0,posted:0,category:'quad'}], 
 
- [0,'quad_11_4','instances',1,'Quad 11 4',{likes:0,posted:0,category:'quad'}],*/
+ [0,'quad_11_4','instances',1,'Quad 11 4',{likes:0,posted:0,category:'quad'}],
   [0,'quad_0_19','instances',1,'Quad 0 19',{likes:0,posted:0,category:'quad'}], 
   [0,'part_0_19','instances',1,'Part 0 19',{likes:0,posted:0,category:'part'}], 
   [0,'part2_0_19','instances',1,'Part2 0 19',{likes:0,posted:0,category:'part'}], 
  
-  /*[0,'quad_14','generators',1,'Quad 14',{likes:0,posted:0,category:'quad'}], 
+  [0,'quad_14','generators',1,'Quad 14',{likes:0,posted:0,category:'quad'}], 
    [0,'quad_0_20','instances',1,'Quad 0 20',{likes:0,posted:0,category:'quad'}], 
  [0,'quad_15','generators',1,'Quad 15',{likes:0,posted:0,category:'quad'}], 
-[0,'quad_0_1','instances',1,'Quad 0 1',{likes:0,posted:0,category:'quad'}], */
+[0,'quad_0_1','instances',1,'Quad 0 1',{likes:0,posted:0,category:'quad'}], 
 [0,'quad_15_0','instances',1,'Quad 15 0',{likes:0,posted:0,category:'quad'}], 
 [0,'part2_0_9','instances',1,'part2 0 9',{likes:0,posted:0,category:'quad'}], 
-/*[0,'quad_15_1','instances',1,'Quad 15 1',{likes:0,posted:0,category:'quad'}], 
+[0,'quad_15_1','instances',1,'Quad 15 1',{likes:0,posted:0,category:'quad'}], 
 [0,'quad_0_2','instances',1,'Quad 0 2',{likes:0,posted:0,category:'quad'}], 
 [0,'quad_15_2','instances',1,'Quad 15 2',{likes:0,posted:0,category:'quad'}], 
 [0,'quad_0_3','instances',1,'Quad 0 3',{likes:0,posted:0,category:'quad'}], 
@@ -89,9 +89,9 @@ sections:
  [0,'quad_0_8_4','instances',1,'Quad 0 8 4',{likes:0,posted:0,category:'quad'}], 
 
 [0,'quad_15_7_5','instances',1,'Quad 15 7 5',{likes:0,posted:0,category:'quad'}],
- [0,'quad_0_8_5','instances',1,'Quad 0 8 5',{likes:0,posted:0,category:'quad'}], */
+ [0,'quad_0_8_5','instances',1,'Quad 0 8 5',{likes:0,posted:0,category:'quad'}], 
  
-/*  [0,'part2_0_D_0','instances',1,'P2 T 1',{likes:0,posted:0,category:'quad'}], 
+  [0,'part2_0_D_0','instances',1,'P2 T 1',{likes:0,posted:0,category:'quad'}], 
   [0,'part2_0_D_1','instances',1,'P2 Q C 2',{likes:0,posted:0,category:'quad'}], 
   [0,'part2_0_D_2','instances',1,'P2 Q C 4',{likes:0,posted:0,category:'quad'}], 
   [0,'part2_0_D_3','instances',1,'P2 Q C 6',{likes:0,posted:0,category:'quad'}], 
@@ -99,7 +99,7 @@ sections:
   [0,'part2_0_D_5','instances',1,'P2 Q C 8',{likes:0,posted:0,category:'quad'}], 
   [0,'part2_0_D_6','instances',1,'P2 Q C 3',{likes:0,posted:0,category:'quad'}], 
   [0,'part2_0_D_7','instances',1,'P2 T C 2',{likes:0,posted:0,category:'quad'}], 
-  [0,'part2_0_D_8','instances',1,'P2 Q C 9',{likes:0,posted:0,category:'quad'}], */
+  [0,'part2_0_D_8','instances',1,'P2 Q C 9',{likes:0,posted:0,category:'quad'}], 
 
  //[0,'part_0_0','instances',1,'Part 0 0',{likes:0,posted:0,category:'quad'}], 
  [0,'part_0_1','instances',1,'Part 0 1',{likes:0,posted:0,category:'quad'}], 

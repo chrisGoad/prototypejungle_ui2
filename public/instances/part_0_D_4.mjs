@@ -3,7 +3,7 @@
 import {rs as generatorP} from '/instances/part_0_D.mjs';
 
 let rs = generatorP.instantiate();
-rs.setName('part_0_D_4');
+rs.setName('part2_0_D_4');
 rs.partParams.rectangular = 1;
 //rs.partParams.levels = 1;
 let wd = rs.width;
@@ -16,6 +16,7 @@ let c = Point.mk(Math.cos(dir),Math.sin(dir)).times(wd*0.2);
 //rs.computeExponentials(strokeWidths,10,0.05,.9);
 
 rs.partSplitParams = function (qd) {
+  debugger;
   let pgon = qd.polygon;
   let c = pgon.center();
   let d = pgon.minDimension();
@@ -23,7 +24,7 @@ rs.partSplitParams = function (qd) {
   //let rd = (Math.random()>0.5?0.25:0.5)*Math.PI;
   //2*Math.PI*Math.random();
   let rp = c.plus(Point.mk(Math.cos(rd),Math.sin(rd)).times(d*.2));
-   return {Case:9,center:rp,fr0:.6,fr1:.3,fr2:0.4,fr3:0.5};
+   return {Case:7,center:rp,pcs:[.6,1.3,2.4,3.5]};
 }
 
 //rs.adjustProtos = function () {this.showLabelsV()};

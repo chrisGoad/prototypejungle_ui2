@@ -11,7 +11,7 @@ let levels = 8;
 rs.partParams.levels = levels;
 rs.partParams.rectangular = 1;
 let strokeWidths = rs.partParams.strokeWidths = [];
-rs.computeExponentials(strokeWidths,20,0.1,.8);
+rs.computeExponentials({dest:strokeWidths,n:20,root:0.1,factor:.8});
 //rs.quadParams.mangle = {'lengthen':.2,'twist':0.0*Math.PI};
 
 rs.partSplitParams = function (qd) {

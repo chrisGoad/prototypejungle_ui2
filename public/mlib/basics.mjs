@@ -407,10 +407,13 @@ item.addToArray = function (a,v,n) {
 }
 
 
-item.computeExponentials = function (a,n,fc,root) {
-  //a.push(root);
+//item.computeExponentials = function (a,n,fc,root) {
+item.computeExponentials = function (args) {
+  let {dest:a,n,factor:fc,root} = args;
+  a.push(root);
+  let cv = root;
   for (let i=0;i<n;i++) {
-    let cv = fc*Math.pow(root,i);
+    cv = fc*cv;
     a.push(cv);
   }
   debugger;

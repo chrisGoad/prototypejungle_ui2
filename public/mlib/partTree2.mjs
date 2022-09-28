@@ -195,9 +195,27 @@ rs.extendQuadOneLevel = function (prt) {
      } else {
         core.error('bad case4 for quad');
      }
+   } else if (case5) {
+     // debugger;
+      if ((side0 === 0) && (side1 === 1) && (side2 === 2) && (side3 === 3)) {
+        //debugger;
+        if ([fr0,fr1].includes(undefined)) {
+         core.error('case 6 undefined parameters');
+        }
+      let cseg = LineSegment.mk(n1,n3);
+      let c0 = cseg.along(fr0);
+      let c1 = cseg.along(fr1);
+      p4corners = [n0,c1,n2,c0];
+      p1corners = [v0,n0,c0,n3];
+      p2corners = [n0,v1,n1,c1];
+      p3corners = [c1,n1,v2,n2];
+      p0corners = [n3,c0,n2,v3]
+    }  else {
+        core.error('bad case5 for quad');
+    } 
   } else if (case6) {
     if ((side0 === 0) && (side1 === 1) && (side2 === 2) && (side3 === 3)) {
-      debugger;
+      //debugger;
        if ([fr0,fr1].includes(undefined)) {
          core.error('case 6 undefined parameters');
        }
@@ -408,6 +426,7 @@ rs.partMangle = function (prt) {
 }
 
 rs.partStrokeWidth = function (prt) {
+  //debugger;
   let {strokeWidths} = this.partParams;
   //debugger;
   let lv,sw;
@@ -418,7 +437,7 @@ rs.partStrokeWidth = function (prt) {
      // debugger;
     }
     sw =strokeWidths[lv];
-   // console.log('lv',lv,'sw',sw);
+    console.log('lv',lv,'sw',sw);
     return sw;
   }
 }
@@ -484,12 +503,13 @@ rs.whereString = function (where) {
 rs.displayCell = function (prt,toSegs) {	
   let {shapes,lineSegs,lineP,circleP,polygonP,mangles,lengthenings,twists,strokeWidths,orect,displayCnt} = this;
   let {where} = prt;
-  console.log('displayCell',this.whereString(where));
   let {circleScale} = prt.root.params;
   let vs = this.partVisible(prt);
   if (!vs) {
     return;
   }
+  console.log('displayCell',this.whereString(where));
+
   //console.log('DISPLAY CELL')
   //debugger;
   let {polygon:pgon} = prt;
@@ -517,7 +537,7 @@ rs.displayCell = function (prt,toSegs) {
   let fill = this.partFill(prt);
   let fillScale = this.partFillScale(prt);
   const styleShape = (shp) => {
-     if (strokew) {
+     if (typeof strokew === 'number') {
        shp['stroke-width'] = strokew;
      }
      if (stroke) {

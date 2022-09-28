@@ -35,7 +35,7 @@ let visibles = rs.partParams.visibles = [];
 rs.addToArray(visibles,1,20);
 
 let strokeWidths = rs.partParams.strokeWidths = [];
-rs.computeExponentials(strokeWidths,20,0.4,.7);
+rs.computeExponentials({dest:strokeWidths,n:20,root:0.4,factor:.7});
 
   
 //rs.addToArray(strokeWidths,.1,levels);

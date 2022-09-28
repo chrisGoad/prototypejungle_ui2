@@ -8,6 +8,7 @@ let levels = 10;
 levels = 9;
 levels = 6;
 
+
 rs.partParams.levels = levels;
 rs.partParams.rectangular = 1;
 
@@ -58,7 +59,7 @@ rs.addToArray(visibles,1,20);
 //rs.addToArray(twists,0.05*Math.PI,levels);
 let strokeWidths = rs.partParams.strokeWidths = [];
 debugger;
-rs.computeExponentials(strokeWidths,20,0.34,.9);
+rs.computeExponentials({dest:strokeWidths,n:20,factor:0.7,root:.9});
 rs.partStrokeWidth = function (prt) {
   let quadp = 1;
   let lev = prt.where.length;

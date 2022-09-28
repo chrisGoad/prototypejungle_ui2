@@ -5,6 +5,7 @@ let rs = generatorP.instantiate();
 
 rs.setName('part2_0_6');
 let levels = 7;
+//levels = 5;
 rs.partParams.levels = levels;
 rs.partParams.rectangular = 1;
 //rs.quadParams.circleScale = 0.25;
@@ -12,7 +13,7 @@ rs.partParams.rectangular = 1;
 
 
 let visibles = rs.partParams.visibles = [];
-rs.addToArray(visibles,1,levels);
+rs.addToArray(visibles,0,levels-1);
 rs.addToArray(visibles,1,levels);
 
 rs.partParams.manglee = {'lengthen':.3,'twist':0.05*Math.PI,within:rs.canvasToRectangle()}
@@ -21,6 +22,7 @@ rs.partParams.chance = 0.7;
 rs.partParams.chance = 1;
 
 rs.partFill = function (qd) {
+  debugger;
   let rb= Math.random() > 0.5;
   let v = Math.floor(255*Math.random());
   let b = `rgb(${v},${v},${v})`;
@@ -30,7 +32,7 @@ rs.partFill = function (qd) {
 let strokeWidths = rs.partParams.strokeWidths = [];
 
 //rs.computeExponentials(strokeWidths,20,0,.9);
-rs.computeExponentials(strokeWidths,20,0.14,.9);
+rs.addToArray(strokeWidths,0.05,20);
 
 let strokes = rs.partParams.strokes = [];
 rs.addToArray(strokes,'white',levels);

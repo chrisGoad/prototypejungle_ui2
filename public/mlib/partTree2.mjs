@@ -116,7 +116,7 @@ rs.extendQuadOneLevel = function (prt) {
      return;
    }
    console.log('quad split','level',this.levelOf(prt));
-   let {vertexNum:ivertexNum,center,direction,radius,Case,ornt,pcs = [],pc0,pc1,pc2,pc3,pc4,pc5,stops=[],frs=[]} = sp;//fr0,fr1} = sp;
+   let {vertexNum:ivertexNum,center,direction,radius,ips=[],Case,ornt,pcs = [],pc0,pc1,pc2,pc3,pc4,pc5,stops=[],frs=[]} = sp;//fr0,fr1} = sp;
    let vertexNum = ivertexNum?ivertexNum:0;
    if (!pc0) {
      pc0 = pcs[0]; 
@@ -128,7 +128,8 @@ rs.extendQuadOneLevel = function (prt) {
    }
    let fr0 = frs[0];
    let fr1 = frs[1];
-
+   let ip0 = ips[0];
+   let ip1 = ips[1];
    const addPart = (pn,vn,pgon,stop) => {
     //S debugger;
      if (pgon && pgon.corners) {
@@ -149,6 +150,7 @@ rs.extendQuadOneLevel = function (prt) {
    let case7 = Case === 7;
    let case8 = Case === 8;
    let case9 = Case === 9;
+   let case10 = Case === 10;
    let v0 = vertex(0);
    let v1 = vertex(1);
    let v2 = vertex(2);
@@ -181,7 +183,7 @@ rs.extendQuadOneLevel = function (prt) {
      //  p4corners = [n3,n2,v3];
        p4corners = [n2,v3,n3];
      } else {
-        core.error('bad case4 for quad');
+        core.error('bad case3 for quad');
      }
    } else if (case4) {
      if ((side0 === 0) && (side1 === 1) && (side2 === 2) && (side3 === 3)) {
@@ -200,7 +202,7 @@ rs.extendQuadOneLevel = function (prt) {
       if ((side0 === 0) && (side1 === 1) && (side2 === 2) && (side3 === 3)) {
         //debugger;
         if ([fr0,fr1].includes(undefined)) {
-         core.error('case 6 undefined parameters');
+         core.error('case 5 undefined parameters');
         }
       let cseg = LineSegment.mk(n1,n3);
       let c0 = cseg.along(fr0);
@@ -213,7 +215,30 @@ rs.extendQuadOneLevel = function (prt) {
     }  else {
         core.error('bad case5 for quad');
     } 
-  } else if (case6) {
+  }  else if (case10) {
+      debugger;
+      if ((side0 === 0) && (side1 === 1) && (side2 === 2) && (side3 === 3)) {
+        //debugger;
+        if ([ip0,ip1].includes(undefined)) {
+         core.error('case 10 undefined parameters');
+        }
+      let xside = LineSegment.mk(v0,v3);
+      let yside = LineSegment.mk(v1,v0);
+      let x0 = xside.along(ip0.x).x;
+      let y0 = yside.along(ip0.y).y;  
+      let x1 = xside.along(ip1.x).x;
+      let y1 = yside.along(ip1.y).y;
+      let c0 = Point.mk(x0,y0);
+      let c1 = Point.mk(x1,y1);
+      p0corners = [n0,c0,n2,c1];
+      p1corners = [v0,n0,c1,n3];
+      p2corners = [n0,v1,n1,c0];
+      p3corners = [c0,n1,v2,n2];
+      p4corners = [n3,c1,n2,v3]
+    }  else {
+        core.error('bad case5 for quad');
+    } 
+  }   else if (case6) {
     if ((side0 === 0) && (side1 === 1) && (side2 === 2) && (side3 === 3)) {
       //debugger;
        if ([fr0,fr1].includes(undefined)) {
@@ -227,7 +252,7 @@ rs.extendQuadOneLevel = function (prt) {
        p2corners = [c1,n1,v2,n2];
        p3corners = [n3,c1,n2,v3];
      } else {
-        core.error('bad case4 for quad');
+        core.error('bad case6 for quad');
      }
    } else if (case7) {
      if ((side0 === 0) && (side1 === 1)&& (side3 === 3))  {
@@ -243,7 +268,7 @@ rs.extendQuadOneLevel = function (prt) {
        p2corners = [c0,n1,v2,n2];
        p3corners = [n3,c1,n2,v3];
      } else {
-        core.error('bad case4 for quad');
+        core.error('bad case7 for quad');
      } 
    } else if (case8) {
        if ((side0 === 0) && (side1 === 1)&& (side2 === 2))  {
@@ -259,7 +284,7 @@ rs.extendQuadOneLevel = function (prt) {
        p2corners = [c1,n1,v2,n2];
        p3corners = [n3,c1,n2,v3];
      } else {
-        core.error('bad case4 for quad');
+        core.error('bad case8 for quad');
      }
   } else if (case9) {
     let cnt = center;

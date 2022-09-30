@@ -4,17 +4,18 @@ module.exports = {
 sections: 
 
 [
- [0,'quad_3','generators',1,'Circles',{likes:72,posted:1,noTitle:1,category:'quad',variant:2}], 
-[0,'quad_9_2','instances',1,'Quad 9 2',{likes:0,posted:0,noTitle:1,category:'quad'}], 
- [0,'quad_9_3','instances',1,'Quad 9 3',{likes:0,posted:0,noTitle:1,category:'quad'}], 
+ [10,'quad_3','generators',1,'Circles',{likes:72,posted:1,noTitle:1,category:'quad',variant:2}], 
+[20,'quad_9_2','instances',1,'Quad 9 2',{likes:0,posted:0,noTitle:1,category:'quad'}], 
+ [30,'quad_9_3','instances',1,'Quad 9 3',{likes:0,posted:0,noTitle:1,category:'quad'}], 
  //[0,'quad_9_4','instances',1,'Quad 9 4',{likes:0,posted:0,category:'quad'}], 
- [0,'quad_9_6','instances',1,'Quad 9 6',{likes:0,posted:0,noTitle:1,category:'quad'}], 
- [0,'quad_11','instances',1,'Quad 11',{likes:0,posted:0,noTitle:1,category:'quad'}], 
- [0,'quad_11_2','instances',1,'Quad 11 2',{likes:0,posted:0,noTitle:1,category:'quad'}], 
- [0,'quad_11_4','instances',1,'Quad 11 4',{likes:0,posted:0,noTitle:1,category:'quad'}], 
- [0,'quad_15_1','instances',1,'Quad 15 1',{likes:0,posted:0,noTitle:1,category:'quad'}], 
- [0,'quad_15_3','instances',1,'Quad 15 3',{likes:0,posted:0,noTitle:1,category:'quad'}], 
- [0,'quad_skein','instances',1,'Quad Skein',{likes:0,posted:0,noTitle:1,category:'quad'}], 
+ [40,'quad_9_6','instances',1,'Quad 9 6',{likes:0,posted:0,noTitle:1,category:'quad'}], 
+ [50,'quad_11','instances',1,'Quad 11',{likes:0,posted:0,noTitle:1,category:'quad'}], 
+ [60,'quad_11_2','instances',1,'Quad 11 2',{likes:0,posted:0,noTitle:1,category:'quad'}], 
+ [70,'quad_11_4','instances',1,'Quad 11 4',{likes:0,posted:0,noTitle:1,category:'quad'}], 
+ [80,'quad_15_1','instances',1,'Quad 15 1',{likes:0,posted:0,noTitle:1,category:'quad'}], 
+ [90,'quad_15_3','instances',1,'Quad 15 3',{likes:0,posted:0,noTitle:1,category:'quad'}], 
+ [100,'quad_skein','instances',1,'Quad Skein',{likes:0,posted:0,noTitle:1,category:'quad'}], 
+ [0,'part2_0_3','instances',1,'Windows',{likes:0,posted:0,noTitle:1,category:'quad'}], 
  
  [100,'drop_space_junk','generators',1,'Space Junk',{likes:50,posted:1,category:'drop',variant:0}], 
  [10,'drop_light','generators',1,'Light',{likes:50,posted:1,category:'drop',variant:0}], 

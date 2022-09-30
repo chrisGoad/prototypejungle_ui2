@@ -38,9 +38,9 @@ git clone https://github.com/chrisGoad/prototypejungle.git
 
 to deploy to kop
 cd c:\prototypejungle
-node admin/genGalleries top
+node admin/genGalleries top 
 node admin/genGalleries web
-node admin/genGalleries quad
+node admin/genGalleries quad 1
 node admin/genGalleries lines
 node admin/genGalleries grid
 node admin/updateKOP

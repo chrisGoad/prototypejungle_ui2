@@ -14,10 +14,10 @@ let visibles = rs.quadParams.visibles = [];
 rs.addToArray(visibles,1,levels);
 rs.addToArray(visibles,1,levels);
 
-rs.quadParams.mangle = {'lengthen':.3,'twist':0.05*Math.PI,within:rs.canvasToRectangle()}
+rs.quadParams.manglee = {'lengthen':.3,'twist':0.05*Math.PI,within:rs.canvasToRectangle()}
 
 let strokeWidths = rs.quadParams.strokeWidths = [];
-rs.computeExponentials(strokeWidths,rs.quadParams.levels,0.2,.9);
+rs.computeExponentials({dest:strokeWidths,n:rs.quadParams.levels,root:0.2,factor:.9});
 
 rs.quadStroke = function (qd) {
   debugger;

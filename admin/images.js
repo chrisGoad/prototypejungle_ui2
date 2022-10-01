@@ -15,7 +15,8 @@ sections:
  [80,'quad_15_1','instances',1,'Quad 15 1',{likes:0,posted:0,noTitle:1,category:'quad'}], 
  [90,'quad_15_3','instances',1,'Quad 15 3',{likes:0,posted:0,noTitle:1,category:'quad'}], 
  [100,'quad_skein','instances',1,'Quad Skein',{likes:0,posted:0,noTitle:1,category:'quad'}], 
- [0,'part2_0_3','instances',1,'Windows',{likes:0,posted:0,noTitle:1,category:'quad'}], 
+ [0,'part2_0_3','instances',1,'Window',{likes:0,posted:0,noTitle:1,category:'quad'}], 
+ [5,'part2_0_2','instances',1,'Recursion',{likes:0,posted:0,noTitle:1,category:'quad'}], 
  
  [100,'drop_space_junk','generators',1,'Space Junk',{likes:50,posted:1,category:'drop',variant:0}], 
  [10,'drop_light','generators',1,'Light',{likes:50,posted:1,category:'drop',variant:0}], 

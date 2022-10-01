@@ -116,6 +116,7 @@ sections:
  [0,'part2_0_6','instances',1,'Part2 0 6',{likes:0,posted:0,category:'quad'}], 
  [0,'part2_0_10','instances',1,'Part2 0 10',{likes:0,posted:0,category:'quad'}], 
  [0,'part2_0_11','instances',1,'Part2 0 11',{likes:0,posted:0,category:'quad'}], 
+ [0,'part2_0_12','instances',1,'Part2 0 12',{likes:0,posted:0,category:'quad'}], 
  [0,'part2_0_15','instances',1,'Part2 0 15',{likes:0,posted:0,category:'quad'}], 
  //[0,'part_0_D_0','instances',1,'Case T 1',{likes:0,posted:0,category:'quad'}],
   [0,'part2_0_D_0','instances',1,'P2 T 1',{likes:0,posted:0,category:'quad'}], 

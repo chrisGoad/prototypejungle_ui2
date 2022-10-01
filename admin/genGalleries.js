@@ -247,7 +247,7 @@ if (imKind === 'g') {
     
 
 
-      <p class="introLineSmall">To expand the images below, click on them.</p>
+      <p class="introLineSmall">To visit the galleries, click on their titles or images.</p>
     `
    } else if (quad) {
 
@@ -274,7 +274,10 @@ if (imKind === 'g') {
       `
       ${headLine}
       <p class="introLineLarge">${kindTitle}</p>    
-      <p class="introLineSmall">${aboutLink}</p>       
+      <p class="introLineSmall">${aboutLink}</p>  
+      <p class="introLineSmall">To enlarge the images, click on them.</p>
+      
+      
     `;
      console.log('pageIntro',pageIntro);
     } 

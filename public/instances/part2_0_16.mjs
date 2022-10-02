@@ -1,24 +1,25 @@
 
-import {rs as generatorP} from '/generators/quad_15.mjs';
+import {rs as generatorP} from '/generators/part2_0.mjs';
 
 let rs = generatorP.instantiate();
 
-rs.setName('quad_15_5');
+rs.setName('part2_0_16');
 let levels = 4;
-rs.quadParams.levels = levels;
+rs.partParams.levels = levels;
+rs.partParams.rectangular = 1;
 
 
 
-let visibles = rs.quadParams.visibles = [];
+let visibles = rs.partParams.visibles = [];
 rs.addToArray(visibles,1,levels);
 rs.addToArray(visibles,1,levels);
 
 //rs.quadParams.mangle = {'lengthen':.3,'twist':0.05*Math.PI,within:rs.canvasToRectangle()}
 
-let strokeWidths = rs.quadParams.strokeWidths = [];
+let strokeWidths = rs.partParams.strokeWidths = [];
 rs.computeExponentials({dest:strokeWidths,n:20,root:0.2,factor:.9});
 
-rs.quadStroke = function (qd) { 
+rs.partStroke = function (qd) { 
   return 'white';
   return Math.random() > 0.5?'rgb(150,150,250)':'rgb(250,150,150)';
 }
@@ -38,12 +39,12 @@ for (let i=0;i<45;i++) {
 */
 
 
-let qdp = {ornt:'v',fr0:0.2,fr1:0.2,fr2:0.2,fr3:0.2,fr4:0.2,fr5:0.2};
+let qdp = {Case:6,pcs:[0.2,1.2,2.2,3.2],frs:[0.2,0.2]};
 let whichToStep = [[0,2,4],[1,3,5]];
  //whichToStep = [[0,2],[1,3,4,5]];
 //whichToStep = [[0,1,2],[3,4,5]];
 
-rs.quadSplitParams = function (qd) {
+rs.partSplitParams = function (qd) {
    return qdp;
 }
 rs.oneStep = function () {

@@ -18,6 +18,15 @@ rs.qspa.push({Case:6,vertexNum:0,pcs:[0.4,1.4,2.6,3.4],frs:[.3,0.6]});
 rs.qspa.push({Case:7,pcs:[0.4,1.4,2.6,3.4]});
 //rs.qspa.push({Case:9,radius:.2,direction:0.25*Math.PI,pc0:0.4,pc1:1.4,pc2:2.6,pc3:3.4});
 
+/*
+rs.qspa = [];
+//rs.qspa.push({Case:3,vertexNum:0,pc0:0.4,pc1:1.4,pc2:2.6,pc3:3.4});
+//rs.qspa.push({Case:7,pcs:[0.5,1.5,2.5,3.5]});
+rs.qspa.push({Case:4,vertexNum:0,pcs:[0.3,1.3,2.7,3.3],frs:[.3,0.7]});
+rs.qspa.push({Case:6,vertexNum:0,pcs:[0.3,1.4,2.7,3.3],frs:[.3,0.7]});
+rs.qspa.push({Case:7,pcs:[0.3,1.3,2.7,3.3]});
+//rs.qspa.push({Case:9,radius:.2,direction:0.25*Math.PI,pc0:0.4,pc1:1.4,pc2:2.6,pc3:3.4});
+*/
 rs.triSplitParams1 = {Case:1,vertexNum:0,pcs:[0.3,1.3]};
 
 rs.partSplitParams = function (prt) {

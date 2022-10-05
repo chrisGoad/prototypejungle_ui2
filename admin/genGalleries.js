@@ -238,10 +238,10 @@ if (imKind === 'g') {
       pageIntro = 
       `
       <p class="introLineLarge">Kingdom of Pattern</p>
-      <p class="introLineLarge">Theory (<a style="color:white;text-decoration:underline" href="essay.html">here</a>)
+      <p class="introLineLarge">Theory (<a style="color:white;text-decoration:underline" href="https://eutelic.medium.com/a-phenomenology-of-visual-pattern-643cf577ad6c">here</a>)
        and Practice (below). </p>
 
-      <p  class="introLineSmall">As you will see from <a style="color:white;text-decoration:underline" href="essay.html">theory</a>, the phrase "Kingdom of Pattern" is not a claim to grandeur.</p>
+      <p  class="introLineSmall">As you will see from <a style="color:white;text-decoration:underline" href="https://eutelic.medium.com/a-phenomenology-of-visual-pattern-643cf577ad6c">theory</a>, the phrase "Kingdom of Pattern" is not a claim to grandeur.</p>
       <p class="introLineSmall">Images by Chris Goad, via JavaScript and <a style="color:white" href="https://developer.mozilla.org/en-US/docs/Web/SVG">SVG</a>.</p> 
 
     

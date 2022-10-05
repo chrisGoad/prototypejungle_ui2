@@ -151,6 +151,7 @@ rs.extendQuadOneLevel = function (prt) {
    let case8 = Case === 8;
    let case9 = Case === 9;
    let case10 = Case === 10;
+   let case11 = Case === 11;
    let v0 = vertex(0);
    let v1 = vertex(1);
    let v2 = vertex(2);
@@ -292,11 +293,23 @@ rs.extendQuadOneLevel = function (prt) {
       let c = pgon.center();
       let d = pgon.minDimension();
       cnt = c.plus(Point.mk(Math.cos(direction),Math.sin(direction)).times(d*radius));
+      
    }
     p0corners = [n3,v0,n0,cnt];
     p1corners = [n0,v1,n1,cnt];
     p2corners = [n1,v2,n2,cnt];
     p3corners = [n2,v3,n3,cnt];
+  }  else if (case11) {
+     if ((side0 === 0) && (side1 === 1) && (side2 === 2)) {
+       p0corners = [v0,n0,n2,v3];
+      // p1corners = [v0,n0,n3];
+       p1corners = [n0,n1,n2];
+       p2corners = [n0,v1,n1];
+       p3corners = [n1,v2,n2];
+     //  p4corners = [n3,n2,v3];
+     } else {
+        core.error('bad case3 for quad');
+     }
   }
   p0pgon = Polygon.mk(p0corners);
   p1pgon = Polygon.mk(p1corners);
@@ -462,7 +475,7 @@ rs.partStrokeWidth = function (prt) {
      // debugger;
     }
     sw =strokeWidths[lv];
-    console.log('lv',lv,'sw',sw);
+  //  console.log('lv',lv,'sw',sw);
     return sw;
   }
 }
@@ -533,7 +546,7 @@ rs.displayCell = function (prt,toSegs) {
   if (!vs) {
     return;
   }
-  console.log('displayCell',this.whereString(where));
+ // console.log('displayCell',this.whereString(where));
 
   //console.log('DISPLAY CELL')
   //debugger;

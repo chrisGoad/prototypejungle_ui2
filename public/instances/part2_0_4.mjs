@@ -6,21 +6,25 @@ let rs = generatorP.instantiate();
 rs.setName('part2_0_4');
 let levels = 10;
 levels = 9;
-levels = 6;
+levels = 4;
 
 
 rs.partParams.levels = levels;
 rs.partParams.rectangular = 1;
 
 rs.quadSplitParams = {Case:3,vertexNum:0,pcs:[0.4,1.4,2.6,3.4]};
+rs.quadSplitParams = {Case:3,vertexNum:0,pcs:[0.5,1.5,2.5,3.5]};
 
-rs.triSplitParams2 =  {Case:2,vertexNum:1,pcs:[0.2,1.8,2.5,3.5],stops:[1,0,1]};
+rs.triSplitParams2 =  {Case:2,vertexNum:0,pcs:[0.2,1.8,2.5,3.5],stops:[1,0,1]};
+let tsp = {Case:2,vertexNum:0,pcs:[.5,1.5,2.2,2.8],stops:[1,0,0,0]};
+
 rs.partSplitParams = function (prt) {
 //debugger;
   let ln = prt.polygon.corners.length;
   let rs;
   if (ln === 3) {
-    rs = this.triSplitParams2;
+    //rs = this.triSplitParams2;
+    rs = tsp;
   } else {
     rs =Object.assign({},this.quadSplitParams);
     let v = .0;//0.0*Math.random();
@@ -36,6 +40,8 @@ rs.partSplitParams = function (prt) {
 
 rs.partFill = function (prt) {
   let ln = prt.polygon.corners.length;
+  return (ln===3)?'rgba(250,0,0,.2)':'rgba(0,0,250,.2)';
+  
   let lev = prt.where.length;
   let rs;
   if (0 && (lev>(levels-2))&&(ln === 4 )) {

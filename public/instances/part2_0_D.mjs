@@ -42,6 +42,7 @@ rs.addToArray(strokeWidths,2,100);
 
 rs.theFills = {P0:'rgb(255,0,0)',P1:'rgb(200,200,0)',P2:'rgb(0,255,0)',P3:'rgb(0,255,255)',P4:'rgb(0,0,255)',P5:'rgb(100,100,100)'};
 rs.partFill = function (prt) {
+debugger;
   let nm = this.partName(prt);
   let fill = this.theFills[nm];
   if (fill) {

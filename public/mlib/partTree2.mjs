@@ -27,7 +27,7 @@ rs.partSplitParams = function (prt) {
  
 
 rs.extendTriOneLevel = function (prt) {
-// debugger;
+ debugger;
    let {polygon:pgon,where,root} = prt;
    let {corners} = pgon;
    let sp= this.partSplitParams(prt);
@@ -138,7 +138,7 @@ rs.extendQuadOneLevel = function (prt) {
        return nprt;
      }
    }
-   let e0,e1,e2,e3,p0corners,p1corners,p2corners,p3corners,p4corners,p0pgon,p1pgon,p2pgon,p3pgon,p4pgon;
+   let e0,e1,e2,e3,p0corners,p1corners,p2corners,p3corners,p4corners,p5corners,p0pgon,p1pgon,p2pgon,p3pgon,p4pgon,p5pgon;
 
    const vertex = (n) =>  corners[(vertexNum+n)%4];
    let case1 = Case === 1;
@@ -152,6 +152,7 @@ rs.extendQuadOneLevel = function (prt) {
    let case9 = Case === 9;
    let case10 = Case === 10;
    let case11 = Case === 11;
+   let case12 = Case === 12;
    let v0 = vertex(0);
    let v1 = vertex(1);
    let v2 = vertex(2);
@@ -166,6 +167,7 @@ rs.extendQuadOneLevel = function (prt) {
    let side2 = pc2?Math.floor(pc2):null;
    let side3 = pc3?Math.floor(pc3):null;
    let side4 = pc4?Math.floor(pc4):null;
+   let side5 = pc5?Math.floor(pc5):null;
   // debugger;
    if (case2) {
      if ((side0 === 0) && (side1 === 2)) {
@@ -310,22 +312,38 @@ rs.extendQuadOneLevel = function (prt) {
      } else {
         core.error('bad case3 for quad');
      }
+  }  else if (case12) {
+     if ((side0 === 0) && (side1 === 1) && (side2 === 2)) {
+     debugger;
+       p0corners = [n0,n3,n2];
+      // p1corners = [v0,n0,n3];
+       p1corners = [n0,n1,n2];
+       p2corners = [n0,v0,n3];
+       p3corners = [n0,v1,n1];
+       p4corners = [n1 ,v2,n2];
+       p5corners = [n3,v3,n2];
+     } else {
+        core.error('bad case3 for quad');
+     }
   }
   p0pgon = Polygon.mk(p0corners);
   p1pgon = Polygon.mk(p1corners);
   p2pgon = Polygon.mk(p2corners);
   p3pgon = Polygon.mk(p3corners);
   p4pgon = Polygon.mk(p4corners);
+  p5pgon = Polygon.mk(p5corners);
   this.checkPolygon(p0pgon);
   this.checkPolygon(p1pgon);
   this.checkPolygon(p2pgon);
   this.checkPolygon(p3pgon);
   this.checkPolygon(p4pgon);
+  this.checkPolygon(p5pgon);
   addPart('P0',0,p0pgon,stops[0]);
   addPart('P1',0,p1pgon,stops[1]);
   addPart('P2',0,p2pgon,stops[2]);
   addPart('P3',0,p3pgon,stops[3]);
   addPart('P4',0,p4pgon,stops[4]);
+  addPart('P5',0,p5pgon,stops[5]);
   return 1;
 }
    
@@ -408,6 +426,7 @@ rs.extendPartNLevels = function (prt,iparams) {
      this.extendPartNLevels(prt.P2);//,i+1);
      this.extendPartNLevels(prt.P3);//,i+1);
      this.extendPartNLevels(prt.P4);//,i+1);
+     this.extendPartNLevels(prt.P5);//,i+1);
   }
  }
  
@@ -434,6 +453,7 @@ rs.extendPartNLevels = function (prt,iparams) {
        this.displayPart(prt.P2,emitLineSegs);
        this.displayPart(prt.P3,emitLineSegs);
        this.displayPart(prt.P4,emitLineSegs);
+       this.displayPart(prt.P5,emitLineSegs);
      }
      return;
    }

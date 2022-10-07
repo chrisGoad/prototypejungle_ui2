@@ -27,7 +27,6 @@ rs.partSplitParams = function (prt) {
  
 
 rs.extendTriOneLevel = function (prt) {
- debugger;
    let {polygon:pgon,where,root} = prt;
    let {corners} = pgon;
    let sp= this.partSplitParams(prt);
@@ -174,7 +173,7 @@ rs.extendQuadOneLevel = function (prt) {
        p0corners = [v0,n0,n1,v3];
        p1corners = [n0,v1,v2,n1];
      } else {
-        core.error('bad case1 for quad');   
+        core.error('bad case2 for quad');   
      }  
   }  else if (case3) {
      if ((side0 === 0) && (side1 === 1) && (side2 === 2) && (side3 === 3)) {
@@ -310,7 +309,7 @@ rs.extendQuadOneLevel = function (prt) {
        p3corners = [n1,v2,n2];
      //  p4corners = [n3,n2,v3];
      } else {
-        core.error('bad case3 for quad');
+        core.error('bad case11 for quad');
      }
   }  else if (case12) {
      if ((side0 === 0) && (side1 === 1) && (side2 === 2)) {
@@ -323,7 +322,7 @@ rs.extendQuadOneLevel = function (prt) {
        p4corners = [n1 ,v2,n2];
        p5corners = [n3,v3,n2];
      } else {
-        core.error('bad case3 for quad');
+        core.error('bad case12 for quad');
      }
   }
   p0pgon = Polygon.mk(p0corners);

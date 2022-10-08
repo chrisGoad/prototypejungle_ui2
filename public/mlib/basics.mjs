@@ -477,6 +477,25 @@ item.randomizeArrayFrom = function (a) {
 item.anyUndefined = function (a) {
   return a.includes(undefined);
 }
+
+item.firstNvaluesEqual = function (a,n,v) {
+  let ln = a.length;
+  if (ln < n) {
+    return false;
+  }
+
+  for (let i=0;i<n;i++) {
+    let cv = a[i][0];
+    if (cv !== v) {
+      return false;
+    }
+  }
+  return true;
+}
+item.allValuesEqual = function (a,v) {
+
+  return this.firstNvaluesEqual(a,a.length,v);
+}
   
 // Stepper 
 

@@ -2,8 +2,9 @@ npm install uglify-js-es6
 npm install terser 
 
 
- initial setup 
- cd c:\prototypejungle\public
+ initial setup
+ 
+cd c:\prototypejungle\public
 git init
 git branch -M main
 git config --global user.name "Chris Goad"
@@ -11,6 +12,12 @@ git config --global user.email "cagoad@gmail.com"
 git remote add origin https://github.com/chrisGoad/prototypejungle.git
 
 git checkout -b main (maybe)
+info commands:
+git branch --list 
+git branch -r
+This Git command will show you remote branches 
+git remote -v
+shows the remote URLs
 
 every time
 cd c:\prototypejungle_ui2

@@ -27,7 +27,7 @@ rs.segParams = function () {
   return {angle,length};
 }
 
-rs.dropAt = function (p) {
+rs.generateDrop = function (p) {
   let {width,height,lineP,lineLength:lineL,dir0L,dir0H,dir1L,dir1H} = this;
   debugger;
   let hh = height/2;

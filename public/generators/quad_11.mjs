@@ -13,7 +13,7 @@ let topParams = {width:wd,height:wd,framePadding:0.2*wd}
 Object.assign(rs,topParams);
 rs.quadParams = {chance:1,levels:7,polygonal:1};
 let strokeWidths = rs.quadParams.strokeWidths = [];
-rs.computeExponentials(strokeWidths,rs.quadParams.levels,0.1,.9);
+rs.computeExponentials({dest:strokeWidths,n:12,root:0.1,factor:.9});
 rs.initProtos = function () {
   this.polygonP =  polygonPP.instantiate();
   this.polygonP.stroke = 'white';

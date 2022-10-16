@@ -5,7 +5,7 @@ let rs = generatorP.instantiate();
 
 rs.setName('part2_0_18');
 
-rs.partParams.levels =4;// 8;
+rs.partParams.levels =8;// 8;
 rs.partParams.rectangular = 1;
 let qsp = {Case:11,pcs:[.6,1.5,2.4],stops:[0,0,0,0]};
 let tsp = {Case:2,vertexNum:0,pcs:[.5,1.5,2.2,2.8],stops:[0,0,0,0]};

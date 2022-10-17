@@ -3,7 +3,7 @@ import {rs as generatorP} from '/generators/quad_0.mjs';
 
 let rs = generatorP.instantiate();
 
-rs.setName('quad_0_2');
+rs.setName('quad_15_1');
 let levels = 7;
 rs.quadParams.levels = levels;
 //rs.quadParams.circleScale = 0.25;

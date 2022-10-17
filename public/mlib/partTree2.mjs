@@ -102,16 +102,20 @@ rs.extendTriOneLevel = function (prt) {
  
 
 rs.extendQuadOneLevel = function (prt) {
-   //debugger;
+   debugger;
    let {polygon:pgon,where,root} = prt;
+   console.log('where',where);
    let {corners} = pgon;
    let sp = this.partSplitParams(prt);
+   prt . splitParams =  sp;
    if ((!sp)  || (prt.stop)) {
+     prt.stopped = 1;
      return;
    }
    let levels = this.partParams.levels;
    let lv = this.levelOf(prt);
    if (lv >= levels) {
+     prt.stopped = 1;
      return;
    }
    console.log('quad split','level',this.levelOf(prt));
@@ -127,6 +131,8 @@ rs.extendQuadOneLevel = function (prt) {
    }
    let fr0 = frs[0];
    let fr1 = frs[1];
+   let fr2 = frs[2];
+   let fr3 = frs[3];
    let ip0 = ips[0];
    let ip1 = ips[1];
    const addPart = (pn,vn,pgon,stop) => {
@@ -152,6 +158,7 @@ rs.extendQuadOneLevel = function (prt) {
    let case10 = Case === 10;
    let case11 = Case === 11;
    let case12 = Case === 12;
+   let case13 = Case === 13;
    let v0 = vertex(0);
    let v1 = vertex(1);
    let v2 = vertex(2);
@@ -324,6 +331,22 @@ rs.extendQuadOneLevel = function (prt) {
      } else {
         core.error('bad case12 for quad');
      }
+  } else if (case13) {
+    debugger;
+    let cnt = pgon.center();
+    let diag0 = LineSegment.mk(v0,cnt);
+    let diag1 = LineSegment.mk(v1,cnt);
+    let diag2 = LineSegment.mk(v2,cnt);
+    let diag3 = LineSegment.mk(v3,cnt);
+    let iv0 = diag0.along(fr0);
+    let iv1 = diag1.along(fr1?fr1:fr0);
+    let iv2 = diag2.along(fr2?fr2:fr0);
+    let iv3 = diag3.along(fr3?fr3:fr0);
+    p0corners = [iv0,iv1,iv2,iv3];
+    p1corners = [v1,iv1,iv0,v0];
+    p2corners = [v2,iv2,iv1,v1];
+    p3corners = [v3,iv3,iv2,v2];
+    p4corners = [v0,iv0,iv3,v3];
   }
   p0pgon = Polygon.mk(p0corners);
   p1pgon = Polygon.mk(p1corners);
@@ -406,6 +429,7 @@ rs.extendPartNLevels = function (prt,iparams) {
   // let lv =  where.length;
    let {levels} = params;
    if (lv >= levels) {
+     prt.stopped = 1;
      return;
     }
     let {polygon:pgon} = prt;

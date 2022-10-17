@@ -4,12 +4,14 @@ module.exports = {
 sections: 
 
 [
- [10,'quad_3','generators',1,'Circles',{likes:72,posted:1,noTitle:1,category:'quad',variant:2}], 
-[20,'quad_9_2','instances',1,'Quad 9 2',{likes:0,posted:0,noTitle:1,category:'quad'}], 
+ //[10,'quad_3','generators',1,'Circles',{likes:72,posted:1,noTitle:1,category:'quad',variant:2}], 
+ [10,'part2_0_25','instances',1,'Part2 9 25',{likes:72,posted:1,noTitle:1,category:'quad'}], 
+//[20,'quad_9_2','instances',1,'Quad 9 2',{likes:0,posted:0,noTitle:1,category:'quad'}], 
+[20,'part2_0_7','instances',1,'Part2 0 7',{likes:0,posted:0,noTitle:1,category:'quad'}], 
  [30,'quad_9_3','instances',1,'Quad 9 3',{likes:0,posted:0,noTitle:1,category:'quad'}], 
  //[0,'quad_9_4','instances',1,'Quad 9 4',{likes:0,posted:0,category:'quad'}], 
  [40,'quad_9_6','instances',1,'Quad 9 6',{likes:0,posted:0,noTitle:1,category:'quad'}], 
- [50,'quad_11','instances',1,'Quad 11',{likes:0,posted:0,noTitle:1,category:'quad'}], 
+ [50,'quad_11','generators',1,'Quad 11',{likes:0,posted:0,noTitle:1,category:'quad'}], 
  [60,'quad_11_2','instances',1,'Quad 11 2',{likes:0,posted:0,noTitle:1,category:'quad'}], 
  //[70,'quad_11_4','instances',1,'Quad 11 4',{likes:0,posted:0,noTitle:1,category:'quad'}], 
  [70,'part2_0_19','instances',1,'Quad 11 4',{likes:0,posted:0,noTitle:1,category:'quad'}], 

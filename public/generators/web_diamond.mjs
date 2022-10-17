@@ -19,7 +19,9 @@ let  topParams = {frameStroke:'rgb(52,52,52)',framePadding:0.1*ht,width:ht,heigh
 
 Object.assign(rs,topParams);
 
-let webParams = {webTries:100, minConnectorLength:mcl, maxConnectorLength:mcl+minc, webTries:1000,maxDropss:10000,lengthenBy:-0.01};
+let webParams = {webTries:100, minConnectorLength:mcl, maxConnectorLength:mcl+minc, webTries:2000,maxDropss:10000,lengthenBy:-0.01};
+webParams = {webTries:100, minConnectorLength:minc, maxConnectorLength:mcl, webTries:2000,maxDropss:10000,llengthenBy:-0.01};
+webParams = {webTries:100, minConnectorLength:mcl, maxConnectorLength:mcl+minc, webTries:2000,maxDropss:10000,lengthenBy:.9};
 
 let gridParams =  {width:ht,height:ht,numRows:nrc,numCols:nrc};
 

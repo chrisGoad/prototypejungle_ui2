@@ -2010,13 +2010,22 @@ Polygon.right = function () {
   return this.min_or_max('x','max');
 }
 
+Polygon.width = function () {
+	return this.right() - this.left();
+}
+	
 Polygon.top = function () {
-  return this.min_or_max('y','max');
+  return this.min_or_max('y','min');
 }
 
 
 Polygon.bottom = function () {
-  return this.min_or_max('y','min');
+  return this.min_or_max('y','max');
+}
+
+
+Polygon.height = function () {
+	return this.bottom() - this.top();
 }
 
 Polygon.sides = function () {

@@ -67,6 +67,16 @@ node admin/imagesToKop
 cd c:\kop
 firebase deploy --only hosting
 
+to reinstall firebase
+install firebase tools
+in a shell started with admin priviledges 
+  (search for powershell in start then click  run as administrator) in that shell:
+Set-ExecutionPolicy RemoteSigned
+then
+cd c:\kop
+firebase init
+
+
 npm install -g firebase-tools
 
 

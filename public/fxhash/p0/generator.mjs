@@ -1,38 +1,32 @@
-
-import {rs as generatorP} from '/generators/part2_0.mjs';
+debugger;
+import {rs as generatorP} from './generators/part2_0.mjs';
 
 let rs = generatorP.instantiate();
 
-rs.setName('part2_0_28');
-let levels = 10;
-levels = 6;
+rs.setName('part2_0_2');
+let levels = 8;
+levels = 7;
 
 rs.partParams.levels = levels;
 rs.partParams.rectangular = 1;
 //rs.partParams.displayProbability = .2;
-//let qsp = {Case:13,frs:[0.5]}
 
 rs.qspa = [];
-rs.qspa.push({Case:13,frs:[0.5]});
-//rs.qspa.push({Case:13,frs:[0.2,0.4,0.6,0.7]});
-//rs.qspa.push( {Case:7,pcs:[.4,1.4,2.4,3.4]});
-rs.qspa.push( {Case:7,pcs:[.5,1.5,2.5,3.5]});
+let eps = Math.floor(Math.random()*5)*.05;
+//rs.qspa.push({Case:4,vertexNum:0,pcs:[0.4,1.4,2.6,3.4],frs:[.3,0.6]});
+rs.qspa.push({Case:4,vertexNum:0,pcs:[.5-eps,1.5-eps,2.5+0.5*eps,3.5-eps],frs:[.3,0.6]});
+rs.qspa.push({Case:6,vertexNum:0,pcs:[0.5-eps,1.5-eps,2.5+.5*eps,3.5-eps],frs:[.3,0.6]});
+rs.qspa.push({Case:7,pcs:[0.4,1.4,2.6,3.4]});
 
 rs.triSplitParams1 = {Case:1,vertexNum:0,pcs:[0.3,1.3]};
 
 rs.partSplitParams = function (prt) {
-  let lev = prt.where.length;
-  
-  if ((lev>1)&&(Math.random()  < 0.1)) {
- // if (0) {
-    return;
-  }
   let ln = prt.polygon.corners.length
-  let wp = Math.floor(Math.random()*3);
-  wp = lev%2;
- let qsp = this.qspa[wp];
-  wp = lev%3;
-  qsp = this.qspa[wp===1?1:0];
+  //let wp = Math.floor(Math.random()*3);
+  let lev = prt.where.length;
+  let wp = lev%3;
+  let qsp = this.qspa[wp];
+
   let rs = (ln === 3)?this.triSplitParams1:qsp;
   return rs;
 }

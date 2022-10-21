@@ -113,7 +113,11 @@ let mainGetVars = {'source':true,'intro':true,'data':true};
 let source,sourceFile,helperUrl,content,loadUrl;
 
 const processQuery = function() {  
-  //debugger;
+  debugger;
+  if (draw.vars.fxhash) {
+    processQueryFxhash();
+    return;
+  }
   let q = core.parseQuerystring();
   helperUrl = '/solar/naws.js';
   //intro = q.intro;
@@ -150,6 +154,27 @@ const processQuery = function() {
     }
   }
   settings = settings;
+}  
+const processQueryFxhash = function() {  
+  //debugger;
+  //let q = core.parseQuerystring();
+  helperUrl = '/solar/naws.js';
+  //intro = q.intro;
+  source = './generator.mjs';
+  //content = q.content;
+  //loadUrl = q.load; // emulates dragging this in as first action
+  //saveCatalog = q.saveCatalog;
+  sourceFile = core.afterLastChar(source,'/');
+/*
+  let settings = {};
+  for (let s in q) {
+    if (!mainGetVars[s]) {
+      let qs = q[s];
+      let nqs = Number(qs);
+      settings[s] = isNaN(nqs)?qs:nqs;
+    }
+  }
+  settings = settings;*/
 }  
 const getConfig = function (cb) {
   core.httpGet(`(${userName})/config.json`,(err,json) => {

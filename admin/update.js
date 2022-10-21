@@ -167,9 +167,9 @@ var fs = require('fs');
       }
       let fpath = ipath + '/' + fln;
       var scripts = '';
-
+      console.log('transfering file ',fpath);
       var vl = fs.readFileSync(fpath).toString();
- 
+       // console.log('vl',vl);
         let  ovl = endsIn(fln,'.html')?insertBoilerplate(vl,scripts,''):vl;
 
        fs.writeFileSync(dir+'/'+fln,ovl);
@@ -195,6 +195,7 @@ xferFiles('admin',['genGrids.js','gridSections.js','imageOrder.js']);
 xferDirs(['public/generators','public/instances','public/shape','public/mlib','public/json','public/doc','public/server','public/admin']);
 //xferDirs(['js/core','js/dom','js/geom','js/draw']);
 xferDirs(['public/js/core','public/js/dom','public/js/geom','public/js/draw']);
+xferDirs(['public/fxhash/p0','public/fxhash/p0/generators','public/fxhash/p0/mlib','public/fxhash/p0/shape']);
 return;
 //xferDir(0,'public','');
  //xferDir('top','','server');

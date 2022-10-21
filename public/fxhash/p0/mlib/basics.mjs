@@ -1,11 +1,12 @@
 // documented in https://prototypejungle.net/doc/basics.html
 
-import {rs as circlePP} from '/shape/circle.mjs';
-import {rs as rectPP} from '/shape/rectangle.mjs';
-import {rs as shadedRectPP} from '/shape/shadedRectangle.mjs';
-import {rs as textPP} from '/shape/textOneLine.mjs';
-
+import {rs as circlePP} from '../shape/circle.mjs';
+import {rs as rectPP} from '../shape/rectangle.mjs';
+import {rs as shadedRectPP} from '../shape/shadedRectangle.mjs';
+import {rs as textPP} from '../shape/textOneLine.mjs';
+debugger;
 const rs = function (item) {
+debugger;
 window.root = core.root;
 item.stateOpsDisabled = 1; // for exported version
 item.setName = function (name,variant,jsonName) {
@@ -571,7 +572,7 @@ item.addText = function (textP,rt,n,p,color) {
   txt.moveto(p);
   return txt;
 }
-debugger;
+
 core.root.backgroundColor = 'black';
 item.setBackgroundColor = (clr) => core.root.backgroundColor = clr; 
 }

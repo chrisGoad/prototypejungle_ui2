@@ -19,7 +19,8 @@ sections:
  //[90,'quad_15_3','instances',1,'Quad 15 3',{likes:0,posted:0,noTitle:1,category:'quad'}], 
  [90,'part2_0_6','instances',1,'Quad 15 3',{likes:0,posted:0,noTitle:1,category:'quad'}], 
 // [100,'quad_skein','instances',1,'Quad Skein',{likes:0,posted:0,noTitle:1,category:'quad'}], 
- [100,'quad_skein','instances',1,'Quad Skein',{likes:0,posted:0,noTitle:1,category:'quad'}], 
+ //[100,'quad_skein','instances',1,'Quad Skein',{likes:0,posted:0,noTitle:1,category:'quad'}], 
+ [100,'part2_0_27','instances',1,'Part2 0 27',{noTitle:1,likes:0,posted:0,category:'quad'}], 
  [0,'part2_0_3','instances',1,'Window',{likes:0,posted:0,noTitle:0,category:'quad'}], 
  [5,'part2_0_2','instances',1,'Recursion',{likes:0,posted:0,noTitle:1,category:'quad'}], 
  

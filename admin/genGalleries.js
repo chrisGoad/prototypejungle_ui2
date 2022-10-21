@@ -345,7 +345,7 @@ const thingString = function (order,ix,dir,useThumb,ititle,props) {
 	let path = spix[0];
 	let ext = (spix.length === 1)?'jpg':spix[1];
 	let x = path + '.'+ ext;
-  let title=ititle?(noTitle?'No Title':ititle):pageNumber+'';
+  let title=ititle?(noTitle?(forKOP?'':'No Title'):ititle):pageNumber+'';
   theTitles.push(ititle?ititle:pageNumber+'');
   let vpath = (variant?path+'_v_'+variant:path);
   //console.log('variant',variant);

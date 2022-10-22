@@ -271,6 +271,7 @@ SvgRoot.activateInspectorListeners = function () {
    
 // when inspecting dom, the canvas is a div, not really a canvas
 SvgRoot.addButtons = function (navTo) {
+  return;
   let plusbut,minusbut,navbut,div;
   this.navbut = navbut = html.Element.mk('<div class="button" style="position:absolute;top:0px">'+navTo+'</div>');
   navbut.__addToDom(div);
@@ -950,19 +951,19 @@ let topbarDiv,cols,svgDiv,saveBut,saveMpixBut,stepBut,ctopDiv,svgMessageDiv,next
 
 let mpg;
 const buildPage = function () {
-saveBut = document.getElementById('saveButton');
+/*saveBut = document.getElementById('saveButton');
 saveMpixBut = document.getElementById('saveMpixButton');
 stepBut = document.getElementById('stepButton');
 saveBut.addEventListener("click", () => saveTheImage(0));
 saveMpixBut.addEventListener("click", () => saveTheImage(1));
-stepBut.addEventListener("click", stepAnimation);
+stepBut.addEventListener("click", stepAnimation);*/
 
 mpg =  html.wrap("main",'div',{style:{position:"absolute","margin":"0px",padding:"0px",display:"none"}}).
 __addChildren([
-  topbarDiv = html.wrap('topbar','div',{style:{position:"absolute",height:"10px",left:"0px","background-color":bkColor,margin:"0px",padding:"0px"}}).
+ /* topbarDiv = html.wrap('topbar','div',{style:{position:"absolute",height:"10px",left:"0px","background-color":bkColor,margin:"0px",padding:"0px"}}).
   __addChildren([
     ctopDiv = html.wrap('topbarInner','div',{style:{float:"right"}})
-  ]),
+  ]),*/
 
   cols = html.Element.mk('<div id="columns" style="left:0px;position:relative"/>').
   __addChildren([
@@ -1003,9 +1004,9 @@ const layout = function(noDraw) { // in the initialization phase, it is not yet 
   pageWidth = pwinwid;
   svgwd = pageWidth  - 20;
   Object.assign(mpg.__element.style,{left:lrs+"px",width:pageWidth+"px",height:(pageHeight-0)+"px",display:"block"});
-  topHt = -15 + topbarDiv.__element.offsetHeight;
+  topHt = 0;// + topbarDiv.__element.offsetHeight;
   cols.$css({left:"5px",width:pageWidth+"px",top:topHt+"px"});
-  ctopDiv.$css({"padding-top":"0px","padding-bottom":"20px","padding-right":"10px",left:svgwd+"px",top:"0px"});
+  //ctopDiv.$css({"padding-top":"0px","padding-bottom":"20px","padding-right":"10px",left:svgwd+"px",top:"0px"});
   svght = pageHeight-70;
   svgDiv.$css({id:"svgdiv",left:"0px",width:svgwd +"px",height:svght + "px","background-color":bkg});
   canvas.style.width = svgwd;

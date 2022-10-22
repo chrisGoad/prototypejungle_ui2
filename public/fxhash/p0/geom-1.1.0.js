@@ -2,7 +2,7 @@
 // License: MIT
 
 //import * as core from "/js/core-1.1.0.min.js";
-import * as core from "/js/core-1.1.0.js";
+import * as core from "./core-1.1.0.js";
 
 let codeRoot = core.codeRoot;
 

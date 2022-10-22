@@ -105,7 +105,7 @@ rs.extendTriOneLevel = function (prt) {
 rs.extendQuadOneLevel = function (prt) {
    debugger;
    let {polygon:pgon,where,root} = prt;
-   console.log('where',where);
+  // console.log('where',where);
    let {corners} = pgon;
    let sp = this.partSplitParams(prt);
    prt . splitParams =  sp;
@@ -119,7 +119,7 @@ rs.extendQuadOneLevel = function (prt) {
      prt.stopped = 1;
      return;
    }
-   console.log('quad split','level',this.levelOf(prt));
+  // console.log('quad split','level',this.levelOf(prt));
    let {vertexNum:ivertexNum,center,direction,radius,ips=[],Case,ornt,pcs = [],pc0,pc1,pc2,pc3,pc4,pc5,stops=[],frs=[]} = sp;//fr0,fr1} = sp;
    let vertexNum = ivertexNum?ivertexNum:0;
    if (!pc0) {
@@ -384,7 +384,7 @@ rs.extendPartOneLevel = function (prt,sep) {
      return ext;
    }*/
    if (sep && sep.stop) {
-     console.log('stop');
+     //console.log('stop');
      return;
    }
    let {polygon:pgon,stop} = prt;
@@ -686,7 +686,7 @@ rs.stepPartParams = function (params) {
   let ln = whichToStep.length;
  // let qdp = {ornt};
   stepper.step(0);
-  console.log(JSON.stringify(this.ar));
+ // console.log(JSON.stringify(this.ar));
   for (let i=0;i<ln;i++) {
     let wts = whichToStep[i];
     let wtsln = wts.length;
@@ -781,7 +781,7 @@ rs.stepPartParams = function (params) {
   let {pcs,frs} = partParams;
   let ln = wPcs.length;
   stepper.step(0);
-  console.log(JSON.stringify(this.ar));
+//console.log(JSON.stringify(this.ar));
   for (let i=0;i<ln;i++) {
     let wts = wPcs[i];
     let wtsln = wts.length;

@@ -3036,7 +3036,7 @@ const httpPost = function (url,data,cb) {
 const loadTopDefs = function (cb) {
   afterLoadTop = cb;
   // binds globals to the modules
-  loadjs('/topdefs.js');
+  loadjs('./topdefs.js');
 }
 
 const mapUrl = function (url,cb) {cb(url)};

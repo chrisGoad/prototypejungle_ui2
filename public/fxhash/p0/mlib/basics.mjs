@@ -1,9 +1,12 @@
 // documented in https://prototypejungle.net/doc/basics.html
 
-import {rs as circlePP} from '../shape/circle.mjs';
-import {rs as rectPP} from '../shape/rectangle.mjs';
-import {rs as shadedRectPP} from '../shape/shadedRectangle.mjs';
-import {rs as textPP} from '../shape/textOneLine.mjs';
+let circlePP = core.vars.circlePP;
+let rectPP = core.vars.rectPP;
+let textPP = core.vars.textPP;
+//import {rs as circlePP} from '../shape/circle.mjs';
+//import {rs as rectPP} from '../shape/rectangle.mjs';
+//import {rs as shadedRectPP} from '../shape/shadedRectangle.mjs';
+//import {rs as textPP} from '../shape/textOneLine.mjs';
 debugger;
 const rs = function (item) {
 debugger;
@@ -37,7 +40,7 @@ item.addRectangle  = function (iparams) {
    if (!width || ((!fill)  && (!leftFill))) {
     return;
    }
-  let rect  = this.set('brect'+this.numRects,leftFill?shadedRectPP.instantiate():rectPP.instantiate());
+  let rect  = this.set('brect'+this.numRects,rectPP.instantiate());
   this.numRects = this.numRects + 1;
   if (fill) {
     rect.fill = fill;

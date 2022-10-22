@@ -1,16 +1,22 @@
 // documented in https://prototypejungle.net/doc/basics.html
-
+/*
 let circlePP = core.vars.circlePP;
 let rectPP = core.vars.rectPP;
 let textPP = core.vars.textPP;
+*/
 //import {rs as circlePP} from '../shape/circle.mjs';
 //import {rs as rectPP} from '../shape/rectangle.mjs';
 //import {rs as shadedRectPP} from '../shape/shadedRectangle.mjs';
 //import {rs as textPP} from '../shape/textOneLine.mjs';
 debugger;
-const rs = function (item) {
+const rs = function (item,mods) {
 debugger;
-window.root = core.root;
+let Circle = mods.circleGeom;
+let LineSegment = mods.lineSegmentGeom;
+let Polygon = mods.polygonGeom;
+let Rectangle = mods.rectangleGeom;
+let rectanglePP = mods.rectanglePP;
+//window.root = core.root;
 item.stateOpsDisabled = 1; // for exported version
 item.setName = function (name,variant,jsonName) {
   let nameWithV = name+(variant?'_v_'+variant:'');
@@ -40,7 +46,7 @@ item.addRectangle  = function (iparams) {
    if (!width || ((!fill)  && (!leftFill))) {
     return;
    }
-  let rect  = this.set('brect'+this.numRects,rectPP.instantiate());
+  let rect  = this.set('brect'+this.numRects,rectanglePP.instantiate());
   this.numRects = this.numRects + 1;
   if (fill) {
     rect.fill = fill;
@@ -576,7 +582,7 @@ item.addText = function (textP,rt,n,p,color) {
   return txt;
 }
 
-core.root.backgroundColor = 'black';
+//core.root.backgroundColor = 'black';
 item.setBackgroundColor = (clr) => core.root.backgroundColor = clr; 
 }
 export {rs};

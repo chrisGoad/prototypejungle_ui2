@@ -68,15 +68,41 @@ Window.core = core;Window.geom=geom;Window.dom=dom;
 //Window.editor=editor;
 Window.draw=draw;
 Window.svg = dom.svg;
-/*
+let svg = dom.svg;
+let linePP = svg.Element.mk('<line/>');
+let circlePP = svg.Element.mk('<circle/>');
+let polygonPP = svg.Element.mk('<polygon/>');
+let rectanglePP = svg.Element.mk('<rect/>');
+let textPP = svg.Element.mk('<g/>');
 
+debugger;
 import {rs as addPartMethods} from './mlib/partTree2.mjs';	
+import {rs as addPart2_0Methods} from './generators/mkPart2_0.mjs';	
 import {rs as addBasis} from './mlib/basics.mjs';
-import {rs as linePP} from './shape/line.mjs';
+import {rs as mkLine} from './shape/mkLine.mjs';
+mkLine(linePP);
+import {rs as mkCircle} from './shape/mkCircle.mjs';
+mkCircle(circlePP);
+import {rs as mkPolygon} from './shape/mkPolygon.mjs';
+mkPolygon(polygonPP);
+import {rs as mkRectangle} from './shape/mkRectangle.mjs';
+mkRectangle(rectanglePP);
+import {rs as mkText} from './shape/mkTextOneLine.mjs';
+mkText(textPP);
+
+
+/* back in
 import {rs as circlePP} from './shape/circle.mjs';
 import {rs as polygonPP} from './shape/polygon.mjs';
 import {rs as rectPP} from './shape/rectangle.mjs';
 */
+let mods = {addPartMethods,addPart2_0Methods,addBasis,linePP,circlePP,polygonPP,rectanglePP,textPP,rectangleGeom:geom.Rectangle,circleGeom:geom.Circle,polygonGeom:geom.Polygon,lineSegmentGeom:geom.LineSegment};//,circlePP,polygonPP,rectPP};
+let basics= svg.Element.mk();
+addBasis(basics,mods);
+mods.basics = basics;
+console.log(mods);
+Window.mods = mods;
+debugger;
 //import * as tree from "/js/tree-1.1.0.min.js";
 //import * as catalog from "/js/catalog-1.1.0.min.js";
 //import * as editor from "/js/editor-1.1.0.min.js";

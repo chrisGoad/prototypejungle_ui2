@@ -1,9 +1,13 @@
-import {rs as utils} from '/shape/utils.mjs';
+//import {rs as utils} from '/shape/utils.mjs';
 
 let item = svg.Element.mk('<line/>');
 item.shape_name = 'line';
 
-utils.setup(item);
+
+item.setEnds = function (line,p0,p1) {
+  line.setPointProperty('end0',p0);
+  line.setPointProperty('end1',p1);
+}
 
 item.setDomAtts = function () {
   let e0 = this.end0;

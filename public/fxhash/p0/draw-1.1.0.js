@@ -572,7 +572,7 @@ const installMainItem = function (source,settings)  {
       if (oldway) {
          core.install(source,afterMainInstall); 
       } else {
-   //     debugger;
+       debugger;
         import(source).then((module) => afterMainInstallM(module));
       }
     }
@@ -592,8 +592,10 @@ const afterMainInstall = function (e,rs) {
   finishMainInstall();
 }
 const afterMainInstallM = function (module) {
-  //debugger;
-  main = module.rs;
+  debugger;
+  //main = module.rs;
+  main = svg.Element.mk('<g/>');
+  module.rs(Window.mods,main);
  // debugger;
   finishMainInstall();
 }

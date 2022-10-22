@@ -11,6 +11,8 @@ let {addBasis,addPartMethods,addPart2_0Methods} = mods;
 addBasis(item,mods);
 addPartMethods(item,mods);
 addPart2_0Methods(item,mods);
+addDropMethods(item,mods);
+addRandomMethods(item,mods);
 item.setName('part2_0_2');
 let levels = 8;
 levels = 6;

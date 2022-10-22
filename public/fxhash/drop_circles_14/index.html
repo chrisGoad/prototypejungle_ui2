@@ -75,9 +75,9 @@ let polygonPP = svg.Element.mk('<polygon/>');
 let rectanglePP = svg.Element.mk('<rect/>');
 let textPP = svg.Element.mk('<g/>');
 
-debugger;o
-import {rs as addDropMethods} from './mlib/drop.mjs';	
-import {rs as addBoundedRandomGridMethods} from './generators/boundedRandomGrids.mjs';	
+debugger;
+import {rs as addPartMethods} from './mlib/partTree2.mjs';	
+import {rs as addPart2_0Methods} from './generators/mkPart2_0.mjs';	
 import {rs as addBasis} from './mlib/basics.mjs';
 import {rs as mkLine} from './shape/mkLine.mjs';
 mkLine(linePP);
@@ -96,7 +96,7 @@ import {rs as circlePP} from './shape/circle.mjs';
 import {rs as polygonPP} from './shape/polygon.mjs';
 import {rs as rectPP} from './shape/rectangle.mjs';
 */
-let mods = {addBoundedRandomGrids,addDropMethods,linePP,circlePP,polygonPP,rectanglePP,textPP,rectangleGeom:geom.Rectangle,circleGeom:geom.Circle,polygonGeom:geom.Polygon,lineSegmentGeom:geom.LineSegment};//,circlePP,polygonPP,rectPP};
+let mods = {addPartMethods,addPart2_0Methods,addBasis,linePP,circlePP,polygonPP,rectanglePP,textPP,rectangleGeom:geom.Rectangle,circleGeom:geom.Circle,polygonGeom:geom.Polygon,lineSegmentGeom:geom.LineSegment};//,circlePP,polygonPP,rectPP};
 let basics= svg.Element.mk();
 addBasis(basics,mods);
 mods.basics = basics;

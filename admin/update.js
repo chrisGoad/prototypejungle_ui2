@@ -195,7 +195,7 @@ xferFiles('admin',['genGrids.js','gridSections.js','imageOrder.js']);
 xferDirs(['public/generators','public/instances','public/shape','public/mlib','public/json','public/doc','public/server','public/admin']);
 //xferDirs(['js/core','js/dom','js/geom','js/draw']);
 xferDirs(['public/js/core','public/js/dom','public/js/geom','public/js/draw']);
-xferDirs(['public/fxhash/p0','public/fxhash/p0/generators','public/fxhash/p0/mlib','public/fxhash/p0/shape']);
+xferDirs(['public/fxhash/part2_0_2','public/fxhash/part2_0_2/generators','public/fxhash/part2_0_2/mlib','public/fxhash/part2_0_2/shape']);
 xferDirs(['public/fxhash/drop_circles_14','public/fxhash/drop_circles_14/generators','public/fxhash/drop_circles_14/mlib','public/fxhash/drop_circles_14/shape']);
 return;
 //xferDir(0,'public','');

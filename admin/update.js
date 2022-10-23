@@ -197,6 +197,7 @@ xferDirs(['public/generators','public/instances','public/shape','public/mlib','p
 xferDirs(['public/js/core','public/js/dom','public/js/geom','public/js/draw']);
 xferDirs(['public/fxhash/part2_0_2','public/fxhash/part2_0_2/generators','public/fxhash/part2_0_2/mlib','public/fxhash/part2_0_2/shape']);
 xferDirs(['public/fxhash/drop_circles_14','public/fxhash/drop_circles_14/generators','public/fxhash/drop_circles_14/mlib','public/fxhash/drop_circles_14/shape']);
+xferDirs(['public/fxhash/test','public/fxhash/test/generators','public/fxhash/test/mlib','public/fxhash/test/shape']);
 return;
 //xferDir(0,'public','');
  //xferDir('top','','server');

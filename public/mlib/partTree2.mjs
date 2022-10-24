@@ -102,7 +102,7 @@ rs.extendTriOneLevel = function (prt) {
  
 
 rs.extendQuadOneLevel = function (prt) {
-   debugger;
+  // debugger;
    let {polygon:pgon,where,root} = prt;
    //console.log('where',where);
    let {corners} = pgon;
@@ -225,7 +225,7 @@ rs.extendQuadOneLevel = function (prt) {
         core.error('bad case5 for quad');
     } 
   }  else if (case10) {
-      debugger;
+     // debugger;
       if ((side0 === 0) && (side1 === 1) && (side2 === 2) && (side3 === 3)) {
         //debugger;
         if ([ip0,ip1].includes(undefined)) {
@@ -320,7 +320,7 @@ rs.extendQuadOneLevel = function (prt) {
      }
   }  else if (case12) {
      if ((side0 === 0) && (side1 === 1) && (side2 === 2)) {
-     debugger;
+   //  debugger;
        p0corners = [n0,n3,n2];
       // p1corners = [v0,n0,n3];
        p1corners = [n0,n1,n2];
@@ -332,7 +332,7 @@ rs.extendQuadOneLevel = function (prt) {
         core.error('bad case12 for quad');
      }
   } else if (case13) {
-    debugger;
+    //debugger;
     let cnt = pgon.center();
     let diag0 = LineSegment.mk(v0,cnt);
     let diag1 = LineSegment.mk(v1,cnt);

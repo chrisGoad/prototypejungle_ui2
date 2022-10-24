@@ -571,7 +571,6 @@ item.addText = function (textP,rt,n,p,color) {
   txt.moveto(p);
   return txt;
 }
-debugger;
 core.root.backgroundColor = 'black';
 item.setBackgroundColor = (clr) => core.root.backgroundColor = clr; 
 }

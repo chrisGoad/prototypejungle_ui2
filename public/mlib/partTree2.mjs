@@ -104,7 +104,7 @@ rs.extendTriOneLevel = function (prt) {
 rs.extendQuadOneLevel = function (prt) {
    debugger;
    let {polygon:pgon,where,root} = prt;
-   console.log('where',where);
+   //console.log('where',where);
    let {corners} = pgon;
    let sp = this.partSplitParams(prt);
    prt . splitParams =  sp;
@@ -118,7 +118,7 @@ rs.extendQuadOneLevel = function (prt) {
      prt.stopped = 1;
      return;
    }
-   console.log('quad split','level',this.levelOf(prt));
+  // console.log('quad split','level',this.levelOf(prt));
    let {vertexNum:ivertexNum,center,direction,radius,ips=[],Case,ornt,pcs = [],pc0,pc1,pc2,pc3,pc4,pc5,stops=[],frs=[]} = sp;//fr0,fr1} = sp;
    let vertexNum = ivertexNum?ivertexNum:0;
    if (!pc0) {

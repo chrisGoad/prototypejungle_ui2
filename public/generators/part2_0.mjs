@@ -5,11 +5,12 @@ import {rs as polygonPP} from '/shape/polygon.mjs';
 import {rs as linePP} from '/shape/line.mjs';
 import {rs as basicP} from '/generators/basics.mjs';
 import {rs as addPartMethods} from '/mlib/partTree2.mjs';	
+import {rs as addPathMethods} from '/mlib/path.mjs';	
 
 let rs = basicP.instantiate();
 addPartMethods(rs);
+addPathMethods(rs);
 rs.setName('part2_0');
-debugger;
 let wd = 100;
 let topParams = {width:wd,height:wd,framePadding:0.1*wd,frameStrokee:'white'}
 Object.assign(rs,topParams);

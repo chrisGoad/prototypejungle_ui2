@@ -1,4 +1,5 @@
 // a part tree node has the form {polygn,P0:quadNode,UR:quadNode,LL:quadNode,QLR
+
 const rs =function (rs) {
 
 
@@ -102,9 +103,9 @@ rs.extendTriOneLevel = function (prt) {
  
 
 rs.extendQuadOneLevel = function (prt) {
-  // debugger;
+   debugger;
    let {polygon:pgon,where,root} = prt;
-   //console.log('where',where);
+  // console.log('where',where);
    let {corners} = pgon;
    let sp = this.partSplitParams(prt);
    prt . splitParams =  sp;
@@ -225,7 +226,7 @@ rs.extendQuadOneLevel = function (prt) {
         core.error('bad case5 for quad');
     } 
   }  else if (case10) {
-     // debugger;
+      debugger;
       if ((side0 === 0) && (side1 === 1) && (side2 === 2) && (side3 === 3)) {
         //debugger;
         if ([ip0,ip1].includes(undefined)) {
@@ -320,7 +321,7 @@ rs.extendQuadOneLevel = function (prt) {
      }
   }  else if (case12) {
      if ((side0 === 0) && (side1 === 1) && (side2 === 2)) {
-   //  debugger;
+     debugger;
        p0corners = [n0,n3,n2];
       // p1corners = [v0,n0,n3];
        p1corners = [n0,n1,n2];
@@ -332,7 +333,7 @@ rs.extendQuadOneLevel = function (prt) {
         core.error('bad case12 for quad');
      }
   } else if (case13) {
-    //debugger;
+    debugger;
     let cnt = pgon.center();
     let diag0 = LineSegment.mk(v0,cnt);
     let diag1 = LineSegment.mk(v1,cnt);
@@ -383,7 +384,7 @@ rs.extendPartOneLevel = function (prt,sep) {
      return ext;
    }*/
    if (sep && sep.stop) {
-     console.log('stop');
+     //console.log('stop');
      return;
    }
    let {polygon:pgon,stop} = prt;
@@ -685,7 +686,7 @@ rs.stepPartParams = function (params) {
   let ln = whichToStep.length;
  // let qdp = {ornt};
   stepper.step(0);
-  console.log(JSON.stringify(this.ar));
+ // console.log(JSON.stringify(this.ar));
   for (let i=0;i<ln;i++) {
     let wts = whichToStep[i];
     let wtsln = wts.length;
@@ -780,7 +781,7 @@ rs.stepPartParams = function (params) {
   let {pcs,frs} = partParams;
   let ln = wPcs.length;
   stepper.step(0);
-  console.log(JSON.stringify(this.ar));
+//console.log(JSON.stringify(this.ar));
   for (let i=0;i<ln;i++) {
     let wts = wPcs[i];
     let wtsln = wts.length;
@@ -794,7 +795,6 @@ rs.stepPartParams = function (params) {
  // return qdp;
  }
 
-rs.alreadyInitialized = 0;
 rs.initialize = function () {
   let {width:wd,height:ht,partParams,dropParams} = this;
  debugger;
@@ -829,14 +829,8 @@ rs.initialize = function () {
   if (partParams.emitLineSegs) {
     this.generateDrops(dropParams);
   }
-  debugger;
-  let ized = this.alreadyInitialized;
-  this.alreadyInitialized = 1;
-  if (!ized) {
+  this.callIfDefined('afterInitialize');
 
-    this.callIfDefined('afterInitialize');
-  }
-  this.alreadyInitialized = 1;
 }
 }
 

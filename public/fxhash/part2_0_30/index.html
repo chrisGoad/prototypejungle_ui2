@@ -1,0 +1,243 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="description" content="Diagramming basedd on an open repository of prototype structures.">
+<title>PrototypeJungle</title>
+<link rel="stylesheet" type="text/css"  href="./style.css"/>
+<link rel="stylesheet" type="text/css"  href="./spectrum.css"/>
+<link rel="icon" href="/images/favicon.ico" />
+  <script id="fxhash-snippet">
+  //---- do not edit the following code (you can indent as you wish)
+  debugger;
+  let alphabet = "123456789abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ"
+  var fxhash = "oo" + Array(49).fill(0).map(_=>alphabet[(Math.random()*alphabet.length)|0]).join('')
+  let b58dec = str=>[...str].reduce((p,c)=>p*alphabet.length+alphabet.indexOf(c)|0, 0)
+  let fxhashTrunc = fxhash.slice(2)
+  let regex = new RegExp(".{" + ((fxhashTrunc.length/4)|0) + "}", 'g')
+  let hashes = fxhashTrunc.match(regex).map(h => b58dec(h))
+  let sfc32 = (a, b, c, d) => {
+    return () => {
+      a |= 0; b |= 0; c |= 0; d |= 0
+      var t = (a + b | 0) + d | 0
+      d = d + 1 | 0
+      a = b ^ b >>> 9
+      b = c + (c << 3) | 0
+      c = c << 21 | c >>> 11
+      c = c + t | 0
+      return (t >>> 0) / 4294967296
+    }
+  }
+  var fxrand = sfc32(...hashes)
+  // true if preview mode active, false otherwise
+  // you can append preview=1 to the URL to simulate preview active
+  var isFxpreview = new URLSearchParams(window.location.search).get('preview') === "1"
+  // call this method to trigger the preview
+  function fxpreview() {
+    console.log("fxhash: TRIGGER PREVIEW")
+  }
+  //---- /do not edit the following code
+</script>
+ 
+</head>
+<body style="background-color:white;font-size:14pt"> <!-- from 12 6/8/19 -->
+
+<!--
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+<script src="js/color_picker.js"></script>
+<script src="ace-builds/src-min-noconflict/ace.js"></script>  
+-->
+<script nomodule>
+        location.href = "/nomodules.html";
+        console.log('HOOB');
+ </script>     
+<script type="module">
+debugger;
+console.log('MODULE');
+  import * as core from "./core-1.1.0.js";
+import * as geom from "./geom-1.1.0.js";
+import * as dom from "./dom-1.1.0.js";
+//import {rs as textPP} from './shape/textOneLine.mjs';
+
+
+
+/* make the modules available in all contexts */
+Window.core = core;Window.geom=geom;Window.dom=dom;
+//Window.graph = graph;Window.ui=ui;
+//Window.editor=editor;
+Window.draw=draw;
+Window.svg = dom.svg;
+let svg = dom.svg;
+let linePP = svg.Element.mk('<line/>');
+let circlePP = svg.Element.mk('<circle/>');
+let polygonPP = svg.Element.mk('<polygon/>');
+let rectanglePP = svg.Element.mk('<rect/>');
+let textPP = svg.Element.mk('<g/>');
+
+debugger;
+import {rs as addPartMethods} from './mlib/partTree2.mjs';	
+import {rs as addPart2_0Methods} from './generators/mkPart2_0.mjs';	
+import {rs as addBasis} from './mlib/basics.mjs';
+import {rs as mkLine} from './shape/mkLine.mjs';
+mkLine(linePP);
+import {rs as mkCircle} from './shape/mkCircle.mjs';
+mkCircle(circlePP);
+import {rs as mkPolygon} from './shape/mkPolygon.mjs';
+mkPolygon(polygonPP);
+import {rs as mkRectangle} from './shape/mkRectangle.mjs';
+mkRectangle(rectanglePP);
+import {rs as mkText} from './shape/mkTextOneLine.mjs';
+mkText(textPP);
+
+
+/* back in
+import {rs as circlePP} from './shape/circle.mjs';
+import {rs as polygonPP} from './shape/polygon.mjs';
+import {rs as rectPP} from './shape/rectangle.mjs';
+*/
+let mods = {addPartMethods,addPart2_0Methods,addBasis,linePP,circlePP,polygonPP,rectanglePP,textPP,rectangleGeom:geom.Rectangle,circleGeom:geom.Circle,polygonGeom:geom.Polygon,lineSegmentGeom:geom.LineSegment};//,circlePP,polygonPP,rectPP};
+let basics= svg.Element.mk();
+addBasis(basics,mods);
+mods.basics = basics;
+console.log(mods);
+Window.mods = mods;
+debugger;
+//import * as tree from "/js/tree-1.1.0.min.js";
+//import * as catalog from "/js/catalog-1.1.0.min.js";
+//import * as editor from "/js/editor-1.1.0.min.js";
+import * as draw from "./draw-1.1.0.js";
+//Window.catalog = catalog;
+let ui = {};
+var fcont = {};
+fcont.xxxx = {};
+ui.vars = {};
+ui.hide = () => {};
+Window.ui = ui;
+let graph = {};
+graph.installCirclePeripheryOps = () => {}
+Window.graph = graph;
+let troort = 3;
+
+
+let aaaa,ctx,img,natWidth,natHeight,canvas;
+aaaa = 23;
+const drawFrame = function () {
+	ctx.clearRect(0,0,natWidth,natHeight);
+	ctx.drawImage(img,0,0,natWidth,natHeight);//,rectInImage.w,rectInImage.h,0,0,canvasRect.w,canvasRect.h);
+}
+
+const drawImage = function () {
+	let qs = core.parseQuerystring();
+	let image = qs.image;
+	if (!image) {
+	  draw.initPage();
+	  return;
+	}
+	let scale  = qs.scale?Number(qs.scale):0.1;
+	let mnim = `inputImages/${image}`;
+	let imageIn = `${mnim}.jpg`;
+  //const finishUp = function () {
+		canvas = document.getElementById('inputCanvas');
+		ctx = canvas.getContext('2d');
+		//let winWd = window.innerWidth;
+		//let winHt = window.innerHeight;
+		//let wf = 0.9;
+		//canvas.width = winWd * wf;
+		//canvas.height = winHt * wf - 30;
+		img = new Image();
+		img.addEventListener('load', function () {
+		 // debugger;
+	  	natWidth = scale * (img.naturalWidth);
+		  natHeight = scale * (img.naturalHeight);
+			canvas.width = natWidth;
+			canvas.height = natHeight;
+			//let data = context.getImageData(imageX, imageY, imageWidth, imageHeight);
+			drawFrame();
+			let wd = Math.floor(natWidth);
+			let ht = Math.floor(natHeight);
+			let data = ctx.getImageData(0,0, wd,ht);
+			debugger;
+			draw.vars.imageData = data.data;
+			draw.vars.imWd = wd;
+			draw.vars.imHt = ht;
+      console.log('initPage');
+			draw.initPage()
+
+			
+		});
+		//showingBox =1;
+		img.src = imageIn;
+	//};
+}
+ui.saveTheFrame =  (n) => {
+ alert(22);// draw.saveFrame(n);
+}
+	//debugger;
+window.addEventListener("DOMContentLoaded", () => { 
+ debugger;
+  core.debugMode(true);
+  core.vars.historyEnabled = false;
+  core.vars.tlogActive = true; // controls time logging (core.tlog)
+  core.vars.activeConsoleTags = ['error','install'];//'install'];//'control'
+  core.vars.stripeInstalled = true;
+ /* core.vars.generatorP = generatorP;
+  core.vars.textPP = textPP;
+  core.vars.linePP = linePP;
+ core.vars.circlePP = circlePP;
+  core.vars.polygonPP = polygonPP;
+  core.vars.rectPP = rectPP;
+  core.vars.addPartMethods = addPartMethods;
+  let cs = containerShape.mk();
+   addBasis(cs);
+  core.vars.basicP = cs;*/
+  core.vars.photoMode = true;
+  core.vars.maxSaveLength = 5000000; // this should match the limit in the storage rules for firebase
+  //core.vars.svgwd = 200;
+   //core.vars.svght = 100;
+  ui.vars.jumpToImage = 1;
+  ui.vars.whichPage = 'structure_editor';
+  ui.vars.defaultCatalog = '(sys)/catalog/global.catalog';
+  draw.vars.fxhash  = 1;
+  draw.vars.fitFactor = 0.8;
+  draw.vars.fitMode = true;// auto-fit items into graphics, with the given factor
+  dom.vars.stdExtent = geom.Point.mk(200,200); // if there is no initial content, this is the area in image space originally in view
+  core.tlog('doc ready');
+  //core.loadTopDefs(() => {drawImage();draw.initPage()});// binds modules to global
+  core.loadTopDefs(() => {drawImage();});// binds modules to global
+  //core.loadTopDefs(() => {drawImage()});// binds modules to global
+});
+</script>
+ 
+ 
+<div id="main" style="display:none"> 
+  <div id="topbar"> 
+   <div id="topbarOuter" style="color:black;">
+  <!--    <div id="title" style="display:inline-block">
+        <span class="mainTitle">PrototypeJungle </span> 
+				<div style="display:inline-block" class="button" id="runButton">Run Animation</div>
+				<div style="display:inline-block" class="button" id="resumeButton">Resume Animation</div>
+				<div style="display:inline-block" class="button" id="pauseButton">Pause</div>
+				<div style="display:inline-block" class="button" id="stepButton">Step</div>
+				<div style="display:inline-block" class="button" id="stepNoSaveButton">Step No Save</div>
+				<div style="display:inline-block" class="button" id="repeatFrameButton">Repeat Frame</div>
+				<div style="display:inline-block" class="button" id="saveAnimationButton">Save Animation</div>
+				<div style="display:inline-block" class="button" id="saveButton">Save Image</div>
+				<div style="display:inline-block" class="button" id="saveMpixButton">Save Image (High Res)</div>
+        <div style="display:inline-block" class="button" id="stepButton">Step</div>
+      </div>-->
+      <div id = "topbarInner" style="float:right"></div>
+   </div>
+
+   <div id="error"></div>
+  </div>  
+</div>
+<canvas id="inputCanvas"></canvas> 
+
+<canvas id="imageCanvas"></canvas> <!-- used for image conversions to jpeg-->
+
+
+
+
+</body>
+</html>

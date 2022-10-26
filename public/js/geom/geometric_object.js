@@ -40,7 +40,8 @@ geometric.moveto = function (ix,iy) {
     }
   }  else {
     xf = mkTranslation(x,y?y:0);
-    this.set("transform",xf);
+    //this.set("transform",xf);
+    this.transform=xf;//modified for fxhash 10/25/22
     if (r) {
       xf.rotation = r;
     }

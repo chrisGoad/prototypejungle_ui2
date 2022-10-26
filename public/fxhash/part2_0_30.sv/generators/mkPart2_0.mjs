@@ -1,10 +1,22 @@
-
+/*debugger;
+import {rs as textPP} from '../shape/textOneLine.mjs';
+console.log('part2_0');
+//import {rs as circlePP} from '../shape/circle.mjs';
+import {rs as circlePP} from '../shape/circle.mjs';
+//let circlePP = core.vars.circlePP;
+//let polygonPP = core.vars.polygonPP;
+//let linePP = core.vars.linePP;
+import {rs as polygonPP} from '../shape/polygon.mjs';
+import {rs as linePP} from '../shape/line.mjs';
+import {rs as basicP} from '../generators/basics.mjs';
+//let basicP = core.vars.basicP;
+import {rs as addPartMethods} from '../mlib/partTree2.mjs';	
+*/
 //let addPartMethods = core.vars.addPartMethods;
 const rs = function (item,mods) {
-let {circlePP,polgonPP,rectanglePP,linePP,polygonPP,textPP,addPartMethods,addBasis,addPathMethods} = mods;
+let {circlePP,polgonPP,rectanglePP,linePP,polygonPP,textPP,addPartMethods,addBasis} = mods;
 addBasis(item,mods);
 addPartMethods(item,mods);
-addPathMethods(item,mods);
 item.setName('part2_0');
 debugger;
 let wd = 100;

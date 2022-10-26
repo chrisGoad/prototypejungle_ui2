@@ -78,7 +78,6 @@ let textPP = svg.Element.mk('<g/>');
 debugger;
 import {rs as addPartMethods} from './mlib/partTree2.mjs';	
 import {rs as addPart2_0Methods} from './generators/mkPart2_0.mjs';	
-import {rs as addPathMethods} from './mlib/path.mjs';	
 import {rs as addBasis} from './mlib/basics.mjs';
 import {rs as mkLine} from './shape/mkLine.mjs';
 mkLine(linePP);
@@ -97,7 +96,7 @@ import {rs as circlePP} from './shape/circle.mjs';
 import {rs as polygonPP} from './shape/polygon.mjs';
 import {rs as rectPP} from './shape/rectangle.mjs';
 */
-let mods = {addPartMethods,addPart2_0Methods,addPathMethods,addBasis,linePP,circlePP,polygonPP,rectanglePP,textPP,rectangleGeom:geom.Rectangle,circleGeom:geom.Circle,polygonGeom:geom.Polygon,lineSegmentGeom:geom.LineSegment};//,circlePP,polygonPP,rectPP};
+let mods = {addPartMethods,addPart2_0Methods,addBasis,linePP,circlePP,polygonPP,rectanglePP,textPP,rectangleGeom:geom.Rectangle,circleGeom:geom.Circle,polygonGeom:geom.Polygon,lineSegmentGeom:geom.LineSegment};//,circlePP,polygonPP,rectPP};
 let basics= svg.Element.mk();
 addBasis(basics,mods);
 mods.basics = basics;

@@ -2956,8 +2956,7 @@ geometric.moveto = function (ix,iy) {
     }
   }  else {
     xf = mkTranslation(x,y?y:0);
-    //this.set("transform",xf);
-    this.transform=xf;
+    this.set("transform",xf);
     if (r) {
       xf.rotation = r;
     }

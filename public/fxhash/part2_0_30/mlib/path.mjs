@@ -8,30 +8,19 @@ let rs = function (item) {
 item.randomNextState = function (pspace,cstate,component) {
   let pspc = pspace[component];
   let {step,min,max} = pspc;
-  let csc =  cstate[component];
-  let cv = csc.value;
+  let cv =  cstate[component];
   let nvp = cv+step;
   let nvm = cv-step;
   if (nvm <= min) {
-    csc.value = nvp;
-    return;
+    return nvp;
   }
   if (nvp > max) {
-      csc.value = nvm;
-     return;
+     return nvm;
   }
-  csc.value = Math.random() < 0.5?nvm:nvp;
+  return Math.random() < 0.5?nvm:nvp;
 }
 
 
-item.randomValueNextState = function (pspace,cstate,component) {
-  let pspc = pspace[component];
-  let {step,min,max} = pspc;
-  let delta = max-min;
-  let nv = min + Math.random()*delta;
-  let csc =  cstate[component];
-  csc.value =nv;
-}
 
 
 item.sweepNextState = function (pspace,cstate,component) {
@@ -52,46 +41,9 @@ item.sweepNextState = function (pspace,cstate,component) {
   csc.value=down?nvm:nvp;
 }
 
-
-item.randomStepsNextState = function (pspace,cstate,component) {
- // debugger;
-  let pspc = pspace[component];
-  let csc = cstate[component];
-  let down = csc.goingDown;
-  let up = !down
-  let {step,min,max,steps} = pspc;
-  let delta = max-min;
-  let stg = 1 + Math.floor(steps*Math.random()*(delta/step));
-  let stepsToGo = csc.stepsToGo;
-  if (stepsToGo === undefined) {
-    stepsToGo = csc.stepsToGo = stg;
-  }
-  let switchDir = stepsToGo <=0;
-  console.log('down',down,'stepsToGo',stepsToGo,'stg',stg);
-  let cv = csc.value;
-  let nvp = cv+step;
-  let nvm = cv-step;    
-  if ((nvm < min)||(down && switchDir)) {
-    down = csc.goingDown = 0;
-    csc.stepsToGo = stg;
-  } else if ((nvp > max) || (up && switchDir)) {
-     down = csc.goingDown = 1;
-     csc.stepsToGo = stg;
-  } else {
-    csc.stepsToGo = csc.stepsToGo - 1
-  }
-  csc.value=down?nvm:nvp;
-}
-
 item.nextState = function (pathKind,pspace,cstate,component) {
   if (pathKind === 'random') {
     this.randomNextState(pspace,cstate,component);
-  }
-  if (pathKind === 'randomValue') {
-    this.randomValueNextState(pspace,cstate,component);
-  }
-  if (pathKind === 'randomSteps') {
-    this.randomStepsNextState(pspace,cstate,component);
   }
   if (pathKind === 'sweep') {
     this.sweepNextState(pspace,cstate,component);

@@ -42,7 +42,7 @@ rs.firstNvaluesEqual = function (a,n,v) {
   if (ln < n) {
     return false;
   }
-    debugger;
+   // debugger;
 
   for (let i=0;i<n;i++) {
     let cv = a[i][0];
@@ -59,9 +59,10 @@ rs.partFill = function (prt) {
 
    console.log('lev',lev,'where',prt.where,'fnv',fnv);
    if (fnv) {
-        debugger;
+        //debugger;
 
-     return 'black';
+    // return 'black';
+     return 'transparent';
    }
    return 'rgb(50,50,50)';
 }
@@ -70,9 +71,17 @@ let visibles = rs.partParams.visibles = [];
 rs.addToArray(visibles,1,20);
 
 let strokeWidths = rs.partParams.strokeWidths = [];
+//rs.computeExponentials({dest:strokeWidths,n:4,factor:0.7,root:.4});
 rs.computeExponentials({dest:strokeWidths,n:20,factor:0.7,root:.4});
 
-  
+//rs.adjustProtos = function () {
+rs.afterInitialize = function () {
+  debugger;
+  let crc = this.circleP.instantiate();
+  crc.dimension=10;
+  crc.fill = 'white';
+  this.set('circle',crc);
+}
 //rs.addToArray(strokeWidths,.1,levels);
 export {rs};
 

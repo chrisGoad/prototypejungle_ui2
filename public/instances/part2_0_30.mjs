@@ -5,13 +5,13 @@ let rs = generatorP.instantiate();
 
 rs.setName('part2_0_30');
 let levels = 8;
-levels = 2;
+levels = 5;
 debugger;
 let initState = {a:{value:0},b:{value:0},c:{value:0},levels:{value:0},csf:{value:0.1}};
 let rng = 0.25;
-let pspace = {a:{step:.015,min:-rng,max:rng,interval:1},b:{step:.013,min:-rng,max:rng,interval:1},c:{step:.011,min:-rng,max:rng,interval:1},
-              levels:{min:1,max:3,step:1,interval:150},csf:{step:0.02,min:0.05,max:0.4,interval:1}};
-let pstate = {pathKind:'sweep',pspace,cstate:initState};
+let pspace = {a:{step:.015,min:-rng,max:rng,interval:1,steps:0.5},b:{step:.013,min:-rng,max:rng,interval:1,steps:0.5},c:{step:.011,min:-rng,max:rng,interval:1,steps:0.5},
+              levels:{min:1,max:3,step:1,interval:150,steps:0.5},csf:{step:0.05,min:0.05,max:14,interval:1,steps:0.5}};
+let pstate = {pathKind:'randomSteps',pspace,cstate:initState};
 let doWhatt = function (cstate) {
   console.log('cstate.a',cstate.a.value,'b',cstate.b.value);
   debugger;
@@ -76,7 +76,7 @@ let strokeWidths = rs.partParams.strokeWidths = [];
 let strokes = rs.partParams.strokes = [];
 rs.addToArray(strokes,'black',20);
 //rs.computeExponentials({dest:strokeWidths,n:20,root:0.4,factor:.7});
-rs.computeExponentials({dest:strokeWidths,n:20,root:4,factor:.7});
+rs.computeExponentials({dest:strokeWidths,n:20,root:.4,factor:.7});
 
 let csf = 0.3;
 const setEps = function (cstate) {
@@ -97,11 +97,15 @@ rs.oneStep = function () {
     setEps(cstate);
     this.qspa = mkqspa();
     console.log('levels',cstate.levels.value);
+    //let strokeWidths = rs.partParams.strokeWidths = [];
+   // rs.computeExponentials({dest:strokeWidths,n:20,root:csf,factor:.7});
+
     //rs.partParams.levels = cstate.levels;
     //this.partParams.levels = cstate.levels.value;
 
   //}
  setTimeout(() => this.oneStep(),40)
+ //setTimeout(() => this.oneStep(),40)
 }
 rs.afterInitialize = function () {
  this.oneStep();
@@ -114,7 +118,7 @@ rs.afterDisplayCell = function (prt) {
   let dim = pgon.minDimension();
   crc.dimension = csf*dim;
   crc.dimension = 0.2*dim;
-  crc.fill = 'white';//Math.random()<0.5?'blue':'blue';
+  crc.fill = 'black';//Math.random()<0.5?'blue':'blue';
   this.shapes.push(crc);
   let cnt = pgon.center();
   crc.moveto(cnt);

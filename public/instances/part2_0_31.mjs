@@ -8,11 +8,30 @@ addPathMethods(rs);
 rs.rectangular = 1;
 rs.setName('part2_0_31');
 
-let initState = {a:{value:0},b:{value:0},c:{value:0},levels:{value:0},csf:{value:0.1}};
-let rng = 0.25;
-let pspace = {a:{step:.015,min:-rng,max:rng,interval:1,steps:0.5},b:{step:.013,min:-rng,max:rng,interval:1,steps:0.5},c:{step:.011,min:-rng,max:rng,interval:1,steps:0.5},
-              levels:{min:1,max:3,step:1,interval:150,steps:0.5},csf:{step:0.05,min:0.05,max:14,interval:1,steps:0.5}};
-let pstate = {pathKind:'randomSteps',pspace,cstate:initState};
+let iv = 1;
+let rng = 200;
+let kind ='randomSteps';
+let nr = 9;
+const buildEm = function (n) {
+  let initS = {};
+  let ps = {};
+  for (let i=0;i<n;i++) {
+    for (let j=0;j<n;j++) {
+      let nm = ('a'+i)+j;
+      initS[nm] = {value:iv};
+      ps[nm] = {kind,step:5,min:1,max:rng,interval:1,steps:0.5};
+    }
+  }
+  return {initState:initS,pspace:ps}
+}  
+let bem = buildEm(nr);
+let {initState,pspace} = bem;
+
+/*let iv = 1;
+let initState = {a0:{value:iv},a1:{value:iv},a2:{value:iv},levels:{value:iv},csf:{value:iv}};
+let pspace = {a0:{kind,step:1,min:1,max:rng,interval:1,steps:0.5},a1:{kind,step:1,min:1,max:rng,interval:1,steps:0.5},
+   a2:{kind,step:1,min:1,max:rng,interval:1,steps:0.5}};*/
+let pstate = {pspace,cstate:initState};
 let doWhatt = function (cstate) {
   console.log('cstate.a',cstate.a.value,'b',cstate.b.value);
   debugger;
@@ -20,49 +39,63 @@ let doWhatt = function (cstate) {
 
 //rs.timeSteps(pstate,30,doWhat);
 
-const setEps = function (cstate) {
-  eps0 = cstate.a.value;
-  eps1 = cstate.b.value;
-  eps2 = cstate.c.value;
-  csf = cstate.csf.value;
-  console.log('cstate a',cstate.a.value,'b',cstate.b.value,'c',cstate.c.value,'csf',csf);
+const setA = function (cstate) {
+  let aa = [];
+  const addA = function (n) {
+     let nm = 'a'+n;
+     let vl = cstate[nm].value;
+     aa.push(vl);
+  }
+  for (let i=0;i<nr;i++) {
+    addA(i);
+  }
+ 
+  console.log('aa',aa);
+  return aa;
+
  }
 // rs.timeSteps(pstate,30,function (cstate) ={doWhat(this );
 
 rs.oneStep = function () {
   debugger;
-  this.resetShapes();
+//  this.resetShapes();
 //  for (let i=0;i<10;i++) {
     this.timeStep(pstate);
     let cstate = pstate.cstate;
-    setEps(cstate);
-    this.qspa = mkqspa();
-    console.log('levels',cstate.levels.value);
-    //let strokeWidths = rs.partParams.strokeWidths = [];
-   // rs.computeExponentials({dest:strokeWidths,n:20,root:csf,factor:.7});
-
-    //rs.partParams.levels = cstate.levels;
-    //this.partParams.levels = cstate.levels.value;
-
-  //}
- setTimeout(() => this.oneStep(),40)
- //setTimeout(() => this.oneStep(),40)
+   // let aa = setA(cstate);
+    for (let i=0;i<nr;i++) {
+      for (let j=0;j<nr;j++) {
+        let snm = ('a'+i)+j;
+        let cnm = ('c'+i)+j;
+        let c = this[cnm]
+        let v = cstate[snm].value;
+        c.dimension = v;
+        c.update();
+      }
+    }
+    draw.refresh();
+	 setTimeout(() => this.oneStep(),40)
 }
+
+let dim = 400;
 rs.initialize = function () {
+  debugger;
   this.circleP = circlePP.instantiate();
   this.shapes = this.set('shapes',arrayShape.mk());
-  const addCirc = (p) => {
+  const addCirc = (p,i,j) => {
     let crc = this.circleP.instantiate();
     crc.dimension = 10;
     crc.fill = 'white';//Math.random()<0.5?'blue':'blue';
-    this.shapes.push(crc);
+    this.set(('c'+i)+j,crc);
     crc.moveto(p);
   }
-  addCirc(Point.mk(-200,0));
-  addCirc(Point.mk(0,0));
-  addCirc(Point.mk(200,0));
-  
- //this.oneStep();
+  for (let i=0;i<nr;i++) {
+    for (let j=0;j<nr;j++) {
+      let hi = (nr-1)/2;
+      let p = Point.mk(dim*(i-hi),dim*(j-hi));
+      addCirc(p,i,j);
+    }
+  }
 }
 
 //rs.addToArray(strokeWidths,.1,levels);

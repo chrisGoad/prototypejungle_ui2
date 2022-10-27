@@ -100,16 +100,18 @@ item.nextState = function (pathKind,pspace,cstate,component) {
   
 item.timeStep = function (pstate) {
   //debugger;
-  let {pathKind,pspace,cstate}= pstate;
+  let {pspace,cstate}= pstate;
   let ct = cstate.time?cstate.time:0;
   let props = Object.getOwnPropertyNames(pspace);
  // let ns = {};
   props.forEach((component) => {
    let cc = pspace[component];
    let iv = cc.interval;
+   let kind = cc.kind;
    //let cs = cstate[component];
    if (ct%iv === 0) {
-     this.nextState(pathKind,pspace,cstate,component);
+    // this.nextState(pathKind,pspace,cstate,component);
+     this.nextState(kind,pspace,cstate,component);
    } else {
  //    ns[component] = cv;
    }

@@ -7,6 +7,14 @@ rs.setName('part2_0_30');
 let levels = 8;
 levels = 5;
 debugger;
+/*const  buildStatePs = function (n,m) {
+  let st = {};
+  for (let i = 0;i<n;i++) {
+    for (let j = 0;j<n;j++) {
+      let nm = ('a'+i)+j;
+         st[nm] = {value:0};
+ */     
+    
 let initState = {a:{value:0},b:{value:0},c:{value:0},levels:{value:0},csf:{value:0.1}};
 let rng = 0.25;
 let pspace = {a:{step:.015,min:-rng,max:rng,interval:1,steps:0.5},b:{step:.013,min:-rng,max:rng,interval:1,steps:0.5},c:{step:.011,min:-rng,max:rng,interval:1,steps:0.5},

@@ -8,7 +8,7 @@ addPathMethods(rs);
 rs.rectangular = 1;
 rs.setName('part2_0_32');
 
-let iv = 1;
+let iv = 51;
 let rng = 255;
 let kind ='randomSteps';
 let nr = 9;
@@ -18,17 +18,21 @@ const buildEm = function (n) {
   for (let i=0;i<n;i++) {
     let nm = ('c'+i);
     initS[nm] = {value:iv};
-    ps[nm] = {kind,step:5,min:50,max:rng,interval:1,steps:0.5};
+    ps[nm] = {kind,step:3,min:50,max:rng,interval:1,steps:0.5};
   }
   return {initState:initS,pspace:ps}
 }  
-let bem = buildEm(nr);
+let bem = buildEm(9);//nr);
 let {initState,pspace} = bem;
 let pstate = {pspace,cstate:initState};
 
-
+rs.ssf = 0;
 rs.oneStep = function () {
   debugger;
+  rs.ssf = rs.ssf+1;
+  if (rs.ssf>2000) {
+    return;
+  }
 //  this.resetShapes();
 //  for (let i=0;i<10;i++) {
     this.timeStep(pstate);

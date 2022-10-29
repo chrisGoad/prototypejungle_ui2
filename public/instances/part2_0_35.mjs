@@ -19,6 +19,7 @@ let kind = 'randomSteps';
 function addComponent(st,ps,n) {
   ps['dir'+n] = {kind,step:.015,min:0,max:2*Math.PI,interval:1,steps:0.5};
   ps['rd'+n] = {kind,step:.001,min:0,max:0.051,interval:1,steps:0.5};
+  ps['rd'+n] = {kind,step:.01,min:0,max:0.4,interval:1,steps:0.5};
   st['dir'+n] = {value:0};
   st['rd'+n] = {value:0};
 }
@@ -29,6 +30,7 @@ rs.addFillComponent = function (st,ps,ws) {
 
 let aws = rs.allWhereStrings(levels,4);
 console.log('aws',aws);
+debugger;
 let initState = {};
 let pspace = {};
 debugger;

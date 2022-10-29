@@ -54,33 +54,57 @@ item.sweepNextState = function (pspace,cstate,component) {
 
 
 item.randomStepsNextState = function (pspace,cstate,component) {
- // debugger;
+  debugger;
   let pspc = pspace[component];
   let csc = cstate[component];
   let down = csc.goingDown;
+  let jerky = pspc.jerky; //jerky acceleration
   let up = !down
   let {step,min,max,steps} = pspc;
   let delta = max-min;
   let stg = 1 + Math.floor(steps*Math.random()*(delta/step));
   let stepsToGo = csc.stepsToGo;
+  let cv = csc.value;
+
   if (stepsToGo === undefined) {
     stepsToGo = csc.stepsToGo = stg;
+    csc.lengthOfLeg = stg;
+    csc.distToGo = Math.min(stg*step,max-cv);
+    csc.legStart = cv;
   }
   let switchDir = stepsToGo <=0;
   //console.log('down',down,'stepsToGo',stepsToGo,'stg',stg);
-  let cv = csc.value;
-  let nvp = cv+step;
-  let nvm = cv-step;    
-  if ((nvm < min)||(down && switchDir)) {
+  let nv = down?cv-step:cv+step;
+  //let nvm = cv-step;  
+  let lol = csc.lengthOfLeg;
+  let lst = csc.legStart;
+  let dtg = down?-csc.distToGo:csc.distToGo;
+  let phase = (Math.PI)*(lol-stepsToGo)/lol - Math.PI/2; 
+  let nvn = Math.sin(phase);
+    console.log('jerky',jerky,'stg',stepsToGo,'lol',lol,'up',up,'phase',phase/(Math.PI/2),'nvn',nvn);
+   if (!jerky) {
+     nv = lst + (nvn+1)*0.5*dtg;
+   }
+   //nvm = csc.legStart + nvn*dtg;  
+  //nvp = nvm;
+  if ((nv < min)||(down && switchDir)) {
     down = csc.goingDown = 0;
     csc.stepsToGo = stg;
-  } else if ((nvp > max) || (up && switchDir)) {
+    csc.lengthOfLeg = stg;
+    csc.distToGo = Math.min(stg*step,max-cv);
+    csc.legStart = cv;
+
+  } else if ((nv > max) || (up && switchDir)) {
      down = csc.goingDown = 1;
      csc.stepsToGo = stg;
+     csc.lengthOfLeg = stg;
+     csc.distToGo = Math.min(stg*step,cv-min);
+     csc.legStart = cv;
+
   } else {
     csc.stepsToGo = csc.stepsToGo - 1
   }
-  csc.value=down?nvm:nvp;
+  csc.value=nv;//down?nvm:nvp;
 }
 
 item.nextState = function (pathKind,pspace,cstate,component) {

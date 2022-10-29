@@ -67,7 +67,7 @@ item.randomStepsNextState = function (pspace,cstate,component) {
     stepsToGo = csc.stepsToGo = stg;
   }
   let switchDir = stepsToGo <=0;
-  console.log('down',down,'stepsToGo',stepsToGo,'stg',stg);
+  //console.log('down',down,'stepsToGo',stepsToGo,'stg',stg);
   let cv = csc.value;
   let nvp = cv+step;
   let nvm = cv-step;    

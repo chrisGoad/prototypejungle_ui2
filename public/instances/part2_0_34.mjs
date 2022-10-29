@@ -3,9 +3,9 @@ import {rs as generatorP} from '/generators/part2_0.mjs';
 
 let rs = generatorP.instantiate();
 
-rs.setName('part2_0_30');
+rs.setName('part2_0_34');
 let levels = 8;
-levels = 5;
+levels = 2;
 debugger;
 /*const  buildStatePs = function (n,m) {
   let st = {};
@@ -113,27 +113,53 @@ rs.oneStep = function () {
     //this.partParams.levels = cstate.levels.value;
 
   //}
+  draw.refresh();
  setTimeout(() => this.oneStep(),40)
  //setTimeout(() => this.oneStep(),40)
 }
 rs.afterInitialize = function () {
+  let lines = this.set('lines',arrayShape.mk());
+
  this.oneStep();
 }
 
 rs.afterDisplayCell = function (prt) {
-  console.log('CSF',csf);
+debugger;
+	  console.log('CSF',csf);
+  let w = prt.where;
+  let ws = this.whereString(w);
+  let wln = w.length;
+  let wa = this[ws];
+  let wwa = !!wa;
+  if  (!wa) {
+    wa = this[ws] = [];
+  }
+  console.log('where',w,'ws',ws,'wln',wln,);
   let crc = this.circleP.instantiate();
   let pgon =  prt.polygon;
   let dim = pgon.minDimension();
   crc.dimension = csf*dim;
-  crc.dimension = 0.2*dim;
-  crc.fill = 'black';//Math.random()<0.5?'blue':'blue';
+  crc.dimension = 0.002*dim;
+  crc.fill = 'white';//Math.random()<0.5?'blue':'blue';
   this.shapes.push(crc);
   let cnt = pgon.center();
+  wa.push(cnt);
+    let waln = wa.length;
+
+  if (waln > 1) {
+      debugger;
+
+    let ln = this.lineP.instantiate();
+    ln.stroke = 'white';
+    ln['stroke-width'] =  .1;
+    this.lines.push(ln);
+    ln.setEnds(wa[waln-2],wa[waln-1]);
+    ln.update();
+  }
   crc.moveto(cnt);
 }
 
-rs.partFill = function (prt) {
+rs.partFilll = function (prt) {
   return 'gray';
 }
 //rs.addToArray(strokeWidths,.1,levels);

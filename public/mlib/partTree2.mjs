@@ -574,11 +574,39 @@ rs.checkPolygon = function (pgon) {
 
 rs.whereString = function (where) {
   let rs ='';
+  let first=1;
   where.forEach((w) => { 
-    rs+=' ';
+    if (!first) {
+      rs+='_';
+    } else {
+      first = 0;
+    }
     rs+=w[0];
   });
   return rs;
+}
+
+
+const allWhereStrings = function (frmlev,tolev,np) {
+  debugger;
+  let aw = [];
+  for (let i=0;i<np;i++) {
+    let cpn = 'P'+i;
+    let cpne = cpn+'_';
+    if (frmlev < tolev) {
+       let aws = allWhereStrings(frmlev+1,tolev,np);
+       aws.forEach((st) => {
+         aw.push(cpne+st);
+       });
+    } else {
+      aw.push(cpn);
+    }
+  }
+  return aw;
+}
+
+rs.allWhereStrings = function (levels,numParts) {
+  return allWhereStrings(1,levels,numParts);
 }
 
 rs.displayCell = function (prt,toSegs) {	
@@ -590,7 +618,7 @@ rs.displayCell = function (prt,toSegs) {
     return;
   }
  // console.log('displayCell',this.whereString(where));
-
+debugger;
   //console.log('DISPLAY CELL')
   //debugger;
   let {polygon:pgon} = prt;
@@ -803,7 +831,7 @@ rs.initialize = function () {
   //let {emitLineSegs,polygonal} = partParams;
   let {emitLineSegs,rectangular} = partParams;
 //  polygonal = 1;
-  this.addFrame();
+ // this.addFrame();
   this.initProtos();
   this.callIfDefined('adjustProtos');
  // if (!this.strokeWidths) {

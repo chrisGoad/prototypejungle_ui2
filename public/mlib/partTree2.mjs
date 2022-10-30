@@ -589,7 +589,10 @@ rs.whereString = function (where) {
 
 const allWhereStrings = function (frmlev,tolev,np) {
   //debugger;
-  let aw = ['top'];
+  let aw = [];
+  if (frmlev === 0) {
+    aw.push('top');
+  }
   for (let i=0;i<np;i++) {
     let cpn = 'P'+i;
     let cpne = cpn+'_';

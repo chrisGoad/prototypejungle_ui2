@@ -828,7 +828,6 @@ rs.stepPartParams = function (params) {
 rs.alreadyInitialized = 0;
 rs.initialize = function () {
   let {width:wd,height:ht,partParams,dropParams} = this;
- debugger;
   let hwd = 0.5*wd;
   let hht = 0.5*ht;
   //let {emitLineSegs,polygonal} = partParams;

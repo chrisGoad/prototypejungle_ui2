@@ -50,7 +50,6 @@ rs.partSplitParams = function (prt) {
 
 rs.numSteps = 0;
 rs.oneStep = function () {
-  debugger;
   //rs.numSteps = rs.numSteps+1;
   if (rs.numSteps++ > 20000) {
    return;
@@ -70,7 +69,7 @@ rs.computeExponentials({dest:strokeWidths,n:20,root:0.4,factor:.7});
 
 
 rs.partFill = function (prt) {
-debugger;
+  let ns = this.numSteps;
   let ws = this.whereString(prt.where)
   let wsr = ws+'_r';
   let r = pstate.cstate[wsr];
@@ -79,9 +78,21 @@ debugger;
   let wsb = ws+'_b';
   let b = pstate.cstate[wsb];
   if (r) {
-  debugger;
    // console.log('ws',ws,'v',v);
-    let fill = `rgb(${r.value},${g.value},${b.value})`;
+    let rv = r.value;
+    let gv = g.value;
+    let bv = b.value;
+    if (ns > 99) {
+      debugger;
+      let rdv = rv - 100;
+      let gdv = gv - 100;
+      let bdv = dv - 100;
+      let fc = ns>200?0:0.01*(200-ns);
+      rv = 100 + fc*rdv;
+      gv = 100 + fc*gdv;
+      bv = 100 + fc*bdv;
+    }
+    let fill = `rgb(${rv},${gv*1},${bv})`;
     return fill;
   }
 }

@@ -45,7 +45,7 @@ item.sinusoidVal = function (sv,ev,step,cstep) {
 }
 
 item.sweepNextState = function (pspace,cstate,component) {
- debugger;
+// debugger;
   let pspc = pspace[component];
   let {jerky,min,max,step} = pspc;
   let csc = cstate[component];
@@ -76,7 +76,7 @@ item.sweepNextState = function (pspace,cstate,component) {
    
 
 item.randomStepsNextState = function (pspace,cstate,component) {
-  debugger;
+ // debugger;
   let pspc = pspace[component];
   let csc = cstate[component];
   let {cstep,down,value,sv,ev} = csc;

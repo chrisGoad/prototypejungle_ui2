@@ -5,7 +5,7 @@ let rs = generatorP.instantiate();
 
 rs.setName('part2_0_35');
 let levels = 8;
-levels = 3;
+levels = 2;
 debugger;
 /*const  buildStatePs = function (n,m) {
   let st = {};

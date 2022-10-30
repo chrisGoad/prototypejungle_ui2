@@ -588,7 +588,7 @@ rs.whereString = function (where) {
 
 
 const allWhereStrings = function (frmlev,tolev,np) {
-  debugger;
+  //debugger;
   let aw = ['top'];
   for (let i=0;i<np;i++) {
     let cpn = 'P'+i;
@@ -618,7 +618,7 @@ rs.displayCell = function (prt,toSegs) {
     return;
   }
  // console.log('displayCell',this.whereString(where));
-debugger;
+//debugger;
   //console.log('DISPLAY CELL')
   //debugger;
   let {polygon:pgon} = prt;
@@ -766,7 +766,7 @@ rs.quad2part = function (params) {
 
 // for illustrations of the partitions (eg instances/part_0_D_0.mjc)
 rs.displayPc = function (n) {  //display periphery coordinate
-  debugger;
+ // debugger;
   let topP = this.shapes[0].fromGeom;
   //let pc = rs.partParams.splitParams['pc'+n];
   let pc = this.partParams.splitParams.pcs[n];
@@ -857,7 +857,7 @@ rs.initialize = function () {
   if (partParams.emitLineSegs) {
     this.generateDrops(dropParams);
   }
-  debugger;
+  //debugger;
   let ized = this.alreadyInitialized;
   this.alreadyInitialized = 1;
   if (!ized) {

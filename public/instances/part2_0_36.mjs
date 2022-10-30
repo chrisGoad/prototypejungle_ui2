@@ -14,7 +14,8 @@ debugger;
       let nm = ('a'+i)+j;
          st[nm] = {value:0};
  */     
-let kind = 'randomSteps';
+//let kind = 'randomSteps';
+let kind = 'sweep';
 let initState = {};
 let rng = 0.25;
 let pspace = {};
@@ -82,10 +83,8 @@ rs.computeExponentials({dest:strokeWidths,n:20,root:.4,factor:.7});
 rs.oneStep = function () {
   debugger;
   this.resetShapes();
-//  for (let i=0;i<10;i++) {
   this.timeStep(pstate);
  setTimeout(() => this.oneStep(),40)
- //setTimeout(() => this.oneStep(),40)
 }
 rs.afterInitialize = function () {
  this.oneStep();

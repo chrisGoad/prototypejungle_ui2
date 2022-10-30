@@ -8,10 +8,12 @@ addPathMethods(rs);
 rs.rectangular = 1;
 rs.setName('part2_0_32');
 
-let iv = 51;
+let iv = 254;
 let rng = 255;
 let kind ='randomSteps';
-let nr = 9;
+//let kind ='sweep';
+//let nr = 9;
+let nr = 1;
 const buildEm = function (n) {
   let initS = {};
   let ps = {};
@@ -22,9 +24,11 @@ const buildEm = function (n) {
   }
   return {initState:initS,pspace:ps}
 }  
-let bem = buildEm(9);//nr);
+let bem = buildEm(nr);
 let {initState,pspace} = bem;
 let pstate = {pspace,cstate:initState};
+
+let nineCs = nr === 9;
 
 rs.ssf = 0;
 rs.oneStep = function () {
@@ -38,27 +42,36 @@ rs.oneStep = function () {
     this.timeStep(pstate);
     let cstate = pstate.cstate;
     let r0 = cstate.c0.value;
-    let g0 = cstate.c1.value;
-    let b0 = cstate.c2.value;
-     let r1 = cstate.c3.value;
-    let g1 = cstate.c4.value;
-    let b1= cstate.c5.value;
-       let r2 = cstate.c6.value;
-    let g2 = cstate.c7.value;
-    let b2= cstate.c8.value;
+    if (nineCs) {let g0 = cstate.c1.value;
+      let b0 = cstate.c2.value;
+       let r1 = cstate.c3.value;
+      let g1 = cstate.c4.value;
+      let b1= cstate.c5.value;
+         let r2 = cstate.c6.value;
+      let g2 = cstate.c7.value;
+      let b2= cstate.c8.value;
+    }
    // let aa = setA(cstate);
-    let fill0 =`rgb(${r0},${r0},${b0})`;
-    let fill1 =`rgb(${r1},${g1},${b1})`;
-    let fill2 =`rgb(${r2},${b2},${b2})`;
+    let fill0,fill1,fill2;
+    if (nineCs) {
+      fill0 =`rgb(${r0},${r0},${b0})`;
+      fill1 =`rgb(${r1},${g1},${b1})`;
+      fill2 =`rgb(${r2},${b2},${b2})`;
+    }  else {
+      fill0 =`rgb(${r0},${r0},${r0})`;
+    }
+
     let c0 = this.circle0;
     c0.fill = fill0;
     c0.update();
-    let c1 = this.circle1;
-    c1.fill = fill1;
-    c1.update();
-    let c2 = this.circle2;
-    c2.fill = fill2;
-    c2.update();
+    if (nineCs) {
+      let c1 = this.circle1;
+      c1.fill = fill1;
+      c1.update();
+      let c2 = this.circle2;
+      c2.fill = fill2;
+      c2.update();
+    }
     draw.refresh();
 	 setTimeout(() => this.oneStep(),40)
 }

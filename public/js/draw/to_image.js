@@ -42,7 +42,6 @@ let jpegMovie = [];
 const convertToJpeg = function (destPath,cb) {
 	//debugger;
 	//const harvestImage = function () {
-    debugger;
 		let canvas = document.getElementById('imageCanvas');
 		let svgElement = dom.svgMain.__element
 		let bbox = svgElement.getBBox();

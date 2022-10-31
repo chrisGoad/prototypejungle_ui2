@@ -95,7 +95,7 @@ const performInit = function () {
 }
 
 const runAnimation = function (save) {
-	debugger;
+//	debugger;
 	let main = core.root.main;
 	main.saveVideo = save === 'yes';
 	if (main.animate) {
@@ -106,7 +106,7 @@ const runAnimation = function (save) {
 
 
 const resumeAnimation = function (save) {
-	debugger;
+	//debugger;
 	let main = core.root.main;
 	main.saveVideo = save === 'yes';
 	if (main.animate) {
@@ -125,7 +125,7 @@ const pauseAnimation = function () {
 
 
 const stepAnimation = function () {
-  debugger;
+  //debugger;
 	let main = core.root.main;
 	if (main.oneStep) {
 		main.oneStep(true);
@@ -135,7 +135,7 @@ const stepAnimation = function () {
 let audioCtx;
 
 const turnOnAudio = function () {
-  debugger;
+ // debugger;
  // audioCtx = new AudioContext();
  // audioCtx.resume();
    let rmain = core.root.main;
@@ -282,7 +282,7 @@ const padWithZeros = function (padTo,n) {
 }
 
 const saveFrame = function (n) {
-	debugger;
+	//debugger;
 	let pdn = padWithZeros(3,n);
 	let wts = core.vars.whereToSave;
 	if (wts) {

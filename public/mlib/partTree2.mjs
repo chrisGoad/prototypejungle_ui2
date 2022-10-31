@@ -525,15 +525,9 @@ rs.partStrokeWidth = function (prt) {
 
 
 rs.partStroke = function (prt) {
-  let {strokes} = this.partParams;
+  let {stroke} = this.partParams;
   //debugger;
-  if (strokes) {
-    let lv =  this.levelOf(prt);
-    //let lv =  prt.where.length;
-    let s =strokes[lv];
-   // console.log('lv',lv,'sw',sw);
-    return s;
-  }
+  return stroke;
 }
 
 

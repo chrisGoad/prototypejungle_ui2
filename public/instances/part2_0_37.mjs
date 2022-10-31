@@ -15,19 +15,53 @@ let kind = 'sweep';
 let rng = 0.25;
 
 let initState = {a:{value:0},b:{value:0}};
+
 let pspace = {a:{kind,step:.015,min:-rng,max:rng,interval:1,steps:0.5},b:{kind,step:.013,min:-rng,max:rng,interval:1,steps:0.5}};
 let pstate = {pspace,cstate:initState};
 
 rs.addFillComponent = function (st,ps,ws) {
   ps[ws+'_r'] = {kind:rkind,step:1,min:0,max:255,interval:1,steps:0.5};
-  st[ws+'_r'] = {value:100};
+  st[ws+'_r'] = {value:Math.floor(Math.random()*255)};
+ // st[ws+'_r'] = {value:100};
   ps[ws+'_g'] = {kind:rkind,step:1,min:0,max:255,interval:1,steps:0.5};
-  st[ws+'_g'] = {value:100}; 
+  //st[ws+'_g'] = {value:200}; 
+  st[ws+'_g'] = {value:Math.floor(Math.random()*128)};
+
   ps[ws+'_b'] = {kind:rkind,step:1,min:0,max:255,interval:1,steps:0.5};
-  st[ws+'_b'] = {value:100};
+    st[ws+'_b'] = {value:Math.floor(Math.random()*255)};
+
+ // st[ws+'_b'] = {value:100};
 }
 let aws = rs.allWhereStrings(levels,5);
 aws.forEach((st) => rs.addFillComponent(initState,pspace,st));
+let iprops = Object.getOwnPropertyNames(initState);
+let copyInit = {};
+iprops.forEach((pr) => {
+  let v = initState[pr].value;
+  copyInit[pr] = {value:v};
+});
+
+rs.interpolateStates= function (ist,fst,fr) { 
+  debugger;
+  let intr = {};
+  let iprops = Object.getOwnPropertyNames(initState);
+  iprops.forEach((pr) => {
+    let ivo = ist[pr];
+    let fvo = fst[pr];
+    if (ivo&&fvo) {
+      let iv = ivo.value;
+      let fv = fvo.value;
+      let intv = iv + fr*(fv-iv);
+      intr[pr]={value:intv};
+    } else {
+      debugger;
+    }
+  });
+  debugger;
+  return intr;
+}
+
+  
 
 debugger;
 let mkqspa = function (a,b){
@@ -49,10 +83,28 @@ rs.partSplitParams = function (prt) {
 }
 
 rs.numSteps = 0;
+let saveAnimation = 1;
 rs.oneStep = function () {
   //rs.numSteps = rs.numSteps+1;
-  if (rs.numSteps++ > 20000) {
+  let ns = this.numSteps;
+//  if (this.numSteps++ > 300) {
+  if (this.numSteps++ > 150) {
+   if (saveAnimation) {
+     debugger;
+     let nf = 10;
+     let fs = pstate.cstate;
+     pstate.cstate = initState;
+     for (let i=1;i<=nf;i++) {
+       this.resetShapes();
+       pstate.cstate = this.interpolateStates(fs,copyInit,i/nf);
+       draw.saveFrame(ns+i-2);
+     }
+   }
    return;
+  }
+  if (ns&&saveAnimation) { // for some reason, the first frame is corrupted
+     
+    draw.saveFrame(ns-1);
   }
   this.resetShapes();
   this.timeStep(pstate);
@@ -65,9 +117,10 @@ let visibles = rs.partParams.visibles = [];
 rs.addToArray(visibles,1,20);
 
 let strokeWidths = rs.partParams.strokeWidths = [];
-rs.computeExponentials({dest:strokeWidths,n:20,root:0.4,factor:.7});
+rs.computeExponentials({dest:strokeWidths,n:20,root:0.8,factor:.7});
+//rs.computeExponentials({dest:strokeWidths,n:20,root:0,factor:.7});
 
-
+rs.partParams.stroke = 'rgb(100,80,100)';
 rs.partFill = function (prt) {
   let ns = this.numSteps;
   let ws = this.whereString(prt.where)
@@ -82,17 +135,18 @@ rs.partFill = function (prt) {
     let rv = r.value;
     let gv = g.value;
     let bv = b.value;
-    if (ns > 99) {
+    if (0&& (ns > 199)) {
       debugger;
       let rdv = rv - 100;
       let gdv = gv - 100;
-      let bdv = dv - 100;
-      let fc = ns>200?0:0.01*(200-ns);
+      let bdv = bv - 100;
+      let fc = ns>400?0:0.005*(400-ns);
       rv = 100 + fc*rdv;
-      gv = 100 + fc*gdv;
+      gv = 80 + fc*gdv;
       bv = 100 + fc*bdv;
     }
-    let fill = `rgb(${rv},${gv*1},${bv})`;
+    //let fill = `rgb(${rv},${gv*1},${bv})`;
+    let fill = `rgb(${rv},${Math.floor(0.8*gv)},${rv})`;
     return fill;
   }
 }

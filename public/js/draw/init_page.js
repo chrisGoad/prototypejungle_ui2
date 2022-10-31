@@ -113,7 +113,7 @@ let mainGetVars = {'source':true,'intro':true,'data':true};
 let source,sourceFile,helperUrl,content,loadUrl;
 
 const processQuery = function() {  
-  debugger;
+ // debugger;
   if (draw.vars.fxhash) {
     processQueryFxhash();
     return;

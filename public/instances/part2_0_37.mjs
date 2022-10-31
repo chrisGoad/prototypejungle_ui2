@@ -2,7 +2,7 @@
 import {rs as generatorP} from '/generators/part2_0.mjs';
 
 let rs = generatorP.instantiate();
-
+debugger;
 rs.setName('part2_0_37');
 let levels = 10;
 levels = 3;
@@ -34,6 +34,9 @@ rs.addFillComponent = function (st,ps,ws) {
 }
 let aws = rs.allWhereStrings(levels,5);
 aws.forEach((st) => rs.addFillComponent(initState,pspace,st));
+
+let copyInit = rs.deepCopy(initState);
+/*
 let iprops = Object.getOwnPropertyNames(initState);
 let copyInit = {};
 iprops.forEach((pr) => {
@@ -60,7 +63,7 @@ rs.interpolateStates= function (ist,fst,fr) {
   debugger;
   return intr;
 }
-
+*/
   
 
 debugger;
@@ -146,7 +149,8 @@ rs.partFill = function (prt) {
       bv = 100 + fc*bdv;
     }
     //let fill = `rgb(${rv},${gv*1},${bv})`;
-    let fill = `rgb(${rv},${Math.floor(0.8*gv)},${rv})`;
+   // let fill = `rgb(${rv},${Math.floor(0.8*gv)},${rv})`;
+    let fill = `rgb(${rv},${rv},100)`;
     return fill;
   }
 }

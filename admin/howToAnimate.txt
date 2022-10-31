@@ -77,7 +77,9 @@ c:\ffmpeg\bin\ffmpeg  -framerate 20 -i animations/basic_move2_f%03d.jpg -s 700x7
 c:\ffmpeg\bin\ffmpeg  -framerate 20 -i animations/basic_move_f%03d.jpg -s 500x500  export/basic_move.anim.mp4
 c:\ffmpeg\bin\ffmpeg  -framerate 20 -i animations/basic_move2_f%03d.jpg -s 500x500  export/basic_move.anim.gif
 c:\ffmpeg\bin\ffmpeg  -framerate 10 -i animations/quad_15_6_f%03d.jpg -s 500x500  export/quad_15_5.anim.gif
-c:\ffmpeg\bin\ffmpeg  -framerate 10 -i animations/part2_0_37_f%03d.jpg -s 500x500  export/part2_0_37.anim.gif
+c:\ffmpeg\bin\ffmpeg  -framerate 20 -i animations/part2_0_37_f%03d.jpg -s 500x500  export/part2_0_37.anim.gif
+c:\ffmpeg\bin\ffmpeg  -framerate 20 -i animations/part2_0_37_f%03d.jpg -s 500x500  export/part2_0_37.anim.mp4
+c:\ffmpeg\bin\ffmpeg  -framerate 20 -i animations/part2_0_38_f%03d.jpg -s 500x500  export/part2_0_38.anim.gif
 
 
 

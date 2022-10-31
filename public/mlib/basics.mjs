@@ -542,6 +542,19 @@ item.Stepper.step = function (index) {
      }
    }
  }
+ 
+ 
+item.deepCopy = function (o) { //only own props, and fails on circular structures
+  let props = Object.getOwnPropertyNames(o);
+  let cp = {};
+  props.forEach((pr) => {
+    let v = o[pr];
+    let rv = (v && (typeof v === 'object'))?this.deepCopy(v):v;
+    cp[pr] = rv;
+  });
+  return cp; 
+}
+
 
 item.resetShapes = function () {
   this.shapes.remove();

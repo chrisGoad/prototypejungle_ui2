@@ -152,6 +152,24 @@ item.timeStep = function (pstate) {
 }
 
 
+item.interpolateStates= function (ist,fst,fr) { 
+  debugger;
+  let intr = {};
+  let iprops = Object.getOwnPropertyNames(ist);
+  iprops.forEach((pr) => {
+    let ivo = ist[pr];
+    let fvo = fst[pr];
+    if (ivo&&fvo) {
+      let iv = ivo.value;
+      let fv = fvo.value;
+      let intv = iv + fr*(fv-iv);
+      intr[pr]={value:intv};
+    }
+  });
+  return intr;
+}
+
+  
 
 item.timeSteps = function (pstate,n,doWhat) {
   for (let i=0;i<n;i++) {
@@ -160,7 +178,47 @@ item.timeSteps = function (pstate,n,doWhat) {
     this.timeStep(pstate);
   }
 }
-    
+
+
+
+item.stepsSoFar = 0;
+item.numSteps = 150;
+item.saveAnimation = 0;
+item.iStepsSoFar = 0;
+item.numISteps = 20;
+item.interpFrom;
+item.interpTo;
+item.stepInterval = 40;
+item.oneInterpolationStep = function () {
+  let i = this.iStepsSoFar;
+  this.iStepsSoFar++;
+  this.resetShapes();
+  this.pstate.cstate = this.interpolateStates(this.interpFrom,this.interpTo,i/this.numISteps);
+  if (this.saveAnimation) {
+    draw.saveFrame(this.numSteps+this.iStepsSoFar-2);
+  }
+  if (i < this.numISteps) {
+     setTimeout(() => this.oneInterpolationStep(),this.stepInterval);
+  }
+
+}
+item.oneStep = function () {
+  let ns = this.stepsSoFar;
+  if (this.stepsSoFar++ > this.numSteps) {
+    this.iStepsSoFar = 0;
+    this.interpFrom = this.pstate.cstate;
+    this.interpTo = this.copyOfInitState;
+    this.oneInterpolationStep();
+    return;
+  }
+  if (ns&&this.saveAnimation) { // for some reason, the first frame is corrupted 
+    draw.saveFrame(ns-1);
+  }
+  this.resetShapes();
+  this.timeStep(this.pstate);
+ setTimeout(() => this.oneStep(),this.stepInterval)
+}
+ 
        
 }  
    

@@ -204,7 +204,7 @@ item.oneInterpolationStep = function () {
 }
 item.oneStep = function () {
   let ns = this.stepsSoFar;
-  if (this.stepsSoFar++ > this.numSteps) {
+  if (this.numISteps && (this.stepsSoFar++ > this.numSteps)) {
     this.iStepsSoFar = 0;
     this.interpFrom = this.pstate.cstate;
     this.interpTo = this.copyOfInitState;

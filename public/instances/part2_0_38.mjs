@@ -80,7 +80,6 @@ let strokes = rs.partParams.strokes = [];
 rs.addToArray(strokes,'white',20);
 rs.computeExponentials({dest:strokeWidths,n:20,root:0,factor:.7});
 
-rs.numSteps = 0;
 /*
 rs.oneStep = function () {
   debugger;

@@ -56,7 +56,7 @@ item.sweepNextState = function (pspace,cstate,component) {
     ev = csc.ev = max;
   }
   let nv = this.sinusoidVal(sv,ev,step,cstep);
-  console.log('nv',nv,'down',down,'sv',sv,'ev',ev,'step',step,'cstep',cstep);
+  //console.log('nv',nv,'down',down,'sv',sv,'ev',ev,'step',step,'cstep',cstep);
   let up = !down;
   if ((nv >= max) && up) {
     csc.sv = max;
@@ -95,7 +95,7 @@ item.randomStepsNextState = function (pspace,cstate,component) {
   }
   let dist = Math.abs(ev-sv);
   let nv = this.sinusoidVal(sv,ev,step,cstep);
-  console.log('nv',nv,'down',down,'sv',sv,'ev',ev,'step',step,'cstep',cstep);
+  //console.log('nv',nv,'down',down,'sv',sv,'ev',ev,'step',step,'cstep',cstep);
   let switchDir = cstep >= dist/step; 
   if (down && ((nv <= min) || switchDir)) {
     down = csc.down = 0;
@@ -190,9 +190,17 @@ item.interpFrom;
 item.interpTo;
 item.stepInterval = 40;
 item.oneInterpolationStep = function () {
+  debugger;
   let i = this.iStepsSoFar;
+  if (i===0) {
+   console.log('interpFrom',this.interpFrom,'interpTo',this.interpTo);
+  }
   this.iStepsSoFar++;
-  this.resetShapes();
+   if (this.updateState) {
+    this.updateState();
+  } else {
+    this.resetShapes();
+  }
   this.pstate.cstate = this.interpolateStates(this.interpFrom,this.interpTo,i/this.numISteps);
   if (this.saveAnimation) {
     draw.saveFrame(this.numSteps+this.iStepsSoFar-2);
@@ -206,7 +214,7 @@ item.oneStep = function () {
   let ns = this.stepsSoFar;
   if (this.numISteps && (this.stepsSoFar++ > this.numSteps)) {
     this.iStepsSoFar = 0;
-    this.interpFrom = this.pstate.cstate;
+    this.interpFrom = this.deepCopy(this.pstate.cstate);
     this.interpTo = this.copyOfInitState;
     this.oneInterpolationStep();
     return;
@@ -214,7 +222,11 @@ item.oneStep = function () {
   if (ns&&this.saveAnimation) { // for some reason, the first frame is corrupted 
     draw.saveFrame(ns-1);
   }
-  this.resetShapes();
+  if (this.updateState) {
+    this.updateState();
+  } else {
+    this.resetShapes();
+  }
   this.timeStep(this.pstate);
  setTimeout(() => this.oneStep(),this.stepInterval)
 }

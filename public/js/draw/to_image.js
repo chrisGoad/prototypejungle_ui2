@@ -20,7 +20,7 @@ const drawInlineSVG = function (svgElement, bbox,xPad,yPad,ctx, callback) {
     let lowy = ycenter - yPad*bbox.height/2;   
     let wd = jpgSizeFactor*xPad*bbox.width;
     let ht = jpgSizeFactor*yPad*bbox.height;
-    console.log('Image drawn with wd ',wd,' ht ',ht);
+   // console.log('Image drawn with wd ',wd,' ht ',ht);
     ctx.drawImage(this, lowx,lowy,xPad*bbox.width,yPad*bbox.height,0,0,wd,ht);
    // ctx.drawImage(this, lowx,lowy,xPad*bbox.width,yPad*bbox.height,0,0,jpgSizeFactor*xPad*bbox.width,jpgSizeFactor*yPad*bbox.height);
     callback();

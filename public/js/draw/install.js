@@ -288,7 +288,7 @@ const saveFrame = function (n) {
 	if (wts) {
 	  let dst = `animations/${wts}_f${pdn}.jpg`;
 	  convertToJpeg(dst,function () {
-		  console.log('saved the frame at '+dst);
+		//  console.log('saved the frame at '+dst);
 	  });	
 	} else {
 		alert('no destination given for image');

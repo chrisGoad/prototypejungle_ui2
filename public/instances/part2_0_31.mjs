@@ -27,19 +27,10 @@ const buildEm = function (n) {
 let bem = buildEm(nr);
 let {initState,pspace} = bem;
 rs.copyOfInitState = rs.deepCopy(initState);
-/*let iv = 1;
-let initState = {a0:{value:iv},a1:{value:iv},a2:{value:iv},levels:{value:iv},csf:{value:iv}};
-let pspace = {a0:{kind,step:1,min:1,max:rng,interval:1,steps:0.5},a1:{kind,step:1,min:1,max:rng,interval:1,steps:0.5},
-   a2:{kind,step:1,min:1,max:rng,interval:1,steps:0.5}};*/
+
 rs.pstate = {pspace,cstate:initState};
-let doWhatt = function (cstate) {
-  console.log('cstate.a',cstate.a.value,'b',cstate.b.value);
-  debugger;
-}
 
-//rs.timeSteps(pstate,30,doWhat);
-
-const setA = function (cstate) {
+const setAA = function (cstate) {
   let aa = [];
   const addA = function (n) {
      let nm = 'a'+n;
@@ -54,10 +45,9 @@ const setA = function (cstate) {
   return aa;
 
  }
-// rs.timeSteps(pstate,30,function (cstate) ={doWhat(this );
+ 
 rs.updateState = function () {
   let cstate = this.pstate.cstate;
-   // let aa = setA(cstate);
   for (let i=0;i<nr;i++) {
     for (let j=0;j<nr;j++) {
       let snm = ('a'+i)+j;
@@ -74,26 +64,7 @@ rs.updateState = function () {
 rs.numSteps = 100;
 rs.numISteps = 20;
 rs.saveAnimation = 1;
-rs.oneStepp = function () {
-  debugger;
-//  this.resetShapes();
-//  for (let i=0;i<10;i++) {
-    this.timeStep(pstate);
-    let cstate = pstate.cstate;
-   // let aa = setA(cstate);
-  /*  for (let i=0;i<nr;i++) {
-      for (let j=0;j<nr;j++) {
-        let snm = ('a'+i)+j;
-        let cnm = ('c'+i)+j;
-        let c = this[cnm]
-        let v = cstate[snm].value;
-        c.dimension = v;
-        c.update();
-      }
-    }
-    draw.refresh();*/
-	 setTimeout(() => this.oneStep(),40)
-}
+
 
 let dim = 400;
 rs.initialize = function () {
@@ -121,7 +92,6 @@ rs.initialize = function () {
   }
 }
 
-//rs.addToArray(strokeWidths,.1,levels);
 export {rs};
 
 

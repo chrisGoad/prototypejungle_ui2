@@ -3,80 +3,53 @@ import {rs as generatorP} from '/generators/part2_0.mjs';
 
 let rs = generatorP.instantiate();
 
-rs.setName('part2_0_13');
+rs.setName('part2_0_41');
 let levels = 10;
-levels = 5;
+levels = 4;
 
 rs.partParams.levels = levels;
 rs.partParams.rectangular = 1;
-//rs.partParams.displayProbability = .2;
-
-const mkQp0 = function (dv) {
-  return {Case:4,vertexNum:0,pcs:[0.4,1.5,2.5,3.5],frs:[.5,0.5]};
-}
-
-const mkQp = function (dv) {
-  return {Case:4,vertexNum:0,pcs:[0.5-dv,1.5-dv,2.5+dv,3.5],frs:[.5-dv,0.5+dv]};
-}
-let inc =0.01;
-let theQps = [mkQp0()];
-const addQp = function () {
-  theQps.push(inc*theQps.length);
-}
-
-for (let i=0;i<100;i++) {
-  addQp();
-}
-let byWhere = {};
-byWhere['P0'] = mkQp0();
-byWhere['P1'] = mkQp();
-byWhere['P2'] = mkQp(.2);
-byWhere['P3'] = mkQp(.3);
-byWhere['P0_P0'] = mkQp(.1);
-
-/*
-rs.qspa0 = [];
-//rs.qspa.push({Case:3,vertexNum:0,pc0:0.4,pc1:1.4,pc2:2.6,pc3:3.4});
-rs.qspa0.push({Case:7,pcs:[0.5,1.5,2.5,3.5]});
-rs.qspa0.push({Case:4,vertexNum:0,pcs:[0.5,1.5,2.5,3.5],frs:[.5,0.5]});
-rs.qspa0.push({Case:4,vertexNum:0,pcs:[0.4,1.5,2.5,3.5],frs:[.5,0.5]});
-rs.qspa0.push({Case:6,vertexNum:0,pcs:[0.5,1.5,2.5,3.5],frs:[.5,0.5]});
-rs.qspa0.push({Case:7,pcs:[0.5,1.5,2.5,3.5]});
-//rs.qspa.push({Case:9,radius:.2,direction:0.25*Math.PI,pc0:0.4,pc1:1.4,pc2:2.6,pc3:3.4});
-
-rs.qspa1 = [];
-//rs.qspa.push({Case:3,vertexNum:0,pc0:0.4,pc1:1.4,pc2:2.6,pc3:3.4});
-rs.qspa1.push({Case:7,pcs:[0.5,1.5,2.5,3.5]});
-rs.qspa1.push({Case:4,vertexNum:0,pcs:[0.4,1.4,2.6,3.4],frs:[.4,0.6]});
-rs.qspa1.push({Case:4,vertexNum:0,pcs:[0.4,1.4,2.6,3.4],frs:[.4,0.6]});
-rs.qspa1.push({Case:6,vertexNum:0,pcs:[0.4,1.4,2.6,3.4],frs:[.4,0.6]});
-rs.qspa1.push({Case:7,pcs:[0.4,1.4,2.6,3.4]});
-//rs.qspa.push({Case:9,radius:.2,direction:0.25*Math.PI,pc0:0.4,pc1:1.4,pc2:2.6,pc3:3.4});
 
 
-rs.qspa2 = [];
-//rs.qspa.push({Case:3,vertexNum:0,pc0:0.4,pc1:1.4,pc2:2.6,pc3:3.4});
-rs.qspa2.push({Case:7,pcs:[0.5,1.5,2.5,3.5]});
-rs.qspa2.push({Case:4,vertexNum:0,pcs:[0.3,1.3,2.7,3.3],frs:[.3,0.7]});
-rs.qspa2.push({Case:6,vertexNum:0,pcs:[0.3,1.4,2.7,3.3],frs:[.3,0.7]});
-rs.qspa2.push({Case:7,pcs:[0.3,1.3,2.7,3.3]});
-//rs.qspa.push({Case:9,radius:.2,direction:0.25*Math.PI,pc0:0.4,pc1:1.4,pc2:2.6,pc3:3.4});
+let mineps = -.2;
+let maxeps = .2;
 
-rs.qspa3 = [];
-//rs.qspa.push({Case:3,vertexNum:0,pc0:0.4,pc1:1.4,pc2:2.6,pc3:3.4});
-rs.qspa3.push({Case:7,pcs:[0.5,1.5,2.5,3.5]});
-rs.qspa3.push({Case:4,vertexNum:0,pcs:[0.2,1.2,2.9,3.2],frs:[.2,0.8]});
-rs.qspa3.push({Case:6,vertexNum:0,pcs:[0.2,1.2,2.8,3.2],frs:[.8,0.8]});
-rs.qspa3.push({Case:7,pcs:[0.2,1.2,2.8,3.2]});
-//rs.qspa.push({Case:9,radius:.2,direction:0.25*Math.PI,pc0:0.4,pc1:1.4,pc2:2.6,pc3:3.4});
+let kind ='randomSteps';
+kind ='randomValue';
+kind ='sweep';
+let nr = 9;
+nr = 1;
+const buildEm = function (n) {
+  let initS = {};
+  let ps = {};
+  for (let i=0;i<n;i++) {
+    for (let j=0;j<n;j++) {
+      let rnm0 = 'eps0';
+      let rnm1 = 'eps1';
+      let xnm = ('x'+i)+j;
+      let ynm = ('y'+i)+j;
+      initS[rnm0] = {value:mineps+Math.floor(Math.random()*(maxeps-mineps)),theta:0};
+      ps[rnm0] = {kind,step:.05,min:mineps,max:maxeps,interval:1,steps:0.5};
+      initS[rnm1] = {value:mineps+Math.floor(Math.random()*(maxeps-mineps)),theta:0};
+      ps[rnm1] = {kind,step:.02,min:mineps,max:maxeps,interval:1,steps:0.5};
+  /*     initS[xnm] = {value:minx+Math.floor(Math.random()*(maxx-minx)),theta:0};
+      ps[xnm] = {kind,step:.5,min:minx,max:maxx,interval:1,steps:0.5};
+       //initS[ynm] = {value:miny+Math.floor(Math.random()*(maxy-miny)),theta:0};
+       initS[ynm] = {value:0,theta:0};
+      ps[ynm] = {kind,step:.7,min:miny,max:maxy,interval:1,steps:0.5}; */
+    }
+  }
+  return {initState:initS,pspace:ps}
+}  
+let bem = buildEm(nr);
 
-rs.triSplitParams1 = {Case:1,vertexNum:0,pcs:[0.3,1.3]};
+let {initState,pspace} = bem;
+rs.copyOfInitState = rs.deepCopy(initState);
 
-*/
+rs.pstate = {pspace,cstate:initState};
 let whereSum = function (wh) {
   let ws = 0;
   wh.forEach((v) => {
-    debugger;
     let wnum = v[0].substring(1);
     let n = Number(wnum);
     ws=ws+n;
@@ -84,6 +57,77 @@ let whereSum = function (wh) {
    return ws;
 }
 
+rs.theFills = {P0:'rgb(255,0,0)',P1:'rgb(200,200,0)',P2:'rgb(0,255,0)',P3:'rgb(0,255,255)',P4:'rgb(0,0,255)',P5:'rgb(100,100,100)'};
+rs.partFilll = function (prt) {
+debugger;
+  let where = prt.where;
+  let lev = where.length;
+  if (lev >= (levels+0)) {
+    let nm = this.partName(prt);
+    let fill = this.theFills[nm];
+    return fill;
+  }
+}
+
+let wass ={};
+
+
+let aws = rs.allWhereStrings(levels,4);
+console.log('aws',aws);
+let buildAssignments = function () {
+  aws.forEach((ws) => {
+   // console.log('ws',ws);
+    wass[ws] = 2+Math.floor(11*Math.random());
+  });
+}
+buildAssignments();
+console.log('wass',wass);
+
+
+
+
+function mkCase(n,eps0,eps1) {
+  let cs;
+  const mkPcs = function () {
+    return [.5-eps0,1.5-eps1,2.5-eps1,3.5-eps0]
+  }
+  if (n===2) {
+    return {Case:2,vertexNum:0,pcs:[0.5+eps,2.5-eps1]};
+  }
+  if (n===3) {
+    return {Case:3,pcs:mkPcs()};
+  } 
+  if (n===4) {
+    return {Case:4,pcs:mkPcs(),frs:[0.3,0.7]};
+  }
+  if (n===5) {
+    return {Case:5,pcs:mkPcs(),frs:[0.3,0.7]};
+  } 
+  if (n===6) {
+    return {Case:6,pcs:mkPcs(),frs:[.3,0.7]};
+  } 
+  if (n===7) {
+    return {Case:7,pcs:mkPcs()};
+  } 
+  if (n===8) {
+    return {Case:8,pcs:mkPcs()};
+  } 
+  if (n===9) {
+    return {Case:9,direction:-0.25*Math.PI,radius:0.2,pcs:mkPcs()};
+  } 
+  if (n===10) {
+    return {Case:10,pcs:mkPcs(),ips:[{x:.3,y:.3},{x:.7,y:.7}]};
+  } 
+  if (n===11) {
+    return {Case:11,pcs:mkPcs()};
+  } 
+  if (n===12) {
+    return {Case:12,pcs:mkPcs()};
+  } 
+}
+
+rs.eps0 = 0;
+rs.eps1 = 0;
 rs.partSplitParams = function (prt) {
   let {polygon:pgon} = prt;
   let {qspa0,qspa1,qspa2,qspa3} = this;
@@ -94,18 +138,25 @@ rs.partSplitParams = function (prt) {
   let inQ3 = (cnt.x > 0) && (cnt.y > 0);
   let ln = pgon.corners.length;
   let where = prt.where;
-  let ws = this.whereString(where);
-  let wsum = whereSum(where);
-  
   let lev = where.length;
+  let ws = this.whereString(where);
+  let idx = wass[ws];
+  let wsum = whereSum(where);
+ // console.log('wsum',wsum);
+  debugger;
   let qp;
-  if (lev === 0) {
+  let cln = 12-2;
+  if (0|| (lev <3)) {
     qp = {Case:7,pcs:[0.5,1.5,2.5,3.5]}
   } else {
-    let idx = Math.floor(4*Math.random());
+  //  let idx = Math.floor(cln*Math.random());
     //qp = theQps[lev%4];
     debugger;
-    qp = theQps[wsum];
+  //  qp = theQps[wsum];
+   // qp = cases[idx];
+    let eps = Math.random()*0.0;
+    qp = mkCase(idx+2,this.eps0,this.eps1);
+   // qp = cases[12];
   //  qp = byWhere[ws];
    }
    return qp;
@@ -116,6 +167,25 @@ rs.addToArray(visibles,1,20);
 
 let strokeWidths = rs.partParams.strokeWidths = [];
 rs.computeExponentials({dest:strokeWidths,n:20,root:0.4,factor:.7});
+
+
+
+rs.updateState = function () {
+  debugger;
+  let cstate = this.pstate.cstate;
+  let eps0 = cstate.eps0.value;
+  let eps1 = cstate.eps1.value;
+ // console.log('eps',eps);
+  rs.eps0 = eps0;
+  rs.eps1 = eps1;
+  this.resetShapes();
+
+}
+
+rs.numSteps = 100;
+rs.numISteps = 0;
+rs.saveAnimation = 0;
+rs.stepInterval = 40;
 
   
 //rs.addToArray(strokeWidths,.1,levels);

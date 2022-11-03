@@ -60,6 +60,7 @@ rs.addToArray(strokes,'black',20);
 rs.computeExponentials({dest:strokeWidths,n:20,root:.4,factor:.7});
 rs.numSteps = 150;
 rs.numSteps = 100;
+rs.numSteps = 300;
 rs.numISteps = 12;
 rs.saveAnimation = 1;
 

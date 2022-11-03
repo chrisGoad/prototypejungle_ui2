@@ -212,14 +212,17 @@ item.oneInterpolationStep = function () {
 }
 item.oneStep = function () {
   let ns = this.stepsSoFar;
-  if (this.numISteps && (this.stepsSoFar++ > this.numSteps)) {
-    this.iStepsSoFar = 0;
-    this.interpFrom = this.deepCopy(this.pstate.cstate);
-    this.interpTo = this.copyOfInitState;
-    this.oneInterpolationStep();
+  if  (this.stepsSoFar++ > this.numSteps) {
+    if (this.numISteps) {
+      this.iStepsSoFar = 0;
+      this.interpFrom = this.deepCopy(this.pstate.cstate);
+      this.interpTo = this.copyOfInitState;
+      this.oneInterpolationStep();
+    }
     return;
   }
   if (ns&&this.saveAnimation) { // for some reason, the first frame is corrupted 
+    console.log('ns',ns);
     draw.saveFrame(ns-1);
   }
   if (this.updateState) {

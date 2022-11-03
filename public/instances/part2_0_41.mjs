@@ -5,7 +5,7 @@ let rs = generatorP.instantiate();
 
 rs.setName('part2_0_41');
 let levels = 10;
-levels = 4;
+levels = 5;
 
 rs.partParams.levels = levels;
 rs.partParams.rectangular = 1;
@@ -19,6 +19,7 @@ kind ='randomValue';
 kind ='sweep';
 let nr = 9;
 nr = 1;
+let sp = 1.5;
 const buildEm = function (n) {
   let initS = {};
   let ps = {};
@@ -29,9 +30,9 @@ const buildEm = function (n) {
       let xnm = ('x'+i)+j;
       let ynm = ('y'+i)+j;
       initS[rnm0] = {value:mineps+Math.floor(Math.random()*(maxeps-mineps)),theta:0};
-      ps[rnm0] = {kind,step:.05,min:mineps,max:maxeps,interval:1,steps:0.5};
+      ps[rnm0] = {kind,step:.04*sp,min:mineps,max:maxeps,interval:1,steps:0.5};
       initS[rnm1] = {value:mineps+Math.floor(Math.random()*(maxeps-mineps)),theta:0};
-      ps[rnm1] = {kind,step:.02,min:mineps,max:maxeps,interval:1,steps:0.5};
+      ps[rnm1] = {kind,step:.035*sp,min:mineps,max:maxeps,interval:1,steps:0.5};
   /*     initS[xnm] = {value:minx+Math.floor(Math.random()*(maxx-minx)),theta:0};
       ps[xnm] = {kind,step:.5,min:minx,max:maxx,interval:1,steps:0.5};
        //initS[ynm] = {value:miny+Math.floor(Math.random()*(maxy-miny)),theta:0};
@@ -58,32 +59,35 @@ let whereSum = function (wh) {
 }
 
 rs.theFills = {P0:'rgb(255,0,0)',P1:'rgb(200,200,0)',P2:'rgb(0,255,0)',P3:'rgb(0,255,255)',P4:'rgb(0,0,255)',P5:'rgb(100,100,100)'};
-rs.partFilll = function (prt) {
-debugger;
+rs.theFills10 = {P1:'rgb(0,0,20)',P0:'rgb(100,100,100)',P2:'black',P3:'rgb(0,0,0)',P4:'rgb(0,0,0)',P5:'rgb(0,0,0)'};
+rs.theFills12 = {P0:'rgb(0,0,0)',P1:'rgb(100,100,100)',P2:'black',P3:'rgb(0,0,0)',P4:'rgb(0,0,0)',P5:'rgb(0,0,0)'};
+rs.partFill = function (prt) {
   let where = prt.where;
   let lev = where.length;
+  let nm,pnm;
   if (lev >= (levels+0)) {
-    let nm = this.partName(prt);
-    let fill = this.theFills[nm];
+    nm = this.partName(prt);
+    pnm = where[0][0];
+    debugger;
+
+    let fill = (pnm==='P0')||(pnm==='P1')?this.theFills10[nm]:this.theFills12[nm];
     return fill;
   }
 }
 
 let wass ={};
-let rejects =[];// [2,3,4,5,6,7,8,9,10];
 
 
 let aws = rs.allWheres(levels,4);
 let cidx = 0;
-let qqps = [5,6,10,12];
+let qqps = [10,12,10,12,4];
 console.log('aws',aws);
 let buildAssignments = function () {
   aws.forEach((ws) => {
    // console.log('ws',ws);
-   debugger;
     let idx = 2+Math.floor(11*Math.random());
     //wass[ws[0]] =2+cidx;
-    let w1 = ws[1].length?ws[1]:3;
+    let w1 = ws[1].length?ws[1]:[4];
     let vl = qqps[w1[0]];
     wass[ws[0]] = vl; // 3 5 6 7 8 9 10! 11 12!
     cidx=(cidx ===10)?0:cidx+1;
@@ -148,14 +152,15 @@ rs.partSplitParams = function (prt) {
   let where = prt.where;
   let lev = where.length;
   let ws = this.whereString(where);
-  let idx = wass[ws];
+  let idx = ws?wass[ws]:4;
   let wsum = whereSum(where);
  // console.log('wsum',wsum);
-  debugger;
   let qp;
   let cln = 12-2;
-  if (0|| (lev < (levels-1))) {
+  if (lev < (levels-1)) {
     qp = {Case:7,pcs:[0.5,1.5,2.5,3.5]}
+  //  qp = mkCase(idx,this.eps0,this.eps1);
+    debugger;
   } else {
     qp = mkCase(idx,this.eps0,this.eps1);
   }
@@ -184,8 +189,8 @@ rs.updateState = function () {
 }
 
 rs.numSteps = 100;
-rs.numISteps = 0;
-rs.saveAnimation = 0;
+rs.numISteps = 10;
+rs.saveAnimation = 1;
 rs.stepInterval = 100;
 
   

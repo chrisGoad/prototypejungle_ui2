@@ -581,29 +581,29 @@ rs.whereString = function (where) {
 }
 
 
-const allWhereStrings = function (frmlev,tolev,np) {
+const allWheres = function (frmlev,tolev,np) {
   //debugger;
   let aw = [];
   if (frmlev === 0) {
-    aw.push('top');
+    aw.push(['top',[]]);
   }
   for (let i=0;i<np;i++) {
     let cpn = 'P'+i;
     let cpne = cpn+'_';
     if (frmlev < tolev) {
-       let aws = allWhereStrings(frmlev+1,tolev,np);
-       aws.forEach((st) => {
-         aw.push(cpne+st);
+       let aws = allWheres(frmlev+1,tolev,np);
+       aws.forEach((w) => {
+         aw.push([cpne+w[0],[i].concat(w[1])]);
        });
     }// else {
-      aw.push(cpn);
+      aw.push([cpn,i]);
     //}
   }
   return aw;
 }
 
-rs.allWhereStrings = function (levels,numParts) {
-  return allWhereStrings(1,levels,numParts);
+rs.allWheres = function (levels,numParts) {
+  return allWheres(1,levels,numParts);
 }
 
 rs.displayCell = function (prt,toSegs) {	

@@ -70,19 +70,27 @@ debugger;
 }
 
 let wass ={};
+let rejects =[];// [2,3,4,5,6,7,8,9,10];
 
 
-let aws = rs.allWhereStrings(levels,4);
+let aws = rs.allWheres(levels,4);
+let cidx = 0;
+let qqps = [5,6,10,12];
 console.log('aws',aws);
 let buildAssignments = function () {
   aws.forEach((ws) => {
    // console.log('ws',ws);
-    wass[ws] = 2+Math.floor(11*Math.random());
+   debugger;
+    let idx = 2+Math.floor(11*Math.random());
+    //wass[ws[0]] =2+cidx;
+    let w1 = ws[1].length?ws[1]:3;
+    let vl = qqps[w1[0]];
+    wass[ws[0]] = vl; // 3 5 6 7 8 9 10! 11 12!
+    cidx=(cidx ===10)?0:cidx+1;
   });
 }
 buildAssignments();
 console.log('wass',wass);
-
 
 
 
@@ -91,8 +99,8 @@ function mkCase(n,eps0,eps1) {
   const mkPcs = function () {
     return [.5-eps0,1.5-eps1,2.5-eps1,3.5-eps0]
   }
-  if (n===2) {
-    return {Case:2,vertexNum:0,pcs:[0.5+eps,2.5-eps1]};
+ if (n===2) {
+    return {Case:2,vertexNum:0,pcs:[0.5+eps0,2.5-eps1]};
   }
   if (n===3) {
     return {Case:3,pcs:mkPcs()};
@@ -146,19 +154,12 @@ rs.partSplitParams = function (prt) {
   debugger;
   let qp;
   let cln = 12-2;
-  if (0|| (lev <3)) {
+  if (0|| (lev < (levels-1))) {
     qp = {Case:7,pcs:[0.5,1.5,2.5,3.5]}
   } else {
-  //  let idx = Math.floor(cln*Math.random());
-    //qp = theQps[lev%4];
-    debugger;
-  //  qp = theQps[wsum];
-   // qp = cases[idx];
-    let eps = Math.random()*0.0;
-    qp = mkCase(idx+2,this.eps0,this.eps1);
-   // qp = cases[12];
-  //  qp = byWhere[ws];
-   }
+    qp = mkCase(idx,this.eps0,this.eps1);
+  }
+  
    return qp;
 }
 
@@ -185,7 +186,7 @@ rs.updateState = function () {
 rs.numSteps = 100;
 rs.numISteps = 0;
 rs.saveAnimation = 0;
-rs.stepInterval = 40;
+rs.stepInterval = 100;
 
   
 //rs.addToArray(strokeWidths,.1,levels);

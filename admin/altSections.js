@@ -144,44 +144,23 @@ sections:
  [0,'part2_0_39','instances',1,'Part2 0 39',{likes:0,posted:0,category:'quad'}], 
  [0,'part2_0_40','instances',1,'Part2 0 40',{likes:0,posted:0,category:'quad'}], 
  [0,'part2_0_41','instances',1,'Part2 0 41',{likes:0,posted:0,category:'quad'}], 
- //[0,'part_0_D_0','instances',1,'Case T 1',{likes:0,posted:0,category:'quad'}],
+
   [0,'part2_0_D_0','instances',1,'P2 T 1',{likes:0,posted:0,category:'quad'}], 
- 
- //[0,'part_0_D_12','instances',1,'Case T 1',{likes:0,posted:0,category:'quad'}], 
- //[0,'part_0_D_1','instances',1,'Case T 1',{likes:0,posted:0,category:'quad'}], 
- //[0,'part_0_D_2','instances',1,'Case T 2',{likes:0,posted:0,category:'quad'}], 
    [0,'part2_0_D_7','instances',1,'P2 T C 2',{likes:0,posted:0,category:'quad'}], 
 
- //[0,'part_0_D_13','instances',1,'Case T 3',{likes:0,posted:0,category:'quad'}], 
- //[0,'part_0_D_3','instances',1,'Case Q 2',{likes:0,posted:0,category:'quad'}], 
    [0,'part2_0_D_1','instances',1,'P2 Q C 2',{likes:0,posted:0,category:'quad'}], 
- //[0,'part_0_D_4','instances',1,'Case Q 9',{likes:0,posted:0,category:'quad'}], 
-   [0,'part2_0_D_8','instances',1,'P2 Q C 9',{likes:0,posted:0,category:'quad'}], 
-
- //[0,'part_0_D_6','instances',1,'Case Q 2',{likes:0,posted:0,category:'quad'}], 
-// [0,'part_0_D_5','instances',1,'Case Q 4',{likes:0,posted:0,category:'quad'}],
-   [0,'part2_0_D_2','instances',1,'P2 Q C 4',{likes:0,posted:0,category:'quad'}], 
-
- //[0,'part_0_D_7','instances',1,'Case Q 6',{likes:0,posted:0,category:'quad'}], 
-   [0,'part2_0_D_3','instances',1,'P2 Q C 6',{likes:0,posted:0,category:'quad'}], 
-
- //[0,'part_0_D_8','instances',1,'Case Q 5',{likes:0,posted:0,category:'quad'}],
+     [0,'part2_0_D_6','instances',1,'P2 Q C 3',{likes:0,posted:0,category:'quad'}], 
+    [0,'part2_0_D_2','instances',1,'P2 Q C 4',{likes:0,posted:0,category:'quad'}], 
  [0,'part2_0_D_11','instances',1,'P2 Q 5',{likes:0,posted:0,category:'quad'}],
- [0,'part2_0_D_12','instances',1,'P2 Q 10',{likes:0,posted:0,category:'quad'}],
- 
- //[0,'part_0_D_9','instances',1,'Case Q 3',{likes:0,posted:0,category:'quad'}], 
-   [0,'part2_0_D_6','instances',1,'P2 Q C 3',{likes:0,posted:0,category:'quad'}], 
-   [0,'part2_0_D_13','instances',1,'P2 Q C 11',{likes:0,posted:0,category:'quad'}], 
-
- //[0,'part_0_D_10','instances',1,'Case Q 7',{likes:0,posted:0,category:'quad'}], 
-   [0,'part2_0_D_4','instances',1,'P2 Q C 7',{likes:0,posted:0,category:'quad'}], 
-//[0,'part_0_D_11','instances',1,'Case Q 8',{likes:0,posted:0,category:'quad'}], 
+   [0,'part2_0_D_3','instances',1,'P2 Q C 6',{likes:0,posted:0,category:'quad'}], 
+  [0,'part2_0_D_4','instances',1,'P2 Q C 7',{likes:0,posted:0,category:'quad'}], 
   [0,'part2_0_D_5','instances',1,'P2 Q C 8',{likes:0,posted:0,category:'quad'}], 
+   [0,'part2_0_D_8','instances',1,'P2 Q C 9',{likes:0,posted:0,category:'quad'}], 
+[0,'part2_0_D_12','instances',1,'P2 Q 10',{likes:0,posted:0,category:'quad'}],
+  [0,'part2_0_D_13','instances',1,'P2 Q C 11',{likes:0,posted:0,category:'quad'}], 
   [0,'part2_0_D_14','instances',1,'P2 Q C 12',{likes:0,posted:0,category:'quad'}], 
   [0,'part2_0_D_15','instances',1,'P2 Q C 13',{likes:0,posted:0,category:'quad'}], 
 
- //[0,'part_0_D_M0','instances',1,'Part 0 D M0',{likes:0,posted:0,category:'quad'}], 
- 
 
 //[0,'quad_15_8','instances',1,'Quad 15 8',{likes:0,posted:0,category:'quad'}],  
 //[0,'quad_15_7_6','instances',1,'Quad 15 7 6',{likes:0,posted:0,category:'quad'}], 

@@ -84,6 +84,18 @@ rs.setAltps =function () {
   });
  }
 rs.setAltps();
+// build a pspace with an element for each whereString, with randomized step size
+
+rs.buildWherePspace =function (minStep,maxStep) {
+  this.aws = rs.allWheres(this.partParams.levels,5);
+  let wps = {};
+  this.aws.forEach( (wv) => {
+    let ws = wv[0];
+    let qp = {kind,step:minStep+Math.random()*(maxStep - minStep),min:mineps,max:maxeps,interval:1,steps:0.5};
+    wps[ws] = qp;
+  });
+ }
+rs.setAltps();
   
 
   debugger;

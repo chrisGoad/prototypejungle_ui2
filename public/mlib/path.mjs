@@ -38,10 +38,30 @@ item.sinusoidVal = function (sv,ev,step,cstep) {
   let down = ev<sv;
   let delta = Math.abs(ev-sv);
   let steps = delta/step;
+  
+  let fr = cstep/steps;
+  let nvl = down?sv - fr*delta:sv+fr*delta;
+  
   let phase = (Math.PI)*(cstep/steps) - Math.PI/2; 
   let nvn =  (1+ Math.sin(phase))/2;
   let nv = down?sv - nvn*delta:sv+nvn*delta;
-  return nv;
+  return {nosin:nvl,sin:nv};
+}
+
+item.adjustSweepToNewStep = function (pstate,component,nstep) {
+  debugger;
+  let {pspace} = pstate;
+  let pspc = pspace[component];
+  let csc = pstate.cstate[component];
+  let {cstep} = csc;
+  let {min,max,step} = pspc;
+  let delta = max-min;
+  let nsteps = delta/nstep;
+  let steps = delta/step;
+  let fr = cstep/steps;
+  let ncstep = Math.floor(fr * nsteps);
+  pspc.step = nstep;
+  csc.cstep = ncstep;
 }
 
 item.sweepNextState = function (pspace,cstate,component) {
@@ -50,20 +70,24 @@ item.sweepNextState = function (pspace,cstate,component) {
   let {jerky,min,max,step} = pspc;
   let csc = cstate[component];
   let {cstep,down,value,sv,ev} = csc;
+    
   if (cstep === undefined) {
     cstep = csc.cstep = 0;
     sv  = csc.sv = value;
     ev = csc.ev = max;
   }
-  let nv = this.sinusoidVal(sv,ev,step,cstep);
+  let nvls = this.sinusoidVal(sv,ev,step,cstep);
+  let {nosin,sin} = nvls;
   //console.log('nv',nv,'down',down,'sv',sv,'ev',ev,'step',step,'cstep',cstep);
   let up = !down;
-  if ((nv >= max) && up) {
+  //if ((nv >= max) && up) {
+  if ((nosin >= max) && up) {
     csc.sv = max;
     csc.ev = min;
     csc.down = 1;
     csc.cstep = 0;
-  } else if ((nv <= min) && down){
+ // } else if ((nv <= min) && down){
+  } else if ((nosin <= min) && down){
     csc.sv = min;
     csc.ev = max;
     csc.down = 0;
@@ -71,7 +95,8 @@ item.sweepNextState = function (pspace,cstate,component) {
   } else {
     csc.cstep++;
   }
-  csc.value = nv;
+  //csc.value = sin;
+  csc.value = nosin;
 }    
    
 
@@ -80,7 +105,6 @@ item.randomStepsNextState = function (pspace,cstate,component) {
   let pspc = pspace[component];
   let csc = cstate[component];
   let {cstep,down,value,sv,ev} = csc;
-
   let jerky = pspc.jerky; //jerky acceleration
   let up = !down
   let {step,min,max,steps} = pspc;
@@ -114,6 +138,10 @@ item.randomStepsNextState = function (pspace,cstate,component) {
 }
 
 item.nextState = function (pathKind,pspace,cstate,component) {
+  let csc = cstate[component];
+  if (csc.paused) {
+    return;
+  }
   if (pathKind === 'random') {
     this.randomNextState(pspace,cstate,component);
   }
@@ -211,6 +239,9 @@ item.oneInterpolationStep = function () {
 
 }
 item.oneStep = function () {
+  if (this.paused) {
+    return;
+  }
   let ns = this.stepsSoFar;
   if  (this.stepsSoFar++ > this.numSteps) {
     if (this.numISteps) {
@@ -222,7 +253,7 @@ item.oneStep = function () {
     return;
   }
   if (ns&&this.saveAnimation) { // for some reason, the first frame is corrupted 
-    console.log('ns',ns);
+   // console.log('ns',ns);
     draw.saveFrame(ns-1);
   }
   if (this.updateState) {

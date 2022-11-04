@@ -117,20 +117,25 @@ const resumeAnimation = function (save) {
 const saveAnimation = () => runAnimation('yes');
 
 const pauseAnimation = function () {
+  debugger;
+  console.log('PAUSED');
 	let main = core.root.main;
 	if (main.pauseAnimation) {
 		main.pauseAnimation();
 	}
+  main.paused = 1;
 }
 
 
 const stepAnimation = function () {
   //debugger;
 	let main = core.root.main;
+  main.paused = 0;
 	if (main.oneStep) {
 		main.oneStep(true);
 	}
 }
+
 
 let audioCtx;
 

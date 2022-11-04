@@ -6,6 +6,8 @@ let rs = generatorP.instantiate();
 rs.setName('part2_0_41');
 let levels = 10;
 levels = 5;
+//levels = 4;
+//levels = 1;
 
 rs.partParams.levels = levels;
 rs.partParams.rectangular = 1;
@@ -13,7 +15,7 @@ rs.partParams.rectangular = 1;
 
 let mineps = -.2;
 let maxeps = .2;
-
+let initv =0.1;
 let kind ='randomSteps';
 kind ='randomValue';
 kind ='sweep';
@@ -30,9 +32,12 @@ const buildEm = function (n) {
       let xnm = ('x'+i)+j;
       let ynm = ('y'+i)+j;
       initS[rnm0] = {value:mineps+Math.floor(Math.random()*(maxeps-mineps)),theta:0};
+      initS[rnm0] = {value:initv,theta:0};
       ps[rnm0] = {kind,step:.04*sp,min:mineps,max:maxeps,interval:1,steps:0.5};
       initS[rnm1] = {value:mineps+Math.floor(Math.random()*(maxeps-mineps)),theta:0};
+      initS[rnm1] = {value:initv,theta:0};
       ps[rnm1] = {kind,step:.035*sp,min:mineps,max:maxeps,interval:1,steps:0.5};
+ //     ps[rnm1] = {kind,step:.04*sp,min:mineps,max:maxeps,interval:1,steps:0.5};
   /*     initS[xnm] = {value:minx+Math.floor(Math.random()*(maxx-minx)),theta:0};
       ps[xnm] = {kind,step:.5,min:minx,max:maxx,interval:1,steps:0.5};
        //initS[ynm] = {value:miny+Math.floor(Math.random()*(maxy-miny)),theta:0};
@@ -68,7 +73,6 @@ rs.partFill = function (prt) {
   if (lev >= (levels+0)) {
     nm = this.partName(prt);
     pnm = where[0][0];
-    debugger;
 
     let fill = (pnm==='P0')||(pnm==='P1')?this.theFills10[nm]:this.theFills12[nm];
     return fill;
@@ -81,6 +85,9 @@ let wass ={};
 let aws = rs.allWheres(levels,4);
 let cidx = 0;
 let qqps = [10,12,10,12,4];
+let qv =10;
+qv = 9;  // 3 5 7
+ qqps = [qv,qv,qv,qv,4];
 console.log('aws',aws);
 let buildAssignments = function () {
   aws.forEach((ws) => {
@@ -160,7 +167,6 @@ rs.partSplitParams = function (prt) {
   if (lev < (levels-1)) {
     qp = {Case:7,pcs:[0.5,1.5,2.5,3.5]}
   //  qp = mkCase(idx,this.eps0,this.eps1);
-    debugger;
   } else {
     qp = mkCase(idx,this.eps0,this.eps1);
   }
@@ -172,13 +178,44 @@ let visibles = rs.partParams.visibles = [];
 rs.addToArray(visibles,1,20);
 
 let strokeWidths = rs.partParams.strokeWidths = [];
-rs.computeExponentials({dest:strokeWidths,n:20,root:0.4,factor:.7});
-
+//rs.computeExponentials({dest:strokeWidths,n:20,root:0.4,factor:.7});
+rs.computeExponentials({dest:strokeWidths,n:20,root:0.2,factor:.7});
+rs.partStrokeWidth = function (prt) {
+  let wh = prt.where;
+  let whs = this.whereString(wh);
+  let pn =  this.partName(prt);
+  let lev = wh.length;
+  //console.log('whs',whs,'pn',pn);
+  if ((['P0','P1','P2','P3'].indexOf(pn) >= -10) && (lev === (levels-0))) {
+    return .2;
+  }
+  return 0;
+}
 
 
 rs.updateState = function () {
-  debugger;
-  let cstate = this.pstate.cstate;
+  let {pstate} = this;
+  let {cstate} = pstate;
+  let {pspace} = pstate;
+  let dv =0;
+  let dv2 =1;
+  if ((this.stepsSoFar === 80+dv)||(this.stepsSoFar === 235+dv2)) {
+    debugger;
+    console.log('eps0 eps1 synched');
+    pspace.eps1.oldStep = pspace.eps1.step;
+    this.adjustSweepToNewStep(pstate,'eps1',pspace.eps0.step);
+   // pspace.eps1.step = pspace.eps0.step;
+   // cstate.eps0.paused = 1;
+   // this.paused = 1;
+  }
+  if (this.stepsSoFar === 110+dv) {
+    debugger;
+    console.log('eps0 eps1 unsynched');
+    this.adjustSweepToNewStep(pstate,'eps1',pspace.eps1.oldStep);
+   // pspace.eps1.step = pspace.eps0.step;
+   // cstate.eps0.paused = 1;
+   // this.paused = 1;
+  }
   let eps0 = cstate.eps0.value;
   let eps1 = cstate.eps1.value;
  // console.log('eps',eps);
@@ -188,9 +225,11 @@ rs.updateState = function () {
 
 }
 
-rs.numSteps = 100;
+  
+
+rs.numSteps = 1000;
 rs.numISteps = 10;
-rs.saveAnimation = 1;
+rs.saveAnimation = 0;
 rs.stepInterval = 100;
 
   

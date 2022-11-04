@@ -638,11 +638,12 @@ rs.displayCell = function (prt,toSegs) {
   let mangled;
   let geom = pgon;
   let shps;
-  let strokew = this.partStrokeWidth(prt);//strokeWidths[lnw];
+ // let strokew = this.partStrokeWidth(prt);//strokeWidths[lnw];
   let stroke = this.partStroke(prt);
   let fill = this.partFill(prt);
   let fillScale = this.partFillScale(prt);
   const styleShape = (shp) => {
+    let strokew = this.partStrokeWidth(prt,shp);//strokeWidths[lnw];
      if (typeof strokew === 'number') {
        shp['stroke-width'] = strokew;
      }

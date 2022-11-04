@@ -16,7 +16,7 @@ rs.copyOfInitState = rs.deepCopy(initState);
 let rng = 0.25;
 let pspace = {a:{kind,step:.015,min:-rng,max:rng,interval:1,steps:0.5},b:{kind,step:.013,min:-rng,max:rng,interval:1,steps:0.5},c:{kind,step:.011,min:-rng,max:rng,interval:1,steps:0.5},
               levels:{kind,min:1,max:3,step:1,interval:150,steps:0.5},csf:{kind,step:0.05,min:0.05,max:14,interval:1,steps:0.5}};
-rs.pstate = {pathKind:'randomSteps',pspace,cstate:initState};
+rs.pstate = {pathKind:'randomValue',pspace,cstate:initState};
 
 
 //rs.timeSteps(pstate,30,doWhat);
@@ -63,6 +63,7 @@ rs.numSteps = 100;
 rs.numSteps = 300;
 rs.numISteps = 12;
 rs.saveAnimation = 1;
+rs.stepInterval = 200;
 
 rs.afterInitialize = function () {
  this.oneStep();

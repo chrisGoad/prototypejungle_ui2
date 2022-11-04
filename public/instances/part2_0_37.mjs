@@ -32,8 +32,9 @@ rs.addFillComponent = function (st,ps,ws) {
 
  // st[ws+'_b'] = {value:100};
 }
-let aws = rs.allWhereStrings(levels,5);
-aws.forEach((st) => rs.addFillComponent(initState,pspace,st));
+let aws = rs.allWheres(levels,5);
+
+aws.forEach((wv) => rs.addFillComponent(initState,pspace,wv[0]));
 
 let copyInit = rs.deepCopy(initState);
 /*

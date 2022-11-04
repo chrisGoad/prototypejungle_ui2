@@ -118,15 +118,16 @@ item.randomStepsNextState = function (pspace,cstate,component) {
     ev = csc.ev = Math.min(max,sv + nsteps*step);
   }
   let dist = Math.abs(ev-sv);
-  let nv = this.sinusoidVal(sv,ev,step,cstep);
+  let nvls = this.sinusoidVal(sv,ev,step,cstep);
+  let {nosin,sin} = nvls;
   //console.log('nv',nv,'down',down,'sv',sv,'ev',ev,'step',step,'cstep',cstep);
   let switchDir = cstep >= dist/step; 
-  if (down && ((nv <= min) || switchDir)) {
+  if (down && ((nosin<= min) || switchDir)) {
     down = csc.down = 0;
     csc.sv = cv;
     csc.ev = Math.min(max,sv + nsteps*step);
     csc.cstep = 0;
-  } else if (up && ((nv >= max) || switchDir)) {
+  } else if (up && ((nosin >= max) || switchDir)) {
      down = csc.down = 1;
      csc.sv = cv;
      csc.ev = Math.max(min,sv - nsteps*step);
@@ -134,10 +135,11 @@ item.randomStepsNextState = function (pspace,cstate,component) {
   } else {
     csc.cstep++;
   }
-  csc.value=nv;//down?nvm:nvp;
+  csc.value=sin;//down?nvm:nvp;
 }
 
 item.nextState = function (pathKind,pspace,cstate,component) {
+debugger;
   let csc = cstate[component];
   if (csc.paused) {
     return;

@@ -12,8 +12,8 @@ let iv = 254;
 let rng = 255;
 let kind ='randomSteps';
 //let kind ='sweep';
-//let nr = 9;
-let nr = 1;
+let nr = 9;
+//let nr = 1;
 const buildEm = function (n) {
   let initS = {};
   let ps = {};
@@ -37,43 +37,38 @@ rs.oneStep = function () {
   if (rs.ssf>2000) {
     return;
   }
-//  this.resetShapes();
-//  for (let i=0;i<10;i++) {
-    this.timeStep(pstate);
-    let cstate = pstate.cstate;
-    let r0 = cstate.c0.value;
-    if (nineCs) {let g0 = cstate.c1.value;
-      let b0 = cstate.c2.value;
-       let r1 = cstate.c3.value;
-      let g1 = cstate.c4.value;
-      let b1= cstate.c5.value;
-         let r2 = cstate.c6.value;
-      let g2 = cstate.c7.value;
-      let b2= cstate.c8.value;
-    }
-   // let aa = setA(cstate);
-    let fill0,fill1,fill2;
-    if (nineCs) {
-      fill0 =`rgb(${r0},${r0},${b0})`;
-      fill1 =`rgb(${r1},${g1},${b1})`;
-      fill2 =`rgb(${r2},${b2},${b2})`;
-    }  else {
-      fill0 =`rgb(${r0},${r0},${r0})`;
-    }
-
-    let c0 = this.circle0;
-    c0.fill = fill0;
-    c0.update();
-    if (nineCs) {
-      let c1 = this.circle1;
-      c1.fill = fill1;
-      c1.update();
-      let c2 = this.circle2;
-      c2.fill = fill2;
-      c2.update();
-    }
-    draw.refresh();
-	 setTimeout(() => this.oneStep(),40)
+  this.timeStep(pstate);
+  let cstate = pstate.cstate;
+  let r0 = cstate.c0.value;
+  let fill0,fill1,fill2;
+  if (nineCs) {
+    let g0 = cstate.c1.value;
+    let b0 = cstate.c2.value;
+    let r1 = cstate.c3.value;
+    let g1 = cstate.c4.value;
+    let b1= cstate.c5.value;
+     let r2 = cstate.c6.value;
+    let g2 = cstate.c7.value;
+    let b2= cstate.c8.value;
+    fill0 =`rgb(${r0},${r0},${b0})`;
+    fill1 =`rgb(${r1},${g1},${b1})`;
+    fill2 =`rgb(${r2},${b2},${b2})`;
+  } else {
+    fill0 =`rgb(${r0},${r0},${r0})`;
+  }
+  let c0 = this.circle0;
+  c0.fill = fill0;
+  c0.update();
+  if (nineCs) {
+    let c1 = this.circle1;
+    c1.fill = fill1;
+    c1.update();
+    let c2 = this.circle2;
+    c2.fill = fill2;
+    c2.update();
+  }
+  draw.refresh();
+ setTimeout(() => this.oneStep(),40)
 }
 
 let dim = 40;

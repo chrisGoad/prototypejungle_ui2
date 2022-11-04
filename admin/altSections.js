@@ -142,8 +142,10 @@ sections:
  [0,'part2_0_37','instances',1,'Part2 0 37',{likes:0,posted:0,category:'quad'}], 
  [0,'part2_0_38','instances',1,'Part2 0 38',{likes:0,posted:0,category:'quad'}], 
  [0,'part2_0_39','instances',1,'Part2 0 39',{likes:0,posted:0,category:'quad'}], 
- [0,'part2_0_40','instances',1,'Part2 0 40',{likes:0,posted:0,category:'quad'}], 
+ //[0,'part2_0_40','instances',1,'Part2 0 40',{likes:0,posted:0,category:'quad'}], 
  [0,'part2_0_41','instances',1,'Part2 0 41',{likes:0,posted:0,category:'quad'}], 
+ [0,'part2_0_41a','instances',1,'Part2 0 41a',{likes:0,posted:0,category:'quad'}], 
+ [0,'part2_0_41b','instances',1,'Part2 0 41b',{likes:0,posted:0,category:'quad'}], 
 
   [0,'part2_0_D_0','instances',1,'P2 T 1',{likes:0,posted:0,category:'quad'}], 
    [0,'part2_0_D_7','instances',1,'P2 T C 2',{likes:0,posted:0,category:'quad'}], 

@@ -28,13 +28,15 @@ rs.addFillComponent = function (st,ps,ws) {
   st[ws] = {value:100};
 }
 
-let aws = rs.allWhereStrings(levels,4);
+//let aws = rs.allWhereStrings(levels,4);
+let aws = rs.allWheres(levels,4);
+
 console.log('aws',aws);
 debugger;
 let initState = {};
 let pspace = {};
 debugger;
-aws.forEach((st) => rs.addFillComponent(initState,pspace,st));
+aws.forEach((wv) => rs.addFillComponent(initState,pspace,wv[0]));
 addComponent(initState,pspace,0);
 addComponent(initState,pspace,1);
 addComponent(initState,pspace,2);

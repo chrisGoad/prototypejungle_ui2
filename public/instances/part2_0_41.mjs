@@ -7,7 +7,7 @@ rs.setName('part2_0_41');
 let levels = 10;
 levels = 6;
 //levels = 4;
-//levels = 1;
+levels = 5;
 
 rs.partParams.levels = levels;
 rs.partParams.rectangular = 1;
@@ -24,14 +24,13 @@ kind ='sweep';
 rs.kind ='sweep';
 let nr = 9;
 nr = 1;
-let sp = 1.5;
+let ratio = .9; //of eps1 to eps1
 let initState = {eps0:{value:0},eps1:{value:0}};
+//initState = {speedup:{value:1}}
 let pspace = {
-  eps0:{kind,step:.04*sp,min:mineps,max:maxeps,interval:1,steps:0.5},
-  eps1:{kind,step:.035*sp,min:mineps,max:maxeps,interval:1,steps:0.5}
+  eps0:{kind,step:.05,min:mineps,max:maxeps,interval:1,steps:0.5},
+  eps1:{kind,step:.035,min:mineps,max:maxeps,interval:1,steps:0.5}
 };
-
-this.epsPspace = pspace;
 rs.copyOfInitState = rs.deepCopy(initState);
 
 rs.pstate = {pspace,cstate:initState};
@@ -45,7 +44,7 @@ rs.partFill = function (prt) {
   let levels = this.partParams.levels;
   let nm,pnm;
   if (lev >= levels) {
-    debugger;
+ //   debugger;
     nm = this.partName(prt);
     pnm = where[0][0];
     let fill = (pnm==='P0')||(pnm==='P1')?this.theFills10[nm]:this.theFills12[nm];
@@ -115,20 +114,27 @@ const initVal = function (params) {
 }
 */
 //rs.buildWherePspace =function (minStep,maxStep,iv) {
-rs.buildWhereMap =function (params,valf) {
+rs.buildWhereMap =function (params,valf,props) {
   this.aws = rs.allWheres(this.partParams.levels,5);
   let whereMap = {};
   this.aws.forEach( (wv) => {
     let ws = wv[0];
-    let val = valf.call(this,params);
-    //let qp = {kind,step:minStep+Math.random()*(maxStep - minStep),min:mineps,max:maxeps,interval:1,steps:0.5};
-    whereMap[ws] = val;
+    if (props) { //this case has not been tested
+      let vals = valf.call(this,params,props);
+      props.forEach((p) => {
+        let fnm = ws+'_'+p;
+        whereMap[fnm] =vals[p];
+      });
+    } else {             
+      let val = valf.call(this,params);
+      whereMap[ws] = val;
+    }           
   });
   return whereMap;
  }
-debugger;
 
 rs.quadCases = [2,3,4,5,6,7,8,9,10,12];  // the partitions per whereString
+//rs.quadCases = [8];  // the partitions per whereString
 
 rs.qcMap = rs.buildWhereMap({},rs.qcRandomVal);
 
@@ -177,9 +183,11 @@ function mkCase(n,eps0,eps1) {
 
 rs.eps0 = 0;
 rs.eps1 = 0;
-debugger;
 rs.partSplitParams = function (prt) {
+  debugger;
   let {polygon:pgon} = prt;
+  let {cstate} = this.pstate;
+  let {eps0,eps1} = cstate;
   let levels = this.partParams.levels;
   let where = prt.where;
   let ws = this.whereString(where);
@@ -189,7 +197,7 @@ rs.partSplitParams = function (prt) {
   if (lev < (levels-1)) {
     qp = {Case:7,pcs:[0.5,1.5,2.5,3.5]}
   } else {
-    qp = mkCase(idx,this.eps0,this.eps1);
+    qp = mkCase(idx,eps0.value,eps1.value);
   }
   
    return qp;
@@ -227,7 +235,6 @@ rs.updateState = function () {
     this.adjustSweepToNewStep(pstate,'eps1',pspace.eps0.step);
   }
   if (this.stepsSoFar === 110+dv) {
-    debugger;
     console.log('eps0 eps1 unsynched');
     this.adjustSweepToNewStep(pstate,'eps1',pspace.eps1.oldStep);
   }

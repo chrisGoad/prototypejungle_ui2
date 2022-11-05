@@ -22,29 +22,51 @@ let maxStep = 0.04;
 let sp = 1.5;
 let kind = 'sweep';
 debugger;
-speedup:{kind,step:.05,min:1,max:2,interval:1,steps:0.5}
 
 rs.buildPspaceElement = function () {
-  {kind,step:.05,min:1,max:2,interval:1,steps:0.5};
+  let ratio = 0.9;
+  let step = minStep + Math.random()*(maxStep-minStep);
+  let vl =
+  //{ eps0:{kind,step,min:this.minEps,max:this.maxEps,interval:1,steps:0.5},
+  { eps0:{kind,step,min:this.minEps,max:this.maxEps,interval:1,steps:0.5},
+    eps1:{kind:kind,step:ratio*step,min:this.minEps,max:this.maxEps,interval:1,steps:0.5}
+  }
+  return vl;
 }
-let pspace = rs.buildWhereMap({},rs.buildPspaceElement);
-let pspace0 = {};
 
-rs.pspace = pspace;
-rs.qcMap = rs.buildWhereMap({},rs.qcRandomVal);
+
+rs.buildInitElement = function () {
+  let vl =
+  { eps0:{value:0},
+    eps1:{value:0}
+  }
+  return vl;
+}
+let pspace = rs.buildWhereMap({},rs.buildPspaceElement,true);
+let cstate = rs.buildWhereMap({},rs.buildInitElement,true);
+rs.pstate = {pspace,cstate};
+debugger;
+
+
+//rs.qcMap = rs.buildWhereMap({},rs.qcRandomVal);
 
 rs.partSplitParams = function (prt) {
-  let {polygon:pgon} = prt;
+  debugger;
   let levels = this.partParams.levels;
   let where = prt.where;
   let ws = this.whereString(where);
   let lev = where.length;
   let idx = ws?this.qcMap[ws]:4;
+  let eps0nm = ws+'_eps0';
+  let eps1nm = ws+'_eps1';
+  let {cstate} = this.pstate;
+  let eps0 = cstate[eps0nm];
+  let eps1 = cstate[eps1nm];
   let qp;
   if (lev < (levels-1)) {
     qp = {Case:7,pcs:[0.5,1.5,2.5,3.5]}
   } else {
-    qp = mkCase(idx,this.eps0,this.eps1);
+    qp = this.mkCase(idx,eps0.value,eps1.value);
   }
   
    return qp;

@@ -114,13 +114,14 @@ const initVal = function (params) {
 }
 */
 //rs.buildWherePspace =function (minStep,maxStep,iv) {
-rs.buildWhereMap =function (params,valf,props) {
+rs.buildWhereMap =function (params,valf,multi) {
   this.aws = rs.allWheres(this.partParams.levels,5);
   let whereMap = {};
   this.aws.forEach( (wv) => {
     let ws = wv[0];
-    if (props) { //this case has not been tested
-      let vals = valf.call(this,params,props);
+    if (multi) { //this case has not been tested
+      let vals = valf.call(this,params);
+      let props = Object.getOwnPropertyNames(vals);
       props.forEach((p) => {
         let fnm = ws+'_'+p;
         whereMap[fnm] =vals[p];
@@ -141,7 +142,7 @@ rs.qcMap = rs.buildWhereMap({},rs.qcRandomVal);
 
 
 
-function mkCase(n,eps0,eps1) {
+rs.mkCase = function (n,eps0,eps1) {
   let cs;
   const mkPcs = function () {
     return [.5-eps0,1.5-eps1,2.5-eps1,3.5-eps0]
@@ -197,7 +198,7 @@ rs.partSplitParams = function (prt) {
   if (lev < (levels-1)) {
     qp = {Case:7,pcs:[0.5,1.5,2.5,3.5]}
   } else {
-    qp = mkCase(idx,eps0.value,eps1.value);
+    qp = this.mkCase(idx,eps0.value,eps1.value);
   }
   
    return qp;
@@ -224,10 +225,11 @@ rs.partStrokeWidth = function (prt) {
 
 
 rs.updateState = function () {
+   
   let {pstate} = this;
   let {cstate} = pstate;
   let {pspace} = pstate;
-  let dv =0;
+  /*let dv =0;
   let dv2 =1;
   if ((this.stepsSoFar === 80+dv)||(this.stepsSoFar === 235+dv2)) {
     console.log('eps0 eps1 synched');
@@ -241,7 +243,7 @@ rs.updateState = function () {
   let eps0 = cstate.eps0.value;
   let eps1 = cstate.eps1.value;
   rs.eps0 = eps0;
-  rs.eps1 = eps1;
+  rs.eps1 = eps1;*/
   this.resetShapes();
 }
 

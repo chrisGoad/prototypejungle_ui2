@@ -12,8 +12,10 @@ let levels = 5;
 rs.partParams.levels = levels;
 rs.partParams.rectangular = 1;
 rs.partParams.stroke = 'white';
-rs.altps = [10]; 
-rs.setAltps();
+rs.quadCases = [10]; 
+
+rs.qcMap = rs.buildWhereMap({},rs.qcRandomVal);
+
 rs.numSteps = 300;
 rs.saveAnimation = 1;
 

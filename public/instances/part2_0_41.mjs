@@ -14,42 +14,29 @@ rs.partParams.rectangular = 1;
 
 
 let mineps = -.2;
+rs.mineps = -.2;
 let maxeps = .2;
+rs.maxeps = .2;
 let initv =0.1;
 let kind ='randomSteps';
 kind ='randomValue';
 kind ='sweep';
+rs.kind ='sweep';
 let nr = 9;
 nr = 1;
 let sp = 1.5;
-const buildEm = function (n) {
-  let initS = {};
-  let ps = {};
-  for (let i=0;i<n;i++) {
-    for (let j=0;j<n;j++) {
-      let rnm0 = 'eps0';
-      let rnm1 = 'eps1';
-      let xnm = ('x'+i)+j;
-      let ynm = ('y'+i)+j;
-      initS[rnm0] = {value:mineps+Math.floor(Math.random()*(maxeps-mineps)),theta:0};
-      initS[rnm0] = {value:initv,theta:0};
-      ps[rnm0] = {kind,step:.04*sp,min:mineps,max:maxeps,interval:1,steps:0.5};
-      initS[rnm1] = {value:mineps+Math.floor(Math.random()*(maxeps-mineps)),theta:0};
-      initS[rnm1] = {value:initv,theta:0};
-      ps[rnm1] = {kind,step:.035*sp,min:mineps,max:maxeps,interval:1,steps:0.5};
-    }
-  }
-  return {initState:initS,pspace:ps}
-}  
-let bem = buildEm(nr);
+let initState = {eps0:{value:0},eps1:{value:0}};
+let pspace = {
+  eps0:{kind,step:.04*sp,min:mineps,max:maxeps,interval:1,steps:0.5},
+  eps1:{kind,step:.035*sp,min:mineps,max:maxeps,interval:1,steps:0.5}
+};
 
-let {initState,pspace} = bem;
+this.epsPspace = pspace;
 rs.copyOfInitState = rs.deepCopy(initState);
 
 rs.pstate = {pspace,cstate:initState};
 
 
-//rs.theFills = {P0:'rgb(255,0,0)',P1:'rgb(200,200,0)',P2:'rgb(0,255,0)',P3:'rgb(0,255,255)',P4:'rgb(0,0,255)',P5:'rgb(100,100,100)'};
 rs.theFills10 = {P1:'rgb(0,0,20)',P0:'rgb(100,100,100)',P2:'black',P3:'rgb(0,0,0)',P4:'rgb(0,0,0)',P5:'rgb(0,0,0)'};
 rs.theFills12 = {P0:'rgb(0,0,0)',P1:'rgb(100,100,100)',P2:'black',P3:'rgb(0,0,0)',P4:'rgb(0,0,0)',P5:'rgb(0,0,0)'};
 rs.partFill = function (prt) {
@@ -57,16 +44,15 @@ rs.partFill = function (prt) {
   let lev = where.length;
   let levels = this.partParams.levels;
   let nm,pnm;
-  if (lev >= (levels+0)) {
+  if (lev >= levels) {
     debugger;
     nm = this.partName(prt);
     pnm = where[0][0];
-
     let fill = (pnm==='P0')||(pnm==='P1')?this.theFills10[nm]:this.theFills12[nm];
     return fill;
   }
 }
-
+/*
 let wass ={};
 
 rs.wps = {};
@@ -84,21 +70,67 @@ rs.setAltps =function () {
   });
  }
 rs.setAltps();
+
+const qcVal = function (params) { //quad case generator
+  let {quadCases} = params;
+  let ln = quadCases.length;
+  let idx  = Math.floor(ln*Math.random());
+  let qc = quadCases[idx];
+  return qc;
+}
+
+const qcIval = function () {
+  return 0;
+}
+
+
+  
 // build a pspace with an element for each whereString, with randomized step size
 
-rs.buildWherePspace =function (minStep,maxStep) {
+rs.buildQp = function (params) {
+  let {Case,kind,step,minStep,maxStep,min,max,interval,steps} = params;
+  let qp;
+  if (step) {
+    qp = {Case,kind,step,min,max,interval,steps};
+  } else {
+    qp = {Case,kind,step:minStep+Math.random()*(maxStep - minStep),min,max,interval,steps};
+  }
+  return qp;
+}
+*/
+rs.quadCases = [2,3,4,5,6,7,8,9,10,12];  // the partitions per whereString
+
+
+rs.qcRandomVal = function () {
+  let ln = this.quadCases.length;
+  let idx  = Math.floor(ln*Math.random());
+  let qc = this.quadCases[idx];
+  return qc;
+}
+/*
+const initVal = function (params) {
+  let value = {params};
+  let iv = {value};
+  return iv;
+}
+*/
+//rs.buildWherePspace =function (minStep,maxStep,iv) {
+rs.buildWhereMap =function (params,valf) {
   this.aws = rs.allWheres(this.partParams.levels,5);
-  let wps = {};
+  let whereMap = {};
   this.aws.forEach( (wv) => {
     let ws = wv[0];
-    let qp = {kind,step:minStep+Math.random()*(maxStep - minStep),min:mineps,max:maxeps,interval:1,steps:0.5};
-    wps[ws] = qp;
+    let val = valf.call(this,params);
+    //let qp = {kind,step:minStep+Math.random()*(maxStep - minStep),min:mineps,max:maxeps,interval:1,steps:0.5};
+    whereMap[ws] = val;
   });
+  return whereMap;
  }
-rs.setAltps();
-  
+debugger;
 
-  debugger;
+rs.quadCases = [2,3,4,5,6,7,8,9,10,12];  // the partitions per whereString
+
+rs.qcMap = rs.buildWhereMap({},rs.qcRandomVal);
 
 
 
@@ -148,19 +180,11 @@ rs.eps1 = 0;
 debugger;
 rs.partSplitParams = function (prt) {
   let {polygon:pgon} = prt;
- // let {qspa0,qspa1,qspa2,qspa3} = this;
   let levels = this.partParams.levels;
- /* let cnt = pgon.center();
-  let inQ0 = (cnt.x < 0) && (cnt.y < 0);
-  let inQ1 = (cnt.x > 0) && (cnt.y < 0);
-  let inQ2 = (cnt.x < 0) && (cnt.y > 0);
-  let inQ3 = (cnt.x > 0) && (cnt.y > 0);
-  let ln = pgon.corners.length;*/
   let where = prt.where;
   let ws = this.whereString(where);
   let lev = where.length;
-  let idx = ws?this.wps[ws]:4;
-
+  let idx = ws?this.qcMap[ws]:4;
   let qp;
   if (lev < (levels-1)) {
     qp = {Case:7,pcs:[0.5,1.5,2.5,3.5]}

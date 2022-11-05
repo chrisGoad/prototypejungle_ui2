@@ -17,6 +17,16 @@ rs.partParams.rectangular = 1;
 rs.partParams.stroke = 'white';
 //rs.altps = [4,6,7,8]; 
 rs.quadCases = [7,8,9]; 
+let minStep = 0.02;
+let maxStep = 0.04;
+let sp = 1.5;
+let kind = 'sweep';
+debugger;
+rs.buildPspaceElement = function () {
+  return {kind,step:(minStep+Math.random()*(maxStep-minStep))*sp,min:this.mineps,max:this.maxeps,interval:1,steps:0.5};
+}
+let pspace = rs.buildWhereMap({},rs.buildPspaceElement);
+
 rs.qcMap = rs.buildWhereMap({},rs.qcRandomVal);
 
 //rs.setAltps();

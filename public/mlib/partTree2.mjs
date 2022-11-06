@@ -455,7 +455,6 @@ rs.extendPartNLevels = function (prt,iparams) {
  
  
  rs.displayPart = function (prt,emitLineSegs) {
-  debugger;
    let {shapes,lineSegs} = this;
    //debugger;
    if (!prt) {

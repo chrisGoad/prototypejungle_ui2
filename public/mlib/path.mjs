@@ -159,7 +159,7 @@ debugger;
 }
   
 item.timeStep = function (pstate) {
-  //debugger;
+  debugger;
   let {pspace,cstate}= pstate;
   let ct = cstate.time?cstate.time:0;
   let props = Object.getOwnPropertyNames(pspace);
@@ -171,6 +171,7 @@ item.timeStep = function (pstate) {
    //let cs = cstate[component];
    if (ct%iv === 0) {
     // this.nextState(pathKind,pspace,cstate,component);
+    debugger;
      this.nextState(kind,pspace,cstate,component);
    } else {
  //    ns[component] = cv;
@@ -241,6 +242,7 @@ item.oneInterpolationStep = function () {
 
 }
 item.oneStep = function () {
+  debugger;
   if (this.paused) {
     return;
   }

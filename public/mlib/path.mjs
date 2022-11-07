@@ -216,6 +216,8 @@ item.numSteps = 150;
 item.saveAnimation = 0;
 item.iStepsSoFar = 0;
 item.numISteps = 0;
+item.chopOffBeginning = 0; // in steps
+item.chopOffEnd = 0; // in steps
 item.interpFrom;
 item.interpTo;
 item.stepInterval = 40;
@@ -240,13 +242,16 @@ item.oneInterpolationStep = function () {
   }
 
 }
-item.oneStep = function () {
+item.oneStep = function (one) {
  // debugger;
   if (this.paused) {
     return;
   }
+
   let ns = this.stepsSoFar;
-  if  (this.stepsSoFar++ > this.numSteps) {
+       console.log('ns',ns,'tns',this.numSteps);
+
+  if  (this.stepsSoFar++ > (this.numSteps-this.chopOffEnd)) {
     if (this.numISteps) {
       this.iStepsSoFar = 0;
       this.interpFrom = this.deepCopy(this.pstate.cstate);
@@ -255,9 +260,8 @@ item.oneStep = function () {
     }
     return;
   }
-  if (ns&&this.saveAnimation) { // for some reason, the first frame is corrupted 
-   // console.log('ns',ns);
-    draw.saveFrame(ns-1);
+  if (ns&&this.saveAnimation&&(ns>this.chopOffBeginning)) { // for some reason, the first frame is corrupted 
+    draw.saveFrame(ns-Math.max(this.chopOffBeginning,1));
   }
   if (this.updateState) {
     this.updateState();
@@ -265,7 +269,9 @@ item.oneStep = function () {
     this.resetShapes();
   }
   this.timeStep(this.pstate);
- setTimeout(() => this.oneStep(),this.stepInterval)
+  if (!one) {
+    setTimeout(() => this.oneStep(),this.stepInterval);
+  }
 }
  
        

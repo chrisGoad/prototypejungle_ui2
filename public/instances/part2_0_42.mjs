@@ -30,8 +30,12 @@ rs.partSplitParams = function (prt) {
   let ssf = this.stepsSoFar;
   let ns = this.numSteps;
   let hns = 0.5*ns;
+  let lev = prt.where.length;
  // let eps = ssf<hns ?0.2*(ssf/hns):0.2*(1-(ssf-hns)/hns);
   let eps = 0.3*(ssf/ns);
+  if (lev === 1) {
+    console.log('eps',eps);
+  }
   let qp = {Case:3,pcs:[0.5-eps,1.5-eps,2.5+eps,3.5-eps]};
   let rs = (ln === 3)?this.triSplitParams:qp;
   //let lev = prt.where.length;
@@ -68,12 +72,14 @@ rs.partStrokeWidth = function (prt) {
   }
   let rs = (((quad&&quadp)|| levHigh)?1:.1)*strokeWidths[lev];
   //let rs = (((quad&&quadp)|| levHigh)?1:.01)*strokeWidths[lev];
-  console.log('lev',lev,'quad',quad,'swvfr',swvfr,'rs',rs);
+ 	if (lev === 1) {
+    console.log('lev',lev,'quad',quad,'swvfr',swvfr,'rs',rs);
+  }
   return swvfr * rs;
 }
 
 rs.updateState = function () {
-  debugger;
+ // debugger;
   let ssf = this.stepsSoFar;
   let ns = this.numSteps;
   let hns = 0.5*ns;
@@ -86,6 +92,8 @@ rs.updateState = function () {
 }
 
 rs.saveAnimation = 1;
+rs.chopOffBeginning = 10; // in steps
+rs.chopOffEnd = 18; // in steps
 
   
 //rs.addToArray(strokeWidths,.1,levels);

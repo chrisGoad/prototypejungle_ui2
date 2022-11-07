@@ -93,7 +93,7 @@ const performInit = function () {
     }
   }  
 }
-
+/*
 const runAnimation = function (save) {
 //	debugger;
 	let main = core.root.main;
@@ -102,7 +102,7 @@ const runAnimation = function (save) {
 		main.animate(0);
 	}
 }
-
+*/
 
 
 const resumeAnimation = function (save) {
@@ -133,6 +133,17 @@ const stepAnimation = function () {
   main.paused = 0;
 	if (main.oneStep) {
 		main.oneStep(true);
+	}
+}
+
+
+
+const runAnimation = function () {
+  //debugger;
+	let main = core.root.main;
+  main.paused = 0;
+	if (main.oneStep) {
+		main.oneStep(false);
 	}
 }
 

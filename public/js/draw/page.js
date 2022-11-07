@@ -1,16 +1,18 @@
 
 let bkColor = "white";
-let topbarDiv,cols,svgDiv,saveBut,saveMpixBut,stepBut,pauseBut,ctopDiv,svgMessageDiv,nextBut;;
+let topbarDiv,cols,svgDiv,saveBut,saveMpixBut,stepBut,runBut,pauseBut,ctopDiv,svgMessageDiv,nextBut;;
 
 let mpg;
 const buildPage = function () {
 saveBut = document.getElementById('saveButton');
 saveMpixBut = document.getElementById('saveMpixButton');
 stepBut = document.getElementById('stepButton');
+runBut = document.getElementById('runButton');
 pauseBut = document.getElementById('pauseButton');
 saveBut.addEventListener("click", () => saveTheImage(0));
 saveMpixBut.addEventListener("click", () => saveTheImage(1));
 stepBut.addEventListener("click", stepAnimation);
+runBut.addEventListener("click", runAnimation);
 pauseBut.addEventListener("click", pauseAnimation);
 
 mpg =  html.wrap("main",'div',{style:{position:"absolute","margin":"0px",padding:"0px",display:"none"}}).

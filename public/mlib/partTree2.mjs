@@ -827,7 +827,7 @@ rs.initialize = function () {
   //let {emitLineSegs,polygonal} = partParams;
   let {emitLineSegs,rectangular} = partParams;
 //  polygonal = 1;
- // this.addFrame();
+  this.addFrame();
   this.initProtos();
   this.callIfDefined('adjustProtos');
  // if (!this.strokeWidths) {

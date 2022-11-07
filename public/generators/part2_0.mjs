@@ -12,7 +12,7 @@ addPartMethods(rs);
 addPathMethods(rs);
 rs.setName('part2_0');
 let wd = 100;
-let topParams = {width:wd,height:wd,framePadding:0.1*wd,frameStrokee:'white'}
+let topParams = {width:wd,height:wd,framePadding:0.2*wd,frameStrokee:'white'}
 Object.assign(rs,topParams);
 rs.partParams = {};
 //let strokeWidths = rs.quadParams.strokeWidths = [];

@@ -139,7 +139,7 @@ item.randomStepsNextState = function (pspace,cstate,component) {
 }
 
 item.nextState = function (pathKind,pspace,cstate,component) {
-debugger;
+//debugger;
   let csc = cstate[component];
   if (csc.paused) {
     return;
@@ -159,7 +159,7 @@ debugger;
 }
   
 item.timeStep = function (pstate) {
-  debugger;
+  //debugger;
   let {pspace,cstate}= pstate;
   let ct = cstate.time?cstate.time:0;
   let props = Object.getOwnPropertyNames(pspace);
@@ -171,7 +171,6 @@ item.timeStep = function (pstate) {
    //let cs = cstate[component];
    if (ct%iv === 0) {
     // this.nextState(pathKind,pspace,cstate,component);
-    debugger;
      this.nextState(kind,pspace,cstate,component);
    } else {
  //    ns[component] = cv;
@@ -216,7 +215,7 @@ item.stepsSoFar = 0;
 item.numSteps = 150;
 item.saveAnimation = 0;
 item.iStepsSoFar = 0;
-item.numISteps = 20;
+item.numISteps = 0;
 item.interpFrom;
 item.interpTo;
 item.stepInterval = 40;
@@ -242,7 +241,7 @@ item.oneInterpolationStep = function () {
 
 }
 item.oneStep = function () {
-  debugger;
+ // debugger;
   if (this.paused) {
     return;
   }

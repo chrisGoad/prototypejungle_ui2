@@ -150,6 +150,7 @@ sections:
  [0,'part2_0_42','instances',1,'Part2 0 42',{likes:0,posted:0,category:'quad'}], 
  [0,'part2_0_43','instances',1,'Part2 0 43',{likes:0,posted:0,category:'quad'}], 
  [0,'part2_0_44','instances',1,'Part2 0 44',{likes:0,posted:0,category:'quad'}], 
+ [0,'part2_0_45','instances',1,'Part2 0 45',{likes:0,posted:0,category:'quad'}], 
 
   [0,'part2_0_D_0','instances',1,'Partition 1',{likes:0,posted:0,category:'quad'}], 
    [0,'part2_0_D_7','instances',1,'Partition 2',{likes:0,posted:0,category:'quad'}], 

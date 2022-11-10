@@ -6,31 +6,23 @@
 consists of a hierarchical partition of 2d polygons into smaller polygons. 
 In this implementation, attention is restricted to triangles and convex quadrangles. 
 Also, we restrict attention to those hierarchical partitions whose nodes consist of 
- 10 basic partitions. Each partition is defined by the listed parameters, 
+ eight basic partitions. Each partition is defined by the listed parameters, 
  each of which determines what fraction of the distance along its edge the depicted point appears. 
- For example, here is the 6th basic partition, which partitions a quadrangle into four triangles 
+ For example, here is the fourth basic partition, which partitions a quadrangle into four triangles 
  surrounding a smaller quadrangle. The parameters pc0, pc1, pc2 and pc3 are set to .4 in
  this case.
  <p><img  src="part2_0_D_6.jpg" style="cursor:pointer"  width="400" height="400"/></p>
  <p> Here is the same partition with parameters set to 0.5:</p>
   <p><img  src="part2_0_D_6a.jpg" style="cursor:pointer"  width="400" height="400"/></p>
-
- <p>However, there are several other ways to partition a convex quadrangle into four smaller quadrangles. Here is one:</p>
-  <p><img  src="https://kingdomofpattern.com/images/thumbs/quad_0_8_0.jpg" style="cursor:pointer"  width="400" height="400"/></p>
- <p>In this case, the partition is governed by five parameters. As illustrated, <span class="textVar">fr0</span> and fr1 govern an initial  partition of the big quadrangle into left and right quads. Then fr2 and fr3 govern a paritition of the left quad into parts, and similarly f4 and f5 govern the partition of the right. In each case frN is given by the fraction of the way along the relevant side that the end of the partitioning line is located. The sides are taken in clockwise order. The parameters for the above partition are {fr0:.4,fr1:.4,fr2:.4,fr3:.4,fr4:.6,fr5:.4} </p>
- <p> Here this partition is extended by two more levels, by partitioning the quads that appear at the first level according to the same rule, and then the second level quads again by the same rule:
-  <p><img  src="https://kingdomofpattern.com/images/thumbs/quad_0_8_2.jpg" style="cursor:pointer"  width="400" height="400"/></p>
-<p> And here's the result of extending our partitions to six levels:</p>
-  <p><img  src="https://kingdomofpattern.com/images/thumbs/quad_0_8_3.jpg" style="cursor:pointer"  width="400" height="400"/></p>
-<p> There are two other ways of partitioning a convex quadrangle into four parts. The first is analogous to the case we have just described, but with the initial partition applied horizontally rather than vertically. That is the first partition is into top and bottom rather than left and right. Here's a picture:</p>
-  <p><img  src="https://kingdomofpattern.com/images/thumbs/quad_0_8_4.jpg" style="cursor:pointer"  width="400" height="400"/></p>
-  
-<p>And finally, the partition can involve specifying a center point around which the partition is done, together with the distance along each side that the partitioning lines connect to:
-</p>
-  <p><img  src="https://kingdomofpattern.com/images/thumbs/quad_0_8_5.jpg" style="cursor:pointer"  width="400" height="400"/></p>
-<p> In the implementation, the partitioning method used for each quadrangle can be chosen programatically, so that the partitioning method varies at different parts of the hierarchy. An example appears below. In this case the partitioning rule varies from center-partition at odd levels, and a random choice between vertical-first and horizontal-first partitions at even. Also, there is randomness in the new center point chosen for center-partitions and in the partitioning parameters for vertical and horizontal partitions. There are eight levels.</p>
-  <p><img  src="https://kingdomofpattern.com/images/thumbs/quad_skein.jpg" style="cursor:pointer"  width="600" height="400"/></p>
-
+  Next is an image in which each quadrangle is partitioned via partition 4 and each triangle
+  is partitioned via partition 1, recursing down 4 levels.
+  <p><img  src="part2_0_45.jpg" style="cursor:pointer"  width="400" height="400"/></p>
+  <p>The eight basic paritions are </p>
+<p><img  src="part2_0_D_0.jpg" style="cursor:pointer"  width="300" height="300"/><img  src="part2_0_D_7.jpg" style="cursor:pointer"  width="300" height="300"/>
+<img  src="part2_0_D_1.jpg" style="cursor:pointer"  width="300" height="300"/></p><img  src="part2_0_D_6.jpg" style="cursor:pointer"  width="300" height="300"/>
+<img  src="part2_0_D_2.jpg" style="cursor:pointer"  width="300" height="300"/><img  src="part2_0_D_3.jpg" style="cursor:pointer"  width="300" height="300"/></p>
+<p><img  src="part2_0_D_11.jpg" style="cursor:pointer"  width="300" height="300"/><img  src="part2_0_D_8.jpg" style="cursor:pointer"  width="300" height="300"/></p>
+ 
 
 </div>
 </div>

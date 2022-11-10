@@ -738,8 +738,9 @@ rs.quad2part = function (params) {
 }
 
 // for illustrations of the partitions (eg instances/part_0_D_0.mjc)
-rs.displayPc = function (n) {  //display periphery coordinate
+rs.displayPc = function (n,ijog) {  //display periphery coordinate
   debugger;
+  let jog = ijog?ijog:Point.mk(0,0);
   let topP = this.shapes[0].fromGeom;
   //let pc = rs.partParams.splitParams['pc'+n];
   let pc = this.partParams.splitParams.pcs[n];
@@ -759,7 +760,7 @@ rs.displayPc = function (n) {  //display periphery coordinate
    } else if (fpc ===3) {
     disp = Point.mk(0,sdisp);
    }
-  this.addT('pc',n,ps.plus(disp));
+  this.addT('pc',n,ps.plus(disp).plus(jog));
 }
 
 rs.displayTitle = function (nm) {

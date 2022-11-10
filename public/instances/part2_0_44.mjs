@@ -3,22 +3,21 @@ import {rs as generatorP} from '/generators/part2_0.mjs';
 
 let rs = generatorP.instantiate();
 
-rs.setName('part2_0_42');
-let levels = 1;
-let topLevels = 9;
-let introSteps = 2;
+rs.setName('part2_0_44');
+let levels = 7;
+let topLevels = levels;
+let introSteps = -1;
 let kind = 'sweep';
 rs.partParams.levels = levels;
 rs.partParams.rectangular = 1;
 levels++;
 let initState = {sw:{value:0}};
 //initState = {speedup:{value:1}}
-let step = 0.05;
+let step = 0.1;
 let pspace = {
   sw:{kind,step:step,min:1,max:topLevels,interval:1,steps:0.5},
 };
 
-rs.numSteps = 2*Math.floor(topLevels/step);
 rs.copyOfInitState = rs.deepCopy(initState);
 
 rs.pstate = {pspace,cstate:initState};
@@ -32,7 +31,7 @@ rs.partSplitParams = function (prt) {
   let hns = 0.5*ns;
   let lev = prt.where.length;
  // let eps = ssf<hns ?0.2*(ssf/hns):0.2*(1-(ssf-hns)/hns);
-  let eps = ssf>=introSteps?0.3*(ssf/ns):0.3*0.5;
+  let eps = ssf>=introSteps?0.4*(ssf/ns):0.6*0.5;
   if (lev === 1) {
     console.log('eps',eps);
   }
@@ -46,25 +45,45 @@ let visibles = rs.partParams.visibles = [];
 rs.addToArray(visibles,1,20);
 
 let strokeWidths = rs.partParams.strokeWidths = [];
-rs.computeExponentials({dest:strokeWidths,n:20,root:0.4,factor:.7});
+rs.computeExponentials({dest:strokeWidths,n:20,root:0.5,factor:.7});
+let startToFade = 100;
+rs.numSteps = 250;
+
 rs.partStrokeWidth = function (prt) {
+  debugger;
   let {cstate} = this.pstate;
   let {sw} =cstate;
   let ssf = this.stepsSoFar;
-  let pastIntro = ssf >= introSteps;
- // debugger;
-  let swv= sw.value;
-  let quadp = 1;
+  let saf = ssf - startToFade;
+  
+  let ns = this.numSteps;
+  let stg = ns-ssf;
+  let clevs,clevsr,stepsPerLevel,inLev;
   let lev = prt.where.length;
-  if (pastIntro && (lev >= swv)) {
-    return 0;
+  let fr = 0;
+  if (saf >= 0) {
+     
+    stepsPerLevel = Math.floor((ns-startToFade)/topLevels);
+    clevsr = saf/stepsPerLevel;
+    clevs = Math.floor(clevsr);
+    inLev = clevsr-clevs;
+    if (lev === (topLevels - clevs)) {
+      fr = inLev;///stepsPerLevel;
+    }
+    if (lev === 0) {
+      console.log('spl',stepsPerLevel,'saf',saf,'clevs',clevs,'inLev',inLev,'fr',fr);
+    }
+    if (lev > (topLevels - clevs)) {
+      return 0;
+    }
+    
+ } 
+ // debugger;
+  if (lev <2) {
+    fr =0;
   }
-  let swvi = Math.floor(swv);
-  let swvfr = Math.min(swv - lev,1);
-  if (pastIntro && (lev >= swvi+1)) {
-    return 0;
-   }
-  let levHigh = lev > 7;
+  let quadp = 1;
+  let levHigh = lev > 6;
   let pln = prt.polygon.corners.length;
   let quad = pln === 4;
   let prnt = prt.parent;
@@ -76,22 +95,14 @@ rs.partStrokeWidth = function (prt) {
   let rs = (((quad&&quadp)|| levHigh)?1:.1)*strokeWidths[lev];
   //let rs = (((quad&&quadp)|| levHigh)?1:.01)*strokeWidths[lev];
  	if (lev === 1) {
-    console.log('lev',lev,'quad',quad,'swvfr',swvfr,'rs',rs);
+  //console.log('lev',lev,'quad',quad,'swvfr',swvfr,'rs',rs);
   }
-  return pastIntro?swvfr * rs:rs;
+  return (1-fr)*rs;
 }
 
 rs.updateState = function () {
  debugger;
-  let ssf = this.stepsSoFar;
-  let pastIntro = ssf >= introSteps;
-
-  let ns = this.numSteps;
-  let hns = 0.5*ns;
-  let fr = ssf<hns?ssf/hns:1-(ssf-hns)/hns;
-  levels = pastIntro? Math.floor(1 + (topLevels-1)*fr):topLevels;
-  console.log('levels',levels);
-  this.partParams.levels = levels;
+ 
 
   this.resetShapes();
 }
@@ -100,7 +111,7 @@ rs.saveAnimation = 1;
 rs.chopOffBeginning = 10; // in steps
 rs.chopOffBeginning = 140; // in steps
 rs.chopOffBeginning = 0; // in steps
-rs.chopOffEnd = 18; // in steps
+rs.chopOffEnd = 0; // in steps
 
   
 //rs.addToArray(strokeWidths,.1,levels);

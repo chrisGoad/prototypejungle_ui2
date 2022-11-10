@@ -12,7 +12,7 @@ rs.afterInitialize =function ()  {
   let ff = (this.width)*0.05;
     let topP = this.shapes[0].fromGeom;
 
-  this.displayTitle('Part2 T C 2 C 0');
+  this.displayTitle('Partition 2');
   this.displayPc(0);
   this.displayPc(1);
  // let n2 = topP.pc2point(2+(1-sp.pc0));

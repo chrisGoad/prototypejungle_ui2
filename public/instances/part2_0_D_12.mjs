@@ -26,7 +26,7 @@ rs.partSplitParamss = function (qd) {
 rs.afterInitialize = function () {
   debugger;
    let ff = (this.width)*0.05;
-  this.displayTitle('Part2 Q C 10 C 0');
+  this.displayTitle('Partition 11');
   this.displayPc(0);
   this.displayPc(1);
   this.displayPc(2);

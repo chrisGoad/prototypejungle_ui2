@@ -261,7 +261,7 @@ item.oneStep = function (one) {
     return;
   }
   if (ns&&this.saveAnimation&&(ns>this.chopOffBeginning)) { // for some reason, the first frame is corrupted 
-    draw.saveFrame(ns-Math.max(this.chopOffBeginning,1));
+    draw.saveFrame(ns-Math.max(this.chopOffBeginning+1,1));
   }
   if (this.updateState) {
     this.updateState();

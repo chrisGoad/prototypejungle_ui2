@@ -10,7 +10,7 @@ let sp = rs.partParams.splitParams = {Case:6,pcs:[.4,1.4,2.4,3.4],frs:[.3,0.7]};
 
 rs.afterInitialize =function ()  {
   let ff = (this.width)*0.05;
-  this.displayTitle('Part2 Q C 6 C 0');
+  this.displayTitle('Partition 6');
   this.displayPc(0);
   this.displayPc(1);
   this.displayPc(2);

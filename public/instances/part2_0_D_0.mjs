@@ -15,7 +15,7 @@ debugger;
   let hwd = 0.5*wd;
   let ff = 0.05*wd;
   
-  this.displayTitle('Part2 T C 1 C 0');
+  this.displayTitle('Partition 1');
   this.displayPc(0);
   this.displayPc(1);
  /* this.addT('Part2_T',1,Point.mk(0*ff,-(hwd+3*ff)));

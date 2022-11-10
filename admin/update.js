@@ -161,7 +161,7 @@ var fs = require('fs');
        let ext = afterLastChar(fln,'.');
       // console.log('fln',fln,'ext',ext);
     //  if ((ext === fln) || (!['js','css','html','png','svg','jpg','ico','md'].includes(ext))) {
-      if  (!['mjs','js','css','html','svg','ico','md','mp3','json'].includes(ext)) {
+      if  (!['mjs','js','css','html','svg','ico','md','mp3','json','jpg'].includes(ext)) {
          console.log('wrong kind of file/dir',fln);
          return;
       }

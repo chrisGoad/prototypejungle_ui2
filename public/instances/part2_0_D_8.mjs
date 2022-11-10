@@ -19,7 +19,7 @@ rs.partSplitParamsss = function (qd) {
    return rs;
 }
 rs.afterInitialize =function ()  {
-  this.displayTitle('Part2 Q C 9 C 0');
+  this.displayTitle('Partition 8');
   this.displayPc(0);
   this.displayPc(1);
   this.displayPc(2);

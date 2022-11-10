@@ -9,7 +9,7 @@ rs.partParams.rectangular = 1;
 let sp = rs.partParams.splitParams = {Case:2,vertexNum:0,pcs:[0.6,2.2]};
 
 rs.afterInitialize =function ()  {
-  this.displayTitle('Part2 Q C 2 C 0');
+  this.displayTitle('Partition 3');
   this.displayPc(0);
   this.displayPc(1);
 }

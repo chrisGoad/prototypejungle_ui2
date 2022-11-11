@@ -70,7 +70,7 @@ item.sweepNextState = function (pspace,cstate,component) {
   let pspc = pspace[component];
   let {jerky,min,max,step} = pspc;
   let csc = cstate[component];
-  let {cycleCount} = cstate;
+  let {cycleCount} = csc;
   let {cstep,down,value,sv,ev} = csc;
     
   if (cstep === undefined) {
@@ -82,6 +82,7 @@ item.sweepNextState = function (pspace,cstate,component) {
   let {nosin,sin} = nvls;
   //console.log('nv',nv,'down',down,'sv',sv,'ev',ev,'step',step,'cstep',cstep);
   let up = !down;
+  let atCycleEnd=0;
   //if ((nv >= max) && up) {
   if (((sin+.000001) >= max) && up) {
     if (bounce) {
@@ -89,15 +90,16 @@ item.sweepNextState = function (pspace,cstate,component) {
       csc.ev = min;
       csc.down = 1;
     } else {
-    debugger;
       if (cycleCount) {
-        cstate.cycleCount++;
+      debugger;
+        csc.cycleCount++;
       } else {
-        cstate.cycleCount = 1;
+        csc.cycleCount = 1;
       }
       csc.sv = min;
       csc.ev = max;
       csc.value = min;
+      atCycleEnd = 1;
     }
     csc.cstep = 0;
  // } else if ((nv <= min) && down){
@@ -109,7 +111,9 @@ item.sweepNextState = function (pspace,cstate,component) {
   } else {
     csc.cstep++;
   }
-  csc.value = sin;
+  if (!atCycleEnd) {
+    csc.value = sin;
+  }
  // csc.value = nosin;
 }    
    
@@ -173,7 +177,6 @@ item.nextState = function (pathKind,pspace,cstate,component) {
 }
   
 item.timeStep = function (pstate) {
-  debugger;
   let {pspace,cstate}= pstate;
   let ct = cstate.time?cstate.time:0;
   let props = Object.getOwnPropertyNames(pspace);
@@ -236,7 +239,6 @@ item.interpFrom;
 item.interpTo;
 item.stepInterval = 40;
 item.oneInterpolationStep = function () {
-  debugger;
   let i = this.iStepsSoFar;
   if (i===0) {
    console.log('interpFrom',this.interpFrom,'interpTo',this.interpTo);

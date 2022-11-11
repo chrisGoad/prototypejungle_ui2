@@ -4,7 +4,7 @@ import {rs as generatorP} from '/generators/part2_0.mjs';
 let rs = generatorP.instantiate();
 
 rs.setName('part2_0_43');
-let levels = 6;
+let levels = 16;
 let topLevels = 9;
 
 let kind = 'sweep';
@@ -48,7 +48,8 @@ rs.partSplitParams = function (prt) {
   let eps2 = cstate.pc2.value;
   let eps3 = cstate.pc3.value;
   let qp = {Case:3,pcs:[0.5+eps0,1.5+eps1,2.5+eps3,3.5+eps3]};
-  let rs = (ln === 3)?this.triSplitParams:qp;
+ // let rs = (ln === 3)?this.triSplitParams:qp;
+  let rs = (ln === 3)?null:qp;
   //let lev = prt.where.length;
   return rs;
 }

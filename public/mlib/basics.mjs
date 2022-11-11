@@ -1,9 +1,11 @@
 // documented in https://prototypejungle.net/doc/basics.html
 
 import {rs as circlePP} from '/shape/circle.mjs';
+import {rs as linePP} from '/shape/line.mjs';
 import {rs as rectPP} from '/shape/rectangle.mjs';
 import {rs as shadedRectPP} from '/shape/shadedRectangle.mjs';
 import {rs as textPP} from '/shape/textOneLine.mjs';
+import {rs as polygonPP} from '/shape/polygon.mjs';
 
 const rs = function (item) {
 window.root = core.root;
@@ -586,6 +588,27 @@ item.addText = function (textP,rt,n,p,color) {
 }
 core.root.backgroundColor = 'black';
 item.setBackgroundColor = (clr) => core.root.backgroundColor = clr; 
+
+
+item.initProtos = function () {
+  this.polygonP =  polygonPP.instantiate();
+  this.polygonP.stroke = 'white';
+  this.polygonP.fill = 'transparent';
+  this.polygonP['stroke-width'] =1;
+  this.lineP =  linePP.instantiate();
+  this.lineP.stroke = 'white';
+  this.lineP['stroke-width'] =.5 ;
+    this.circleP =  circlePP.instantiate();
+  this.circleP.stroke = 'white';
+  this.circleP.fill = 'blue';
+  this.circleP['stroke-width'] =.05;
+   let textP = this.textP =  textPP.instantiate();
+  textP["font-size"] = "12";
+  textP["font-style"] = "normal";
+  textP["font-family"] = "arial";
+  textP["font-weight"] = "normal";
+  textP.stroke = 'white';
+}
 }
 export {rs};
  

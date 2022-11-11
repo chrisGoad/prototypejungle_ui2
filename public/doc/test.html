@@ -1,0 +1,33 @@
+{{boilerplate_kop}}
+<div>
+<p><a style="color:white" href="kop_general.html">General Considerations</a></p>
+<p class="title">Partition Trees</p>
+<p> A geometric partition tree is a  data structure which 
+consists of a hierarchical partition of 2d polygons into smaller polygons. 
+In this implementation, attention is restricted to triangles and convex quadrangles. 
+Also, I restrict attention to those hierarchical partitions whose nodes consist of 
+ eight basic partitions. Each basic partition includes parameters 
+ which determine what fraction of the distance along its edge each labeled point appears. 
+ For example, here is the fourth basic partition, which partitions a quadrangle into four triangles 
+ surrounding a smaller quadrangle. The parameters pc0, pc1, pc2 and pc3 are set to 0.4 in
+ this case.
+ <p><img  src="part2_0_D_6.jpg" style="cursor:pointer"  width="400" height="400"/></p>
+ <p> Here is the same partition with parameters set to 0.5:</p>
+  <p><img  src="part2_0_D_6a.jpg" style="cursor:pointer"  width="400" height="400"/></p>
+  Next is an image in which each quadrangle is partitioned via partition 4 and each triangle
+  is partitioned via partition 1, recursing down 4 levels.
+  <p><video controls width = "400">><source src="part2_0_44.anim.mp4" type="video/mp4"> </video>
+  <p>The eight basic paritions are </p>
+<p><img  src="part2_0_D_0.jpg" style="cursor:pointer"  width="300" height="300"/><img  src="part2_0_D_7.jpg" style="cursor:pointer"  width="300" height="300"/>
+<img  src="part2_0_D_1.jpg" style="cursor:pointer"  width="300" height="300"/></p><img  src="part2_0_D_6.jpg" style="cursor:pointer"  width="300" height="300"/>
+<img  src="part2_0_D_2.jpg" style="cursor:pointer"  width="300" height="300"/><img  src="part2_0_D_3.jpg" style="cursor:pointer"  width="300" height="300"/></p>
+<p><img  src="part2_0_D_11.jpg" style="cursor:pointer"  width="300" height="300"/><img  src="part2_0_D_8.jpg" style="cursor:pointer"  width="300" height="300"/></p>
+ 
+
+</div>
+</div>
+</body>
+</html>
+
+
+

@@ -4,7 +4,7 @@ import {rs as generatorP} from '/generators/part2_0.mjs';
 let rs = generatorP.instantiate();
 
 rs.setName('part2_0_43');
-let levels = 4;
+let levels = 6;
 let topLevels = 9;
 
 let kind = 'sweep';
@@ -14,13 +14,16 @@ levels++;
 let initState = {sw:{value:0},pc0:{value:0},pc1:{value:0},pc2:{value:0},pc3:{value:0}};
 //initState = {speedup:{value:1}}
 let step = 0.05;
-let minpc = -.4;
-let maxpc = .4;
-let baseStep = 0.005;
+let minpc = -.5;
+let maxpc = .5;
+let baseStep = 0.01;
 let step0 = 1.0;
-let step1 = 1.1;
+/*let step1 = 1.1;
 let step2 = 1.2;
-let step3 = 1.3;
+let step3 = 1.3;*/
+let step1 =1.0;
+let step2 =1.0;
+let step3 =1.0;
 let pspace = {
   sw:{kind,step:step,min:1,max:topLevels,interval:1,steps:0.5},
   pc0:{kind,step:step0*baseStep,min:minpc,max:maxpc,interval:1,steps:0.5},
@@ -97,12 +100,12 @@ rs.updateStatee = function () {
   this.resetShapes();
 }
 
-rs.saveAnimation = 1;
+rs.saveAnimation = 0;
 
  rs.stepInterval = 40;
-let ist=rs.numISteps = 30;
+let ist=rs.numISteps = 0;
 
-rs.numSteps = 200-ist;
+rs.numSteps = 2000-ist;
 //rs.addToArray(strokeWidths,.1,levels);
 export {rs};
 

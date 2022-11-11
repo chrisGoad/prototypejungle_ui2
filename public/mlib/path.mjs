@@ -66,9 +66,11 @@ item.adjustSweepToNewStep = function (pstate,component,nstep) {
 
 item.sweepNextState = function (pspace,cstate,component) {
 // debugger;
+  let bounce = 0;
   let pspc = pspace[component];
   let {jerky,min,max,step} = pspc;
   let csc = cstate[component];
+  let {cycleCount} = cstate;
   let {cstep,down,value,sv,ev} = csc;
     
   if (cstep === undefined) {
@@ -81,10 +83,22 @@ item.sweepNextState = function (pspace,cstate,component) {
   //console.log('nv',nv,'down',down,'sv',sv,'ev',ev,'step',step,'cstep',cstep);
   let up = !down;
   //if ((nv >= max) && up) {
-  if ((nosin >= max) && up) {
-    csc.sv = max;
-    csc.ev = min;
-    csc.down = 1;
+  if (((sin+.000001) >= max) && up) {
+    if (bounce) {
+      csc.sv = max;
+      csc.ev = min;
+      csc.down = 1;
+    } else {
+    debugger;
+      if (cycleCount) {
+        cstate.cycleCount++;
+      } else {
+        cstate.cycleCount = 1;
+      }
+      csc.sv = min;
+      csc.ev = max;
+      csc.value = min;
+    }
     csc.cstep = 0;
  // } else if ((nv <= min) && down){
   } else if ((nosin <= min) && down){
@@ -95,8 +109,8 @@ item.sweepNextState = function (pspace,cstate,component) {
   } else {
     csc.cstep++;
   }
-  //csc.value = sin;
-  csc.value = nosin;
+  csc.value = sin;
+ // csc.value = nosin;
 }    
    
 
@@ -159,7 +173,7 @@ item.nextState = function (pathKind,pspace,cstate,component) {
 }
   
 item.timeStep = function (pstate) {
-  //debugger;
+  debugger;
   let {pspace,cstate}= pstate;
   let ct = cstate.time?cstate.time:0;
   let props = Object.getOwnPropertyNames(pspace);

@@ -27,7 +27,7 @@ let top = kind === 'top';
 let drop = kind === 'drop';
 let grid = kind === 'grid';
 let lines = kind === 'lines';
-let quad = kind === 'quad';
+let partition = kind === 'partition';
 let web = kind === 'web';
 let sortByOrder = toBoolean(sortByOrderstr);
 let byKind = kind === 'byKind';
@@ -105,7 +105,7 @@ if (byLikes) {
 }  else if (top)  {
   sectionsPath = './galleries.js';
   imKind = 'g'
-} else if (images || forKOP  || forPJ || drop || grid || lines || quad || web)  {
+} else if (images || forKOP  || forPJ || drop || grid || lines || partition || web)  {
   sectionsPath = './images.js';
   imKind = 'g'
 }  else if (local_images)  {
@@ -142,8 +142,8 @@ if (alternate) {
   outPath = 'public/gridImages.html';
 } else if (lines) {
   outPath = 'public/linesImages.html';
-} else if (quad) {
-  outPath = 'public/quadImages.html';
+} else if (partition) {
+  outPath = 'public/partitionImages.html';
 } else if (web) {
   outPath = 'public/webImages.html';
 } else if (byKind) {
@@ -249,10 +249,10 @@ if (imKind === 'g') {
 
       <p class="introLineSmall">To visit the galleries, click on their titles or images.</p>
     `
-   } else if (quad) {
+   } else if (partition) {
 
-      kindTitle = 'Quadtrees';
-      aboutURL = "kop_quad.html";
+      kindTitle = 'Partition Trees';
+      aboutURL = "kop_partition.html";
     } else if (drop) {
       kindTitle = 'Drops';
       aboutURL = "kop_drop.html";
@@ -346,6 +346,7 @@ const thingString = function (order,ix,dir,useThumb,ititle,props) {
 	let ext = (spix.length === 1)?'jpg':spix[1];
 	let x = path + '.'+ ext;
   let title=ititle?(noTitle?(forKOP?'':'No Title'):ititle):pageNumber+'';
+  console.log('ititle',ititle,'title',title);
   theTitles.push(ititle?ititle:pageNumber+'');
   let vpath = (variant?path+'_v_'+variant:path);
   //console.log('variant',variant);
@@ -382,8 +383,8 @@ const thingString = function (order,ix,dir,useThumb,ititle,props) {
      // console.log('galURL');
     } else if (title === 'Lines') {
       galURL = "linesImages.html";
-    } else if (title === 'Quadtrees') {
-      galURL = "quadImages.html";
+    } else if (title === 'Partitions') {
+      galURL = "partitionImages.html";
     } else if (title === 'Grids') {
       galURL = "gridImages.html";
     } else if (title === 'Webs') {
@@ -413,7 +414,7 @@ const thingString = function (order,ix,dir,useThumb,ititle,props) {
     rs = rs +`<p class="centered">${astart}<img width="200" src="${thumbsrc}" alt="Image Missing"></a></p></div>`;
 	} 
   if (top) {
-		console.log('top');
+		console.log('top','galLink',galLink);
     rs = `<div><p class="centered">${galLink}</p>`;
 
     rs = rs +

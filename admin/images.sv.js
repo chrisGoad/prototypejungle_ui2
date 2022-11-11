@@ -21,7 +21,7 @@ sections:
 // [100,'quad_skein','instances',1,'Quad Skein',{likes:0,posted:0,noTitle:1,category:'partition'}], 
  //[100,'quad_skein','instances',1,'Quad Skein',{likes:0,posted:0,noTitle:1,category:'partition'}], 
  [100,'part2_0_27','instances',1,'Part2 0 27',{noTitle:1,likes:0,posted:0,category:'partition'}], 
- [0,'part2_0_1','instances',1,'Window',{likes:0,posted:0,noTitle:1,category:'partition'}], 
+ [0,'part2_0_3','instances',1,'Window',{likes:0,posted:0,noTitle:0,category:'partition'}], 
  [5,'part2_0_2','instances',1,'Recursion',{likes:0,posted:0,noTitle:1,category:'partition'}], 
  
  [100,'drop_space_junk','generators',1,'Space Junk',{likes:50,posted:1,category:'drop',variant:0}], 
@@ -94,6 +94,7 @@ sections:
 				[280,'grid_star_maps','generators','wide2','Star Maps',{likes:2,posted:1,category:'grid',sources:1}],
 		   [290,'grid_4','generators','square','Grid 4',{likes:0,posted:0,category:'grid'}],// was [0,'grid_0_5','final','square','Grid 4']
 		 	[10,'grid_void','generators','wide1','Void',{likes:100,posted:1,category:'grid'}], // was [0,'grid0_8_18','final','wide1','Void'], 
+      
 ]
 
 

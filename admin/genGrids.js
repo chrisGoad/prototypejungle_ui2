@@ -128,8 +128,8 @@ if (alternate) {
   outPath = 'public/gridImages.html';
 } else if (lines) {
   outPath = 'public/linesImages.html';
-} else if (quad) {
-  outPath = 'public/quadImages.html';
+} else if (partition) {
+  outPath = 'public/partitionImages.html';
 } else if (web) {
   outPath = 'public/webImages.html';
 } else if (byKind) {

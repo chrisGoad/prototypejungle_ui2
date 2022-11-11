@@ -29,10 +29,10 @@ xferFile('public','reallySetAtKOP.js','setAtKOP.js');
 xferFiles('public',['dropPages.js','dropTitles.js','dropImages.html',
                      'linesPages.js','linesTitles.js','linesImages.html',
                      'gridPages.js','gridTitles.js','gridImages.html',
-                     'quadPages.js','quadTitles.js','quadImages.html',
+                     'partitionPages.js','partitionTitles.js','partitionImages.html',
                      'webPages.js','webTitles.js','webImages.html',
                      'page.html','pageSupport.js']);
- xferFiles('public/doc',['kop_drop.html','kop_quad.html','kop_grid.html','kop_web.html','kop_lines.html','kop_general.html']);
+ xferFiles('public/doc',['kop_drop.html','kop_partition.html','kop_grid.html','kop_web.html','kop_lines.html','kop_general.html','style.css']);
 
 //xferFiles('public',['gPages.js','gTitles.js','gLocals.js','page.html','pageSupport.js']);
 

@@ -106,9 +106,9 @@ document.addEventListener('DOMContentLoaded', () => {
   } else if (imKind === 'grid') {
     thePages = gridPages;
     theTitles = gridTitles;
-  } else if (imKind === 'quad') {
-    thePages = quadPages;
-    theTitles = quadTitles;
+  } else if (imKind === 'partition') {
+    thePages = partitionPages;
+    theTitles = partitionTitles;
   } else if (imKind === 'web') {
     thePages = webPages;
     theTitles = webTitles;

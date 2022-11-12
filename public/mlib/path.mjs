@@ -66,9 +66,8 @@ item.adjustSweepToNewStep = function (pstate,component,nstep) {
 
 item.sweepNextState = function (pspace,cstate,component) {
 // debugger;
-  let bounce = 0;
   let pspc = pspace[component];
-  let {jerky,min,max,step} = pspc;
+  let {sinusoidal,min,max,step,bounce} = pspc;
   let csc = cstate[component];
   let {cycleCount} = csc;
   let {cstep,down,value,sv,ev} = csc;
@@ -112,7 +111,7 @@ item.sweepNextState = function (pspace,cstate,component) {
     csc.cstep++;
   }
   if (!atCycleEnd) {
-    csc.value = sin;
+    csc.value = sinusoidal?sin:nosin;
   }
  // csc.value = nosin;
 }    

@@ -6,11 +6,13 @@ let rs = generatorP.instantiate();
 rs.setName('part2_0_43');
 let levels = 16;
 let topLevels = 9;
-
+rs.frameStrokee = 'white';
+rs.framePadding = .05*rs.width;
 let kind = 'sweep';
 rs.partParams.levels = levels;
 rs.partParams.rectangular = 1;
 levels++;
+//let initState = {sw:{value:-.4},pc0:{value:-.5},pc1:{value:-.5},pc2:{value:-.5},pc3:{value:-.5}};
 let initState = {sw:{value:0},pc0:{value:0},pc1:{value:0},pc2:{value:0},pc3:{value:0}};
 //initState = {speedup:{value:1}}
 let step = 0.05;
@@ -24,12 +26,14 @@ let step3 = 1.3;*/
 let step1 =1.0;
 let step2 =1.0;
 let step3 =1.0;
+let bounce  = 1;
+let sinusoidal = 1;
 let pspace = {
   sw:{kind,step:step,min:1,max:topLevels,interval:1,steps:0.5},
-  pc0:{kind,step:step0*baseStep,min:minpc,max:maxpc,interval:1,steps:0.5},
-  pc1:{kind,step:step1*baseStep,min:minpc,max:maxpc,interval:1,steps:0.5},
-  pc2:{kind,step:step2*baseStep,min:minpc,max:maxpc,interval:1,steps:0.5},
-  pc3:{kind,step:step3*baseStep,min:minpc,max:maxpc,interval:1,steps:0.5},
+  pc0:{kind,step:step0*baseStep,min:minpc,max:maxpc,interval:1,steps:0.5,bounce,sinusoidal},
+  pc1:{kind,step:step1*baseStep,min:minpc,max:maxpc,interval:1,steps:0.5,bounce,sinusoidal},
+  pc2:{kind,step:step2*baseStep,min:minpc,max:maxpc,interval:1,steps:0.5,bounce,sinusoidal},
+  pc3:{kind,step:step3*baseStep,min:minpc,max:maxpc,interval:1,steps:0.5,bounce,sinusoidal},
 };
 
 rs.numSteps = 200;
@@ -101,12 +105,13 @@ rs.updateStatee = function () {
   this.resetShapes();
 }
 
-rs.saveAnimation = 0;
-
+rs.saveAnimation = 1;
+rs.chopOffBeginning = 1;
  rs.stepInterval = 40;
 let ist=rs.numISteps = 0;
 
-rs.numSteps = 2000-ist;
+rs.numSteps = 101-ist;
+rs.numSteps = 300;
 //rs.addToArray(strokeWidths,.1,levels);
 export {rs};
 

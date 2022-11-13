@@ -60,6 +60,7 @@ node admin/genGalleries top 1
 node admin/genGalleries web 1
 node admin/genGalleries partition 1
 node admin/genGalleries lines 1
+node admin/genGalleries anim 1
 node admin/genGalleries grid 1
 node admin/updateKOP
 node admin/imagesToKop

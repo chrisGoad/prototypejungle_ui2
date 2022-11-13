@@ -4,6 +4,9 @@ module.exports = {
 sections: 
 
 [
+[0,'part2_0_43','instances',1,'Part2 0 43 mp4',{video:'mp4',likes:0,posted:0,category:'anim'}], 
+ [0,'part2_0_43','instances',1,'Part2 0 43 gif',{video:'gif',likes:0,posted:0,category:'anim'}],
+ 
  //[10,'quad_3','generators',1,'Circles',{likes:72,posted:1,noTitle:1,category:'partition',variant:2}], 
  [10,'part2_0_25','instances',1,'Part2 9 25',{likes:72,posted:1,noTitle:1,category:'partition'}], 
 //[20,'partition_9_2','instances',1,'partition 9 2',{likes:0,posted:0,noTitle:1,category:'partition'}], 

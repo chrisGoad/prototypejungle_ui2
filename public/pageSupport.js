@@ -103,6 +103,9 @@ document.addEventListener('DOMContentLoaded', () => {
   } else if (imKind === 'lines') {
     thePages = linesPages;
     theTitles = linesTitles;
+  }  else if (imKind === 'anim') {
+    thePages = animPages;
+    theTitles = animTitles;
   } else if (imKind === 'grid') {
     thePages = gridPages;
     theTitles = gridTitles;

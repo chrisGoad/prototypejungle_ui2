@@ -27,6 +27,7 @@ let top = kind === 'top';
 let drop = kind === 'drop';
 let grid = kind === 'grid';
 let lines = kind === 'lines';
+let anim = kind === 'anim';
 let partition = kind === 'partition';
 let web = kind === 'web';
 let sortByOrder = toBoolean(sortByOrderstr);
@@ -105,7 +106,7 @@ if (byLikes) {
 }  else if (top)  {
   sectionsPath = './galleries.js';
   imKind = 'g'
-} else if (images || forKOP  || forPJ || drop || grid || lines || partition || web)  {
+} else if (images || forKOP  || forPJ || drop || grid || lines || anim || partition || web)  {
   sectionsPath = './images.js';
   imKind = 'g'
 }  else if (local_images)  {
@@ -142,6 +143,8 @@ if (alternate) {
   outPath = 'public/gridImages.html';
 } else if (lines) {
   outPath = 'public/linesImages.html';
+} else if (anim) {
+  outPath = 'public/animImages.html';
 } else if (partition) {
   outPath = 'public/partitionImages.html';
 } else if (web) {
@@ -265,6 +268,9 @@ if (imKind === 'g') {
     } else if (lines) {
       kindTitle = 'Lines'
       aboutURL = "kop_lines.html";
+    } else if (anim) {
+      kindTitle = 'Animation'
+      aboutURL = "kop_anim.html";
     }
     if (!top) {
     

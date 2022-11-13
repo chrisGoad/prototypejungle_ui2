@@ -3,7 +3,7 @@ import {rs as generatorP} from '/generators/part2_0.mjs';
 
 let rs = generatorP.instantiate();
 
-rs.setName('part2_0_46');
+rs.setName('part2_0_47');
 let levels = 3;
 rs.frameStrokee = 'white';
 rs.framePadding = .05*rs.width;
@@ -83,13 +83,8 @@ rs.partSplitParams = function (prt) {
   let dir = lev<2?0:cstate.dir.value;
  // let dir = 0.1 * Math.PI;
   let radius = lev<2?0:.2;
-  if (lev<2) {
-     return {Case:9,direction:0,radius:0,pcs:[.5,1.5,2.5,3.5]};
-  }
-  let csn = casesByWhereString[ws];
-  if (csn) {
-    return genCase(csn,cstate);
-  }
+ 
+  return genCase(7,cstate);
  // {Case:3,pcs:[.5+pc3,1.5+pc3,2.5+pc3,3.5+pc3]}
 }
 /*

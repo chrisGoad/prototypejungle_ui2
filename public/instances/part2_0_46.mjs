@@ -11,7 +11,7 @@ let kind = 'sweep';
 rs.partParams.levels = levels;
 rs.partParams.rectangular = 1;
 //let initState = {sw:{value:-.4},pc0:{value:-.5},pc1:{value:-.5},pc2:{value:-.5},pc3:{value:-.5}};
-let initState = {dir:{value:0},pc3:{value:0},pc4:{value:0},pc7:{value:.4}};
+let initState = {dir:{value:0},pc3:{value:0},pc4:{value:0},pc4r:{value:0},pc7:{value:0},pc10:{value:0}};
 //initState = {speedup:{value:1}}
 let step9 = 0.05*Math.PI;
 
@@ -20,8 +20,11 @@ let sinusoidal = 0;
 let step3 = 0.01;
 let step4 = 0.01;
 let step7 = 0.01;
+let step10 = 0.01;
 let minpc = -.5;
 let maxpc = .5;
+let minpc10 = -.5;
+let maxpc10 = .5;
 let minpc4 = 0;
 let maxpc4 = 50;
 let minpc7 = 0;
@@ -30,7 +33,9 @@ let pspace = {
   dir:{kind,step:step9,min:0,max:2*Math.PI,interval:1,steps:0.5},
   pc3:{kind,step:step3,min:minpc,max:maxpc,interval:1,steps:0.5,bounce,sinusoidal},
   pc4:{kind,step:step4,min:minpc4,max:maxpc4,interval:1,steps:0.5,bounce:0,sinusoidal:0},
+  pc4r:{kind,step:step4,min:maxpc4,max:minpc4,interval:1,steps:0.5,bounce:0,sinusoidal:0},
   pc7:{kind,step:step7,min:minpc7,max:maxpc7,interval:1,steps:0.5,bounce:0,sinusoidal:0},
+  pc10:{kind,step:step10,min:minpc10,max:maxpc10,interval:1,steps:0.5,bounce:0,sinusoidal:0},
 };
 
 rs.numSteps = 200;
@@ -40,13 +45,17 @@ rs.pstate = {pspace,cstate:initState};
 
 const genCase = function (n,cstate) {
   let pc,rs;
-  if (n===3) {
-    pc = cstate.pc3.value;
+  if ((n===3)||(n===30)) {
+    pc = n===3?cstate.pc3.value:-cstate.pc3.value;
     rs = {Case:3,pcs:[.5+pc,1.5+pc,2.5+pc,3.5+pc]}
   }
-  if (n===4) {
+  if (n===10) {
+    pc = cstate.pc10.value;
+    rs = {Case:10,pcs:[.5+pc,1.5+pc,2.5+pc,3.5+pc],ips:[{x:.3,y:.3},{x:.7,y:.7}]} 
+  }
+  if ((n===4)||(n===40)) {
   debugger;
-    pc = cstate.pc4.value;
+    pc = (n===4)?cstate.pc4.value:-cstate.pc4.value;
     let ipc = Math.floor(pc);
     let cs = (ipc%2===0)?4:6;
     let fpc = pc -ipc -.5;
@@ -70,7 +79,8 @@ const genCase = function (n,cstate) {
   return rs;
 }
 
-let casesByWhereString = {P0_P0:3,P0_P2:9,P0_P1:4,P1_P0:7,P1_P1:7,P1_P2:7,P1_P3:7};
+let casesByWhereString = {P0_P0:9,P0_P2:9,P0_P1:9,P0_P3:9,P1_P0:7,P1_P1:7,P1_P2:7,P1_P3:7,
+   P2_P0:4,P2_P1:4,P2_P2:40,P2_P3:40,P3_P0:3,P3_P1:3,P3_P1:3,P3_P2:30,P3_P3:30};
 
 rs.partSplitParams = function (prt) {
   let {pstate} = this;
@@ -128,7 +138,7 @@ rs.chopOffBeginning = 1;
 let ist=rs.numISteps = 0;
 
 rs.numSteps = 101-ist;
-rs.numSteps = 300;
+rs.numSteps = 3000;
 //rs.addToArray(strokeWidths,.1,levels);
 export {rs};
 

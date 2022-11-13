@@ -26,8 +26,8 @@ let step3 = 1.3;*/
 let step1 =1.0;
 let step2 =1.0;
 let step3 =1.0;
-let bounce  = 1;
-let sinusoidal = 1;
+let bounce  = 0;
+let sinusoidal = 0;
 let pspace = {
   sw:{kind,step:step,min:1,max:topLevels,interval:1,steps:0.5},
   pc0:{kind,step:step0*baseStep,min:minpc,max:maxpc,interval:1,steps:0.5,bounce,sinusoidal},
@@ -111,7 +111,7 @@ rs.chopOffBeginning = 1;
 let ist=rs.numISteps = 0;
 
 rs.numSteps = 101-ist;
-rs.numSteps = 300;
+//rs.numSteps = 300;
 //rs.addToArray(strokeWidths,.1,levels);
 export {rs};
 

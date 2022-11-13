@@ -336,14 +336,14 @@ let pageNumber = 0;
 let numPages = 0;
 const thingString = function (order,ix,dir,useThumb,ititle,props) {
 	debugger;
-  let {variant,likes,posted,category,sources,noTitle} = props;
+  let {variant,likes,posted,category,sources,noTitle,video} = props;
   //console.log('POSTED',posted,'category',category,'kind',kind);
   if ((kind !== 'alt') && (category !==  kind)) {
     return '</div>';
   }
 	let spix = ix.split('.');
 	let path = spix[0];
-	let ext = (spix.length === 1)?'jpg':spix[1];
+	let ext = video?video:((spix.length === 1)?'jpg':spix[1]);
 	let x = path + '.'+ ext;
   let title=ititle?(noTitle?(forKOP?'':'No Title'):ititle):pageNumber+'';
   console.log('ititle',ititle,'title',title);
@@ -356,6 +356,7 @@ const thingString = function (order,ix,dir,useThumb,ititle,props) {
 	let imsrc = `images/std_size/${vpath}.jpg`;
 	let thumbsrc = `images/thumbs/${vpath}.jpg`;
   let localSrc =`public/images/thumbs/${vpath}.jpg`;
+  let videoSrc = video?`images/std_size/${vpath}.${video}`:null; 
   if (ix === 'drift_web') {
     //console.log('IIIIIXXXX',ix);
   }

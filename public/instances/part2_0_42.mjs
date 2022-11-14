@@ -4,9 +4,12 @@ import {rs as generatorP} from '/generators/part2_0.mjs';
 let rs = generatorP.instantiate();
 
 rs.setName('part2_0_42');
+//rs.frameStroke = 'blue';
+rs.framePadding = .2*(rs.width);
 let levels = 1;
 let topLevels = 9;
-let introSteps = 2;
+//topLevels = 6;
+let introSteps = -2;
 let kind = 'sweep';
 rs.partParams.levels = levels;
 rs.partParams.rectangular = 1;
@@ -15,10 +18,11 @@ let initState = {sw:{value:0}};
 //initState = {speedup:{value:1}}
 let step = 0.05;
 let pspace = {
-  sw:{kind,step:step,min:1,max:topLevels,interval:1,steps:0.5},
+  sw:{kind,step:step,min:1,max:topLevels,interval:1,steps:0.5,bounce:1},
 };
 
 rs.numSteps = 2*Math.floor(topLevels/step);
+
 rs.copyOfInitState = rs.deepCopy(initState);
 
 rs.pstate = {pspace,cstate:initState};
@@ -99,7 +103,7 @@ rs.updateState = function () {
 rs.saveAnimation = 1;
 rs.chopOffBeginning = 10; // in steps
 rs.chopOffBeginning = 140; // in steps
-rs.chopOffBeginning = 0; // in steps
+rs.chopOffBeginning = 10; // in steps
 rs.chopOffEnd = 18; // in steps
 
   

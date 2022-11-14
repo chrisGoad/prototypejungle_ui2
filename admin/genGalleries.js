@@ -390,7 +390,9 @@ const thingString = function (order,ix,dir,useThumb,ititle,props) {
      // console.log('galURL');
     } else if (title === 'Lines') {
       galURL = "linesImages.html";
-    } else if (title === 'Partitions') {
+    } else if (title === 'Animations') {
+      galURL = "animImages.html";
+    }else if (title === 'Partitions') {
       galURL = "partitionImages.html";
     } else if (title === 'Grids') {
       galURL = "gridImages.html";
@@ -435,7 +437,7 @@ const thingString = function (order,ix,dir,useThumb,ititle,props) {
     ${astart}<img width="200" src="${thumbsrc}"></a></p></div>
     `;
 	}
- // console.log ('rs = ',rs);
+  console.log ('rs = ',rs);
 	return rs;
 }
 

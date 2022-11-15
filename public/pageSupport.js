@@ -159,7 +159,19 @@ document.addEventListener('DOMContentLoaded', () => {
   //console.log('DIR ',dir);
 	if (ext === 'mp4') {
 	  imageDiv.style.display = 'none';
+    videoEl.autoplay = 'true';
 		 videoEl.src = dir+im;
+    // videoEl.onload = ()=>{ 
+     //   videoEl.play();
+   //  };
+    let imWd = videoEl.naturalWidth;
+		  let imHt = videoEl.naturalHeight;
+			let imAR = imWd/imHt;
+			if (imAR > cAR) {
+			  videoEl.width = 0.75*cWidth;
+			} else {
+			  videoEl.height = 0.75 * cHeight;
+			}	 
 	} else {
 	  videoDiv.style.display = 'none';
  	  imageDiv.style.visibility = 'hidden';

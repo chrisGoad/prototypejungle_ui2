@@ -7,10 +7,24 @@ let rs = basicP.instantiate();
 addPathMethods(rs);
 rs.rectangular = 1;
 rs.setName('part2_0_31');
+debugger;
 
+rs.framePadding = .15*rs.width;
+//rs.frameStroke = 'white'
 let rng = 200;
+let rmin = 100;
+let rmax = 250;
+let gmin = 100;
+let gmax = 250;
+let bmin = 100;
+let bmax = 250;
+let brng = 250;
 let kind ='randomSteps';
 let nr = 9;
+let wd = 400;
+let dim = wd;
+Object.assign(rs,{width:wd,height:wd,frameStrokeWidth:4,framePadding:.15*wd,frameStrokee:'white'});
+
 //nr = 2;
 const buildEm = function (n) {
   let initS = {};
@@ -18,8 +32,17 @@ const buildEm = function (n) {
   for (let i=0;i<n;i++) {
     for (let j=0;j<n;j++) {
       let nm = ('a'+i)+j;
+      let rnm = nm+'_r';
+      let gnm = nm+'_g';
+      let bnm = nm+'_b';
       initS[nm] = {value:Math.floor(Math.random()*rng)};
       ps[nm] = {kind,step:5,min:1,max:rng,interval:1,steps:0.5};
+       initS[rnm] = {value:rmin+Math.floor(Math.random()*(rmax-rmin))};
+      ps[rnm] = {kind,step:5,min:rmin,max:rmax,interval:1,steps:0.5};
+      initS[gnm] = {value:gmin+Math.floor(Math.random()*(gmax-gmin))};
+      ps[gnm] = {kind,step:5,min:rmin,max:rmax,interval:1,steps:0.5};
+       initS[bnm] = {value:bmin+Math.floor(Math.random()*(bmax-bmin))};
+      ps[bnm] = {kind,step:5,min:bmin,max:bmax,interval:1,steps:0.5};
     }
   }
   return {initState:initS,pspace:ps}
@@ -52,9 +75,17 @@ rs.updateState = function () {
     for (let j=0;j<nr;j++) {
       let snm = ('a'+i)+j;
       let cnm = ('c'+i)+j;
-      let c = this[cnm]
+      let c = this[cnm];
+      let rnm = snm+'_r';
+      let gnm = snm+'_g';
+      let bnm = snm+'_b';
       let v = cstate[snm].value;
-      c.dimension = v;
+      let r = cstate[rnm].value;
+      let g = 0;//cstate[gnm].value;
+      let b = cstate[bnm].value;
+      c.dimension = v/nr;
+      c.fill = `rgb(${r},${g},${b})`;
+      console.log('fill', c.fill);
       c.update();
     }
   }
@@ -66,9 +97,9 @@ rs.numISteps = 20;
 rs.saveAnimation = 1;
 
 
-let dim = 400;
 rs.initialize = function () {
   debugger;
+  this.addFrame();
   this.circleP = circlePP.instantiate();
   this.shapes = this.set('shapes',arrayShape.mk());
   const addCirc = (p,i,j) => {
@@ -78,19 +109,20 @@ rs.initialize = function () {
     if (!dimv) {
       debugger;
     }
-    crc.dimension = dimv.value;
-    crc.fill = 'white';//Math.random()<0.5?'blue':'blue';
+    crc.dimension = dimv.value/nr;
+    crc.fill = Math.random()<0.5?'blue':'red';//'red';
     this.set(('c'+i)+j,crc);
     crc.moveto(p);
   }
   for (let i=0;i<nr;i++) {
     for (let j=0;j<nr;j++) {
       let hi = (nr-1)/2;
-      let p = Point.mk(dim*(i-hi),dim*(j-hi));
+      let p = Point.mk(dim*(i-hi)/nr,dim*(j-hi)/nr);
       addCirc(p,i,j);
     }
   }
 }
+
 
 export {rs};
 

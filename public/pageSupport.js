@@ -122,7 +122,8 @@ document.addEventListener('DOMContentLoaded', () => {
   debugger;
 	let prevDiv = document.getElementById('prevDiv');
 	let nextDiv = document.getElementById('nextDiv');
-	let fullDiv = document.getElementById('fullDiv');
+//	let fullDiv = document.getElementById('fullDiv');
+	let fullDiv = document.getElementById('full');
 	let topDiv = document.getElementById('topDiv');
 	let titleDiv = document.getElementById('titleDiv');
 	let imageDiv = document.getElementById('imageDiv');
@@ -164,14 +165,17 @@ document.addEventListener('DOMContentLoaded', () => {
     // videoEl.onload = ()=>{ 
      //   videoEl.play();
    //  };
-    let imWd = videoEl.naturalWidth;
-		  let imHt = videoEl.naturalHeight;
-			let imAR = imWd/imHt;
-			if (imAR > cAR) {
+    let vidWd = videoEl.naturalWidth;
+		  let vidHt = videoEl.naturalHeight;
+			let vidAR = vidWd/vidHt;
+			if (vidAR > cAR) {
 			  videoEl.width = 0.75*cWidth;
 			} else {
 			  videoEl.height = 0.75 * cHeight;
 			}	 
+      fullDiv.style.visibility = 'hidden';
+   //   fullDiv.height = 0;
+
 	} else {
 	  videoDiv.style.display = 'none';
  	  imageDiv.style.visibility = 'hidden';

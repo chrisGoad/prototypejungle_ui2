@@ -65,10 +65,13 @@ node admin/genGalleries grid 1
 node admin/updateKOP
 node admin/imagesToKop
 
+drop the 1s for local use with source
+
 copy the jpgs by hand from public/doc from prototypejungle to kop
 
 cd c:\kop
 firebase deploy --only hosting
+
 
 to reinstall firebase
 install firebase tools

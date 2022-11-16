@@ -108,7 +108,7 @@ item.addFrame = function (params) {
     width = width + frp;
     height = height + frp;
   }
-  let rect =  this.addRectangle({width,height,fill:frf,stroke:frs,strokeWidth:fswd,position:pos});
+  let rect =  this.addRectangle({width,height,fill:frf,stroke:frs,stroke_width:fswd,position:pos});
   return rect;
 }
 

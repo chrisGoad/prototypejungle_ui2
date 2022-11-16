@@ -274,14 +274,16 @@ if (imKind === 'g') {
     }
     if (!top) {
     
-      aboutStart = `<a style="color:white" href="doc/${aboutURL}">`;
-      aboutLink = `${aboutStart}about ${kindTitle}</a>`
+      aboutStart = anim?'':`<a style="color:white" href="doc/${aboutURL}">`;
+      aboutLink = `${aboutStart}about ${kindTitle}</a>`;
+      let aboutLine = anim?'':`<p class="introLineSmall">${aboutLink}</p>`;  
+      let enlargeText = anim?'To view animations, click on the images.':'To enlarge the images, click on them.';
       pageIntro = 
       `
       ${headLine}
       <p class="introLineLarge">${kindTitle}</p>    
-      <p class="introLineSmall">${aboutLink}</p>  
-      <p class="introLineSmall">To enlarge the images, click on them.</p>
+      ${aboutLine}  
+      <p class="introLineSmall">${enlargeText}</p>
       
       
     `;
@@ -404,7 +406,7 @@ const thingString = function (order,ix,dir,useThumb,ititle,props) {
     galLink = `${galStart}${title}</a>`
   }
   //console.log('ASTART',astart);
-  let propsStr = imagesHere?`<span style="font-size:10pt">${likes?'Likes '+likes:''} ${posted?"":" NOT POSTED"} ${local_images?'Local':''} ${category}</span><br/>`:'';;
+  let propsStr = imagesHere?`<span style="font-size:10pt">${likes?'Likes '+likes:''} ${posted?"":" NOT POSTED"} ${local_images?'Local':''} ${category}</span><br>`:'';;
   let sourcenm = `source${sources?'s':''}`;
 	//if (forKOP || forPJ) {
   console.log('forKOP',forKOP,'astart',astart);
@@ -431,8 +433,8 @@ const thingString = function (order,ix,dir,useThumb,ititle,props) {
 	} else if (!forKOP) {
     srcUrl = (sources)?`doc/${path}_sources.html`:`${dir}/${path}.${fileExt}`;
 	//	console.log('not for KOP');
-    rs = `<div><p style="text-align:center"><a href="http://localhost:8081/draw.html?source=/${dir}/${path}.${fileExt}${theImageArg}">${title}</a><br/>
-    <a href="${srcUrl}">${sourcenm}</a><br/>
+    rs = `<div><p style="text-align:center"><a href="http://localhost:8081/draw.html?source=/${dir}/${path}.${fileExt}${theImageArg}">${title}</a><br>
+    <a href="${srcUrl}">${sourcenm}</a><br>
     ${propsStr}
     ${astart}<img width="200" src="${thumbsrc}"></a></p></div>
     `;
@@ -549,7 +551,7 @@ let sectionString = function (things) {
       let txt = thing[0];
       numThingsThisLine = numThingsPerLine;
    //  rs += `</div>${startLine}<div>${txt}</div></div>`;
-      rs += `</div><br/><div style="text-align:center">${txt}</div><br/><div>`;
+      rs += `</div><br><div style="text-align:center">${txt}</div><br><div>`;
     } else {
       let [order,file,directory,useThumb,title,props] = thing;
      // console.log('PROPS',props);
@@ -572,12 +574,12 @@ let sectionString = function (things) {
 	//	console.log('numThingsThisLine',numThingsThisLine,'i',i,'ln',ln);
 		if ((numThingsThisLine === numThingsPerLine) && (i<(ln-1))) {
 		//	console.log('EOL');
-			rs += `</div><br/>
+			rs += `</div><br>
 	`+ startLine;
 			numThingsThisLine = 0;
 	  }
   };
-  rs += `</div><br/>
+  rs += `</div><br>
 `;
  debugger;
  return rs;

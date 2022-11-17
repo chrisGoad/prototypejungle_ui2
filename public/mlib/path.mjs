@@ -65,36 +65,40 @@ item.adjustSweepToNewStep = function (pstate,component,nstep) {
 }
 
 item.sweepNextState = function (pspace,cstate,component) {
-// debugger;
+ //debugger;
   let pspc = pspace[component];
-  let {sinusoidal,min,max,step,bounce} = pspc;
+  let {sinusoidal,min,max,step,bounce,startDown} = pspc;
   let csc = cstate[component];
   let {cycleCount} = csc;
   let {cstep,down,value,sv,ev} = csc;
-    
+   if (down === undefined) {
+    down = csc.down = startDown;
+  }  
   if (cstep === undefined) {
     cstep = csc.cstep = 0;
     sv  = csc.sv = value;
-    ev = csc.ev = max;
+    ev = csc.ev = down?min:max;
   }
   let nvls = this.sinusoidVal(sv,ev,step,cstep);
   let {nosin,sin} = nvls;
+ 
   //console.log('nv',nv,'down',down,'sv',sv,'ev',ev,'step',step,'cstep',cstep);
   let up = !down;
   let atCycleEnd=0;
   //if ((nv >= max) && up) {
-  if (((sin+.000001) >= max) && up) {
+ 
+  if (((nosin+.000001) >= max) && up) {
+    if (cycleCount) {
+      debugger;
+      csc.cycleCount++;
+    } else {
+      csc.cycleCount = 1;
+    }
     if (bounce) {
       csc.sv = max;
       csc.ev = min;
       csc.down = 1;
     } else {
-      if (cycleCount) {
-      debugger;
-        csc.cycleCount++;
-      } else {
-        csc.cycleCount = 1;
-      }
       csc.sv = min;
       csc.ev = max;
       csc.value = min;
@@ -102,11 +106,19 @@ item.sweepNextState = function (pspace,cstate,component) {
     }
     csc.cstep = 0;
  // } else if ((nv <= min) && down){
-  } else if ((nosin <= min) && down){
+  } else if (((nosin-.000001) <= min) && down){
+     if (cycleCount) {
+      debugger;
+      csc.cycleCount++;
+    } else {
+      csc.cycleCount = 1;
+    }
     csc.sv = min;
     csc.ev = max;
     csc.down = 0;
     csc.cstep = 0;
+    csc.value = min;
+    atCycleEnd = 1;
   } else {
     csc.cstep++;
   }

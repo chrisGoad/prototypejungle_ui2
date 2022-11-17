@@ -93,6 +93,7 @@ c:\ffmpeg\bin\ffmpeg  -framerate 10 -i animations/part2_0_43_f%03d.jpg -s 800x80
 c:\ffmpeg\bin\ffmpeg  -framerate 10 -i animations/part2_0_44_f%03d.jpg -s 800x800  export/part2_0_44.anim.mp4
 c:\ffmpeg\bin\ffmpeg  -framerate 20 -i animations/part2_0_46_f%03d.jpg -s 800x800  export/part2_0_46.gif
 c:\ffmpeg\bin\ffmpeg  -framerate 20 -i animations/part2_0_31_f%03d.jpg -s 500x500  export/part2_0_31.anim.gif
+c:\ffmpeg\bin\ffmpeg  -framerate 10 -i animations/grid_emergence_f%03d.jpg -s 500x500  export/grid_emergence.gif
 
 
 

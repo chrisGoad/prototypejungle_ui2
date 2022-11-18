@@ -97,6 +97,11 @@ document.addEventListener('DOMContentLoaded', () => {
     theTitles = altTitles;
    // theLocals = altLocals;
 
+  } else if (imKind === 'book') {
+    thePages = bookPages;
+    theTitles = bookTitles;
+   // theLocals = altLocals;
+
   } else if (imKind === 'drop') {
     thePages = dropPages;
     theTitles = dropTitles;

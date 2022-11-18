@@ -2,15 +2,46 @@
 */
 module.exports = {
 sections: 
-
+/*
+1 intro page
+2 part2_0_27
+3 part2_0_21?
+4 quad9_6
+5 drop_circles_14 circles
+6 drop_all_0 thatch 
+7 drop_light light
+8 drop_iris iris
+9 drop_space_junk space junk
+10 drop_circles_3
+11 drop_rects_1
+12 web_diamond
+13 lines_chaos_within_order chaos within order
+14 grid_void void
+15 grid_fade Fade
+16 grid_distortion_field_warped distortion field
+17 grid_superposition
+18 grid_droplets
+*/
 [
- [0,'part2_0_43','instances',1,'You are getting very sleepy...',{video:'gif',likes:0,posted:0,category:'anim'}],
- [0,'part2_0_42','instances',1,'Quadrangular Abyss',{video:'mp4',likes:0,posted:0,category:'anim'}],
- [0,'part2_0_38','instances',1,'Shifting Grid',{video:'gif',likes:0,posted:0,category:'anim'}],
- [0,'part2_0_31','instances',1,'Pulse',{video:'gif',noTitle:0,likes:0,posted:0,category:'anim'}],
- [0,'part2_0_46','instances',1,'Pulse and Dance',{video:'gif',noTitle:0,likes:0,posted:0,category:'anim'}],
- [0,'grid_emergence','generators',1,'Emergence',{video:'gif',noTitle:0,likes:0,posted:0,category:'anim'}],
- 
+ [0,'part2_0_1','instances',1,'Quadrangular Abyss',{likes:0,posted:0,category:'part'}],
+ [20,'part2_0_27','instances',1,'Chamber',{likes:0,posted:0,category:'part'}],
+ [30,'part2_0_21','instances',1,'Diamond 1',{likes:0,posted:0,category:'part'}],
+ [40,'quad_9_6','generators',1,'Weave',{likes:0,posted:0,category:'part'}],
+ [50,'drop_circles_14','generators',1,'Circles',{likes:0,posted:0,category:'part'}],
+ [60,'drop_all_0','generators',1,'Thatch',{likes:0,posted:0,category:'part'}],
+ [70,'drop_light','generators',1,'Light',{likes:0,posted:0,category:'part'}],
+ [80,'drop_iris','generators',1,'Iris',{likes:0,posted:0,category:'part'}],
+ [90,'drop_space_junk','generators',1,'Space Junk',{likes:0,posted:0,category:'part'}],
+ [100,'drop_circles_3','generators',1,'Streams',{likes:0,posted:0,category:'part'}],
+ [110,'drop_rects_1','generators',1,'Quilt',{likes:0,posted:0,category:'part'}],
+ [120,'lines_chaos_within_order','generators',1,'Chaos within Order',{likes:0,posted:0,category:'part'}],
+ [130,'web_diamond','generators',1,'Diamond 2',{likes:0,posted:0,category:'part'}],
+ [140,'grid_void','generators',1,'Void',{likes:0,posted:0,category:'part'}],
+ [150,'grid_fade','generators',1,'Fade',{likes:0,posted:0,category:'part'}],
+ [160,'grid_distortion_field_warped','generators',1,'Distortion Field',{likes:0,posted:0,category:'part'}],
+ [170,'grid_superposition','generators',1,'Superposition',{likes:0,posted:0,category:'part'}],
+ [180,'grid_droplets','generators',1,'Droplets',{likes:0,posted:0,category:'part'}],
+ /*
  //[10,'quad_3','generators',1,'Circles',{likes:72,posted:1,noTitle:1,category:'partition',variant:2}], 
  [10,'part2_0_25','instances',1,'Part2 9 25',{likes:72,posted:1,noTitle:1,category:'partition'}], 
 //[20,'partition_9_2','instances',1,'partition 9 2',{likes:0,posted:0,noTitle:1,category:'partition'}], 
@@ -101,6 +132,7 @@ sections:
 				[280,'grid_star_maps','generators','wide2','Star Maps',{likes:2,posted:1,category:'grid',sources:1}],
 		   [290,'grid_4','generators','square','Grid 4',{likes:0,posted:0,category:'grid'}],// was [0,'grid_0_5','final','square','Grid 4']
 		 	[10,'grid_void','generators','wide1','Void',{likes:100,posted:1,category:'grid'}], // was [0,'grid0_8_18','final','wide1','Void'], 
+      */
 ]
 
 

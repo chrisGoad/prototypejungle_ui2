@@ -23,6 +23,7 @@ let signed = 0
 //let signed = toBoolean(signedstr);
 //let forKOP = toBoolean(forKOPstr);
 let forPJ = kind === 'forPJ';
+let book = kind === 'book';
 let top = kind === 'top';
 let drop = kind === 'drop';
 let grid = kind === 'grid';
@@ -63,6 +64,10 @@ if (byLikes) {
   imKind = 'g';
 } else if (alternate) {
  sectionsPath = './altSections.js';
+  sortByOrder = 0;
+  imKind = 'book';
+} else if (book) {
+ sectionsPath = './book_images.js';
   sortByOrder = 0;
   imKind = 'alt';
 } else if (byKind) {
@@ -133,8 +138,8 @@ console.log('imKind',imKind);
 let outPath;
 if (alternate) {
   outPath = 'public/altImages.html';
-} else if (alternate) {
-  outPath = 'public/altImages.html';
+} else if (book) {
+  outPath = 'public/bookImages.html';
 } else if (drop) {
    outPath = 'public/dropImages.html';
 } else if (top) {
@@ -346,7 +351,7 @@ const thingString = function (order,ix,dir,useThumb,ititle,props) {
 	debugger;
   let {variant,likes,posted,category,sources,noTitle,video} = props;
   //console.log('POSTED',posted,'category',category,'kind',kind);
-  if ((kind !== 'alt') && (category !==  kind)) {
+  if ((kind !== 'alt') && (kind !== 'book') &&(category !==  kind)) {
     return '</div>';
   }
 	let spix = ix.split('.');

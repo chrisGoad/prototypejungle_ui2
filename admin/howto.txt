@@ -58,6 +58,7 @@ to deploy to kop
 cd c:\prototypejungle
 node admin/genGalleries top 1
 node admin/genGalleries web 1
+node admin/genGalleries drop 1
 node admin/genGalleries partition 1
 node admin/genGalleries lines 1
 node admin/genGalleries anim 1

@@ -85,7 +85,7 @@ let strokeWidths = rs.partParams.strokeWidths = [];
 let strokes = rs.partParams.strokes = [];
 rs.addToArray(strokes,'black',20);
 //rs.computeExponentials({dest:strokeWidths,n:20,root:0.4,factor:.7});
-rs.computeExponentials({dest:strokeWidths,n:20,root:.4,factor:.7});
+rs.computeExponentials({dest:strokeWidths,n:20,root:0,factor:.7});
 
 let csf = 0.3;
 const setEps = function (cstate) {

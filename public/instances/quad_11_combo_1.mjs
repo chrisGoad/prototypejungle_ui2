@@ -45,8 +45,8 @@ rs.initialize = function () {
   let pgonshs =  this.set('pgons',arrayShape.mk());
   pgons.forEach((pgon) => {
     let pgonsh = pgon.toShape(polygonP);
-    pgonsh['stroke-width'] = 1;
-    //pgonsh.fill = 'transparent';
+    pgonsh['stroke-width'] = .1;
+    pgonsh.fill = 'rgb(0,0,50)';
     pgonshs.push(pgonsh);
   });
   const addQuad = (qdIdx,pgIdx,offc) => {

@@ -7,6 +7,7 @@ const toBoolean = (v) => {
   }
 }
 
+let neverTitle = 0;
 let kind = process.argv[2];
 let forKOP = toBoolean(process.argv[3]);
 let sortByOrderstr = "1";
@@ -359,6 +360,9 @@ const thingString = function (order,ix,dir,useThumb,ititle,props) {
 	let ext = video?video:((spix.length === 1)?'jpg':spix[1]);
 	let x = path + '.'+ ext;
   let title=ititle?(noTitle?(forKOP?'':'No Title'):ititle):pageNumber+'';
+  if (neverTitle) {
+    title = '';
+  }
   console.log('ititle',ititle,'title',title);
   theTitles.push(ititle?ititle:pageNumber+'');
   let vpath = (variant?path+'_v_'+variant:path);

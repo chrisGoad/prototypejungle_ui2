@@ -7,7 +7,7 @@ rs.setName('grid_distortion_field_warped');
 
 let nr = 40;
 let dim = 400;
-let topParams = {frameWidth:1.7*dim,frameHeight:1.35*dim,frameStrokee:'white',framePos:Point.mk(170,170)};
+let topParams = {frameWidth:1.7*dim,frameHeight:1.7*dim,frameStrokee:'white',framePos:Point.mk(170,170)};
 
 Object.assign(rs,topParams);
 

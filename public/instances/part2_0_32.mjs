@@ -8,6 +8,12 @@ addPathMethods(rs);
 rs.rectangular = 1;
 rs.setName('part2_0_32');
 
+let dim = 40;
+let dist = 60;
+let wd = 1.8 * (dim + dist);
+let topParams = {width:wd,height:60,framePadding:0.1*wd,frameStrokee:'white'};
+Object.assign(rs,topParams);
+
 let iv = 254;
 let rng = 255;
 let kind ='randomSteps';
@@ -19,7 +25,8 @@ const buildEm = function (n) {
   let ps = {};
   for (let i=0;i<n;i++) {
     let nm = ('c'+i);
-    initS[nm] = {value:iv};
+//    initS[nm] = {value:iv};
+    initS[nm] = {value:50 + Math.floor(Math.random()*(rng-50))};
     ps[nm] = {kind,step:3,min:50,max:rng,interval:1,steps:0.5};
   }
   return {initState:initS,pspace:ps}
@@ -27,19 +34,17 @@ const buildEm = function (n) {
 let bem = buildEm(nr);
 let {initState,pspace} = bem;
 let pstate = {pspace,cstate:initState};
+rs.pstate = pstate;
+rs.copyOfInitState = rs.deepCopy(initState);
 
 let nineCs = nr === 9;
-
+rs.numISteps = 40;
+rs.numSteps = 1000;
+rs.numSteps = 400;
 rs.ssf = 0;
-rs.oneStep = function () {
-  debugger;
-  console.log('steps',this.ssf++);
-  this.stepCount++;
-//  if (rs.ssf>2000) {
-  if (rs.ssf>200000) {
-    return;
-  }
-  this.timeStep(pstate);
+rs.saveAnimation = 1;
+
+rs.updateState = function () {
   let cstate = pstate.cstate;
   let r0 = cstate.c0.value;
   let fill0,fill1,fill2;
@@ -70,13 +75,35 @@ rs.oneStep = function () {
     c2.update();
   }
   draw.refresh();
+   this.timeStep(pstate);
+
+}
+rs.oneStep = function () {
+//  debugger;
+  console.log('steps',this.ssf++);
+  this.stepCount++;
+//  if (rs.ssf>2000) {
+ // if (rs.ssf>200000) {
+  if  (this.ssf> this.numSteps) {
+    debugger;
+    if (this.numISteps) {
+      this.iStepsSoFar = 0;
+      this.interpFrom = this.deepCopy(this.pstate.cstate);
+      this.interpTo = this.copyOfInitState;
+      this.oneInterpolationStep();
+    }
+    return;
+  }
+  this.updateState();
+  if (this.saveAnimation) { // for some reason, the first frame is corrupted 
+    draw.saveFrame(this.ssf);
+  }
  setTimeout(() => this.oneStep(),40)
 }
 
-let dim = 40;
-let dist = 60;
 rs.initialize = function () {
   debugger;
+  this.addFrame();
   this.circleP = circlePP.instantiate();
   let crc0 = this.circleP.instantiate();
   let crc1 = this.circleP.instantiate();
@@ -96,6 +123,7 @@ rs.initialize = function () {
  // draw.refresh();
   
 }
+
 
 //rs.addToArray(strokeWidths,.1,levels);
 export {rs};

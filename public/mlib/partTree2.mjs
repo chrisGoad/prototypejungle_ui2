@@ -606,7 +606,8 @@ rs.allWheres = function (levels,numParts) {
 }
 
 rs.displayCell = function (prt,toSegs) {	
-  let {shapes,lineSegs,lineP,circleP,polygonP,mangles,lengthenings,twists,strokeWidths,orect,displayCnt} = this;
+  let {shapes,lineSegs,lineP,circleP,polygonP,mangles,lengthenings,
+      recycle,shapesRecycleIndex,firstInitialize,twists,strokeWidths,orect,displayCnt} = this;
   let {where} = prt;
   let {circleScale} = prt.root.params;
   let vs = this.partVisible(prt);
@@ -651,15 +652,22 @@ rs.displayCell = function (prt,toSegs) {
      }
      if (fill) {
        shp.fill = fill;
-     }
+     } 
   }
   const addShape = (sc) => {
       if (!pgon) {
         debugger; // keep
       }
-      shps = pgon.toShape(polygonP,sc);
+      if (recycle && !firstInitialize) {
+        shps = pgon.toShape(polygonP,sc,shapes[shapesRecycleIndex]);
+        this.shapesRecycleIndex = shapesRecycleIndex+1;
+      } else{
+        shps = pgon.toShape(polygonP,sc);
+      }
     styleShape(shps);
-    shapes.push(shps);
+    if (firstInitialize || !recycle) {
+      shapes.push(shps);
+    }
   }
   if (mng) {
      mangled = geom.mangle(mng);
@@ -825,6 +833,7 @@ rs.stepPartParams = function (params) {
 rs.alreadyInitialized = 0;
 rs.initialize = function () {
   let {width:wd,height:ht,partParams,dropParams} = this;
+  debugger;
   let hwd = 0.5*wd;
   let hht = 0.5*ht;
   //let {emitLineSegs,polygonal} = partParams;

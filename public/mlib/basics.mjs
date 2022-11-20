@@ -170,10 +170,11 @@ Rectangle.toShape = function (rectP,scale=1) {
    return rs;
  }
  
- 
-Polygon.toShape = function (polygonP,scale=1) {
+ // recycling shapes will only work if the shape tree is identical each time
+
+Polygon.toShape = function (polygonP,scale=1,recycledPolygon) {
    let {corners} = this;
-   let rs = polygonP.instantiate();
+   let rs = recycledPolygon?recycledPolygon:polygonP.instantiate();
    rs.fromGeom = this;
    let pcorners = arrayShape.mk();
    if (scale) {
@@ -557,11 +558,17 @@ item.deepCopy = function (o) { //only own props, and fails on circular structure
   return cp; 
 }
 
-
+item.firstInitialize = 1;
 item.resetShapes = function () {
-  this.shapes.remove();
-  this.set('shapes',arrayShape.mk());
+  debugger;
+  if (this.recycle && !this.firstInitialize) {
+    this.shapesRecycleIndex = 0;
+  } else {
+    this.shapes.remove();
+    this.set('shapes',arrayShape.mk());
+  }
   this.initialize();
+  this.firstInitialize = 0;
   draw.refresh();
 }
 

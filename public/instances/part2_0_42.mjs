@@ -6,8 +6,9 @@ let rs = generatorP.instantiate();
 rs.setName('part2_0_42');
 //rs.frameStroke = 'blue';
 rs.framePadding = .2*(rs.width);
-let levels = 1;
-let topLevels = 9;
+let levelsToShow = 1;
+let levels = 9;
+levels = 6;
 //topLevels = 6;
 let introSteps = -2;
 let kind = 'sweep';
@@ -18,11 +19,11 @@ let initState = {sw:{value:0}};
 //initState = {speedup:{value:1}}
 let step = 0.05;
 let pspace = {
-  sw:{kind,step:step,min:1,max:topLevels,interval:1,steps:0.5,bounce:1},
+  sw:{kind,step:step,min:1,max:levels,interval:1,steps:0.5,bounce:1},
 };
 
-rs.numSteps = 2*Math.floor(topLevels/step);
-
+rs.numSteps = 2*Math.floor(levels/step);
+rs.numSteps = 1000;
 rs.copyOfInitState = rs.deepCopy(initState);
 
 rs.pstate = {pspace,cstate:initState};
@@ -52,6 +53,8 @@ rs.addToArray(visibles,1,20);
 let strokeWidths = rs.partParams.strokeWidths = [];
 rs.computeExponentials({dest:strokeWidths,n:20,root:0.4,factor:.7});
 rs.partStrokeWidth = function (prt) {
+ //return .05;
+ debugger;
   let {cstate} = this.pstate;
   let {sw} =cstate;
   let ssf = this.stepsSoFar;
@@ -93,7 +96,7 @@ rs.updateState = function () {
   let ns = this.numSteps;
   let hns = 0.5*ns;
   let fr = ssf<hns?ssf/hns:1-(ssf-hns)/hns;
-  levels = pastIntro? Math.floor(1 + (topLevels-1)*fr):topLevels;
+  levelsToShow = pastIntro? Math.floor(1 + (levels-1)*fr):levels;
   console.log('levels',levels);
   this.partParams.levels = levels;
 

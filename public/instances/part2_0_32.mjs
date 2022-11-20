@@ -33,8 +33,10 @@ let nineCs = nr === 9;
 rs.ssf = 0;
 rs.oneStep = function () {
   debugger;
-  rs.ssf = rs.ssf+1;
-  if (rs.ssf>2000) {
+  console.log('steps',this.ssf++);
+  this.stepCount++;
+//  if (rs.ssf>2000) {
+  if (rs.ssf>200000) {
     return;
   }
   this.timeStep(pstate);

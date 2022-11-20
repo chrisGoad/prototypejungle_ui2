@@ -39,9 +39,11 @@ rs.copyOfInitState = rs.deepCopy(initState);
 
 let nineCs = nr === 9;
 rs.numISteps = 40;
+rs.numISteps = 5;
+rs.numISteps = 40;
 rs.numSteps = 1000;
-rs.numSteps = 400;
-rs.ssf = 0;
+rs.numSteps = 80;
+//rs.ssf = 0;
 rs.saveAnimation = 1;
 
 rs.updateState = function () {
@@ -75,10 +77,10 @@ rs.updateState = function () {
     c2.update();
   }
   draw.refresh();
-   this.timeStep(pstate);
+//   this.timeStep(pstate);
 
 }
-rs.oneStep = function () {
+rs.oneStepp = function () {
 //  debugger;
   console.log('steps',this.ssf++);
   this.stepCount++;

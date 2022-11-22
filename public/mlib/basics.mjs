@@ -576,7 +576,7 @@ item.genRandomPoint = function (onw) {
   if (onw) {
     if (Rectangle.isPrototypeOf(onw)) {
       let {corner,extent} = onw;
-      let lx = corner.x;
+      let lx = corner.x;	
       let ly = corner.y;
       let x = Math.random() * extent.x + lx;
       let y = Math.random() * extent.y + ly;
@@ -594,10 +594,10 @@ item.genRandomPoint = function (onw) {
   return Point.mk(rx,ry);
 }
 
-item.callIfDefined = function (nm) {
+item.callIfDefined = function (nm,a0) {
   let fn = this[nm];
   if (fn) {
-    fn.call(this);
+    fn.call(this,a0);
   }
 }
 

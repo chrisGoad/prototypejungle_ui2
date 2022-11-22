@@ -67,7 +67,7 @@ item.adjustSweepToNewStep = function (pstate,component,nstep) {
 item.sweepNextState = function (pspace,cstate,component) {
  //debugger;
   let pspc = pspace[component];
-  let {sinusoidal,min,max,step,bounce,startDown} = pspc;
+  let {sinusoidal,min,max,step,bounce,startDown,once} = pspc;
   let csc = cstate[component];
   let {cycleCount} = csc;
   let {cstep,down,value,sv,ev} = csc;
@@ -88,6 +88,10 @@ item.sweepNextState = function (pspace,cstate,component) {
   //if ((nv >= max) && up) {
  
   if (((nosin+.000001) >= max) && up) {
+    if (once) {
+      this.callIfDefined(this.atCycleEnd,component)
+      return;
+    }
     if (cycleCount) {
       debugger;
       csc.cycleCount++;
@@ -107,6 +111,9 @@ item.sweepNextState = function (pspace,cstate,component) {
     csc.cstep = 0;
  // } else if ((nv <= min) && down){
   } else if (((nosin-.000001) <= min) && down){
+     if (once) {
+       return;
+     }
      if (cycleCount) {
       debugger;
       csc.cycleCount++;

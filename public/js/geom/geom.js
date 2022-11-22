@@ -687,7 +687,7 @@ Line.nearestPoint = function (p) {
 	let ln = vec.length();
 	console.log('ln',ln);
 	if (ln > 5) {
-		debugger;
+	//	debugger;
 	}
 	return rs;
 }
@@ -716,7 +716,7 @@ LineSegment.mk = function (end0,end1,dontCopy) {
 
 
 LineSegment.center = function () {
-  debugger;
+  //debugger;
 	let {end0,end1} = this;
   let rs = end0.plus(end1).times(0.5);
   return rs;
@@ -1884,7 +1884,7 @@ Polygon.reduce = function() {
     let ni = (i+1)%ln;
     let nc = corners[ni];
     if (!nc) {
-      debugger;
+      debugger; //keep
     }
     if (!cc.equals(nc)) {
       newCorners.push(cc);
@@ -1929,7 +1929,7 @@ Polygon.pc2point = function (pc) {
   let v0 = corners[aSideNum];
   let v1 = corners[(aSideNum+1)%ln];
   if (!v1) {
-    debugger;
+    debugger; // keep
   }
   let vec = v1.difference(v0);
   let rs = v0.plus(vec.times(along));
@@ -1956,7 +1956,7 @@ Polygon.lowerLeftCorner = function () {
 }
 
 Polygon.reorderFromLL = function () {
-  debugger;
+//  debugger;
   let {corners} = this;
   if (!corners) {
     return;

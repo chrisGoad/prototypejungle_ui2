@@ -7,8 +7,8 @@ sections:
  [0,'part2_0_43','instances',1,'You are getting very sleepy...',{video:'gif',likes:0,posted:0,category:'anim'}],
  [0,'part2_0_42','instances',1,'Quadrangular Abyss',{video:'mp4',likes:0,posted:0,category:'anim'}],
  [0,'part2_0_38','instances',1,'Shifting Grid',{video:'gif',likes:0,posted:0,category:'anim'}],
- [0,'part2_0_31','instances',1,'Pulse 1',{video:'gif',noTitle:0,likes:0,posted:0,category:'anim'}],
- [0,'part2_0_32','instances',1,'Pulse 2',{video:'mp4',noTitle:0,likes:0,posted:0,category:'anim'}],
+ [0,'part2_0_31','instances',1,'Pulse',{video:'gif',noTitle:0,likes:0,posted:0,category:'anim'}],
+ [0,'part2_0_32','instances',1,'Colors',{video:'mp4',noTitle:0,likes:0,posted:0,category:'anim'}],
  [0,'part2_0_46','instances',1,'Pulse and Dance',{video:'gif',noTitle:0,likes:0,posted:0,category:'anim'}],
  [0,'grid_emergence','generators',1,'Emergence',{video:'gif',noTitle:0,likes:0,posted:0,category:'anim'}],
  

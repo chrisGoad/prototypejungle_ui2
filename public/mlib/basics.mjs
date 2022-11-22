@@ -572,6 +572,28 @@ item.resetShapes = function () {
   draw.refresh();
 }
 
+item.genRandomPoint = function (onw) {
+  if (onw) {
+    if (Rectangle.isPrototypeOf(onw)) {
+      let {corner,extent} = onw;
+      let lx = corner.x;
+      let ly = corner.y;
+      let x = Math.random() * extent.x + lx;
+      let y = Math.random() * extent.y + ly;
+      return Point.mk(x,y);
+    }
+    if (oneDf.isPrototypeOf(onw)) {
+      let rpnt = onw.randomPoint();
+      return rpnt;
+    }
+
+  }
+  let {width,height} = this;
+  let rx = (Math.random()-0.5) * width;
+   let ry= (Math.random()-0.5) * height;
+  return Point.mk(rx,ry);
+}
+
 item.callIfDefined = function (nm) {
   let fn = this[nm];
   if (fn) {

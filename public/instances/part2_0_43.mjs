@@ -111,7 +111,7 @@ rs.chopOffBeginning = 1;
 let ist=rs.numISteps = 0;
 
 rs.numSteps = 101-ist;
-rs.numSteps = 2000;
+//rs.numSteps = 2000;
 rs.recycle = 1;
 //rs.numSteps = 300;
 //rs.addToArray(strokeWidths,.1,levels);

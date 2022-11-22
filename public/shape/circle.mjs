@@ -25,12 +25,20 @@ rs.getDimension = function () {
 }
 
 
-rs.update =  () => {};
+rs.setDomAtts = function () {
+  debugger;
+  this.setDomAttribute('r',0.5*this.dimension);
+}
+
+rs.update =  function () {
+  this.setDomAtts();
+}
 
 // used to compute where connections (eg arrows) terminate on this shape's periphery
 graph.installCirclePeripheryOps(rs);
 
 rs.transferState = function (src,own) { //own = consider only the own properties of src
+  debugger;
   core.setProperties(this,src,ui.stdTransferredProperties,own);
 }
 

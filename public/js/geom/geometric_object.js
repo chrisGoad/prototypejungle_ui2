@@ -253,6 +253,9 @@ geometric.toLocalCoords = function (ip,toOwn) {
 defineOnArray('toLocalCoords');
 
 
+
   
 }
+defineGeometric(Circle);
+
 export {defineGeometric};

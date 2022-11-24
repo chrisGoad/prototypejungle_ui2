@@ -50,6 +50,7 @@ sections:
  // [0,'quad_0_19','instances',1,'Quad 0 19',{likes:0,posted:0,category:'quad'}], 
  // [0,'part_0_19','instances',1,'Part 0 19',{likes:0,posted:0,category:'part'}], 
   [0,'drop_move','generators',1,'Drop Move',{likes:0,posted:0,category:'quad'}], 
+  [0,'path_rwalk','generators',1,'Random Walk',{likes:0,posted:0,category:'quad'}], 
 
   [0,'part2_0_19','instances',1,'Part2 0 19',{likes:0,posted:0,category:'part'}], 
  

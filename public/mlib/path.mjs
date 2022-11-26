@@ -195,6 +195,7 @@ item.nextState = function (pathKind,pspace,cstate,component) {
 }
   
 item.timeStep = function (pstate) {
+debugger;
   let {pspace,cstate}= pstate;
   let ct = cstate.time?cstate.time:0;
   let props = Object.getOwnPropertyNames(pspace);

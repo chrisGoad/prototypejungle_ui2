@@ -315,6 +315,7 @@ item.oneStep = function (one) {
       this.interpTo = this.copyOfInitState;
       this.oneInterpolationStep();
     }
+  
     return;
   }
   if (ns&&this.saveAnimation&&(ns>this.chopOffBeginning)) { // for some reason, the first frame is corrupted 

@@ -9,9 +9,9 @@ addPathMethods(rs);
 debugger;
 rs.setName('path_rwalk');
 let ht= 100;
-let topParams = {width:5*ht,height:5*ht,framePadding:.1,frameStrokee:'white',frameStrokeWidth:1}
-let numGroups = 64;
-let numWalkers = 64;
+let topParams = {width:2.5*ht,height:2.5*ht,framePadding:.1,frameStrokee:'white',frameStrokeWidth:1}
+let numGroups = 32;
+let numWalkers = 32;
 let groupSize = numWalkers/numGroups;
 Object.assign(rs,topParams);
 
@@ -28,7 +28,7 @@ rs.addPath = function (n) {
   if (!psOfGroup) {
     psOfGroup = {kind,step:.1*Math.PI,min:-Math.PI,max:Math.PI,interval:1,steps:0.5,once:1};
     pspaceByGroup[gnm] = psOfGroup;
-    initStateByGroup[gnm] = {pos:Point.mk(0,0),value:Math.PI*2*Math.random()-Math.PI,wrap:1,biasBy:.6,biasTowards:0};
+    initStateByGroup[gnm] = {pos:Point.mk(0,0),value:Math.PI*2*Math.random()-Math.PI,wrap:1,biasBy:.7,biasTowards:0};
   }
   let hht = 0.5*ht;
  // let {walkers} = this;
@@ -37,7 +37,9 @@ rs.addPath = function (n) {
   let swd = 1.8*ht;
   let hswd = 0.5*swd;
  // let color = this.randomColorObject();
-  displacements[nm] = Point.mk(Math.random()*swd-hswd,Math.random()*swd-hswd);
+ let hdim = 5;
+  displacements[nm] = Point.mk(0,-80).plus(Point.mk(Math.random()*2*hdim-hdim,Math.random()*2*hdim-hdim));
+  //displacements[nm] = Point.mk(0,100).pludPoint.mk(Math.random()*swd-hswd,Math.random()*swd-hswd);
  // initStateB[nm] = {pos:Point.mk(Math.random()*swd-hswd,Math.random()*swd-hswd),value:Math.PI*2*Math.random()};
  // pspace[nm] = {kind,step:50,min:ln,max:10000*Math.SQRT2,interval:1,steps:0.5,once:1};
   //pspaceByGroup[gnm] = {kind,step:.1*Math.PI,min:-Math.PI,max:Math.PI,interval:1,steps:0.5,once:1};
@@ -97,34 +99,78 @@ rs.updateStateOf = function (n) {
 }
 
 rs.updateState = function () {
-  let {walkers} = this;
+  let {walkers,goTowards,pstate,numSteps} = this;
+  let {cstate} = pstate;
+  let {time} = cstate;
+  debugger;
   let ln = walkers.length;
   for (let i=0;i<ln;i++) {
     this.updateStateOf(i);
   }
+  let ta = 0.0025*time*2*Math.PI;
+  let trg = Point.mk(Math.cos(ta),Math.sin(ta));
+  this.goTowards = trg.times(100);;
+  let lt = 360; //length of trail
+  let upto;
+  if (time > lt) {
+    let fr = (time-lt)*ln;
+    upto = fr+ln;
+    this.hideLines(fr,upto);
+  
+  //let dt = 720;
+  //if (time>dt)
+    this.hideLines(upto, upto+Math.floor(((time-lt)/(numSteps-lt))*380)*ln);;
+  }
+  let hcd = 100;
+  let hct = numSteps - hcd;
+  
+  if (time > hct) {
+    let fr = 1 - (time-hct)/hcd;
+    console.log('fr',fr);
+    for (let j=0;j<ln;j++) {
+      let w = walkers[j];
+      w.fill = `rgba(255,255,255,${fr})`;
+      w.update();
+    }
+  }
+    
+    
 }
   
+ rs.hideLines = function (fr,upto) {
+   let {lines} = this;
+   let ln=lines.length;
+   let ub = Math.min(upto,ln);
+   for (let i=fr-2;i<ub;i++) {
+    let line = lines[i];
+    line.hide();
+   }
+}
+
   
 rs.initProtos = function () {
   let circleP = this.circleP = circlePP.instantiate();
   circleP.fill = 'black';
+  circleP.fill = 'white';
   circleP['stroke-width'] = 0;
-  circleP.stroke = 'blue';
-  circleP.dimension =0.015*ht;
+  circleP.stroke = 'yellow';
+  circleP.dimension =0.025*ht;
+  //circleP.dimension =0;
    let lineP = this.lineP = linePP.instantiate();
-  lineP['stroke-width'] = .1;
+  lineP['stroke-width'] = .2;
   lineP.stroke = 'red';
+  lineP.stroke = 'white';
 }  
 
 rs.callAtCycleEnd = function (nm) {
 }
 
-rs.numSteps = 530;
-rs.saveAnimation = 0;
+rs.numSteps = 800;
+rs.saveAnimation = 1;
 rs.initialize = function () {
   debugger;
-  this.setBackgroundColor('white');
- //this.setBackgroundColor('black');
+  this.setBackgroundColor('grey');
+ this.setBackgroundColor('black');
 
   //this.addRectangle({width:ht,height:ht,stroke_width:0,fill:'white'});
   this.initProtos();

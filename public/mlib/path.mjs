@@ -5,20 +5,42 @@ down again.*/
 
 let rs = function (item) {
 
+item.angularDistance = function (a0,a1) {
+  let min = Infinity;
+  for (let i =-1;i<=1;i++) {
+    let nv = Math.abs((a1+i*2*Math.PI)-a0);
+    if (nv < min) {
+     min = nv;
+    }
+  }
+  //console.log('a1',a1,'a0',a0,'absdiff',Math.abs(a1-a0),'min', min);
+  return min;
+}
+   
 item.randomNextState = function (pspace,cstate,component) {
+  debugger;
   let pspc = pspace[component];
   let {step,min,max} = pspc;
   let csc =  cstate[component];
-  let cv = csc.value;
+  let {value:cv,wrap,biasTowards,biasBy} = csc;
   let nvp = cv+step;
   let nvm = cv-step;
   if (nvm <= min) {
-    csc.value = nvp;
-    return;
+    nvm = wrap?max-(min-nvm):nvp;
   }
   if (nvp > max) {
-      csc.value = nvm;
-     return;
+      //csc.value = wrap?min+(nvp-max):nvm;
+      nvp = wrap?min+(nvp-max):nvm;
+    // return;
+  }
+  if (biasBy) {
+  //  let mdiff = Math.abs(nvm-biasTowards);
+    let mdiff = this.angularDistance(nvm,biasTowards);
+    let pdiff = this.angularDistance(nvp,biasTowards);
+ //   let pdiff = Math.abs(nvp-biasTowards);
+    let wtc = mdiff <  pdiff?nvm:nvp;
+    csc.value = Math.random()<biasBy?wtc:Math.random()<0.5?nvm:nvp;
+    return;
   }
   csc.value = Math.random() < 0.5?nvm:nvp;
 }

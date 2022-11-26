@@ -10,7 +10,7 @@ debugger;
 rs.setName('path_rwalk');
 let ht= 100;
 let topParams = {width:5*ht,height:5*ht,framePadding:.1,frameStrokee:'white',frameStrokeWidth:1}
-let numGroups = 2;
+let numGroups = 64;
 let numWalkers = 64;
 let groupSize = numWalkers/numGroups;
 Object.assign(rs,topParams);
@@ -28,7 +28,7 @@ rs.addPath = function (n) {
   if (!psOfGroup) {
     psOfGroup = {kind,step:.1*Math.PI,min:-Math.PI,max:Math.PI,interval:1,steps:0.5,once:1};
     pspaceByGroup[gnm] = psOfGroup;
-    initStateByGroup[gnm] = {pos:Point.mk(0,0),value:Math.PI*2*Math.random()};
+    initStateByGroup[gnm] = {pos:Point.mk(0,0),value:Math.PI*2*Math.random()-Math.PI,wrap:1,biasBy:.6,biasTowards:0};
   }
   let hht = 0.5*ht;
  // let {walkers} = this;
@@ -54,10 +54,11 @@ rs.addPaths  = function () {
 
 //let dropParams = {dropTries:150,maxDrops:20}
 
+rs.goTowards = Point.mk(0,0);
 
 rs.updateStateOf = function (n) {
   debugger;
-  let {walkers,pstate,displacements} = this;
+  let {walkers,pstate,displacements,goTowards} = this;
   let {pspace} = pstate;
   let grn = Math.floor(n/groupSize);
   let gnm = 'g'+grn;
@@ -82,6 +83,9 @@ rs.updateStateOf = function (n) {
   let disp = displacements[inm];
   let dpos = pos.plus(disp);
   let dnpos = npos.plus(disp);
+  let dnvec = goTowards.difference(dnpos);
+  let dnangle = Math.atan2(dnvec.y,dnvec.x);
+  nstate.biasTowards = dnangle;
   let tm = cstate.time;
   let w = walkers[n]
   let line=this.lineP.instantiate();

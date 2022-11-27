@@ -17,7 +17,7 @@ item.angularDistance = function (a0,a1) {
   return min;
 }
    
-item.randomNextState = function (pspace,cstate,component) {
+item.randomNextStateValue = function (pspace,cstate,component) {
   debugger;
   let pspc = pspace[component];
   let {step,min,max} = pspc;
@@ -25,26 +25,30 @@ item.randomNextState = function (pspace,cstate,component) {
   let {value:cv,wrap,biasTowards,biasBy} = csc;
   let nvp = cv+step;
   let nvm = cv-step;
+  let value;
   if (nvm <= min) {
     nvm = wrap?max-(min-nvm):nvp;
   }
   if (nvp > max) {
-      //csc.value = wrap?min+(nvp-max):nvm;
       nvp = wrap?min+(nvp-max):nvm;
-    // return;
   }
   if (biasBy) {
-  //  let mdiff = Math.abs(nvm-biasTowards);
     let mdiff = this.angularDistance(nvm,biasTowards);
     let pdiff = this.angularDistance(nvp,biasTowards);
- //   let pdiff = Math.abs(nvp-biasTowards);
     let wtc = mdiff <  pdiff?nvm:nvp;
-    csc.value = Math.random()<biasBy?wtc:Math.random()<0.5?nvm:nvp;
-    return;
+    value = Math.random()<biasBy?wtc:Math.random()<0.5?nvm:nvp;
+  } else {
+    value = Math.random() < 0.5?nvm:nvp;
   }
-  csc.value = Math.random() < 0.5?nvm:nvp;
+  return value;
 }
 
+item.randomNextState = function (pspace,cstate,component) {
+  let csc =  cstate[component];
+  let value = this.randomNextStateValue(pspace,cstate,component);
+  csc.value = value;
+}
+  
 
 item.randomValueNextState = function (pspace,cstate,component) {
   let pspc = pspace[component];

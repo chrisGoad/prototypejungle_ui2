@@ -55,6 +55,7 @@ sections:
   [0,'path_rwalk_3','generators',1,'Random Walk 3',{likes:0,posted:0,category:'quad'}], 
   [0,'path_rwalk_4','generators',1,'Random Walk 4',{likes:0,posted:0,category:'quad'}], 
   [0,'path_rwalk_4_0','instances',1,'Random Walk 4 0',{likes:0,posted:0,category:'quad'}], 
+  [0,'path_rwalk_4_1','instances',1,'Random Walk 4 1',{likes:0,posted:0,category:'quad'}], 
 
   [0,'part2_0_19','instances',1,'Part2 0 19',{likes:0,posted:0,category:'part'}], 
  

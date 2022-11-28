@@ -51,6 +51,7 @@ item.randomNextState = function (pspace,cstate,component) {
 item.randomWalkNextState = function (pspace,cstate,component) {
    debugger;
    let csc = cstate[component];
+   let {movingTarget:mvt} = csc;
    let csp = pspace[component];
    let dirst = cstate[csp.directionComponent];
    let dir = dirst.value;
@@ -58,13 +59,22 @@ item.randomWalkNextState = function (pspace,cstate,component) {
    let npos;
    let tm = cstate.time;
    csc.lastPos = csc.pos;
-   let vec = Point.mk(Math.cos(dir),Math.sin(dir)).times(stpl);
-   npos = vec.plus(pos);
-   csc.pos = npos;
-  let nvec = goTowards.difference(npos);
-  let nangle = Math.atan2(nvec.y,nvec.x);
-  dirst.biasTowards = nangle;
-  dirst.biasBy  = biasBy;
+   let done = csc.done;
+   if ((!mvt) && (csc.pos.distance(goTowards) < stpl)) {
+     npos = goTowards.copy();
+     csc.pos = npos;
+     done= csc.done = 1;
+   } else {
+     let vec = Point.mk(Math.cos(dir),Math.sin(dir)).times(stpl);
+     npos = vec.plus(pos);
+   }
+   if (!done) {
+    csc.pos = npos;
+    let nvec = goTowards.difference(npos);
+    let nangle = Math.atan2(nvec.y,nvec.x);
+    dirst.biasTowards = nangle;
+    dirst.biasBy  = biasBy;
+  }
 }
   
    

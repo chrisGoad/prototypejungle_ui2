@@ -48,7 +48,27 @@ item.randomNextState = function (pspace,cstate,component) {
   let value = this.randomNextStateValue(pspace,cstate,component);
   csc.value = value;
 }
+item.randomWalkNextState = function (pspace,cstate,component) {
+   debugger;
+   let csc = cstate[component];
+   let csp = pspace[component];
+   let dirst = cstate[csp.directionComponent];
+   let dir = dirst.value;
+   let {goTowards,biasBy,stepLength:stpl,pos} = csc;
+   let npos;
+   let tm = cstate.time;
+   csc.lastPos = csc.pos;
+   let vec = Point.mk(Math.cos(dir),Math.sin(dir)).times(stpl);
+   npos = vec.plus(pos);
+   csc.pos = npos;
+  let nvec = goTowards.difference(npos);
+  let nangle = Math.atan2(nvec.y,nvec.x);
+  dirst.biasTowards = nangle;
+  dirst.biasBy  = biasBy;
+}
   
+   
+   
 
 item.randomValueNextState = function (pspace,cstate,component) {
   let pspc = pspace[component];
@@ -163,7 +183,7 @@ item.sweepNextState = function (pspace,cstate,component) {
    
 
 item.randomStepsNextState = function (pspace,cstate,component) {
- // debugger;
+  debugger;
   let pspc = pspace[component];
   let csc = cstate[component];
   let {cstep,down,value,sv,ev} = csc;
@@ -209,6 +229,9 @@ item.nextState = function (pathKind,pspace,cstate,component) {
   if (pathKind === 'random') {
     this.randomNextState(pspace,cstate,component);
   }
+   if (pathKind === 'randomWalk') {
+    this.randomWalkNextState(pspace,cstate,component);
+  }
   if (pathKind === 'randomValue') {
     this.randomValueNextState(pspace,cstate,component);
   }
@@ -231,7 +254,7 @@ debugger;
    let iv = cc.interval;
    let kind = cc.kind;
    //let cs = cstate[component];
-   if (ct%iv === 0) {
+   if ((!iv) || (ct%iv === 0)) {
     // this.nextState(pathKind,pspace,cstate,component);
      this.nextState(kind,pspace,cstate,component);
    } else {

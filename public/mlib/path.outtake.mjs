@@ -47,6 +47,40 @@ item.randomNextState = function (pspace,cstate,component) {
   debugger;
   let value = this.randomNextStateValue(pspace,cstate,component);
   csc.value = value;
+  let h = csc.recentHistory;
+  if (h ===  undefined) {
+    h = csc.recentHistory = [value];
+  }
+  let ln = h.length;
+  debugger;
+  let hln = 8;;
+  if (ln <hln ) {
+   h.push(value);
+  } else {
+    h=h.slice(0,hln-1);
+    h.push(value);
+    csc.recentHistory = h;
+  }
+  if (csc.currentSign===undefined){
+    csc.currentSign = value>0;
+    csc.sinceLastSignChange=0;
+    csc.rValue = value;
+  }
+  let cSign = value>0;
+  if (cSign === csc.currentSign) {
+    csc.steadyV = value;
+    csc.sinceLastSignChange++;
+    return;
+  }
+  if (csc.sinceLastSignChange >10) {
+    csc.rValue = value;
+    csc.steadyV = value;
+    csc.currentSign =  value>0;
+    csc.sinceLastSignChange=0;
+    return;
+  }
+  csc.steadyV = csc.rValue;
+  csc.sinceLastSignChange++;
 }
 
   

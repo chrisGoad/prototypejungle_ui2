@@ -11,6 +11,7 @@ sections:
  [0,'part2_0_32','instances',1,'Colors',{video:'mp4',noTitle:0,likes:0,posted:0,category:'anim'}],
  [0,'part2_0_46','instances',1,'Pulse and Dance',{video:'gif',noTitle:0,likes:0,posted:0,category:'anim'}],
  [0,'grid_emergence','generators',1,'Emergence',{video:'gif',noTitle:0,likes:0,posted:0,category:'anim'}],
+ [0,'path_rwalk_4_1','instances',1,'Chase',{video:'gif',noTitle:0,likes:0,posted:0,category:'anim'}],
  
  //[10,'quad_3','generators',1,'Circles',{likes:72,posted:1,noTitle:1,category:'partition',variant:2}], 
  [10,'part2_0_25','instances',1,'Part2 9 25',{likes:72,posted:1,noTitle:1,category:'partition'}], 

@@ -22,7 +22,7 @@ rs.addPath = function (n) {
   pspace[nm] ={kind:'random',step:.1*Math.PI,min:-Math.PI,max:Math.PI,interval:1,steps:0.5,once:1};
     initState[nm] = {pos:Point.mk(0,0),value:0,wrap:1,biasBy:1,biasTowards:0};
   let rnm = 'rw'+n;
-  pspace[rnm] = {kind:'randomWalk',directionComponent:nm};
+  pspace[rnm] = {kind:'randomWalk',directionComponent:nm,numDirections:8};
    let hdim = .1;
   initState[rnm] = {stepLength:2,pos:Point.mk(0,-100).plus(Point.mk(Math.random()*2*hdim-hdim,Math.random()*2*hdim-hdim))};
 }  

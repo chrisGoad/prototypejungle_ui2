@@ -419,7 +419,6 @@ item.computeExponentials = function (args) {
     cv = fc*cv;
     a.push(cv);
   }
-  debugger;
 }
 
 item.randomBetween = function (lh) {
@@ -560,7 +559,6 @@ item.deepCopy = function (o) { //only own props, and fails on circular structure
 
 item.firstInitialize = 1;
 item.resetShapes = function () {
-  debugger;
   if (this.recycle && !this.firstInitialize) {
     this.shapesRecycleIndex = 0;
   } else {

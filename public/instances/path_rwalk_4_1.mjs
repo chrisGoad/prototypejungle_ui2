@@ -17,9 +17,12 @@ Object.assign(rs,topParams);
  let hpwd = 0.5*pwd;
  let nr =4;
  let delta =  pwd/(nr-1);
+ let dim = 200;
+   let hdim = 0.5*dim;
  for (let i=0;i<nr;i++) {
    for (let j=0;j<nr;j++) {
-     let cpos = Point.mk(i*delta - hpwd,+j*delta-hpwd);
+  //   let cpos = Point.mk(i*delta - hpwd,+j*delta-hpwd);
+     let cpos = Point.mk(-hdim,-hdim).plus(Point.mk(Math.random()*dim,Math.random()*dim));
      initialPositions.push(cpos);
    }
  }
@@ -33,11 +36,10 @@ rs.addPath = function (n) {
   pspace[nm] ={kind:'random',step:.1*Math.PI,min:-Math.PI,max:Math.PI,interval:1,steps:0.5,once:1};
     initState[nm] = {pos:Point.mk(0,0),value:0,wrap:1,biasBy:1,biasTowards:0};
   let rnm = 'rw'+n;
-  pspace[rnm] = {kind:'randomWalk',directionComponent:nm,index:n};
-  let dim = 200;
-   let hdim = 0.5*dim;
-  //initState[rnm] = {stepLength:2,pos:initialPositions[n],movingTarget:1};
-  initState[rnm] = {stepLength:2,pos:Point.mk(-hdim,-hdim).plus(Point.mk(Math.random()*dim,Math.random()*dim)),movingTarget:1};
+  pspace[rnm] = {kind:'randomWalk2d',directionComponent:nm,index:n};
+  
+  initState[rnm] = {stepLength:2,pos:initialPositions[n],movingTarget:1,numDirectionss:4};
+  //initState[rnm] = {stepLength:2,pos:Point.mk(-hdim,-hdim).plus(Point.mk(Math.random()*dim,Math.random()*dim)),movingTarget:1};
   
   //pos:Point.mk(0,-100).plus(Point.mk(Math.random()*2*hdim-hdim,Math.random()*2*hdim-hdim))};
 }  
@@ -162,7 +164,7 @@ rs.initProtos = function () {
   circleP['stroke-width'] = 0;
   circleP.dimension =0.025*this.ht;
    let lineP = this.lineP = linePP.instantiate();
-  lineP['stroke-width'] = .2;
+  lineP['stroke-width'] = .3;
   lineP.stroke = 'red';
   lineP.stroke = 'white';
 }  

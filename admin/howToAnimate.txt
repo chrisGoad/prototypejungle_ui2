@@ -100,6 +100,9 @@ c:\ffmpeg\bin\ffmpeg  -framerate 20 -i animations/drop_move_f%03d.jpg -s 500x500
 c:\ffmpeg\bin\ffmpeg  -framerate 20 -i animations/path_rwalk_f%03d.jpg -s 500x500  export/path_rwalk.mp4
 c:\ffmpeg\bin\ffmpeg  -framerate 20 -i animations/path_rwalk_f%03d.jpg -s 500x500  export/path_rwalk.gif
 c:\ffmpeg\bin\ffmpeg  -framerate 20 -i animations/path_rwalk_4_1_f%03d.jpg -s 500x500  export/path_rwalk_4_1.gif
+c:\ffmpeg\bin\ffmpeg  -framerate 20 -i animations/part2_0_48_f%03d.jpg -s 500x500  export/part2_0_48.gif
+c:\ffmpeg\bin\ffmpeg  -framerate 20 -i animations/part2_0_48_f%03d.jpg -s 500x500  export/part2_0_48.mp4
+c:\ffmpeg\bin\ffmpeg  -framerate 20 -i animations/part2_0_49_f%03d.jpg -s 500x500  export/part2_0_49.mp4
 
 
 

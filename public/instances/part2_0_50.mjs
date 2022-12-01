@@ -3,12 +3,13 @@ import {rs as generatorP} from '/generators/part2_0.mjs';
 
 let rs = generatorP.instantiate();
 
-rs.setName('part2_0_48');
+rs.setName('part2_0_49');
 //rs.frameStroke = 'blue';
 rs.framePadding = .2*(rs.width);
 let levelsToShow = 1;
 let levels = 9;
 levels = 6;
+//levels = 3;
 //topLevels = 6;
 
 rs.partParams.levels = levels;
@@ -29,6 +30,9 @@ const addPath = function (kind,n) {
 for (let i=0;i<4;i++) {
   addPath('q',i);
 }
+for (let i=0;i<4;i++) {
+  addPath('o',i);
+}
 
 for (let i=0;i<2;i++) {
   addPath('t',i);
@@ -39,28 +43,29 @@ rs.copyOfInitState = rs.deepCopy(initState);
 
 rs.pstate = {pspace,cstate:initState};
 
-rs.quadSplitParams = {Case:3,vertexNum:0,pcs:[0.4,1.4,2.6,3.4]};
-rs.triSplitParams = {Case:1,vertexNum:0,pcs:[0.3,1.3]};
-rs.triSplitParams = null;
 rs.partSplitParams = function (prt) {
   let ln = prt.polygon.corners.length;
+  let lev = prt.where.length;
+  let olev = lev%2;
+  let quad = ln === 4;
   if (ln === 4) {
  //   debugger;
   }
   let {pstate} = this;
   let {cstate} = pstate;
-  let qpc0 = cstate.qpc0.value;
-  let qpc1 = cstate.qpc1?cstate.qpc1.value:qpc0;
-  let qpc2 = cstate.qpc2?cstate.qpc2.value:qpc0;
-  let qpc3 = cstate.qpc3?cstate.qpc3.value:qpc0;
+  const vl = (nm) => cstate[nm].value;
   //console.log('qpcs',qpc0,qpc1,qpc2,qpc3);
-  let qp = {Case:3,pcs:[0.5+qpc0,1.5+qpc1,2.5+qpc2,3.5+qpc3]};
-  let tpc0 = cstate.tpc0.value;
-  let tpc1 = cstate.tpc1.value;
-  let tp = {Case:1,pcs:[0.5+tpc0,1.5+tpc1]};
-  let rs = (ln === 3)?tp:qp;
-  //let lev = prt.where.length;
-  return rs;
+  let p;
+  if (quad) {
+    if (olev) {
+      p = {Case:3,pcs:[0.5+vl('opc0'),1.5+vl('opc1'),2.5+vl('opc2'),3.5+vl('opc3')]};
+    } else {
+      p = {Case:3,pcs:[0.5+vl('qpc0'),1.5+vl('qpc1'),2.5+vl('qpc2'),3.5+vl('qpc3')]};
+    }
+  } else {
+    p = {Case:1,pcs:[0.5+vl('tpc0'),1.5+vl('tpc0')]};
+  }
+  return p;
 }
 
 let visibles = rs.partParams.visibles = [];
@@ -84,7 +89,55 @@ rs.updateStatee= function () {
   this.resetShapes();
 }
 
-rs.saveAnimation = 1;
+rs.partVisible  = function (prt) {
+  debugger;
+  let w = prt.where;
+  let ln = w.length;
+  if (ln === 0) {
+    return 0;
+  }
+  let p0 = w[0][0];
+  if (p0 === 'P0') {
+    return 1;
+  }
+  return 0;
+}
+
+rs.computeFills = function () {
+  const rshade =() => Math.floor(Math.random()*255);
+  let aw = this.allWheres(this.partParams.levels,5);
+  let af = {};
+  
+  aw.forEach((w) => {
+    let r = rshade();
+    let g = rshade();
+    let b = rshade();
+    let wn = w[0];
+    let rcolor = `rgb(${r},${0},${b})`;
+    af[wn] = rcolor;
+  });
+  this.colors = af;
+  debugger;
+}
+
+rs.computeFills();
+
+
+rs.partFill  = function (prt) {
+  debugger;
+  let w = prt.where;
+  let ln = w.length;
+  if (ln < 1) {
+    return 'black';
+  }
+  let ws = this.whereString(w);
+  let clr = this.colors[ws];
+  return clr;
+}
+
+rs.saveAnimation = 0;
+rs.numSteps = 500;
+rs.numISteps = 60;
 
 
   

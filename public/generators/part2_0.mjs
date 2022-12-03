@@ -14,7 +14,7 @@ rs.setName('part2_0');
 let wd = 100;
 let topParams = {width:wd,height:wd,framePadding:0.2*wd,frameStrokee:'white'}
 Object.assign(rs,topParams);
-rs.partParams = {};
+rs.set('partParams',ObjectNode.mk());
 //let strokeWidths = rs.quadParams.strokeWidths = [];
 //rs.computeExponentials(strokeWidths,levels,0.1,0.9);
 

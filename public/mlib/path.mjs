@@ -97,13 +97,13 @@ item.randomWalk2dNextState = function (pspace,cstate,component) {
 item.randomWalkScalarNextState = function (pspace,cstate,component) {
   debugger;
      let csc = cstate[component];
-
+   let {reverse} = csc;
    if (csc.aboveBoundCount === undefined) {
      csc.aboveBoundCount = 0;
    }
   
    let csp = pspace[component];
-   let {min,max,up,reverse} = csp;
+   let {min,max,up,wrap} = csp;
    let subState = cstate[csp.subComponent];
    let subV = subState.value;
    //let subV = subState.average;
@@ -125,18 +125,24 @@ item.randomWalkScalarNextState = function (pspace,cstate,component) {
    let eps = 0.0;
    if (value > max) {
        debugger;
-       nval = max-eps;//nvall;
-       reverse = subVP?1:0;
-    
+       if (wrap) {
+         nval = (min + (value-max));
+       } else {
+         nval = max-eps;//nvall;
+         reverse = subVP?1:0;
+       }
    } else if (value < min) {
      debugger;
-     //nval = nvalh;
-     nval = min+eps;
-     reverse = subVP?0:1;
+     if (wrap) {
+         nval = max - (min-value);
+       } else {
+         nval = min+eps;
+         reverse = subVP?0:1;
+       }
    } else {
      nval = reverse?value-subV:value+subV;
    }
-   csp.reverse  = reverse;
+   csc.reverse  = reverse;
    csc.value = nval;
 }
    

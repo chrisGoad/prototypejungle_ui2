@@ -266,6 +266,7 @@ item.randomStepsNextState = function (pspace,cstate,component) {
   let pspc = pspace[component];
   let csc = cstate[component];
   let {cstep,down,value,sv,ev} = csc;
+  
   let jerky = pspc.jerky; //jerky acceleration
   let up = !down
   let {step,min,max,steps} = pspc;

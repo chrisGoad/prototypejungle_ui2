@@ -28,6 +28,7 @@ rs.getDimension = function () {
 rs.setDomAtts = function () {
   this.setDomAttribute('r',0.5*this.dimension);
   this.setDomAttribute('fill',this.fill);
+  this.setDomAttribute('visibility',this.visibility);
 }
 
 rs.update =  function () {

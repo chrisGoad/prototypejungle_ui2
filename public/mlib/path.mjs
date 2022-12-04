@@ -44,7 +44,6 @@ item.randomNextStateValue = function (pspace,cstate,component) {
 
 item.randomNextState = function (pspace,cstate,component) {
   let csc =  cstate[component];
-  debugger;
   let value = this.randomNextStateValue(pspace,cstate,component);
   csc.value = value;
 }
@@ -59,7 +58,6 @@ item.randomNextState = function (pspace,cstate,component) {
   csc.value = value;
 }*/
 item.randomWalk2dNextState = function (pspace,cstate,component) {
-   //debugger;
    let csc = cstate[component];
    let {movingTarget:mvt,numDirections:numDirs} = csc;
    let csp = pspace[component];
@@ -95,7 +93,6 @@ item.randomWalk2dNextState = function (pspace,cstate,component) {
 
 
 item.randomWalkScalarNextState = function (pspace,cstate,component) {
-  debugger;
      let csc = cstate[component];
    let {reverse} = csc;
    if (csc.aboveBoundCount === undefined) {
@@ -124,7 +121,6 @@ item.randomWalkScalarNextState = function (pspace,cstate,component) {
    let nval;
    let eps = 0.0;
    if (value > max) {
-       debugger;
        if (wrap) {
          nval = (min + (value-max));
        } else {
@@ -132,7 +128,6 @@ item.randomWalkScalarNextState = function (pspace,cstate,component) {
          reverse = subVP?1:0;
        }
    } else if (value < min) {
-     debugger;
      if (wrap) {
          nval = max - (min-value);
        } else {
@@ -174,7 +169,6 @@ item.sinusoidVal = function (sv,ev,step,cstep) {
 }
 
 item.adjustSweepToNewStep = function (pstate,component,nstep) {
-  debugger;
   let {pspace} = pstate;
   let pspc = pspace[component];
   let csc = pstate.cstate[component];
@@ -190,7 +184,6 @@ item.adjustSweepToNewStep = function (pstate,component,nstep) {
 }
 
 item.sweepNextState = function (pspace,cstate,component) {
- //debugger;
   let pspc = pspace[component];
   let {sinusoidal,min,max,step,bounce,startDown,once} = pspc;
   let csc = cstate[component];
@@ -218,7 +211,6 @@ item.sweepNextState = function (pspace,cstate,component) {
       return;
     }
     if (cycleCount) {
-      debugger;
       csc.cycleCount++;
     } else {
       csc.cycleCount = 1;
@@ -240,7 +232,6 @@ item.sweepNextState = function (pspace,cstate,component) {
        return;
      }
      if (cycleCount) {
-      debugger;
       csc.cycleCount++;
     } else {
       csc.cycleCount = 1;
@@ -262,7 +253,6 @@ item.sweepNextState = function (pspace,cstate,component) {
    
 
 item.randomStepsNextState = function (pspace,cstate,component) {
-  debugger;
   let pspc = pspace[component];
   let csc = cstate[component];
   let {cstep,down,value,sv,ev} = csc;
@@ -301,7 +291,6 @@ item.randomStepsNextState = function (pspace,cstate,component) {
 }
 
 item.nextState = function (pathKind,pspace,cstate,component) {
-//debugger;
   let csc = cstate[component];
   if (csc.paused) {
     return;
@@ -350,7 +339,6 @@ item.timeStep = function (pstate) {
 
 
 item.interpolateStates= function (ist,fst,fr) { 
-  debugger;
   let intr = {};
   let iprops = Object.getOwnPropertyNames(ist);
   iprops.forEach((pr) => {
@@ -409,7 +397,7 @@ item.oneInterpolationStep = function () {
 
 }
 item.oneStep = function (one) {
- // debugger;
+  debugger;
   if (this.paused) {
     return;
   }

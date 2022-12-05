@@ -6,24 +6,33 @@ import {rs as addPathMethods} from '/mlib/path.mjs';
 let rs = basicP.instantiate();
 addPathMethods(rs);
 addDropMethods(rs);
-debugger;
-rs.setName('drop_move');
+rs.setName('drop_move_2');
 let ht= 100;
 let hht = 0.5*ht;
-let topParams = {width:ht,height:ht,framePadding:.1,frameStrokee:'white',frameStrokeWidth:100}
+rs.wb = 1; // white background
+let topParams = {width:ht,height:ht,framePadding:.1*ht,frameStroke:'white',frameStrokeWidth:1}
 Object.assign(rs,topParams);
-
+let circDim = 2;
  let initState = {};
   let pspace = {};
 rs.pstate = {pspace,cstate:initState};
+
+
+rs.dropParams = {dropTries:150,maxDrops:16}
+rs.rcda = 57*rs.dropParams.maxDrops;
  let kind = 'sweep';
 rs.addPath = function (n) {
-  let {drops,shapes} = this;
-  let crc = shapes[n];
+  debugger;
+  let {dropys,shapes,rcda} = this;
+  //let crc = shapes[n];
+  let y = dropys[n%rcda];
   let nm = 'c'+n;
-  let inv = {value:-hht,y:crc.getTranslation().y};
+  //let inv = {value:-hht,y:crc.getTranslation().y};
+  //let inv = {value:-hht,y:d.center.y};
+  let inv = {value:-hht,y};
   initState[nm] = inv;
-  pspace[nm] = {kind,step:1,min:-hht,max:hht,interval:1,steps:0.5,once:0};
+  pspace[nm] = {kind,step:1,min:-hht,max:hht,interval:1,steps:0.5,once:1};
+  pspace[nm] = {kind,step:1,min:-hht,max:0,interval:1,steps:0.5,once:1};
 }  
 
 rs.addPaths  = function (frm) {
@@ -34,19 +43,18 @@ rs.addPaths  = function (frm) {
   }
 }
 
-let dropParams = {dropTries:150,maxDrops:4}
-
 
 //let dropParams = {dropTries:150,maxDrops:20}
 rs.generateDrop= function (oneD) {
- 
-  let crc = Circle.mk(2);
-  let crcs = crc.toShape(this.circleP,.5)
+  let crc = Circle.mk(1);
+  let crcs = crc.toShape(this.circleP,.5);
+  crcs.fill = 'transparent';
+  crcs.update();
   return {geometries:[crc],shapes:[crcs]}; 
  }
 
 rs.updateStateOf = function (n) {
-  let {shapes,pstate,drops} = this;
+  let {shapes,pstate,drops,wb} = this;
   let cstate = pstate.cstate;
   let tm = cstate.time;
   let shape = shapes[n]
@@ -54,10 +62,20 @@ rs.updateStateOf = function (n) {
   let nm = 'c'+n;
   let nstate = cstate[nm];
   let {value:x,y} = nstate;
-  let pnt = Point.mk(x,y);
+  //let frx = 2*(1-(Math.abs(x)/hht);
+  //let frx = 1-(Math.abs(x)/hht);
+  let frx = (Math.abs(x)/hht);
+  let fry = (Math.abs(y)/hht);
+  let angle = fry *2* Math.PI - Math.PI;
+  let pnt = Point.mk(Math.cos(angle),Math.sin(angle)).times(frx*hht);
+//  let pnt = Point.mk(frx*x,frx*y);
   shape.moveto(pnt);
+  shape.dimension = circDim * frx;
+  shape.fill = wb?'black':'white';
   drop.center = pnt;
-  debugger;
+  shape.unhide();
+  shape.update();
+  return;
   if (x>0) {
     shape.fill = 'black';
     shape.update();
@@ -67,17 +85,19 @@ rs.updateStateOf = function (n) {
   }
 }
 
+  
 rs.updateState = function () {
-  debugger;
-  let {shapes,pstate} = this;
+  let {shapes,pstate,rdrops,dropParams,drops,dropys} = this;
   let {cstate} = pstate;
   let ln = shapes.length;
   for (let i=0;i<ln;i++) {
     this.updateStateOf(i);
   }
   let tm = cstate.time;
-  if (tm%1 === 0) {
-      this.generateDrops(dropParams);
+  this.generateDrops(dropParams);
+  let aln  = shapes.length;
+  for (let i=ln;i<aln;i++) {
+    dropys.push(drops[i].center.y);
   }
   this.addPaths(ln);
   return;
@@ -91,66 +111,11 @@ rs.updateState = function () {
 rs.initProtos = function () {
   let circleP = this.circleP = circlePP.instantiate();
   circleP.fill = 'white';
+  circleP.fill = 'black';
   circleP.dimension = 1;
   circleP['stroke-width'] = 0;
-  circleP.stroke = 'black';
+  //circleP.stroke = 'white';
 }  
-
-rs.randomColorObject = function () {
-  let r = Math.floor(Math.random()*255);
-  let g = Math.floor(Math.random()*255);
-  let b = r;
-  //Math.floor(Math.random()*255);
-  //let rs = `rgb(${r},${g},${r})`;
-  //let rs = {r,g,b};
- let rs = {r:255,g:255,b:255};
- //let rs = {r:0,g:0,b:0};
-  debugger;
-  return rs;
-}
-
-
-rs.scaleColor = function (clr,ifc) {
-  debugger;
-  let {r,g,b} = clr;
- // let fc = 1-ifc;
-  let fc =ifc;
-  let nr = Math.floor(r*fc);
-  let ng = Math.floor(g*fc);
-  let nb = Math.floor(r*fc); 
-  console.log('fc',fc,'r,g,b',r,g,b,'nr,ng,nb',nr,ng,nb);
-  let rs = `rgb(${nr},${ng},${nr})`;
-  //let rs = 'rgb(100,100,100)';
-  debugger;
-  return rs;
-}
-rs.oneDropp = function () {
-debugger;
-  let {shapes,drops,pstate}  = this;
-  let {cstate} = pstate;
-  let {time} = cstate;
-  let rwd = 400;
-  let hrwd = 0.5*rwd;
-  //let rect = Rectangle.mk(Point.mk(-hrwd,-hrwd),Point.mk(rwd,rwd));
-  //let pnt = this.genRandomPoint(rect);
-  let numdirs = Math.max(128-.9*time,32);
-  let dir = (Math.floor(Math.random()*numdirs)/numdirs)*2*Math.PI;
-  let pnt = Point.mk(Math.cos(dir),Math.sin(dir)).times(600+time?10*Math.pow(time,1.2):0);
-  debugger;
- // let ln = pnt.length();
- // if (ln>400) {
- //   return;
- // }
-  let crc = Circle.mk(pnt,4);
-  let crcs = crc.toShape(this.circleP);
- // crcs.moveto(pnt);
-  //crc.moveto(pnt);
-  shapes.push(crcs);
-  drops.push(crc);
-  crcs.dimension = 40;
-  crcs.fill = 'white';
-  //crcs.fill = this.randomColor();
-}
 
 rs.callAtCycleEnd = function (nm) {
 }
@@ -159,16 +124,20 @@ rs.numSteps = 230;
 rs.saveAnimation = 1;
 rs.initialize = function () {
   debugger;
-  this.setBackgroundColor('white');
-  this.setBackgroundColor('black');
+  let {wb,dropParams} = this;
+  this.setBackgroundColor(wb?'white':'black');
+  //this.setBackgroundColor('black');
 
   //this.addRectangle({width:ht,height:ht,stroke_width:0,fill:'white'});
   this.initProtos();
   this.addFrame();
-    this.addRectangle({width:0.5*ht,height:ht,position:Point.mk(-0.25*ht,0),stroke_width:0,fill:'rgb(0,0,0)'});
-  this.addRectangle({width:0.5*ht,height:ht,position:Point.mk(0.25*ht,0),stroke_width:0,fill:'rgb(255,255,255)'});
-  this.drops = [];
-  this.set('shapes',arrayShape.mk());
+  //  this.addRectangle({width:0.5*ht,height:ht,position:Point.mk(-0.25*ht,0),stroke_width:0,fill:'rgb(128,128,128)'});
+  //  this.addRectangle({width:0.5*ht,height:ht,position:Point.mk(-0.25*ht,0),stroke_width:0,fill:'rgb(0,0,0)'});
+  //this.addRectangle({width:0.5*ht,height:ht,position:Point.mk(0.25*ht,0),stroke_width:0,fill:'rgb(255,255,255)'});
+ // this.addRectangle({width:0.5*ht,height:ht,position:Point.mk(0.25*ht,0),stroke_width:0,fill:'rgb(128,128,128)'});
+  let drops = this.drops = [];
+  let dropys = this.dropys = []; 
+  let shapes = this.set('shapes',arrayShape.mk());
   const mkVline = (x) => {
     let top=0.5*ht;
     let bot = -top;
@@ -179,16 +148,18 @@ rs.initialize = function () {
    
     return vline;
   }
-  debugger;
   let Vline = mkVline(-0.5*ht);
   dropParams.oneD = Vline;
 
   let rnd = Vline.randomPoint();
   this.generateDrops(dropParams);
+  let aln  = shapes.length;
+  for (let i=0;i<aln;i++) {
+    dropys.push(drops[i].center.y);
+  }
   //this.generateDrops(dropParams);
-  let drops = this.drops;
-  debugger;
-  this.addPaths(0);
+ // let drops = this.drops;
+ this.addPaths(0);
   return;
   for (let i=0;i<0;i++) {
    this.oneDrop();
@@ -199,8 +170,9 @@ rs.initialize = function () {
  this.pstate = pstate;
   
 }
-
-rs.numSteps = 500;
+rs.chopOffBeginning = 57;
+rs.numSteps = 57*2+6;
+rs.saveAnimation = 1;
 export {rs};
 
 

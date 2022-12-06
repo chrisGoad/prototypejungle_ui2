@@ -75,7 +75,7 @@ let strokeWidths = rs.partParams.strokeWidths = [];
 rs.computeExponentials({dest:strokeWidths,n:20,root:0.4,factor:.7});
 
 rs.updateStatee= function () {
- debugger;
+ //debugger;
   let ssf = this.stepsSoFar;
   let pastIntro = ssf >= introSteps;
 
@@ -90,7 +90,7 @@ rs.updateStatee= function () {
 }
 
 rs.partVisible  = function (prt) {
-  debugger;
+  //debugger;
   let w = prt.where;
   let ln = w.length;
   if (ln === 0) {
@@ -117,14 +117,14 @@ rs.computeFills = function () {
     af[wn] = rcolor;
   });
   this.colors = af;
-  debugger;
+  //debugger;
 }
 
 rs.computeFills();
 
 
 rs.partFill  = function (prt) {
-  debugger;
+  //debugger;
   let w = prt.where;
   let ln = w.length;
   if (ln < 1) {

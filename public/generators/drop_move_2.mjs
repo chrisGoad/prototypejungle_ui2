@@ -10,7 +10,7 @@ rs.setName('drop_move_2');
 let ht= 100;
 let hht = 0.5*ht;
 rs.wb = 1; // white background
-let topParams = {width:ht,height:ht,framePadding:.1*ht,frameStroke:'white',frameStrokeWidth:1}
+let topParams = {width:ht,height:ht,framePadding:.1*ht,frameStrokee:'white',frameStrokeWidth:1}
 Object.assign(rs,topParams);
 let circDim = 2;
  let initState = {};
@@ -19,7 +19,8 @@ rs.pstate = {pspace,cstate:initState};
 
 
 rs.dropParams = {dropTries:150,maxDrops:16}
-rs.rcda = 57*rs.dropParams.maxDrops;
+rs.cycleL = 57;
+rs.rcda = rs.cycleL*rs.dropParams.maxDrops;
  let kind = 'sweep';
 rs.addPath = function (n) {
   debugger;
@@ -31,7 +32,7 @@ rs.addPath = function (n) {
   //let inv = {value:-hht,y:d.center.y};
   let inv = {value:-hht,y};
   initState[nm] = inv;
-  pspace[nm] = {kind,step:1,min:-hht,max:hht,interval:1,steps:0.5,once:1};
+  //pspace[nm] = {kind,step:1,min:-hht,max:hht,interval:1,steps:0.5,once:1};
   pspace[nm] = {kind,step:1,min:-hht,max:0,interval:1,steps:0.5,once:1};
 }  
 
@@ -41,6 +42,14 @@ rs.addPaths  = function (frm) {
   for (let i=frm;i<ln;i++) {
     this.addPath(i);
   }
+  if (pspace.spin){
+    debugger;
+  } else {
+    pspace.spin = {kind,step:.05*Math.PI,min:0,max:.5*Math.PI,steps:0.5,once:1};
+      initState.spin = {value:0};
+  }
+
+
 }
 
 
@@ -53,8 +62,11 @@ rs.generateDrop= function (oneD) {
   return {geometries:[crc],shapes:[crcs]}; 
  }
 
+rs.goingIn = 1;
+rs.goingInFrames = 100;
 rs.updateStateOf = function (n) {
-  let {shapes,pstate,drops,wb} = this;
+  let {shapes,pstate,drops,wb,goingIn} = this;
+ // debugger;
   let cstate = pstate.cstate;
   let tm = cstate.time;
   let shape = shapes[n]
@@ -62,15 +74,26 @@ rs.updateStateOf = function (n) {
   let nm = 'c'+n;
   let nstate = cstate[nm];
   let {value:x,y} = nstate;
+ 
   //let frx = 2*(1-(Math.abs(x)/hht);
   //let frx = 1-(Math.abs(x)/hht);
   let frx = (Math.abs(x)/hht);
+  
+  let omfrx = 1-frx;
+  let gfrx = goingIn?frx:omfrx;
+  if ((gfrx >  0.95)||(gfrx < 0.05)) {
+    shape.hide();
+    shape.update();
+    return;
+  }
+  let spin = 0.8*frx*Math.PI;
   let fry = (Math.abs(y)/hht);
-  let angle = fry *2* Math.PI - Math.PI;
-  let pnt = Point.mk(Math.cos(angle),Math.sin(angle)).times(frx*hht);
+  let angle = (fry *2* Math.PI - Math.PI)+spin;
+  let pnt = Point.mk(Math.cos(angle),Math.sin(angle)).times(gfrx*hht);
+  debugger;
 //  let pnt = Point.mk(frx*x,frx*y);
   shape.moveto(pnt);
-  shape.dimension = circDim * frx;
+  shape.dimension = circDim * gfrx;
   shape.fill = wb?'black':'white';
   drop.center = pnt;
   shape.unhide();
@@ -87,17 +110,24 @@ rs.updateStateOf = function (n) {
 
   
 rs.updateState = function () {
-  let {shapes,pstate,rdrops,dropParams,drops,dropys} = this;
+  let {shapes,pstate,rdrops,dropParams,drops,dropys,rcda,goingInFrames,cycleL} = this;
   let {cstate} = pstate;
+  // let spin = cstate.spin.value;
+  //debugger;
   let ln = shapes.length;
   for (let i=0;i<ln;i++) {
     this.updateStateOf(i);
   }
   let tm = cstate.time;
-  this.generateDrops(dropParams);
-  let aln  = shapes.length;
-  for (let i=ln;i<aln;i++) {
-    dropys.push(drops[i].center.y);
+  this.goingIn = tm < goingInFrames;
+  if ((tm < 3*cycleL)||((tm>4*cycleL)&&(tm<5*cycleL))) {
+    this.generateDrops(dropParams);
+  }
+  if (ln < rcda) {
+    let aln  = shapes.length;
+    for (let i=ln;i<aln;i++) {
+      dropys.push(drops[i].center.y);
+    }
   }
   this.addPaths(ln);
   return;
@@ -170,9 +200,23 @@ rs.initialize = function () {
  this.pstate = pstate;
   
 }
-rs.chopOffBeginning = 57;
-rs.numSteps = 57*2+6;
-rs.saveAnimation = 1;
+rs.fs = function (n) {
+  let {dropys} = this;
+  let ln = dropys.length;
+  let lnf = Math.floor(ln/16);
+  let v = dropys[n*16];
+  for (let i = n+1;i<lnf;i++) {
+     let ov = dropys[i*16];
+     if (ov === v) {
+       return i;
+     }
+  }
+}
+
+//rs.chopOffBeginning = 57;
+rs.numSteps = 6*rs.cycleL;
+rs.saveAnimation = 0;
+rs.goingInFrames = 4*rs.cycleL;
 export {rs};
 
 

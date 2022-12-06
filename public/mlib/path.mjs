@@ -184,6 +184,9 @@ item.adjustSweepToNewStep = function (pstate,component,nstep) {
 }
 
 item.sweepNextState = function (pspace,cstate,component) {
+  if (component === 'spin') {
+    debugger;
+  }
   let pspc = pspace[component];
   let {sinusoidal,min,max,step,bounce,startDown,once} = pspc;
   let csc = cstate[component];
@@ -397,7 +400,7 @@ item.oneInterpolationStep = function () {
 
 }
 item.oneStep = function (one) {
-  debugger;
+  //debugger;
   if (this.paused) {
     return;
   }
@@ -407,6 +410,7 @@ item.oneStep = function (one) {
 
   if  (this.stepsSoFar++ > (this.numSteps-this.chopOffEnd)) {
     if (this.numISteps) {
+      debugger;
       this.iStepsSoFar = 0;
       this.interpFrom = this.deepCopy(this.pstate.cstate);
       this.interpTo = this.copyOfInitState;

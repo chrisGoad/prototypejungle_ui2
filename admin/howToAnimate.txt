@@ -106,6 +106,7 @@ c:\ffmpeg\bin\ffmpeg  -framerate 20 -i animations/part2_0_49_f%03d.jpg -s 500x50
 c:\ffmpeg\bin\ffmpeg  -framerate 20 -i animations/part2_0_49a_f%03d.jpg -s 500x500  export/part2_0_49a.mp4
 c:\ffmpeg\bin\ffmpeg  -framerate 20 -i animations/part2_0_49b_f%03d.jpg -s 500x500  export/part2_0_49b.mp4
 c:\ffmpeg\bin\ffmpeg  -framerate 20 -i animations/part2_0_49c_f%03d.jpg -s 500x500  export/part2_0_49c.mp4
+c:\ffmpeg\bin\ffmpeg  -framerate 15 -i animations/part2_0_49c_f%03d.jpg -s 500x500  export/part2_0_49c.gif
 c:\ffmpeg\bin\ffmpeg  -framerate 20 -i animations/part2_0_51_f%03d.jpg -s 800x800  export/part2_0_51.mp4
 c:\ffmpeg\bin\ffmpeg  -framerate 20 -i animations/part2_0_52_f%03d.jpg -s 800x800  export/part2_0_52.mp4
 c:\ffmpeg\bin\ffmpeg  -framerate 20 -i animations/drop_move_2_f%03d.jpg -s 800x800  export/drop_move_2.mp4

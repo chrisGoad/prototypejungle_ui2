@@ -53,7 +53,6 @@ rs.dropCenters = function () {
   
 rs.generateDrops = function (params) {
   let {shapes,drops,numRows,randomGridsForShapes,positions,saveState} = this;
-  debugger;
   if (!shapes) { 
     shapes = this.set('shapes',arrayShape.mk());
   }
@@ -131,7 +130,6 @@ rs.generateDrops = function (params) {
   }
   if (!saveState && (saveState !== undefined)) {
     // drop points were stored in this.positions
-    debugger;
     positions.forEach((ipnt) => {
       let pnt = Point.mk(ipnt.x,ipnt.y);
       let drop = dropAt(pnt);
@@ -166,7 +164,6 @@ rs.generateDrops = function (params) {
       tries++;
       if (tries >= dropTries) {
         //console.log('dropTries',dropTries,'exceeded');
-        debugger;
         return drops;
       }
     } else {
@@ -174,7 +171,6 @@ rs.generateDrops = function (params) {
       tries = 0;
     }
   }
-  debugger;
 }
       
 }

@@ -1,4 +1,5 @@
 import {rs as circlePP} from '/shape/circle.mjs';
+import {rs as linePP} from '/shape/line.mjs';
 import {rs as basicP} from '/generators/basics.mjs';
 import {rs as addDropMethods} from '/mlib/drop.mjs';
 import {rs as addPathMethods} from '/mlib/path.mjs';	
@@ -23,7 +24,6 @@ rs.cycleL = 57;
 rs.rcda = rs.cycleL*rs.dropParams.maxDrops;
  let kind = 'sweep';
 rs.addPath = function (n) {
-  debugger;
   let {dropys,shapes,rcda} = this;
   //let crc = shapes[n];
   let y = dropys[n%rcda];
@@ -42,8 +42,8 @@ rs.addPaths  = function (frm) {
   for (let i=frm;i<ln;i++) {
     this.addPath(i);
   }
+  return;
   if (pspace.spin){
-    debugger;
   } else {
     pspace.spin = {kind,step:.05*Math.PI,min:0,max:.5*Math.PI,steps:0.5,once:1};
       initState.spin = {value:0};
@@ -64,8 +64,54 @@ rs.generateDrop= function (oneD) {
 
 rs.goingIn = 1;
 rs.goingInFrames = 100;
+rs.nextLineN = 0;
+rs.allocateLine = function () {
+  let {lines,nextLineN} = this;
+  let ln = lines.length;
+  let line;
+  if (ln<1024) {
+    line = this.lineP.instantiate();
+    lines.push(line);
+  }  else {
+    line = lines[nextLineN];
+    nextLineN = nextLineN+1;
+    if (nextLineN >= ln) {
+       nextLineN = 0;
+    }
+    this.nextLineN = nextLineN;
+  }
+  return line;
+}
+
+rs.linesHidden;
+
+rs.forLines = function (lw,hg,stroke) {
+  let {lines} = this;
+  for (let i=lw;i<hg;i++) {
+    let line = lines[i];
+    line.stroke = stroke;
+    line.update();
+  }
+}
+rs.hideSomeLines = function (n) {
+  debugger;
+  let {nextLineN,lines,linesHidden} = this;
+  let ln = lines.length;
+  let hdut = linesHidden + n;
+  if (hdut > ln) {
+    this.forLines(linesHidden,ln,'transparent');
+    hdut = hdut%ln;
+    this.forLines(0,hdut,'transparent');
+  } else {
+    this.forLines(linesHidden,hdut,'transparent');
+  }
+}
+  
+    
+
+  
 rs.updateStateOf = function (n) {
-  let {shapes,pstate,drops,wb,goingIn} = this;
+  let {shapes,lines,pstate,drops,wb,goingIn} = this;
  // debugger;
   let cstate = pstate.cstate;
   let tm = cstate.time;
@@ -90,8 +136,15 @@ rs.updateStateOf = function (n) {
   let fry = (Math.abs(y)/hht);
   let angle = (fry *2* Math.PI - Math.PI)+spin;
   let pnt = Point.mk(Math.cos(angle),Math.sin(angle)).times(gfrx*hht);
-  debugger;
 //  let pnt = Point.mk(frx*x,frx*y);
+ let lastPos = shape.lastPos;
+  if (lastPos) {
+    let line=this.allocateLine();
+    line.time = tm;
+    line.setEnds(lastPos,pnt);
+    line.update();
+  }
+  shape.lastPos = shape.getTranslation();
   shape.moveto(pnt);
   shape.dimension = circDim * gfrx;
   shape.fill = wb?'black':'white';
@@ -110,7 +163,7 @@ rs.updateStateOf = function (n) {
 
   
 rs.updateState = function () {
-  let {shapes,pstate,rdrops,dropParams,drops,dropys,rcda,goingInFrames,cycleL} = this;
+  let {nextLineN,shapes,pstate,rdrops,dropParams,drops,dropys,rcda,goingInFrames,cycleL} = this;
   let {cstate} = pstate;
   // let spin = cstate.spin.value;
   //debugger;
@@ -120,8 +173,16 @@ rs.updateState = function () {
   }
   let tm = cstate.time;
   this.goingIn = tm < goingInFrames;
-  if ((tm < 3*cycleL)||((tm>4*cycleL)&&(tm<5*cycleL))) {
+  if ((tm < 2*cycleL)||((tm>3.2*cycleL)&&(tm<4.2*cycleL))) {
+ // if ((tm < 3*cycleL)||((tm>4*cycleL)&&(tm<5*cycleL))) {
     this.generateDrops(dropParams);
+  }
+  if ((tm > 2*cycleL)&&(tm<3.2*cycleL)) {
+    if (this.linesHidden === undefined) {
+       
+       this.linesHidden = nextLineN;
+    }
+    this.hideSomeLines(16);
   }
   if (ln < rcda) {
     let aln  = shapes.length;
@@ -144,10 +205,24 @@ rs.initProtos = function () {
   circleP.fill = 'black';
   circleP.dimension = 1;
   circleP['stroke-width'] = 0;
-  //circleP.stroke = 'white';
+   let lineP = this.lineP = linePP.instantiate();
+  
+  lineP['stroke-width'] = .2;
+  lineP.stroke = 'white';
 }  
 
 rs.callAtCycleEnd = function (nm) {
+}
+
+rs.hideLastNLines = function (n) {
+  let {lines} = this;
+  let ln = lines.length;
+  let frm = Math.max(0,ln-n);
+  for (let i=frm;i<ln;i++) {
+    let line = lines[i];
+    line.hide();
+    line.update();
+  }
 }
 
 rs.numSteps = 230;
@@ -168,6 +243,7 @@ rs.initialize = function () {
   let drops = this.drops = [];
   let dropys = this.dropys = []; 
   let shapes = this.set('shapes',arrayShape.mk());
+  let lines = this.set('lines',arrayShape.mk());
   const mkVline = (x) => {
     let top=0.5*ht;
     let bot = -top;
@@ -214,9 +290,9 @@ rs.fs = function (n) {
 }
 
 //rs.chopOffBeginning = 57;
-rs.numSteps = 6*rs.cycleL;
+rs.numSteps = 5*rs.cycleL;
 rs.saveAnimation = 0;
-rs.goingInFrames = 4*rs.cycleL;
+rs.goingInFrames = 3*rs.cycleL;
 export {rs};
 
 

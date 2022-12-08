@@ -12,6 +12,9 @@ item.setDomAtts = function () {
   this.setDomAttribute('y1',e0.y);
   this.setDomAttribute('x2',e1.x);
   this.setDomAttribute('y2',e1.y);
+  this.setDomAttribute('visibility',this.visibility);
+  this.setDomAttribute('stroke',this.stroke);
+
 }
 
 item.setEnds = function (e0,e1) {

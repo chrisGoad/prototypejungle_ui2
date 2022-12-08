@@ -80,6 +80,8 @@ rs.allocateLine = function () {
     }
     this.nextLineN = nextLineN;
   }
+  line.stroke = 'white';
+  line.update();
   return line;
 }
 
@@ -94,9 +96,10 @@ rs.forLines = function (lw,hg,stroke) {
   }
 }
 rs.hideSomeLines = function (n) {
-  debugger;
   let {nextLineN,lines,linesHidden} = this;
   let ln = lines.length;
+    debugger;
+
   let hdut = linesHidden + n;
   if (hdut > ln) {
     this.forLines(linesHidden,ln,'transparent');
@@ -105,6 +108,8 @@ rs.hideSomeLines = function (n) {
   } else {
     this.forLines(linesHidden,hdut,'transparent');
   }
+  this.linesHidden = hdut;
+
 }
   
     
@@ -129,16 +134,22 @@ rs.updateStateOf = function (n) {
   let gfrx = goingIn?frx:omfrx;
   if ((gfrx >  0.95)||(gfrx < 0.05)) {
     shape.hide();
+    shape.inactive = 1;
     shape.update();
     return;
+  } else {
+     shape.unhide();
+     shape.inactive = 0;
+     shape.update();
   }
+  let inactive = shape.inactive;
   let spin = 0.8*frx*Math.PI;
   let fry = (Math.abs(y)/hht);
   let angle = (fry *2* Math.PI - Math.PI)+spin;
   let pnt = Point.mk(Math.cos(angle),Math.sin(angle)).times(gfrx*hht);
 //  let pnt = Point.mk(frx*x,frx*y);
  let lastPos = shape.lastPos;
-  if (lastPos) {
+  if (lastPos  && (!inactive)) {
     let line=this.allocateLine();
     line.time = tm;
     line.setEnds(lastPos,pnt);
@@ -173,16 +184,20 @@ rs.updateState = function () {
   }
   let tm = cstate.time;
   this.goingIn = tm < goingInFrames;
-  if ((tm < 2*cycleL)||((tm>3.2*cycleL)&&(tm<4.2*cycleL))) {
- // if ((tm < 3*cycleL)||((tm>4*cycleL)&&(tm<5*cycleL))) {
+ // if ((tm < 2*cycleL)||((tm>3.5*cycleL)&&(tm<4.2*cycleL))) {
+  if ((tm < 2*cycleL)||((tm>3.5*cycleL)&&(tm<4.8*cycleL))) {
     this.generateDrops(dropParams);
   }
-  if ((tm > 2*cycleL)&&(tm<3.2*cycleL)) {
+  if (tm>4.2*cycleL) {
+    this.hideSomeLines(3*16);
+  }
+
+  if ((tm > 2.8*cycleL)&&(tm<3.5*cycleL)) {
     if (this.linesHidden === undefined) {
-       
-       this.linesHidden = nextLineN;
+       debugger;
+       this.linesHidden = this.nextLineN;
     }
-    this.hideSomeLines(16);
+    this.hideSomeLines(3*16);
   }
   if (ln < rcda) {
     let aln  = shapes.length;
@@ -290,7 +305,7 @@ rs.fs = function (n) {
 }
 
 //rs.chopOffBeginning = 57;
-rs.numSteps = 5*rs.cycleL;
+rs.numSteps = 5.9*rs.cycleL;
 rs.saveAnimation = 0;
 rs.goingInFrames = 3*rs.cycleL;
 export {rs};

@@ -8,7 +8,7 @@ let rs = basicP.instantiate();
 addPathMethods(rs);
 
 rs.setName('spirals_0');
-let initState = {};
+/*let initState = {};
   let pspace = {};
 rs.pstate = {pspace,cstate:initState};
 let step = 0.0002*Math.PI;
@@ -30,7 +30,7 @@ rs.clockwise = 0;
 let ff = 2;
 let topParams = {width:ht*ff,height:ht*ff,framePadding:.1*ht,frameStroke:'white',frameStrokeWidth:1}
 Object.assign(rs,topParams);
-
+*/
 
 rs.initProtos = function () {
   let circleP = this.circleP = circlePP.instantiate();
@@ -88,7 +88,7 @@ rs.angleInc = 0;
 
 // rn 0 is the outer ring
 rs.dotPos = function (rn,sn) { //ringNumber, spokenumber
-  let {numDotsPerRing,angleInc,numRings} = this;
+  let {numDotsPerRing,angleInc,numRings,ht} = this;
   let od = 0.9*ht;
   let id = 0.05*ht;
   let df = od - id;
@@ -104,7 +104,7 @@ rs.dotPos = function (rn,sn) { //ringNumber, spokenumber
 }
 
 rs.ringRadius = function (rn) {
-  let {numRings} = this;
+  let {numRings,ht} = this;
    let od = 0.9*ht;
   let id = 0.05*ht;
   let df = od - id;

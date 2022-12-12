@@ -174,7 +174,8 @@ sections:
  [0,'path_flows','generators',1,'Path flows',{likes:0,posted:0,category:'quad'}], 
  [0,'drop_move_2','generators',1,'Drop Move 2',{likes:0,posted:0,category:'quad'}], 
  [0,'drop_move_2','generators',1,'Drop Move 2',{likes:0,posted:0,category:'quad'}], 
- [0,'spirals_0','generators',1,'Spirals',{likes:0,posted:0,category:'quad'}], 
+ [0,'spirals_0','generators',1,'Spirals 0',{likes:0,posted:0,category:'quad'}], 
+ [0,'spirals_0_0','instances',1,'Spirals 0 0',{likes:0,posted:0,category:'quad'}], 
  [0,'part2_0_53','instances',1,'Part2 0 53',{likes:0,posted:0,category:'quad'}], 
 
   [0,'part2_0_D_0','instances',1,'Partition 1',{likes:0,posted:0,category:'quad'}], 

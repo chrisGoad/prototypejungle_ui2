@@ -11,7 +11,8 @@ let pspace = {};
 rs.pstate = {pspace,cstate:initState};
 let step = 0.0002*Math.PI;
 step = 0.0004*Math.PI;
-step = 0.004*Math.PI;
+//step = 0.004*Math.PI;
+//step = 0.008*Math.PI;
 let rng = 0.4*Math.PI;
 rs.addPath = function () {
   initState['a'] = {value:0};
@@ -20,19 +21,18 @@ rs.addPath = function () {
 
 rs.addPath();
 
-
 let ht = rs.ht= 100;
 let hht = rs.hht = 0.5*rs.ht;
 rs.wb = 1; // white background
 rs.clockwise = 0;
-let ff = 2;
+let ff = rs.ff =  2;
 let topParams = {width:ht*rs.ff,height:ht*ff,framePadding:.1*ht,frameStroke:'white',frameStrokeWidth:1}
 Object.assign(rs,topParams);
 
 
 rs.numRings = 100;
-rs.numRings = 50;
-rs.numRings = 20;
+//rs.numRings = 50;
+//rs.numRings = 20;
 rs.numDotsPerRing = 8;
 
 rs.initProtos = function () {
@@ -50,12 +50,15 @@ rs.initProtos = function () {
   lineP.stroke = 'white';
 }  
 
+rs.afterInitializee = function () {
+  this.addRectangle({width:1.9*ht,height:1.9*ht,fill:'rgba(0,0,0,.05)'})
+}
 rs.includeDots = 1;
-rs.includeLines = 1;
-rs.includeRings = 1;
+rs.includeLines = 0;
+rs.includeRings = 0;
 
-
-rs.saveAnimation = 0;
+rs.stepInterval = 100;
+rs.saveAnimation = 1;
 rs.numSteps = 1263;
 rs.numSteps = 626;
 export {rs}

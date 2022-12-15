@@ -1,5 +1,5 @@
-import {rs as circlePP} from '/shape/circle.mjs';
-import {rs as linePP} from '/shape/line.mjs';
+//import {rs as circlePP} from '/shape/circle.mjs';
+//import {rs as linePP} from '/shape/line.mjs';
 import {rs as basicP} from '/generators/basics.mjs';
 import {rs as addPathMethods} from '/mlib/path.mjs';	
 
@@ -22,7 +22,7 @@ rs.addPath = function () {
 
 rs.addPath();
 
-
+debugger;
 let ht= 100;
 let hht = 0.5*ht;
 rs.wb = 1; // white background
@@ -30,7 +30,7 @@ rs.clockwise = 0;
 let ff = 2;
 let topParams = {width:ht*ff,height:ht*ff,framePadding:.1*ht,frameStroke:'white',frameStrokeWidth:1}
 Object.assign(rs,topParams);
-*/
+
 
 rs.initProtos = function () {
   let circleP = this.circleP = circlePP.instantiate();
@@ -46,7 +46,7 @@ rs.initProtos = function () {
   lineP['stroke-width'] = .2;
   lineP.stroke = 'white';
 }  
-
+*/
 rs.allocateDots = function (n) {
   for (let i=0;i<n;i++) {
     let dot = this.circleP.instantiate();
@@ -157,6 +157,7 @@ rs.initialize = function () {
   }
   if (includeLines) {
     this.allocateLines(numRings*numDotsPerRing);
+    this.placeLines();
   }
  /* for (let i=0;i<numRings;i++) {
     let cd = 2*(id+i*delta);
@@ -165,9 +166,9 @@ rs.initialize = function () {
     rings.push(circ);
     this.placeDotsOnRing(cd/2,i);
   }*/
-  if (includeDots) {
-    this.placeDotsOnRings(1);
-  }
+ 
+  this.callIfDefined('afterInitialize');
+  
 }
 
 

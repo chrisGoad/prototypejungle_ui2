@@ -184,6 +184,7 @@ rs.updateState = function () {
   if (includeLines) {
     this.placeLines();
   }
+  this.callIfDefined('afterUpdateState');
 }
 rs.saveAnimation = 1;
 rs.numSteps = 1263;

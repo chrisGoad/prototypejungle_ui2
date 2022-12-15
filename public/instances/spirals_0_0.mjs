@@ -10,7 +10,33 @@ let initState = {};
 let pspace = {};
 rs.pstate = {pspace,cstate:initState};
 let step = 0.0002*Math.PI;
-step = 0.0004*Math.PI;
+let sfc = .9913;
+//higher towards jumping, lower towards stasis
+sfc = 1.087;
+sfc = 1.04;
+sfc = 1.045;
+sfc = 1.042;
+sfc = 1.043;
+sfc = 1.0428;
+sfc = 1.0432;
+sfc = 1.0435;
+sfc = 1.0433;
+sfc = 1.0434;
+sfc = 1.04345;
+sfc = 1.04342;
+sfc = 1.04343;
+sfc = 1.043435;
+sfc = 1.043437;
+sfc = 1.043438;
+sfc = 1.0434375;
+sfc = 1.0434372;
+sfc = 1.0434373;
+sfc = 1.0434374;
+sfc = 1.0434376;
+sfc = 1.0434377;
+sfc = 1.0434378;
+sfc = 1.0434379;
+step = 0.0004*sfc*Math.PI;
 //step = 0.004*Math.PI;
 //step = 0.008*Math.PI;
 let rng = 0.4*Math.PI;
@@ -26,7 +52,7 @@ let hht = rs.hht = 0.5*rs.ht;
 rs.wb = 1; // white background
 rs.clockwise = 0;
 let ff = rs.ff =  2;
-let topParams = {width:ht*rs.ff,height:ht*ff,framePadding:.1*ht,frameStroke:'white',frameStrokeWidth:1}
+let topParams = {width:ht*rs.ff,height:ht*ff,framePadding:.1*ht,frameStrokee:'white',frameStrokeWidth:1}
 Object.assign(rs,topParams);
 
 
@@ -53,12 +79,22 @@ rs.initProtos = function () {
 rs.afterInitializee = function () {
   this.addRectangle({width:1.9*ht,height:1.9*ht,fill:'rgba(0,0,0,.05)'})
 }
+
+rs.afterUpdateState = function  () {
+  let {stepsSoFar:ssf,lines,numSteps} = this;
+  let lva =580;
+  if (ssf > lva) {
+    lines.forEach((line) => {
+      line['stroke-width'] = .2 * ((numSteps - ssf)/(numSteps - lva));
+    });
+  }
+}
 rs.includeDots = 1;
-rs.includeLines = 0;
+rs.includeLines = 1;
 rs.includeRings = 0;
 
 rs.stepInterval = 100;
 rs.saveAnimation = 1;
 rs.numSteps = 1263;
-rs.numSteps = 626;
+rs.numSteps = Math.floor(627/sfc);
 export {rs}

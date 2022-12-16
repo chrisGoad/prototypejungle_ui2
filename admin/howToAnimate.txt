@@ -113,7 +113,8 @@ c:\ffmpeg\bin\ffmpeg  -framerate 20 -i animations/drop_move_2_f%03d.jpg -s 800x8
 c:\ffmpeg\bin\ffmpeg  -framerate 15 -i animations/drop_move_2_bb_f%03d.jpg -s 800x800  export/drop_move_2_bb.gif
 c:\ffmpeg\bin\ffmpeg  -framerate 25 -i animations/spirals_0_f%03d.jpg -s 800x800  export/spirals_0.gif
 c:\ffmpeg\bin\ffmpeg  -framerate 25 -i animations/spirals_0_f%03d.jpg -s 800x800  export/spirals_0.mp4
-c:\ffmpeg\bin\ffmpeg  -framerate 5 -i animations/spirals_0_0_f%03d.jpg -s 800x800  export/spirals_0_0.mp4
+c:\ffmpeg\bin\ffmpeg  -framerate 10 -i animations/spirals_0_0_f%03d.jpg -s 800x800  export/spirals_0_0.mp4
+c:\ffmpeg\bin\ffmpeg  -framerate 10 -i animations/spirals_0_1_f%03d.jpg -s 800x800  export/spirals_0_1.mp4
 
 
 

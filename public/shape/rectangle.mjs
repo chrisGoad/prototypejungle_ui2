@@ -17,8 +17,9 @@ item.resizable = true;
 item.role = 'spot';
 
 item.update =  function () {
+  this.setDomAttribute('width',this.width);
+  this.setDomAttribute('height',this.height);
   this.setDomAttribute('x',-0.5*this.width);
   this.setDomAttribute('y',-0.5*this.height);
 }
-
 export {item as rs};

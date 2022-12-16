@@ -175,8 +175,9 @@ sections:
  [0,'drop_move_2','generators',1,'Drop Move 2',{likes:0,posted:0,category:'quad'}], 
  [0,'drop_move_2','generators',1,'Drop Move 2',{likes:0,posted:0,category:'quad'}], 
  [0,'spirals_0','generators',1,'Spirals 0',{likes:0,posted:0,category:'quad'}], 
- [0,'paths_0','generators',1,'Paths 0',{likes:0,posted:0,category:'quad'}], 
+ [0,'paths_0_0','instances',1,'Paths 0 0',{likes:0,posted:0,category:'quad'}], 
  [0,'spirals_0_0','instances',1,'Spirals 0 0',{likes:0,posted:0,category:'quad'}], 
+ [0,'spirals_0_1','instances',1,'Spirals 0 1',{likes:0,posted:0,category:'quad'}], 
  [0,'part2_0_53','instances',1,'Part2 0 53',{likes:0,posted:0,category:'quad'}], 
 
   [0,'part2_0_D_0','instances',1,'Partition 1',{likes:0,posted:0,category:'quad'}], 

@@ -1,5 +1,6 @@
 import {rs as circlePP} from '/shape/circle.mjs';
 import {rs as linePP} from '/shape/line.mjs';
+import {rs as rectPP} from '/shape/rectangle.mjs';
 import {rs as basicP} from '/generators/basics.mjs';
 import {rs as addPathMethods} from '/mlib/path.mjs';	
 
@@ -8,58 +9,40 @@ let rs = basicP.instantiate();
 addPathMethods(rs);
 
 rs.setName('paths_0');
-let initState = {};
-let pspace = {};
-rs.pstate = {pspace,cstate:initState};
-rs.step = 5;
 
 
-let ht= 100;
-let hht = 0.5*ht;
-rs.wb = 1; // white background
-rs.clockwise = 0;
-let ff = 2;
-let topParams = {width:ht*ff,height:ht*ff,framePadding:.1*ht,frameStroke:'white',frameStrokeWidth:1}
-Object.assign(rs,topParams);
 
-let step = 1;
-rs.addPath = function (nm,frm,tO,lln,lineP) {
+rs.addPath = function (params) {
    debugger;
-   let {pstate,lines} = this;
+   let {nm,min,max,wd,ht,ln,od,horizontal,skind} = params;
+   let {pstate,shapes,rectP,step} = this;
   let {cstate,pspace} = pstate;
-  let vec = tO.difference(frm);
-  let dst = vec.length();
-  let nvec = vec.times(1/dst);
-  initState[nm] = {value:0};
-  let line =  lineP.instantiate();
-  let hln = 0.5*lln;
-  line.setEnds(Point.mk(0,0),nvec.times(lln));
-  lines.push(line);
-  pspace[nm] = {kind:'sweep',step:step,min:0,max:dst,once:1,frm,nvec,line};
+
+  cstate[nm] = {value:min};
+  let shape;
+  if (skind === 'rectangle') {
+     shape =  rectP.instantiate();
+  ///rect.fill = horizontal?'rgba(250,0,0,.5)':'rgba(0,0,250,0.5)';
+     shape.width = wd;
+     shape.height = ht;
+  }
+  shapes.push(shape);
+  pspace[nm] = {kind:'sweep',step:step,min:min,max:max,once:1,horizontal,shape,skind,od};
 }
 
-rs.updateStateOf = function (nm) {
-  let {pstate} = this;
-  let {cstate,pspace} = pstate;
-  let d = cstate[nm].value;
-  let ps = pspace[nm];
-  let {frm,line,nvec} = ps;
-  let pos = frm.plus(nvec.times(d));
-  line.moveto(pos);
-  line.update();
-}
+
+rs.numAdds = 0;
 
 
 rs.updateState = function (nm) {
+  this.callIfDefined('beforeUpdateState');
+  debugger;
   let {pstate,stepsSoFar:ssf} = this;
-  if (ssf%30===3) {
-    for (let i=0;i<20;i++) {
-      this.addHpath('ha'+ssf+'_'+i,i*4);
-    }
-     for (let i=0;i<20;i++) {
-      this.addVpath('va'+ssf+'_'+i,i*4);
-    }
-  }
+ /* if (Math.random()  <0.2) {
+    let od = (ht*Math.random())-hht;
+    this.addApath('a'+numAdds,od);
+    this.numAdds++;
+  }*/
   let {cstate,pspace} = pstate;
   let pnms = Object.getOwnPropertyNames(pspace);
   if (ssf === 32) {
@@ -76,35 +59,31 @@ rs.initProtos = function () {
   circleP.dimension = 1;
   circleP['stroke-width'] = 0;
   
-  let lineP = this.lineP = linePP.instantiate();
+  let rectP = this.rectP = rectPP.instantiate();
+  rectP['stroke-width'] = .2;
+  rectP.stroke = 'white';
+  
+   let lineP = this.lineP = linePP.instantiate();
   lineP['stroke-width'] = .2;
   lineP.stroke = 'white';
 }  
 
+//rs.addPath = function (nm,min,max,wd,ht,od,rectP,horizontal) {
 
-rs.addHpath = function (nm,y) {
-  let scl = 0.8;
-  this.addPath(nm,Point.mk(-scl*hht,y),Point.mk(scl*hht,y),40,this.lineP);
+
+rs.addApath = function (nm,min,max,od,horizontal) {
+  let scl = 1.1;
+  //this.addPath({nm,min:-scl*hht,max:scl*hht,width:this.rwd,height:this.rht,od,shape:this.rectP,horizontal,skind:'rectangle'});
+  this.addPath({nm,min:min,max:max,width:this.rwd,height:this.rht,od,shape:this.rectP,horizontal,skind:'rectangle'});
 }
 
-rs.addVpath = function (nm,x) {
-  let scl = 0.8;
-  this.addPath(nm,Point.mk(x,-scl*hht),Point.mk(x,scl*hht),40,this.lineP);
-}
 rs.initialize = function () {
   debugger;
   this.initProtos();
   this.addFrame();
-  let lines = this.set('lines',arrayShape.mk());
+  let shapes = this.set('shapes',arrayShape.mk());
   let scl = 0.8;
   //this.addPath('a',Point.mk(-scl*hht,0),Point.mk(scl*hht,0),10,this.lineP);
-  for (let i=0;i<0;i++) {
-    this.addHpath('h'+i,i*4);
-  }
-   //this.addPath('a',Point.mk(-scl*hht,0),Point.mk(scl*hht,0),10,this.lineP);
-  for (let i=0;i<0;i++) {
-    this.addVpath('v'+i,i*4);
-  }
   this.callIfDefined('afterInitialize');
   
 }

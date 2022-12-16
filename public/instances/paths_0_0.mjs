@@ -33,11 +33,22 @@ rs.initProtos = function () {
 }  
 
 
+rs.addApath = function (nm,shape,min,max,od,horizontal) {
+  let scl = 1.1;
+  debugger;
+  //this.addPath({nm,min:-scl*hht,max:scl*hht,width:this.rwd,height:this.rht,od,shape:this.rectP,horizontal,skind:'rectangle'});
+  //this.addPath({nm,min:min,max:max,width:this.rwd,height:this.rht,od,shape:this.rectP,horizontal,skind:'rectangle'});
+  this.addPath({nm,min:min,max:max,width:this.rwd,height:this.rht,od,shape,horizontal});
+}
+
+
 rs.beforeUpdateState = function (nm) {
   let {pstate,stepsSoFar:ssf,numAdds} = this;
   if (Math.random()  <0.2) {
     let od = (ht*Math.random())-hht;
-    this.addApath('a'+numAdds,-hht,hht,od);
+    let shape = this.rectP.instantiate();
+    this.shapes.push(shape);
+    this.addApath('a'+numAdds,shape,-hht,hht,od);
     this.numAdds++;
   }
 }
@@ -46,20 +57,21 @@ rs.rht = 25;
 rs.updateStateOf = function (nm) {
   let {pstate,rwd,rht} = this;
   let {cstate,pspace} = pstate;
-  let {min,max} = pspace[nm];
   let v = cstate[nm].value;
   
-  let fr =(v-min)/(max-min);
  
   debugger;
   let ps = pspace[nm];
-  let {shape,od,horizontal} = ps;
+  let {shape,min,max,od,horizontal} = ps;
+     let fr =(v-min)/(max-min);
+
   if (v >= max) {
-    shape.hide();
+  //  shape.hide();
   }
   shape.width = (1-fr)*rwd;
   shape.height = (1-fr)*rht;
   let pos = horizontal?Point.mk(v,od):Point.mk(od,v);
+  console.log('v',v,'pos',pos.x,pos.y);
   shape.moveto(pos);
   shape.update();
 }

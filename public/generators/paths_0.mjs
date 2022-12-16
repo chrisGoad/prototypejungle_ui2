@@ -14,20 +14,28 @@ rs.setName('paths_0');
 
 rs.addPath = function (params) {
    debugger;
-   let {nm,min,max,wd,ht,ln,od,horizontal,skind} = params;
-   let {pstate,shapes,rectP,step} = this;
+ //  let {nm,min,max,wd,ht,ln,od,shape,horizontal,skind} = params;
+   let {nm,min,max,od,shape,horizontal,upOrLeft} = params;
+   let {pstate,shapes,rectP,lineP,step} = this;
   let {cstate,pspace} = pstate;
 
   cstate[nm] = {value:min};
-  let shape;
+  /*let shape;
   if (skind === 'rectangle') {
      shape =  rectP.instantiate();
   ///rect.fill = horizontal?'rgba(250,0,0,.5)':'rgba(0,0,250,0.5)';
      shape.width = wd;
      shape.height = ht;
+  } else if (skind === 'line') {
+     shape =  lineP.instantiate();
+  ///rect.fill = horizontal?'rgba(250,0,0,.5)':'rgba(0,0,250,0.5)';
+    let hln = 0.5*ln;
+    let e0 = horizontal?Point.mk(0,-hln):Point.mk(-hln,0);
+    let e1 = horizontal?Point.mk(0,hln):Point.mk(hln,0);
+    shape.setEnds(e0,e1);
   }
-  shapes.push(shape);
-  pspace[nm] = {kind:'sweep',step:step,min:min,max:max,once:1,horizontal,shape,skind,od};
+  shapes.push(shape);*/
+  pspace[nm] = {kind:'sweep',step:step,min:min,max:max,once:1,horizontal,shape,od,upOrLeft};
 }
 
 
@@ -36,7 +44,6 @@ rs.numAdds = 0;
 
 rs.updateState = function (nm) {
   this.callIfDefined('beforeUpdateState');
-  debugger;
   let {pstate,stepsSoFar:ssf} = this;
  /* if (Math.random()  <0.2) {
     let od = (ht*Math.random())-hht;
@@ -69,13 +76,6 @@ rs.initProtos = function () {
 }  
 
 //rs.addPath = function (nm,min,max,wd,ht,od,rectP,horizontal) {
-
-
-rs.addApath = function (nm,min,max,od,horizontal) {
-  let scl = 1.1;
-  //this.addPath({nm,min:-scl*hht,max:scl*hht,width:this.rwd,height:this.rht,od,shape:this.rectP,horizontal,skind:'rectangle'});
-  this.addPath({nm,min:min,max:max,width:this.rwd,height:this.rht,od,shape:this.rectP,horizontal,skind:'rectangle'});
-}
 
 rs.initialize = function () {
   debugger;

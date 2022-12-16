@@ -105,7 +105,7 @@ item.randomWalkScalarNextState = function (pspace,cstate,component) {
    let subV = subState.value;
    //let subV = subState.average;
    //let subV = subState.steadyV;
-   console.log('subV',subV);
+   //console.log('subV',subV);
    let subVP = subV > 0;
    let th = 0.01;
    let tooSmall = false;// subVP?subV<th:subV>-0.1;

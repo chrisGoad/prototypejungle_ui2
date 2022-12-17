@@ -23,7 +23,7 @@ Object.assign(rs,topParams);
 let initState = {};
 let pspace = {};
 rs.pstate = {pspace,cstate:initState};
-rs.step = 1;
+rs.step = 0.5;
 rs.strokeWV = 0;
 rs.strokeWH = 0;
 rs.initProtos = function () {
@@ -34,56 +34,50 @@ rs.initProtos = function () {
   
 }  
 
-rs.addWpath = function (nm) {
-  let {pstate} = this;
-  let {cstate,pspace} = pstate;
-  let snm = 'sub'+nm;
-  let d = 0.01;
-  pspace[snm] = {kind:'random',step:0.1*d,min:-d,max:d,forStroke:1};
-  cstate[snm] = {value:0};
-  pspace[nm] = {kind:'randomWalkScalar',subComponent:snm,min:0,max:.2,forStroke:1};
-  cstate[nm] = {value:.025};
-};
 
-rs.addApath = function (nm,shape,min,max,horizontal,upOrLeft) {
-  let scl = 1.1;
-  //this.addPath({nm,min:-scl*hht,max:scl*hht,width:this.rwd,height:this.rht,od,shape:this.rectP,horizontal,skind:'rectangle'});
-  debugger;
-  this.addPath({nm,min,max,shape,horizontal,upOrLeft});
+rs.scaleStroke = function (shp,fc) {
+  let {r,g,b} = shp;
+  const scale = (v,fc) => {
+    return Math.floor(fc*v);
+  }
+  let rs = scale(r,fc);
+  let gs = scale(g,fc);
+  let bs = scale(b,fc);
+  let clr=`rgb(${rs},${gs},${bs})`;
+  shp.stroke = clr;
 }
-
-rs.addOnePath = function (nm,min,max,horizontal,upOrLeft) {
-    let {shapes,strokeWV,strokeWH,lineP} = this;
+ 
+rs.addOnePath = function (inm,min,max,horizontal,upOrLeft) {
+    let {shapes,strokeWV,strokeWH,r,g,b,lineP,stepsSoFar:ssf,numSteps,startFade,numAdds} = this;
     let shape = lineP.instantiate();
-    shape['stroke-width'] = Math.max(0.004,1*(horizontal?strokeWH:strokeWV));
+    shape['stroke-width'] = Math.max(0.04,(horizontal?strokeWH:strokeWV));
+    shape.r = r;
+    shape.g = g;
+    shape.b = b;
+    let clr=`rgb(${r},${g},${b})`;
+    shape.stroke = clr;
     console.log('strokeWH',strokeWH,'strokeWV',strokeWV);
-    debugger;
     let e0 = horizontal?Point.mk(0,-hht):Point.mk(-hht,0);
     let e1 = horizontal?Point.mk(0,hht):Point.mk(hht,0);
     shape.setEnds(e0,e1);
     shapes.push(shape);
-    this.addApath(nm+(horizontal?'h':'v')+(upOrLeft?'uol':'norm'),shape,-hht,hht,horizontal,upOrLeft);
+    if (ssf>startFade) {
+      let fc = 1 - (ssf - startFade)/(numSteps-startFade);
+      shapes.forEach((shp) => this.scaleStroke(shp,fc));
+    }
+    let nm = inm+numAdds;
+    this.addPath({nm,min,max,shape,horizontal,upOrLeft});
+    this.numAdds++;
+
  }
 
 rs.beforeUpdateState = function (nm) {
   let {pstate,stepsSoFar:ssf,numAdds,lineP,shapes} = this;
   let {cstate,pspace} = pstate;
-
-  if (Math.random()  <1) {
-    //let horizontal =Math.random()<0.5;
-    //let upOrLeft = Math.random()<0.5;
-        /*let shape = lineP.instantiate();
-        shape['stroke-width'] = cstrokeW;
-        let e0 = horizontal?Point.mk(0,-hht):Point.mk(-hht,0);
-        let e1 = horizontal?Point.mk(0,hht):Point.mk(hht,0);
-        shape.setEnds(e0,e1);
-        shapes.push(shape);*/
-  this.addOnePath('a'+numAdds,-hht,hht,0,0);
-    this.addOnePath('a'+numAdds,-hht,hht,0,1);
-    this.addOnePath('a'+numAdds,-hht,hht,1,0);
-    this.addOnePath('a'+numAdds,-hht,hht,1,1);
-    this.numAdds++;
-  }
+  this.addOnePath('a',-hht,hht,0,0);
+  this.addOnePath('a',-hht,hht,0,1);
+  this.addOnePath('a',-hht,hht,1,0);
+  this.addOnePath('a',-hht,hht,1,1);
 }
 rs.rwd = 5;
 rs.rht = 25;
@@ -100,8 +94,13 @@ rs.updateStateOf = function (nm) {
       this.strokeWH = v;
     } else if (nm === 'strokeWV')  {
       this.strokeWV = v;
+    } else if (nm === 'r')  {
+      this.r = v;
+    }else if (nm === 'g')  {
+      this.g = v;
+    }else if (nm === 'b')  {
+      this.b = v;
     }
-    debugger;
     return;
   }
   let ow = ps.upOrLeft;
@@ -109,22 +108,27 @@ rs.updateStateOf = function (nm) {
     shape.hide();
   }
   let uv = ow?max-hht-v:v;
-    //console.log('v',v,'uv',uv);
-
   let pos = horizontal?Point.mk(uv,0):Point.mk(0,uv);
   shape.moveto(pos);
   shape.update();
 }
 
 rs.afterInitialize = function () {
-  this.addWpath('strokeWH');
-  this.addWpath('strokeWV');
+  this.addWpath('strokeWH',.01,0,.2,0.025,'forStroke',1);
+  this.addWpath('strokeWV',.01,0,.2,0.025,'forStroke',1);
+  this.addWpath('r',5,100,250,0.025,'forStroke',1);
+  this.addWpath('g',5,100,250,0.025,'forStroke',1);
+  this.addWpath('b',5,100,250,0.025,'forStroke',1);
+  //let rt = this.computeTrace('r',20);
+  debugger;
 }
 
 rs.stepInterval = 60;
-rs.saveAnimation = 0;
+rs.saveAnimation = 1;
 
 //rs.numSteps = 627-(rs.numISteps);
-rs.numSteps = 10000;
+rs.startFade = 450;
+rs.startFade = 530;
+rs.numSteps = 600;
 //rs.numSteps = Math.floor(627/sfc);
 export {rs}

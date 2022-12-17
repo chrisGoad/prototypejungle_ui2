@@ -141,7 +141,26 @@ item.randomWalkScalarNextState = function (pspace,cstate,component) {
    csc.value = nval;
 }
    
-   
+ 
+item.addWpath = function (nm,subRange,min,max,initVal,prop,val) {
+  let {pstate} = this;
+  let {cstate,pspace} = pstate;
+  let snm = 'sub'+nm;
+  let d = subRange;
+  let pssub= {kind:'random',step:0.1*d,min:-d,max:d,forStrokee:1};
+  if (prop) {
+    pssub[prop] = val;
+  }
+  pspace[snm] = pssub;
+  cstate[snm] = {value:0};
+  let ps = {kind:'randomWalkScalar',subComponent:snm,min,max};
+  if (prop) {
+    ps[prop] = val;
+  }
+  pspace[nm] = ps;
+  cstate[nm] = {value:initVal};
+};
+  
    
 
 item.randomValueNextState = function (pspace,cstate,component) {
@@ -317,27 +336,27 @@ item.nextState = function (pathKind,pspace,cstate,component) {
     this.sweepNextState(pspace,cstate,component);
   }
 }
-  
+
+item.stepComponent = function (nm,forTrace) { // stv = subtracevalue
+  let {pspace,cstate}= this.pstate;
+  let cc = pspace[nm];
+  let subc = cc.subComponent;
+  if (forTrace&&subc) {
+    this.stepComponent(subc);
+  }
+  let iv = cc.interval;
+  let kind = cc.kind;
+  if ((!iv) || (ct%iv === 0)) {
+    this.nextState(kind,pspace,cstate,nm);
+  }
+}
+   
 item.timeStep = function (pstate) {
   let {pspace,cstate}= pstate;
   let ct = cstate.time?cstate.time:0;
   let props = Object.getOwnPropertyNames(pspace);
- // let ns = {};
-  props.forEach((component) => {
-   let cc = pspace[component];
-   let iv = cc.interval;
-   let kind = cc.kind;
-   //let cs = cstate[component];
-   if ((!iv) || (ct%iv === 0)) {
-    // this.nextState(pathKind,pspace,cstate,component);
-     this.nextState(kind,pspace,cstate,component);
-   } else {
- //    ns[component] = cv;
-   }
-  });
+  props.forEach((component) => this.stepComponent(component));
   cstate.time = ct+1;
-
- // pstate.cstate = ns;
 }
 
 
@@ -432,6 +451,22 @@ item.oneStep = function (one) {
     setTimeout(() => this.oneStep(),this.stepInterval);
   }
 }
+
+item.computeTrace = function (component,n) {
+  let {cstate}= this.pstate;
+  let cstc = cstate[component];
+  let trace = [];
+  for (let i=0;i<n;i++) {
+    let cv = this.deepCopy(cstc);
+    trace.push(cv);
+    //let stv = subtrace?subtrace[i]:undefined;
+   // this.stepComponent(component,stv);
+    this.stepComponent(component,1);
+  }
+  return trace;
+}
+
+
  
        
 }  

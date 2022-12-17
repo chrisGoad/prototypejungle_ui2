@@ -119,7 +119,7 @@ rs.afterInitialize = function () {
   this.addWpath('r',5,100,250,0.025,'forStroke',1);
   this.addWpath('g',5,100,250,0.025,'forStroke',1);
   this.addWpath('b',5,100,250,0.025,'forStroke',1);
-  //let rt = this.computeTrace('r',20);
+  let rt = this.computeTrace('r',20);
   debugger;
 }
 

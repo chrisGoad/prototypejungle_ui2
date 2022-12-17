@@ -24,7 +24,8 @@ let initState = {};
 let pspace = {};
 rs.pstate = {pspace,cstate:initState};
 rs.step = 1;
-rs.cstrokeW = 0;
+rs.strokeWV = 0;
+rs.strokeWH = 0;
 rs.initProtos = function () {
  
   let lineP = this.lineP = linePP.instantiate();
@@ -52,10 +53,11 @@ rs.addApath = function (nm,shape,min,max,horizontal,upOrLeft) {
 }
 
 rs.addOnePath = function (nm,min,max,horizontal,upOrLeft) {
-    let {shapes,cstrokeW,lineP} = this;
+    let {shapes,strokeWV,strokeWH,lineP} = this;
     let shape = lineP.instantiate();
-    shape['stroke-width'] = Math.max(0.02,cstrokeW);
-    console.log('cstrokeW',cstrokeW);
+    shape['stroke-width'] = Math.max(0.004,1*(horizontal?strokeWH:strokeWV));
+    console.log('strokeWH',strokeWH,'strokeWV',strokeWV);
+    debugger;
     let e0 = horizontal?Point.mk(0,-hht):Point.mk(-hht,0);
     let e1 = horizontal?Point.mk(0,hht):Point.mk(hht,0);
     shape.setEnds(e0,e1);
@@ -64,19 +66,19 @@ rs.addOnePath = function (nm,min,max,horizontal,upOrLeft) {
  }
 
 rs.beforeUpdateState = function (nm) {
-  let {pstate,stepsSoFar:ssf,numAdds,lineP,shapes,cstrokeW} = this;
+  let {pstate,stepsSoFar:ssf,numAdds,lineP,shapes} = this;
   let {cstate,pspace} = pstate;
 
   if (Math.random()  <1) {
     //let horizontal =Math.random()<0.5;
     //let upOrLeft = Math.random()<0.5;
-    /*let shape = lineP.instantiate();
-    shape['stroke-width'] = cstrokeW;
-    let e0 = horizontal?Point.mk(0,-hht):Point.mk(-hht,0);
-    let e1 = horizontal?Point.mk(0,hht):Point.mk(hht,0);
-    shape.setEnds(e0,e1);
-    shapes.push(shape);*/
-    this.addOnePath('a'+numAdds,-hht,hht,0,0);
+        /*let shape = lineP.instantiate();
+        shape['stroke-width'] = cstrokeW;
+        let e0 = horizontal?Point.mk(0,-hht):Point.mk(-hht,0);
+        let e1 = horizontal?Point.mk(0,hht):Point.mk(hht,0);
+        shape.setEnds(e0,e1);
+        shapes.push(shape);*/
+  this.addOnePath('a'+numAdds,-hht,hht,0,0);
     this.addOnePath('a'+numAdds,-hht,hht,0,1);
     this.addOnePath('a'+numAdds,-hht,hht,1,0);
     this.addOnePath('a'+numAdds,-hht,hht,1,1);
@@ -89,14 +91,20 @@ rs.updateStateOf = function (nm) {
   let {pstate,rwd,rht} = this;
   let {cstate,pspace} = pstate;
   let v = cstate[nm].value;
-  debugger;
+ // debugger;
   let ps = pspace[nm];
+  let {shape,horizontal,max} = ps;
+
   if (ps.forStroke) {
-    this.cstrokeW = v;
+    if (nm === 'strokeWH') {
+      this.strokeWH = v;
+    } else if (nm === 'strokeWV')  {
+      this.strokeWV = v;
+    }
+    debugger;
     return;
   }
   let ow = ps.upOrLeft;
-  let {shape,horizontal,max} = ps;
   if (v >= ps. max) {
     shape.hide();
   }
@@ -109,7 +117,8 @@ rs.updateStateOf = function (nm) {
 }
 
 rs.afterInitialize = function () {
-  this.addWpath('stroke');
+  this.addWpath('strokeWH');
+  this.addWpath('strokeWV');
 }
 
 rs.stepInterval = 60;

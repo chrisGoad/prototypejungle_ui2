@@ -16,6 +16,7 @@ rs.addPath = function (params) {
    debugger;
  //  let {nm,min,max,wd,ht,ln,od,shape,horizontal,skind} = params;
    let {nm,min,max,od,shape,horizontal,upOrLeft} = params;
+   debugger;
    let {pstate,shapes,rectP,lineP,step} = this;
   let {cstate,pspace} = pstate;
 

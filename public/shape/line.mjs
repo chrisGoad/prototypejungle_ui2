@@ -14,6 +14,7 @@ item.setDomAtts = function () {
   this.setDomAttribute('y2',e1.y);
   this.setDomAttribute('visibility',this.visibility);
   this.setDomAttribute('stroke',this.stroke);
+  this.setDomAttribute('stroke-width',this['stroke-width']);
 
 }
 

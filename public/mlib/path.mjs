@@ -142,12 +142,13 @@ item.randomWalkScalarNextState = function (pspace,cstate,component) {
 }
    
  
-item.addWpath = function (nm,subRange,min,max,initVal,prop,val) {
+item.addWpath = function (nm,subRange,substepfactor,min,max,initVal,prop,val) {
   let {pstate} = this;
   let {cstate,pspace} = pstate;
   let snm = 'sub'+nm;
   let d = subRange;
-  let pssub= {kind:'random',step:0.1*d,min:-d,max:d,forStrokee:1};
+  let ssf = substepfactor;
+  let pssub= {kind:'random',step:ssf*d,min:-d,max:d,forStrokee:1};
   if (prop) {
     pssub[prop] = val;
   }
@@ -452,18 +453,18 @@ item.oneStep = function (one) {
   }
 }
 
-item.computeTrace = function (component,n) {
+item.pushTrace = function (a,component,n) {
   let {cstate}= this.pstate;
   let cstc = cstate[component];
-  let trace = [];
+  //let trace = [];
   for (let i=0;i<n;i++) {
     let cv = this.deepCopy(cstc);
-    trace.push(cv);
+    a.push(cv);
     //let stv = subtrace?subtrace[i]:undefined;
    // this.stepComponent(component,stv);
     this.stepComponent(component,1);
   }
-  return trace;
+  return a;
 }
 
 

@@ -6,7 +6,7 @@ import {rs as addPathMethods} from '/mlib/path.mjs';
 let rs = basicP.instantiate();
 addPathMethods(rs);
 
-rs.setName('crosshatch_0');
+rs.setName('crosshatch_1');
 
 rs.pstate = {pspace:{},cstate:{}};
 
@@ -53,28 +53,19 @@ rs.initProtos = function () {
 rs.setFromTraces = function (n) {
   let {vlines,hlines,rt,gt,bt,swv,swh,numSteps,startFade,numLines} = this;
   debugger;
-  let sc =1;
-    if (n > startFade)  {
-    //  sc = 1- (n-startFade)/(numSteps-startFade);
-  }
-  console.log('sc',sc);
+
   let oldSchool = 0;
   let inwards = 1;
   let hnl = oldSchool?numLines:numLines/2;
+  const valueOf= (a,n) => {
+    let av= a[n];
+    return av?av.value:0;
+  }
   for (let i=0;i<hnl;i++) {
-  
-    let swvi = swv[i+n];
-    let swhi = swh[i+n];
-    let rti = rt[i+n];
-    let gti = gt[i+n];
-    let bti = bt[i+n];
-    let swvv  = swvi?swvi.value:0;
-    let swvh  = swhi?swhi.value:0;
-    let rtv = rti?rti.value:0;
-    let gtv = gti?gti.value:0;
-    let btv = bti?bti.value:0;
-    let clr = `rgb(${sc*rtv},${sc*gtv},${sc*btv})`;
-   // clr = 'rgb(255,255,255)'
+    let rtv = valueOf(rt,i+n);
+    let gtv = valueOf(gt,i+n);
+    let btv = valueOf(bt,i+n);
+    let clr = `rgb(${rtv},${gtv},${btv})`;
     if (oldSchool) {
       let hline = hlines[i];
       hline.stroke = clr;
@@ -86,21 +77,14 @@ rs.setFromTraces = function (n) {
     }
     let vline0 = vlines[inwards?hnl-i-1:i];
     vline0.stroke = clr;
-   // vline0['stroke-width'] = swvv;
     vline0.update();
-   // let vline1 = vlines[numLines-i-1];
     let vline1 = vlines[inwards?hnl+i:numLines-i-1];
     vline1.stroke = clr;
-   // vline1['stroke-width'] = swvv;
     vline1.update();
-    //let hline0 = hlines[i];
     let hline0 = hlines[inwards?hnl-i-1:i];
     hline0.stroke = clr;
-   // hline0['stroke-width'] = swvh;
     hline0.update();
-  //  let hline1 = hlines[numLines-i-1];
     let hline1 = hlines[inwards?hnl+i:numLines-i-1];
-   // hline1['stroke-width'] = swvh;
     hline1.stroke = clr;
     hline1.update();
   }
@@ -124,19 +108,12 @@ rs.initialize = function () {
   let {cycles,numLines} = this;
   let numSteps = this.numSteps = (cycles+1) * (numLines/2);
   let numFrames = this.numFrames = numSteps+numLines;
-  this.startFade = numSteps -numLines;
   this.initProtos();
   this.addFrame();
   let vlines = this.set('vlines',arrayShape.mk());
   let hlines = this.set('hlines',arrayShape.mk());
   this.buildCrosshatch();
-  let wsr = 0.01;
-  let wssf = 0.04;
-  let maxw = .2;
-  let minw  = 0.02;
-  this.addWpath('strokeWH',wsr,wssf,minw,maxw,0.025,'forStroke',1);
-  this.addWpath('strokeWV',wsr,wssf,minw,maxw,0.025,'forStroke',1);
-    //this.addWpath('b',wsr,wssf,mi,250,iv,'forStroke',1);
+ 
 
 //item.addWpath = function (nm,subRange,min,max,initVal,prop,val) {
 
@@ -147,11 +124,6 @@ rs.initialize = function () {
   this.addWpath('r',sr,ssf,mi,250,iv,'forStroke',1);
   this.addWpath('g',sr,ssf,mi,250,iv,'forStroke',1);
   this.addWpath('b',sr,ssf,mi,250,iv,'forStroke',1);
- /* this.addWpath('strokeWH',.01,0,.2,0.025,'forStroke',1);
-  this.addWpath('strokeWV',.01,0,.2,0.025,'forStroke',1);
-  this.addWpath('r',5,100,250,0.025,'forStroke',1);
-  this.addWpath('g',5,100,250,0.025,'forStroke',1);
-  this.addWpath('b',5,100,250,0.025,'forStroke',1);*/
   let rt =this.rt = [];
   let gt =this.gt = [];
   let bt =this.bt = [];
@@ -161,18 +133,13 @@ rs.initialize = function () {
   this.pushTrace(rt,'r',numFrames);
   this.pushTrace(gt,'g',numFrames);
   this.pushTrace(bt,'b',numFrames);
-  this.pushTrace(swv,'strokeWV',numFrames);
-  this.pushTrace(swh,'strokeWH',numFrames);
-  debugger;
-    this.pushBlacks();
+  this.pushBlacks();
   this.numSteps =(this.numSteps)+2*numLines;
-  debugger;
- // this.setFromTraces(0);
  rs.cFrame = (this.numSteps)/2;
 }
 
 
-//rs.cFrame = 0;
+rs.cFrame = 0;
 rs.stepsSoFar = 0;
 
 
@@ -195,8 +162,4 @@ rs.timeStep = () => {};
 
 rs.stepInterval = 60;
 rs.saveAnimation = 1;
-
-//rs.numSteps = 627-(rs.numISteps);
-
-//rs.numSteps = Math.floor(627/sfc);
 export {rs}

@@ -16,8 +16,8 @@ let ht= rs.ht = 100;
 let wd = rs.wd = 100;
 let hht = rs.hht = 0.5*ht;
 let hwd = rs.hwd = 0.5*wd;
-let numRows = rs.numRows = 64;
-let numCols = rs.numCols = 64;
+let numRows = rs.numRows = 32;
+let numCols = rs.numCols =32;
 
 
 let ff = 1;
@@ -58,7 +58,7 @@ rs.initProtos = function () {
 
 
 
-rs.setFromTrace = function (n,cfn,ifn) { //cfn = choice funtion; ifn = installation function
+rs.setFromTrace = function (tr,n,cfn,ifn) { //cfn = choice funtion; ifn = installation function
   let {numRows,numCols} = this;
   debugger;
   for (let i=0;i<numCols;i++) {
@@ -71,7 +71,7 @@ rs.setFromTrace = function (n,cfn,ifn) { //cfn = choice funtion; ifn = installat
   }
 }
 
-rs.setFrom3Traces = function (ntr0,tr1,tr3,cfn0,cfn1,cfn2,ifn) { //cfn = choice funtion; ifn = installation function
+rs.setFrom3Traces = function (n,tr0,tr1,tr2,cfn0,cfn1,cfn2,ifn) { //cfn = choice funtion; ifn = installation function
   let {numRows,numCols} = this;
   debugger;
   const valueOf = (a,i) => {
@@ -80,14 +80,13 @@ rs.setFrom3Traces = function (ntr0,tr1,tr3,cfn0,cfn1,cfn2,ifn) { //cfn = choice 
   }
   for (let i=0;i<numCols;i++) {
     for (let j=0;j<numRows;j++) {
-      let idx0 = cfn0(this,i,j);
-      let idx1 = cfn1(this,i,j);
-      let idx2 = cfn2(this,i,j);
-      let vm = tr[n+idx];
+      let idx0 = cfn0.call(this,i,j);
+      let idx1 = cfn1.call(this,i,j);
+      let idx2 = cfn2.call(this,i,j);
       let v0 = valueOf(tr0,n+idx0);
-      let v1 = valueOf(tr1,n+idx0);
-      let v2 = valueOf(tr2,n+idx0);
-      ifn(this,v0,v1,v2,i,j);
+      let v1 = valueOf(tr1,n+idx1);
+      let v2 = valueOf(tr2,n+idx2);
+      ifn.call(this,v0,v1,v2,i,j);
     }
   }
 }
@@ -96,21 +95,54 @@ rs.upCfn = function (i,j) {
   return j;
 }
 
+rs.downCfn = function (i,j) {
+  let {numRows} = this;
+  return numRows-j;
+}
+rs.toLeftCfn = function (i,j) {
+  return i;
+}
+rs.toRightCfn = function (i,j) {
+  let {numCols} = this;
+  return numCols - i;
+}
+
 rs.greyIfn = function (v,i,j) {
   let {rects,numCols} = this;
   let idx = i*numCols +j;
   let rect = rects[idx];
+  let fv = Math.floor(v);
   let clr = `rgb(${v},${v},${v})`;
-  rect.fill = clrf;
+  rect.fill = clr;
+  rect.update();
+}
+
+
+
+rs.fillIfn = function (r,g,b,i,j) {
+  let {rects,numCols} = this;
+  let idx = i*numCols +j;
+  let rect = rects[idx];
+  let fr = Math.floor(r);
+  let fg = Math.floor(g);
+  let fb = Math.floor(b);
+  let clr = `rgb(${fr},${fg},${fb})`;
+  rect.fill = clr;
+  rect.update();
 }
     
   //  rs.setFromTrace = function (n,cfn,ifn) { //cfn = choice funtion; ifn = installation function
 
 rs.setFromTraces = function (n) {
   let {rt} = this;
-  this.setFromTrace(n,this.upCfn,this.greyIfn);
+  this.setFromTrace(rt,n,this.downCfn,this.greyIfn);
 }
 
+
+rs.setFromTraces = function (n) {
+  let {rt,gt,bt} = this;
+  this.setFrom3Traces(n,rt,gt,bt,this.downCfn,this.upCfn,this.toRightCfn,this.fillIfn);
+}
 
 rs.cycles = 5;
 rs.initialize = function () {
@@ -123,7 +155,8 @@ rs.initialize = function () {
   this.addFrame();
   this.initProtos();
   this.buildGrid();
-  let numSteps = this.numSteps = (cycles+1) * numRows;
+  let numSteps = this.numSteps = cycles * numRows;
+  let numFrames = this.numSteps = (cycles+2) * numRows;
   
  
 
@@ -131,8 +164,8 @@ rs.initialize = function () {
 
   let sr = 10; //subrange
   let iv = 0;
-  let ssf = 0.04; //substepfactor
-  let mi = 0; //minintensity
+  let ssf = 0.4; //substepfactor
+  let mi = 100; //minintensity
   this.addWpath('r',sr,ssf,mi,250,iv,'forStroke',1);
   this.addWpath('g',sr,ssf,mi,250,iv,'forStroke',1);
   this.addWpath('b',sr,ssf,mi,250,iv,'forStroke',1);
@@ -142,8 +175,6 @@ rs.initialize = function () {
   this.pushTrace(rt,'r',numFrames);
   this.pushTrace(gt,'g',numFrames);
   this.pushTrace(bt,'b',numFrames);
-  this.pushBlacks();
-  this.numSteps =(this.numSteps)+2*numLines;
  rs.cFrame = (this.numSteps)/2;
 }
 
@@ -153,22 +184,14 @@ rs.stepsSoFar = 0;
 
 
 rs.updateState = function () {
-  let {cFrame,numSteps,wentBack} = this;
-  this.setFromTraces(cFrame);
-  cFrame++;
-  if (cFrame>=numSteps-80) {
-    cFrame = 0;
-    rs.wentBack =1;
-  } 
-  if (wentBack && (cFrame === (numSteps/2)+2)) {
-    this.stepsSoFar = numSteps+1;
-  }
-  this.cFrame = cFrame;
+  let {cFrame,numSteps,wentBack,stepsSoFar:ssf,rt} = this;
+  this.setFromTraces(ssf);
+ 
 }
 
 rs.timeStep = () => {};
 
 
-rs.stepInterval = 60;
+rs.stepInterval = 30;
 rs.saveAnimation = 1;
 export {rs}

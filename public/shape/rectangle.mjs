@@ -21,5 +21,6 @@ item.update =  function () {
   this.setDomAttribute('height',this.height);
   this.setDomAttribute('x',-0.5*this.width);
   this.setDomAttribute('y',-0.5*this.height);
+  this.setDomAttribute('fill',this.fill);
 }
 export {item as rs};

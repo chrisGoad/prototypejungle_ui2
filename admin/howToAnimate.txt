@@ -119,6 +119,7 @@ c:\ffmpeg\bin\ffmpeg  -framerate 20 -i animations/spirals_0_2_f%03d.jpg -s 800x8
 c:\ffmpeg\bin\ffmpeg  -framerate 20 -i animations/paths_0_1_f%03d.jpg -s 800x800  export/paths_0_1.mp4
 c:\ffmpeg\bin\ffmpeg  -framerate 5 -i animations/crosshatch_0_f%03d.jpg -s 800x800  export/crosshatch_0.mp4
 c:\ffmpeg\bin\ffmpeg  -framerate 20 -i animations/crosshatch_0_f%03d.jpg -s 800x800  export/crosshatch_0.mp4
+c:\ffmpeg\bin\ffmpeg  -framerate 20 -i animations/flows_0_f%03d.jpg -s 800x800  export/flows_0.mp4
 
 
 

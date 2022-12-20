@@ -16,8 +16,9 @@ let ht= rs.ht = 100;
 let wd = rs.wd = 100;
 let hht = rs.hht = 0.5*ht;
 let hwd = rs.hwd = 0.5*wd;
-let numRows = rs.numRows = 32;
-let numCols = rs.numCols =32;
+let nr = 32;
+let numRows = rs.numRows = nr;
+let numCols = rs.numCols = nr;
 
 
 let ff = 1;
@@ -52,13 +53,13 @@ rs.initProtos = function () {
   let sc = 0.8;
   rectP.width = sc*deltaX;
   rectP.height = sc*deltaY;
-  rectP.fill = 'red';
+  rectP.fill = 'white';
   
 }  
 
 
 
-rs.setFromTrace = function (tr,n,cfn,ifn) { //cfn = choice funtion; ifn = installation function
+rs.setFromTrace = function (n,tr,cfn,ifn) { //cfn = choice funtion; ifn = installation function
   let {numRows,numCols} = this;
   debugger;
   for (let i=0;i<numCols;i++) {
@@ -117,16 +118,56 @@ rs.greyIfn = function (v,i,j) {
   rect.update();
 }
 
+rs.wIfn = function (v,i,j) {
+  let {rects,numCols} = this;
+  let idx = i*numCols +j;
+  let rect = rects[idx];
+  rect.width = v;
+  rect.update();
+}
+rs.hIfn = function (v,i,j) {
+  let {rects,numCols} = this;
+  let idx = i*numCols +j;
+  let rect = rects[idx];
+  rect.height = v;
+  rect.update();
+}
+
 
 
 rs.fillIfn = function (r,g,b,i,j) {
   let {rects,numCols} = this;
   let idx = i*numCols +j;
   let rect = rects[idx];
-  let fr = Math.floor(r);
-  let fg = Math.floor(g);
-  let fb = Math.floor(b);
-  let clr = `rgb(${fr},${fg},${fb})`;
+  let clr;
+  let rb = r>150?1:0;
+  let gb= g>150?1:0;
+  let bb = b>150?1:0;
+  clr = (rb+gb+bb)%2?'white':'black';
+ /* if (r>150) {
+    if (g>150) {
+      if (b>150) {
+        clr = 'blue';
+      } else {
+        clr = 'red';
+      }
+    } else {
+      clr = 'green';
+    }
+  } else {
+    clr = 'yellow'
+  }*
+  let res = 80;
+  let fr = Math.floor(r/res)*res;
+  let fg = Math.floor(g/res)*res;
+  let fb = Math.floor(b/res)*res;
+ /* let fr = r<150?100:250;
+  let fg = g<150?100:250;
+  let fb = b<150?100:250;
+  //let fr = Math.floor(r);
+  //let fg = Math.floor(g);
+  //let fb = Math.floor(b);*/
+  //clr = `rgb(${fr},${fg},${fb})`;
   rect.fill = clr;
   rect.update();
 }
@@ -140,11 +181,14 @@ rs.setFromTraces = function (n) {
 
 
 rs.setFromTraces = function (n) {
-  let {rt,gt,bt} = this;
+  let {rt,gt,bt,wt,htt} = this;
   this.setFrom3Traces(n,rt,gt,bt,this.downCfn,this.upCfn,this.toRightCfn,this.fillIfn);
+    this.setFromTrace(n,wt,this.toLeftCfn,this.wIfn);
+    this.setFromTrace(n,htt,this.toRightCfn,this.hIfn);
+
 }
 
-rs.cycles = 5;
+rs.cycles = 32;
 rs.initialize = function () {
   debugger;
     let {numRows,numCols,ht,wd,cycles} = this;
@@ -163,18 +207,28 @@ rs.initialize = function () {
 //item.addWpath = function (nm,subRange,min,max,initVal,prop,val) {
 
   let sr = 10; //subrange
+  let dsr = 0.1 *deltaX;
   let iv = 0;
-  let ssf = 0.4; //substepfactor
+  let wiv = 0.4*deltaX;
+  let ssf = 0.04; //substepfactor
+  let dssf = 0.05; //substepfactor
   let mi = 100; //minintensity
+  let md= deltaX*0.1;; //minintensity
   this.addWpath('r',sr,ssf,mi,250,iv,'forStroke',1);
   this.addWpath('g',sr,ssf,mi,250,iv,'forStroke',1);
   this.addWpath('b',sr,ssf,mi,250,iv,'forStroke',1);
+  this.addWpath('w',dsr,dssf,md,0.8*deltaX,wiv,'forStroke',1);
+  this.addWpath('h',dsr,dssf,md,0.8*deltaX,wiv,'forStroke',1);
   let rt =this.rt = [];
   let gt =this.gt = [];
   let bt =this.bt = [];
+  let wt =this.wt = [];
+  let htt =this.htt = [];
   this.pushTrace(rt,'r',numFrames);
   this.pushTrace(gt,'g',numFrames);
   this.pushTrace(bt,'b',numFrames);
+  this.pushTrace(wt,'w',numFrames);
+  this.pushTrace(htt,'h',numFrames);
  rs.cFrame = (this.numSteps)/2;
 }
 

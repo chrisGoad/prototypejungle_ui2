@@ -61,7 +61,6 @@ rs.initProtos = function () {
 
 rs.setFromTrace = function (n,tr,cfn,ifn) { //cfn = choice funtion; ifn = installation function
   let {numRows,numCols} = this;
-  debugger;
   for (let i=0;i<numCols;i++) {
     for (let j=0;j<numRows;j++) {
       let idx = cfn.call(this,i,j);
@@ -74,7 +73,6 @@ rs.setFromTrace = function (n,tr,cfn,ifn) { //cfn = choice funtion; ifn = instal
 
 rs.setFrom3Traces = function (n,tr0,tr1,tr2,cfn0,cfn1,cfn2,ifn) { //cfn = choice funtion; ifn = installation function
   let {numRows,numCols} = this;
-  debugger;
   const valueOf = (a,i) => {
     let vm = a[i];
     return vm?vm.value:0;
@@ -188,7 +186,6 @@ rs.setFromTraces = function (n) {
 
 }
 
-rs.cycles = 32;
 rs.initialize = function () {
   debugger;
     let {numRows,numCols,ht,wd,cycles} = this;
@@ -200,9 +197,17 @@ rs.initialize = function () {
   this.initProtos();
   this.buildGrid();
   let numSteps = this.numSteps = cycles * numRows;
-  let numFrames = this.numSteps = (cycles+2) * numRows;
-  
- 
+  let numFrames = this.numFrames = (cycles+2) * numRows;
+  this.afterInitialize();
+}	
+
+rs.cycles = 32;
+rs.cycles = 4;
+rs.startStep =rs.numRows ;
+rs.numISteps = rs.numRows;
+rs.afterInitialize = function () {
+    let {numRows,numCols,ht,wd,cycles,deltaX,deltaY,numSteps,numFrames} = this;
+
 
 //item.addWpath = function (nm,subRange,min,max,initVal,prop,val) {
 
@@ -229,18 +234,26 @@ rs.initialize = function () {
   this.pushTrace(bt,'b',numFrames);
   this.pushTrace(wt,'w',numFrames);
   this.pushTrace(htt,'h',numFrames);
- rs.cFrame = (this.numSteps)/2;
+  this.stepsSoFar = this.startStep;
+ //rs.cFrame = (this.numSteps)/2;
 }
 
 
 rs.cFrame = 0;
 rs.stepsSoFar = 0;
-
-
+rs.turnAround = Math.floor(0.7*numSteps);
+rs.firstState = 1;
 rs.updateState = function () {
-  let {cFrame,numSteps,wentBack,stepsSoFar:ssf,rt} = this;
-  this.setFromTraces(ssf);
- 
+  let {cFrame,numSteps,wentBack,stepsSoFar:ssf,rt,firstState,pstate,numSteps,turnAround} = this;
+  let stp = ssf;
+  if (ssf > turnAround) {
+    stp = turnAround - (ssf - turnAround);
+  }
+  this.setFromTraces(stp);
+  if (firstState) {
+    this.copyOfInitState = this.deepCopy(pstate.cstate);
+    this.firstState = 0;
+  }
 }
 
 rs.timeStep = () => {};

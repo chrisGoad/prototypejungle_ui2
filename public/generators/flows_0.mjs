@@ -28,6 +28,24 @@ rs.setFromTrace = function (n,tr,cfn,ifn) { //cfn = choice funtion; ifn = instal
   }
 }
 
+
+
+rs.setFrom2Traces = function (n,tr0,tr1,cfn0,cfn1,ifn) { //cfn = choice funtion; ifn = installation function
+  let {numRows,numCols} = this;
+  const valueOf = (a,i) => {
+    let vm = a[i];
+    return vm?vm.value:0;
+  }
+  for (let i=0;i<numCols;i++) {
+    for (let j=0;j<numRows;j++) {
+      let idx0 = cfn0.call(this,i,j);
+      let idx1 = cfn1.call(this,i,j);
+      let v0 = valueOf(tr0,n+idx0);
+      let v1 = valueOf(tr1,n+idx1);
+      ifn.call(this,v0,v1,i,j);
+    }
+  }
+}
 rs.setFrom3Traces = function (n,tr0,tr1,tr2,cfn0,cfn1,cfn2,ifn) { //cfn = choice funtion; ifn = installation function
   let {numRows,numCols} = this;
   const valueOf = (a,i) => {

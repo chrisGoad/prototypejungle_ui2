@@ -599,6 +599,11 @@ item.callIfDefined = function (nm,a0) {
   }
 }
 
+item.pushValNtimes = function (a,v,n) {
+  for (let i=0;i<n;i++) {
+    a.push(v);
+  }
+}
 
 item.addText = function (textP,rt,n,p,color) {
   let isTitle = n==='';

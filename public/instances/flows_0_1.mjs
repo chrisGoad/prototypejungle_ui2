@@ -5,7 +5,7 @@ import {rs as generatorP} from '/generators/flows_0.mjs';
 
 let rs = generatorP.instantiate();
 
-rs.setName('flows_0_0');
+rs.setName('flows_0_1');
 
 
 rs.pstate = {pspace:{},cstate:{}};
@@ -16,12 +16,13 @@ let wd = rs.wd = 100;
 let hht = rs.hht = 0.5*ht;
 let hwd = rs.hwd = 0.5*wd;
 let nr = 32;
+nr=48;
 let numRows = rs.numRows = nr;
 let numCols = rs.numCols = nr;
 
 
 let ff = 1;
-let topParams = {width:ht*ff,height:ht*ff,framePadding:.1*ht,frameStrokee:'white',frameStrokeWidth:1}
+let topParams = {width:ht*ff,height:ht*ff,framePadding:.2*ht,frameStroke:'white',frameStrokeWidth:1}
 Object.assign(rs,topParams);
 
 rs.buildGrid = function () {
@@ -81,7 +82,7 @@ rs.fillIfn = function (r,g,b,i,j) {
   let rb = r>150?1:0;
   let gb= g>150?1:0;
   let bb = b>150?1:0;
-  clr = (rb+gb+bb)%2?'white':'black';
+  clr = (rb+gb+bb)%3?'white':'black';
   rect.fill = clr;
   rect.update();
 }

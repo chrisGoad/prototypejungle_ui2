@@ -4,7 +4,7 @@ let rs = generatorP.instantiate();
 
 rs.setName('part2_0_3');
 let levels = 9;
-//levels = 7;
+levels = 7;
 
 rs.partParams.levels = levels;
 rs.partParams.rectangular = 1;
@@ -52,35 +52,61 @@ rs.firstNvaluesEqual = function (a,n,v) {
   }
   return true;
 }
+
 rs.partFill = function (prt) {
    let lev = prt.where.length;
    let fnv =this.firstNvaluesEqual(prt.where,3,'P0')
-   //let fnv =this.firstNvaluesEqual(prt.where,2,'P0')
-
-   console.log('lev',lev,'where',prt.where,'fnv',fnv);
    if (fnv) {
-        //debugger;
-
-    // return 'black';
-     return 'transparent';
+     if (lev === 3) {
+       this.portal = prt.polygon;
+       debugger;
+     }
+     return 'black';
    }
    return 'rgb(50,50,50)';
 }
 
+rs.partStroke = function (prt) {
+   let lev = prt.where.length;
+   let fnv =this.firstNvaluesEqual(prt.where,3,'P0')
+   if (fnv) {
+     return 'transparent';
+   }
+   return 'white';
+}
+
 let visibles = rs.partParams.visibles = [];
 rs.addToArray(visibles,1,20);
+//rs.addToArray(visibles,1,levels);
 
 let strokeWidths = rs.partParams.strokeWidths = [];
 //rs.computeExponentials({dest:strokeWidths,n:4,factor:0.7,root:.4});
 rs.computeExponentials({dest:strokeWidths,n:20,factor:0.7,root:.4});
 
 //rs.adjustProtos = function () {
+rs.addCircle = function (p) {
+   let crc = this.circleP.instantiate();
+  crc.dimension=Math.random()*0.4;;
+  crc.fill = 'white';
+  crc.moveto(p);
+  this.circles.push(crc);
+
+}
 rs.afterInitialize = function () {
   debugger;
-  let crc = this.circleP.instantiate();
-  crc.dimension=10;
-  crc.fill = 'white';
-  this.set('circle',crc);
+  let {portal} = this;
+  this.set('circles',arrayShape.mk());
+  let pc = portal.contains(Point.mk(0,0));
+  for (let i = 0;i<100;i++) {
+    let dim = 40;
+    let x = (Math.random()-0.5)*dim;
+    let y = (Math.random()-0.5)*dim;
+    let p = Point.mk(x,y);
+    if (portal.contains(p)) {
+      this.addCircle(p);
+    }
+  }
+  
 }
 //rs.addToArray(strokeWidths,.1,levels);
 export {rs};

@@ -2028,6 +2028,9 @@ Polygon.height = function () {
 	return this.bottom() - this.top();
 }
 
+Polygon.extent = function() {
+  return Math.max(this.width(),this.height());
+}
 Polygon.sides = function () {
   let rs = [];
   let corners = this.corners;
@@ -2039,7 +2042,32 @@ Polygon.sides = function () {
   return rs;
 }
 
+Polygon.intersectsLineSegment = function (sg) {
+  let sds = this.sides();
+  let sln = sds.length;
+  for (let i=0;i<sln;i++) {
+    let iscts = sg.intersectsLineSegment(sds[i]);
+    if (iscts) {
+     return 1;
+    }
+  }
+  return 0;
+}
+     
+// only works for convex polygons.
 
+Polygon.contains = function (p) {
+  debugger;
+  let ext = this.extent();
+  let ra = Math.random()*2*Math.PI;
+  let rvec = Point.mk(Math.cos(ra),Math.sin(ra));
+  let op0 = p.plus(rvec.times(ext*100));
+  let op1 = p.plus(rvec.times(-ext*100));
+  let seg0 = LineSegment.mk(p,op0);
+  let seg1 = LineSegment.mk(p,op1);
+  return this.intersectsLineSegment(seg0) && this.intersectsLineSegment(seg1);
+}
+     
 Polygon.mangle = function (params) {
  let {twist:tw=0,lengthen:ln=1,within} = params;
 //debugger;

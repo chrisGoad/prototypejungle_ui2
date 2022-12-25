@@ -1,4 +1,5 @@
 import {rs as rectPP} from '/shape/rectangle.mjs';
+import {rs as polygonPP} from '/shape/polygon.mjs';
 import {rs as basicP} from '/generators/basics.mjs';
 import {rs as addPathMethods} from '/mlib/path.mjs';	
 
@@ -11,8 +12,15 @@ rs.setName('flows_0');
 
 rs.pstate = {pspace:{},cstate:{}};
 
-
- 
+rs.mkQuadrantGon = function (dim,ul,ur,ll,lr) { 
+  let qg = {dim};
+  let hdim = 0.5*dim;
+  let ulc = Point.mk(-hdim,-hdim);
+  let urc = Point.mk(hdim,-hdim);
+  let lrc = Point.mk(hdim,hdim);
+  let llc = Point.mk(-hdim,hdim);
+  let pul = ulc.plus(ul);
+}
 
 
 

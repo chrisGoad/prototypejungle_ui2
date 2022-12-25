@@ -99,7 +99,7 @@ rs.setFromTraces = function (n) {
 
 
 rs.cycles = 32;
-rs.cycles = 12;
+rs.cycles = 16;
 rs.saveAnimation = 1;
 rs.blackSteps = 10;
 rs.frameDelta = 100;

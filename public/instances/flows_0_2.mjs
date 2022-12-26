@@ -57,14 +57,16 @@ rs.initProtos = function () {
   
 }  
 
-rs.wIfn = function (v0,v1,i,j) {
+rs.wIfn = function (va,i,j) {
+  let [v0,v1] = va;
   let {rects,numCols} = this;
   let idx = i*numCols +j;
   let rect = rects[idx];
   rect.width = (v0+v1)/2;
   rect.update();
 }
-rs.hIfn = function (v0,v1,i,j) {
+rs.hIfn = function (va,i,j) {
+  let [v0,v1] = va;
   let {rects,numCols} = this;
   let idx = i*numCols +j;
   let rect = rects[idx];
@@ -74,7 +76,8 @@ rs.hIfn = function (v0,v1,i,j) {
 
 
 
-rs.fillIfn = function (r,g,b,i,j) {
+rs.fillIfn = function (va,i,j) {
+  let [r,g,b] = va;
   let {rects,numCols} = this;
   let idx = i*numCols +j;
   let rect = rects[idx];
@@ -91,9 +94,9 @@ rs.fillIfn = function (r,g,b,i,j) {
  
 rs.setFromTraces = function (n) {
   let {rt,gt,bt,wt0,wt1,htt0,htt1} = this;
-  this.setFrom3Traces(n,rt,gt,bt,this.downCfn,this.upCfn,this.toRightCfn,this.fillIfn);
-  this.setFrom2Traces(n,wt0,wt1,this.downCfn,this.upCfn,this.wIfn);
-    this.setFrom2Traces(n,htt0,htt1,this.toRightCfn,this.toLeftCfn,this.hIfn);
+  this.setFromTraceArray(n,[rt,gt,bt],[this.downCfn,this.upCfn,this.toRightCfn],this.fillIfn);
+  this.setFromTraceArray(n,[wt0,wt1],[this.downCfn,this.upCfn],this.wIfn);
+  this.setFromTraceArray(n,[htt0,htt1],[this.toRightCfn,this.toLeftCfn],this.hIfn);
 
 }
 

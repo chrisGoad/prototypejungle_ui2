@@ -339,6 +339,7 @@ item.nextState = function (pathKind,pspace,cstate,component) {
 }
 
 item.stepComponent = function (nm,forTrace) { // stv = subtracevalue
+  let {stepsSoFar:ssf}= this;
   let {pspace,cstate}= this.pstate;
   let cc = pspace[nm];
   let subc = cc.subComponent;
@@ -347,12 +348,15 @@ item.stepComponent = function (nm,forTrace) { // stv = subtracevalue
   }
   let iv = cc.interval;
   let kind = cc.kind;
-  if ((!iv) || (ct%iv === 0)) {
+  if ((!iv) || (ssf%iv === 0)) {
     this.nextState(kind,pspace,cstate,nm);
   }
 }
    
 item.timeStep = function (pstate) {
+  if (!pstate) {
+    return;
+  }
   let {pspace,cstate}= pstate;
   let ct = cstate.time?cstate.time:0;
   let props = Object.getOwnPropertyNames(pspace);
@@ -420,7 +424,7 @@ item.oneInterpolationStep = function () {
 
 }
 item.oneStep = function (one) {
-  //debugger;
+  debugger;
   if (this.paused) {
     return;
   }

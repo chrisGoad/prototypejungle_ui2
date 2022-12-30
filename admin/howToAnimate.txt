@@ -125,6 +125,7 @@ c:\ffmpeg\bin\ffmpeg  -framerate 15 -i animations/flows_0_1_f%03d.jpg -s 800x800
 c:\ffmpeg\bin\ffmpeg  -framerate 15 -i animations/flows_0_1_f%03d.jpg -s 800x800  export/flows_0_1.gif
 c:\ffmpeg\bin\ffmpeg  -framerate 15 -i animations/flows_0_2_f%03d.jpg -s 800x800  export/flows_0_2.mp4
 c:\ffmpeg\bin\ffmpeg  -framerate 15 -i animations/flows_0_3_f%03d.jpg -s 800x800  export/flows_0_3.mp4
+c:\ffmpeg\bin\ffmpeg  -framerate 20 -i animations/part2_0_55_f%03d.jpg -s 800x800  export/part2_0_55.gif
 
 
 

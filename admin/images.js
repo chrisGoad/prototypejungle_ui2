@@ -21,9 +21,11 @@ sections:
  //[0,'quad_9_4','instances',1,'partition 9 4',{likes:0,posted:0,category:'quad'}], 
  [40,'quad_9_6','instances',1,'Quad 9 6',{likes:0,posted:0,noTitle:1,category:'partition'}], 
  [50,'quad_11','generators',1,'Quad 11',{likes:0,posted:0,noTitle:1,category:'partition'}], 
- [60,'quad_11_2','instances',1,'Quad 11 2',{likes:0,posted:0,noTitle:1,category:'partition'}], 
+ //[60,'quad_11_2','instances',1,'Quad 11 2',{likes:0,posted:0,noTitle:1,category:'partition'}], 
+ [60,'part2_0_19','instances',1,'Quad 11 4',{likes:0,posted:0,noTitle:1,category:'partition'}], 
+  [70,'part2_0_3','instances',1,'Quad 11 2',{likes:0,posted:0,noTitle:1,category:'partition'}], 
+
  //[70,'quad_11_4','instances',1,'Quad 11 4',{likes:0,posted:0,noTitle:1,category:'partition'}], 
- [70,'part2_0_19','instances',1,'Quad 11 4',{likes:0,posted:0,noTitle:1,category:'partition'}], 
  [80,'quad_15_1','instances',1,'Quad 15 1',{likes:0,posted:0,noTitle:1,category:'partition'}], 
  //[90,'quad_15_3','instances',1,'Quad 15 3',{likes:0,posted:0,noTitle:1,category:'partition'}], 
  [90,'part2_0_6','instances',1,'Quad 15 3',{likes:0,posted:0,noTitle:1,category:'partition'}], 

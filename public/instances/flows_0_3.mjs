@@ -15,7 +15,7 @@ let ht= rs.ht = 100;
 let wd = rs.wd = 100;
 let hht = rs.hht = 0.5*ht;
 let hwd = rs.hwd = 0.5*wd;
-let nr = 48;
+let nr = 32;
 //nr = 8;
 //nr=48;
 let numRows = rs.numRows = nr;
@@ -23,7 +23,7 @@ let numCols = rs.numCols = nr;
 
 
 let ff = 1;
-let topParams = {width:ht*ff,height:ht*ff,framePadding:.2*ht,frameStroke:'white',frameStrokeWidth:1}
+let topParams = {width:ht*ff,height:ht*ff,framePadding:.2*ht,frameStrokee:'white',frameStrokeWidth:1}
 Object.assign(rs,topParams);
 
 
@@ -120,10 +120,9 @@ rs.setFromTraces = function (n) {
 }
 
 
-rs.cycles = 32;
+//rs.cycles = 32;
 rs.cycles = 16;
 rs.cycles = 12;
-rs.saveAnimation = 0;
 rs.blackSteps = 10;
 rs.frameDelta = 60;
 
@@ -158,7 +157,7 @@ rs.initialize = function () {
   let wiv = 0;
   let ssf = 0.04; //substepfactor
   let dssf = 0.05; //substepfactor
-  let mi = 100; //minintensity
+  let mi =0; //minintensity
   let lwd= 0;
   let hgd= deltaX*0.6;;
   this.addWpath('r',sr,ssf,mi,250,iv,'forStroke',1);
@@ -196,8 +195,9 @@ rs.initialize = function () {
   this.pushTrace(llyt,'lly',numFrames);
   debugger;
   for (let i=toBlack;i<numFrames;i++) {
-    //wt[i].value = 0;
-    //htt[i].value = 0;
+    rt[i].value = 0;
+    gt[i].value = 0;
+    bt[i].value = 0;
   }
 }
 

@@ -1,20 +1,20 @@
 
-import {rs as generatorP} from '/generators/part2_0.mjs';
+import {rs as basicP} from '/generators/basics.mjs';
 
-let rs = generatorP.instantiate();
+import {rs as addPathMethods} from '/mlib/path.mjs';	
+
+let rs = basicP.instantiate();
+addPathMethods(rs);
 rs.pstate = {pspace:{},cstate:{}};
 
-rs.setName('part2_0_55');
+rs.setName('part2_0_56');
+let wd = 1000;
+let nr = 4;
+let topParams = {width:wd,height:wd,framePadding:0.2*wd,frameStroke:'white',numRows:nr,numCols:nr}
+Object.assign(rs,topParams);
 let levels = 16;
 levels = 6;
-let topLevels = 9;
-rs.frameStrokee = 'white';
-rs.framePadding = .05*rs.width;
-let kind = 'sweep';
-rs.partParams.levels = levels;
-rs.partParams.rectangular = 1;
-levels++;
-
+import {rs as partp} from '/instances/part2_0_57.mjs';	
 
 let qsr = 0.03;
 let qssf = 0.04;
@@ -28,6 +28,38 @@ let qiv = 0.5;
 rs.numSteps = 200;
 rs.numSteps = 1000;
 
+
+
+rs.buildGrid = function (proto) {
+  let {numRows,numCols,height:ht,width:wd,hht,hwd,parts,deltaX,deltaY} = this;
+  // column major order
+  debugger;
+  let lx = - (0.5*(wd-deltaX));
+  let ly = - (0.5*(ht-deltaY));
+  for (let i=0;i<numRows;i++) {
+    let x = i*deltaX +lx;
+    for (let j=0;j<numCols;j++) {
+       let y = j*deltaY+ly;
+       let p = Point.mk(x,y);
+       let parti = proto.instantiate()
+       parts.push(parti);
+       parti.initialize();
+       parti.moveto(p);
+    }
+  }
+}
+      
+
+rs.initialize = function () {
+  let {numRows,width} = this;
+  this.set('parts',arrayShape.mk());
+  this.deltaX = width/numRows;
+  this.deltaY = width/numRows;
+  this.buildGrid(partp);
+  //let parti = partp.instantiate();
+  //this.set('part',parti);
+  //parti.initialize();
+}
 
 rs.quadSplitParams = {Case:3,vertexNum:0,pcs:[0.4,1.4,2.6,3.4]};
 rs.triSplitParams = {Case:1,vertexNum:0,pcs:[0.3,1.3]};
@@ -55,21 +87,9 @@ rs.partSplitParams = function (prt) {
   return rs;
 }
 
-let visibles = rs.partParams.visibles = [];
-rs.addToArray(visibles,1,20);
-
-let strokeWidths = rs.partParams.strokeWidths = [];
-rs.computeExponentials({dest:strokeWidths,n:20,root:0.4,factor:.8});
-
 //item.addWpath = function (nm,subRange,min,max,initVal,prop,val) {
 //item.addWpath = function (nm,subRange,substepfactor,min,max,initVal,prop,val) {
 
-rs.afterInitializee = function () {
-    this.addWpath('L1q0s0',qsr,qssf,qmin,qmax,qiv);
-    this.addWpath('L1q0s1',qsr,qssf,qmin,qmax,qiv);
-    this.addWpath('L1q0s2',qsr,qssf,qmin,qmax,qiv);
-    this.addWpath('L1q0s3',qsr,qssf,qmin,qmax,qiv);
-}
 rs.updateStatee = function () {
   debugger;
   this.resetShapes();

@@ -172,6 +172,8 @@ sections:
  [0,'part2_0_51','instances',1,'Part2 0 51',{likes:0,posted:0,category:'quad'}], 
  [0,'part2_0_52','instances',1,'Part2 0 52',{likes:0,posted:0,category:'quad'}], 
  [0,'part2_0_55','instances',1,'Part2 0 55',{likes:0,posted:0,category:'quad'}], 
+ [0,'part2_0_56','instances',1,'Part2 0 56',{likes:0,posted:0,category:'quad'}], 
+ [0,'part2_0_57','instances',1,'Part2 0 57',{likes:0,posted:0,category:'quad'}], 
  [0,'path_flows','generators',1,'Path flows',{likes:0,posted:0,category:'quad'}], 
  [0,'drop_move_2','generators',1,'Drop Move 2',{likes:0,posted:0,category:'quad'}], 
  [0,'drop_move_2','generators',1,'Drop Move 2',{likes:0,posted:0,category:'quad'}], 

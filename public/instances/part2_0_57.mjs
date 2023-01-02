@@ -26,25 +26,6 @@ rs.partSplitParams = function (prt) {
 let visibles = rs.partParams.visibles = [];
 rs.addToArray(visibles,1,20);
 
-let strokeWidths = rs.partParams.strokeWidths = [];
-rs.computeExponentials({dest:strokeWidths,n:20,root:0.4,factor:.7});
-rs.partStrokeWidth = function (prt) {
-  let quadp = 1;
-  let lev = prt.where.length;
-  let levHigh = lev > 7;
-  let pln = prt.polygon.corners.length;
-  let quad = pln === 4;
-  let prnt = prt.parent;
-  if (prnt) {
-  //  debugger;
-    let  pln = prnt.polygon.corners.length;
-    quadp = pln === 4;
-  }
-  let rs = (((quad&&quadp)|| levHigh)?1:.1)*strokeWidths[lev];
-  //let rs = (((quad&&quadp)|| levHigh)?1:.01)*strokeWidths[lev];
-  console.log('lev',lev,'quad',quad,'rs',rs);
-  return rs;
-}
   
 //rs.addToArray(strokeWidths,.1,levels);
 export {rs};

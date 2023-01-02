@@ -3,8 +3,11 @@ import {rs as basicP} from '/generators/basics.mjs';
 
 import {rs as addPathMethods} from '/mlib/path.mjs';	
 
+import {rs as addFlowMethods} from '/mlib/flows.mjs';	
+
 let rs = basicP.instantiate();
 addPathMethods(rs);
+addFlowMethods(rs);
 rs.pstate = {pspace:{},cstate:{}};
 
 rs.setName('part2_0_56');
@@ -21,12 +24,6 @@ let qssf = 0.04;
 let qmin = 0.2;
 let qmax = 0.8;
 let qiv = 0.5;
- rs.addWpath('L1q0s0',qsr,qssf,qmin,qmax,qiv);
-    rs.addWpath('L1q0s1',qsr,qssf,qmin,qmax,qiv);
-    rs.addWpath('L1q0s2',qsr,qssf,qmin,qmax,qiv);
-    rs.addWpath('L1q0s3',qsr,qssf,qmin,qmax,qiv);
-rs.numSteps = 200;
-rs.numSteps = 1000;
 
 
 
@@ -48,47 +45,64 @@ rs.buildGrid = function (proto) {
     }
   }
 }
-      
-
+ 
+rs.cycles = 2;
 rs.initialize = function () {
-  let {numRows,width} = this;
+  let {numRows,width,cycles} = this;
   this.set('parts',arrayShape.mk());
   this.deltaX = width/numRows;
   this.deltaY = width/numRows;
+ let numSteps = this.numSteps = cycles * 1* numRows;
+  let numFrames = this.numFrames = (cycles+2) *1* numRows;     
   this.buildGrid(partp);
+  this.addWpath('L1q0s0',qsr,qssf,qmin,qmax,qiv);
+    this.addWpath('L1q0s1',qsr,qssf,qmin,qmax,qiv);
+    this.addWpath('L1q0s2',qsr,qssf,qmin,qmax,qiv);
+    this.addWpath('L1q0s3',qsr,qssf,qmin,qmax,qiv);
+   let L1q0s0t =this.L1q0s0t = [];
+   let L1q0s1t =this.L1q0s1t = [];
+   let L1q0s2t =this.L1q0s2t = [];
+   let L1q0s3t =this.L1q0s3t = [];
+   this.pushTrace(L1q0s0t,'L1q0s0',numFrames);
+   this.pushTrace(L1q0s1t,'L1q0s1',numFrames);
+   this.pushTrace(L1q0s2t,'L1q0s2',numFrames);
+   this.pushTrace(L1q0s3t,'L1q0s3',numFrames);
+
   //let parti = partp.instantiate();
   //this.set('part',parti);
   //parti.initialize();
 }
 
-rs.quadSplitParams = {Case:3,vertexNum:0,pcs:[0.4,1.4,2.6,3.4]};
-rs.triSplitParams = {Case:1,vertexNum:0,pcs:[0.3,1.3]};
-rs.partSplitParams = function (prt) {
-  let ln = prt.polygon.corners.length;
-  let {pstate} = this;
-  let {cstate} = pstate;
-  let {where} = prt;
-  let lev = where.length;
-  /*let eps0 = cstate.pc0.value;
-  let eps1 = cstate.pc1.value;
-  let eps2 = cstate.pc2.value;
-  let eps3 = cstate.pc3.value;*/
-  let L1q0s0 = cstate.L1q0s0.value;
-  let L1q0s1 = cstate.L1q0s1.value+1;
-  let L1q0s2 = cstate.L1q0s2.value+2;
-  let L1q0s3 = cstate.L1q0s3.value+3;
-  let qp;
-  if (1 || (lev===0)) {
-    qp =  {Case:3,pcs:[L1q0s0,L1q0s1,L1q0s2,L1q0s3]};
-  } else {
-    qp = null;
-  }
-  let rs = (ln === 3)?this.triSplitParams:qp;
-  return rs;
+rs.adjustPart = function (va,i,j) {
+  let {numRows,parts} = this;
+
+ let idx = i*numRows + j;
+ let prt = parts[idx];
+  let [L1q0s0,L1q0s1,L1q0s2,L1q0s3] = va;
+ let qp =  {Case:3,pcs:[L1q0s0,L1q0s1+1,L1q0s2+2,L1q0s3+3]};
+ prt.quadSplitParams = qp;
+ prt.resetShapes();
+}
+ 
+rs.setFromTraces = function (n) {
+  let {L1q0s0t,L1q0s1t,L1q0s2t,L1q0s3t} = this;
+  this.setFromTraceArray(n,[L1q0s0t,L1q0s1t,L1q0s2t,L1q0s3t],
+                           [this.toLeftCfn,this.toRightCfn,this.downCfn,this.upCfn],
+                           this.adjustPart);
+  this.draw();
 }
 
-//item.addWpath = function (nm,subRange,min,max,initVal,prop,val) {
-//item.addWpath = function (nm,subRange,substepfactor,min,max,initVal,prop,val) {
+
+rs.updateState = function () {
+  let {stepsSoFar:ssf} = this;
+  /*let {cFrame,numSteps,wentBack,stepsSoFar:ssf,rt,firstState,pstate,frameDelta} = this;
+  let fr = (ssf+frameDelta)%numSteps;
+  if (fr === 2) {
+    debugger;
+  }*/
+  this.setFromTraces(ssf);
+  
+}
 
 rs.updateStatee = function () {
   debugger;

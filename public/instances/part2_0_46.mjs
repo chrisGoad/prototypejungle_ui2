@@ -17,10 +17,11 @@ let step9 = 0.02*(200/183)*Math.PI;
 
 let bounce  = 1;
 let sinusoidal = 0;
-let step3 = 0.01;
-let step4 = 0.01;
-let step7 = 0.01;
-let step10 = 0.01;
+let step = 0.02
+let step3 = step;
+let step4 = step;
+let step7 = step;
+let step10 = step;
 let minpc = -.5;
 let maxpc = .5;
 let minpc10 = -.5;
@@ -100,6 +101,9 @@ const randomColor = function () {
 let fillByWhereString = {P0_P0_P0:randomColor(),P0_P2:randomColor(),P0_P1:randomColor(),P0_P3:randomColor(),P1_P0:randomColor(),P1_P1:randomColor(),P1_P2:randomColor(),P1_P3:randomColor(),
    P2_P0:randomColor(),P2_P1:randomColor(),P2_P2:randomColor(),P2_P3:randomColor(),P3_P0:randomColor(),P3_P1:randomColor(),P3_P1:randomColor(),P3_P2:randomColor(),P3_P3:randomColor()};
 
+
+let colorSw = 183;
+ colorSw = 91;
 rs.genFills = function () {
     let {pstate} = this;
     let {cstate} = pstate;
@@ -107,8 +111,8 @@ rs.genFills = function () {
     if (time === 183) {
       debugger;
     }
-    let sqc0 = time <= 183?'red':'yellow';
-    let sqc1 = time <= 183?'blue':'magenta';
+    let sqc0 = time <= colorSw?'red':'yellow';
+    let sqc1 = time <= colorSw?'blue':'magenta';
   	let aw = rs.allWheres(levels,4);
     let faw = aw.filter((w) => {
       let w1 = w[1];
@@ -203,7 +207,7 @@ let ist=rs.numISteps = 0;
 rs.numSteps = 101-ist;
 rs.numSteps = 3000;
 rs.numSteps = 100;
-rs.numSteps = 2*183;
+rs.numSteps = 2*colorSw+8;
 //rs.addToArray(strokeWidths,.1,levels);
 export {rs};
 

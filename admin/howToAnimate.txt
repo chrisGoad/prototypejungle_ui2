@@ -92,6 +92,7 @@ c:\ffmpeg\bin\ffmpeg  -framerate 10 -i animations/part2_0_43_f%03d.jpg -s 800x80
 c:\ffmpeg\bin\ffmpeg  -framerate 10 -i animations/part2_0_43_f%03d.jpg -s 800x800  export/part2_0_43.gif
 c:\ffmpeg\bin\ffmpeg  -framerate 10 -i animations/part2_0_44_f%03d.jpg -s 800x800  export/part2_0_44.anim.mp4
 c:\ffmpeg\bin\ffmpeg  -framerate 20 -i animations/part2_0_46_f%03d.jpg -s 800x800  export/part2_0_46.gif
+c:\ffmpeg\bin\ffmpeg  -framerate 20 -i animations/part2_0_46_f%03d.jpg -s 800x800  export/part2_0_46f.gif
 c:\ffmpeg\bin\ffmpeg  -framerate 20 -i animations/part2_0_31_f%03d.jpg -s 500x500  export/part2_0_31.anim.gif
 c:\ffmpeg\bin\ffmpeg  -framerate 10 -i animations/grid_emergence_f%03d.jpg -s 500x500  export/grid_emergence.gif
 c:\ffmpeg\bin\ffmpeg  -framerate 10 -i animations/part2_0_32_f%03d.jpg -s 500x500  export/part2_0_32.gif
@@ -109,6 +110,7 @@ c:\ffmpeg\bin\ffmpeg  -framerate 20 -i animations/part2_0_49c_f%03d.jpg -s 500x5
 c:\ffmpeg\bin\ffmpeg  -framerate 15 -i animations/part2_0_49c_f%03d.jpg -s 500x500  export/part2_0_49c.gif
 c:\ffmpeg\bin\ffmpeg  -framerate 20 -i animations/part2_0_51_f%03d.jpg -s 800x800  export/part2_0_51.mp4
 c:\ffmpeg\bin\ffmpeg  -framerate 20 -i animations/part2_0_52_f%03d.jpg -s 800x800  export/part2_0_52.mp4
+c:\ffmpeg\bin\ffmpeg  -framerate 20 -i animations/part2_0_56_f%03d.jpg -s 800x800  export/part2_0_56.mp4
 c:\ffmpeg\bin\ffmpeg  -framerate 20 -i animations/drop_move_2_f%03d.jpg -s 800x800  export/drop_move_2.mp4
 c:\ffmpeg\bin\ffmpeg  -framerate 15 -i animations/drop_move_2_bb_f%03d.jpg -s 800x800  export/drop_move_2_bb.gif
 c:\ffmpeg\bin\ffmpeg  -framerate 25 -i animations/spirals_0_f%03d.jpg -s 800x800  export/spirals_0.gif
@@ -125,7 +127,9 @@ c:\ffmpeg\bin\ffmpeg  -framerate 15 -i animations/flows_0_1_f%03d.jpg -s 800x800
 c:\ffmpeg\bin\ffmpeg  -framerate 15 -i animations/flows_0_1_f%03d.jpg -s 800x800  export/flows_0_1.gif
 c:\ffmpeg\bin\ffmpeg  -framerate 15 -i animations/flows_0_2_f%03d.jpg -s 800x800  export/flows_0_2.mp4
 c:\ffmpeg\bin\ffmpeg  -framerate 15 -i animations/flows_0_3_f%03d.jpg -s 800x800  export/flows_0_3.mp4
-c:\ffmpeg\bin\ffmpeg  -framerate 20 -i animations/part2_0_55_f%03d.jpg -s 800x800  export/part2_0_55.gif
+c:\ffmpeg\bin\ffmpeg  -framerate 15 -i animations/flows_0_5_f%03d.jpg -s 800x800  export/flows_0_5.mp4
+c:\ffmpeg\bin\ffmpeg  -framerate 20 -i animations/part2_0_55_f%03d.jpg -s 800x800  export/part2_0_55.mp4
+c:\ffmpeg\bin\ffmpeg  -framerate 20 -i animations/part2_0_56_f%03d.jpg -s 800x800  export/part2_0_56.mp4
 
 
 

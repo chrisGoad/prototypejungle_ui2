@@ -188,6 +188,7 @@ sections:
  [0,'flows_0_2','instances',1,'Flows 0 2',{likes:0,posted:0,category:'quad'}], 
  [0,'flows_0_3','instances',1,'Flows 0 3',{likes:0,posted:0,category:'quad'}], 
  [0,'flows_0_4','instances',1,'Flows 0 4',{likes:0,posted:0,category:'quad'}], 
+ [0,'flows_0_5','instances',1,'Flows 0 5',{likes:0,posted:0,category:'quad'}], 
  [0,'spirals_0_0','instances',1,'Spirals 0 0',{likes:0,posted:0,category:'quad'}], 
  [0,'spirals_0_1','instances',1,'Spirals 0 1',{likes:0,posted:0,category:'quad'}], 
  [0,'spirals_0_2','instances',1,'Spirals 0 2',{likes:0,posted:0,category:'quad'}], 

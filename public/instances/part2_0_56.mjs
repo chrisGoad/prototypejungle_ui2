@@ -11,19 +11,23 @@ addFlowMethods(rs);
 rs.pstate = {pspace:{},cstate:{}};
 
 rs.setName('part2_0_56');
-let wd = 1000;
-let nr = 4;
+let wd = 600;
+let nr = 5;
 let topParams = {width:wd,height:wd,framePadding:0.2*wd,frameStroke:'white',numRows:nr,numCols:nr}
 Object.assign(rs,topParams);
 let levels = 16;
 levels = 6;
 import {rs as partp} from '/instances/part2_0_57.mjs';	
 
-let qsr = 0.03;
-let qssf = 0.04;
-let qmin = 0.2;
-let qmax = 0.8;
-let qiv = 0.5;
+let qsr0 = 0.06;
+let qsr1 = 0.2;
+let qssf = 0.1;
+let qmin0 = 0.2;
+let qmin1 = 0.3;
+let qmax0 = 0.8;
+let qmax1 = 0.8;
+let qiv0 = 0.5;
+let qiv1 = 0.7;
 
 
 
@@ -45,20 +49,22 @@ rs.buildGrid = function (proto) {
     }
   }
 }
- 
+//item.addWpath = function (nm,subRange,substepfactor,min,max,initVal,prop,val) {
+
 rs.cycles = 2;
 rs.initialize = function () {
   let {numRows,width,cycles} = this;
   this.set('parts',arrayShape.mk());
   this.deltaX = width/numRows;
   this.deltaY = width/numRows;
- let numSteps = this.numSteps = cycles * 1* numRows;
-  let numFrames = this.numFrames = (cycles+2) *1* numRows;     
+  let fc=20;
+ let numSteps = this.numSteps = fc* cycles * 1* numRows;
+  let numFrames = this.numFrames = fc* (cycles+2) *1* numRows;     
   this.buildGrid(partp);
-  this.addWpath('L1q0s0',qsr,qssf,qmin,qmax,qiv);
-    this.addWpath('L1q0s1',qsr,qssf,qmin,qmax,qiv);
-    this.addWpath('L1q0s2',qsr,qssf,qmin,qmax,qiv);
-    this.addWpath('L1q0s3',qsr,qssf,qmin,qmax,qiv);
+  this.addWpath('L1q0s0',qsr0,qssf,qmin0,qmax0,qiv0);
+    this.addWpath('L1q0s1',qsr1,qssf,qmin1,qmax1,qiv1);
+    this.addWpath('L1q0s2',qsr0,qssf,qmin0,qmax1,qiv0);
+    this.addWpath('L1q0s3',qsr1,qssf,qmin1,qmax1,qiv1);
    let L1q0s0t =this.L1q0s0t = [];
    let L1q0s1t =this.L1q0s1t = [];
    let L1q0s2t =this.L1q0s2t = [];
@@ -67,7 +73,7 @@ rs.initialize = function () {
    this.pushTrace(L1q0s1t,'L1q0s1',numFrames);
    this.pushTrace(L1q0s2t,'L1q0s2',numFrames);
    this.pushTrace(L1q0s3t,'L1q0s3',numFrames);
-
+  debugger;
   //let parti = partp.instantiate();
   //this.set('part',parti);
   //parti.initialize();
@@ -75,10 +81,11 @@ rs.initialize = function () {
 
 rs.adjustPart = function (va,i,j) {
   let {numRows,parts} = this;
-
+debugger;
  let idx = i*numRows + j;
  let prt = parts[idx];
   let [L1q0s0,L1q0s1,L1q0s2,L1q0s3] = va;
+ console.log('idx',idx,'va',va);
  let qp =  {Case:3,pcs:[L1q0s0,L1q0s1+1,L1q0s2+2,L1q0s3+3]};
  prt.quadSplitParams = qp;
  prt.resetShapes();
@@ -87,7 +94,8 @@ rs.adjustPart = function (va,i,j) {
 rs.setFromTraces = function (n) {
   let {L1q0s0t,L1q0s1t,L1q0s2t,L1q0s3t} = this;
   this.setFromTraceArray(n,[L1q0s0t,L1q0s1t,L1q0s2t,L1q0s3t],
-                           [this.toLeftCfn,this.toRightCfn,this.downCfn,this.upCfn],
+                           [this.downCfn,this.downCfn,this.downCfn,this.downCfn],
+                          // [this.toLeftCfn,this.toRightCfn,this.downCfn,this.upCfn],
                            this.adjustPart);
   this.draw();
 }

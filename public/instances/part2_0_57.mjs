@@ -8,7 +8,7 @@ let topParams = {width:wd,height:wd,framePadding:0.2*wd,frameStrokee:'white'}
 Object.assign(rs,topParams);
 rs.setName('part2_0_57');
 let levels = 10;
-levels = 3;
+levels = 2;
 
 rs.partParams.levels = levels;
 rs.partParams.rectangular = 1;

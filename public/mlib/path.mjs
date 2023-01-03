@@ -154,12 +154,14 @@ item.addWpath = function (nm,subRange,substepfactor,min,max,initVal,prop,val) {
   }
   pspace[snm] = pssub;
   cstate[snm] = {value:0};
+
   let ps = {kind:'randomWalkScalar',subComponent:snm,min,max};
   if (prop) {
     ps[prop] = val;
   }
   pspace[nm] = ps;
   cstate[nm] = {value:initVal};
+
 };
   
    

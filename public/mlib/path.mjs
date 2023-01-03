@@ -337,24 +337,36 @@ item.nextState = function (pathKind,pspace,cstate,component) {
   }
   if (pathKind === 'sweep') {
     this.sweepNextState(pspace,cstate,component);
+  } 
+  if (pathKind === 'interpolate') {
+    this.interpolateNextState(pspace,cstate,component);
   }
 }
 
 item.stepComponent = function (nm,forTrace) { // stv = subtracevalue
-  let {stepsSoFar:ssf}= this;
+  let {stepsSoFar:ssf,iStart,iSteps,iTarget}= this;
+  let interpolating = iStart&&(ssf>=iStart);
   let {pspace,cstate}= this.pstate;
   let cc = pspace[nm];
   let subc = cc.subComponent;
-  if (forTrace&&subc) {
+  if (forTrace&&subc&&(!interpolating)) {
     this.stepComponent(subc);
   }
   let iv = cc.interval;
-  let kind = cc.kind;
+  let kind = interpolating?'interpolate':cc.kind;
   if ((!iv) || (ssf%iv === 0)) {
     this.nextState(kind,pspace,cstate,nm);
   }
 }
-   
+
+
+item.interpolateComponent = function (nm,iState,fState,fr) { // stv = subtracevalue
+  let {pspace,cstate}= this.pstate;
+  let ival = iState[nm].value;
+  let fval = fState[nm].value;
+  let cval = ival+fr*(fval-ival);
+  cstate[nm].value = cval;
+}
 item.timeStep = function (pstate) {
   if (!pstate) {
     return;
@@ -474,7 +486,46 @@ item.pushTrace = function (a,component,n) {
 }
 
 
- 
+item.recordTraces = function (n) {
+  let {cstate,pspace}= this.pstate;
+  let props = Object.getOwnPropertyNames(pspace);
+  let traces = {};
+  props.forEach((nm) => {
+    let ctr = []
+    traces[nm] = ctr;
+    this.pushTrace(ctr,nm,n);
+  });
+  return traces;
+}
+  
+
+item.interpolateTrace = function (a,component,iState,fState,n) {
+  let {cstate}= this.pstate;
+  let cstc = cstate[component];
+  //let trace = [];
+  for (let i=0;i<=n;i++) {
+    let fr = i/n;
+    let cv = this.deepCopy(cstc);
+    a.push(cv);
+    //let stv = subtrace?subtrace[i]:undefined;
+   // this.stepComponent(component,stv);
+    this.interpolateComponent(component,iState,fState,fr);
+  }
+  return a;
+}
+
+
+item.interpolateTraces = function (iState,fState,n) {
+  let {cstate,pspace}= this.pstate;
+  let props = Object.getOwnPropertyNames(pspace);
+  let traces = {};
+  props.forEach((nm) => {
+    let ctr = []
+    traces[nm] = ctr;
+    this.interpolateTrace(ctr,nm,iState,fState,n);
+  });
+  return traces;
+}
        
 }  
    

@@ -27,13 +27,13 @@ let wd = rs.wd = 100;
 let hht = rs.hht = 0.5*ht;
 let hwd = rs.hwd = 0.5*wd;
 let nr = 32;
-//nr=48;
+nr=24;
 let numRows = rs.numRows = nr;
 let numCols = rs.numCols = nr;
 
 
 let ff = 1;
-let topParams = {width:ht*ff,height:ht*ff,framePadding:.6*ht,frameStrokee:'white',frameStrokeWidth:1}
+let topParams = {width:ht*ff,height:ht*ff,framePadding:1.5*ht,frameStrokee:'white',frameStrokeWidth:1}
 Object.assign(rs,topParams);
 
 
@@ -106,7 +106,6 @@ rs.addLines = function () {
       if (i < (numCols-1)) {
         pR = points[pRidx];
         line = lineP.instantiate();
-        debugger;
         //line.setEnds(pO,pR);
         line.end0 = pO;
         line.end1 = pR;
@@ -129,7 +128,7 @@ rs.addLines = function () {
 
 rs.initProtos = function () {
   let lineP = this.lineP = linePP.instantiate();
-  lineP['stroke-width'] = .4;
+  lineP['stroke-width'] = .6;
   lineP.stroke = 'white';
   
 }  
@@ -195,12 +194,21 @@ rs.setFromTraces = function (n) {
 }
 
 
+rs.setFromTraces = function (n) {
+  let {r,g,b,dx,dy} = this.traces;
+  this.setFromTraceArray(n,[r,g,b,dx,dy],
+                           [this.toLeftCfn,this.toRightCfn,this.downCfn,this.downCfn,this.upCfn],
+                           this.adjustPointFun);
+  this.draw();
+}
+
+
 //rs.cycles = 32;
 rs.cycles = 16;
 rs.cycles = 12;
-rs.cycles = 48;
+rs.cycles = 8;
 rs.blackSteps = 10;
-rs.frameDelta = 60;
+rs.frameDelta = 120;
 
 
 rs.stepInterval = 30;
@@ -217,12 +225,12 @@ rs.initialize = function () {
   olines.set('lines',arrayShape.mk());
   this.lines = olines.lines;
   this.points = [];
-  let linesByOidx = this.linesByOidx = [];
+  /*let linesByOidx = this.linesByOidx = [];
   let linesByEidx = this.linesByEidx = [];
   for (let i=0;i<numRows*numCols;i++) {
     linesByOidx.push([]);
     linesByEidx.push([]);
-  }
+  }*/
   this.addFrame();
   this.initProtos();
   this.buildGrid();
@@ -237,8 +245,6 @@ rs.initialize = function () {
   let sr = 10; //subrange
   sr = 5; //subrange
   let dsr = 0.05 *deltaX;
-  dsr = 0.5 *deltaX;
-  dsr = 0.05 *deltaX;
   let iv = 0;
   let wiv = 100;
   let ssf = 0.04; //substepfactor
@@ -251,7 +257,7 @@ rs.initialize = function () {
   this.addWpath('b',sr,ssf,mi,250,wiv,'forStroke',1);
   this.addWpath('dx',dsr,dssf,lwd,hgd,iv,'forStroke',1);
   this.addWpath('dy',dsr,dssf,lwd,hgd,iv,'forStroke',1);
-  let rt =this.rt = [];
+/*  let rt =this.rt = [];
   let gt =this.gt = [];
   let bt =this.bt = [];
   let dxt =this.dxt = [];
@@ -261,29 +267,32 @@ rs.initialize = function () {
   this.pushTrace(gt,'g',numFrames);
   this.pushTrace(bt,'b',numFrames);
   this.pushTrace(dxt,'dx',numFrames);
-  this.pushTrace(dyt,'dy',numFrames);
-  return;
+  this.pushTrace(dyt,'dy',numFrames);*/
+  let traces = this.traces = this.recordTraces(numFrames);
   debugger;
+  return;
   for (let i=toBlack;i<numFrames;i++) {
-    rt[i].value = 0;
-    gt[i].value = 0;
-    bt[i].value = 0;
+    traces.r[i].value = 0;
+    traces.g[i].value = 0;
+    traces.b[i].value = 0;
   }
 }
 
 
-
+rs.firstFrame = 1;
 rs.updateState = function () {
   //let {cFrame,numSteps,wentBack,stepsSoFar:ssf,rt,firstState,pstate,frameDelta,olines,lines} = this;
-  let {stepsSoFar:ssf,olines,lines,points} = this;
+  let {stepsSoFar:ssf,olines,lines,points,numSteps,frameDelta,traces,pstate} = this;
   debugger;
+  let {cstate} = pstate;
   this.sumpnts = Point.mk(0,0);
   this.numpnts = 0;
-  /*let fr = (ssf+frameDelta)%numSteps;
-  if (fr === 2) {
-    debugger;
-  }*/
-  this.setFromTraces(ssf);
+  let fr = (ssf+frameDelta)%numSteps;
+  this.setFromTraces(fr);
+  if (this.firstFrame) {
+    this.initState = this.deepCopy(cstate);
+    this.firstFrame = 0;
+  }
   debugger;
   lines.forEach((line) => {
     let e0 = line.end0;

@@ -486,19 +486,60 @@ item.pushTrace = function (a,component,n) {
 }
 
 
-item.recordTraces = function (n) {
+item.recordTraceBundle = function (n) {
   let {cstate,pspace}= this.pstate;
   let props = Object.getOwnPropertyNames(pspace);
-  let traces = {};
+  let traceB = {};
   props.forEach((nm) => {
     let ctr = []
-    traces[nm] = ctr;
+    traceB[nm] = ctr;
     this.pushTrace(ctr,nm,n);
   });
-  return traces;
+  return traceB;
+}
+
+item.nthTraceBundleState = function (traceB,n) {
+  let {cstate,pspace}= this.pstate;
+  let props = Object.getOwnPropertyNames(pspace);
+  let state = {};
+  props.forEach((nm) => {
+    let tr = traceB[nm][n];
+    state[nm] = this.deepCopy(tr);
+  });
+  return state;
+}
+
+item.traceBundleTraceLength = function (traceB) {
+  let {cstate,pspace}= this.pstate;
+  let props = Object.getOwnPropertyNames(pspace);
+  let aTrace = traceB[props[0]];
+  let ln = aTrace.length;
+  return ln;
+}
+ 
+item.firstTraceBundleState = function (traceB) {
+  return this.nthTraceBundleState(traceB,0);
+}
+
+item.lastTraceBundleState = function (traceB) {
+debugger;
+  let ln = this.traceBundleTraceLength(traceB);
+  return this.nthTraceBundleState(traceB,ln-1);
+}
+
+item.concatTraceBundles = function (trb0,trb1) {
+  let {cstate,pspace}= this.pstate;
+  let props = Object.getOwnPropertyNames(pspace);
+  let ctrb = {};
+  props.forEach((nm) => {
+    let ctr0 = trb0[nm];
+    let ctr1 = trb1[nm];
+    ctrb[nm] = ctr0.concat(ctr1);
+  });
+  return ctrb;
 }
   
-
+  
 item.interpolateTrace = function (a,component,iState,fState,n) {
   let {cstate}= this.pstate;
   let cstc = cstate[component];
@@ -515,7 +556,8 @@ item.interpolateTrace = function (a,component,iState,fState,n) {
 }
 
 
-item.interpolateTraces = function (iState,fState,n) {
+item.interpolateStates = function (iState,fState,n) {
+  debugger;
   let {cstate,pspace}= this.pstate;
   let props = Object.getOwnPropertyNames(pspace);
   let traces = {};

@@ -188,14 +188,15 @@ rs.adjustPointFun = function (va,i,j) {
 rs.setFromTraces = function (n) {
   let {rt,gt,bt,dxt,dyt} = this;
   this.setFromTraceArray(n,[rt,gt,bt,dxt,dyt],
-                           [this.toLeftCfn,this.toRightCfn,this.downCfn,this.downCfn,this.upCfn],
+    //                       [this.toLeftCfn,this.toRightCfn,this.downCfn,this.downCfn,this.upCfn],
+                           [this.toRightCfn,this.toRightCfn,this.toRightCfn,this.downCfn,this.upCfn],
                            this.adjustPointFun);
   this.draw();
 }
 
 
 rs.setFromTraces = function (n) {
-  let {r,g,b,dx,dy} = this.traces;
+  let {r,g,b,dx,dy} = this.traceB;
   this.setFromTraceArray(n,[r,g,b,dx,dy],
                            [this.toLeftCfn,this.toRightCfn,this.downCfn,this.downCfn,this.upCfn],
                            this.adjustPointFun);
@@ -207,8 +208,9 @@ rs.setFromTraces = function (n) {
 rs.cycles = 16;
 rs.cycles = 12;
 rs.cycles = 8;
-rs.blackSteps = 10;
+rs.blackSteps = 0;
 rs.frameDelta = 120;
+rs.frameDelta = 0;
 
 
 rs.stepInterval = 30;
@@ -236,8 +238,10 @@ rs.initialize = function () {
   this.buildGrid();
   this.addLines();
   let fc = 2;
+  let fci = 1;
   let numSteps = this.numSteps = cycles * fc* numRows;
   let numFrames = this.numFrames = (cycles+2) *fc* numRows;
+  let numIframes = this.numIframes = fci* numRows;
   let toBlack = numSteps - blackSteps;
 
 //item.addWpath = function (nm,subRange,min,max,initVal,prop,val) {
@@ -257,18 +261,13 @@ rs.initialize = function () {
   this.addWpath('b',sr,ssf,mi,250,wiv,'forStroke',1);
   this.addWpath('dx',dsr,dssf,lwd,hgd,iv,'forStroke',1);
   this.addWpath('dy',dsr,dssf,lwd,hgd,iv,'forStroke',1);
-/*  let rt =this.rt = [];
-  let gt =this.gt = [];
-  let bt =this.bt = [];
-  let dxt =this.dxt = [];
-  let dyt =this.dyt = [];
- 
-  this.pushTrace(rt,'r',numFrames);
-  this.pushTrace(gt,'g',numFrames);
-  this.pushTrace(bt,'b',numFrames);
-  this.pushTrace(dxt,'dx',numFrames);
-  this.pushTrace(dyt,'dy',numFrames);*/
-  let traces = this.traces = this.recordTraces(numFrames);
+
+  let mainTraceB = this.recordTraceBundle(numFrames);
+  this.firstState = this.firstTraceBundleState(mainTraceB);
+  this.lastState = this.lastTraceBundleState(mainTraceB);
+  let iTraceB = this.interpolateStates(this.lastState,this.firstState,numIframes);
+  let traceB = this.traceB = this.concatTraceBundles(mainTraceB,iTraceB);
+  this.numSteps = this.traceBundleTraceLength(traceB);
   debugger;
   return;
   for (let i=toBlack;i<numFrames;i++) {
@@ -282,7 +281,7 @@ rs.initialize = function () {
 rs.firstFrame = 1;
 rs.updateState = function () {
   //let {cFrame,numSteps,wentBack,stepsSoFar:ssf,rt,firstState,pstate,frameDelta,olines,lines} = this;
-  let {stepsSoFar:ssf,olines,lines,points,numSteps,frameDelta,traces,pstate} = this;
+  let {stepsSoFar:ssf,olines,lines,points,numSteps,frameDelta,traceB,pstate} = this;
   debugger;
   let {cstate} = pstate;
   this.sumpnts = Point.mk(0,0);

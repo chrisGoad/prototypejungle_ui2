@@ -4,13 +4,14 @@ import {rs as addPathMethods} from '/mlib/path.mjs';
 import {rs as addFlowMethods} from '/mlib/flows.mjs';	
 
 
-import {rs as generatorP} from '/generators/part2_0.mjs';
-
-let rs = generatorP.instantiate();
+let rs = basicP.instantiate();
 
 //let rs = basicP.instantiate();
 addPathMethods(rs);
 addFlowMethods(rs);
+
+//import {rs as generatorP} from '/generators/part2_0.mjs';/
+//let rs = generatorP.instantiate();
 
 
 //import {rs as generatorP} from '/generators/flows_0.mjs';
@@ -43,7 +44,6 @@ rs.buildGrid = function () {
   let {rectP,numRows,numCols,ht,wd,hht,hwd,rects,deltaX,deltaY} = this;
  
   const addGon = (p)=> {
-    debugger;
     let qg = this.mkQuadrantGon((0.8*wd)/numCols);
     qg.polygon.moveto(p);
   }
@@ -100,7 +100,7 @@ rs.fillIfn = function (r,g,b,i,j) {
   rect.update();
 }
 
-rs.adjustPolyFun = function (va,i,j) {
+rs.adjustPolyFun = function (va,t,i,j) {
   debugger;
   let {quads,numCols,qdim} = this;
   let idx = i*numCols +j;

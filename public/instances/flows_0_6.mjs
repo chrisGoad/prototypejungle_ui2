@@ -165,14 +165,29 @@ rs.fillIfn = function (r,g,b,i,j) {
 }
 
 rs.recordGridHistory = function (va,t,i,j) {
-  let {gridHistory:grh,numCols} = this;
+  let {gridHistory:grh,numCols,points} = this;
     let [r,g,b,dx,dy] = va;
 
   let ln =grh.length;
     let idx = i*numCols +j;
   let cgs;
+  if (t > 0) {
+    if (t>5) {
+       debugger;
+    }
+    let lg = grh[t-1]
+    let cellv = lg[idx];
+    let lx = cellv[5];
+    let ly = cellv[6];
+    va.push(lx + dx);
+    va.push(ly + dy);
+  } else {
+    let op =  points[idx]
+    va.push(op.x);
+    va.push(op.y);
+  }
   if (t >30) {
-   console.log('t',t,'ln',ln,'idx',idx,'i',i,'j',j,'r',r,'g',g,'b',b);
+  // console.log('t',t,'ln',ln,'idx',idx,'i',i,'j',j,'r',r,'g',g,'b',b);
    if (r===0) {
      debugger;
    }
@@ -189,13 +204,13 @@ rs.recordGridHistory = function (va,t,i,j) {
   
 rs.adjustPointFun = function (va,t,i,j) {
   let {numCols,points} = this;
-  //debugger;
+  debugger;
   let idx = i*numCols +j;
   //let Ridx = (i+1)*numCols +j;
   //let Uidx = (i+1)*numCols +j+1;
  // let pO = points[idx];
   
-  let [r,g,b,dx,dy] = va;
+  let [r,g,b,dx,dy,x,y] = va;
   let rf = Math.floor(r);
   let gf = Math.floor(g);
   let bf = Math.floor(b);
@@ -203,7 +218,9 @@ rs.adjustPointFun = function (va,t,i,j) {
   let d = Point.mk(dx,dy);
   let p = points[idx];
   p.clr = clr;
-  p.copyto(p.plus(d));
+  p.x = x;
+  p.y = y;
+  //p.copyto(p.plus(d));
   this.sumpnts = this.sumpnts.plus(p);
     this.numpnts++;
 }
@@ -223,11 +240,11 @@ rs.traceProps = ['r','g','b','dx','dy'];
 rs.setFromTraces = function (n) {
   let {traceProps,traceB} = this;
   let traces = [];
-  debugger;
+  //debugger;
   traceProps.forEach((p) => traces.push(traceB[p]));
   //let {r,g,b,dx,dy} = this.traceB;
   if (n === 31) {
-    debugger;
+  //  debugger;
   }
  //this.setFromTraceArray(n,[r,g,b,dx,dy],
   this.setFromTraceArray(n,traces,
@@ -291,12 +308,17 @@ rs.initialize = function () {
  debugger;
   let traceB = this.traceB =this.recordTraceBundle(numFrames);
   //numSteps = this.numSteps = this.traceBundleTraceLength(traceB);
-  this.gridHistory = [];
+  let gridHistory =this.gridHistory = [];
   debugger;
   for (let tm=0;tm<numSteps;tm++) {
     this.setFromTraces(tm);
   }
-
+  let iState = gridHistory[0];
+  let fState = gridHistory[numSteps-1];
+  debugger;
+  let interp = this.interpolateBetweenGridStates(fState,iState,numIframes);
+  gridHistory = this.gridHistory = gridHistory.concat(interp);
+  this.numSteps = this.gridHistory.length;
   debugger;
   return;
   for (let i=toBlack;i<numFrames;i++) {
@@ -318,6 +340,7 @@ rs.updateState = function () {
   //let {cFrame,numSteps,wentBack,stepsSoFar:ssf,rt,firstState,pstate,frameDelta,olines,lines} = this;
   let {stepsSoFar:ssf,olines,lines,points,numSteps,frameDelta,traceB,pstate,gridHistory,numCols,numRows} = this;
   //debugger;
+  console.log('ssf',ssf);
   this.sumpnts = Point.mk(0,0);
   this.numpnts = 0;
   let cgrid = gridHistory[ssf];
@@ -341,7 +364,7 @@ rs.updateState = function () {
   });
  // return;
   let avgpnt = this.sumpnts.times(1/(this.numpnts));
-  console.log('avgpnt',avgpnt.x,avgpnt.y);
+ // console.log('avgpnt',avgpnt.x,avgpnt.y);
   olines.moveto(avgpnt.times(-1)); 
 }
 

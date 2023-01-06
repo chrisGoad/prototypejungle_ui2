@@ -45,14 +45,14 @@ item.mkQuadrantGon = function (dim,iul,iur,ill,ilr) {
  
 
 
-item.setFromTrace = function (n,tr,cfn,ifn) { //cfn = choice funtion; ifn = installation function
+item.setFromTrace = function (t,tr,cfn,ifn) { //cfn = choice funtion; ifn = installation function
   let {numRows,numCols} = this;
   for (let i=0;i<numCols;i++) {
     for (let j=0;j<numRows;j++) {
       let idx = cfn.call(this,i,j);
-      let vm = tr[n+idx];
+      let vm = tr[t+idx];
       let v = vm?vm.value:0;
-      ifn.call(this,v,i,j);
+      ifn.call(this,v,t,i,j);
     }
   }
 }

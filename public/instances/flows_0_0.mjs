@@ -1,9 +1,19 @@
 import {rs as rectPP} from '/shape/rectangle.mjs';
+import {rs as basicP} from '/generators/basics.mjs';
+
+import {rs as addPathMethods} from '/mlib/path.mjs';	
+import {rs as addFlowMethods} from '/mlib/flows.mjs';	
 
 
-import {rs as generatorP} from '/generators/flows_0.mjs';
 
-let rs = generatorP.instantiate();
+let rs = basicP.instantiate();
+
+//let rs = basicP.instantiate();
+addPathMethods(rs);
+addFlowMethods(rs);
+//import {rs as generatorP} from '/generators/flows_0.mjs';
+
+//let rs = generatorP.instantiate();
 
 rs.setName('flows_0_0');
 
@@ -56,14 +66,14 @@ rs.initProtos = function () {
   
 }  
 
-rs.wIfn = function (v,i,j) {
+rs.wIfn = function (v,t,i,j) {
   let {rects,numCols} = this;
   let idx = i*numCols +j;
   let rect = rects[idx];
   rect.width = v;
   rect.update();
 }
-rs.hIfn = function (v,i,j) {
+rs.hIfn = function (v,t,i,j) {
   let {rects,numCols} = this;
   let idx = i*numCols +j;
   let rect = rects[idx];
@@ -73,8 +83,9 @@ rs.hIfn = function (v,i,j) {
 
 
 
-rs.fillIfn = function (r,g,b,i,j) {
+rs.fillIfn = function (va,t,i,j) {
   let {rects,numCols} = this;
+  let  [r,g,b] = va;
   let idx = i*numCols +j;
   let rect = rects[idx];
   let clr;
@@ -89,7 +100,7 @@ rs.fillIfn = function (r,g,b,i,j) {
  
 rs.setFromTraces = function (n) {
   let {rt,gt,bt,wt,htt} = this;
-  this.setFrom3Traces(n,rt,gt,bt,this.downCfn,this.upCfn,this.toRightCfn,this.fillIfn);
+  this.setFromTraceArray(n,[rt,gt,bt],[this.downCfn,this.upCfn,this.toRightCfn],this.fillIfn);
     this.setFromTrace(n,wt,this.toLeftCfn,this.wIfn);
     this.setFromTrace(n,htt,this.toRightCfn,this.hIfn);
 

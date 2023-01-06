@@ -420,7 +420,7 @@ item.stepInterval = 40;
 item.oneInterpolationStep = function () {
   let i = this.iStepsSoFar;
   if (i===0) {
-   console.log('interpFrom',this.interpFrom,'interpTo',this.interpTo);
+  // console.log('interpFrom',this.interpFrom,'interpTo',this.interpTo);
   }
   this.iStepsSoFar++;
    if (this.updateState) {
@@ -438,7 +438,7 @@ item.oneInterpolationStep = function () {
 
 }
 item.oneStep = function (one) {
- // debugger;
+  debugger;
   if (this.paused) {
     return;
   }
@@ -540,21 +540,42 @@ item.concatTraceBundles = function (trb0,trb1) {
 }
   
   
-item.interpolateTrace = function (a,component,iState,fState,n) {
-  let {cstate}= this.pstate;
-  let cstc = cstate[component];
-  //let trace = [];
-  for (let i=0;i<=n;i++) {
-    let fr = i/n;
-    let cv = this.deepCopy(cstc);
-    a.push(cv);
-    //let stv = subtrace?subtrace[i]:undefined;
-   // this.stepComponent(component,stv);
-    this.interpolateComponent(component,iState,fState,fr);
-  }
-  return a;
+item.interpolateStates = function (iState,fState,fr) {
+ 
+  let rState = [];
+  let ln = iState.length;
+  for (let i=0;i<ln;i++){
+    let ival = iState[i];
+    let fval = fState[i];
+    let rval = ival + fr*(fval-ival);
+    rState.push(rval);
+  };
+  return rState;
 }
+item.interpolateGridState1 = function (iState,fState,fr) {
+  let rState = [];
+  let ln = iState.length;
+  for (let idx=0;idx<ln;idx++) {
+    let cellIstate = iState[idx];
+    let cellFstate = fState[idx];
+    let cellRstate = this.interpolateStates(cellIstate,cellFstate,fr);
+    rState.push(cellRstate);
+  }
+  return rState;
+}
+item.interpolateBetweenGridStates = function (iState,fState,n) {
+  let ga = [iState];
+  for (let i=1;i<=n;i++) {
+    let fr = i/n;
+    let cs = this.interpolateGridState1(iState,fState,fr);
+    ga.push(cs);
+  }
+  return ga;
+}
+  
 
+      
+/*
 
 item.interpolateStates = function (iState,fState,n) {
   debugger;
@@ -568,7 +589,7 @@ item.interpolateStates = function (iState,fState,n) {
   });
   return traces;
 }
-       
+    */   
 }  
    
 export {rs};

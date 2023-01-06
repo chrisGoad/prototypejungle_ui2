@@ -438,15 +438,15 @@ item.oneInterpolationStep = function () {
 
 }
 item.oneStep = function (one) {
-  debugger;
+ // debugger;
   if (this.paused) {
     return;
   }
 
   let ns = this.stepsSoFar;
        //console.log('ns',ns,'tns',this.numSteps);
-
-  if  (this.stepsSoFar++ > (this.numSteps-this.chopOffEnd)) {
+  this.stepsSoFar++;
+  if  (this.stepsSoFar >= (this.numSteps-this.chopOffEnd)) {
     if (this.numISteps) {
       debugger;
       this.iStepsSoFar = 0;

@@ -16,7 +16,7 @@ addFlowMethods(rs);
 
 //let rs = generatorP.instantiate();
 
-rs.setName('flows_0_5');
+rs.setName('flows_0_6');
 
 
 rs.pstate = {pspace:{},cstate:{}};
@@ -28,7 +28,7 @@ let hht = rs.hht = 0.5*ht;
 let hwd = rs.hwd = 0.5*wd;
 let nr = 32;
 nr=24;
-nr=4;
+//nr=4;
 let numRows = rs.numRows = nr;
 let numCols = rs.numCols = nr;
 
@@ -218,17 +218,23 @@ rs.setFromTracess = function (n) {
   this.draw();
 }
 
+rs.traceProps = ['r','g','b','dx','dy'];
 
 rs.setFromTraces = function (n) {
-  let {r,g,b,dx,dy} = this.traceB;
+  let {traceProps,traceB} = this;
+  let traces = [];
+  debugger;
+  traceProps.forEach((p) => traces.push(traceB[p]));
+  //let {r,g,b,dx,dy} = this.traceB;
   if (n === 31) {
     debugger;
   }
-  this.setFromTraceArray(n,[r,g,b,dx,dy],
+ //this.setFromTraceArray(n,[r,g,b,dx,dy],
+  this.setFromTraceArray(n,traces,
                            //[this.toLeftCfn,this.toRightCfn,this.downCfn,this.downCfn,this.upCfn],
                             [this.toRightCfn,this.toRightCfn,this.toRightCfn,this.downCfn,this.upCfn],
-                          this.adjustPointFun);
-                   //        this.recordGridHistory);
+                       //   this.adjustPointFun);
+                          this.recordGridHistory);
   this.draw();
 }
 
@@ -237,7 +243,7 @@ rs.setFromTraces = function (n) {
 rs.cycles = 16;
 rs.cycles = 12;
 rs.cycles = 8;
-rs.cycles = 2;
+//rs.cycles = 2;
 rs.blackSteps = 0;
 rs.frameDelta = 120;
 rs.frameDelta = 0;
@@ -249,20 +255,12 @@ rs.saveAnimation = 1;
 rs.initialize = function () {
   debugger;
     let {numRows,numCols,ht,wd,cycles,blackSteps} = this;
-
   let deltaX = this.deltaX = wd/numCols;
   let deltaY = this.deltaY = ht/numRows;
-
   let olines =this.set('olines',containerShape.mk());
   olines.set('lines',arrayShape.mk());
   this.lines = olines.lines;
   this.points = [];
-  /*let linesByOidx = this.linesByOidx = [];
-  let linesByEidx = this.linesByEidx = [];
-  for (let i=0;i<numRows*numCols;i++) {
-    linesByOidx.push([]);
-    linesByEidx.push([]);
-  }*/
   this.addFrame();
   this.initProtos();
   this.buildGrid();
@@ -274,8 +272,7 @@ rs.initialize = function () {
   let numIframes = this.numIframes = fci* numRows;
   let toBlack = numSteps - blackSteps;
 
-//item.addWpath = function (nm,subRange,min,max,initVal,prop,val) {
-
+//item.addWpath = function (nm,subRange,min,max,initVal,prop,val) 
   let sr = 10; //subrange
   sr = 5; //subrange
   let dsr = 0.05 *deltaX;
@@ -293,13 +290,13 @@ rs.initialize = function () {
   this.addWpath('dy',dsr,dssf,lwd,hgd,iv,'forStroke',1);
  debugger;
   let traceB = this.traceB =this.recordTraceBundle(numFrames);
- /* let maintTraceB = this.traceB =this.recordTraceBundle(numFrames);
-  this.firstState = this.firstTraceBundleState(mainTraceB);
-  this.lastState = this.lastTraceBundleState(mainTraceB);
-  let iTraceB = this.interpolateStates(this.lastState,this.firstState,numIframes);
-  let traceB = this.traceB = this.concatTraceBundles(mainTraceB,iTraceB);*/
-  this.numSteps = this.traceBundleTraceLength(traceB);
+  //numSteps = this.numSteps = this.traceBundleTraceLength(traceB);
   this.gridHistory = [];
+  debugger;
+  for (let tm=0;tm<numSteps;tm++) {
+    this.setFromTraces(tm);
+  }
+
   debugger;
   return;
   for (let i=toBlack;i<numFrames;i++) {
@@ -309,22 +306,33 @@ rs.initialize = function () {
   }
 }
 
+/* let maintTraceB = this.traceB =this.recordTraceBundle(numFrames);
+  this.firstState = this.firstTraceBundleState(mainTraceB);
+  this.lastState = this.lastTraceBundleState(mainTraceB);
+  let iTraceB = this.interpolateStates(this.lastState,this.firstState,numIframes);
+  let traceB = this.traceB = this.concatTraceBundles(mainTraceB,iTraceB);*/
 
 rs.firstFrame = 1;
 rs.updateState = function () {
+
   //let {cFrame,numSteps,wentBack,stepsSoFar:ssf,rt,firstState,pstate,frameDelta,olines,lines} = this;
-  let {stepsSoFar:ssf,olines,lines,points,numSteps,frameDelta,traceB,pstate} = this;
- // debugger;
-  let {cstate} = pstate;
+  let {stepsSoFar:ssf,olines,lines,points,numSteps,frameDelta,traceB,pstate,gridHistory,numCols,numRows} = this;
+  //debugger;
   this.sumpnts = Point.mk(0,0);
   this.numpnts = 0;
-  let fr = (ssf+frameDelta)%numSteps;
-  this.setFromTraces(fr);
-  if (this.firstFrame) {
-    this.initState = this.deepCopy(cstate);
-    this.firstFrame = 0;
+  let cgrid = gridHistory[ssf];
+  if (!cgrid) {
+    debugger;
+    return;
   }
- // debugger;
+  for (let i=0;i<numCols;i++) {
+    for (let j=0;j<numRows;j++) {
+      let idx = i*numCols+j;
+      let va = cgrid[idx];
+      this.adjustPointFun(va,ssf,i,j);
+    }
+  }
+  
   lines.forEach((line) => {
     let e0 = line.end0;
     line.stroke = e0.clr;
@@ -334,9 +342,7 @@ rs.updateState = function () {
  // return;
   let avgpnt = this.sumpnts.times(1/(this.numpnts));
   console.log('avgpnt',avgpnt.x,avgpnt.y);
-  olines.moveto(avgpnt.times(-1));
-  
-  
+  olines.moveto(avgpnt.times(-1)); 
 }
 
 rs.timeStep = () => {};

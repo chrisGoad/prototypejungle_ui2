@@ -58,8 +58,8 @@ item.setFromTrace = function (n,tr,cfn,ifn) { //cfn = choice funtion; ifn = inst
 }
 
 
-item.setFromTraceArray= function (n,traces,choiceFunctions,ifn) { //ifn = installation function
-  debugger;
+item.setFromTraceArray= function (t,traces,choiceFunctions,ifn) { //ifn = installation function
+ // debugger;
   let {numRows,numCols} = this;
   let nt = traces.length;
   const valueOf = (a,i) => {
@@ -73,10 +73,10 @@ item.setFromTraceArray= function (n,traces,choiceFunctions,ifn) { //ifn = instal
         let cf = choiceFunctions[k];
         let tr = traces[k];
         let idx = cf.call(this,i,j);
-        let v = valueOf(tr,n+idx);
+        let v = valueOf(tr,t+idx);
         va.push(v);
       }
-      ifn.call(this,va,i,j);
+      ifn.call(this,va,t,i,j);
     }
   }
 }

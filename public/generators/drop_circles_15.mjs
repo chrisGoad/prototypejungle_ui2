@@ -16,7 +16,7 @@ let topParams = {width:ht,height:ht,numRows:nr,numCols:nr,radius:100,framePaddin
 Object.assign(rs,topParams);
 
 rs.dropParams = {dropTries:3500,maxDrops:1000000,numIntersections:1}
-rs.dropParams = {dropTries:35,maxDrops:1000,numIntersections:1}
+rs.dropParams = {dropTries:350,maxDrops:10000,numIntersections:0}
 
 rs.initProtos = function () {
   let circleP = this.circleP = circlePP.instantiate();
@@ -64,17 +64,26 @@ rs.initialize = function () {
   let drops =  this.generateDrops(dropParams);
 }
 
-rs.numSteps = 1000;
+rs.numSteps = 350;
 rs.updateState = function () {
-  let {stepsSoFar:ssf,shapes} = this;
+  let {stepsSoFar:ssf,shapes,drops} = this;
   console.log('update ',ssf);
   debugger;
-  let fc = 0.95;
-  shapes.forEach((s) => {
-    let cd = s.dimension;
-    s.dimension = fc*cd;
+  let fc = 0.99;
+  let mind = 2;
+  let ln = shapes.length;
+  for (let i=0;i<ln;i++) {
+    let s = shapes[i];
+    let d = drops[i];
+    let nd = fc * s.dimension;
+    if (nd < mind) {
+      s.hide();
+      drops[i] = undefined;
+    } else {
+      s.dimension = nd;
+    }
     s.update();
-  });
+  };
   
 }
 export {rs};

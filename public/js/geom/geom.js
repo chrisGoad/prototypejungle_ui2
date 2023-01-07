@@ -1135,6 +1135,9 @@ Circle.intersectsCircle = function (crc) {
     
 
 Circle.intersects = function (target) {
+   if (!target) {
+     return 0;
+   }
   if (Circle.isPrototypeOf(target)) {
     return this.intersectsCircle(target);
   }
@@ -1468,6 +1471,9 @@ Rectangle.intersectsLineSegment = function (seg) {
   return rs;
 }
  Rectangle.intersects = function (g) {
+   if (!g) {
+     return 0;
+   }
 	 if (Rectangle.isPrototypeOf(g)) {
 		 return this.intersectsRectangle(g);
 	 } 
@@ -1481,6 +1487,9 @@ Rectangle.intersectsLineSegment = function (seg) {
  }
 
 LineSegment.intersects = function (g) {
+    if (!g) {
+     return 0;
+   }
 	 if (Rectangle.isPrototypeOf(g)) {
 		 return g.intersectsRectangle(this);
 	 } 

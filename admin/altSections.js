@@ -194,6 +194,7 @@ sections:
  [0,'spirals_0_1','instances',1,'Spirals 0 1',{likes:0,posted:0,category:'quad'}], 
  [0,'spirals_0_2','instances',1,'Spirals 0 2',{likes:0,posted:0,category:'quad'}], 
  [0,'part2_0_53','instances',1,'Part2 0 53',{likes:0,posted:0,category:'quad'}], 
+ [0,'drop_circles_15','generators',1,'Drop Circles 15',{likes:0,posted:0,category:'drop'}], 
 
   [0,'part2_0_D_0','instances',1,'Partition 1',{likes:0,posted:0,category:'quad'}], 
    [0,'part2_0_D_7','instances',1,'Partition 2',{likes:0,posted:0,category:'quad'}], 

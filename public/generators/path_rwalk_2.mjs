@@ -7,7 +7,7 @@ import {rs as addPathMethods} from '/mlib/path.mjs';
 let rs = basicP.instantiate();
 addPathMethods(rs);
 debugger;
-rs.setName('path_rwalk');
+rs.setName('path_rwalk_2');
 let ht= 100;
 let topParams = {width:2.8*ht,height:2.8*ht,framePadding:.1,frameStrokee:'white',frameStrokeWidth:1}
 let numGroups = 32;

@@ -44,6 +44,7 @@ addComponent(initState,pspace,2);
 //let pspace = {dir:{kind,step:.015,min:0,max:2*Math.PI,interval:1,steps:0.5},rd:{kind,step:.013,min:0,max:0.5,interval:1,steps:0.5}};
 let pstate = {pspace,cstate:initState};
 
+rs.pstate = pstate;
   
 rs.partSplitParams = function (qd) {
   //debugger;
@@ -83,7 +84,7 @@ rs.oneStep = function () {
  setTimeout(() => this.oneStep(),40)
 }
 rs.afterInitialize = function () {
- this.oneStep();
+//this.oneStep();
 }
 
 rs.afterDisplayCelll = function (prt) {

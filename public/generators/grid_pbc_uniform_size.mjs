@@ -9,7 +9,7 @@ let rs = basicsP.instantiate();
 addGridMethods(rs);
 addRandomMethods(rs);
 addParamsByCellMethods(rs);
-rs.setName('grid_void_variant');
+rs.setName('grid_pbc_uniform_size');
 
 
 let wd = 400;

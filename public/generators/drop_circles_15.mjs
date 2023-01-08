@@ -16,7 +16,7 @@ let topParams = {width:ht,height:ht,numRows:nr,numCols:nr,radius:100,framePaddin
 Object.assign(rs,topParams);
 
 rs.dropParams = {dropTries:3500,maxDrops:1000000,numIntersections:1}
-rs.dropParams = {dropTries:350,maxDrops:10000,numIntersections:0}
+rs.dropParams = {dropTries:350,maxDrops:10000,numIntersections:1}
 
 rs.initProtos = function () {
   let circleP = this.circleP = circlePP.instantiate();

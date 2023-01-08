@@ -1124,7 +1124,7 @@ Circle.intersectsCircle = function (crc) {
   }
   //if ((!crc.isDisk) && ((d+cr)<tr)) {
   if ((!crc.isDisk) && ((d+tr)<cr)) {
-    return 0; // crc contains this
+    return null; // crc contains this
   }
   // if ((!this.isDisk) && ((d+tr)<cr)) {
    if ((!this.isDisk) && ((d+cr)<tr)) {
@@ -1181,6 +1181,12 @@ Circle.intersectLine = function (point,vec) {
   return [s0,s1];
 }
 
+Circle.containsCircle = function (circle) {
+  let Cr = this.radius;
+  let cr = c.radius;
+  let Cc = this.center;
+  let cc = c.center;
+}
 Circle.containsPoint = function (point) {
   if (!point) {
    debugger;
@@ -1518,30 +1524,40 @@ const geometriesIntersect0 = function (g,gs) {
 const geometriesIntersect0 = function (g,gs,n=0) {
   let ln = gs.length;
   let cnt = 0;
+  let containment =0
   for (let i=0;i<ln;i++) {
     let gi = gs[i];
-    if (g.intersects(gi)) {
+    let ig = g.intersects(gi);
+    if (ig === null) {
+      containment = 1;
+    }
+    if (ig) {
       cnt ++;
     }
     if (cnt>n) {
       return cnt;
     }
   }
-  return 0;
+  return containment?null:0;
  }
   // return the min(number of intersections,n+1)
  
 const geometriesIntersect = function (gs0,gs1,n=0) {
   let ln = gs0.length;
   let cnt = 0;
+  let containment = 0;
   for (let i=0;i<ln;i++) {
     let gi = gs0[i];
-    cnt += geometriesIntersect0(gi,gs1,n-cnt);
+    let ig = geometriesIntersect0(gi,gs1,n-cnt);
+     if (ig === null) {
+      containment = 1;
+    }
+    cnt += ig;
     if (cnt > n) {
       return cnt;
     }
   }
-  return 0;
+  return containment?null:0;
  }
    
 

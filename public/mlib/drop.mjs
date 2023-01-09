@@ -98,10 +98,16 @@ rs.generateDrops = function (params) {
     } 
     let dpnt = drop.pos?drop.pos:pnt;
     let gs = drop.geometries;
-    tgs = gs.map((g) => geom.moveBy(g,dpnt));
+    tgs = gs.map((g) => {
+    //  debugger;
+      return geom.moveBy(g,dpnt)
+    });
     return drop;
   }
-  const installDrop = (drop,ipnt) => {
+  const installDrop = (drop,ipnt,containers) => {
+    if (containers) {
+    // debugger;
+    }
     let moveNeeded = 1;
     let pnt;
     if (ipnt) {
@@ -122,7 +128,11 @@ rs.generateDrops = function (params) {
       s.moveto(dpnt.plus(sp));
       shapes.push(s);
     });
-    tgs.forEach((g) => drops.push(g));
+    tgs.forEach((g) => 
+      {
+      g.index = drops.length;
+      drops.push(g)
+    });
     tries = 0;
   }
   if (!this.generateDrop) {
@@ -160,14 +170,23 @@ rs.generateDrops = function (params) {
          continue;
        }
     }
-    if (geometriesIntersect(tgs,drops,numIntersections-1)) {
+    let gi =geometriesIntersect(tgs,drops,numIntersections-1);
+    let acn = typeof gi !== 'number';//gi is an array of containers
+    let lc  = 0;
+    if (acn) {
+      lc = gi.length;
+      if (lc > 1) {
+        debugger;
+      }
+    }
+    if (gi && ((lc >1) || !acn)) {
       tries++;
       if (tries >= dropTries) {
         //console.log('dropTries',dropTries,'exceeded');
         return drops;
       }
     } else {
-      installDrop(drop,pnt);
+      installDrop(drop,pnt,gi);
       tries = 0;
     }
   }

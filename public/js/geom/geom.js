@@ -1124,6 +1124,9 @@ Circle.intersectsCircle = function (crc) {
   }
   //if ((!crc.isDisk) && ((d+cr)<tr)) {
   if ((!crc.isDisk) && ((d+tr)<cr)) {
+     if (crc.index !== undefined) {
+      //  debugger;
+     }
     return null; // crc contains this
   }
   // if ((!this.isDisk) && ((d+tr)<cr)) {
@@ -1524,12 +1527,12 @@ const geometriesIntersect0 = function (g,gs) {
 const geometriesIntersect0 = function (g,gs,n=0) {
   let ln = gs.length;
   let cnt = 0;
-  let containment =0
+  let containments =[];
   for (let i=0;i<ln;i++) {
     let gi = gs[i];
     let ig = g.intersects(gi);
-    if (ig === null) {
-      containment = 1;
+    if ((ig === null)&&(gi.index)) {
+      containments.push(gi);
     }
     if (ig) {
       cnt ++;
@@ -1538,26 +1541,30 @@ const geometriesIntersect0 = function (g,gs,n=0) {
       return cnt;
     }
   }
-  return containment?null:0;
+  return containments.length>0?containments:0;
  }
   // return the min(number of intersections,n+1)
  
 const geometriesIntersect = function (gs0,gs1,n=0) {
   let ln = gs0.length;
   let cnt = 0;
-  let containment = 0;
+  let containments = [];
   for (let i=0;i<ln;i++) {
     let gi = gs0[i];
     let ig = geometriesIntersect0(gi,gs1,n-cnt);
-     if (ig === null) {
-      containment = 1;
+     if (typeof ig !== 'number') {
+      containments.push.apply(containments,ig);
     }
     cnt += ig;
     if (cnt > n) {
       return cnt;
     }
   }
-  return containment?null:0;
+  let lc = containments.length;
+  if (lc) {
+   //  debugger;
+  }
+  return lc?containments:0;
  }
    
 

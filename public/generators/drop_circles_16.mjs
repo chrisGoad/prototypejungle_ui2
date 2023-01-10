@@ -12,22 +12,20 @@ addAnimationMethods(rs);
 rs.setName('drop_circles_15');
  let ht= 500;
 let nr = 40;
-let topParams = {width:ht,height:ht,numRows:nr,numCols:nr,radius:100,framePadding:-0.1*ht}
+let topParams = {width:ht,height:ht,numRows:nr,numCols:nr,radius:100,framePadding:1*ht}
 Object.assign(rs,topParams);
-
-rs.dropParams = {dropTries:3500,maxDrops:1000000,numIntersections:1}
-rs.firstDropParams = {dropTries:350,maxDrops:100,numIntersections:1}
-rs.dropParams = {dropTries:150,maxDrops:16,numIntersections:1}
+let numI = 1;
+rs.firstDropParams = {dropTries:350,maxDrops:1,numIntersections:numI}
 
 rs.initProtos = function () {
   let circleP = this.circleP = circlePP.instantiate();
 }  
 
-rs.firstDrop = 1;
+rs.firstDrop = 0;
 rs.initialDrop = function () {
   if (this.firstDrop) {
     let crc = Circle.mk(0.8*0.5*this.height);
-    crc.isDisk = 0;
+    crc.isDisk = 1;
     let crcs = crc.toShape(this.circleP);
     this.firstDrop = 0;
     return {geometries:[crc],shapes:[]};
@@ -35,8 +33,8 @@ rs.initialDrop = function () {
 }
 
 rs.generateDrop= function (p,rvs) {
-
-  let {height:ht} = this;
+ // debugger;
+  let {height:ht,stepsSoFar:ssf} = this;
   let hht = 0.5*ht;
   let fr = 1- p.length()/(0.5*ht);
   if (fr<0.2) {
@@ -50,8 +48,10 @@ rs.generateDrop= function (p,rvs) {
   let clr = `rgba(${r+100},${r},${100+b})`;
   let fill  = `rgba(250,250,250,${alpha})`;
   let crc = Circle.mk(rad);
-  crc.isDisk = 0;
+  crc.isDisk = 1;
   let crcs = crc.toShape(this.circleP);
+  crcs.dimension = 0.2*rad;
+  crcs.birth = ssf;
   crcs.stroke = 'white';
   crcs.fill = fill;
   crcs['stroke-width'] = fr;
@@ -80,7 +80,7 @@ rs.removeDrop  = function (n) {
 }
 rs.numSteps = 350;
 rs.removedSoFar = 0;
-rs.stepInterval = 200;
+rs.stepInterval = 100;
 rs.removeDrops = function () {
   let rsf = this.removedSoFar;
   let numR = 15;
@@ -89,27 +89,73 @@ rs.removeDrops = function () {
   }
   this.removedSoFar = rsf + numR;
 }
-let dropParams = {dropTries:150,maxDrops:16,numIntersections:1}
+//let dropParams = {dropTries:350,maxDrops:100,numIntersections:1}
+let dropParams = {dropTries:3500,maxDrops:20,numIntersections:numI}
 
+rs.theta = 0.01;
+rs.deltaTheta = 0.01;
+rs.hubble = 1.03;
+rs.rotateEm = function () {
+  let {shapes,drops,theta,deltaTheta,hubble} = this;
+  let ln = shapes.length;
+  let rm = geom.rotationMatrix(theta);
+  rm.theta = theta+deltaTheta;
+  for (let i=0;i<ln;i++) {
+    let s = shapes[i];
+    let d = drops[i];
+    if (d) {
+      let p = s.getTranslation();
+      let np = p.rotate(rm).times(hubble);
+      let pl = p.length();
+      let npl = np.length();
+      let diff = npl - pl;
+      console.log('pl',pl,'diff',diff);
+      s.moveto(np);
+      d.center = np;
+    }
+  }
+}
+  
+  
 rs.updateState = function () {
-  debugger;
+ // debugger;
    let {stepsSoFar:ssf,shapes,drops} = this;
   this.generateDrops(dropParams);
-  this.removeDrops();
+  this.rotateEm();
+  //this.removeDrops();
   console.log('update ',ssf);
-  debugger;
-  let fc = 0.99;
-  let mind = 2;
+ // debugger;
+  let fc = 0.9;
+  let mind = .5;
   let ln = shapes.length;
   for (let i=0;i<ln;i++) {
     let s = shapes[i];
     let d = drops[i];
-    let nd = fc * s.dimension;
+    if (!d) {
+      continue;
+    }
+    let sh = s.shrinking;
+    let r = d.radius;
+    let dim = s.dimension;
+    let rs = 0.5*dim;
+    let nd;
+    if (sh) {
+      nd = fc*dim;
+    } else  if (rs < r) {
+      nd = (1/fc)*dim;
+    } else {
+      nd = dim;
+      sh = s.shrinking = 1;
+    }
     if (nd < mind) {
+      debugger;
       s.hide();
       drops[i] = undefined;
     } else {
       s.dimension = nd;
+      if (sh) {
+        d.radius = 0.5*nd;
+      }
     }
     s.update();
   };

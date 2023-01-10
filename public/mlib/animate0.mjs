@@ -16,7 +16,7 @@ item.chopOffEnd = 0; // in steps
 item.stepInterval = 40;
 
 item.oneStep = function (one) {
-  debugger;
+  //debugger;
   if (this.paused) {
     return;
   }

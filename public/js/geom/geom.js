@@ -34,7 +34,7 @@ Point.equals = function (p) {
    let {x,y} = p;
    return (x===thx) && (y===thy);
 }
-
+/*
 const rotationMatrix  = function (th) {
 	let r00 = Math.cos(th);
 	let r10 = -Math.sin(th);
@@ -42,11 +42,18 @@ const rotationMatrix  = function (th) {
 	let r11 = r00;
 	return [r00,r01,r10,r11];
 }
-
+*/
+const rotationMatrix  = function (th) {
+	let r00 = Math.cos(th);
+	let r10 = -Math.sin(th);
+	let r01 = -r10;
+	let r11 = r00;
+	return [r00,r01,r10,r11];
+}
 Point.rotate =  function (rm) {
 	let [r00,r01,r10,r11] = rm;
 	let {x,y} = this;
-	let rx = r00*x + r10 * y;
+	let rx = r00*x + r01 * y;
 	let ry = r10*x + r11 * y;
 	return Point.mk(rx,ry);
 }

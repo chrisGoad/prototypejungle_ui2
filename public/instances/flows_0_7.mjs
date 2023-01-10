@@ -55,9 +55,9 @@ rs.buildGrid = function () {
   // column major order
   let lx = - (0.5*(wd-deltaX));
   let ly = - (0.5*(ht-deltaY));
-  for (let i=0;i<=numCols;i++) {
+  for (let i=0;i<numCols;i++) {
     let x0 = i*deltaX +lx;
-    for (let j=0;j<=numRows;j++) {
+    for (let j=0;j<numRows;j++) {
        let y0 = j*deltaY+ly;
        let p0 = Point.mk(x0,y0);
        p0.i = i;
@@ -68,6 +68,7 @@ rs.buildGrid = function () {
 }
 
 rs.gonPoints = function (i,j) {
+  let {points} = this;
   let pLLidx = i*numRows+j;
   let pLRidx = (i+1)*numRows+j;
   let pULidx = i*numRows+j+1;
@@ -79,42 +80,40 @@ rs.gonPoints = function (i,j) {
   return [pLL,pLR,pUR,pUL];
 }
 
-rs.addPolygons = function () {
+rs.addGons = function () {
   let {numRows,numCols,gons,points,polygonP} = this;
-  for (let i=0;i<numCols;i++) {
-    for (let j=0;j<numRows;j++) {
+  debugger;
+  for (let i=0;i<numCols-1;i++) {
+    for (let j=0;j<numRows-1;j++) {
       let gon = polygonP.instantiate();
       let pnts = this.gonPoints(i,j);
       gon.corners = pnts;
-      gons.push(pnts);
-      if (i < (numCols-1)) {
-        pR = points[pRidx];
-        line = lineP.instantiate();
-        //line.setEnds(pO,pR);
-        line.end0 = pO;
-        line.end1 = pR;
-        lines.push(line);
-        pO.hline = line;
-      }
-      if (j < (numRows-1)) {
-        pU = points[pUidx];
-        line = lineP.instantiate();
-        //line.setEnds(pO,pU);
-        line.end0 = pO;
-        line.end1 = pU;
-        lines.push(line);
-        pO.vline = line;
-      }         
+      gons.push(gon);
     }
   }
 }    
  
-
+rs.adjustGons = function () {
+    let {numRows,numCols,gons,points} = this;
+   for (let i=0;i<numCols-1;i++) {
+    for (let j=0;j<numRows-1;j++) {
+      let idx = i*(numCols-1) + j;
+      let gon = gons[idx];
+      if (!gon) {
+        debugger;
+      }
+      let pnts = this.gonPoints(i,j);
+      gon.corners = pnts;
+      gon.update();
+      gon.draw();
+    }
+  }
+}
 rs.initProtos = function () {
-  let lineP = this.lineP = linePP.instantiate();
-  lineP['stroke-width'] = .6;
-  lineP.stroke = 'white';
-  
+  let polygonP = this.polygonP = polygonPP.instantiate();
+  polygonP['stroke-width'] = .6;
+  polygonP.stroke = 'white';
+  polygonP.fill = 'red';
 }  
 
 rs.wIfn = function (v,i,j) {
@@ -187,7 +186,7 @@ rs.recordGridHistory = function (va,t,i,j) {
   
 rs.adjustPointFun = function (va,t,i,j) {
   let {numCols,points} = this;
-  debugger;
+ // debugger;
   let idx = i*numCols +j;
   //let Ridx = (i+1)*numCols +j;
   //let Uidx = (i+1)*numCols +j+1;
@@ -257,14 +256,14 @@ rs.initialize = function () {
     let {numRows,numCols,ht,wd,cycles,blackSteps} = this;
   let deltaX = this.deltaX = wd/numCols;
   let deltaY = this.deltaY = ht/numRows;
-  let olines =this.set('olines',containerShape.mk());
-  olines.set('lines',arrayShape.mk());
-  this.lines = olines.lines;
+  let ogons =this.set('ogons',containerShape.mk());
+  ogons.set('gons',arrayShape.mk());
+  this.gons = ogons.gons;
   this.points = [];
   this.addFrame();
   this.initProtos();
   this.buildGrid();
-  this.addLines();
+  this.addGons();
   let fc = 2;
   let fci = 1;
   let numSteps = this.numSteps = cycles * fc* numRows;
@@ -321,7 +320,7 @@ rs.firstFrame = 1;
 rs.updateState = function () {
 
   //let {cFrame,numSteps,wentBack,stepsSoFar:ssf,rt,firstState,pstate,frameDelta,olines,lines} = this;
-  let {stepsSoFar:ssf,olines,lines,points,numSteps,frameDelta,traceB,pstate,gridHistory,numCols,numRows} = this;
+  let {stepsSoFar:ssf,ogons,gons,points,numSteps,frameDelta,traceB,pstate,gridHistory,numCols,numRows} = this;
   //debugger;
   console.log('ssf',ssf);
   this.sumpnts = Point.mk(0,0);
@@ -338,17 +337,18 @@ rs.updateState = function () {
       this.adjustPointFun(va,ssf,i,j);
     }
   }
-  
-  lines.forEach((line) => {
+  this.adjustGons();
+  /*lines.forEach((line) => {
     let e0 = line.end0;
     line.stroke = e0.clr;
     line.update();
     line.draw();
-  });
+  });*/
  // return;
   let avgpnt = this.sumpnts.times(1/(this.numpnts));
  // console.log('avgpnt',avgpnt.x,avgpnt.y);
-  olines.moveto(avgpnt.times(-1)); 
+  debugger;
+  ogons.moveto(avgpnt.times(-1)); 
 }
 
 rs.timeStep = () => {};

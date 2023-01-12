@@ -29,7 +29,7 @@ let hht = rs.hht = 0.5*ht;
 let hwd = rs.hwd = 0.5*wd;
 let nr = 32;
 nr=24;
-//nr=4;
+//nr=16;
 let numRows = rs.numRows = nr;
 let numCols = rs.numCols = nr;
 
@@ -67,6 +67,22 @@ rs.buildGrid = function () {
   }
 }
 
+rs.scalePoints = function (a,s) {
+  let avg = Point.mk(0,0);
+  a.forEach((p) => {
+    avg = avg.plus(p);
+  });
+  let ln = a.length;
+  let cnt = avg.times(1/ln);
+  let npa= [];
+  a.forEach((p) => {
+   let np=cnt.plus(p.difference(cnt).times(s));
+   np.clr = p.clr;
+   npa.push(np);
+  });
+  return npa;
+}
+  
 rs.gonPoints = function (i,j) {
   let {points} = this;
   let pLLidx = i*numRows+j;
@@ -77,7 +93,10 @@ rs.gonPoints = function (i,j) {
   let pLR = points[pLRidx];
   let pUL = points[pULidx];
   let pUR = points[pURidx];
-  return [pLL,pLR,pUR,pUL];
+  let a = [pLL,pLR,pUR,pUL];
+  let sc = pLL.sc;
+  let sp = this.scalePoints(a,sc);
+  return sp;
 }
 
 rs.addGons = function () {
@@ -99,11 +118,15 @@ rs.adjustGons = function () {
     for (let j=0;j<numRows-1;j++) {
       let idx = i*(numCols-1) + j;
       let gon = gons[idx];
+      
       if (!gon) {
         debugger;
       }
       let pnts = this.gonPoints(i,j);
+        let clr = pnts[0].clr;
+      debugger;
       gon.corners = pnts;
+      gon.fill = clr;
       gon.update();
       gon.draw();
     }
@@ -111,7 +134,7 @@ rs.adjustGons = function () {
 }
 rs.initProtos = function () {
   let polygonP = this.polygonP = polygonPP.instantiate();
-  polygonP['stroke-width'] = .6;
+  polygonP['stroke-width'] = 0;
   polygonP.stroke = 'white';
   polygonP.fill = 'red';
 }  
@@ -134,22 +157,22 @@ rs.hIfn = function (v,i,j) {
 
 
 rs.fillIfn = function (r,g,b,i,j) {
-  let {rects,numCols} = this;
+  let {gons,numCols} = this;
   let idx = i*numCols +j;
-  let rect = rects[idx];
-  let clr;
-  let rb = r>150?1:0;
+  let gon = gons[idx];
+  let clr = `rgb(${r},${g},${b})`;
+ /* let rb = r>150?1:0;
   let gb= g>150?1:0;
   let bb = b>150?1:0;
-  clr = (rb+gb+bb)%3?'white':'black';
+  clr = (rb+gb+bb)%3?'white':'black';*/
   rect.fill = clr;
   rect.update();
 }
 
 rs.recordGridHistory = function (va,t,i,j) {
   let {gridHistory:grh,numCols,points} = this;
-    let [r,g,b,dx,dy] = va;
-
+    let [r,g,b,dx,dy,sc] = va;
+debugger;
   let ln =grh.length;
     let idx = i*numCols +j;
   let cgs;
@@ -159,8 +182,8 @@ rs.recordGridHistory = function (va,t,i,j) {
     }
     let lg = grh[t-1]
     let cellv = lg[idx];
-    let lx = cellv[5];
-    let ly = cellv[6];
+    let lx = cellv[6];
+    let ly = cellv[7];
     va.push(lx + dx);
     va.push(ly + dy);
   } else {
@@ -169,7 +192,7 @@ rs.recordGridHistory = function (va,t,i,j) {
     va.push(op.y);
   }
   if (t >30) {
-  // console.log('t',t,'ln',ln,'idx',idx,'i',i,'j',j,'r',r,'g',g,'b',b);
+  // console.log('t',t,'ln',ln,'idx',idx,'i',i,'j',j,'r',r,'g',g,'b',b,'sc',sc);
    if (r===0) {
      debugger;
    }
@@ -192,14 +215,16 @@ rs.adjustPointFun = function (va,t,i,j) {
   //let Uidx = (i+1)*numCols +j+1;
  // let pO = points[idx];
   
-  let [r,g,b,dx,dy,x,y] = va;
+  let [r,g,b,dx,dy,sc,x,y] = va;
   let rf = Math.floor(r);
   let gf = Math.floor(g);
   let bf = Math.floor(b);
   let clr = `rgb(${rf},${gf},${bf})`;
   let d = Point.mk(dx,dy);
   let p = points[idx];
+ // debugger;
   p.clr = clr;
+  p.sc = sc;
   p.x = x;
   p.y = y;
   //p.copyto(p.plus(d));
@@ -217,7 +242,7 @@ rs.setFromTracess = function (n) {
   this.draw();
 }
 
-rs.traceProps = ['r','g','b','dx','dy'];
+rs.traceProps = ['r','g','b','dx','dy','sc'];
 
 rs.setFromTraces = function (n) {
   let {traceProps,traceB} = this;
@@ -231,7 +256,7 @@ rs.setFromTraces = function (n) {
  //this.setFromTraceArray(n,[r,g,b,dx,dy],
   this.setFromTraceArray(n,traces,
                            //[this.toLeftCfn,this.toRightCfn,this.downCfn,this.downCfn,this.upCfn],
-                            [this.toRightCfn,this.toRightCfn,this.toRightCfn,this.downCfn,this.upCfn],
+                            [this.toRightCfn,this.toRightCfn,this.toRightCfn,this.downCfn,this.upCfn,this.toRightCfn],
                        //   this.adjustPointFun);
                           this.recordGridHistory);
   this.draw();
@@ -275,6 +300,7 @@ rs.initialize = function () {
   let sr = 10; //subrange
   sr = 5; //subrange
   let dsr = 0.05 *deltaX;
+  let dss = 0.01 *deltaX;
   let iv = 0;
   let wiv = 100;
   let ssf = 0.04; //substepfactor
@@ -282,11 +308,14 @@ rs.initialize = function () {
   let mi =100; //minintensity
   let hgd = .9* deltaX;
   let lwd= -hgd;
+  let lws = 0.05 * deltaX;
+  let hgs = .2* deltaX;
   this.addWpath('r',sr,ssf,mi,250,wiv,'forStroke',1);
   this.addWpath('g',sr,ssf,mi,250,wiv,'forStroke',1);
   this.addWpath('b',sr,ssf,mi,250,wiv,'forStroke',1);
   this.addWpath('dx',dsr,dssf,lwd,hgd,iv,'forStroke',1);
-  this.addWpath('dy',dsr,dssf,lwd,hgd,iv,'forStroke',1);
+  this.addWpath('dy',dsr,dssf,lws,hgs,.075,'forStroke',1);
+  this.addWpath('sc',dss,dssf,lws,hgs,.075,'forStroke',1);
  debugger;
   let traceB = this.traceB =this.recordTraceBundle(numFrames);
   //numSteps = this.numSteps = this.traceBundleTraceLength(traceB);

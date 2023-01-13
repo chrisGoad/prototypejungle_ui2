@@ -9,7 +9,7 @@ addDropMethods(rs);
 addRandomMethods(rs);
 addAnimationMethods(rs);
 
-rs.setName('drop_circles_15');
+rs.setName('drop_circles_16');
  let ht= 500;
 let nr = 40;
 let topParams = {width:ht,height:ht,numRows:nr,numCols:nr,radius:100,framePadding:1*ht}
@@ -78,9 +78,11 @@ rs.removeDrop  = function (n) {
     shp.hide();
   }
 }
-rs.numSteps = 350;
+rs.numSteps = 150;
+rs.numSteps = 250;
+rs.saveAnimation = 1;
 rs.removedSoFar = 0;
-rs.stepInterval = 100;
+rs.stepInterval = 40;
 rs.removeDrops = function () {
   let rsf = this.removedSoFar;
   let numR = 15;
@@ -90,11 +92,12 @@ rs.removeDrops = function () {
   this.removedSoFar = rsf + numR;
 }
 //let dropParams = {dropTries:350,maxDrops:100,numIntersections:1}
-let dropParams = {dropTries:3500,maxDrops:20,numIntersections:numI}
+let dropParams = {dropTries:3500,maxDrops:20,numIntersections:numI,maxLoops:100}
 
 rs.theta = 0.01;
 rs.deltaTheta = 0.01;
 rs.hubble = 1.03;
+
 rs.rotateEm = function () {
   let {shapes,drops,theta,deltaTheta,hubble} = this;
   let ln = shapes.length;
@@ -109,24 +112,43 @@ rs.rotateEm = function () {
       let pl = p.length();
       let npl = np.length();
       let diff = npl - pl;
-      console.log('pl',pl,'diff',diff);
+     // console.log('pl',pl,'diff',diff);
       s.moveto(np);
       d.center = np;
     }
   }
 }
-  
-  
+ 
+rs.stopDrop = rs.numSteps - 100;
+rs.maxDist = 500;
+rs.pointFilter = function (p) {
+  let {stepsSoFar:ssf,numSteps,shapes,stopDrop,maxDist} = this;
+  if (ssf > stopDrop) {
+    let dist = p.length();
+    let tfr = (ssf - stopDrop)/(numSteps - stopDrop);
+    let dfr = dist/maxDist;
+    console.log('tfr',tfr,'dfr',dfr);
+    let pf = tfr < dfr;
+    if (!pf) {
+      debugger;
+    }
+    return pf;
+  }
+  return 1;
+}
 rs.updateState = function () {
  // debugger;
-   let {stepsSoFar:ssf,shapes,drops} = this;
-  this.generateDrops(dropParams);
+   let {stepsSoFar:ssf,numSteps,shapes,drops,maxDist} = this;
+   if (1 || (ssf < stopDrop)) {
+     this.generateDrops(dropParams);
+   }
   this.rotateEm();
   //this.removeDrops();
   console.log('update ',ssf);
  // debugger;
   let fc = 0.9;
   let mind = .5;
+ // let maxDist = 500;
   let ln = shapes.length;
   for (let i=0;i<ln;i++) {
     let s = shapes[i];
@@ -136,6 +158,8 @@ rs.updateState = function () {
     }
     let sh = s.shrinking;
     let r = d.radius;
+    let c = d.center;
+    let dist = c.length();
     let dim = s.dimension;
     let rs = 0.5*dim;
     let nd;
@@ -147,8 +171,8 @@ rs.updateState = function () {
       nd = dim;
       sh = s.shrinking = 1;
     }
-    if (nd < mind) {
-      debugger;
+    if ((nd < mind)|| (dist > maxDist)) {
+   // if (dist > maxDist) {
       s.hide();
       drops[i] = undefined;
     } else {

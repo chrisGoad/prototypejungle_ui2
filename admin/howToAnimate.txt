@@ -132,6 +132,7 @@ c:\ffmpeg\bin\ffmpeg  -framerate 15 -i animations/flows_0_6_f%03d.jpg -s 800x800
 c:\ffmpeg\bin\ffmpeg  -framerate 15 -i animations/flows_0_7_f%03d.jpg -s 800x800  export/flows_0_7.gif
 c:\ffmpeg\bin\ffmpeg  -framerate 20 -i animations/part2_0_55_f%03d.jpg -s 800x800  export/part2_0_55.mp4
 c:\ffmpeg\bin\ffmpeg  -framerate 20 -i animations/part2_0_56_f%03d.jpg -s 800x800  export/part2_0_56.mp4
+c:\ffmpeg\bin\ffmpeg  -framerate 10 -i animations/drop_circles_16_f%03d.jpg -s 800x800  export/drop_circles_16.gif
 
 
 

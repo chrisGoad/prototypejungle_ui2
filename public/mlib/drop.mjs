@@ -52,7 +52,7 @@ rs.dropCenters = function () {
  }
   
 rs.generateDrops = function (params) {
-  let {shapes,drops,numRows,randomGridsForShapes,positions,saveState} = this;
+  let {shapes,drops,numRows,randomGridsForShapes,positions,saveState,pointFilter} = this;
   if (!shapes) { 
     shapes = this.set('shapes',arrayShape.mk());
   }
@@ -70,6 +70,7 @@ rs.generateDrops = function (params) {
   }
   this.dropParams = params;
   let {maxLoops=Infinity,maxDrops=Infinity,dropTries,mustIntersect,numIntersections=1,oneD,dropOnLineSegs} = params;
+  //debugger;
   let cnt =0;
   let tries = 0;
   let rvs;
@@ -159,7 +160,13 @@ rs.generateDrops = function (params) {
       drop = dropAt(seg);
     } else {
       pnt = this.genRandomPoint(oneD);
-       drop = dropAt(pnt);
+      if (pointFilter) {
+        let allowDrop = this.pointFilter(pnt);
+        if (!allowDrop) {
+          continue;
+        }
+      }
+      drop = dropAt(pnt);
     }
     if (!drop) {
       continue;

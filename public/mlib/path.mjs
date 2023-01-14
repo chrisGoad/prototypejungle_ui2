@@ -206,6 +206,8 @@ item.adjustSweepToNewStep = function (pstate,component,nstep) {
 }
 
 item.sweepNextState = function (pspace,cstate,component) {
+  let {stepsSoFar:ssf} = this;
+  
   if (component === 'spin') {
     debugger;
   }
@@ -213,7 +215,10 @@ item.sweepNextState = function (pspace,cstate,component) {
   let {sinusoidal,min,max,step,bounce,startDown,once} = pspc;
   let csc = cstate[component];
   let {cycleCount} = csc;
-  let {cstep,down,value,sv,ev} = csc;
+  let {cstep,down,value,sv,ev,startAtStep:sas} = csc;
+  if (sas && (ssf < sas)) {
+    return;
+  }    
    if (down === undefined) {
     down = csc.down = startDown;
   }  
@@ -254,6 +259,7 @@ item.sweepNextState = function (pspace,cstate,component) {
  // } else if ((nv <= min) && down){
   } else if (((nosin-.000001) <= min) && down){
      if (once) {
+       csc.done = 1;
        return;
      }
      if (cycleCount) {
@@ -347,6 +353,10 @@ item.stepComponent = function (nm,forTrace) { // stv = subtracevalue
   let {stepsSoFar:ssf,iStart,iSteps,iTarget}= this;
   let interpolating = iStart&&(ssf>=iStart);
   let {pspace,cstate}= this.pstate;
+  let cst = cstate[nm];
+  if (cst.done) {
+    return;
+  }
   let cc = pspace[nm];
   let subc = cc.subComponent;
   if (forTrace&&subc&&(!interpolating)) {

@@ -237,7 +237,8 @@ item.sweepNextState = function (pspace,cstate,component) {
  
   if (((nosin+.000001) >= max) && up) {
     if (once) {
-      this.callIfDefined(this.atCycleEnd,component)
+      this.callIfDefined(this.atCycleEnd,component);
+      csc.done = 1;
       return;
     }
     if (cycleCount) {

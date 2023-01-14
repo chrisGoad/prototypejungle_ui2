@@ -13,7 +13,7 @@ let topParams = {width:rs.ht,height:rs.ht,framePadding:.1*ht,frameStroke:'white'
 
 Object.assign(rs,topParams);
 rs.numH = 1;
-rs.numV = 1;
+rs.numV = 16;
  let initState = {time:0};
   let pspace = {};
 rs.pstate = {pspace,cstate:initState}
@@ -34,33 +34,42 @@ rs.addHpath = function (n) {
 }
 
 
-rs.addVpath = function (n) {
+rs.addVpath = function (n,iv,x) {
   debugger;
   let nm = 'v'+n;
   pspace[nm] ={kind:'sweep',step:stepV,min:minV,max:maxV,interval:1,once:1};
-  initState[nm] = {value:minV,y:0};
+  initState[nm] = {value:iv,x};
 }    
 
 rs.addPaths  = function () {
-  let {numH} = this;
+  let {numV,numH} = this;
   for (let i=0;i<numH;i++) {
     this.addHpath(i);
   }
-  for (let i=0;i<numH;i++) {
-    this.addVpath(i);
+  let delta = 1/8;
+ //delta = 1/2;
+  let fr = 0;
+  for (let i=0;i<numV;i++) {
+    this.addVpath(i,fr*minV,minV - fr * minV);
+    fr = fr + delta;
   }
 }
 
 
 rs.updateStateOfH= function (n){
-  debugger;
   let nm = 'h'+n
   let {hTravelers,pstate} = this;
   let {pspace,cstate} = pstate;
   let cs = cstate[nm];
-  let pos = Point.mk(cs.value,cs.y);
+  let {value:v,done,y} = cs;
+  let pos = Point.mk(v,y);
   let tr = hTravelers[n]
-  tr.moveto(pos);
+  if (done) {
+    debugger;
+    tr.hide();
+  } else {
+    tr.moveto(pos);
+  }
   tr.update();
 }
 
@@ -73,16 +82,16 @@ rs.updateStateOfV= function (nn){
   let {vTravelers,pstate} = this;
   let {pspace,cstate} = pstate;
   let cs = cstate[nm];
+  let  {x,value:v} = cs;
   let ps = pspace[nm]
-  let {value:v} = cs;
   let topy = ps.min;
   let boty = ps.max;
-  let trht = v-topy-gap;
-  let brht = boty -v -gap;
+  let trht = Math.min(2*boty,Math.max(0,v-topy-gap));
+  let brht = Math.min(2*boty,Math.max(0,boty -v -gap));
   let ttry = topy + 0.5*trht;
   let btry = boty - 0.5*brht;
-  let ttrpos = Point.mk(0,ttry);
-  let btrpos = Point.mk(0,btry);
+  let ttrpos = Point.mk(x,ttry);
+  let btrpos = Point.mk(x,btry);
   
   let ttr = vTravelers[nt]
   let btr = vTravelers[nb]
@@ -117,7 +126,7 @@ rs.initProtos = function () {
 }  
 
 
-rs.numSteps = 100;
+rs.numSteps = 200;
 rs.saveAnimation = 0;
 rs.initialize = function () {
   debugger;
@@ -134,7 +143,10 @@ rs.initialize = function () {
   let vTtravelers = this.set('vTravelers',arrayShape.mk());
   for (let i=0;i<2*numV;i++) {
    let rect= this.rectP.instantiate();
-   vTtravelers.push(rect)
+   vTtravelers.push(rect);
+   if (i%2 === 0) {
+    rect.fill = 'blue';
+   }
   }
   this.addPaths();
   

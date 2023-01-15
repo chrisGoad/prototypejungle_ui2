@@ -212,13 +212,22 @@ item.sweepNextState = function (pspace,cstate,component) {
     debugger;
   }
   let pspc = pspace[component];
-  let {sinusoidal,min,max,step,bounce,startDown,once} = pspc;
+  let {sinusoidal,min,max,step,bounce,startDown,once,startAtStep:sas} = pspc;
+  if (sas) {
+    console.log('sas',sas);
+  }
   let csc = cstate[component];
   let {cycleCount} = csc;
-  let {cstep,down,value,sv,ev,startAtStep:sas} = csc;
-  if (sas && (ssf < sas)) {
-    return;
-  }    
+  let {cstep,down,value,sv,ev} = csc;
+  if (sas) {
+    if  (ssf < sas) {
+      //console.log('c',component,'ssf',ssf,'value',value);
+      return;
+    } else if (component == 'v17') {
+       
+      console.log('C',component,'sas',sas,'ssf',ssf,'value',value);
+    }
+  }
    if (down === undefined) {
     down = csc.down = startDown;
   }  
@@ -449,7 +458,7 @@ item.oneInterpolationStep = function () {
 
 }
 item.oneStep = function (one) {
-  debugger;
+ // debugger;
   if (this.paused) {
     return;
   }

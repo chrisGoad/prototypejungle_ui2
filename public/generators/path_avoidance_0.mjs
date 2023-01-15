@@ -34,10 +34,10 @@ rs.addHpath = function (n) {
 }
 
 
-rs.addVpath = function (n,iv,x) {
+rs.addVpath = function (n,iv,x,stt) {
   debugger;
   let nm = 'v'+n;
-  pspace[nm] ={kind:'sweep',step:stepV,min:minV,max:maxV,interval:1,once:1};
+  pspace[nm] ={kind:'sweep',step:stepV,min:minV,max:maxV,interval:1,once:1,startAtStep:stt};
   initState[nm] = {value:iv,x};
 }    
 
@@ -50,7 +50,14 @@ rs.addPaths  = function () {
  //delta = 1/2;
   let fr = 0;
   for (let i=0;i<numV;i++) {
-    this.addVpath(i,fr*minV,minV - fr * minV);
+    this.addVpath(i,fr*minV,minV - fr * minV,0);
+    fr = fr + delta;
+  }
+  fr = 0;
+  let stt = Math.floor(1.0*(ht/stepH));
+  console.log('stt',stt);
+  for (let i=0;i<numV;i++) {
+    this.addVpath(numV+i,fr*minV,minV - fr * minV,stt);
     fr = fr + delta;
   }
 }
@@ -65,7 +72,6 @@ rs.updateStateOfH= function (n){
   let pos = Point.mk(v,y);
   let tr = hTravelers[n]
   if (done) {
-    debugger;
     tr.hide();
   } else {
     tr.moveto(pos);
@@ -74,16 +80,31 @@ rs.updateStateOfH= function (n){
 }
 
 rs.updateStateOfV= function (nn){
-  debugger;
+ // debugger;
+  let {vTravelers,pstate,stepsSoFar:ssf,numV} = this;
+  let {pspace,cstate} = pstate;
+  let ns = Math.floor(ht/stepV);
+  
   let gap = 5;
   let nt = 2*nn;
   let nb = 2*nn+1;
   let nm = 'v'+nn;
-  let {vTravelers,pstate} = this;
-  let {pspace,cstate} = pstate;
   let cs = cstate[nm];
   let  {x,value:v} = cs;
   let ps = pspace[nm]
+  let ttr = vTravelers[nt];
+  let btr = vTravelers[nb];
+  if (ssf > ns) {
+    if (nn< numV) {
+      ttr.hide();
+      btr.hide();
+    } else {
+      //console.log('ssf',ssf,'x',x,'v',v);
+      ttr.show();
+      btr.show();
+    }
+  }
+ 
   let topy = ps.min;
   let boty = ps.max;
   let trht = Math.min(2*boty,Math.max(0,v-topy-gap));
@@ -93,8 +114,6 @@ rs.updateStateOfV= function (nn){
   let ttrpos = Point.mk(x,ttry);
   let btrpos = Point.mk(x,btry);
   
-  let ttr = vTravelers[nt]
-  let btr = vTravelers[nb]
   ttr.moveto(ttrpos);
   btr.moveto(btrpos);
   ttr.height = trht;
@@ -104,11 +123,14 @@ rs.updateStateOfV= function (nn){
 }
 
 rs.updateState = function () {
+  let {stepsSoFar:ssf} = this;
+  console.log('ssf',ssf);
   let {numH,numV} = this;
   for (let i=0;i<numH;i++) {
     this.updateStateOfH(i);
   }
-  for (let i=0;i<numV;i++) {
+  for (let i=0;i<2*numV;i++) {
+//  for (let i=0;i<numV;i++) {
     this.updateStateOfV(i);
   }     
 }
@@ -126,7 +148,7 @@ rs.initProtos = function () {
 }  
 
 
-rs.numSteps = 200;
+rs.numSteps = 2*Math.floor(ht/stepH);
 rs.saveAnimation = 0;
 rs.initialize = function () {
   debugger;
@@ -141,11 +163,15 @@ rs.initialize = function () {
    hTtravelers.push(crc)
   }
   let vTtravelers = this.set('vTravelers',arrayShape.mk());
-  for (let i=0;i<2*numV;i++) {
+  for (let i=0;i<4*numV;i++) {
    let rect= this.rectP.instantiate();
    vTtravelers.push(rect);
    if (i%2 === 0) {
     rect.fill = 'blue';
+   }
+   if (i>=2*numV) {
+     rect.fill = 'yellow';
+     rect.hide();
    }
   }
   this.addPaths();

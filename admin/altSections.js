@@ -51,6 +51,7 @@ sections:
  // [0,'part_0_19','instances',1,'Part 0 19',{likes:0,posted:0,category:'part'}], 
   [0,'drop_move','generators',1,'Drop Move',{likes:0,posted:0,category:'quad'}], 
   [0,'path_avoidance_0','generators',1,'Path Avoidance 0',{likes:0,posted:0,category:'quad'}], 
+  [0,'path_avoidance_1','generators',1,'Path Avoidance 1',{likes:0,posted:0,category:'quad'}], 
   [0,'path_rwalk','generators',1,'Random Walk',{likes:0,posted:0,category:'quad'}], 
   [0,'path_rwalk_2','generators',1,'Random Walk 2',{likes:0,posted:0,category:'quad'}], 
   [0,'path_rwalk_3','generators',1,'Random Walk 3',{likes:0,posted:0,category:'quad'}], 

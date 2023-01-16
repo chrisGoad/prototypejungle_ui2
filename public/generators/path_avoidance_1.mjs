@@ -42,27 +42,26 @@ rs.addVpath = function (n,iv,x,stt) {
 }    
 
 rs.addPaths  = function () {
-  let {numV,numH} = this;
+  let {numV,numH,leftGaps,rightGaps} = this;
   this.addHpath(0,0);
   let delta = 1/8;
  //delta = 1/2;
   let fr = 0;
-  for (let i=0;i<numV;i++) {
-    this.addVpath(i,fr*minV,minV - fr * minV,0);
+  for (let i=0;i<numV;i++) {// left
+    leftGaps.push(fr*minV);
     fr = fr + delta;
   }
   fr = 0;
-  let stt = Math.floor(1.0*(ht/stepH));
-  console.log('stt',stt);
-  this.addHpath(1,stt);
-  for (let i=0;i<numV;i++) {
-    this.addVpath(numV+i,fr*minV,minV - fr * minV,stt);
+  for (let i=numV-1;i>=0;i--) {// right
+  //  rightGaps.push(fr*minV);
+    rightGaps[i] = fr*minV;
     fr = fr + delta;
   }
 }
 
 
 rs.updateStateOfH= function (n){
+  debugger;
   let {stepsSoFar:ssf} = this;
   let nm = 'h'+n;
     let stt = Math.floor(1.0*(ht/stepH));
@@ -72,7 +71,6 @@ rs.updateStateOfH= function (n){
   let {value:v,done,y} = cs;
   let pos = Point.mk(v,y);
   let tr = hTravelers[n];
-  //if (((ssf>stt)&&(n===0))||done) {
   if (((ssf>stt)&&(n===0))||((ssf <= stt)&&(n===1))) {
     tr.hide();
   } else {
@@ -83,21 +81,56 @@ rs.updateStateOfH= function (n){
 }
 
 rs.updateStateOfV= function (nn){
- // debugger;
-  let {vTravelers,pstate,stepsSoFar:ssf,numV} = this;
-  let {pspace,cstate} = pstate;
+  debugger;
+  let {tvTravelers,bvTravelers,stepsSoFar:ssf,numV,leftGaps,rightGaps} = this;
   let ns = Math.floor(ht/stepV);
-  
+  let fr = (ssf-1)/ns;
+  let ileftGap = leftGaps[nn];
+  let leftGap = Math.min(maxV,Math.max(minV,ileftGap + 2*fr*maxV)); 
+  let irightGap = rightGaps[nn];
+  let rightGap = Math.min(maxV,Math.max(minV,irightGap + 2*fr*maxV));
   let gap = 5;
-  let nt = 2*nn;
-  let nb = 2*nn+1;
-  let nm = 'v'+nn;
-  let cs = cstate[nm];
-  let  {x,value:v} = cs;
-  let ps = pspace[nm]
-  let ttr = vTravelers[nt];
-  let btr = vTravelers[nb];
-  if (ssf > ns) {
+  let tltop = minV;
+  let tlbot = leftGap-gap;
+  let tlmid = 0.5*(tltop + tlbot);
+  let tlht = tlbot - tltop;
+  let bltop = leftGap + gap;
+  let blbot = maxV;
+  let blmid = 0.5*(bltop + blbot);
+  let blht = blbot - bltop;
+  let x = minV + (nn/numV) * ht;
+  let tlpos = Point.mk(x,tlmid);
+ /* let ttr = tvTravelers[nn];
+  ttr.moveto(tlpos);
+  ttr.height = tlht;
+  ttr.update();
+  let blpos = Point.mk(x,blmid);
+  let btr = bvTravelers[nn];
+  btr.moveto(blpos);
+  btr.height = blht;
+  btr.update();*/
+  
+   let trtop = minV;
+  let trbot = rightGap-gap;
+  let trmid = 0.5*(trtop + trbot);
+  let trht = trbot - trtop;
+  let brtop = rightGap + gap;
+  let brbot = maxV;
+  let brmid = 0.5*(brtop + brbot);
+  let brht = brbot - brtop;
+  //let x = minV + (nn/numV) * ht;
+  let trpos = Point.mk(x,trmid);
+  let ttr = tvTravelers[nn];
+  ttr.moveto(trpos);
+  ttr.height = trht;
+  ttr.update();
+  let brpos = Point.mk(x,brmid);
+  let btr = bvTravelers[nn];
+  btr.moveto(brpos);
+  btr.height = brht;
+  btr.update();
+  return;
+ /* if (ssf > ns) {
     if (nn< numV) {
       ttr.hide();
       btr.hide();
@@ -122,7 +155,7 @@ rs.updateStateOfV= function (nn){
   ttr.height = trht;
   ttr.update();
   btr.height = brht;
-  btr.update();
+  btr.update();*/
 }
 
 rs.updateState = function () {
@@ -130,8 +163,8 @@ rs.updateState = function () {
   console.log('ssf',ssf);
   let {numH,numV} = this;
   this.updateStateOfH(0);
-  this.updateStateOfH(1);
-  for (let i=0;i<2*numV;i++) {
+ // this.updateStateOfH(1);
+  for (let i=0;i<numV;i++) {
 //  for (let i=0;i<numV;i++) {
     this.updateStateOfV(i);
   }     
@@ -165,17 +198,17 @@ rs.initialize = function () {
    let crc = this.circleP.instantiate();
    hTtravelers.push(crc)
   }
-  let vTtravelers = this.set('vTravelers',arrayShape.mk());
-  for (let i=0;i<4*numV;i++) {
-   let rect= this.rectP.instantiate();
-   vTtravelers.push(rect);
-/*   if (i%2 === 0) {
-    rect.fill = 'blue';
-   }*/
-   if (i>=2*numV) {
-    // rect.fill = 'yellow';
-     rect.hide();
-   }
+  this.leftGaps=[];
+  this.rightGaps=[];
+  let tvTravelers = this.set('tvTravelers',arrayShape.mk());
+  let bvTravelers = this.set('bvTravelers',arrayShape.mk());
+  let mvTravelers = this.set('mvTravelers',arrayShape.mk());
+  for (let i=0;i<numV;i++) {
+   let trect= this.rectP.instantiate();
+   let brect= this.rectP.instantiate();
+   tvTravelers.push(trect);
+   bvTravelers.push(brect);
+   //mvTtravelers.push(rect);
   }
   this.addPaths();
   

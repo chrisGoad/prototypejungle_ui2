@@ -364,6 +364,9 @@ item.stepComponent = function (nm,forTrace) { // stv = subtracevalue
   let interpolating = iStart&&(ssf>=iStart);
   let {pspace,cstate}= this.pstate;
   let cst = cstate[nm];
+  if (!cst) {
+    debugger;
+  }
   if (cst.done) {
     return;
   }

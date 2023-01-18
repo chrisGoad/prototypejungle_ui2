@@ -11,7 +11,7 @@ rs.setName('path_avoidance_4');
 let ht = rs.ht= 100;
 let d=0.5*ht;
 
-let topParams = {width:rs.ht,height:rs.ht,framePadding:.2*ht,frameStrokee:'white',frameStrokeWidth:1}
+let topParams = {width:rs.ht,height:rs.ht,framePadding:1*ht,frameStroke:'white',frameStrokeWidth:1}
 
 Object.assign(rs,topParams);
 rs.numH = 2;
@@ -98,15 +98,28 @@ rs.addAllLines = function () {
 
 rs.adjustLine = function (ld,y) {
   let {line,e0,e1} = ld;
-  let ae0 = Point.mk(e0.x,y+e0.y);
-  let ae1 = Point.mk(e1.x,y+e1.y);
-  line.setEnds(e0,e1);
+  let ae0y = y+e0.y;
+  let ae1y = y+e1.y;
+  if (ae0y >d)  {
+    line.hide();
+  } else if (ae1y < -d)  {
+    line.hide();
+  } else {
+    ae1y = Math.min(ae1y,d);
+    ae0y = Math.max(ae0y,-d);
+    let ae0 = Point.mk(e0.x,ae0y);
+    let ae1 = Point.mk(e1.x,ae1y);
+    line.show();
+    line.setEnds(ae0,ae1);
+  }
+  line.update();
 }
 
 rs.adjustLines = function (y) {
+  debugger;
   let {lineData} = this;
   lineData.forEach((ld) => {
-   this.adjustLine(ld);
+   this.adjustLine(ld,y);
   });
 }
  
@@ -158,10 +171,10 @@ rs.updateStateOfH= function (n){
 }
 let vStep=5;
 rs.updateState = function () {
+  debugger;
   let {stepsSoFar:ssf} = this;
   console.log('ssf',ssf);
-  let {numH} = this;
-  this.adjustLines(vStep*ssf);
+  this.adjustLines(stepV*ssf-d);
   this.updateStateOfH(0);
   this.updateStateOfH(1);
 }
@@ -180,7 +193,7 @@ rs.initProtos = function () {
 
 rs.numSteps = 2.4*Math.floor(ht/stepH);
 rs.numSteps = 2*Math.floor(ht/stepH);
-rs.numSteps = Math.floor(ht/stepH);
+rs.numSteps = Math.floor(ht/stepH)+1;
 rs.saveAnimation = 1;
 rs.initialize = function () {
   debugger;
@@ -196,7 +209,7 @@ rs.initialize = function () {
    crc0.fill = 'blue';
    hTtravelers.push(crc0);
     let crc1 = this.circleP.instantiate();
-   crc1.fill = 'red';
+   crc1.fill = 'blue';
    hTtravelers.push(crc1);
    this.addAllLines()
   

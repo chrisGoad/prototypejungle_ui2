@@ -54,6 +54,7 @@ sections:
   [0,'path_avoidance_1','generators',1,'Path Avoidance 1',{likes:0,posted:0,category:'quad'}], 
   [0,'path_avoidance_2','generators',1,'Path Avoidance 2',{likes:0,posted:0,category:'quad'}], 
   [0,'path_avoidance_3','generators',1,'Path Avoidance 3',{likes:0,posted:0,category:'quad'}], 
+  [0,'path_avoidance_4','generators',1,'Path Avoidance 4',{likes:0,posted:0,category:'quad'}], 
   [0,'path_rwalk','generators',1,'Random Walk',{likes:0,posted:0,category:'quad'}], 
   [0,'path_rwalk_2','generators',1,'Random Walk 2',{likes:0,posted:0,category:'quad'}], 
   [0,'path_rwalk_3','generators',1,'Random Walk 3',{likes:0,posted:0,category:'quad'}], 

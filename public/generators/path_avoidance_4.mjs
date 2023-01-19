@@ -10,8 +10,8 @@ debugger;
 rs.setName('path_avoidance_4');
 let ht = rs.ht= 100;
 let d=0.5*ht;
-
-let topParams = {width:rs.ht,height:rs.ht,framePadding:1*ht,frameStroke:'white',frameStrokeWidth:1}
+let fade = 1;
+let topParams = {width:rs.ht,height:rs.ht,framePadding:1*ht,frameStrokee:'white',frameStrokeWidth:1}
 
 Object.assign(rs,topParams);
 rs.numH = 2;
@@ -116,7 +116,7 @@ rs.adjustLine = function (ld,y) {
 }
 
 rs.adjustLines = function (y) {
-  debugger;
+ // debugger;
   let {lineData} = this;
   lineData.forEach((ld) => {
    this.adjustLine(ld,y);
@@ -141,9 +141,9 @@ rs.addHpaths = function () {
   debugger;
   let nm0 = 'h0';
   let nm1 = 'h1';
-  pspace[nm0] ={kind:'sweep',step:stepH,min:minH,max:maxH,interval:1,once:1};
+  pspace[nm0] ={kind:'sweep',step:stepH,min:minH,max:maxH,interval:1,once:0};
   initState[nm0] = {value:minH,y:0};
-  pspace[nm1] ={kind:'sweep',step:stepH,min:minH,max:maxH,interval:1,once:1};
+  pspace[nm1] ={kind:'sweep',step:stepH,min:minH,max:maxH,interval:1,once:0};
   initState[nm1] = {value:minH,y:0};
 }
 
@@ -158,7 +158,8 @@ rs.updateStateOfH= function (n){
   let {pspace,cstate} = pstate;
   let cs = cstate[nm];
   let {value:iv,done,y} = cs;
-  let v = (n===0)?iv: -5-iv;
+ // let v = (n===0)?iv: -5-iv;
+  let v = (n===0)?iv: -iv;
   let pos = Point.mk(v,y);
   let tr = hTravelers[n];
   /*if (((ssf>stt)&&(n===0))||((ssf <= stt)&&(n===1))) {
@@ -171,12 +172,31 @@ rs.updateStateOfH= function (n){
 }
 let vStep=5;
 rs.updateState = function () {
-  debugger;
-  let {stepsSoFar:ssf} = this;
+  //debugger;
+  let {stepsSoFar:ssf,numSteps,cycleTime,lines} = this;
   console.log('ssf',ssf);
-  this.adjustLines(stepV*ssf-d);
+  this.adjustLines(stepV*ssf-2-d);
   this.updateStateOfH(0);
   this.updateStateOfH(1);
+  if (fade) {
+    const colorLines = (fr) => {
+      let v = Math.max(100,Math.floor(fr*255));
+      let clr = `rgb(${v},${v},${v})`;
+      lines.forEach( (L) => {
+        L.stroke = clr;
+        L.update();
+      });
+    }
+    if (ssf<=cycleTime) {
+      let fr = (cycleTime - ssf)/cycleTime;
+      colorLines(fr);
+    } else if (ssf>2*cycleTime) {
+      debugger;
+      let fr =(ssf-2*cycleTime)/cycleTime;
+      colorLines(fr);
+    }
+    
+  }
 }
   
   
@@ -193,7 +213,10 @@ rs.initProtos = function () {
 
 rs.numSteps = 2.4*Math.floor(ht/stepH);
 rs.numSteps = 2*Math.floor(ht/stepH);
-rs.numSteps = Math.floor(ht/stepH)+1;
+let cycleTime = rs.cycleTime = Math.floor(ht/stepH)+1; 
+rs.numSteps = 2*cycleTime;
+rs.numSteps = 3*cycleTime;
+rs.chopOffBeginning =1;
 rs.saveAnimation = 1;
 rs.initialize = function () {
   debugger;
@@ -212,7 +235,8 @@ rs.initialize = function () {
    crc1.fill = 'blue';
    hTtravelers.push(crc1);
    this.addAllLines()
-  
+    this.adjustLines(-2-d);
+
   this.addHpaths();
   
 }

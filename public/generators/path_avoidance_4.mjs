@@ -183,6 +183,9 @@ rs.updateState = function () {
   this.updateStateOfH(0);
   this.updateStateOfH(1);
   if (fade) {
+    if (ssf==2*cycleTime) {
+      this.adjustLines(-2-d);
+    }
     const colorLines = (fr) => {
       let v = Math.max(5,Math.floor(fr*255));
       let clr = `rgb(${v},${v},${v})`;
@@ -193,15 +196,13 @@ rs.updateState = function () {
     }
     if (ssf<=cycleTime) {
       let fr = (cycleTime - ssf)/cycleTime;
-      colorLines(fr);
+      colorLines(Math.pow(fr,1.1));
     } else if (ssf>2*cycleTime) {
       debugger;
       let fr =(ssf-2*cycleTime)/cycleTime;
-      colorLines(fr);
+      colorLines(Math.pow(fr,1.1));
     }
-    if (ssf==2*cycleTime) {
-      this.adjustLines(-2-d);
-    }
+  
 
     
   }
@@ -221,9 +222,9 @@ rs.initProtos = function () {
 
 rs.numSteps = 2.4*Math.floor(ht/stepH);
 rs.numSteps = 2*Math.floor(ht/stepH);
-let cycleTime = rs.cycleTime = Math.floor(ht/stepH)+1; 
+let cycleTime = rs.cycleTime = Math.floor(ht/stepH); 
 rs.numSteps = 2*cycleTime;
-rs.numSteps = 3*cycleTime;
+rs.numSteps = 3*cycleTime+2;
 rs.chopOffBeginning =1;
 rs.saveAnimation = 1;
 rs.initialize = function () {

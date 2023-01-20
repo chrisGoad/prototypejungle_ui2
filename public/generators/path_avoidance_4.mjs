@@ -175,12 +175,16 @@ rs.updateState = function () {
   //debugger;
   let {stepsSoFar:ssf,numSteps,cycleTime,lines} = this;
   console.log('ssf',ssf);
-  this.adjustLines(stepV*ssf-2-d);
+  if (ssf < 2*cycleTime) {
+    this.adjustLines(stepV*ssf-2-d);
+  }  else { 
+    this.adjustLines(stepV*(ssf-2*cycleTime)-2-d);
+  }
   this.updateStateOfH(0);
   this.updateStateOfH(1);
   if (fade) {
     const colorLines = (fr) => {
-      let v = Math.max(100,Math.floor(fr*255));
+      let v = Math.max(5,Math.floor(fr*255));
       let clr = `rgb(${v},${v},${v})`;
       lines.forEach( (L) => {
         L.stroke = clr;
@@ -195,6 +199,10 @@ rs.updateState = function () {
       let fr =(ssf-2*cycleTime)/cycleTime;
       colorLines(fr);
     }
+    if (ssf==2*cycleTime) {
+      this.adjustLines(-2-d);
+    }
+
     
   }
 }

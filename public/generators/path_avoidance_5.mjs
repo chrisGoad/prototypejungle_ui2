@@ -7,11 +7,11 @@ import {rs as addPathMethods} from '/mlib/path.mjs';
 let rs = basicP.instantiate();
 addPathMethods(rs);
 debugger;
-rs.setName('path_avoidance_4');
+rs.setName('path_avoidance_5');
 let ht = rs.ht= 100;
 let d=0.5*ht;
 let fade = 1;
-let topParams = {width:rs.ht,height:rs.ht,framePadding:1*ht,frameStrokee:'white',frameStrokeWidth:1}
+let topParams = {width:rs.ht,height:rs.ht,framePadding:1*ht,frameStroke:'white',frameStrokeWidth:1}
 
 Object.assign(rs,topParams);
 rs.numH = 2;
@@ -42,9 +42,13 @@ rs.zgaps = function () {
 rs.gap = 5;
 rs.gap = 10;
 
-rs.addLines = function (x) {
+rs.addLines = function (x,up) {
   debugger;
-  let {gap,lineP,lines,lineData} = this;
+  let {gap,lineP,linesUp,linesDown,lineDataUp,lineDataDown} = this;
+  let upColor = 'red';
+  let downColor = 'blue';
+  downColor = 'white';
+  upColor = 'white';
   let tgap = 2*gap;
   let gaps;
   if  (x<0) {
@@ -68,11 +72,20 @@ rs.addLines = function (x) {
   const addLine = (e0,e1) => {
     if (e0.distance(e1) > tgap) {
       let line = lineP.instantiate();
+      line.stroke = up?upColor:downColor;
       line.setEnds(e0,e1);
       let lineDat = {line,e0,e1};
-      lineData.push(lineDat);
+      if (up) {
+        lineDataUp.push(lineDat);
+      } else {
+        lineDataDown.push(lineDat);
+      }
       line.show();
-      lines.push(line);
+      if (up) {
+        linesUp.push(line);
+      } else {
+        linesDown.push(line);
+      }
       line.update();
 
     } 
@@ -85,15 +98,23 @@ rs.addLines = function (x) {
 }
 
 rs.numV = 8; //on each side
+rs.numV = 16; //on each side
 
 rs.addAllLines = function () {
   let {numV} = this;
   let delta = d/numV;
+  let hdelta = 0.5*delta;
   for (let i=0;i<numV;i++) {
     this.addLines(-i*delta);
   }
   for (let i=1;i<numV;i++) {
     this.addLines(i*delta);
+  }
+   for (let i=0;i<numV;i++) {
+    this.addLines(-hdelta-i*delta,1);
+  }
+  for (let i=0;i<numV;i++) {
+    this.addLines(hdelta+i*delta,1);
   }
 }
 
@@ -118,9 +139,12 @@ rs.adjustLine = function (ld,y) {
 
 rs.adjustLines = function (y) {
  // debugger;
-  let {lineData} = this;
-  lineData.forEach((ld) => {
+  let {lineDataDown,lineDataUp} = this;
+  lineDataDown.forEach((ld) => {
    this.adjustLine(ld,y);
+  });
+  lineDataUp.forEach((ld) => {
+   this.adjustLine(ld,-y);
   });
 }
  
@@ -138,6 +162,7 @@ let minH = -d;
 let maxH = d;
 
 
+
 rs.addHpaths = function () {
   debugger;
   let nm0 = 'h0';
@@ -149,9 +174,8 @@ rs.addHpaths = function () {
 }
 
 
-
 rs.updateStateOfH= function (n){
-  //debugger;
+  debugger;
   let {stepsSoFar:ssf} = this;
   let nm = 'h'+n;
     let stt = Math.floor(1.0*(ht/stepH));
@@ -171,79 +195,22 @@ rs.updateStateOfH= function (n){
   //}
   tr.update();
 }
+
+
 let vStep=5;
-rs.interpolateThru = function (fr,indist,inpnt) {
-  let efr;
-  if (fr < indist) {
-     efr = (fr/indist)*inpnt;
-  } else {
-    efr = inpnt +(fr-indist)/(1-indist)*(1-inpnt);
-  } 
-  console.log('efr',efr);
-  return efr;
-}
-rs.frFunctionD = function (fr) {
-  let efr = this.interpolateThru(fr,0.7,0.2);
-  return 1 - efr;
- /* let inpnt = 0.2;
-  let indist = 0.7;
-  let efr;
-  if (fr < indist) {
-     efr = (fr/indist)*inpnt;
-  } else {
-    efr = inpnt +(fr-indist)/(1-indist)*(1-inpnt);
-  } console.log('efr',efr);
-  return 1-efr;*/
-}
-rs.frFunctionU = function (fr) {
-  let efr = this.interpolateThru(fr,0.4,0.3)
-  return efr;
- /* let inpnt = 0.2;
-  let indist = 0.7;
-  let efr;
-  if (fr < indist) {
-     efr = (fr/indist)*inpnt;
-  } else {
-    efr = inpnt +(fr-indist)/(1-indist)*(1-inpnt);
-  } console.log('efrU',efr);*/
-  return efr;
-}
+
 rs.updateState = function () {
   //debugger;
   let {stepsSoFar:ssf,numSteps,cycleTime,lines} = this;
   console.log('ssf',ssf);
+  this.updateStateOfH(0);
+  this.updateStateOfH(1);
   if (ssf < 2*cycleTime) {
     this.adjustLines(stepV*ssf-2-d);
   }  else { 
     this.adjustLines(stepV*(ssf-2*cycleTime)-2-d);
   }
-  this.updateStateOfH(0);
-  this.updateStateOfH(1);
-  if (fade) {
-    if (ssf==2*cycleTime) {
-      this.adjustLines(-2-d);
-    }
-    const colorLines = (fr) => {
-      let v = Math.max(0,Math.floor(fr*255));
-      let clr = `rgb(${v},${v},${v})`;
-      lines.forEach( (L) => {
-        L.stroke = clr;
-        L.update();
-      });
-    }
-    if (ssf<=cycleTime) {
-//      let fr = (cycleTime - ssf)/cycleTime;
-      let fr = ssf/cycleTime;
-      colorLines(this.frFunctionD(fr));
-    } else if (ssf>2*cycleTime) {
-      debugger;
-      let fr =(ssf-2*cycleTime)/cycleTime;
-      colorLines(this.frFunctionU(fr));
-    }
-  
 
-    
-  }
 }
   
   
@@ -251,19 +218,19 @@ rs.initProtos = function () {
   let circleP = this.circleP = circlePP.instantiate();
   circleP.fill = 'white';
   circleP['stroke-width'] = 0;
-  circleP.dimension =0.025*this.ht;
+  circleP.dimension =0.1*this.ht;
     let lineP = this.lineP = linePP.instantiate();
   lineP.stroke = 'white';
-  lineP['stroke-width'] = 2;
+  lineP['stroke-width'] = 1;
 }  
 
 
 rs.numSteps = 2.4*Math.floor(ht/stepH);
 rs.numSteps = 2*Math.floor(ht/stepH);
 let cycleTime = rs.cycleTime = Math.floor(ht/stepH); 
-rs.numSteps = 2*cycleTime;
-rs.numSteps = 3*cycleTime+2;
-rs.chopOffBeginning =1;
+rs.numSteps = cycleTime;
+//rs.numSteps = 3*cycleTime+2;
+rs.chopOffBeginning =0;
 rs.saveAnimation = 1;
 rs.initialize = function () {
   debugger;
@@ -273,18 +240,24 @@ rs.initialize = function () {
   this.initProtos();
   this.addFrame();
   let hTtravelers = this.set('hTravelers',arrayShape.mk());
-  let lines = this.set('lines',arrayShape.mk());
-  let lineData = this.lineData = [];
+
+  this.set('linesUp',arrayShape.mk());
+  this.set('linesDown',arrayShape.mk());
+  let lineDataUp = this.lineDataUp = [];
+  let lineDataDown = this.lineDataDown = [];
+   this.addAllLines()
+    this.adjustLines(-2-d);
+    
+    
    let crc0 = this.circleP.instantiate();
    crc0.fill = 'blue';
    hTtravelers.push(crc0);
     let crc1 = this.circleP.instantiate();
    crc1.fill = 'blue';
    hTtravelers.push(crc1);
-   this.addAllLines()
-    this.adjustLines(-2-d);
-
+   
   this.addHpaths();
+
   
 }
 

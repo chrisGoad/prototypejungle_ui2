@@ -1,4 +1,5 @@
 import {rs as circlePP} from '/shape/circle.mjs';
+import {rs as polygonPP} from '/shape/polygon.mjs';
 import {rs as linePP} from '/shape/line.mjs';
 import {rs as basicP} from '/generators/basics.mjs';
 //import {rs as addDropMethods} from '/mlib/drop.mjs';
@@ -205,11 +206,13 @@ rs.updateState = function () {
   console.log('ssf',ssf);
   this.updateStateOfH(0);
   this.updateStateOfH(1);
-  if (ssf < 2*cycleTime) {
+  let step = stepV*ssf-0-d;
+  console.log('step',step);
+ // if (ssf < 2*cycleTime) {
     this.adjustLines(stepV*ssf-2-d);
-  }  else { 
+  /*}  else { 
     this.adjustLines(stepV*(ssf-2*cycleTime)-2-d);
-  }
+  }*/
 
 }
   
@@ -218,6 +221,9 @@ rs.initProtos = function () {
   let circleP = this.circleP = circlePP.instantiate();
   circleP.fill = 'white';
   circleP['stroke-width'] = 0;
+  circleP.dimension =0.1*this.ht;
+  let polygonP = this.polygonP = polygonPP.instantiate();
+  polygonP.fill = 'blue';
   circleP.dimension =0.1*this.ht;
     let lineP = this.lineP = linePP.instantiate();
   lineP.stroke = 'white';
@@ -228,7 +234,7 @@ rs.initProtos = function () {
 rs.numSteps = 2.4*Math.floor(ht/stepH);
 rs.numSteps = 2*Math.floor(ht/stepH);
 let cycleTime = rs.cycleTime = Math.floor(ht/stepH); 
-rs.numSteps = cycleTime;
+rs.numSteps = cycleTime+1;
 //rs.numSteps = 3*cycleTime+2;
 rs.chopOffBeginning =0;
 rs.saveAnimation = 1;
@@ -245,19 +251,16 @@ rs.initialize = function () {
   this.set('linesDown',arrayShape.mk());
   let lineDataUp = this.lineDataUp = [];
   let lineDataDown = this.lineDataDown = [];
-   this.addAllLines()
-    this.adjustLines(-2-d);
-    
-    
-   let crc0 = this.circleP.instantiate();
-   crc0.fill = 'blue';
-   hTtravelers.push(crc0);
-    let crc1 = this.circleP.instantiate();
-   crc1.fill = 'blue';
-   hTtravelers.push(crc1);
-   
+  this.addAllLines()
+  this.adjustLines(-2-d);  
+  let gond = 0.1*this.ht;
+  let gon0 = this.polygonP.instantiate();
+  gon0.corners  = [Point.mk(-gond,0),Point.mk(0,gond),Point.mk(gond,0),Point.mk(0,-gond)];
+  hTtravelers.push(gon0);
+  let gon1 = this.polygonP.instantiate();
+  gon1.corners  = [Point.mk(-gond,0),Point.mk(0,gond),Point.mk(gond,0),Point.mk(0,-gond)];
+  hTtravelers.push(gon1); 
   this.addHpaths();
-
   
 }
 

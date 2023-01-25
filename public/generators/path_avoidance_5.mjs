@@ -100,7 +100,7 @@ rs.addLines = function (x,up) {
 
 rs.numV = 8; //on each side
 rs.numV = 16; //on each side
-
+rs.numV = 4;
 rs.addAllLines = function () {
   let {numV} = this;
   let delta = d/numV;
@@ -206,10 +206,11 @@ rs.updateState = function () {
   console.log('ssf',ssf);
   this.updateStateOfH(0);
   this.updateStateOfH(1);
-  let step = stepV*ssf-0-d;
+  let step = stepV*ssf-1-d;
   console.log('step',step);
  // if (ssf < 2*cycleTime) {
-    this.adjustLines(stepV*ssf-2-d);
+   // this.adjustLines(stepV*ssf-2-d);
+    this.adjustLines(step);
   /*}  else { 
     this.adjustLines(stepV*(ssf-2*cycleTime)-2-d);
   }*/
@@ -224,6 +225,7 @@ rs.initProtos = function () {
   circleP.dimension =0.1*this.ht;
   let polygonP = this.polygonP = polygonPP.instantiate();
   polygonP.fill = 'blue';
+  polygonP.fill = 'transparent';
   circleP.dimension =0.1*this.ht;
     let lineP = this.lineP = linePP.instantiate();
   lineP.stroke = 'white';

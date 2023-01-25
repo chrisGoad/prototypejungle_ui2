@@ -140,6 +140,7 @@ c:\ffmpeg\bin\ffmpeg  -framerate 4 -i animations/path_avoidance_3_f%03d.jpg -s 8
 c:\ffmpeg\bin\ffmpeg  -framerate 20 -i animations/path_avoidance_4_f%03d.jpg -s 800x800  export/path_avoidance_4.gif
 c:\ffmpeg\bin\ffmpeg  -framerate 20 -i animations/path_avoidance_5_f%03d.jpg -s 800x800  export/path_avoidance_5.gif
 c:\ffmpeg\bin\ffmpeg  -framerate 2 -i animations/path_avoidance_5_f%03d.jpg -s 800x800  export/path_avoidance_5.gif
+c:\ffmpeg\bin\ffmpeg  -framerate 1 -i animations/path_avoidance_5_f%03d.jpg -s 800x800  export/path_avoidance_5.mp4
 c:\ffmpeg\bin\ffmpeg  -framerate 2 -i animations/path_avoidance_4_f%03d.jpg -s 800x800  export/path_avoidance_4.gif
 
 

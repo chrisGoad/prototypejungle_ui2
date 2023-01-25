@@ -41,8 +41,12 @@ rs.zgaps = function () {
 }
 
 rs.gap = 5;
-rs.gap = 10;
+rs.gap = 9;
+rs.gap = 15;
 
+rs.numV = 8; //on each side
+//rs.numV = 16; //on each side
+//rs.numV = 4;
 rs.addLines = function (x,up) {
   debugger;
   let {gap,lineP,linesUp,linesDown,lineDataUp,lineDataDown} = this;
@@ -51,13 +55,15 @@ rs.addLines = function (x,up) {
   downColor = 'white';
   upColor = 'white';
   let tgap = 2*gap;
-  let gaps;
+  //let tgap = gap;
+  let gaps,zc;
   if  (x<0) {
     gaps = this.ngaps(x);
   } else if (x>0) {
     gaps = this.pgaps(x);
   } else {
     gaps = this.zgaps();
+    zc = 1;
   }
   let [g0,g1,g2,g3,g4] = gaps;
   let L0e0 = Point.mk(x,-2*d);
@@ -70,8 +76,8 @@ rs.addLines = function (x,up) {
   let L3e1 = Point.mk(x,g3-gap); 
   let L4e0 = Point.mk(x,g3+gap);
   let L4e1 = Point.mk(x,2*d); 
-  const addLine = (e0,e1) => {
-    if (e0.distance(e1) > tgap) {
+  const addLine = (e0,e1,outside) => {
+    if (e0.distance(e1) > (outside?gap:tgap)) {
       let line = lineP.instantiate();
       line.stroke = up?upColor:downColor;
       line.setEnds(e0,e1);
@@ -91,16 +97,18 @@ rs.addLines = function (x,up) {
 
     } 
   }
-  addLine(L0e0,L0e1);
-  addLine(L1e0,L1e1);
-  addLine(L2e0,L2e1);
-  addLine(L3e0,L3e1);
-  addLine(L4e0,L4e1);
+  addLine(L0e0,L0e1,1);
+  addLine(L1e0,L1e1,0);
+  addLine(L2e0,L2e1,0);
+  if (!zc) {
+    addLine(L3e0,L3e1,0);
+    addLine(L4e0,L4e1,1);
+  }
 }
 
 rs.numV = 8; //on each side
-rs.numV = 16; //on each side
-rs.numV = 4;
+//rs.numV = 16; //on each side
+//rs.numV = 4;
 rs.addAllLines = function () {
   let {numV} = this;
   let delta = d/numV;
@@ -123,9 +131,12 @@ rs.adjustLine = function (ld,y) {
   let {line,e0,e1} = ld;
   let ae0y = y+e0.y;
   let ae1y = y+e1.y;
-  if (ae0y >d)  {
+  if (ae0y > ae1y) {
+    debugger;
+  }
+  if ((ae0y >d) && (ae1y > d)) {
     line.hide();
-  } else if (ae1y < -d)  {
+  } else if ((ae1y < -d) && (ae1y < -d)) {
     line.hide();
   } else {
     ae1y = Math.min(ae1y,d);
@@ -141,9 +152,14 @@ rs.adjustLine = function (ld,y) {
 rs.adjustLines = function (y) {
  // debugger;
   let {lineDataDown,lineDataUp} = this;
-  lineDataDown.forEach((ld) => {
+  let lnd = lineDataDown.length;
+  for (let i = 0;i<lnd;i++) {
+    let ld = lineDataDown[i];
+    if (i ===1) {
+      debugger;
+    }
    this.adjustLine(ld,y);
-  });
+  };
   lineDataUp.forEach((ld) => {
    this.adjustLine(ld,-y);
   });
@@ -158,7 +174,7 @@ rs.adjustLines = function (y) {
   let pspace = {};
 rs.pstate = {pspace,cstate:initState}
 let stepH = 1;
-let stepV = 1;
+let stepV = 1.01;
 let minH = -d;
 let maxH = d;
 
@@ -176,7 +192,7 @@ rs.addHpaths = function () {
 
 
 rs.updateStateOfH= function (n){
-  debugger;
+ // debugger;
   let {stepsSoFar:ssf} = this;
   let nm = 'h'+n;
     let stt = Math.floor(1.0*(ht/stepH));
@@ -254,7 +270,7 @@ rs.initialize = function () {
   let lineDataUp = this.lineDataUp = [];
   let lineDataDown = this.lineDataDown = [];
   this.addAllLines()
-  this.adjustLines(-2-d);  
+ // this.adjustLines(-2-d);  
   let gond = 0.1*this.ht;
   let gon0 = this.polygonP.instantiate();
   gon0.corners  = [Point.mk(-gond,0),Point.mk(0,gond),Point.mk(gond,0),Point.mk(0,-gond)];

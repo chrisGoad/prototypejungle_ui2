@@ -12,7 +12,7 @@ rs.setName('path_avoidance_6');
 let ht = rs.ht= 100;
 let d=0.5*ht;
 let fade = 1;
-let topParams = {width:rs.ht,height:rs.ht,framePadding:1*ht,frameStroke:'white',frameStrokeWidth:1}
+let topParams = {width:rs.ht,height:rs.ht,framePadding:.1*ht,frameStrokee:'white',frameStrokeWidth:1}
 
 Object.assign(rs,topParams);
 rs.numH = 2;
@@ -30,25 +30,26 @@ rs.numV = 8; //on each side
 //rs.numV = 16; //on each side
 //rs.numV = 4;
 
+let L  =rs.lineLength = 30;
 
-rs.adjustLine = function (ld,y) {
-  let {line,e0,e1} = ld;
-  let ae0y = y+e0.y;
-  let ae1y = y+e1.y;
-  if (ae0y > ae1y) {
-    debugger;
-  }
-  if ((ae0y >d) && (ae1y > d)) {
+rs.adjustLine = function (line,pos,h) {
+  let {lineLength:L} = this;
+  let {x,y} = pos;
+  let p = h?x:y;
+  let ae0 = p-0.5*L;
+  let ae1 = p+0.5*L;
+  
+  if ((ae0 >d) && (ae1 > d)) {
     line.hide();
-  } else if ((ae1y < -d) && (ae1y < -d)) {
+  } else if ((ae0 < -d) && (ae1 < -d)) {
     line.hide();
   } else {
-    ae1y = Math.min(ae1y,d);
-    ae0y = Math.max(ae0y,-d);
-    let ae0 = Point.mk(e0.x,ae0y);
-    let ae1 = Point.mk(e1.x,ae1y);
+    ae1 = Math.min(ae1,d);
+    ae0 = Math.max(ae0,-d);
+    let ne0 = h?Point.mk(ae0-p,0):Point.mk(0,ae0-p);
+    let ne1 = h?Point.mk(ae1-p,0):Point.mk(0,ae1-p);
     line.show();
-    line.setEnds(ae0,ae1);
+    line.setEnds(ne0,ne1);
   }
   line.update();
 }
@@ -77,10 +78,10 @@ rs.adjustLines = function (y) {
  let initState = {time:0};
   let pspace = {};
 rs.pstate = {pspace,cstate:initState}
-let stepH = 1;
+let stepH = 2;
 let stepV = 1.;
-let minH = -d;
-let maxH = d;
+let minH = -d-L;
+let maxH = d+L;
 
 
 
@@ -100,7 +101,6 @@ rs.addVpath = function (n,x,od) {
   initState[nm] = {value:minH,x,od};
 }
 
-rs.lineLength = 30;
 rs.addLine = function (h) {
   let {lineLength:L,hlines,vlines,lineP} = this;
   let line = lineP.instantiate();
@@ -127,10 +127,15 @@ rs.updateStateOfH= function (n){
   let {pspace,cstate} = pstate;
   let cs = cstate[nm];
   let {value:iv,done,y,od} = cs;
+  let line = hlines[n];
+  if (done) {
+    line.hide();
+    return;
+  }
   let v = od?-iv: iv;
   let pos = Point.mk(v,y);
-  let line = hlines[n];
-  line.show();
+  this.adjustLine(line,pos,1);
+
   line.moveto(pos);
   line.update();
 }
@@ -144,10 +149,15 @@ rs.updateStateOfV= function (n){
   let {pspace,cstate} = pstate;
   let cs = cstate[nm];
   let {value:iv,done,x,od} = cs;
+  let line = vlines[n];
+  if (done) {
+    line.hide();
+    return;
+  }
   let v = od?-iv: iv;
   let pos = Point.mk(x,v);
-  let line = vlines[n];
-  line.show();
+  this.adjustLine(line,pos,0);
+ // line.show();
   line.moveto(pos);
   line.update();
 }
@@ -166,7 +176,7 @@ rs.updateState = function () {
   for (let i=0;i<vln;i++) {
     this.updateStateOfV(i);
   }
-  if (Math.random() < 1) {
+  if (Math.random() < 2) {
     let rw = Math.floor(Math.random()*nr);
     let r = (rw-nr/2) * (ht/nr);
     debugger;
@@ -193,7 +203,7 @@ rs.initProtos = function () {
   circleP.dimension =0.1*this.ht;
     let lineP = this.lineP = linePP.instantiate();
   lineP.stroke = 'white';
-  lineP['stroke-width'] = 1;
+  lineP['stroke-width'] = .5;
 }  
 
 

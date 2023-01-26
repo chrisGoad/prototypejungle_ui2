@@ -12,7 +12,7 @@ rs.setName('path_avoidance_5');
 let ht = rs.ht= 100;
 let d=0.5*ht;
 let fade = 1;
-let topParams = {width:rs.ht,height:rs.ht,framePadding:1*ht,frameStroke:'white',frameStrokeWidth:1}
+let topParams = {width:rs.ht,height:rs.ht,framePadding:1*ht,frameStrokee:'white',frameStrokeWidth:1}
 
 Object.assign(rs,topParams);
 rs.numH = 2;
@@ -217,8 +217,8 @@ rs.updateState = function () {
   //debugger;
   let {stepsSoFar:ssf,numSteps,cycleTime,lines} = this;
   console.log('ssf',ssf);
-  this.updateStateOfH(0);
-  this.updateStateOfH(1);
+  //this.updateStateOfH(0);
+  //this.updateStateOfH(1);
   let step = stepV*ssf-1-d;
   console.log('step',step);
  // if (ssf < 2*cycleTime) {
@@ -266,7 +266,8 @@ rs.initialize = function () {
   this.set('linesDown',arrayShape.mk());
   let lineDataUp = this.lineDataUp = [];
   let lineDataDown = this.lineDataDown = [];
-  this.addAllLines()
+  this.addAllLines();
+  return;
  // this.adjustLines(-2-d);  
   let gond = 0.1*this.ht;
   let gon0 = this.polygonP.instantiate();

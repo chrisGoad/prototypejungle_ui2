@@ -32,7 +32,18 @@ rs.numV = 8; //on each side
 
 let L  =rs.lineLength = 30;
 
-rs.adjustLine = function (line,pos,h) {
+rs.rotateLine = function(line,a) {
+  let {lineLength:L} = this;
+  let cs =Math.cos(a);
+  let sn = Math.sin(a);
+  let hvec = Point.mk(cs,sn).times(0.5*L);
+  let ne0 = hvec.times(-1);
+  let ne1 = hvec;
+  line.setEnds(ne0,ne1);
+  line.update();
+ }
+rs.adjustLine = function (line,pos,h,angle) {
+  debugger;
   let {lineLength:L} = this;
   let {x,y} = pos;
   let p = h?x:y;
@@ -49,7 +60,8 @@ rs.adjustLine = function (line,pos,h) {
     let ne0 = h?Point.mk(ae0-p,0):Point.mk(0,ae0-p);
     let ne1 = h?Point.mk(ae1-p,0):Point.mk(0,ae1-p);
     line.show();
-    line.setEnds(ne0,ne1);
+    this.rotateLine(line,angle);
+   // line.setEnds(ne0,ne1);
   }
   line.update();
 }
@@ -89,7 +101,7 @@ rs.addHpath = function (n,y,od) {
   debugger;
   let nm = 'h'+n;
   pspace[nm] ={kind:'sweep',step:stepH,min:minH,max:maxH,interval:1,once:1};
-  initState[nm] = {value:minH,y,od};
+  initState[nm] = {value:minH,y,od,angle:0};
 }
 
 
@@ -98,7 +110,7 @@ rs.addVpath = function (n,x,od) {
   debugger;
   let nm = 'v'+n;
   pspace[nm] ={kind:'sweep',step:stepH,min:minH,max:maxH,interval:1,once:1};
-  initState[nm] = {value:minH,x,od};
+  initState[nm] = {value:minH,x,od,angle:Math.PI/2};
 }
 
 rs.addLine = function (h) {
@@ -118,7 +130,7 @@ rs.addLine = function (h) {
 }     
  
 
-rs.updateStateOfH= function (n){
+rs.updateStateOfH= function (n,angle){
  debugger;
   let {stepsSoFar:ssf} = this;
   let nm = 'h'+n;
@@ -134,13 +146,13 @@ rs.updateStateOfH= function (n){
   }
   let v = od?-iv: iv;
   let pos = Point.mk(v,y);
-  this.adjustLine(line,pos,1);
+  this.adjustLine(line,pos,1,angle);
 
   line.moveto(pos);
   line.update();
 }
 
-rs.updateStateOfV= function (n){
+rs.updateStateOfV= function (n,angle){
  // debugger;
   let {stepsSoFar:ssf} = this;
   let nm = 'v'+n;
@@ -156,86 +168,28 @@ rs.updateStateOfV= function (n){
   }
   let v = od?-iv: iv;
   let pos = Point.mk(x,v);
-  this.adjustLine(line,pos,0);
+  this.adjustLine(line,pos,0,angle);
  // line.show();
   line.moveto(pos);
   line.update();
 }
-rs.intersectLine = function (hline,vline) {
-  let L = this.lineLength;
-  let ph = hline.getTranslation();
-  let pv = vline.getTranslation();
-  if ((ph.x+0.5*L)<pv.x) { 
-    return;
-  }
-  if (pv.x<(ph.x-0.5*L)) { 
-    return;
-  }
-  if ((pv.y+0.5*L)<ph.y) { 
-    return;
-  }
-  if (pv.y<(ph.y-0.5*L)) { 
-    return;
-  }
-  return Point.mk(ph.x,pv.y);
-}
 
-rs.allIntersections = function () {
-  let {hlines,vlines} = this;
-  let ai = [];
-  hlines.forEach((h) => {
-    vlines.forEach((v) => {
-      let i = this.intersectLine(h,v);
-      if (i) {
-        ai.push(i);
-      }
-    });
-  });
-  return ai;
-}
-
-rs.placeCircles = function () {
-  let {circles,circleP} = this;
-  let ai = this.allIntersections();
-  let cl = circles.length;
-  let ail = ai.length;
-  if (ail > cl) {
-    let nn = ail-cl;
-    for (let j=o;j<nn;j++) {
-      let crc = circleP.instantiate();
-      circles.push(crc);
-    }
-  }
-  for (let k=0;k<ail;k++) {
-    let crc = circles[k];
-    crc.moveto(ai[k])
-    crc.show();
-    crc.update();
-  }
-  if (cl > ail) {
-    for (let  k=cl;k<ail;k++) {
-      let crc = circles[k];
-      crc.hide();
-      crc.update();
-    }
-  }
-}
-  
 
 let vStep=5;
 let nr = 80;
 rs.updateState = function () {
   //debugger;
   let {stepsSoFar:ssf,numSteps,cycleTime,hlines,vlines} = this;
+  //let angle = (0.1*(ssf%cycleTime)/cycleTime)*Math.PI;
+  let angle = 0*(ssf/numSteps)*Math.PI;
   let hln = hlines.length;
   let vln = vlines.length;
   for (let i=0;i<hln;i++) {
-    this.updateStateOfH(i);
+    this.updateStateOfH(i,angle);
   }
   for (let i=0;i<vln;i++) {
-    this.updateStateOfV(i);
+    this.updateStateOfV(i,angle+Math.PI/2);
   }
-  this.placeCircles()
   if (Math.random() < 2) {
     let rw = Math.floor(Math.random()*nr);
     let r = (rw-nr/2) * (ht/nr);
@@ -290,4 +244,5 @@ rs.initialize = function () {
 }
 
 export {rs};
+
 

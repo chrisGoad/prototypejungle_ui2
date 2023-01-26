@@ -45,7 +45,7 @@ rs.gap = 9;
 rs.gap = 15;
 
 rs.numV = 8; //on each side
-//rs.numV = 16; //on each side
+rs.numV = 32; //on each side
 //rs.numV = 4;
 rs.addLines = function (x,up) {
   debugger;
@@ -106,9 +106,6 @@ rs.addLines = function (x,up) {
   }
 }
 
-rs.numV = 8; //on each side
-//rs.numV = 16; //on each side
-//rs.numV = 4;
 rs.addAllLines = function () {
   let {numV} = this;
   let delta = d/numV;
@@ -245,7 +242,7 @@ rs.initProtos = function () {
   circleP.dimension =0.1*this.ht;
     let lineP = this.lineP = linePP.instantiate();
   lineP.stroke = 'white';
-  lineP['stroke-width'] = 1;
+  lineP['stroke-width'] = 0.5;
 }  
 
 

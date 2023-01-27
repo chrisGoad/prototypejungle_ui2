@@ -93,7 +93,7 @@ rs.adjustLines = function (y) {
  let initState = {time:0};
   let pspace = {};
 rs.pstate = {pspace,cstate:initState}
-let stepH = 2;
+let vel = 2;
 let stepV = 1.;
 let minH = -d-L;
 let maxH = d+L;
@@ -103,7 +103,7 @@ let maxH = d+L;
 rs.addHpath = function (n,y,od) {
   let {stepsSoFar:ssf} = this;
   let nm = 'h'+n;
-  pspace[nm] ={kind:'sweep',step:stepH,min:minH,max:maxH,interval:1,once:1};
+  pspace[nm] ={kind:'sweep',step:vel,min:minH,max:maxH,interval:1,once:1};
   initState[nm] = {value:minH,y,od,start:ssf};
 }
 
@@ -112,14 +112,16 @@ rs.addHpath = function (n,y,od) {
 rs.addVpath = function (n,x,od) {
   let {stepsSoFar:ssf} = this;
   let nm = 'v'+n;
-  pspace[nm] ={kind:'sweep',step:stepH,min:minH,max:maxH,interval:1,once:1};
+  pspace[nm] ={kind:'sweep',step:vel,min:minH,max:maxH,interval:1,once:1};
   initState[nm] = {value:minH,x,od,start:ssf};
 }
 
 rs.addLine = function (h) {
-  let {lineLength:L,hlines,vlines,lineP,hends0,hends1,vends0,vends1,circleP1} = this;
+  let {lineLength:L,hlines,vlines,lineP,hends0,hends1,vends0,vends1,circleP1,stepsSoFar:ssf} = this;
   debugger;
   let line = lineP.instantiate();
+  line.h = h;
+  line.start = ssf;
   let ends0 = h?hends0:vends0;
   let ends1 = h?hends1:vends1;
   if (h) {
@@ -145,7 +147,7 @@ rs.addLine = function (h) {
 rs.updateStateOfH= function (n){
   let {stepsSoFar:ssf,ends} = this;
   let nm = 'h'+n;
-    let stt = Math.floor(1.0*(ht/stepH));
+    let stt = Math.floor(1.0*(ht/vel));
   let {hlines,pstate} = this;
   let {pspace,cstate} = pstate;
   let cs = cstate[nm];
@@ -167,7 +169,7 @@ rs.updateStateOfV= function (n){
  // debugger;
   let {stepsSoFar:ssf} = this;
   let nm = 'v'+n;
-    let stt = Math.floor(1.0*(ht/stepH));
+    let stt = Math.floor(1.0*(ht/vel));
   let {vlines,pstate} = this;
   let {pspace,cstate} = pstate;
   let cs = cstate[nm];
@@ -245,6 +247,64 @@ rs.placeCircles = function () {
   }
 }
   
+rs.willBeInRangeSN = function (x) { 
+  let {stepsSoFar:ssf} = this;
+  let low = (x-0.5*L)/vel+ssf;
+  let high = (x+0.5*L)/vel+ssf;
+  return {low,high};
+}
+rs.willBeInRange function (line,x) {
+  let st = line.start;
+   let lowt = (x-0.5*L)/vel+st;
+  let hight = (x+0.5*L)/vel+st;
+  return {low,high};
+
+}
+
+rs.rangesIntersect = function (r0,r1) {
+  let L0 = r0.low;
+  let H0 = r0.high;
+  let L1 = r1.low;
+  let H1 = r1.high;
+  let I0 = (L0<=L1)&&(L1<=H0); 
+  let I1 = (L0<=H1)&&(H1<=H0); 
+  let I2 = {L1<=L0)&&(L0<= H1);
+  return I0 || I1 || I2;
+}
+
+rs.willIntersectH = function (y) {
+  let {vlines} = this;
+  let ln = vlines.length;
+  for (let i=0;i<ln;i++) {
+    let line = vlines[i];
+    let pos = line.getTranslation();
+    let x = pos.x;
+    let myrange = this.willBeInRangeSN(x);
+    let linerange = this.willBeInRange(line,y);
+    if (this.rangesIntersect(myrange,linerange)) {
+      return 1;
+    }
+  }
+}
+
+rs.willIntersectV = function (x) {
+  let {hlines} = this;
+  let ln = hlines.length;
+  for (let i=0;i<ln;i++) {
+    let line = hlines[i];
+    let pos = line.getTranslation();
+    let y = pos.y;
+    let myrange = this.willBeInRangeSN(y);
+    let linerange = this.willBeInRange(line,x);
+    if (this.rangesIntersect(myrange,linerange)) {
+      return 1;
+    }
+  }
+}
+    
+
+
+
 
 let vStep=5;
 let nr = 80;
@@ -264,11 +324,18 @@ rs.updateState = function () {
     let rw = Math.floor(Math.random()*nr);
     let r = (rw-nr/2) * (ht/nr);
     debugger;
-    let od = (Math.random()<0.5)?1:0;
+    //let od = (Math.random()<0.5)?1:0;
+    let od = (Math.random()<0)?1:0;
     if (Math.random()<0.5) {
+      if (this.willIntersectH(r)) {
+        return;
+      }
       this.addLine(1);
       this.addHpath(hln,r,od);
     } else {
+      if (this.willIntersectV(r)) {
+        return;
+      }
       this.addLine(0);
       this.addVpath(vln,r,od);
     }
@@ -280,7 +347,7 @@ rs.initProtos = function () {
   let circleP = this.circleP = circlePP.instantiate();
   circleP.fill = 'red';
   circleP['stroke-width'] = 0;
-  circleP.dimension =0.005*this.ht;
+  circleP.dimension =0.01*this.ht;
   let circleP1 = this.circleP1 = circlePP.instantiate();
   circleP1.fill = 'blue';
   circleP1['stroke-width'] = 0;
@@ -294,9 +361,9 @@ rs.initProtos = function () {
 }  
 
 
-rs.numSteps = 2.4*Math.floor(ht/stepH);
-rs.numSteps = 2*Math.floor(ht/stepH);
-let cycleTime = rs.cycleTime = Math.floor(ht/stepH); 
+rs.numSteps = 2.4*Math.floor(ht/vel);
+rs.numSteps = 2*Math.floor(ht/vel);
+let cycleTime = rs.cycleTime = Math.floor(ht/vel); 
 rs.numSteps = cycleTime+1;
 rs.numSteps = 6*cycleTime;
 rs.chopOffBeginning =0;

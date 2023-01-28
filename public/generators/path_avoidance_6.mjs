@@ -9,12 +9,17 @@ let rs = basicP.instantiate();
 addPathMethods(rs);
 debugger;
 rs.setName('path_avoidance_6');
-let ht = rs.ht= 100;
-let d=0.5*ht;
-let fade = 1;
-let topParams = {width:rs.ht,height:rs.ht,framePadding:.2*ht,frameStroke:'white',frameStrokeWidth:1}
+rs.ht= 100;
+let d;
+rs.setTopParams = function () {
+  let {ht} = this;
+  debugger;
+  d = this.d=0.5*ht;
+  let topParams = {width:rs.ht,height:rs.ht,framePadding:.2*ht,frameStrokke:'white',frameStrokeWidth:1}
+  Object.assign(this,topParams);
+}
+rs.setTopParams();
 
-Object.assign(rs,topParams);
 rs.numH = 2;
 
 rs.gap = 5;
@@ -33,7 +38,7 @@ rs.numV = 8; //on each side
 let L  =rs.lineLength = 30;
 
 rs.adjustLine = function (line,pos,h) {
-  let {lineLength:L,hends0,hends1,vends0,vends1} = this;
+  let {lineLength:L,hends0,hends1,vends0,vends1,d} = this;
   let {index} = line;
   let {x,y} = pos;
   debugger;
@@ -93,7 +98,7 @@ rs.adjustLines = function (y) {
  let initState = {time:0};
   let pspace = {};
 rs.pstate = {pspace,cstate:initState}
-let stepH = 2;
+let vel = 2;
 let stepV = 1.;
 let minH = -d-L;
 let maxH = d+L;
@@ -103,7 +108,7 @@ let maxH = d+L;
 rs.addHpath = function (n,y,od) {
   let {stepsSoFar:ssf} = this;
   let nm = 'h'+n;
-  pspace[nm] ={kind:'sweep',step:stepH,min:minH,max:maxH,interval:1,once:1};
+  pspace[nm] ={kind:'sweep',step:vel,min:minH,max:maxH,interval:1,once:1};
   initState[nm] = {value:minH,y,od,start:ssf};
 }
 
@@ -112,7 +117,7 @@ rs.addHpath = function (n,y,od) {
 rs.addVpath = function (n,x,od) {
   let {stepsSoFar:ssf} = this;
   let nm = 'v'+n;
-  pspace[nm] ={kind:'sweep',step:stepH,min:minH,max:maxH,interval:1,once:1};
+  pspace[nm] ={kind:'sweep',step:vel,min:minH,max:maxH,interval:1,once:1};
   initState[nm] = {value:minH,x,od,start:ssf};
 }
 
@@ -143,9 +148,9 @@ rs.addLine = function (h) {
  
 
 rs.updateStateOfH= function (n){
-  let {stepsSoFar:ssf,ends} = this;
+  let {stepsSoFar:ssf,ends,ht} = this;
   let nm = 'h'+n;
-    let stt = Math.floor(1.0*(ht/stepH));
+    let stt = Math.floor(1.0*(ht/vel));
   let {hlines,pstate} = this;
   let {pspace,cstate} = pstate;
   let cs = cstate[nm];
@@ -165,9 +170,9 @@ rs.updateStateOfH= function (n){
 
 rs.updateStateOfV= function (n){
  // debugger;
-  let {stepsSoFar:ssf} = this;
+  let {stepsSoFar:ssf,ht} = this;
   let nm = 'v'+n;
-    let stt = Math.floor(1.0*(ht/stepH));
+    let stt = Math.floor(1.0*(ht/vel));
   let {vlines,pstate} = this;
   let {pspace,cstate} = pstate;
   let cs = cstate[nm];
@@ -250,7 +255,7 @@ let vStep=5;
 let nr = 80;
 rs.updateState = function () {
   //debugger;
-  let {stepsSoFar:ssf,numSteps,cycleTime,hlines,vlines} = this;
+  let {stepsSoFar:ssf,numSteps,cycleTime,hlines,vlines,ht} = this;
   let hln = hlines.length;
   let vln = vlines.length;
   for (let i=0;i<hln;i++) {
@@ -281,6 +286,7 @@ rs.initProtos = function () {
   circleP.fill = 'red';
   circleP['stroke-width'] = 0;
   circleP.dimension =0.005*this.ht;
+  circleP.dimension =0.01*this.ht;
   let circleP1 = this.circleP1 = circlePP.instantiate();
   circleP1.fill = 'blue';
   circleP1['stroke-width'] = 0;
@@ -290,13 +296,13 @@ rs.initProtos = function () {
   polygonP.fill = 'transparent';
     let lineP = this.lineP = linePP.instantiate();
   lineP.stroke = 'white';
-  lineP['stroke-width'] = .04;
+  lineP['stroke-width'] = .1;
 }  
 
 
-rs.numSteps = 2.4*Math.floor(ht/stepH);
-rs.numSteps = 2*Math.floor(ht/stepH);
-let cycleTime = rs.cycleTime = Math.floor(ht/stepH); 
+rs.numSteps = 2.4*Math.floor(rs.ht/vel);
+rs.numSteps = 2*Math.floor(rs.ht/vel);
+let cycleTime = rs.cycleTime = Math.floor(rs.ht/vel); 
 rs.numSteps = cycleTime+1;
 rs.numSteps = 6*cycleTime;
 rs.chopOffBeginning =0;

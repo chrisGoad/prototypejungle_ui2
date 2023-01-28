@@ -8,7 +8,7 @@ import {rs as addPathMethods} from '/mlib/path.mjs';
 let rs = basicP.instantiate();
 addPathMethods(rs);
 debugger;
-rs.setName('path_avoidance_6');
+rs.setName('path_avoidance_7');
 let ht = rs.ht= 100;
 let d=0.5*ht;
 let fade = 1;
@@ -30,7 +30,8 @@ rs.numV = 8; //on each side
 //rs.numV = 16; //on each side
 //rs.numV = 4;
 
-let L  =rs.lineLength = 30;
+//let L  =rs.lineLength = 30;
+let L  =rs.lineLength = 2;
 
 rs.adjustLine = function (line,pos,h) {
   let {lineLength:L,hends0,hends1,vends0,vends1} = this;
@@ -59,6 +60,7 @@ rs.adjustLine = function (line,pos,h) {
     let ne1 = h?Point.mk(ae1-p,0):Point.mk(0,ae1-p);
     line.show();
     line.setEnds(ne0,ne1);
+    return;
     crc0.moveto(pos.plus(ne0));
     crc1.moveto(pos.plus(ne1));
     crc0.show();
@@ -247,16 +249,22 @@ rs.placeCircles = function () {
   }
 }
   
-rs.willBeInRangeSN = function (x) { 
+rs.willBeInRangeSN = function (x,od) { 
   let {stepsSoFar:ssf} = this;
-  let low = (x-0.5*L)/vel+ssf;
-  let high = (x+0.5*L)/vel+ssf;
+ // let low = (x-0.5*L)/vel+ssf;
+  let low = od?(d-(x+0.5*L))/vel+ssf:(x-0.5*L)/vel+ssf;
+  //let high = (x+0.5*L)/vel+ssf;
+  let high = od?(d-x-0.5*L)/vel+ssf:(x+0.5*L)/vel+ssf;
   return {low,high};
 }
-rs.willBeInRange function (line,x) {
+rs.willBeInRange = function (line,x) {
   let st = line.start;
-   let lowt = (x-0.5*L)/vel+st;
-  let hight = (x+0.5*L)/vel+st;
+  let od = line.od;
+  // let low = (x-0.5*L)/vel+st;
+  let low = od?(d-(x+0.5*L))/vel+st:(x-0.5*L)/vel+st;
+ // let high = (x+0.5*L)/vel+st;
+    let high = od?(d-x-0.5*L)/vel+st:(x+0.5*L)/vel+st;
+
   return {low,high};
 
 }
@@ -268,18 +276,18 @@ rs.rangesIntersect = function (r0,r1) {
   let H1 = r1.high;
   let I0 = (L0<=L1)&&(L1<=H0); 
   let I1 = (L0<=H1)&&(H1<=H0); 
-  let I2 = {L1<=L0)&&(L0<= H1);
+  let I2 = (L1<=L0)&&(L0<= H1);
   return I0 || I1 || I2;
 }
 
-rs.willIntersectH = function (y) {
+rs.willIntersectH = function (y,od) {
   let {vlines} = this;
   let ln = vlines.length;
   for (let i=0;i<ln;i++) {
     let line = vlines[i];
     let pos = line.getTranslation();
     let x = pos.x;
-    let myrange = this.willBeInRangeSN(x);
+    let myrange = this.willBeInRangeSN(x,od);
     let linerange = this.willBeInRange(line,y);
     if (this.rangesIntersect(myrange,linerange)) {
       return 1;
@@ -287,14 +295,14 @@ rs.willIntersectH = function (y) {
   }
 }
 
-rs.willIntersectV = function (x) {
+rs.willIntersectV = function (x,od) {
   let {hlines} = this;
   let ln = hlines.length;
   for (let i=0;i<ln;i++) {
     let line = hlines[i];
     let pos = line.getTranslation();
     let y = pos.y;
-    let myrange = this.willBeInRangeSN(y);
+    let myrange = this.willBeInRangeSN(y,od);
     let linerange = this.willBeInRange(line,x);
     if (this.rangesIntersect(myrange,linerange)) {
       return 1;
@@ -320,23 +328,23 @@ rs.updateState = function () {
     this.updateStateOfV(i);
   }
   this.placeCircles()
-  if (Math.random() < 2) {
+  if (Math.random() < 1) {
     let rw = Math.floor(Math.random()*nr);
     let r = (rw-nr/2) * (ht/nr);
     debugger;
-    //let od = (Math.random()<0.5)?1:0;
-    let od = (Math.random()<0)?1:0;
+    let od = (Math.random()<0.5)?1:0;
+    //let od = (Math.random()<0)?1:0;
     if (Math.random()<0.5) {
-      if (this.willIntersectH(r)) {
+      if (this.willIntersectH(r,od)) {
         return;
       }
-      this.addLine(1);
+      this.addLine(1,od);
       this.addHpath(hln,r,od);
     } else {
-      if (this.willIntersectV(r)) {
+      if (this.willIntersectV(r,od)) {
         return;
       }
-      this.addLine(0);
+      this.addLine(0,od);
       this.addVpath(vln,r,od);
     }
   }
@@ -357,7 +365,7 @@ rs.initProtos = function () {
   polygonP.fill = 'transparent';
     let lineP = this.lineP = linePP.instantiate();
   lineP.stroke = 'white';
-  lineP['stroke-width'] = .04;
+  lineP['stroke-width'] = .4;
 }  
 
 

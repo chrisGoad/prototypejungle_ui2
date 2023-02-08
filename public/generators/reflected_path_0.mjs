@@ -8,33 +8,56 @@ import {rs as addPathMethods} from '/mlib/path.mjs';
 let rs = basicP.instantiate();
 addPathMethods(rs);
 debugger;
-rs.setName('path_avoidance_7');
-let ht = rs.ht= 100;
-let d=0.5*ht;
-let fade = 1;
-let topParams = {width:rs.ht,height:rs.ht,framePadding:.2*ht,frameStroke:'white',frameStrokeWidth:1}
+rs.setName('reflected_path_0');
+rs.ht= 100;
+let d;
+rs.setTopParams = function () {
+  let {ht} = this;
+  debugger;
+  d = this.d=0.5*ht;
+  let corners = [Point.mk(-d,d),Point.mk(-d,-d),Point.mk(d,-d),Point.mk(d,d)];
+  let sides = [LineSegment.mk(corners[0],corners[1]),
+               LineSegment.mk(corners[1],corners[2]),
+               LineSegment.mk(corners[2],corners[3]),
+               LineSegment.mk(corners[3],corners[0])];
+  let topParams = {width:rs.ht,height:rs.ht,framePadding:.2*ht,frameStrokke:'white',frameStrokeWidth:1,corners,sides}
+  Object.assign(this,topParams);
+}
+rs.setTopParams();
 
-Object.assign(rs,topParams);
-rs.numH = 2;
-
-rs.gap = 5;
-rs.gap = 9;
-rs.gap = 15;
-
-rs.numV = 8; //on each side
-//rs.numV = 16; //on each side
-//rs.numV = 4;
 
 
-rs.numV = 8; //on each side
-//rs.numV = 16; //on each side
-//rs.numV = 4;
+rs.sideI2pnt = function (sideI,fr) {
+  let side = this.sides[sideI];
+  let e0 = side.end0;
+  let e1 = side.end1;
+  let vec = e1.differnce(e0);
+  let p = e0.plus(vec.times(fr));
+  return p;
+}
 
-//let L  =rs.lineLength = 30;
-let L  =rs.lineLength = 2;
+
+ let initState = {time:0};
+  let pspace = {};
+rs.pstate = {pspace,cstate:initState}
+let vel = 2;
+
+
+rs.addPath = function (n,sdi,fr,dir) {
+  let {stepsSoFar:ssf} = this;
+  let nm = 'p'+n;
+  let maxH = 20;
+  let fromP = this.sideI2pnt(sdi,fr);
+  let toP = fromP.difference(Point.mk(20,0));
+  pspace[nm] ={kind:'sweep',step:vel,min:0,max:maxH,interval:1,once:1};
+  initState[nm] = {value:minH,fromP,toP,start:ssf};
+}
+
+let L  =rs.lineLength = 30;
+
 
 rs.adjustLine = function (line,pos,h) {
-  let {lineLength:L,hends0,hends1,vends0,vends1} = this;
+  let {lineLength:L,hends0,hends1,vends0,vends1,d} = this;
   let {index} = line;
   let {x,y} = pos;
   debugger;
@@ -60,7 +83,6 @@ rs.adjustLine = function (line,pos,h) {
     let ne1 = h?Point.mk(ae1-p,0):Point.mk(0,ae1-p);
     line.show();
     line.setEnds(ne0,ne1);
-    return;
     crc0.moveto(pos.plus(ne0));
     crc1.moveto(pos.plus(ne1));
     crc0.show();
@@ -91,40 +113,14 @@ rs.adjustLines = function (y) {
 
 
 
-  
- let initState = {time:0};
-  let pspace = {};
-rs.pstate = {pspace,cstate:initState}
-let vel = 2;
-let stepV = 1.;
-let minH = -d-L;
-let maxH = d+L;
-
-rs.sideD2pnt = function (side,sd) {
-  
-
-rs.addPath = function (n,side,d,dir) {
-  let {stepsSoFar:ssf} = this;
-  let nm = 'p'+n;
-  pspace[nm] ={kind:'sweep',step:vel,min:minH,max:maxH,interval:1,once:1};
-  initState[nm] = {value:minH,y,od,start:ssf};
-}
 
 
 
-rs.addVpath = function (n,x,od) {
-  let {stepsSoFar:ssf} = this;
-  let nm = 'v'+n;
-  pspace[nm] ={kind:'sweep',step:vel,min:minH,max:maxH,interval:1,once:1};
-  initState[nm] = {value:minH,x,od,start:ssf};
-}
 
 rs.addLine = function (h) {
-  let {lineLength:L,hlines,vlines,lineP,hends0,hends1,vends0,vends1,circleP1,stepsSoFar:ssf} = this;
+  let {lineLength:L,hlines,vlines,lineP,hends0,hends1,vends0,vends1,circleP1} = this;
   debugger;
   let line = lineP.instantiate();
-  line.h = h;
-  line.start = ssf;
   let ends0 = h?hends0:vends0;
   let ends1 = h?hends1:vends1;
   if (h) {
@@ -147,8 +143,8 @@ rs.addLine = function (h) {
 }     
  
 
-rs.updateStateOfH= function (n){
-  let {stepsSoFar:ssf,ends} = this;
+rs.updateStateOf= function (n){
+  let {stepsSoFar:ssf,ends,ht} = this;
   let nm = 'h'+n;
     let stt = Math.floor(1.0*(ht/vel));
   let {hlines,pstate} = this;
@@ -168,27 +164,6 @@ rs.updateStateOfH= function (n){
   line.update();
 }
 
-rs.updateStateOfV= function (n){
- // debugger;
-  let {stepsSoFar:ssf} = this;
-  let nm = 'v'+n;
-    let stt = Math.floor(1.0*(ht/vel));
-  let {vlines,pstate} = this;
-  let {pspace,cstate} = pstate;
-  let cs = cstate[nm];
-  let {value:iv,done,x,od} = cs;
-  let line = vlines[n];
-  if (done) {
-    line.hide();
-    return;
-  }
-  let v = od?-iv: iv;
-  let pos = Point.mk(x,v);
-  this.adjustLine(line,pos,0);
- // line.show();
-  line.moveto(pos);
-  line.update();
-}
 rs.intersectLine = function (hline,vline) {
   let L = this.lineLength;
   let ph = hline.getTranslation();
@@ -250,76 +225,12 @@ rs.placeCircles = function () {
   }
 }
   
-rs.willBeInRangeSN = function (x,od) { 
-  let {stepsSoFar:ssf} = this;
- // let low = (x-0.5*L)/vel+ssf;
-  let low = od?(d-(x+0.5*L))/vel+ssf:(x-0.5*L)/vel+ssf;
-  //let high = (x+0.5*L)/vel+ssf;
-  let high = od?(d-x-0.5*L)/vel+ssf:(x+0.5*L)/vel+ssf;
-  return {low,high};
-}
-rs.willBeInRange = function (line,x) {
-  let st = line.start;
-  let od = line.od;
-  // let low = (x-0.5*L)/vel+st;
-  let low = od?(d-(x+0.5*L))/vel+st:(x-0.5*L)/vel+st;
- // let high = (x+0.5*L)/vel+st;
-    let high = od?(d-x-0.5*L)/vel+st:(x+0.5*L)/vel+st;
-
-  return {low,high};
-
-}
-
-rs.rangesIntersect = function (r0,r1) {
-  let L0 = r0.low;
-  let H0 = r0.high;
-  let L1 = r1.low;
-  let H1 = r1.high;
-  let I0 = (L0<=L1)&&(L1<=H0); 
-  let I1 = (L0<=H1)&&(H1<=H0); 
-  let I2 = (L1<=L0)&&(L0<= H1);
-  return I0 || I1 || I2;
-}
-
-rs.willIntersectH = function (y,od) {
-  let {vlines} = this;
-  let ln = vlines.length;
-  for (let i=0;i<ln;i++) {
-    let line = vlines[i];
-    let pos = line.getTranslation();
-    let x = pos.x;
-    let myrange = this.willBeInRangeSN(x,od);
-    let linerange = this.willBeInRange(line,y);
-    if (this.rangesIntersect(myrange,linerange)) {
-      return 1;
-    }
-  }
-}
-
-rs.willIntersectV = function (x,od) {
-  let {hlines} = this;
-  let ln = hlines.length;
-  for (let i=0;i<ln;i++) {
-    let line = hlines[i];
-    let pos = line.getTranslation();
-    let y = pos.y;
-    let myrange = this.willBeInRangeSN(y,od);
-    let linerange = this.willBeInRange(line,x);
-    if (this.rangesIntersect(myrange,linerange)) {
-      return 1;
-    }
-  }
-}
-    
-
-
-
 
 let vStep=5;
 let nr = 80;
 rs.updateState = function () {
   //debugger;
-  let {stepsSoFar:ssf,numSteps,cycleTime,hlines,vlines} = this;
+  let {stepsSoFar:ssf,numSteps,cycleTime,hlines,vlines,ht} = this;
   let hln = hlines.length;
   let vln = vlines.length;
   for (let i=0;i<hln;i++) {
@@ -329,23 +240,16 @@ rs.updateState = function () {
     this.updateStateOfV(i);
   }
   this.placeCircles()
-  if (Math.random() < 1) {
+  if (Math.random() < 2) {
     let rw = Math.floor(Math.random()*nr);
     let r = (rw-nr/2) * (ht/nr);
     debugger;
     let od = (Math.random()<0.5)?1:0;
-    //let od = (Math.random()<0)?1:0;
     if (Math.random()<0.5) {
-      if (this.willIntersectH(r,od)) {
-        return;
-      }
-      this.addLine(1,od);
+      this.addLine(1);
       this.addHpath(hln,r,od);
     } else {
-      if (this.willIntersectV(r,od)) {
-        return;
-      }
-      this.addLine(0,od);
+      this.addLine(0);
       this.addVpath(vln,r,od);
     }
   }
@@ -356,6 +260,7 @@ rs.initProtos = function () {
   let circleP = this.circleP = circlePP.instantiate();
   circleP.fill = 'red';
   circleP['stroke-width'] = 0;
+  circleP.dimension =0.005*this.ht;
   circleP.dimension =0.01*this.ht;
   let circleP1 = this.circleP1 = circlePP.instantiate();
   circleP1.fill = 'blue';
@@ -366,13 +271,13 @@ rs.initProtos = function () {
   polygonP.fill = 'transparent';
     let lineP = this.lineP = linePP.instantiate();
   lineP.stroke = 'white';
-  lineP['stroke-width'] = .4;
+  lineP['stroke-width'] = .1;
 }  
 
 
-rs.numSteps = 2.4*Math.floor(ht/vel);
-rs.numSteps = 2*Math.floor(ht/vel);
-let cycleTime = rs.cycleTime = Math.floor(ht/vel); 
+rs.numSteps = 2.4*Math.floor(rs.ht/vel);
+rs.numSteps = 2*Math.floor(rs.ht/vel);
+let cycleTime = rs.cycleTime = Math.floor(rs.ht/vel); 
 rs.numSteps = cycleTime+1;
 rs.numSteps = 6*cycleTime;
 rs.chopOffBeginning =0;

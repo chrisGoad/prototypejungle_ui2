@@ -20,7 +20,7 @@ rs.setTopParams = function () {
                LineSegment.mk(corners[1],corners[2]),
                LineSegment.mk(corners[2],corners[3]),
                LineSegment.mk(corners[3],corners[0])];
-  let topParams = {width:rs.ht,height:rs.ht,framePadding:.2*ht,frameStrokke:'white',frameStrokeWidth:1,corners,sides}
+  let topParams = {width:rs.ht,height:rs.ht,framePadding:.0*ht,frameStroke:'white',frameStrokeWidth:1,corners,sides}
   Object.assign(this,topParams);
 }
 rs.setTopParams();
@@ -28,10 +28,11 @@ rs.setTopParams();
 
 
 rs.sideI2pnt = function (sideI,fr) {
+  debugger;
   let side = this.sides[sideI];
   let e0 = side.end0;
   let e1 = side.end1;
-  let vec = e1.differnce(e0);
+  let vec = e1.difference(e0);
   let p = e0.plus(vec.times(fr));
   return p;
 }
@@ -43,14 +44,19 @@ rs.pstate = {pspace,cstate:initState}
 let vel = 2;
 
 
-rs.addPath = function (n,sdi,fr,dir) {
-  let {stepsSoFar:ssf} = this;
-  let nm = 'p'+n;
+rs.addPath = function (sdi,fr,dir) {
+  let {stepsSoFar:ssf,ccircles,circleP} = this;
+  let ln = ccircles.length;
+  let nm = 'p'+ln;
   let maxH = 20;
+  let circ = circleP.instantiate().show();
+  ccircles.push(circ);
   let fromP = this.sideI2pnt(sdi,fr);
-  let toP = fromP.difference(Point.mk(20,0));
+  let vec = Point.mk(Math.cos(dir),Math.sin(dir));
+  let toP = fromP.difference(vec.times(30));
+  //let vec = toP.difference(fromP).normalize();
   pspace[nm] ={kind:'sweep',step:vel,min:0,max:maxH,interval:1,once:1};
-  initState[nm] = {value:minH,fromP,toP,start:ssf};
+  initState[nm] = {value:0,fromP,start:ssf,vec};
 }
 
 let L  =rs.lineLength = 30;
@@ -143,25 +149,29 @@ rs.addLine = function (h) {
 }     
  
 
-rs.updateStateOf= function (n){
-  let {stepsSoFar:ssf,ends,ht} = this;
-  let nm = 'h'+n;
-    let stt = Math.floor(1.0*(ht/vel));
-  let {hlines,pstate} = this;
+rs.updateStateOfCC = function (n){
+  let {stepsSoFar:ssf,ends,ht,ccircles,pstate} = this;
+  let circ = ccircles[n];
+  let nm = 'p'+n;
   let {pspace,cstate} = pstate;
   let cs = cstate[nm];
-  let {value:iv,done,y,od} = cs;
-  let line = hlines[n];
+  let {value:v,done,fromP,vec} = cs;
+ /*
+ let line = hlines[n];
   if (done) {
     line.hide();
     return;
   }
   let v = od?-iv: iv;
-  let pos = Point.mk(v,y);
+  */
+  let pos = fromP.plus(vec.times(v*vel));
+  circ.moveto(pos);
+  circ.update();
+ /*
   this.adjustLine(line,pos,1);
 
   line.moveto(pos);
-  line.update();
+  line.update();*/
 }
 
 rs.intersectLine = function (hline,vline) {
@@ -229,16 +239,14 @@ rs.placeCircles = function () {
 let vStep=5;
 let nr = 80;
 rs.updateState = function () {
-  //debugger;
-  let {stepsSoFar:ssf,numSteps,cycleTime,hlines,vlines,ht} = this;
-  let hln = hlines.length;
-  let vln = vlines.length;
-  for (let i=0;i<hln;i++) {
-    this.updateStateOfH(i);
+  debugger;
+  let {stepsSoFar:ssf,numSteps,cycleTime,lines,ccircles,ht} = this;
+  //let lln = vlines.length;
+  let ccln = ccircles.length;
+  for (let i=0;i<ccln;i++) {
+    this.updateStateOfCC(i);
   }
-  for (let i=0;i<vln;i++) {
-    this.updateStateOfV(i);
-  }
+  return;
   this.placeCircles()
   if (Math.random() < 2) {
     let rw = Math.floor(Math.random()*nr);
@@ -281,7 +289,7 @@ let cycleTime = rs.cycleTime = Math.floor(rs.ht/vel);
 rs.numSteps = cycleTime+1;
 rs.numSteps = 6*cycleTime;
 rs.chopOffBeginning =0;
-rs.saveAnimation = 1;
+rs.saveAnimation = 0;
 rs.initialize = function () {
   debugger;
   let {numH,numV} = this;
@@ -289,9 +297,9 @@ rs.initialize = function () {
 
   this.initProtos();
   this.addFrame();
-  let hlines = this.set('hlines',arrayShape.mk());
-  let vlines = this.set('vlines',arrayShape.mk());
-  let circles = this.set('circles',arrayShape.mk());
+  let lines = this.set('lines',arrayShape.mk());
+  let icircles = this.set('icircles',arrayShape.mk());
+  let ccircles = this.set('ccircles',arrayShape.mk());
   this.set('hends0',arrayShape.mk());
   this.set('vends0',arrayShape.mk());
   this.set('hends1',arrayShape.mk());
@@ -299,7 +307,7 @@ rs.initialize = function () {
  // this.addLine(1);
  
   let lineData = this.lineData = [];
-  //this.addHpath(0,0);
+  this.addPath(2,0.5,1.1*Math.PI);
 }
 
 export {rs};

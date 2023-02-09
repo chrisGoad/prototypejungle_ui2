@@ -41,12 +41,12 @@ rs.sideI2pnt = function (sideI,fr) {
  let initState = {time:0};
   let pspace = {};
 rs.pstate = {pspace,cstate:initState}
-let vel = 2;
+let vel = 1;
 
 
 //rs.addPath = function (sdi,fromP,dir) {
 rs.addPath = function (fromSide,fromP,dir) {
-  let {stepsSoFar:ssf,ccircles,circleP,sides,ht} = this;
+  let {stepsSoFar:ssf,ccircles,circleP,sides,ht,lineP,lines} = this;
   debugger;
   let ln = ccircles.length;
   let nm = 'p'+ln;
@@ -73,11 +73,12 @@ rs.addPath = function (fromSide,fromP,dir) {
   }
   let circ = circleP.instantiate().show();
   ccircles.push(circ);
-      
+  let line = lineP.instantiate().show();
+  lines.push(line);
   let dist = toP.distance(fromP);
   //let vec = toP.difference(fromP).normalize();
   pspace[nm] ={kind:'sweep',step:vel,min:0,max:dist/vel,interval:1,once:1};
-  initState[nm] = {value:0,fromP,toP,fromSide,toSide,start:ssf,vec,dir};
+  initState[nm] = {value:0,fromP,toP,fromSide,toSide,start:ssf,vec,dir,line};
 }
 
 rs.atCycleEnd = function (nm) {
@@ -181,12 +182,12 @@ rs.addLine = function (h) {
  
 
 rs.updateStateOfCC = function (n){
-  let {stepsSoFar:ssf,ends,ht,ccircles,pstate} = this;
+  let {stepsSoFar:ssf,ends,ht,ccircles,pstate,lineLength:ll} = this;
   let circ = ccircles[n];
   let nm = 'p'+n;
   let {pspace,cstate} = pstate;
   let cs = cstate[nm];
-  let {value:v,done,fromP,vec} = cs;
+  let {value:v,done,fromP,toP,vec,line} = cs;
  /*
  let line = hlines[n];
   if (done) {
@@ -196,6 +197,11 @@ rs.updateStateOfCC = function (n){
   let v = od?-iv: iv;
   */
   let pos = fromP.plus(vec.times(v*vel));
+  let toGo = pos.distance(toP);
+  let lnl = Math.min(toGo,ll);
+  let epos = pos.plus(vec.times(lnl));
+  line.setEnds(pos,epos);
+  line.update();
   circ.moveto(pos);
   circ.update();
  /*

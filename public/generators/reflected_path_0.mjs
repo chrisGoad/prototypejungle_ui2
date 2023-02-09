@@ -44,21 +44,52 @@ rs.pstate = {pspace,cstate:initState}
 let vel = 2;
 
 
-rs.addPath = function (sdi,fr,dir) {
-  let {stepsSoFar:ssf,ccircles,circleP} = this;
+//rs.addPath = function (sdi,fromP,dir) {
+rs.addPath = function (fromSide,fromP,dir) {
+  let {stepsSoFar:ssf,ccircles,circleP,sides,ht} = this;
+  debugger;
   let ln = ccircles.length;
   let nm = 'p'+ln;
   let maxH = 20;
+ 
+  //let fromP = this.sideI2pnt(sdi,fr);
+  let vec = Point.mk(Math.cos(dir),Math.sin(dir));
+  let lvec = vec.times(10*ht);
+  let seg = LineSegment.mk(fromP,fromP.plus(lvec));
+  let toP,toSide;
+  for (let i=0;i<4;i++) {
+    if (i!==fromSide) {
+      let side = sides[i];
+      let isect = seg.intersect(side);
+      if (isect) {
+        toP = isect;
+        toSide = i;
+        break;
+      }
+    }
+  }
+  if (!toP) {
+    return;
+  }
   let circ = circleP.instantiate().show();
   ccircles.push(circ);
-  let fromP = this.sideI2pnt(sdi,fr);
-  let vec = Point.mk(Math.cos(dir),Math.sin(dir));
-  let toP = fromP.difference(vec.times(30));
+      
+  let dist = toP.distance(fromP);
   //let vec = toP.difference(fromP).normalize();
-  pspace[nm] ={kind:'sweep',step:vel,min:0,max:maxH,interval:1,once:1};
-  initState[nm] = {value:0,fromP,start:ssf,vec};
+  pspace[nm] ={kind:'sweep',step:vel,min:0,max:dist/vel,interval:1,once:1};
+  initState[nm] = {value:0,fromP,toP,fromSide,toSide,start:ssf,vec,dir};
 }
 
+rs.atCycleEnd = function (nm) {
+ let {pstate} = this;
+  let {pspace,cstate} = pstate;
+  let cs = cstate[nm];
+  let {dir,toP,toSide} = cs;
+ // let na = toSide%2?dir-Math.PI:Math.PI -dir;
+  let na = toSide%2?-dir:Math.PI -dir;
+  this.addPath(toSide,toP,na);
+ debugger;
+}
 let L  =rs.lineLength = 30;
 
 
@@ -239,7 +270,7 @@ rs.placeCircles = function () {
 let vStep=5;
 let nr = 80;
 rs.updateState = function () {
-  debugger;
+  //debugger;
   let {stepsSoFar:ssf,numSteps,cycleTime,lines,ccircles,ht} = this;
   //let lln = vlines.length;
   let ccln = ccircles.length;
@@ -307,7 +338,9 @@ rs.initialize = function () {
  // this.addLine(1);
  
   let lineData = this.lineData = [];
-  this.addPath(2,0.5,1.1*Math.PI);
+  let theta = 0.1*Math.PI;
+  this.addPath(0,this.sideI2pnt(0,0.5),theta);
+  this.addPath(2,this.sideI2pnt(2,0.5),Math.PI-theta);
 }
 
 export {rs};

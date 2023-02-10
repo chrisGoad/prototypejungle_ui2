@@ -44,14 +44,15 @@ rs.pstate = {pspace,cstate:initState}
 let vel = 1;
 
 
-//rs.addPath = function (sdi,fromP,dir) {
-rs.addPath = function (fromSide,fromP,dir) {
-  let {stepsSoFar:ssf,ccircles,circleP,sides,ht,lineP,lines} = this;
-  debugger;
+//rs.addPath = function (fromSide,fromP,dir,line,inFront,addingTrailer) {
+rs.addPath = function (params) {
+  let {name,fromSide,fromP,dir,line,inFront,addingTrailer} = params;
+  let {stepsSoFar:ssf,ccircles,circleP,sides,ht,lineP,lines,pstate} = this;
+  let {pspace,cstate} = pstate;
   let ln = ccircles.length;
-  let nm = 'p'+ln;
+  let nm = name?name:'p'+ln;
   let maxH = 20;
- 
+  // debugger;
   //let fromP = this.sideI2pnt(sdi,fr);
   let vec = Point.mk(Math.cos(dir),Math.sin(dir));
   let lvec = vec.times(10*ht);
@@ -71,27 +72,39 @@ rs.addPath = function (fromSide,fromP,dir) {
   if (!toP) {
     return;
   }
-  let circ = circleP.instantiate().show();
-  ccircles.push(circ);
-  let line = lineP.instantiate().show();
-  lines.push(line);
+  if (!name) {
+    let circ = circleP.instantiate().show();
+    ccircles.push(circ);
+  //if ((!line)|| addingTrailer) {
+    line = lineP.instantiate().show();
+    lines.push(line);
+  }
   let dist = toP.distance(fromP);
   //let vec = toP.difference(fromP).normalize();
   pspace[nm] ={kind:'sweep',step:vel,min:0,max:dist/vel,interval:1,once:1};
-  initState[nm] = {value:0,fromP,toP,fromSide,toSide,start:ssf,vec,dir,line};
+  if (name) {
+    let cs = cstate[nm];
+   //Object.assign(ist,{value:0,fromP,toP,fromSide,toSide,start:ssf,vec,dir,line,inFront});
+    Object.assign(cs,{value:0,fromP,toP,fromSide,toSide,start:ssf,vec,dir,done:0,cstep:undefined});
+    debugger;
+  } else {
+    cstate[nm] = {value:0,fromP,toP,fromSide,toSide,start:ssf,vec,dir,line,inFront,trailerNeeded:!inFront};
+  }
 }
 
 rs.atCycleEnd = function (nm) {
  let {pstate} = this;
   let {pspace,cstate} = pstate;
   let cs = cstate[nm];
-  let {dir,toP,toSide} = cs;
+  let {dir,toP,toSide,line,inFront} = cs;
  // let na = toSide%2?dir-Math.PI:Math.PI -dir;
   let na = toSide%2?-dir:Math.PI -dir;
-  this.addPath(toSide,toP,na);
+  //rs.addPath = function (fromSide,fromP,dir,line,inFront,addingTrailer) {
+
+  this.addPath({name:nm,fromSide:toSide,fromP:toP,dir:na,line,inFront});
  debugger;
 }
-let L  =rs.lineLength = 30;
+let L  =rs.lineLength = 60;
 
 
 rs.adjustLine = function (line,pos,h) {
@@ -182,12 +195,13 @@ rs.addLine = function (h) {
  
 
 rs.updateStateOfCC = function (n){
-  let {stepsSoFar:ssf,ends,ht,ccircles,pstate,lineLength:ll} = this;
+  let {stepsSoFar:ssf,ends,ht,ccircles,pstate,lineLength:ll,trailerAdded} = this;
   let circ = ccircles[n];
   let nm = 'p'+n;
   let {pspace,cstate} = pstate;
   let cs = cstate[nm];
-  let {value:v,done,fromP,toP,vec,line} = cs;
+  let {value:v,done,fromP,toP,vec,dir,line,inFront,fromSide,trailerNeeded} = cs;
+ // debugger;
  /*
  let line = hlines[n];
   if (done) {
@@ -196,11 +210,33 @@ rs.updateStateOfCC = function (n){
   }
   let v = od?-iv: iv;
   */
-  let pos = fromP.plus(vec.times(v*vel));
+  let   pos = fromP.plus(vec.times(v*vel));
+
   let toGo = pos.distance(toP);
-  let lnl = Math.min(toGo,ll);
-  let epos = pos.plus(vec.times(lnl));
-  line.setEnds(pos,epos);
+  let lGone = pos.distance(fromP);
+
+  if (inFront) {
+    
+    let lnl = Math.min(toGo,ll);
+    let epos = pos.plus(vec.times(lnl));
+    line.setEnds(pos,epos);
+  } else {
+    let farOut = lGone >= ll;
+    if (farOut) {
+   //   debugger;
+    }
+    if (farOut && trailerNeeded) {
+       debugger;
+       cs.trailerNeeded = 0;
+       //rs.addPath = function (fromSide,fromP,dir,line,inFront,addingTrailer) {
+//rs.addPath = function (fromSide,fromP,dir,line,inFront,addingTrailer) {
+
+       this.addPath({fromSide,fromP,dir,line,inFront:1,addingTrailer:1});
+    }    
+    let lnl = Math.min(lGone,ll);
+    let epos = pos.difference(vec.times(lnl));
+    line.setEnds(epos,pos);
+  }
   line.update();
   circ.moveto(pos);
   circ.update();
@@ -324,7 +360,7 @@ rs.numSteps = 2.4*Math.floor(rs.ht/vel);
 rs.numSteps = 2*Math.floor(rs.ht/vel);
 let cycleTime = rs.cycleTime = Math.floor(rs.ht/vel); 
 rs.numSteps = cycleTime+1;
-rs.numSteps = 6*cycleTime;
+rs.numSteps = 60*cycleTime;
 rs.chopOffBeginning =0;
 rs.saveAnimation = 0;
 rs.initialize = function () {
@@ -345,8 +381,12 @@ rs.initialize = function () {
  
   let lineData = this.lineData = [];
   let theta = 0.1*Math.PI;
-  this.addPath(0,this.sideI2pnt(0,0.5),theta);
-  this.addPath(2,this.sideI2pnt(2,0.5),Math.PI-theta);
+  //rs.addPath = function (fromSide,fromP,dir,line,inFront) {
+//rs.addPath = function (fromSide,fromP,dir,line,inFront,addingTrailer) {
+  for (let i=1;i<10;i++) {
+    this.addPath({fromSide:0,fromP:this.sideI2pnt(0,i/10),dir:theta});
+    this.addPath({fromSide:2,fromP:this.sideI2pnt(2,i/10),dir:Math.PI-theta});
+  }
 }
 
 export {rs};

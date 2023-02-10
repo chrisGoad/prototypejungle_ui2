@@ -57,6 +57,7 @@ rs.addPath = function (params) {
   let vec = Point.mk(Math.cos(dir),Math.sin(dir));
   let lvec = vec.times(10*ht);
   let seg = LineSegment.mk(fromP,fromP.plus(lvec));
+  seg.active = 1;
   let toP,toSide;
   for (let i=0;i<4;i++) {
     if (i!==fromSide) {
@@ -72,12 +73,24 @@ rs.addPath = function (params) {
   if (!toP) {
     return;
   }
+  const randomValue = function () {
+      return 155 + Math.floor(100*Math.random());
+  }
+  const randomColor = function () {
+    let r = randomValue();
+    let b = randomValue();
+    let g = randomValue();
+    return `rgb(${r},${g},${b})`;
+  }
+    
   if (!name) {
     let circ = circleP.instantiate().show();
     ccircles.push(circ);
   //if ((!line)|| addingTrailer) {
     line = lineP.instantiate().show();
     lines.push(line);
+    //line.stroke = randomColor();
+    
   }
   let dist = toP.distance(fromP);
   //let vec = toP.difference(fromP).normalize();
@@ -88,7 +101,7 @@ rs.addPath = function (params) {
     Object.assign(cs,{value:0,fromP,toP,fromSide,toSide,start:ssf,vec,dir,done:0,cstep:undefined});
     debugger;
   } else {
-    cstate[nm] = {value:0,fromP,toP,fromSide,toSide,start:ssf,vec,dir,line,inFront,trailerNeeded:!inFront};
+    cstate[nm] = {value:0,fromP,toP,fromSide,toSide,start:ssf,vec,dir,line,inFront,trailerNeeded:!inFront,seg};
   }
 }
 
@@ -104,7 +117,7 @@ rs.atCycleEnd = function (nm) {
   this.addPath({name:nm,fromSide:toSide,fromP:toP,dir:na,line,inFront});
  debugger;
 }
-let L  =rs.lineLength = 60;
+let L  =rs.lineLength = 10;
 
 
 rs.adjustLine = function (line,pos,h) {
@@ -200,7 +213,7 @@ rs.updateStateOfCC = function (n){
   let nm = 'p'+n;
   let {pspace,cstate} = pstate;
   let cs = cstate[nm];
-  let {value:v,done,fromP,toP,vec,dir,line,inFront,fromSide,trailerNeeded} = cs;
+  let {value:v,done,fromP,toP,vec,dir,line,inFront,fromSide,trailerNeeded,seg} = cs;
  // debugger;
  /*
  let line = hlines[n];
@@ -214,12 +227,19 @@ rs.updateStateOfCC = function (n){
 
   let toGo = pos.distance(toP);
   let lGone = pos.distance(fromP);
-
+  line.show();
+  seg.active = 1;
   if (inFront) {
-    
+    if (toGo >= ll) {
+      seg.active = 0;
+    //  line.hide();
+    //  return;
+    } 
     let lnl = Math.min(toGo,ll);
     let epos = pos.plus(vec.times(lnl));
     line.setEnds(pos,epos);
+    seg.end0 = pos;
+    seg.end1 = epos;
   } else {
     let farOut = lGone >= ll;
     if (farOut) {
@@ -236,6 +256,8 @@ rs.updateStateOfCC = function (n){
     let lnl = Math.min(lGone,ll);
     let epos = pos.difference(vec.times(lnl));
     line.setEnds(epos,pos);
+    seg.end0 = epos;
+    seg.end1 = pos;
   }
   line.update();
   circ.moveto(pos);
@@ -307,8 +329,18 @@ rs.placeCircles = function () {
     }
   }
 }
-  
 
+
+rs.addSomePaths = function () {
+  let theta = Math.random()*0.2*Math.PI-0.1*Math.PI
+ theta = -0.1*Math.PI
+
+ for (let i=1;i<10;i++) {
+    let tt =theta+0.0*i*Math.PI;
+    this.addPath({fromSide:0,fromP:this.sideI2pnt(0,i/10),dir:tt});
+    this.addPath({fromSide:2,fromP:this.sideI2pnt(2,i/10),dir:Math.PI-tt});
+  }
+}
 let vStep=5;
 let nr = 80;
 rs.updateState = function () {
@@ -318,6 +350,9 @@ rs.updateState = function () {
   let ccln = ccircles.length;
   for (let i=0;i<ccln;i++) {
     this.updateStateOfCC(i);
+  }
+  if (ssf % 30 === 0) {
+    this.addSomePaths();
   }
   return;
   this.placeCircles()
@@ -340,6 +375,7 @@ rs.updateState = function () {
 rs.initProtos = function () {
   let circleP = this.circleP = circlePP.instantiate();
   circleP.fill = 'red';
+  circleP.fill = 'transparent';
   circleP['stroke-width'] = 0;
   circleP.dimension =0.005*this.ht;
   circleP.dimension =0.01*this.ht;
@@ -352,7 +388,7 @@ rs.initProtos = function () {
   polygonP.fill = 'transparent';
     let lineP = this.lineP = linePP.instantiate();
   lineP.stroke = 'white';
-  lineP['stroke-width'] = .1;
+  lineP['stroke-width'] = .4;
 }  
 
 
@@ -383,7 +419,7 @@ rs.initialize = function () {
   let theta = 0.1*Math.PI;
   //rs.addPath = function (fromSide,fromP,dir,line,inFront) {
 //rs.addPath = function (fromSide,fromP,dir,line,inFront,addingTrailer) {
-  for (let i=1;i<10;i++) {
+  for (let i=1;i<0;i++) {
     this.addPath({fromSide:0,fromP:this.sideI2pnt(0,i/10),dir:theta});
     this.addPath({fromSide:2,fromP:this.sideI2pnt(2,i/10),dir:Math.PI-theta});
   }

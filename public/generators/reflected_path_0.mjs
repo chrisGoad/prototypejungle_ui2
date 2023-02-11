@@ -10,6 +10,7 @@ addPathMethods(rs);
 debugger;
 rs.setName('reflected_path_0');
 rs.ht= 100;
+rs.numPaths = 10;
 let d;
 rs.setTopParams = function () {
   let {ht} = this;
@@ -28,13 +29,21 @@ rs.setTopParams();
 
 
 rs.sideI2pnt = function (sideI,fr) {
-  debugger;
   let side = this.sides[sideI];
   let e0 = side.end0;
   let e1 = side.end1;
   let vec = e1.difference(e0);
   let p = e0.plus(vec.times(fr));
   return p;
+}
+
+rs.onSide= function (p) {
+  let {d} = this;
+  const near = function (x) {
+    let eps = 0.1;
+    return ((d-eps) <= x)&&(x <= (d+eps))||((-d-eps) <= x)&&(x <= (eps-d))
+  }
+  return near(p.x) || near(p.y);
 }
 
 
@@ -57,7 +66,7 @@ rs.addPath = function (params) {
   let vec = Point.mk(Math.cos(dir),Math.sin(dir));
   let lvec = vec.times(10*ht);
   let seg = LineSegment.mk(fromP,fromP.plus(lvec));
-  seg.active = 1;
+  seg.active = 0;
   let toP,toSide;
   for (let i=0;i<4;i++) {
     if (i!==fromSide) {
@@ -174,7 +183,6 @@ rs.updateStateOfCC = function (n){
 }
 
 rs.allIntersections = function (segs) {
-  debugger;
   let ln = segs.length;
   let ai = [];
   for (let i=0;i<ln;i++) {
@@ -189,11 +197,15 @@ rs.allIntersections = function (segs) {
       }
  
       let ints = segi.intersect(segj);
-      if (ints) {
+      if (ints&&(!this.onSide(ints))) {
+        debugger;
         ai.push(ints);
       }
     }
-  };
+  }
+  if (ai.length) {
+    //debugger;
+  }
   return ai;
 }
 
@@ -225,29 +237,30 @@ rs.placeCircles = function () {
 }
 
 
-rs.addSomePaths = function () {
+rs.addSomePaths = function (n) {
   let theta = Math.random()*0.2*Math.PI-0.1*Math.PI
  theta = -0.1*Math.PI
 
  //for (let i=1;i<3;i++) {
- for (let i=1;i<10;i++) {
+ for (let i=1;i<n;i++) {
     let tt =theta+0.0*i*Math.PI;
-    this.addPath({fromSide:0,fromP:this.sideI2pnt(0,i/10),dir:tt});
-    this.addPath({fromSide:2,fromP:this.sideI2pnt(2,i/10),dir:Math.PI-tt});
+    //let tt =0.1*(i+1)*Math.PI;
+    this.addPath({fromSide:0,fromP:this.sideI2pnt(0,i/(n-1)),dir:tt});
+    this.addPath({fromSide:2,fromP:this.sideI2pnt(2,i/(n-1)),dir:Math.PI-tt});
   }
 }
 let vStep=5;
 let nr = 80;
 rs.updateState = function () {
   //debugger;
-  let {stepsSoFar:ssf,numSteps,cycleTime,lines,ecircles,segs,ht} = this;
+  let {stepsSoFar:ssf,numSteps,cycleTime,lines,ecircles,segs,ht,numPaths} = this;
   //let lln = vlines.length;
   let ecln = ecircles.length;
   for (let i=0;i<ecln;i++) {
     this.updateStateOfCC(i);
   }
   if (ssf % 30 === 0) {
-    this.addSomePaths();
+    this.addSomePaths(numPaths);
   }
   this.placeCircles();
 }
@@ -255,20 +268,21 @@ rs.updateState = function () {
   
 rs.initProtos = function () {
   let icircleP = this.icircleP = circlePP.instantiate();
+  icircleP.stroke = 'transparent';
   icircleP.fill = 'red';
-  icircleP['stroke-width'] = 0;
+  icircleP['stroke-width'] = .01;
   icircleP.dimension =0.005*this.ht;
-  icircleP.dimension =0.01*this.ht;
+  //icircleP.dimension =0.01*this.ht;
   let ecircleP = this.ecircleP = circlePP.instantiate();
   ecircleP.fill = 'blue';
   ecircleP['stroke-width'] = 0;
-  ecircleP.dimension =0.01*this.ht;
+  ecircleP.dimension =0.001*this.ht;
   let polygonP = this.polygonP = polygonPP.instantiate();
   polygonP.fill = 'blue';
   polygonP.fill = 'transparent';
     let lineP = this.lineP = linePP.instantiate();
   lineP.stroke = 'rgb(250,250,250)';
-  lineP['stroke-width'] = .4;
+  lineP['stroke-width'] = .04;
 }  
 
 

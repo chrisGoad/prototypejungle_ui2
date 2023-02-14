@@ -10,6 +10,7 @@ addPathMethods(rs);
 rs.setName('reflected_path_0');
 rs.ht= 100;
 rs.numPaths = 10;
+rs.theta = -0.2 *Math.PI;
 //rs.numPaths = 2;
 let d;
 rs.setTopParams = function () {
@@ -127,7 +128,7 @@ rs.atCycleEnd = function (nm) {
  
   let {pspace,cstate} = pstate;
   let cs = cstate[nm];
-  let {dir,toP,toSide,line,inBack} = cs;
+  let {dir,toP,toSide,line,inBack,seg} = cs;
   if (inBack&& 0) {
     let ocs = cstate[inBack];
     let oline = ocs.line;
@@ -149,10 +150,12 @@ rs.atCycleEnd = function (nm) {
     debugger;
     //line.hide();
    line.stroke = 'transparent';
+   seg.active  = 0;
     line.update();
   }
 }
-let L  =rs.lineLength = 10;
+//let L  =rs.lineLength = 10;
+let L  =rs.lineLength = 20;
 
 rs.pauseAnimation = function() {
   let {stepsSoFar:ssf,pstate} = this;
@@ -160,7 +163,7 @@ rs.pauseAnimation = function() {
   debugger;
 }
 rs.updateStateOfCC = function (n){
-  let {stepsSoFar:ssf,ends,ht,ecircles,pstate,lineLength:ll,trailerAdded} = this;
+  let {stepsSoFar:ssf,ends,ht,ecircles,pstate,lineLength:ll,trailerAdded,noNewPaths} = this;
   let circ = ecircles[n];
   let nm = 'p'+n;
   let {pspace,cstate} = pstate;
@@ -171,7 +174,9 @@ rs.updateStateOfCC = function (n){
   let toGo = pos.distance(toP);
   let lGone = pos.distance(fromP);
   line.show();
-  seg.active = 1;
+  if (ssf < noNewPaths) {
+    seg.active = 1;
+  }
  // line.stroke = 'rgba(250,250,250,.5)';
   line.update();
 
@@ -267,18 +272,19 @@ rs.placeCircles = function () {
 
 
 rs.addSomePaths = function (n) {
-  let theta = Math.random()*0.2*Math.PI-0.1*Math.PI
- theta = -0.1*Math.PI
+  let {theta} = this;
+//  let theta = Math.random()*0.2*Math.PI-0.1*Math.PI
+// theta = -0.1*Math.PI
  //debugger;
  //for (let i=1;i<3;i++) {
- for (let i=1;i<n;i++) {
+ for (let i=2;i<n-1;i++) {
     let tt =theta+0.0*i*Math.PI;
-    let fr = i/n;
+    let fr = i/(n-1);
     //let tt =0.1*(i+1)*Math.PI;
     let fromP0 = this.sideI2pnt(0,i/n);
     let fromP1 = this.sideI2pnt(2,i/n);
     this.addPath({fromSide:0,fromP:fromP0,dir:tt});
-   this.addPath({fromSide:2,fromP:fromP1,dir:Math.PI-tt});
+   this.addPath({fromSide:2,fromP:fromP1,dir:Math.PI+tt});
   }
 }
 let vStep=5;
@@ -327,9 +333,9 @@ rs.numSteps = 2.4*Math.floor(rs.ht/vel);
 rs.numSteps = 2*Math.floor(rs.ht/vel);
 let cycleTime = rs.cycleTime = Math.floor(rs.ht/vel); 
 rs.numSteps = cycleTime+1;
-rs.numSteps = 5*cycleTime;
-rs.noNewPaths = 3*cycleTime;
-rs.chopOffBeginning = 6*cycleTime;
+rs.numSteps = 7.0*cycleTime;
+rs.noNewPaths = 5*cycleTime;
+rs.chopOffBeginningg = 6*cycleTime;
 rs.saveAnimation = 1;
 rs.initialize = function () {
   debugger;

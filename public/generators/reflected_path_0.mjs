@@ -7,14 +7,13 @@ import {rs as addPathMethods} from '/mlib/path.mjs';
 
 let rs = basicP.instantiate();
 addPathMethods(rs);
-debugger;
 rs.setName('reflected_path_0');
 rs.ht= 100;
 rs.numPaths = 10;
+//rs.numPaths = 2;
 let d;
 rs.setTopParams = function () {
   let {ht} = this;
-  debugger;
   d = this.d=0.5*ht;
   let corners = [Point.mk(-d,d),Point.mk(-d,-d),Point.mk(d,-d),Point.mk(d,d)];
   let sides = [LineSegment.mk(corners[0],corners[1]),
@@ -60,6 +59,9 @@ rs.addPath = function (params) {
   let {pspace,cstate} = pstate;
   let ln = ecircles.length;
   let nm = name?name:'p'+ln;
+  if (nm === 'p16') {
+    //debugger;
+  }
   let maxH = 20;
   // debugger;
   //let fromP = this.sideI2pnt(sdi,fr);
@@ -99,7 +101,13 @@ rs.addPath = function (params) {
     line = lineP.instantiate().show();
     lines.push(line);
     segs.push(seg);
-    //line.stroke = randomColor();
+    if (addingTrailer) {
+      //line.stroke = 'rgba(255,0,0,50)';
+      //line.update();
+    } else {
+     // line.stroke ='rgba(0,255,0,50)';
+     // line.update();
+    }
     
   }
   let dist = toP.distance(fromP);
@@ -109,26 +117,48 @@ rs.addPath = function (params) {
     let cs = cstate[nm];
    //Object.assign(ist,{value:0,fromP,toP,fromSide,toSide,start:ssf,vec,dir,line,inBack});
     Object.assign(cs,{value:0,fromP,toP,fromSide,toSide,start:ssf,vec,dir,done:0,cstep:undefined});
-    debugger;
   } else {
     cstate[nm] = {value:0,fromP,toP,fromSide,toSide,start:ssf,vec,dir,line,inBack,trailerNeeded:!inBack,seg};
   }
 }
 
 rs.atCycleEnd = function (nm) {
- let {pstate} = this;
+ let {pstate,noNewPaths,stepsSoFar:ssf} = this;
+ 
   let {pspace,cstate} = pstate;
   let cs = cstate[nm];
   let {dir,toP,toSide,line,inBack} = cs;
+  if (inBack&& 0) {
+    let ocs = cstate[inBack];
+    let oline = ocs.line;
+    oline.hide();
+    oline.update();
+    oline.stroke = 'rgba(255,255,0,0)';
+        debugger;
+	
+  } 
+  if (ssf > 10*noNewPaths) {
+    line.hide();
+   return;
+ }
  // let na = toSide%2?dir-Math.PI:Math.PI -dir;
   let na = toSide%2?-dir:Math.PI -dir;
-  //rs.addPath = function (fromSide,fromP,dir,line,inBack,addingTrailer) {
-
-  this.addPath({name:nm,fromSide:toSide,fromP:toP,dir:na,line,inBack});
- debugger;
+  if (ssf < noNewPaths) {
+    this.addPath({name:nm,fromSide:toSide,fromP:toP,dir:na,line,inBack});
+  } else if (ssf>noNewPaths) {
+    debugger;
+    //line.hide();
+   line.stroke = 'transparent';
+    line.update();
+  }
 }
 let L  =rs.lineLength = 10;
 
+rs.pauseAnimation = function() {
+  let {stepsSoFar:ssf,pstate} = this;
+  let {pspace,cstate} = pstate;
+  debugger;
+}
 rs.updateStateOfCC = function (n){
   let {stepsSoFar:ssf,ends,ht,ecircles,pstate,lineLength:ll,trailerAdded} = this;
   let circ = ecircles[n];
@@ -164,12 +194,11 @@ rs.updateStateOfCC = function (n){
    //   debugger;
     }
     if (farOut && trailerNeeded) {
-       debugger;
        cs.trailerNeeded = 0;
        //rs.addPath = function (fromSide,fromP,dir,line,inBack,addingTrailer) {
 //rs.addPath = function (fromSide,fromP,dir,line,inBack,addingTrailer) {
 
-       this.addPath({fromSide,fromP,dir,line,inBack:1,addingTrailer:1});
+       this.addPath({fromSide,fromP,dir,line,inBack:nm,addingTrailer:1});
     }    
     let lnl = Math.min(lGone,ll);
     let epos = pos.difference(vec.times(lnl));
@@ -197,8 +226,7 @@ rs.allIntersections = function (segs) {
       }
  
       let ints = segi.intersect(segj);
-      if (ints&&(!this.onSide(ints))) {
-        debugger;
+      if (ints&&(typeof ints === 'object')&& (!this.onSide(ints))) {
         ai.push(ints);
       }
     }
@@ -228,7 +256,8 @@ rs.placeCircles = function () {
     crc.update();
   }
   if (cl > ail) {
-    for (let  k=cl;k<ail;k++) {
+    debugger;
+    for (let  k=ail;k<cl;k++) {
       let crc = icircles[k];
       crc.hide();
       crc.update();
@@ -240,26 +269,33 @@ rs.placeCircles = function () {
 rs.addSomePaths = function (n) {
   let theta = Math.random()*0.2*Math.PI-0.1*Math.PI
  theta = -0.1*Math.PI
-
+ //debugger;
  //for (let i=1;i<3;i++) {
  for (let i=1;i<n;i++) {
     let tt =theta+0.0*i*Math.PI;
+    let fr = i/n;
     //let tt =0.1*(i+1)*Math.PI;
-    this.addPath({fromSide:0,fromP:this.sideI2pnt(0,i/(n-1)),dir:tt});
-    this.addPath({fromSide:2,fromP:this.sideI2pnt(2,i/(n-1)),dir:Math.PI-tt});
+    let fromP0 = this.sideI2pnt(0,i/n);
+    let fromP1 = this.sideI2pnt(2,i/n);
+    this.addPath({fromSide:0,fromP:fromP0,dir:tt});
+   this.addPath({fromSide:2,fromP:fromP1,dir:Math.PI-tt});
   }
 }
 let vStep=5;
 let nr = 80;
 rs.updateState = function () {
   //debugger;
-  let {stepsSoFar:ssf,numSteps,cycleTime,lines,ecircles,segs,ht,numPaths} = this;
+  let {stepsSoFar:ssf,numSteps,cycleTime,lines,ecircles,segs,ht,numPaths,noNewPaths} = this;
   //let lln = vlines.length;
   let ecln = ecircles.length;
   for (let i=0;i<ecln;i++) {
     this.updateStateOfCC(i);
   }
-  if (ssf % 30 === 0) {
+  if (ssf > noNewPaths) {
+ //   debugger;
+    
+  }
+  if ((ssf % 30 === 0)&& (ssf < noNewPaths)) {
     this.addSomePaths(numPaths);
   }
   this.placeCircles();
@@ -283,6 +319,7 @@ rs.initProtos = function () {
     let lineP = this.lineP = linePP.instantiate();
   lineP.stroke = 'rgb(250,250,250)';
   lineP['stroke-width'] = .04;
+  //lineP['stroke-width'] = .2;
 }  
 
 
@@ -290,12 +327,13 @@ rs.numSteps = 2.4*Math.floor(rs.ht/vel);
 rs.numSteps = 2*Math.floor(rs.ht/vel);
 let cycleTime = rs.cycleTime = Math.floor(rs.ht/vel); 
 rs.numSteps = cycleTime+1;
-rs.numSteps = 60*cycleTime;
-rs.chopOffBeginning =0;
-rs.saveAnimation = 0;
+rs.numSteps = 5*cycleTime;
+rs.noNewPaths = 3*cycleTime;
+rs.chopOffBeginning = 6*cycleTime;
+rs.saveAnimation = 1;
 rs.initialize = function () {
   debugger;
-  let {numH,numV} = this;
+  let {numPaths} = this;
  this.setBackgroundColor('black');
 
   this.initProtos();
@@ -313,10 +351,8 @@ rs.initialize = function () {
   let theta = 0.1*Math.PI;
   //rs.addPath = function (fromSide,fromP,dir,line,inBack) {
 //rs.addPath = function (fromSide,fromP,dir,line,inBack,addingTrailer) {
-  for (let i=1;i<0;i++) {
-    this.addPath({fromSide:0,fromP:this.sideI2pnt(0,i/10),dir:theta});
-    this.addPath({fromSide:2,fromP:this.sideI2pnt(2,i/10),dir:Math.PI-theta});
-  }
+  this.addSomePaths(numPaths);
+ 
 }
 
 export {rs};

@@ -12,8 +12,8 @@ rs.setTopParams = function () {
   let vel = 1;
   let cycleTime = Math.floor(ht/vel)
   this.setSides(d);
-  let topParams = {ht,d,width:ht,height:ht,framePadding:.0*ht,frameStroke:'white',frameStrokeWidth:1,numPaths:6,theta:-0.2 *Math.PI,vel,
-  cycleTime,numSteps:10*cycleTime,noNewPaths:8*cycleTime,lineLength:20,addPathInterval:30,fromOneSide:1}
+  let topParams = {ht,d,width:ht,height:ht,framePadding:.0*ht,frameStroke:'white',frameStrokeWidth:1,numPaths:4,theta:-0.2 *Math.PI,vel,
+  cycleTime,numSteps:4*cycleTime,noNewPaths:2*cycleTime,lineLength:20,addPathInterval:30,fromOneSide:1,gap:0}
   Object.assign(this,topParams);
 }
 

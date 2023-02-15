@@ -128,12 +128,14 @@ const pauseAnimation = function () {
 
 
 const stepAnimation = function () {
-  //debugger;
 	let main = core.root.main;
   main.paused = 0;
 	if (main.oneStep) {
 		main.oneStep(true);
 	}
+  if (main.stepAnimation) {
+    main.stepAnimation();
+  }
 }
 
 
@@ -164,7 +166,7 @@ const turnOnAudio = function () {
 const stepNoSaveAnimation = function () {
 	let main = core.root.main;
 	if (main.oneStep) {
-		main.oneStep(false);
+		main.oneStep(true);
 	}
 }
 

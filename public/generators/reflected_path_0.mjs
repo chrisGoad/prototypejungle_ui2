@@ -24,7 +24,7 @@ rs.setTopParams = function () {
   let cycleTime = Math.floor(ht/vel)
   this.setSides(d);
   let topParams = {ht,d,width:ht,height:ht,framePadding:.0*ht,frameStroke:'white',frameStrokeWidth:1,numPaths:10,theta:-0.2 *Math.PI,vel,
-  cycleTime,numSteps:7.0*cycleTime,noNewPaths:5*cycleTime,lineLength:20}
+  cycleTime,numSteps:7.0*cycleTime,noNewPaths:5*cycleTime,lineLength:20,addPathInterval:30,fromOneSide:0,gap:1}
   Object.assign(this,topParams);
 }
 rs.setTopParams();
@@ -83,7 +83,9 @@ rs.addPath = function (params) {
     let circ = ecircleP.instantiate().show();
     ecircles.push(circ);
     line = lineP.instantiate().show();
+    line.stroke = addingTrailer?'blue':'red';
     lines.push(line);
+    
     segs.push(seg);
   }
   let dist = toP.distance(fromP);
@@ -98,19 +100,38 @@ rs.addPath = function (params) {
 
 rs.atCycleEnd = function (nm) {
  let {pstate,noNewPaths,stepsSoFar:ssf} = this;
- 
-  let {pspace,cstate} = pstate;
+  // debugger;
+   let {pspace,cstate} = pstate;
   let cs = cstate[nm];
-  let {dir,toP,toSide,line,inBack,seg} = cs;
+  let {dir,toP,toSide,line,inBack,seg,start} = cs;
+     console.log('cycleEnd ssf',ssf,'nm',nm,'inBack',inBack,'color',line.stroke);
+
   let na = toSide%2?-dir:Math.PI -dir;
   if (ssf < noNewPaths) {
     this.addPath({name:nm,fromSide:toSide,fromP:toP,dir:na,line,inBack});
-  } else if (ssf>noNewPaths) {
+  } else {//if (ssf>noNewPaths) {
     //line.hide();
-   line.stroke = 'transparent';
+     // if (ssf - start)> 10)
+     debugger;
+     let lddone = true;
+     if (inBack) {
+         let lds = cstate[inBack];
+         lddone = lds.done;
+      }
+      if (lddone) {
+        line.stroke = 'transparent';
+      } else {
+        this.addPath({name:nm,fromSide:toSide,fromP:toP,dir:na,line,inBack});
+      }
    seg.active  = 0;
     line.update();
   }
+}
+
+rs.stepAnimation = function(db) {
+  let {stepsSoFar:ssf,pstate} = this;
+  let {pspace,cstate} = pstate;
+  debugger;
 }
 
 rs.pauseAnimation = function() {
@@ -119,13 +140,21 @@ rs.pauseAnimation = function() {
   debugger;
 }
 rs.updateStateOfCC = function (n){
-  let {stepsSoFar:ssf,ends,ht,ecircles,pstate,lineLength:ll,trailerAdded,noNewPaths,vel} = this;
+  let {stepsSoFar:ssf,ends,ht,ecircles,pstate,lineLength:ll,trailerAdded,noNewPaths,vel,gap} = this;
+  let dbg = 0;//(ssf > 204) && (n>3) && (n<6);
+  if (dbg) {
+    debugger;
+  }
   let circ = ecircles[n];
   let nm = 'p'+n;
   let {pspace,cstate} = pstate;
   let cs = cstate[nm];
   let {value:v,done,fromP,toP,vec,dir,line,inBack,fromSide,trailerNeeded,seg} = cs;
   let   pos = fromP.plus(vec.times(v*vel));
+ // console.log('inBack',inBack);
+  let nvec = vec.normal();
+  let snvec = nvec.times(gap*(inBack?1:-1));
+  let  gpos = pos.plus(snvec);
   let toGo = pos.distance(toP);
   let lGone = pos.distance(fromP);
   line.show();
@@ -133,26 +162,49 @@ rs.updateStateOfCC = function (n){
     seg.active = 1;
   }
   line.update();
-
-  if (inBack) {
+  line.bouncing = 1;
+  if (inBack) {// pos is the trailing point and epos the leading
     if (toGo >= ll) {
+      line.bouncing = 0;
+      if (dbg) {
+        debugger;
+      }
       seg.active = 0;
-      line.update();
-    } 
+      line.show();//new
+      //line.stroke = 'yellow';
+      line.update();//new
+    } else if (ssf > 204) {
+ //     debugger;
+    }
     let lnl = Math.min(toGo,ll);
     let epos = pos.plus(vec.times(lnl));
-    line.setEnds(pos,epos);
+    let gepos = epos.plus(snvec);
+  //  line.setEnds(pos,epos);
+    line.setEnds(gpos,gepos);
     seg.end0 = pos;
     seg.end1 = epos;
-  } else {
+  } else { // pos is the leading point and epos the trailing
     let farOut = lGone >= ll;
-    if (farOut && trailerNeeded) {
-       cs.trailerNeeded = 0;
-       this.addPath({fromSide,fromP,dir,line,inBack:nm,addingTrailer:1});
-    }    
+    if (farOut) {
+      line.bouncing = 0;
+      if (dbg) {
+        debugger;
+      }
+      if (trailerNeeded) {
+        cs.trailerNeeded = 0;
+        this.addPath({fromSide,fromP,dir,line,inBack:nm,addingTrailer:1});
+      }
+      line.show();//new
+    //  line.stroke = 'green';
+      line.update();//new
+    } else if (ssf > 204) {
+    //  debugger;
+    }   
     let lnl = Math.min(lGone,ll);
     let epos = pos.difference(vec.times(lnl));
-    line.setEnds(epos,pos);
+    let gepos = epos.plus(snvec);
+   // line.setEnds(epos,pos);
+    line.setEnds(gepos,gpos);
     seg.end0 = epos;
     seg.end1 = pos;
   }
@@ -214,24 +266,26 @@ rs.placeCircles = function () {
 
 
 rs .addSomePaths = function (n) {
-  let {theta} = this;
+  let {theta,fromOneSide} = this;
  for (let i=2;i<n-1;i++) {
     let tt =theta+0.0*i*Math.PI;
     let fr = i/(n-1);
     let fromP0 = this.sideI2pnt(0,i/n);
     let fromP1 = this.sideI2pnt(2,i/n);
     this.addPath({fromSide:0,fromP:fromP0,dir:tt});
-    this.addPath({fromSide:2,fromP:fromP1,dir:Math.PI+tt});
+    if (!fromOneSide) {
+      this.addPath({fromSide:2,fromP:fromP1,dir:Math.PI+tt});
+    }
   }
 }
 rs.updateState = function () {
-  let {stepsSoFar:ssf,numSteps,cycleTime,lines,ecircles,segs,ht,numPaths,noNewPaths} = this;
+  let {stepsSoFar:ssf,numSteps,cycleTime,lines,ecircles,segs,ht,numPaths,noNewPaths,addPathInterval} = this;
   //let lln = vlines.length;
   let ecln = ecircles.length;
   for (let i=0;i<ecln;i++) {
     this.updateStateOfCC(i);
   }
-  if ((ssf % 30 === 0)&& (ssf < noNewPaths)) {
+  if ((ssf % addPathInterval === 0)&& (ssf < noNewPaths)) {
     this.addSomePaths(numPaths);
   }
   this.placeCircles();
@@ -239,6 +293,7 @@ rs.updateState = function () {
   
   
 rs.initProtos = function () {
+  debugger;
   let {ht} = this;
   let icircleP = this.icircleP = circlePP.instantiate();
   icircleP.stroke = 'transparent';

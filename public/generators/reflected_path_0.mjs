@@ -6,7 +6,7 @@ import {rs as addPathMethods} from '/mlib/path.mjs';
 
 let rs = basicP.instantiate();
 addPathMethods(rs);
-rs.setName('reflected_path_0');
+rs.setName('reflected_path_0_2');
 
 rs.setSides = function (d) {
   let corners = [Point.mk(-d,d),Point.mk(-d,-d),Point.mk(d,-d),Point.mk(d,d)];
@@ -83,7 +83,7 @@ rs.addPath = function (params) {
     let circ = ecircleP.instantiate().show();
     ecircles.push(circ);
     line = lineP.instantiate().show();
-    line.stroke = addingTrailer?'blue':'red';
+   // line.stroke = addingTrailer?'blue':'red';
     lines.push(line);
     
     segs.push(seg);
@@ -162,19 +162,12 @@ rs.updateStateOfCC = function (n){
     seg.active = 1;
   }
   line.update();
-  line.bouncing = 1;
   if (inBack) {// pos is the trailing point and epos the leading
     if (toGo >= ll) {
-      line.bouncing = 0;
-      if (dbg) {
-        debugger;
-      }
       seg.active = 0;
       line.show();//new
       //line.stroke = 'yellow';
       line.update();//new
-    } else if (ssf > 204) {
- //     debugger;
     }
     let lnl = Math.min(toGo,ll);
     let epos = pos.plus(vec.times(lnl));
@@ -186,20 +179,13 @@ rs.updateStateOfCC = function (n){
   } else { // pos is the leading point and epos the trailing
     let farOut = lGone >= ll;
     if (farOut) {
-      line.bouncing = 0;
-      if (dbg) {
-        debugger;
-      }
       if (trailerNeeded) {
         cs.trailerNeeded = 0;
         this.addPath({fromSide,fromP,dir,line,inBack:nm,addingTrailer:1});
       }
       line.show();//new
-    //  line.stroke = 'green';
       line.update();//new
-    } else if (ssf > 204) {
-    //  debugger;
-    }   
+    }  
     let lnl = Math.min(lGone,ll);
     let epos = pos.difference(vec.times(lnl));
     let gepos = epos.plus(snvec);

@@ -6,7 +6,7 @@ import {rs as addPathMethods} from '/mlib/path.mjs';
 
 let rs = basicP.instantiate();
 addPathMethods(rs);
-rs.setName('reflected_path_0_2');
+rs.setName('reflected_path_0');
 
 rs.setSides = function (d) {
   let corners = [Point.mk(-d,d),Point.mk(-d,-d),Point.mk(d,-d),Point.mk(d,d)];
@@ -24,7 +24,7 @@ rs.setTopParams = function () {
   let cycleTime = Math.floor(ht/vel)
   this.setSides(d);
   let topParams = {ht,d,width:ht,height:ht,framePadding:.0*ht,frameStroke:'white',frameStrokeWidth:1,numPaths:10,theta:-0.2 *Math.PI,vel,
-  cycleTime,numSteps:7.0*cycleTime,noNewPaths:5*cycleTime,lineLength:20,addPathInterval:30,fromOneSide:0,gap:1}
+  cycleTime,numSteps:7.0*cycleTime,noNewPaths:5*cycleTime,lineLength:20,addPathInterval:30,fromOneSide:0,gap:1,randomFactor:0}
   Object.assign(this,topParams);
 }
 rs.setTopParams();
@@ -250,14 +250,44 @@ rs.placeCircles = function () {
   }
 }
 
+rs.computePathPositions = function (n) {
+ let {randomFactor:rf,theta} = this;
+ debugger;
+ let pp0 = [];
+ let pp2 = [];
+ this.pathPositions0 = pp0;
+ this.pathPositions2 = pp2;
+ this.pathAngle0 = theta;
+ this.pathAngle2 = Math.PI+theta;
+ for (let i=2;i<n-1;i++) {
+    let r = rf*(Math.random()-0.5);
+    let fromP0 = this.sideI2pnt(0,i/n+r);
+    let fromP2 = this.sideI2pnt(2,i/n+r);
+    pp0.push(fromP0);
+    pp2.push(fromP2);
+  }
+}
 
 rs .addSomePaths = function (n) {
+  let {pathPositions0:pp0,pathPositions2:pp2,pathAngle0:pa0,pathAngle2:pa2 ,fromOneSide} = this;
+  debugger;
+  let ln = pp0.length;
+   for (let i=0;i<ln;i++) {
+    this.addPath({fromSide:0,fromP:pp0[i],dir:pa0});
+    if (!fromOneSide) {
+      this.addPath({fromSide:2,fromP:pp2[i],dir:pa2});
+    }
+  }
+}
+
+rs .addSomePathsss = function (n) {
   let {theta,fromOneSide} = this;
  for (let i=2;i<n-1;i++) {
     let tt =theta+0.0*i*Math.PI;
     let fr = i/(n-1);
-    let fromP0 = this.sideI2pnt(0,i/n);
-    let fromP1 = this.sideI2pnt(2,i/n);
+    let r = 0.1*(Math.random()-0.5);
+    let fromP0 = this.sideI2pnt(0,i/n+r);
+    let fromP1 = this.sideI2pnt(2,i/n+r);
     this.addPath({fromSide:0,fromP:fromP0,dir:tt});
     if (!fromOneSide) {
       this.addPath({fromSide:2,fromP:fromP1,dir:Math.PI+tt});
@@ -266,6 +296,7 @@ rs .addSomePaths = function (n) {
 }
 rs.updateState = function () {
   let {stepsSoFar:ssf,numSteps,cycleTime,lines,ecircles,segs,ht,numPaths,noNewPaths,addPathInterval} = this;
+  debugger;
   //let lln = vlines.length;
   let ecln = ecircles.length;
   for (let i=0;i<ecln;i++) {
@@ -275,6 +306,8 @@ rs.updateState = function () {
     this.addSomePaths(numPaths);
   }
   this.placeCircles();
+  this.callIfDefined('afterUpdate');
+
 }
   
   
@@ -284,7 +317,6 @@ rs.initProtos = function () {
   let icircleP = this.icircleP = circlePP.instantiate();
   icircleP.stroke = 'transparent';
   icircleP.fill = 'red';
-  icircleP['stroke-width'] = .01;
   icircleP['stroke-width'] = 0;
   icircleP.dimension =0.01*ht;
   let ecircleP = this.ecircleP = circlePP.instantiate();
@@ -306,16 +338,11 @@ rs.initialize = function () {
   let lines = this.set('lines',arrayShape.mk());
   let icircles = this.set('icircles',arrayShape.mk());
   let ecircles = this.set('ecircles',arrayShape.mk());
-  this.set('segs',arrayShape.mk());
-  this.set('vends0',arrayShape.mk());
-  this.set('hends1',arrayShape.mk());
-  this.set('vends1',arrayShape.mk());
- 
   this.segs = [];
-  //let theta = 0.1*Math.PI;
-  //rs.addPath = function (fromSide,fromP,dir,line,inBack) {
-//rs.addPath = function (fromSide,fromP,dir,line,inBack,addingTrailer) {
+  this.computePathPositions(numPaths);
   this.addSomePaths(numPaths);
+  this.callIfDefined('afterInitialize');
+
  
 }
 

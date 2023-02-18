@@ -465,7 +465,7 @@ item.oneStep = function (one) {
   if (this.paused) {
     return;
   }
-
+  this.callIfDefined('initAudio');
   let ns = this.stepsSoFar;
        //console.log('ns',ns,'tns',this.numSteps);
   this.stepsSoFar++;

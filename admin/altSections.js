@@ -62,11 +62,12 @@ sections:
   [0,'reflected_path_0_1','instances',1,'Reflected path 0 1',{likes:0,posted:0,category:'quad'}], 
   [0,'reflected_path_0_2','instances',1,'Reflected path 0 2',{likes:0,posted:0,category:'quad'}], 
   [0,'reflected_path_0_3','instances',1,'Reflected path 0 3',{likes:0,posted:0,category:'quad'}], 
+  [0,'reflected_path_0_4','instances',1,'Reflected path 0 4',{likes:0,posted:0,category:'quad'}], 
   [0,'path_avoidance_7','generators',1,'Path Avoidance 7',{likes:0,posted:0,category:'quad'}], 
   [0,'path_rwalk','generators',1,'Random Walk',{likes:0,posted:0,category:'quad'}], 
   [0,'path_rwalk_2','generators',1,'Random Walk 2',{likes:0,posted:0,category:'quad'}], 
   [0,'path_rwalk_3','generators',1,'Random Walk 3',{likes:0,posted:0,category:'quad'}], 
-  [0,'path_rwalk_4','generators',1,'Random Walk 4',{likes:0,posted:0,category:'quad'}], 
+  [0,'path_rwalk_4','generators',1,'Random Walk 4',{likes:0,posted:0,category:'quad'}], 	
   [0,'path_rwalk_4_0','instances',1,'Random Walk 4 0',{likes:0,posted:0,category:'quad'}], 
   [0,'path_rwalk_4_1','instances',1,'Random Walk 4 1',{likes:0,posted:0,category:'quad'}], 
 

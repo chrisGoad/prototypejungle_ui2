@@ -163,6 +163,8 @@ rs.initialize = function () {
   
 }
 
+rs.numSteps = 100;
+rs.saveAnimation = 1;
 export {rs};
 
 

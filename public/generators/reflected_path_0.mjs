@@ -3,9 +3,11 @@ import {rs as linePP} from '/shape/line.mjs';
 import {rs as basicP} from '/generators/basics.mjs';
 //import {rs as addDropMethods} from '/mlib/drop.mjs';
 import {rs as addPathMethods} from '/mlib/path.mjs';	
+import {rs as addAudioMethods} from '/mlib/audio.mjs';	
 
 let rs = basicP.instantiate();
 addPathMethods(rs);
+addAudioMethods(rs);
 rs.setName('reflected_path_0');
 
 rs.setSides = function (d) {
@@ -24,7 +26,7 @@ rs.setTopParams = function () {
   let cycleTime = Math.floor(ht/vel)
   this.setSides(d);
   let topParams = {ht,d,width:ht,height:ht,framePadding:.0*ht,frameStroke:'white',frameStrokeWidth:1,numPaths:10,theta:-0.2 *Math.PI,vel,
-  cycleTime,numSteps:7.0*cycleTime,noNewPaths:5*cycleTime,lineLength:20,addPathInterval:30,fromOneSide:0,gap:1,randomFactor:0}
+  cycleTime,numSteps:7.0*cycleTime,noNewPaths:5*cycleTime,lineLength:20,addPathInterval:30,fromOneSide:0,gap:1,randomFactor:0,randomAngleFactor:0}
   Object.assign(this,topParams);
 }
 rs.setTopParams();
@@ -251,31 +253,34 @@ rs.placeCircles = function () {
 }
 
 rs.computePathPositions = function (n) {
- let {randomFactor:rf,theta} = this;
+ let {randomFactor:rfp,randomAngleFactor:rfa,theta} = this;
  debugger;
  let pp0 = [];
  let pp2 = [];
+ let aa = [];
  this.pathPositions0 = pp0;
  this.pathPositions2 = pp2;
- this.pathAngle0 = theta;
- this.pathAngle2 = Math.PI+theta;
+ this.pathAngles = aa;
  for (let i=2;i<n-1;i++) {
-    let r = rf*(Math.random()-0.5);
+    let r = rfp*(Math.random()-0.5);
     let fromP0 = this.sideI2pnt(0,i/n+r);
     let fromP2 = this.sideI2pnt(2,i/n+r);
     pp0.push(fromP0);
     pp2.push(fromP2);
+    let ra = rfa*(Math.random()-0.5)*Math.PI;
+    aa.push(theta+ra);
+    
   }
 }
 
 rs .addSomePaths = function (n) {
-  let {pathPositions0:pp0,pathPositions2:pp2,pathAngle0:pa0,pathAngle2:pa2 ,fromOneSide} = this;
+  let {pathPositions0:pp0,pathPositions2:pp2,pathAngles:pa,fromOneSide} = this;
   debugger;
   let ln = pp0.length;
    for (let i=0;i<ln;i++) {
-    this.addPath({fromSide:0,fromP:pp0[i],dir:pa0});
+    this.addPath({fromSide:0,fromP:pp0[i],dir:pa[i]});
     if (!fromOneSide) {
-      this.addPath({fromSide:2,fromP:pp2[i],dir:pa2});
+      this.addPath({fromSide:2,fromP:pp2[i],dir:pa[i]+Math.PI});
     }
   }
 }

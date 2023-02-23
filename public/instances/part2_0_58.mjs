@@ -44,7 +44,10 @@ rs.constructSeqOb = function () {
   debugger;
   let props = Object.getOwnPropertyNames(pspace);
   
-  this.SeqOb = this.randomSeqOb({props,lb:-0.4,ub:0.4,numCycles});
+  let SeqOb = this.randomSeqOb({props,lb:-0.4,ub:0.4,numCycles:numCycles-1});
+  let Ob0 = SeqOb[0];
+  SeqOb.push(Ob0);
+  this.SeqOb = SeqOb;
   let cycleL = dur + pd;
   this.numSteps = numCycles * cycleL;
   this.cycleL = cycleL;
@@ -64,7 +67,7 @@ rs.addPath = function (kind,n) {
 rs.pstate = {pspace,cstate:initState};
 
 rs.partSplitParams = function (prt) {
-  debugger;
+ // debugger;
   let ln = prt.polygon.corners.length;
   let lev = prt.where.length;
   let olev = lev%2;
@@ -96,16 +99,16 @@ let strokeWidths = rs.partParams.strokeWidths = [];
 rs.computeExponentials({dest:strokeWidths,n:20,root:0.4,factor:.7});
 
 rs.updateState= function () {
- debugger;
   let {stepsSoFar:ssf,numSteps,pstate,duration:dur,pauseDuration:pd,SeqOb} = this;
   let {cstate,pspace} = pstate;
   let ns = this.numSteps;
   let cycleL = dur + pd;
-  let cycle = Math.floor(ssf%cycleL);
+  let cycle = Math.floor(ssf/cycleL);
   let wic = ssf%cycleL;
   this.cycle = cycle;
   this.whereInCycle = wic;
-  if (wic === 0) {   
+  if (wic === 0) {  
+    debugger;  
     let props = Object.getOwnPropertyNames(pspace);
     props.forEach((prop) => {
       let psc = pspace[prop];
@@ -117,6 +120,8 @@ rs.updateState= function () {
       psc.done =0;
       let cs = cstate[prop];
       cs.value = ivl;
+      cs.start = ssf;
+      cs.done=0;
     });
   }
   this.resetShapes();

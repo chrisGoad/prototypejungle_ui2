@@ -7,7 +7,7 @@ rs.setName('part2_0_58b');
 
 let levels = 9;
 levels = 2;
-//levels = 3;
+levels = 5;
 //topLevels = 6;
 
 rs.partParams.levels = levels;
@@ -21,7 +21,7 @@ rs.computeFills = function () {
     let g = rshade();
     let b = rshade();
     let wn = w[0];
-    let rcolor = `rgb(${r},${r},${r})`;
+    let rcolor = `rgb(${r},${g},${b})`;
     af[wn] = rcolor;
   });
   this.colors = af;
@@ -34,7 +34,8 @@ rs.computeFills();
 
 rs.duration = 20;//duration of one path
 rs.pauseDuration = 4;
-rs.numCycles = 4;
+rs.numCycles = 8;
+rs.saveAnimation = 1;
 rs.partParams.levels = levels;
 rs.partParams.rectangular = 1;
 

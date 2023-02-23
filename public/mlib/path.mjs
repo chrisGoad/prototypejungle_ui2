@@ -294,6 +294,7 @@ item.sweepNextState = function (pspace,cstate,component) {
 
 
 item.sweepFixedDurNextState = function (pspace,cstate,component) {
+  //debugger;
   let {stepsSoFar:ssf} = this;
   let pspc = pspace[component];
   let {min,max,dur} = pspc;
@@ -362,7 +363,6 @@ item.nextState = function (pathKind,pspace,cstate,component) {
   }
   let fnnm = this.nextTable[pathKind];
   let fn =this[fnnm];
-  debugger;
   fn.call(this,pspace,cstate,component);
 }
 

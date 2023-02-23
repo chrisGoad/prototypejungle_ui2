@@ -291,7 +291,26 @@ item.sweepNextState = function (pspace,cstate,component) {
   }
  // csc.value = nosin;
 }    
-   
+
+
+item.sweepFixedDurNextState = function (pspace,cstate,component) {
+  let {stepsSoFar:ssf} = this;
+  let pspc = pspace[component];
+  let {min,max,dur} = pspc;
+  let cs = cstate[component];
+  let {start} = cs;
+  let fr = (ssf-start)/dur;
+  if (fr > 1) {
+    cs.done = 1;
+    return;
+  }
+  let delta = max-min;
+  let v=min+fr*delta;
+  cs.value = v;
+}
+  
+     
+    
 
 item.randomStepsNextState = function (pspace,cstate,component) {
   let pspc = pspace[component];
@@ -331,7 +350,25 @@ item.randomStepsNextState = function (pspace,cstate,component) {
   csc.value=sin;//down?nvm:nvp;
 }
 
+item.nextTable = {'random':'randomNextState','randomWalk':'randomWalk2dNextState','randomWalkScalar':'randomWalkScalarNextState',
+                  'randomValue':'randomValueNextState','randomSteps':'randomStepsdNextState','sweep':'sweepNextState',
+                  'sweepFixedDur':'sweepFixedDurNextState','interpolate':'interpolateNextState'};
+                  
+                  
 item.nextState = function (pathKind,pspace,cstate,component) {
+  let csc = cstate[component];
+  if (csc.paused) {
+    return;
+  }
+  let fnnm = this.nextTable[pathKind];
+  let fn =this[fnnm];
+  debugger;
+  fn.call(this,pspace,cstate,component);
+}
+
+
+
+item.nextStatee = function (pathKind,pspace,cstate,component) {
   let csc = cstate[component];
   if (csc.paused) {
     return;
@@ -353,6 +390,9 @@ item.nextState = function (pathKind,pspace,cstate,component) {
   }
   if (pathKind === 'sweep') {
     this.sweepNextState(pspace,cstate,component);
+  } 
+  if (pathKind === 'sweepFixedDur') {
+    this.sweepFixedDurNextState(pspace,cstate,component);
   } 
   if (pathKind === 'interpolate') {
     this.interpolateNextState(pspace,cstate,component);

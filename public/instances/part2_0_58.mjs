@@ -11,53 +11,60 @@ let levels = 9;
 levels = 6;
 //levels = 3;
 //topLevels = 6;
-
+rs.duration = 20;//duration of one path
+rs.pauseDuration = 4;
+rs.numCycles = 4;
 rs.partParams.levels = levels;
 rs.partParams.rectangular = 1;
 let initState = {};
 //initState = {speedup:{value:1}}
 let pspace = {};
-rs.randomSeq = function (params) {
-  let {lb,ub,numInnerVals} = params;
+rs.randomObject = function (params) {
+  let {lb,ub,props} = params;
   let delta = ub-lb;
-  let iseq = [];
-  for (let i=0;i<numInnerVals) {
-    iseq.plus(lb+Math.random()*delta);
-  }
-  return iseq;
+  let iob = {};
+  props.forEach( (prop) => {
+    iob[prop] =lb+Math.random()*delta;
+  });
+  return iob;
 }
-rs.randomSeqSeq = function (params) {
-  let {numOuterVals} = params;
+rs.randomSeqOb = function (params) {
+  let {numCycles,props} = params;
   let oseq = [];
-  for (let i=0;i<numOuterVals) {
-    oseq.plus(lb+Math.random()*delta);
+  for (let i=0;i<numCycles;i++) {
+    oseq.push(this.randomObject(params));
   }
-  return 0seq;
+  return oseq;
 }
+
+rs.constructSeqOb = function () {
+  let {pstate,duration:dur,pauseDuration:pd,numCycles} = this;
+
+  let {pspace} = pstate;
+  debugger;
+  let props = Object.getOwnPropertyNames(pspace);
   
+  this.SeqOb = this.randomSeqOb({props,lb:-0.4,ub:0.4,numCycles});
+  let cycleL = dur + pd;
+  this.numSteps = numCycles * cycleL;
+  this.cycleL = cycleL;
+}
+
+
 rs.addPath = function (kind,n) {
+  //let ss = this.SeqSeq;
+  let dur = this.duration;
+  //let nm = kind+'pc'+'_'+n;
   let nm = kind+'pc'+n;
-  pspace[nm] = {kind:'sweep',subComponent:snm,min:-.4,max:.4};
+  pspace[nm] = {kind:'sweepFixedDur',dur,min:0,max:0};
   initState[nm] = {value:0};
 };
 
-for (let i=0;i<4;i++) {
-  addPath('q',i);
-}
-for (let i=0;i<4;i++) {
-  addPath('o',i);
-}
-
-for (let i=0;i<2;i++) {
-  addPath('t',i);
-}
-
-rs.numSteps = 1000;
-rs.copyOfInitState = rs.deepCopy(initState);
 
 rs.pstate = {pspace,cstate:initState};
 
 rs.partSplitParams = function (prt) {
+  debugger;
   let ln = prt.polygon.corners.length;
   let lev = prt.where.length;
   let olev = lev%2;
@@ -88,18 +95,30 @@ rs.addToArray(visibles,1,20);
 let strokeWidths = rs.partParams.strokeWidths = [];
 rs.computeExponentials({dest:strokeWidths,n:20,root:0.4,factor:.7});
 
-rs.updateStatee= function () {
- //debugger;
-  let ssf = this.stepsSoFar;
-  let pastIntro = ssf >= introSteps;
-
+rs.updateState= function () {
+ debugger;
+  let {stepsSoFar:ssf,numSteps,pstate,duration:dur,pauseDuration:pd,SeqOb} = this;
+  let {cstate,pspace} = pstate;
   let ns = this.numSteps;
-  let hns = 0.5*ns;
-  let fr = ssf<hns?ssf/hns:1-(ssf-hns)/hns;
-  levelsToShow = pastIntro? Math.floor(1 + (levels-1)*fr):levels;
-  console.log('levels',levels);
-  this.partParams.levels = levels;
-
+  let cycleL = dur + pd;
+  let cycle = Math.floor(ssf%cycleL);
+  let wic = ssf%cycleL;
+  this.cycle = cycle;
+  this.whereInCycle = wic;
+  if (wic === 0) {   
+    let props = Object.getOwnPropertyNames(pspace);
+    props.forEach((prop) => {
+      let psc = pspace[prop];
+      let ivls = SeqOb[cycle];
+      let fvls = SeqOb[cycle+1];
+      let ivl = ivls[prop]
+      psc.min=ivl;
+      psc.max=fvls[prop];
+      psc.done =0;
+      let cs = cstate[prop];
+      cs.value = ivl;
+    });
+  }
   this.resetShapes();
 }
 
@@ -117,25 +136,6 @@ rs.partVisible  = function (prt) {
   return 0;
 }
 
-rs.computeFills = function () {
-  const rshade =() => Math.floor(Math.random()*255);
-  let aw = this.allWheres(this.partParams.levels,5);
-  let af = {};
-  
-  aw.forEach((w) => {
-    let r = rshade();
-    let g = rshade();
-    let b = rshade();
-    let wn = w[0];
-    let rcolor = `rgb(${r},${0},${b})`;
-    af[wn] = rcolor;
-  });
-  this.colors = af;
-  //debugger;
-}
-
-rs.computeFills();
-
 
 rs.partFill  = function (prt) {
   //debugger;
@@ -148,10 +148,6 @@ rs.partFill  = function (prt) {
   let clr = this.colors[ws];
   return clr;
 }
-
-rs.saveAnimation = 1;
-rs.numSteps = 500;
-rs.numISteps = 60;
 
 
   

@@ -49,6 +49,8 @@ sections:
  [0,'quad_11_4','instances',1,'Quad 11 4',{likes:0,posted:0,category:'quad'}],*/
  // [0,'quad_0_19','instances',1,'Quad 0 19',{likes:0,posted:0,category:'quad'}], 
  // [0,'part_0_19','instances',1,'Part 0 19',{likes:0,posted:0,category:'part'}], 
+  [0,'part2_0_58b','instances',1,'Part2 0 58b',{likes:0,posted:0,category:'quad'}], 
+
   [0,'drop_move','generators',1,'Drop Move',{likes:0,posted:0,category:'quad'}], 
   [0,'path_avoidance_0','generators',1,'Path Avoidance 0',{likes:0,posted:0,category:'quad'}], 
   [0,'path_avoidance_1','generators',1,'Path Avoidance 1',{likes:0,posted:0,category:'quad'}], 

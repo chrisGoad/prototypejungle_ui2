@@ -562,7 +562,9 @@ item.resetShapes = function () {
   if (this.recycle && !this.firstInitialize) {
     this.shapesRecycleIndex = 0;
   } else {
-    this.shapes.remove();
+    if (this.shapes) {
+      this.shapes.remove();
+    }
     this.set('shapes',arrayShape.mk());
   }
   this.initialize();

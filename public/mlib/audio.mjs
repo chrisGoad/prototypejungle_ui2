@@ -2,7 +2,7 @@ const rs = function (rs) {
 
 rs.audioInitialized = 0;
 rs.initAudio  = function () {
-  debugger;
+  //debugger;
   let {audioInitialized} = this;
   if (audioInitialized) {
     return;
@@ -14,12 +14,12 @@ rs.initAudio  = function () {
   }
 
 rs.fileTest =  function (url) {
- debugger;
+ //debugger;
  fetch(url).then((resp) => {
    debugger;
    let txt = resp.text();
    txt.then((rtxt) => {
-     debugger;
+    // debugger;
      console.log(rtxt);
     });
   });

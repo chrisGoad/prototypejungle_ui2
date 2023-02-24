@@ -6,12 +6,12 @@ let rs = generatorP.instantiate();
 
 rs.setName('line_path_0_2');
 
-debugger;
-rs.setTopParams = function () {
-  debugger;
-  let ht = 100;
+ let ht = 100;
   let d = 0.5*ht;
   let vel = 1;
+
+debugger;
+rs.setTopParams = function () {
   let cycleTime = Math.floor(ht/vel)
   this.setSides(d);
   let topParams = {ht,d,width:ht,height:ht,framePadding:.0*ht,frameStroke:'white',frameStrokeWidth:1,numPaths:6,theta:-0.2 *Math.PI,vel,
@@ -19,15 +19,29 @@ rs.setTopParams = function () {
   Object.assign(this,topParams);
 }
 
+let fc = 0.8;
+rs.pointsToShow =  rs.pointsOnSeg(10,LineSegment.mk(Point.mk(-fc*d,0),Point.mk(fc*d,fc*d))).concat(
+                   rs.pointsOnSeg(10,LineSegment.mk(Point.mk(-fc*d,0),Point.mk(fc*d,-fc*d))));
+rs.pointsToShow =  rs.pointsOnCircle(67,0.8*d).concat( rs.pointsOnCircle(67,0.4*d));
+debugger;
+rs.pointsToShow =  rs.pointsOnCircle(67,0.8*d);
+rs.pointsToShow.push(Point.mk(0,0));
+
 
 rs.initProtos = function () {
   debugger;
   let {ht} = this;
   let icircleP = this.icircleP = circlePP.instantiate();
   icircleP.stroke = 'transparent';
-  icircleP.fill = 'red';
+  icircleP.fill = 'blue';
   icircleP['stroke-width'] = 0;
-  icircleP.dimension =0.01*ht;
+  icircleP.dimension =0.006*ht;
+  let pcircleP = this.pcircleP = circlePP.instantiate();
+  pcircleP.stroke = 'transparent';
+  //pcircleP.fill = 'transparent';
+  pcircleP.fill = 'red';
+  pcircleP['stroke-width'] = 0;
+  pcircleP.dimension =0.01*ht;
   let ecircleP = this.ecircleP = circlePP.instantiate();
   ecircleP.fill = 'blue';
   ecircleP['stroke-width'] = 0;

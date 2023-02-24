@@ -483,12 +483,13 @@ rs.addPointsToSchedule = function (pnts) {
 }
 
 
-rs.pointsOnCircle = function (n,rad) {
+rs.pointsOnCircle = function (n,rad,icenter) {
   debugger;
+  let center=icenter?icenter:Point.mk(0,0);
   let pnts = [];
   for (let i=0;i<n;i++) {
     let a = (i/n)*2*Math.PI;
-    let p = Point.mk(Math.cos(a)*rad,Math.sin(a)*rad);
+    let p = center.plus(Point.mk(Math.cos(a)*rad,Math.sin(a)*rad));
     pnts.push(p);
   }
   return pnts;

@@ -224,18 +224,58 @@ rs.allIntersections = function (segs) {
   return ai;
 }
 
+rs.nearToApoint =function (p,pnts) {
+  let ln = pnts.length;
+  for (let i=0;i<ln;i++) {
+    let pnt = pnts[i];
+    if (pnt.distance(p)<1) {
+      return true;
+    }
+  }
+}
+
+rs.updateShownPoints = function (pnts) {
+  let {pointsToShow:pts} = this;
+  pts.forEach ( (p) => {
+    if (!p.showMe) {
+      if (this.nearToApoint(p,pnts)) {
+        p.showMe =1;
+      }
+    }
+  });
+}
+
+
+
 rs.placeCircles = function () {
-  let {icircles,icircleP,segs} = this;
+  let {icircles,icircleP,segs,pointsToShow:pts} = this;
   let ai = this.allIntersections(segs);
+  this.updateShownPoints(ai);
+  let nts = 0;
+  pts.forEach((p) => {
+    if (p.showMe) {
+      nts++;
+    }
+  });
   let cl = icircles.length;
-  let ail = ai.length;
-  if (ail > cl) {
-    let nn = ail-cl;
+  
+  if (nts > cl) {
+    let nn = nts-cl;
     for (let j=0;j<nn;j++) {
       let crc = icircleP.instantiate();
       icircles.push(crc);
     }
   }
+  let cp=0;
+  pts.forEach( (p) => {
+    if (p.showMe) {
+      let crc = icircles[cp];
+      crc.moveto(p);
+      crc.show();
+      cp++;
+    }
+  });
+  return;
   for (let k=0;k<ail;k++) {
     let crc = icircles[k];
     crc.moveto(ai[k])
@@ -317,21 +357,24 @@ rs .addSomePathsss = function (n) {
 rs.updateState = function () {
   let {stepsSoFar:ssf,numSteps,cycleTime,lines,ecircles,segs,ht,numPaths,noNewPaths,addPathInterval,schedule} = this;
   debugger;
-  let s0 = schedule[0];
-  let {dir,tm,pnt} = s0;
-  let {x,y} = pnt;
+ // let s0 = schedule[0];
+ // let {dir,tm,pnt} = s0;
   //let lln = vlines.length;
   let ecln = ecircles.length;
   for (let i=0;i<ecln;i++) {
     this.updateStateOfCC(i);
   }
-  if (ssf === tm) {
-    if (dir === 'V') {
-      this.addVpath(x);
-    } else {
-      this.addHpath(y);
+  schedule.forEach( (sel) => {
+    let {dir,tm,pnt} = sel;
+    let {x,y} = pnt;
+    if (ssf === tm) {
+      if (dir === 'V') {
+        this.addVpath(x);
+      } else {
+        this.addHpath(y);
+      }
     }
-  }
+  });
   
   if (0 && (ssf % addPathInterval === 0)&& (ssf < noNewPaths)) {
     this.addSomePaths(numPaths);
@@ -361,6 +404,42 @@ rs.initProtos = function () {
 
 rs.saveAnimation = 1;
 rs.schedule = [];
+
+rs.addPointToSchedule = function (pnt) {
+  let {d,schedule} = this;
+  let td = this.timeDiff(pnt);
+  let sel0,sel1;
+  let {x,y} = pnt;
+  if (td < 0) {
+    //this.addHpath(y);
+    sel0 = {tm:1,dir:'H',pnt};
+    sel1 = {tm:1-td,dir:'V',pnt};
+  } else {
+   // this.addVpath(ix);
+    sel0 = {tm:1,dir:'V',pnt};
+    sel1 = {tm:td+1,dir:'H',pnt};
+  }
+  schedule.push(sel0);
+  schedule.push(sel1);
+}
+
+rs.addPointsToSchedule = function (pnts) {
+  pnts.forEach( (p) => {
+    this.addPointToSchedule(p);
+  });
+}
+
+
+rs.pointsOnCircle = function (n,rad) {
+  let pnts = [];
+  for (let i=0;i<n;i++) {
+    let a = (i/n)*2*Math.PI;
+    let p = Point.mk(Math.cos(a)*rad,Math.sin(a)*rad);
+    pnts.push(p);
+  }
+  return pnts;
+}
+  
 rs.initialize = function () {
   debugger;
   let {d,schedule} = this;
@@ -372,6 +451,11 @@ rs.initialize = function () {
   let ecircles = this.set('ecircles',arrayShape.mk());
   this.segs = [];
   let ipnt = Point.mk(0.5*d,0.25*d);
+  let pnts = this.pointsOnCircle(67,0.8*d);
+  //this.addPointToSchedule(ipnt);
+  this.addPointsToSchedule(pnts);
+  this.pointsToShow = pnts;
+  return;
   let td = this.timeDiff(ipnt);
   let sel;
   if (td < 0) {

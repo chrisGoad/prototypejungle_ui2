@@ -4,7 +4,7 @@ import {rs as generatorP} from '/generators/line_path_0.mjs';
 
 let rs = generatorP.instantiate();
 
-rs.setName('line_path_0_2');
+rs.setName('line_path_0_3');
 
  let ht = 100;
   let d = 0.5*ht;
@@ -15,7 +15,7 @@ rs.setTopParams = function () {
   let cycleTime = Math.floor(ht/vel)
   this.setSides(d);
   let topParams = {ht,d,width:ht,height:ht,framePadding:.0*ht,frameStroke:'white',frameStrokeWidth:1,numPaths:6,theta:-0.2 *Math.PI,vel,
-  cycleTime,numSteps:180,noNewPaths:8*cycleTime,lineLength:20,addPathInterval:30,fromOneSide:0,gap:0,saveAnimation:1	}
+  cycleTime,numSteps:180,noNewPaths:8*cycleTime,lineLength:10,addPathInterval:30,fromOneSide:0,gap:0,saveAnimation:1	}
   Object.assign(this,topParams);
 }
 
@@ -28,13 +28,13 @@ rs.pointsToShow =  rs.pointsOnCircle(67,0.8*d);
 rs.pointsToShow.push(Point.mk(0,0));
 let fc0 = .4;
 let fcc = 0.4;
-/*
+
 rs.pointsToShow =  rs.pointsOnCircle(67,fc0*d,Point.mk(-fcc*d,-fcc*d)).concat(
                    rs.pointsOnCircle(67,fc0*d,Point.mk(fcc*d,fcc*d)),
                    rs.pointsOnCircle(67,fc0*d,Point.mk(-fcc*d,fcc*d)),
                    rs.pointsOnCircle(67,fc0*d,Point.mk(fcc*d,-fcc*d))
                    );
-*/
+
 rs.initProtos = function () {
   debugger;
   let {ht} = this;

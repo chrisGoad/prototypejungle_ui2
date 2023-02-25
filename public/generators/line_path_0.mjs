@@ -368,10 +368,25 @@ rs .addVpath = function (x) {
 }
 
 
+rs.addVpathM = function (x) {
+  let {d} = this;
+  let opnt = Point.mk(x,d);
+  this.addPath({fromSide:3,fromP:opnt,dir:-0.5*Math.PI});
+}
+
+
+
 rs .addHpath = function (y) {
   let {d} = this;
   let opnt = Point.mk(-d,y);
   this.addPath({fromSide:0,fromP:opnt,dir:0});
+}
+
+
+rs.addHpathM = function (y) {
+  let {d} = this;
+  let opnt = Point.mk(d,y);
+  this.addPath({fromSide:2,fromP:opnt,dir:Math.PI});
 }
 
 rs.timeDiff = function (p) {
@@ -379,6 +394,15 @@ rs.timeDiff = function (p) {
   let {x,y} = p;
   let t0 = (x+d)/vel;
   let t1 = (y+d)/vel;
+  return Math.floor(t1-t0);
+}
+
+
+rs.timeDiffM = function (p) {
+  let {d,vel} = this;
+  let {x,y} = p;
+  let t0 = (d-x)/vel;
+  let t1 = (d-y)/vel;
   return Math.floor(t1-t0);
 }
 rs .addSomePaths = function () {
@@ -404,7 +428,7 @@ rs .addSomePathsss = function (n) {
 }
 rs.updateState = function () {
   let {stepsSoFar:ssf,numSteps,cycleTime,lines,ecircles,segs,ht,numPaths,noNewPaths,addPathInterval,schedule} = this;
- // debugger;
+  debugger;
  // let s0 = schedule[0];
  // let {dir,tm,pnt} = s0;
   //let lln = vlines.length;
@@ -418,9 +442,14 @@ rs.updateState = function () {
     if (ssf === tm) {
       if (dir === 'V') {
         this.addVpath(x);
-      } else {
+      } else if (dir === 'VM') {
+        this.addVpathM(x);
+      } else if (dir === 'H') {
         this.addHpath(y);
+      } else {
+        this.addHpathM(y);
       }
+
     }
   });
   
@@ -458,28 +487,43 @@ rs.initProtos = function () {
 rs.saveAnimation = 1;
 rs.schedule = [];
 
-rs.addPointToSchedule = function (pnt) {
+rs.addPointToSchedule = function (pnt,pd,itm) {
   let {d,schedule} = this;
-  let td = this.timeDiff(pnt);
   let sel0,sel1;
   let {x,y} = pnt;
-  if (td < 0) {
-    //this.addHpath(y);
-    sel0 = {tm:1,dir:'H',pnt};
-    sel1 = {tm:1-td,dir:'V',pnt};
+  if (pd) {
+    let td = this.timeDiff(pnt);
+  
+    if (td < 0) {
+      //this.addHpath(y);
+      sel0 = {tm:1+itm,dir:'H',pnt};
+      sel1 = {tm:1+itm-td,dir:'V',pnt};
+    } else {
+     // this.addVpath(ix);
+      sel0 = {tm:1+itm,dir:'V',pnt};
+      sel1 = {tm:td+1+itm,dir:'H',pnt};
+    }
   } else {
-   // this.addVpath(ix);
-    sel0 = {tm:1,dir:'V',pnt};
-    sel1 = {tm:td+1,dir:'H',pnt};
+    let td = this.timeDiffM(pnt);
+    if (td < 0) {
+      sel0 = {tm:1+itm,dir:'HM',pnt};
+      sel1 = {tm:1+itm-td,dir:'VM',pnt};
+    } else {
+     // this.addVpath(ix);
+      sel0 = {tm:1+itm,dir:'VM',pnt};
+      sel1 = {tm:itm+td+1,dir:'HM',pnt};
+    }
   }
   schedule.push(sel0);
   schedule.push(sel1);
 }
 
 rs.addPointsToSchedule = function (pnts) {
-  pnts.forEach( (p) => {
-    this.addPointToSchedule(p);
-  });
+  let ln = pnts.length;
+  for (let i=0;i<ln;i++) {
+    let p = pnts[i] 
+    this.addPointToSchedule(p,Math.random()<0.5,20);//i%2);
+  }
 }
 
 

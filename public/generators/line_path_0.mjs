@@ -102,7 +102,6 @@ rs.addPath = function (params) {
 
 rs.atCycleEnd = function (nm) {
  let {pstate,noNewPaths,stepsSoFar:ssf} = this;
-  debugger;
    let {pspace,cstate} = pstate;
   let cs = cstate[nm];
   let {dir,toP,toSide,line,inBack,seg,start} = cs;
@@ -114,7 +113,6 @@ rs.atCycleEnd = function (nm) {
   } else {//if (ssf>noNewPaths) {
     //line.hide();
      // if (ssf - start)> 10)
-     debugger;
      let lddone = true;
      if (inBack) {
          let lds = cstate[inBack];
@@ -244,11 +242,19 @@ rs.nearToApoint =function (p,pnts) {
 }
 
 rs.updateShownPoints = function (pnts) {
-  let {pointsToShow:pts} = this;
+  let {pointsToShow:pts,stepsSoFar:ssf,part0tm} = this;
   pts.forEach ( (p) => {
-    if (!p.showMe) {
-      if (this.nearToApoint(p,pnts)) {
-        p.showMe =1;
+    if (ssf<part0tm) {
+      if (!p.showMe) {
+        if (this.nearToApoint(p,pnts)) {
+          p.showMe =1;
+        }
+      }
+    } else {
+        if (!p.hideMe) {
+        if (this.nearToApoint(p,pnts)) {
+          p.hideMe =1;
+        }
       }
     }
   });
@@ -263,11 +269,14 @@ rs.placePcircles = function (ai) {
   this.updateShownPoints(ai);
   let nts = 0;
   pts.forEach((p) => {
-    if (p.showMe) {
+    if (p.showMe&&(!p.hideMe)) {
       nts++;
     }
   });
   let cl = pcircles.length;
+  pcircles.forEach( (c) => {
+    c.hide();
+  });
   
   if (nts > cl) {
     let nn = nts-cl;
@@ -278,12 +287,12 @@ rs.placePcircles = function (ai) {
   }
   let cp=0;
   pts.forEach( (p) => {
-    if (p.showMe) {
+    if (p.showMe&&(!p.hideMe)) {
       let crc = pcircles[cp];
       crc.moveto(p);
       crc.show();
       cp++;
-    }
+    } 
   });
   return;
   for (let k=0;k<ail;k++) {
@@ -427,8 +436,7 @@ rs .addSomePathsss = function (n) {
   }
 }
 rs.updateState = function () {
-  let {stepsSoFar:ssf,numSteps,cycleTime,lines,ecircles,segs,ht,numPaths,noNewPaths,addPathInterval,schedule} = this;
-  debugger;
+  let {stepsSoFar:ssf,numSteps,cycleTime,lines,ecircles,segs,ht,numPaths,noNewPaths,addPathInterval,schedule,part0tm} = this;
  // let s0 = schedule[0];
  // let {dir,tm,pnt} = s0;
   //let lln = vlines.length;
@@ -457,6 +465,12 @@ rs.updateState = function () {
     this.addSomePaths(numPaths);
   }
   this.placeAllCircles();
+  let pnts = this.pointsToShow;
+  if (ssf === part0tm) {
+    debugger;
+      this.addPointsToSchedule(pnts,ssf+1);
+  }
+
   this.callIfDefined('afterUpdate');
 
 }
@@ -518,11 +532,12 @@ rs.addPointToSchedule = function (pnt,pd,itm) {
   schedule.push(sel1);
 }
 
-rs.addPointsToSchedule = function (pnts) {
+rs.addPointsToSchedule = function (pnts,itm) {
   let ln = pnts.length;
   for (let i=0;i<ln;i++) {
     let p = pnts[i] 
-    this.addPointToSchedule(p,Math.random()<0.5,20);//i%2);
+    //this.addPointToSchedule(p,Math.random()<0.5,itm);//i%2);
+    this.addPointToSchedule(p,i%2,itm);//i%2);
   }
 }
 
@@ -568,7 +583,7 @@ rs.initialize = function () {
   let pnts = this.pointsToShow;//pointsOnCircle(67,0.8*d);
  // let pnts = this.pointsOnCircle(7,0.8*d);
   //this.addPointToSchedule(ipnt);
-  this.addPointsToSchedule(pnts);
+  this.addPointsToSchedule(pnts,0);
   //this.pointsToShow = pnts;
   return;
   let td = this.timeDiff(ipnt);

@@ -9,13 +9,13 @@ rs.setName('line_path_0_2');
  let ht = 100;
   let d = 0.5*ht;
   let vel = 1;
-
+ let part0tm = 180;
 debugger;
 rs.setTopParams = function () {
   let cycleTime = Math.floor(ht/vel)
   this.setSides(d);
   let topParams = {ht,d,width:ht,height:ht,framePadding:.0*ht,frameStroke:'white',frameStrokeWidth:1,numPaths:6,theta:-0.2 *Math.PI,vel,
-  cycleTime,numSteps:180,noNewPaths:8*cycleTime,lineLength:20,addPathInterval:30,fromOneSide:0,gap:0,saveAnimation:1	}
+  cycleTime,part0tm,numSteps:2*part0tm,noNewPaths:8*cycleTime,lineLength:20,addPathInterval:30,fromOneSide:0,gap:0,saveAnimation:1	}
   Object.assign(this,topParams);
 }
 

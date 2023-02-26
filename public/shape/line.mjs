@@ -22,6 +22,11 @@ item.setEnds = function (e0,e1) {
   utils.setEnds(this,e0,e1);
 }
 
+item.length = function () {
+  let {end0,end1} = this;
+  return end1.distance(end0);
+}
+
 item.update = function () {
   this.setDomAtts(this.__element);
   if (this.text  && this.__parent.updateText) {

@@ -141,7 +141,7 @@ rs.pauseAnimation = function() {
   debugger;
 }
 rs.updateStateOfCC = function (n){
-  let {stepsSoFar:ssf,ends,ht,ecircles,pstate,lineLength:ll,trailerAdded,noNewPaths,vel,gap} = this;
+  let {stepsSoFar:ssf,ends,ht,ecircles,pstate,lineLength:ll,trailerAdded,noNewPaths,vel,gap,part0tm,turnBlack} = this;
   let dbg = 0;//(ssf > 204) && (n>3) && (n<6);
   if (dbg) {
     debugger;
@@ -162,6 +162,9 @@ rs.updateStateOfCC = function (n){
   if ((ssf < noNewPaths)&&(!seg.stayInactive)) {
     seg.active = 1;
   }
+  if ((ssf>part0tm)&& (inBack) && (line.length()>5)&& turnBlack) {
+    line.stroke='black';
+  }
   line.update();
   if (inBack) {// pos is the trailing point and epos the leading
     if (toGo >= ll) {
@@ -173,7 +176,7 @@ rs.updateStateOfCC = function (n){
     let lnl = Math.min(toGo,ll);
     let epos = pos.plus(vec.times(lnl));
     let gepos = epos.plus(snvec);
-  //  line.setEnds(pos,epos);
+  //  line.setEnds(pos,epos);a
     line.setEnds(gpos,gepos);
     seg.end0 = pos;
     seg.end1 = epos;
@@ -541,6 +544,36 @@ rs.addPointsToSchedule = function (pnts,itm) {
   }
 }
 
+rs.randomPoints = function (n,fn) {
+  let {d,ht} = this;
+  let pnts = [];
+  let cnt =0;
+  while (cnt<n) {
+    let rx = Math.floor(ht*Math.random())-d;
+    let ry = Math.floor(ht*Math.random())-d;
+    let p = Point.mk(rx,ry);
+    if (fn(p)) {
+      cnt++;
+      pnts.push(p);
+    }
+  }
+  return pnts;
+}
+
+rs.randomRectPoints = function (n,fr) {
+  let {d,ht} = this;
+  let frd = fr*d;
+  let frht = fr*ht;
+  let pnts = [];
+  let cnt =0;
+  for (let i=0;i<n;i++) {
+    let rx = Math.floor(frht*Math.random())-frd;
+    let ry = Math.floor(frht*Math.random())-frd;
+    let p = Point.mk(rx,ry);
+    pnts.push(p);
+  }
+  return pnts;
+}
 
 rs.pointsOnCircle = function (n,rad,icenter) {
   debugger;
@@ -555,7 +588,6 @@ rs.pointsOnCircle = function (n,rad,icenter) {
 }
 
 rs.pointsOnSeg = function (n,seg) {
-  debugger;
   let {end0,end1} = seg;
   let vec = end1.difference(end0);
   let dvec = vec.times(1/n);
@@ -570,8 +602,10 @@ rs.pointsOnSeg = function (n,seg) {
   
 rs.initialize = function () {
   debugger;
-  let {d,schedule} = this;
- this.setBackgroundColor('black');
+  let {d,schedule,backGroundColor} = this;
+  let bkc = backGroundColor?backGroundColor:'black';
+ 
+ this.setBackgroundColor(bkc);
   this.initProtos();
   this.addFrame();
   let lines = this.set('lines',arrayShape.mk());

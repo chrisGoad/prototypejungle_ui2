@@ -300,8 +300,11 @@ rs .addSomePathsss = function (n) {
   }
 }
 rs.updateState = function () {
-  let {stepsSoFar:ssf,numSteps,cycleTime,lines,ecircles,segs,ht,numPaths,noNewPaths,addPathInterval} = this;
+  let {stepsSoFar:ssf,numSteps,cycleTime,lines,ecircles,segs,ht,numPaths,noNewPaths,addPathInterval,part0tm} = this;
   debugger;
+  if (ssf === part0tm) {
+    this.lineP.stroke = 'black';
+  }
   //let lln = vlines.length;
   let ecln = ecircles.length;
   for (let i=0;i<ecln;i++) {

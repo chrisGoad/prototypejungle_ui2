@@ -152,6 +152,7 @@ c:\ffmpeg\bin\ffmpeg  -framerate 20 -i animations/line_path_0_3_f%03d.jpg -s 800
 c:\ffmpeg\bin\ffmpeg  -framerate 20 -i animations/line_path_0_4_f%03d.jpg -s 800x800  export/line_path_0_4.gif
 c:\ffmpeg\bin\ffmpeg  -framerate 20 -i animations/line_path_0_5_f%03d.jpg -s 800x800  export/line_path_0_5.gif
 c:\ffmpeg\bin\ffmpeg  -framerate 20 -i animations/line_path_0_6_f%03d.jpg -s 800x800  export/line_path_0_6.gif
+c:\ffmpeg\bin\ffmpeg  -framerate 20 -i animations/line_path_0_7_f%03d.jpg -s 800x800  export/line_path_0_7.gif
 c:\ffmpeg\bin\ffmpeg  -framerate 20 -i animations/reflected_path_0_4_f%03d.jpg -s 800x800  export/reflected_path_0_4.mp4
 c:\ffmpeg\bin\ffmpeg  -framerate 20 -i animations/part2_0_58b_f%03d.jpg -s 800x800  export/part2_0_58b.gif
 

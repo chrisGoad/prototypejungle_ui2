@@ -67,6 +67,7 @@ sections:
   [0,'line_path_0_4','instances',1,'Line path 0 4',{likes:0,posted:0,category:'quad'}], 
   [0,'line_path_0_5','instances',1,'Line path 0 5',{likes:0,posted:0,category:'quad'}], 
   [0,'line_path_0_6','instances',1,'Line path 0 6',{likes:0,posted:0,category:'quad'}], 
+  [0,'line_path_0_7','instances',1,'Line path 0 7',{likes:0,posted:0,category:'quad'}], 
   [0,'reflected_path_0_2','instances',1,'Reflected path 0 2',{likes:0,posted:0,category:'quad'}], 
   [0,'reflected_path_0_3','instances',1,'Reflected path 0 3',{likes:0,posted:0,category:'quad'}], 
   [0,'reflected_path_0_4','instances',1,'Reflected path 0 4',{likes:0,posted:0,category:'quad'}], 

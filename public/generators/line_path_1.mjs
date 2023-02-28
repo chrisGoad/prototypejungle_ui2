@@ -53,16 +53,12 @@ rs.onSide= function (p) {
 
 let pspace = {};
 rs.pstate = {pspace,cstate:{time:0}}
-
-
-rs.addPath = function (params) {
-  let {fromSide,fromP,dir,name,startAtStep} = params;
-  let {sides,ht,pstate,vel} = this;
-  let {pspace,cstate} = pstate;
-  let maxH = 20;
+// compute the side, and the point which a long vector in direction dir emanating from p will hit
+rs.hitSide = function (p,dir,fromSide) {
+  let {ht,sides} = this;
   let vec = Point.mk(Math.cos(dir),Math.sin(dir));
   let lvec = vec.times(10*ht);
-  let seg = LineSegment.mk(fromP,fromP.plus(lvec));
+  let seg = LineSegment.mk(p,p.plus(lvec));
   let toP,toSide;
   for (let i=0;i<4;i++) {
     if (i!==fromSide) {
@@ -75,6 +71,15 @@ rs.addPath = function (params) {
       }
     }
   }
+  return {toSide,toP,vec}
+}
+
+rs.addPath = function (params) {
+  let {fromSide,fromP,dir,name,startAtStep} = params;
+  let {sides,ht,pstate,vel} = this;
+  let {pspace,cstate} = pstate;
+  let hs = this.hitSide(fromP,dir,fromSide);
+  let {toSide,toP,vec} =hs;
   if (!toP) {
     return;
   }

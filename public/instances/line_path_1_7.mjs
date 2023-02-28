@@ -38,9 +38,9 @@ rs.initProtos = function () {
   let pcircleP = this.pcircleP = circlePP.instantiate();
   pcircleP.stroke = 'transparent';
   pcircleP.fill = 'transparent';
-  //pcircleP.fill = 'red';
+  pcircleP.fill = 'red';
   pcircleP['stroke-width'] = 0;
-  pcircleP.dimension =0.01*ht;
+  pcircleP.dimension =0.006*ht;
   let ecircleP = this.ecircleP = circlePP.instantiate();
   ecircleP.fill = 'blue';
   ecircleP['stroke-width'] = 0;

@@ -15,8 +15,8 @@ debugger;
 rs.setTopParams = function () {
   let cycleTime = Math.floor(ht/vel)
   this.setSides(d);
-  let topParams = {ht,d,width:ht,height:ht,framePadding:.0*ht,frameStroke:'white',frameStrokeWidth:1,numPaths:6,theta:-0.2 *Math.PI,vel,
-  cycleTime,part0tm,numSteps:2*part0tm,noNewPaths:8*cycleTime,lineLength:10,addPathInterval:30,fromOneSide:0,gap:0,saveAnimation:1	}
+  let topParams = {ht,d,width:ht,height:ht,framePadding:.0*ht,frameStroke:'white',frameStrokeWidth:1,numPaths:6,theta:-0.2 *Math.PI,vel,backGroundColor:'white',
+  cycleTime,part0tm,numSteps:2*part0tm+20,noNewPaths:8*cycleTime,lineLength:10,addPathInterval:30,fromOneSide:0,gap:0,saveAnimation:1,turnBlack:1	}
   Object.assign(this,topParams);
 }
 
@@ -56,6 +56,7 @@ rs.initProtos = function () {
   ecircleP.dimension =0;
   let lineP = this.lineP = linePP.instantiate();
   lineP.stroke = 'white';
+//  lineP.stroke = 'black';
   lineP['stroke-width'] = .1;
 }  
 

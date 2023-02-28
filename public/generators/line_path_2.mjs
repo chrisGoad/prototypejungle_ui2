@@ -75,21 +75,23 @@ rs.hitSide = function (p,dir,fromSide) {
 }
 
 rs.addPath = function (params) {
-  let {fromSide,fromP,dir,name,startAtStep} = params;
+  //let {fromSide,fromP,dir,name,startAtStep} = params;
+  let {fromSide,fromP,toSide,toP,dir,vec,name,startAtStep} = params;
   let {sides,ht,pstate,vel} = this;
   let {pspace,cstate} = pstate;
-  let hs = this.hitSide(fromP,dir,fromSide);
-  let {toSide,toP,vec} =hs;
+  //let hs = this.hitSide(fromP,dir,fromSide);
+  //let {toSide,toP,vec} =hs;
   if (!toP) {
     return;
   }
   let dist = toP.distance(fromP);
   pspace[name] ={kind:'sweep',step:vel,min:0,max:dist/vel,interval:1,once:1,startAtStep};
   cstate[name] = {value:0,fromP,toP,fromSide,toSide,vec,dir};
+  cstate[name] = {value:0,fromP,toP,vec,dir};
 }
 
 rs.addPathPair = function (params) {
-  let {sides,ht,pstate,segEndNames,segs,lines,lineLength:ll,stepsSoFar:ssf,vel,lineP,fromP} = this;
+  let {sides,ht,pstate,segs,lines,lineLength:ll,stepsSoFar:ssf,vel,lineP} = this;
  // debugger;
  /*
  let dist0;
@@ -369,6 +371,22 @@ rs.computePathPositions = function (n) {
 }
 
 rs.addPathsTo = function (p,dir0,dir1) {
+ let [stepsSoFar:ssf} = this;
+ let hit0 = this.hitSide(p,dir0);
+ let {toSide0,toP0,vec0} =hit0;
+ let hit1 = this.hitSide(p,dir1);
+ let {toSide1,toP1,vec1} =hit1;
+ let dist0 = p.distance(toP0);
+ let dist1 = p.distance(toP1);
+ let params0= {fromP:p,toP:toP0,dir:dir0,vec:vec0};
+ let params1 = {fromP:p,toP:toP1,dir:dir1,vec:vec1};
+ if (dist1 > dist0) {
+   params0.startAtStep = (dist1-dist0)/vel + ssf;
+ } else {
+   params1.startAtStep =(dist0-dist1)/vel + ssf;
+ }
+ this.addPathPair(params0);
+ this.addPathPair(params1);
 }
 
 

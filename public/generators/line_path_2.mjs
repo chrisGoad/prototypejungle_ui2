@@ -267,7 +267,7 @@ rs.placePcircles = function (ai) {
   //debugger;
   let {pcircles,pcircleP,segs,pointsToShow:pts} = this;
   //let ai = this.allIntersections(segs);
-  let av = 1;//alsways visible
+  let av = 0;//alsways visible
   this.updateShownPoints(ai);
   let nts = 0;
   pts.forEach((p) => {
@@ -387,14 +387,45 @@ rs.addPathsTo = function (p,dir0,dir1) {
  let params0= {fromP:toP0,toP:p,dir:rdir0,vec:vec0.times(-1)};
  let params1 = {fromP:toP1,toP:p,dir:rdir1,vec:vec1.times(-1)};
  if (dist1 > dist0) {
-   params0.startAtStep = (dist1-dist0)/vel + ssf;
+   params1.startAtStep = (dist1-dist0)/vel + ssf;
  } else {
-   params1.startAtStep =(dist0-dist1)/vel + ssf;
+   params0.startAtStep =(dist0-dist1)/vel + ssf;
  }
  this.addPathPair(params0);
  this.addPathPair(params1);
 }
 
+
+rs.scheduleForPoint= function (p,dir0,dir1) {
+ let {stepsSoFar:ssf,vel,schedule} = this;
+ debugger;
+ let rdir0 = dir0+Math.PI;
+ let rdir1 = dir1+Math.PI;
+ let hit0 = this.hitSide(p,rdir0);
+ let ohit0 = this.hitSide(p,dir0);
+ let {toSide:toSide0,toP:toP0,vec:vec0} =hit0;
+ let {toP:otoP0} =ohit0;
+ let hit1 = this.hitSide(p,rdir1);
+ let ohit1 = this.hitSide(p,dir1);
+ let {toSide:toSide1,toP:toP1,vec:vec1} =hit1;
+ let {toP:otoP1} =ohit1;
+
+ let dist0 = p.distance(toP0);
+ let dist1 = p.distance(toP1);
+ let sched0= {fromP:toP0,toP:otoP0,dir:rdir0,vec:vec0.times(-1)};
+ let sched1 = {fromP:toP1,toP:otoP1,dir:rdir1,vec:vec1.times(-1)};
+ if (dist1 > dist0) {
+   sched0.startStep = Math.floor((dist1-dist0)/vel + ssf);
+   sched1.startStep = ssf+1;
+ } else {
+   sched1.startStep = Math.floor((dist0-dist1)/vel + ssf);
+   sched0.startStep = ssf+1;
+ }
+ schedule.push(sched0);
+ schedule.push(sched1);
+ //this.addPathPair(params0);
+ //this.addPathPair(params1);
+}
 
 rs .addVpath = function (x) {
   let {d} = this;
@@ -473,25 +504,18 @@ rs.updateState = function () {
  // let s0 = schedule[0];
  // let {dir,tm,pnt} = s0;
   //let lln = vlines.length;
+  debugger;
   let ln = segs.length;
   for (let i=0;i<ln;i++) {
     this.updateStateOfSeg(i);
   }
   schedule.forEach( (sel) => {
-    let {dir,tm,pnt} = sel;
-    let {x,y} = pnt;
-    if (ssf === tm) {
-      if (dir === 'V') {
-        this.addVpath(x);
-      } else if (dir === 'VM') {
-        this.addVpathM(x);
-      } else if (dir === 'H') {
-        this.addHpath(y);
-      } else {
-        this.addHpathM(y);
-      }
-
+    let {startStep:ss} = sel;
+    if (ssf === ss) {
+      debugger;
+      this.addPathPair(sel);
     }
+    
   });
   this.placeAllCircles();
   let pnts = this.pointsToShow;
@@ -530,7 +554,7 @@ rs.initProtos = function () {
 rs.saveAnimation = 1;
 rs.schedule = [];
 
-rs.addPointToSchedule = function (pnt,pd) {
+rs.addPointToSchedule = function (pnt,dir) {
  debugger;
  if (pd) {
    this.addPathsTo(pnt,0,0.5*Math.PI);
@@ -576,7 +600,8 @@ rs.addPointsToSchedule = function (pnts) {
   for (let i=0;i<ln;i++) {
     let p = pnts[i] 
     //this.addPointToSchedule(p,Math.random()<0.5,itm);//i%2);
-    this.addPointToSchedule(p,i%2);//i%2);
+    let ada = Math.random()*2*Math.PI;//i%2?0:Math.PI;
+    this.scheduleForPoint(p,0+ada,0.5*Math.PI+ada);
   }
 }
 

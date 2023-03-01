@@ -81,6 +81,7 @@ rs.addPath = function (params) {
   let {pspace,cstate} = pstate;
   //let hs = this.hitSide(fromP,dir,fromSide);
   //let {toSide,toP,vec} =hs;
+  debugger;
   if (!toP) {
     return;
   }
@@ -92,7 +93,7 @@ rs.addPath = function (params) {
 
 rs.addPathPair = function (params) {
   let {sides,ht,pstate,segs,lines,lineLength:ll,stepsSoFar:ssf,vel,lineP} = this;
- // debugger;
+ debugger;
  /*
  let dist0;
   if (dir0 || dir1) {
@@ -168,7 +169,7 @@ rs.pauseAnimation = function() {
 rs.updateStateOfSeg = function (n){
   let {stepsSoFar:ssf,segs,lines,part0tm,turnBlack} = this;
   let seg = segs[n];
-  if (ssf>3) {
+  if (ssf>-3) {
     debugger;
   }
   if (!seg.active) {
@@ -266,20 +267,22 @@ rs.placePcircles = function (ai) {
   //debugger;
   let {pcircles,pcircleP,segs,pointsToShow:pts} = this;
   //let ai = this.allIntersections(segs);
+  let av = 1;//alsways visible
   this.updateShownPoints(ai);
   let nts = 0;
   pts.forEach((p) => {
-    if (p.showMe&&(!p.hideMe)) {
+    if (av || (p.showMe&&(!p.hideMe))) {
       nts++;
     }
   });
   let cl = pcircles.length;
   pcircles.forEach( (c) => {
-    c.hide();
+   c.hide();
   });
   
   if (nts > cl) {
     let nn = nts-cl;
+    //for (let j=0;j<nn;j++) {
     for (let j=0;j<nn;j++) {
       let crc = pcircleP.instantiate();
       pcircles.push(crc);
@@ -287,7 +290,7 @@ rs.placePcircles = function (ai) {
   }
   let cp=0;
   pts.forEach( (p) => {
-    if (p.showMe&&(!p.hideMe)) {
+    if (av || (p.showMe&&(!p.hideMe))) {
       let crc = pcircles[cp];
       crc.moveto(p);
       crc.show();
@@ -371,15 +374,18 @@ rs.computePathPositions = function (n) {
 }
 
 rs.addPathsTo = function (p,dir0,dir1) {
- let [stepsSoFar:ssf} = this;
- let hit0 = this.hitSide(p,dir0);
- let {toSide0,toP0,vec0} =hit0;
- let hit1 = this.hitSide(p,dir1);
- let {toSide1,toP1,vec1} =hit1;
+ let {stepsSoFar:ssf,vel} = this;
+ debugger;
+ let rdir0 = dir0+Math.PI;
+ let rdir1 = dir1+Math.PI;
+ let hit0 = this.hitSide(p,rdir0);
+ let {toSide:toSide0,toP:toP0,vec:vec0} =hit0;
+ let hit1 = this.hitSide(p,rdir1);
+ let {toSide:toSide1,toP:toP1,vec:vec1} =hit1;
  let dist0 = p.distance(toP0);
  let dist1 = p.distance(toP1);
- let params0= {fromP:p,toP:toP0,dir:dir0,vec:vec0};
- let params1 = {fromP:p,toP:toP1,dir:dir1,vec:vec1};
+ let params0= {fromP:toP0,toP:p,dir:rdir0,vec:vec0.times(-1)};
+ let params1 = {fromP:toP1,toP:p,dir:rdir1,vec:vec1.times(-1)};
  if (dist1 > dist0) {
    params0.startAtStep = (dist1-dist0)/vel + ssf;
  } else {
@@ -396,6 +402,13 @@ rs .addVpath = function (x) {
   this.addPathPair({fromSide:1,fromP:opnt,dir:0.5*Math.PI});
 }
 
+
+
+rs .addVpath = function (x) {
+  let {d} = this;
+  let opnt = Point.mk(x,-d);
+  this.addPaths({fromSide:1,fromP:opnt,dir:0.5*Math.PI});
+}
 
 rs.addVpathM = function (x) {
   let {d} = this;
@@ -517,7 +530,17 @@ rs.initProtos = function () {
 rs.saveAnimation = 1;
 rs.schedule = [];
 
-rs.addPointToSchedule = function (pnt,pd,itm) {
+rs.addPointToSchedule = function (pnt,pd) {
+ debugger;
+ if (pd) {
+   this.addPathsTo(pnt,0,0.5*Math.PI);
+ }  else {
+   this.addPathsTo(pnt,Math.PI,1.5*Math.PI);
+ }
+}
+     
+
+rs.addPointToSchedulee = function (pnt,pd,itm) {
   let {d,schedule} = this;
   let sel0,sel1;
   let {x,y} = pnt;
@@ -548,12 +571,12 @@ rs.addPointToSchedule = function (pnt,pd,itm) {
   schedule.push(sel1);
 }
 
-rs.addPointsToSchedule = function (pnts,itm) {
+rs.addPointsToSchedule = function (pnts) {
   let ln = pnts.length;
   for (let i=0;i<ln;i++) {
     let p = pnts[i] 
     //this.addPointToSchedule(p,Math.random()<0.5,itm);//i%2);
-    this.addPointToSchedule(p,i%2,itm);//i%2);
+    this.addPointToSchedule(p,i%2);//i%2);
   }
 }
 

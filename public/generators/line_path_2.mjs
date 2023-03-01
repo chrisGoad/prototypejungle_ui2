@@ -74,6 +74,34 @@ rs.hitSide = function (p,dir,fromSide) {
   return {toSide,toP,vec}
 }
 
+rs.hitCircumference = function (p,dir,circle) {
+  let {center,radius} = circle;
+  let vec = Point.mk(Math.cos(dir),Math.sin(dir));
+  let ints = circle.instersectLine(p,vec);
+  if (!ints) return;
+  let [i0,i1] = ints;
+  let v0 = i0.difference(p);
+  let v1 = i1.difference(p);
+  let dp0 = v0.dotp(vec);
+  let dp1 = v0.dotp(vec);
+  // for now, deal only with the case where p is inside circle
+  int = dp1>dp0?i1:i0;
+  return i0;
+  let toP,toSide;
+  for (let i=0;i<4;i++) {
+    if (i!==fromSide) {
+      let side = sides[i];
+      let isect = seg.intersect(side);
+      if (isect) {
+        toP = isect;
+        toSide = i;
+        break;
+      }
+    }
+  }
+  return {toSide,toP,vec}
+}
+
 rs.addPath = function (params) {
   //let {fromSide,fromP,dir,name,startAtStep} = params;
   let {fromSide,fromP,toSide,toP,dir,vec,name,startAtStep} = params;
@@ -125,6 +153,7 @@ rs.addPathPair = function (params) {
   lines.push(line);
     
 }  
+
 
 rs.atCycleEndd = function (nm) {
  let {pstate,noNewPaths,stepsSoFar:ssf} = this;

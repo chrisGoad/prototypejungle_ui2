@@ -77,29 +77,19 @@ rs.hitSide = function (p,dir,fromSide) {
 rs.hitCircumference = function (p,dir,circle) {
   let {center,radius} = circle;
   let vec = Point.mk(Math.cos(dir),Math.sin(dir));
-  let ints = circle.instersectLine(p,vec);
+ // let lvec = vec.times(radius*10);
+ // let svec = vec.times(radius*.01);
+  debugger;
+  let ints = circle.intersectLine(p,vec);
   if (!ints) return;
   let [i0,i1] = ints;
   let v0 = i0.difference(p);
   let v1 = i1.difference(p);
   let dp0 = v0.dotp(vec);
-  let dp1 = v0.dotp(vec);
+  let dp1 = v1.dotp(vec);
   // for now, deal only with the case where p is inside circle
-  int = dp1>dp0?i1:i0;
-  return i0;
-  let toP,toSide;
-  for (let i=0;i<4;i++) {
-    if (i!==fromSide) {
-      let side = sides[i];
-      let isect = seg.intersect(side);
-      if (isect) {
-        toP = isect;
-        toSide = i;
-        break;
-      }
-    }
-  }
-  return {toSide,toP,vec}
+  let toP = dp1>dp0?i1:i0;
+  return {toP,vec}
 }
 
 rs.addPath = function (params) {
@@ -115,23 +105,14 @@ rs.addPath = function (params) {
   }
   let dist = toP.distance(fromP);
   pspace[name] ={kind:'sweep',step:vel,min:0,max:dist/vel,interval:1,once:1,startAtStep};
-  cstate[name] = {value:0,fromP,toP,fromSide,toSide,vec,dir};
+ // cstate[name] = {value:0,fromP,toP,fromSide,toSide,vec,dir};
   cstate[name] = {value:0,fromP,toP,vec,dir};
+  //cstate[name] = {value:0,fromP,toP,vec,dir};
 }
 
 rs.addPathPair = function (params) {
   let {sides,ht,pstate,segs,lines,lineLength:ll,stepsSoFar:ssf,vel,lineP} = this;
  debugger;
- /*
- let dist0;
-  if (dir0 || dir1) {
-    let hit0 = this.hitSide(p,dir0);
-    let {toSide,toP,vec} =hit0;
-    dist0 = fromP.distance(toP);
-     let hit1 = this.hitSide(p,dir1);
-    let {toSide,toP,vec} =hit1;
-    dist1 = fromP.distance(toP);  
-  }  */
   let delay = ll/vel;
   let sas0 = ssf;
   let sas1=Math.floor(ssf+delay);
@@ -265,7 +246,7 @@ rs.nearToApoint =function (p,pnts) {
   let ln = pnts.length;
   for (let i=0;i<ln;i++) {
     let pnt = pnts[i];
-    if (pnt.distance(p)<1) {
+    if (pnt.distance(p)<6) {
       return true;
     }
   }
@@ -402,41 +383,22 @@ rs.computePathPositions = function (n) {
   }
 }
 
-rs.addPathsTo = function (p,dir0,dir1) {
- let {stepsSoFar:ssf,vel} = this;
- debugger;
- let rdir0 = dir0+Math.PI;
- let rdir1 = dir1+Math.PI;
- let hit0 = this.hitSide(p,rdir0);
- let {toSide:toSide0,toP:toP0,vec:vec0} =hit0;
- let hit1 = this.hitSide(p,rdir1);
- let {toSide:toSide1,toP:toP1,vec:vec1} =hit1;
- let dist0 = p.distance(toP0);
- let dist1 = p.distance(toP1);
- let params0= {fromP:toP0,toP:p,dir:rdir0,vec:vec0.times(-1)};
- let params1 = {fromP:toP1,toP:p,dir:rdir1,vec:vec1.times(-1)};
- if (dist1 > dist0) {
-   params1.startAtStep = (dist1-dist0)/vel + ssf;
- } else {
-   params0.startAtStep =(dist0-dist1)/vel + ssf;
- }
- this.addPathPair(params0);
- this.addPathPair(params1);
-}
 
 
-rs.scheduleForPoint= function (p,dir0,dir1) {
+rs.scheduleForPoint= function (p,dir0,dir1,circle) {
  let {stepsSoFar:ssf,vel,schedule} = this;
  debugger;
  let rdir0 = dir0+Math.PI;
  let rdir1 = dir1+Math.PI;
- let hit0 = this.hitSide(p,rdir0);
- let ohit0 = this.hitSide(p,dir0);
- let {toSide:toSide0,toP:toP0,vec:vec0} =hit0;
+ let hit0 = circle?this.hitCircumference(p,rdir0,circle):this.hitSide(p,rdir0);
+ let ohit0 = circle?this.hitCircumference(p,dir0,circle):this.hitSide(p,dir0);
+ //let {toSide:toSide0,toP:toP0,vec:vec0,circle} =hit0;
+ let {toP:toP0,vec:vec0} =hit0;
  let {toP:otoP0} =ohit0;
- let hit1 = this.hitSide(p,rdir1);
- let ohit1 = this.hitSide(p,dir1);
- let {toSide:toSide1,toP:toP1,vec:vec1} =hit1;
+ let hit1 = circle?this.hitCircumference(p,rdir1,circle):this.hitSide(p,rdir1);
+ let ohit1 = circle?this.hitCircumference(p,dir1,circle):this.hitSide(p,dir1);
+ //let {toSide:toSide1,toP:toP1,vec:vec1} =hit1;
+ let {toP:toP1,vec:vec1} =hit1;
  let {toP:otoP1} =ohit1;
 
  let dist0 = p.distance(toP0);
@@ -452,88 +414,13 @@ rs.scheduleForPoint= function (p,dir0,dir1) {
  }
  schedule.push(sched0);
  schedule.push(sched1);
- //this.addPathPair(params0);
- //this.addPathPair(params1);
 }
 
-rs .addVpath = function (x) {
-  let {d} = this;
-  let opnt = Point.mk(x,-d);
-  this.addPathPair({fromSide:1,fromP:opnt,dir:0.5*Math.PI});
-}
-
-
-
-rs .addVpath = function (x) {
-  let {d} = this;
-  let opnt = Point.mk(x,-d);
-  this.addPaths({fromSide:1,fromP:opnt,dir:0.5*Math.PI});
-}
-
-rs.addVpathM = function (x) {
-  let {d} = this;
-  let opnt = Point.mk(x,d);
-  this.addPathPair({fromSide:3,fromP:opnt,dir:-0.5*Math.PI});
-}
-
-
-
-rs .addHpath = function (y) {
-  let {d} = this;
-  let opnt = Point.mk(-d,y);
-  this.addPathPair({fromSide:0,fromP:opnt,dir:0});
-}
-
-
-rs.addHpathM = function (y) {
-  let {d} = this;
-  let opnt = Point.mk(d,y);
-  this.addPathPair({fromSide:2,fromP:opnt,dir:Math.PI});
-}
-
-rs.timeDiff = function (p) {
-  let {d,vel} = this;
-  let {x,y} = p;
-  let t0 = (x+d)/vel;
-  let t1 = (y+d)/vel;
-  return Math.floor(t1-t0);
-}
-
-
-rs.timeDiffM = function (p) {
-  let {d,vel} = this;
-  let {x,y} = p;
-  let t0 = (d-x)/vel;
-  let t1 = (d-y)/vel;
-  return Math.floor(t1-t0);
-}
-rs .addSomePaths = function () {
-  debugger;
-  this.addVPath(0);
-  this.addHPath(0);
- 
-}
-
-rs .addSomePathsss = function (n) {
-  let {theta,fromOneSide} = this;
- for (let i=2;i<n-1;i++) {
-    let tt =theta+0.0*i*Math.PI;
-    let fr = i/(n-1);
-    let r = 0.1*(Math.random()-0.5);
-    let fromP0 = this.sideI2pnt(0,i/n+r);
-    let fromP1 = this.sideI2pnt(2,i/n+r);
-    this.addPath({fromSide:0,fromP:fromP0,dir:tt});
-    if (!fromOneSide) {
-      this.addPath({fromSide:2,fromP:fromP1,dir:Math.PI+tt});
-    }
-  }
-}
 rs.updateState = function () {
   let {stepsSoFar:ssf,numSteps,cycleTime,lines,ecircles,segs,ht,numPaths,noNewPaths,addPathInterval,schedule,part0tm} = this;
  // let s0 = schedule[0];
  // let {dir,tm,pnt} = s0;
   //let lln = vlines.length;
-  debugger;
   let ln = segs.length;
   for (let i=0;i<ln;i++) {
     this.updateStateOfSeg(i);
@@ -583,54 +470,14 @@ rs.initProtos = function () {
 rs.saveAnimation = 1;
 rs.schedule = [];
 
-rs.addPointToSchedule = function (pnt,dir) {
- debugger;
- if (pd) {
-   this.addPathsTo(pnt,0,0.5*Math.PI);
- }  else {
-   this.addPathsTo(pnt,Math.PI,1.5*Math.PI);
- }
-}
-     
 
-rs.addPointToSchedulee = function (pnt,pd,itm) {
-  let {d,schedule} = this;
-  let sel0,sel1;
-  let {x,y} = pnt;
-  if (pd) {
-    let td = this.timeDiff(pnt);
-  
-    if (td < 0) {
-      //this.addHpath(y);
-      sel0 = {tm:1+itm,dir:'H',pnt};
-      sel1 = {tm:1+itm-td,dir:'V',pnt};
-    } else {
-     // this.addVpath(ix);
-      sel0 = {tm:1+itm,dir:'V',pnt};
-      sel1 = {tm:td+1+itm,dir:'H',pnt};
-    }
-  } else {
-    let td = this.timeDiffM(pnt);
-    if (td < 0) {
-      sel0 = {tm:1+itm,dir:'HM',pnt};
-      sel1 = {tm:1+itm-td,dir:'VM',pnt};
-    } else {
-     // this.addVpath(ix);
-      sel0 = {tm:1+itm,dir:'VM',pnt};
-      sel1 = {tm:itm+td+1,dir:'HM',pnt};
-    }
-  }
-  schedule.push(sel0);
-  schedule.push(sel1);
-}
-
-rs.addPointsToSchedule = function (pnts) {
+rs.addPointsToSchedule = function (pnts,circle) {
   let ln = pnts.length;
   for (let i=0;i<ln;i++) {
     let p = pnts[i] 
     //this.addPointToSchedule(p,Math.random()<0.5,itm);//i%2);
     let ada = Math.random()*2*Math.PI;//i%2?0:Math.PI;
-    this.scheduleForPoint(p,0+ada,0.5*Math.PI+ada);
+    this.scheduleForPoint(p,0+ada,0.5*Math.PI+ada,circle);
   }
 }
 
@@ -707,23 +554,9 @@ rs.initialize = function () {
   let pnts = this.pointsToShow;//pointsOnCircle(67,0.8*d);
  // let pnts = this.pointsOnCircle(7,0.8*d);
   //this.addPointToSchedule(ipnt);
-  this.addPointsToSchedule(pnts,0);
-  //this.pointsToShow = pnts;
-  return;
-  let td = this.timeDiff(ipnt);
-  let sel;
-  if (td < 0) {
-    this.addHpath(ipnt.y);
-    sel = {tm:-td,dir:'V',pnt:ipnt};
-  } else {
-    this.addVpath(ipnt.x);
-    sel = {tm:td,dir:'H',pnt:ipnt};
-  }
-  schedule.push(sel);
-    
-  //this.addHpath(ipnt.y);
-  //this.addVpath(ipnt.x);
- 
+  let crc = Circle.mk(Point.mk(0,0),0.7*d);
+  this.addPointsToSchedule(pnts,crc);
+  //this.pointsToShow = pnts; 
   this.callIfDefined('afterInitialize');
 
  

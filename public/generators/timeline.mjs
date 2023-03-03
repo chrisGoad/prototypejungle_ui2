@@ -14,10 +14,11 @@ rs.setTopParams = function () {
   let vel = 1;
   let cycleTime = Math.floor(ht/vel)
   let people = [{name:'Hume',birth:1711,death:1776,whichLine:0},{name:'Frege',birth:1848,death:1925,whichLine:1},
-                {name:'Kant',birth:1724,death:1804,whichLine:1},
-  ]
+                {name:'Kant',birth:1724,death:1804,whichLine:1},{name:'Fichte',birth:1762,death:1814,whichLine:1},
+  ];
+
   //this.setSides(d);
-  let topParams = {width:wd,height:ht,people,framePadding:.0*ht,frameStroke:'black',frameStrokeWidth:1,minYear:1500,maxYear:2000,backGroundColor:'white',
+  let topParams = {width:wd,height:ht,people,framePadding:.0*ht,frameStroke:'black',frameStrokeWidth:1,backGroundColor:'white',
   lineSep:40,lineLength:20}
   Object.assign(this,topParams);
 }
@@ -34,7 +35,7 @@ rs.yearToX = function (y) {
   
 
 rs.addPerson = function (params) {
-  let {name,birth,death,whichLine:wl} = params;
+  let {name,birth,death,whichLine:wl,skip} = params;
   let {texts,textP,lines,lineP,lineSep} = this;
   let mlife = 0.5*(birth+death);
   let txt = textP.instantiate();
@@ -66,9 +67,30 @@ rs.addPerson = function (params) {
 
 rs.addPeople = function () {
   let {people} = this;
+  let n=0;
   people.forEach( (p) => {
-    this.addPerson(p);
+    let {skip} = p;
+    if (!skip) {
+      this.addPerson(p);
+      n++;
+    }
   });
+  console.log('num people',n);
+
+}
+
+rs.computeTimeRange = function () {
+  debugger;
+  let {people} = this;
+  let max = -10000;
+  let min = 10000;
+  people.forEach( (p) => {
+    let {birth,death} = p;
+    max = Math.max(death,max);
+    min = Math.min(birth,min);
+  });
+  this.minYear = min;
+  this.maxYear = max;
 }
     
 
@@ -98,12 +120,10 @@ rs.initialize = function () {
  this.setBackgroundColor(bkc);
   this.initProtos();
   this.addFrame();
-  let tt = this.textP.instantiate();
+  this.computeTimeRange();
   let lines = this.set('lines',arrayShape.mk());
   let texts = this.set('texts',arrayShape.mk());
-  //texts.push(tt);
   this.addPeople();
-  tt.update();
   this.callIfDefined('afterInitialize');
 
  

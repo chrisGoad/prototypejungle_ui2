@@ -49,6 +49,8 @@ sections:
  [0,'quad_11_4','instances',1,'Quad 11 4',{likes:0,posted:0,category:'quad'}],*/
  // [0,'quad_0_19','instances',1,'Quad 0 19',{likes:0,posted:0,category:'quad'}], 
  // [0,'part_0_19','instances',1,'Part 0 19',{likes:0,posted:0,category:'part'}], 
+  [0,'timeline','generators',1,'timeline',{likes:0,posted:0,category:'quad'}], 
+  [0,'philosophers_0','instances',1,'philosophers_0',{likes:0,posted:0,category:'quad'}], 
   [0,'part2_0_58b','instances',1,'Part2 0 58b',{likes:0,posted:0,category:'quad'}], 
 
   [0,'drop_move','generators',1,'Drop Move',{likes:0,posted:0,category:'quad'}], 

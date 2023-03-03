@@ -24,7 +24,7 @@ let fc = 0.8;
 //rs.pointsToShow =  rs.pointsOnSeg(10,LineSegment.mk(Point.mk(-fc*d,0),Point.mk(fc*d,fc*d))).concat(
                 //   rs.pointsOnSeg(10,LineSegment.mk(Point.mk(-fc*d,0),Point.mk(fc*d,-fc*d))));
 //rs.pointsToShow =  rs.pointsOnCircle(67,0.8*d).concat( rs.pointsOnCircle(67,0.4*d));
-rs.pointsToShow =  rs.pointsOnCircle(60,0.5*d);
+rs.pointsToShow =  rs.pointsOnCircle(60,0.6*d);
 //rs.pointsToShow =  rs.pointsOnCircle(2,0.5*d);
 //rs.pointsToShow.push(Point.mk(0,0));
 let fc0 = .4;
@@ -60,6 +60,7 @@ rs.initProtos = function () {
   ecircleP.dimension =0;
   let lineP = this.lineP = linePP.instantiate();
   lineP.stroke = 'white';
+  lineP.stroke = 'transparent';
   lineP['stroke-width'] = .1;
 }  
 

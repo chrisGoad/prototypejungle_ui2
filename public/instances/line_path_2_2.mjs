@@ -10,12 +10,13 @@ rs.setName('line_path_2_2');
   let d = 0.5*ht;
   let vel = 1;
  let part0tm = 180;
+ part0tm = 1500;
 debugger;
 rs.setTopParams = function () {
   let cycleTime = Math.floor(ht/vel)
   this.setSides(d);
   let topParams = {ht,d,width:ht,height:ht,framePadding:.0*ht,frameStroke:'white',frameStrokeWidth:1,numPaths:6,theta:-0.2 *Math.PI,vel,
-  cycleTime,part0tm,numSteps:2*part0tm,noNewPaths:8*cycleTime,lineLength:20,addPathInterval:30,fromOneSide:0,gap:0,saveAnimation:1,backGroundColor:'white'	}
+  cycleTime,part0tm,numSteps:2*part0tm,noNewPaths:8*cycleTime,lineLength:20,addPathInterval:30,fromOneSide:0,gap:0,saveAnimation:1	}
   Object.assign(this,topParams);
 }
 
@@ -23,7 +24,7 @@ let fc = 0.8;
 //rs.pointsToShow =  rs.pointsOnSeg(10,LineSegment.mk(Point.mk(-fc*d,0),Point.mk(fc*d,fc*d))).concat(
                 //   rs.pointsOnSeg(10,LineSegment.mk(Point.mk(-fc*d,0),Point.mk(fc*d,-fc*d))));
 //rs.pointsToShow =  rs.pointsOnCircle(67,0.8*d).concat( rs.pointsOnCircle(67,0.4*d));
-rs.pointsToShow =  rs.pointsOnCircle(16,0.5*d);
+rs.pointsToShow =  rs.pointsOnCircle(60,0.5*d);
 //rs.pointsToShow =  rs.pointsOnCircle(2,0.5*d);
 //rs.pointsToShow.push(Point.mk(0,0));
 let fc0 = .4;
@@ -43,6 +44,10 @@ rs.initProtos = function () {
   icircleP.fill = 'blue';
   icircleP['stroke-width'] = 0;
   icircleP.dimension =0.006*ht;
+  let bcircleP = this.bcircleP = circlePP.instantiate();
+  bcircleP.stroke = 'white';
+  bcircleP.fill = 'transparent';
+  bcircleP['stroke-width'] = .5;
   let pcircleP = this.pcircleP = circlePP.instantiate();
   pcircleP.stroke = 'transparent';
   //pcircleP.fill = 'transparent';
@@ -54,7 +59,7 @@ rs.initProtos = function () {
   ecircleP['stroke-width'] = 0;
   ecircleP.dimension =0;
   let lineP = this.lineP = linePP.instantiate();
-  lineP.stroke = 'black';
+  lineP.stroke = 'white';
   lineP['stroke-width'] = .1;
 }  
 

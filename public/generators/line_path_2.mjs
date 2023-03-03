@@ -75,11 +75,13 @@ rs.hitSide = function (p,dir,fromSide) {
 }
 
 rs.hitCircumference = function (p,dir,circle) {
+ if (!circle) {
+    debugger;
+  }
   let {center,radius} = circle;
   let vec = Point.mk(Math.cos(dir),Math.sin(dir));
  // let lvec = vec.times(radius*10);
  // let svec = vec.times(radius*.01);
-  debugger;
   let ints = circle.intersectLine(p,vec);
   if (!ints) return;
   let [i0,i1] = ints;
@@ -94,9 +96,11 @@ rs.hitCircumference = function (p,dir,circle) {
 
 rs.addPath = function (params) {
   //let {fromSide,fromP,dir,name,startAtStep} = params;
-  let {fromSide,fromP,toSide,toP,dir,vec,name,startAtStep} = params;
+ // let {fromSide,fromP,toSide,toP,dir,vec,name,startAtStep,circle} = params;
+  let {fromP,toP,dir,vec,name,index,startAtStep,circle,numBounces} = params;
   let {sides,ht,pstate,vel} = this;
   let {pspace,cstate} = pstate;
+  let vdir = Point.mk(Math.cos(dir),Math.sin(dir));
   //let hs = this.hitSide(fromP,dir,fromSide);
   //let {toSide,toP,vec} =hs;
   debugger;
@@ -104,7 +108,7 @@ rs.addPath = function (params) {
     return;
   }
   let dist = toP.distance(fromP);
-  pspace[name] ={kind:'sweep',step:vel,min:0,max:dist/vel,interval:1,once:1,startAtStep};
+  pspace[name] ={kind:'sweep',step:vel,min:0,max:dist/vel,interval:1,once:1,startAtStep,circle,numBounces,index};
  // cstate[name] = {value:0,fromP,toP,fromSide,toSide,vec,dir};
   cstate[name] = {value:0,fromP,toP,vec,dir};
   //cstate[name] = {value:0,fromP,toP,vec,dir};
@@ -112,16 +116,20 @@ rs.addPath = function (params) {
 
 rs.addPathPair = function (params) {
   let {sides,ht,pstate,segs,lines,lineLength:ll,stepsSoFar:ssf,vel,lineP} = this;
- debugger;
+ //debugger;
   let delay = ll/vel;
   let sas0 = ssf;
   let sas1=Math.floor(ssf+delay);
   let params0 = Object.assign({},params);
   let params1 = Object.assign({},params);
   let segCount = segs.length;
-  let nm0 = 'p'+2*segCount;
-  let nm1 = 'p'+(2*segCount+1);
+  let idx0 = 2*segCount;
+  let idx1 = 2*segCount+1;
+  let nm0 = 'p'+ idx0;
+  let nm1 = 'p'+ idx1;
   params0.name = nm0;
+  params0.index = idx0;
+  params1.index = idx1;
   params1.name = nm1;
   params0.startAtStep = sas0;
   params1.startAtStep = sas1;
@@ -134,53 +142,116 @@ rs.addPathPair = function (params) {
   lines.push(line);
     
 }  
+rs.toTwoPI = function (ia) {
+  let ad = ia;
+  while (ad < 0) {
+    ad = ad+2*Math.PI;
+  }
+  while (ad>2*Math.PI) {
+    ad = ad - 2*Math.PI;
+  }
+  return ad;
+}
+
+rs.angleDiff = function (ia0,ia1) {
+   let a0 = this.toTwoPI (ia0);
+   let a1 = this.toTwoPI (ia1);
+   let ad = Math.abs(a1-a0);
+  if (ad <= Math.PI) {
+    return ad;
+  } else {
+    return 2*Math.PI - ad;
+  }
+}
+
+
+    
+rs.atCycleEnd = function (nm) {
+ let {pstate,noNewPaths,stepsSoFar:ssf} = this;
+   let {pspace,cstate} = pstate;
+  let cs = cstate[nm];
+  let {dir,toP,line,seg,start} = cs;
+  let ps = pspace[nm];
+  let {circle,numBounces,index} = ps;
+  if (index%2) {
+    return;
+  }
+  if (!numBounces) {
+    numBounces = 0;
+  }
+  if (numBounces === 1) {
+    debugger;
+  }
+  let {center} = circle;
+  
+  let dirr = this.toTwoPI(dir+Math.PI)
+  let vdirr = Point.mk(Math.cos(dirr),Math.sin(dirr));
+  let vdir = Point.mk(Math.cos(dir),Math.sin(dir));
+  let vc  = toP.difference(center);
+  let {x,y} = vc;
+  let dirc = Math.atan2(y,x);
+  let vdirc = Point.mk(Math.cos(dirc),Math.sin(dirc));
+  let dird = this.angleDiff(dirc,dirr);
+  //let ndir = dirc + dird;
+  let ndir = dirc - dird;
+  let vndir = Point.mk(Math.cos(ndir),Math.sin(ndir));
+ 
+  let hc = this.hitCircumference(toP,ndir,circle);
+  let {toP:ntoP,vec:nvec} = hc;
+  let params = {fromP:toP,toP:ntoP,dir:ndir,vec:nvec,circle,numBounces:numBounces+1};
+  this.addPathPair(params);
+}
 
 
 rs.atCycleEndd = function (nm) {
  let {pstate,noNewPaths,stepsSoFar:ssf} = this;
    let {pspace,cstate} = pstate;
   let cs = cstate[nm];
-  let {dir,toP,toSide,line,inBack,seg,start} = cs;
-     console.log('cycleEnd ssf',ssf,'nm',nm,'inBack',inBack,'color',line.stroke);
-
-  let na = toSide%2?-dir:Math.PI -dir;
-  if (0 && (ssf < noNewPaths)) {
-    this.addPath({name:nm,fromSide:toSide,fromP:toP,dir:na,line,inBack});
-  } else {//if (ssf>noNewPaths) {
-    //line.hide();
-     // if (ssf - start)> 10)
-     let lddone = true;
-     if (inBack) {
-         let lds = cstate[inBack];
-         lddone = lds.done;
-      }
-      if (lddone) {
-        line.stroke = 'transparent';
-      } else {
-        this.addPath({name:nm,fromSide:toSide,fromP:toP,dir:na,line,inBack});
-      }
-   seg.active  = 0;
-   seg.stayInactive = 1;
-    line.update();
+  let {dir,toP,line,seg,start} = cs;
+  let ps = pspace[nm];
+  let {circle,numBounces,index} = ps;
+  if (index%2) {
+    return;
   }
+  if (!numBounces) {
+    numBounces = 0;
+  }
+  if (numBounces === 1) {
+    debugger;
+  }
+  let {center} = circle;
+  let dirr = dir%(2*Math.PI);
+  let vdirr = Point.mk(Math.cos(dirr),Math.sin(dirr));
+  let vc  = toP.difference(center);
+  let {x,y} = vc;
+  let dirc = Math.atan2(y,x);
+  let vdirc = Point.mk(Math.cos(dirc),Math.sin(dirc));
+
+  let dird = dirc - dirr;
+  let ndir = dirc + dird;
+  let vndir = Point.mk(Math.cos(ndir),Math.sin(ndir));
+ 
+  let hc = this.hitCircumference(toP,ndir,circle);
+  let {toP:ntoP,vec:nvec} = hc;
+  let params = {fromP:toP,toP:ntoP,dir:ndir,vec:nvec,circle,numBounces:numBounces+1};
+  this.addPathPair(params);
 }
+
 
 rs.stepAnimation = function(db) {
   let {stepsSoFar:ssf,pstate} = this;
   let {pspace,cstate} = pstate;
-  debugger;
 }
 
 rs.pauseAnimation = function() {
   let {stepsSoFar:ssf,pstate} = this;
   let {pspace,cstate} = pstate;
-  debugger;
 }
 rs.updateStateOfSeg = function (n){
   let {stepsSoFar:ssf,segs,lines,part0tm,turnBlack} = this;
   let seg = segs[n];
   if (ssf>-3) {
-    debugger;
+    //debugger;
   }
   if (!seg.active) {
     return;
@@ -390,6 +461,10 @@ rs.scheduleForPoint= function (p,dir0,dir1,circle) {
  debugger;
  let rdir0 = dir0+Math.PI;
  let rdir1 = dir1+Math.PI;
+ let vdir0 = Point.mk(Math.cos(dir0),Math.sin(dir0));
+ let vdir1 = Point.mk(Math.cos(dir1),Math.sin(dir0));
+ let vrdir0 = Point.mk(Math.cos(rdir0),Math.sin(rdir0));
+ let vrdir1 = Point.mk(Math.cos(rdir1),Math.sin(rdir1));
  let hit0 = circle?this.hitCircumference(p,rdir0,circle):this.hitSide(p,rdir0);
  let ohit0 = circle?this.hitCircumference(p,dir0,circle):this.hitSide(p,dir0);
  //let {toSide:toSide0,toP:toP0,vec:vec0,circle} =hit0;
@@ -403,8 +478,10 @@ rs.scheduleForPoint= function (p,dir0,dir1,circle) {
 
  let dist0 = p.distance(toP0);
  let dist1 = p.distance(toP1);
- let sched0= {fromP:toP0,toP:otoP0,dir:rdir0,vec:vec0.times(-1)};
- let sched1 = {fromP:toP1,toP:otoP1,dir:rdir1,vec:vec1.times(-1)};
+ //let sched0= {fromP:toP0,toP:otoP0,dir:rdir0,vec:vec0.times(-1),circle};
+ let sched0= {fromP:toP0,toP:otoP0,dir:dir0,vec:vec0.times(-1),circle};
+ //let sched1 = {fromP:toP1,toP:otoP1,dir:rdir1,vec:vec1.times(-1),circle};
+ let sched1 = {fromP:toP1,toP:otoP1,dir:dir1,vec:vec1.times(-1),circle};
  if (dist1 > dist0) {
    sched0.startStep = Math.floor((dist1-dist0)/vel + ssf);
    sched1.startStep = ssf+1;
@@ -428,7 +505,7 @@ rs.updateState = function () {
   schedule.forEach( (sel) => {
     let {startStep:ss} = sel;
     if (ssf === ss) {
-      debugger;
+      //debugger;
       this.addPathPair(sel);
     }
     
@@ -446,13 +523,16 @@ rs.updateState = function () {
   
   
 rs.initProtos = function () {
-  debugger;
   let {ht} = this;
   let icircleP = this.icircleP = circlePP.instantiate();
   icircleP.stroke = 'transparent';
   icircleP.fill = 'red';
   icircleP['stroke-width'] = 0;
   icircleP.dimension =0.01*ht;
+   let bcircleP = this.bcircleP = circlePP.instantiate();
+  bcircleP.stroke = 'white';
+  bcircleP.fill = 'transparent';
+  bcircleP['stroke-width'] = 3;
   let pcircleP = this.pcircleP = circlePP.instantiate();
   pcircleP.stroke = 'transparent';
   pcircleP.fill = 'red';
@@ -476,8 +556,8 @@ rs.addPointsToSchedule = function (pnts,circle) {
   for (let i=0;i<ln;i++) {
     let p = pnts[i] 
     //this.addPointToSchedule(p,Math.random()<0.5,itm);//i%2);
-    let ada = Math.random()*2*Math.PI;//i%2?0:Math.PI;
-    this.scheduleForPoint(p,0+ada,0.5*Math.PI+ada,circle);
+    let ada =Math.PI;// Math.random()*2*Math.PI;//i%2?0:Math.PI;
+    this.scheduleForPoint(p,0+ada,0.2*Math.PI+ada,circle);
   }
 }
 
@@ -513,7 +593,6 @@ rs.randomRectPoints = function (n,fr) {
 }
 
 rs.pointsOnCircle = function (n,rad,icenter) {
-  debugger;
   let center=icenter?icenter:Point.mk(0,0);
   let pnts = [];
   for (let i=0;i<n;i++) {
@@ -555,6 +634,10 @@ rs.initialize = function () {
  // let pnts = this.pointsOnCircle(7,0.8*d);
   //this.addPointToSchedule(ipnt);
   let crc = Circle.mk(Point.mk(0,0),0.7*d);
+  let bc = this.bcircleP.instantiate();
+  bc.dimension = 2*crc.radius;
+  bc.show();
+  this.set('bc',bc);
   this.addPointsToSchedule(pnts,crc);
   //this.pointsToShow = pnts; 
   this.callIfDefined('afterInitialize');

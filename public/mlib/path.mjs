@@ -216,6 +216,9 @@ item.sweepNextState = function (pspace,cstate,component) {
   if (sas) {
     console.log('sas',sas);
   }
+  if (sas === 198) {
+    debugger;
+  }
   let csc = cstate[component];
   let {cycleCount} = csc;
   let {cstep,down,value,sv,ev} = csc;

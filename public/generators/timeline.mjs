@@ -33,7 +33,16 @@ rs.yearToX = function (y) {
   return x;
 }
   
-
+rs.addTitle = function () {
+  let {title,titlePos,textP,texts} = this;
+  let txt = textP.instantiate();
+  txt.text = title;
+  txt["font-size"] = 14;
+  texts.push(txt);
+  txt.moveto(titlePos);
+}
+  
+  
 rs.addPerson = function (params) {
   let {name,birth,death,whichLine:wl,skip} = params;
   let {texts,textP,lines,lineP,lineSep} = this;
@@ -123,6 +132,7 @@ rs.initialize = function () {
   this.computeTimeRange();
   let lines = this.set('lines',arrayShape.mk());
   let texts = this.set('texts',arrayShape.mk());
+  this.addTitle();
   this.addPeople();
   this.callIfDefined('afterInitialize');
 

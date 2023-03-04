@@ -21,7 +21,7 @@ rs.setTopParams = function () {
   ]
   //this.setSides(d);
   let topParams = {width:wd,height:ht,people,framePadding:.0*ht,frameStroke:'black',frameStrokeWidth:1,minYear:1500,maxYear:2000,backGroundColor:'white',
-  lineSep:40,lineLength:20}
+  lineSep:40,lineLength:20,titlePos:Point.mk(0,-0.8*0.5*ht),title:'Some European philosophers of the 17th through 19th centuries'}
   Object.assign(this,topParams);
 }
 rs.setTopParams();

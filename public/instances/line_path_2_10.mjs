@@ -1,15 +1,16 @@
 import {rs as circlePP} from '/shape/circle.mjs';
 import {rs as linePP} from '/shape/line.mjs';
-import {rs as generatorP} from '/generators/line_path_1.mjs';
+import {rs as generatorP} from '/generators/line_path_2.mjs';
 
 let rs = generatorP.instantiate();
 
-rs.setName('line_path_1_2');
+rs.setName('line_path_2_2');
 
  let ht = 100;
   let d = 0.5*ht;
   let vel = 1;
  let part0tm = 180;
+ part0tm = 1500;
 debugger;
 rs.setTopParams = function () {
   let cycleTime = Math.floor(ht/vel)
@@ -20,13 +21,20 @@ rs.setTopParams = function () {
 }
 
 let fc = 0.8;
-rs.pointsToShow =  rs.pointsOnSeg(10,LineSegment.mk(Point.mk(-fc*d,0),Point.mk(fc*d,fc*d))).concat(
-                   rs.pointsOnSeg(10,LineSegment.mk(Point.mk(-fc*d,0),Point.mk(fc*d,-fc*d))));
-rs.pointsToShow =  rs.pointsOnCircle(67,0.8*d).concat( rs.pointsOnCircle(67,0.4*d));
-debugger;
-rs.pointsToShow =  rs.pointsOnCircle(67,0.8*d);
-//rs.pointsToShow =  rs.pointsOnCircle(2,0.8*d);
-rs.pointsToShow.push(Point.mk(0,0));
+
+let pointsToShow =  rs.pointsOnCircle(60,0.6*d);
+let mainCircle= Circle.mk(Point.mk(0,0),0.7*d);
+
+let hits = [];
+pointsToShow.forEach((p) => {
+   let ada = Math.PI;// Math.random()*2*Math.PI;
+   let h = {p,dir0:ada,dir1:0.2*Math.PI+ada,circle:mainCircle}
+   hits.push(h);
+  });
+
+rs.hits = hits;
+
+
 let fc0 = .4;
 let fcc = 0.4;
 /*
@@ -37,13 +45,16 @@ rs.pointsToShow =  rs.pointsOnCircle(67,fc0*d,Point.mk(-fcc*d,-fcc*d)).concat(
                    );
 */
 rs.initProtos = function () {
-  debugger;
   let {ht} = this;
   let icircleP = this.icircleP = circlePP.instantiate();
   icircleP.stroke = 'transparent';
   icircleP.fill = 'blue';
   icircleP['stroke-width'] = 0;
   icircleP.dimension =0.006*ht;
+  let bcircleP = this.bcircleP = circlePP.instantiate();
+  bcircleP.stroke = 'white';
+  bcircleP.fill = 'transparent';
+  bcircleP['stroke-width'] = .5;
   let pcircleP = this.pcircleP = circlePP.instantiate();
   pcircleP.stroke = 'transparent';
   //pcircleP.fill = 'transparent';
@@ -56,6 +67,7 @@ rs.initProtos = function () {
   ecircleP.dimension =0;
   let lineP = this.lineP = linePP.instantiate();
   lineP.stroke = 'white';
+  lineP.stroke = 'transparent';
   lineP['stroke-width'] = .1;
 }  
 

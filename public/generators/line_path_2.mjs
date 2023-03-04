@@ -499,7 +499,7 @@ rs.scheduleToHitPoint= function (p,dir0,dir1,circle) {
 }
 
 rs.updateState = function () {
-  let {stepsSoFar:ssf,numSteps,cycleTime,lines,ecircles,segs,ht,numPaths,noNewPaths,addPathInterval,schedule,part0tm} = this;
+  let {stepsSoFar:ssf,numSteps,cycleTime,lines,ecircles,segs,ht,numPaths,noNewPaths,addPathInterval,schedule,part0tm,hits} = this;
  // let s0 = schedule[0];
  // let {dir,tm,pnt} = s0;
   //let lln = vlines.length;
@@ -516,10 +516,10 @@ rs.updateState = function () {
     
   });
   this.placeAllCircles();
-  let pnts = this.pointsToShow;
+  let hits = this.hits;
   if (ssf === part0tm) {
     debugger;
-      this.addPointsToSchedule(pnts,ssf+1);
+      this.scheduleHits(hits);
   }
 
   this.callIfDefined('afterUpdate');
@@ -619,7 +619,16 @@ rs.pointsOnSeg = function (n,seg) {
   };
   return pnts;
 }
-  
+
+rs.scheduleHits = function (hits,collectPoints) {
+  hits.forEach((h) => {
+      let {p,dir0,dir1,circle} = h;
+      if (collectPoints) {
+        this.pointsToShow.push(p);
+      }
+      this.scheduleToHitPoint(p,dir0,dir1,circle);
+    });
+}    
   
 rs.initialize = function () {
   debugger;
@@ -651,12 +660,14 @@ rs.initialize = function () {
     });
   }
   if (hits) {
-    hits.forEach((h) => {
+    this.scheduleHits(hits,'collectThePoints');
+  }
+  /*  hits.forEach((h) => {
       let {p,dir0,dir1,circle} = h;
       this.pointsToShow.push(p);
       this.scheduleToHitPoint(p,dir0,dir1,circle);
-    });
-  }
+    }); 
+  }*/
   if (circles) {
     circles.forEach((c) => {
       let crc = this.bcircleP.instantiate();

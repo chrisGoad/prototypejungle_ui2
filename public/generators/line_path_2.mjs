@@ -173,6 +173,9 @@ rs.atCycleEnd = function (nm) {
   let {dir,toP,line,seg,start} = cs;
   let ps = pspace[nm];
   let {circle,numBounces,index} = ps;
+  if (!circle) {
+    return;
+  }
   if (index%2) {
     return;
   }
@@ -182,7 +185,7 @@ rs.atCycleEnd = function (nm) {
   if (numBounces === 1) {
     debugger;
   }
-  let {center} = circle;
+  let {center} = circle?circle.center:Point.mk(0,0);
   
   let dirr = this.toTwoPI(dir+Math.PI)
   let vdirr = Point.mk(Math.cos(dirr),Math.sin(dirr));
@@ -463,7 +466,6 @@ rs.addPathFrom = function (p,dir,circle) {
 
 rs.scheduleToHitPoint= function (p,dir0,dir1,circle) {
  let {stepsSoFar:ssf,vel,schedule} = this;
- debugger;
  let rdir0 = dir0+Math.PI;
  let rdir1 = dir1+Math.PI;
  let vdir0 = Point.mk(Math.cos(dir0),Math.sin(dir0));
@@ -516,7 +518,6 @@ rs.updateState = function () {
     
   });
   this.placeAllCircles();
-  let hits = this.hits;
   if (ssf === part0tm) {
     debugger;
       this.scheduleHits(hits);
@@ -649,10 +650,10 @@ rs.initialize = function () {
   //this.addPointToSchedule(ipnt);
   this.pointsToShow = [];
   let crc = Circle.mk(Point.mk(0,0),0.7*d);
-  let bc = this.bcircleP.instantiate();
+  /*let bc = this.bcircleP.instantiate();
   bc.dimension = 2*crc.radius;
   bc.show();
-  this.set('bc',bc);
+  this.set('bc',bc);*/
   if (froms) {
     froms.forEach((fr) => {
       let {p,dir,circle} = fr;

@@ -4,7 +4,7 @@ import {rs as generatorP} from '/generators/timeline.mjs';
 
 let rs = generatorP.instantiate();
 
-rs.setName('philosophers_1');
+rs.setName('mathematicians_0');
 
 
 rs.setTopParams = function () {
@@ -13,7 +13,7 @@ rs.setTopParams = function () {
   let people = [{name:'Gauss',birth:1777,death:1885,whichLine:-2,skip:0},{name:'Noether',birth:1882,death:1935,whichLine:1,skip:0},
                 {name:'Pascal',birth:1623,death:1662,whichLine:-1,skip:0},{name:'Euler',birth:1707,death:1783,whichLine:2,skip:0},
                 {name:'Hilbert',birth:1862,death:1943,whichLine:-1,skip:0},{name:'Poincaré',birth:1854,death:1912,whichLine:2,skip:0},
-                {name:'Gödel',birth:1906,death:1978,whichLine:-5,skip:1},{name:'Descartes',birth:1596,death:1650,whichLine:0},
+                {name:'Gödel',birth:1906,death:1978,whichLine:-4,skip:0},{name:'Descartes',birth:1596,death:1650,whichLine:0},
                 {name:'Grothendieck',birth:1928,death:2014,whichLine:-2,skip:0},{name:'Cantor',birth:1845,death:1918,whichLine:0},
                 {name:'Turing',birth:1912,death:1978,whichLine:-3,skip:0},{name:'Galois',birth:1811,death:1832,whichLine:0},
                 {name:'Bernoulli',birth:1655,death:1705,whichLine:-3,skip:0},{name:'Fermat',birth:1607,death:1665,whichLine:1},

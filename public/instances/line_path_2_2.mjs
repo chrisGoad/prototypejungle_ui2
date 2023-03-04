@@ -1,6 +1,6 @@
 import {rs as circlePP} from '/shape/circle.mjs';
 import {rs as linePP} from '/shape/line.mjs';
-import {rs as generatorP} from '/generators/line_path_1.mjs';
+import {rs as generatorP} from '/generators/line_path_2.mjs';
 
 let rs = generatorP.instantiate();
 
@@ -20,22 +20,20 @@ rs.setTopParams = function () {
 }
 
 let fc = 0.8;
-rs.pointsToShow =  rs.pointsOnSeg(10,LineSegment.mk(Point.mk(-fc*d,0),Point.mk(fc*d,fc*d))).concat(
-                   rs.pointsOnSeg(10,LineSegment.mk(Point.mk(-fc*d,0),Point.mk(fc*d,-fc*d))));
-rs.pointsToShow =  rs.pointsOnCircle(67,0.8*d).concat( rs.pointsOnCircle(67,0.4*d));
-debugger;
-rs.pointsToShow =  rs.pointsOnCircle(67,0.8*d);
-//rs.pointsToShow =  rs.pointsOnCircle(2,0.8*d);
-rs.pointsToShow.push(Point.mk(0,0));
-let fc0 = .4;
-let fcc = 0.4;
-/*
-rs.pointsToShow =  rs.pointsOnCircle(67,fc0*d,Point.mk(-fcc*d,-fcc*d)).concat(
-                   rs.pointsOnCircle(67,fc0*d,Point.mk(fcc*d,fcc*d)),
-                   rs.pointsOnCircle(67,fc0*d,Point.mk(-fcc*d,fcc*d)),
-                   rs.pointsOnCircle(67,fc0*d,Point.mk(fcc*d,-fcc*d))
-                   );
-*/
+
+let pointsToShow =  rs.pointsOnCircle(60,0.6*d);
+let mainCircle= Circle.mk(Point.mk(0,0),0.7*d);
+
+let hits = [];
+pointsToShow.forEach((p) => {
+  let {d} = rs;
+   let {x,y} = p;
+   let h = {p,dir0:0,dir1:0.5*Math.PI}
+   hits.push(h);
+  });
+
+rs.hits = hits;
+
 rs.initProtos = function () {
   debugger;
   let {ht} = this;
@@ -54,6 +52,10 @@ rs.initProtos = function () {
   ecircleP.fill = 'blue';
   ecircleP['stroke-width'] = 0;
   ecircleP.dimension =0;
+   let bcircleP = this.bcircleP = circlePP.instantiate();
+  bcircleP.stroke = 'white';
+  bcircleP.fill = 'transparent';
+  bcircleP['stroke-width'] = 3;
   let lineP = this.lineP = linePP.instantiate();
   lineP.stroke = 'white';
   lineP['stroke-width'] = .1;

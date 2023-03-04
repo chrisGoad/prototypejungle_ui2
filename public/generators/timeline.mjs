@@ -44,7 +44,7 @@ rs.addTitle = function () {
   
   
 rs.addPerson = function (params) {
-  let {name,birth,death,whichLine:wl,skip} = params;
+  let {name,birth,death,whichLine:wl,skip,stillAlive} = params;
   let {texts,textP,lines,lineP,lineSep} = this;
   let mlife = 0.5*(birth+death);
   let txt = textP.instantiate();
@@ -61,13 +61,16 @@ rs.addPerson = function (params) {
   let bp = e0.plus(Point.mk(12,dateY));
   let dp = e1.plus(Point.mk(-12,dateY));
   let tb = textP.instantiate();
-  tb.text = ''+birth;
+  tb.text = birth<0?(-birth)+' BC':''+birth;
   texts.push(tb);
   tb.moveto(bp);
-  let td = textP.instantiate();
-  td.text = ''+death;
-  texts.push(td);
-  td.moveto(dp);
+  if (!stillAlive) {
+    let shortLife = (death-birth)<23;
+    let td = textP.instantiate();
+    td.text = shortLife?'-'+(death%100):(death<0?(-death)+' BC':''+death);
+    texts.push(td);
+    td.moveto(dp);
+  }
   let line = lineP.instantiate();
   line.setEnds(e0,e1);
   lines.push(line);

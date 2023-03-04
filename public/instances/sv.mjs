@@ -21,20 +21,12 @@ rs.setTopParams = function () {
 }
 
 let fc = 0.8;
-
-let pointsToShow =  rs.pointsOnCircle(60,0.6*d);
-let mainCircle= Circle.mk(Point.mk(0,0),0.7*d);
-
-let hits = [];
-pointsToShow.forEach((p) => {
-   let ada = Math.PI;// Math.random()*2*Math.PI;
-   let h = {p,dir0:ada,dir1:0.2*Math.PI+ada,circle:mainCircle}
-   hits.push(h);
-  });
-
-rs.hits = hits;
-
-
+//rs.pointsToShow =  rs.pointsOnSeg(10,LineSegment.mk(Point.mk(-fc*d,0),Point.mk(fc*d,fc*d))).concat(
+                //   rs.pointsOnSeg(10,LineSegment.mk(Point.mk(-fc*d,0),Point.mk(fc*d,-fc*d))));
+//rs.pointsToShow =  rs.pointsOnCircle(67,0.8*d).concat( rs.pointsOnCircle(67,0.4*d));
+rs.pointsToShow =  rs.pointsOnCircle(60,0.6*d);
+//rs.pointsToShow =  rs.pointsOnCircle(2,0.5*d);
+//rs.pointsToShow.push(Point.mk(0,0));
 let fc0 = .4;
 let fcc = 0.4;
 /*
@@ -45,6 +37,7 @@ rs.pointsToShow =  rs.pointsOnCircle(67,fc0*d,Point.mk(-fcc*d,-fcc*d)).concat(
                    );
 */
 rs.initProtos = function () {
+  debugger;
   let {ht} = this;
   let icircleP = this.icircleP = circlePP.instantiate();
   icircleP.stroke = 'transparent';

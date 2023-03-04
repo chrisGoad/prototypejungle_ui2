@@ -4,7 +4,7 @@ import {rs as generatorP} from '/generators/line_path_2.mjs';
 
 let rs = generatorP.instantiate();
 
-rs.setName('line_path_2_2');
+rs.setName('line_path_2_9');
 
  let ht = 100;
   let d = 0.5*ht;
@@ -22,17 +22,25 @@ rs.setTopParams = function () {
 
 let fc = 0.8;
 
-let pointsToShow =  rs.pointsOnCircle(60,0.6*d);
+let fromPoints =  rs.pointsOnCircle(60,0.7*d);
+debugger;
 let mainCircle= Circle.mk(Point.mk(0,0),0.7*d);
 
-let hits = [];
-pointsToShow.forEach((p) => {
+let froms = [];
+let cnt = 0;
+fromPoints.forEach((p) => {
    let ada = Math.PI;// Math.random()*2*Math.PI;
-   let h = {p,dir0:ada,dir1:0.2*Math.PI+ada,circle:mainCircle}
-   hits.push(h);
+   let nvec =p.normalize().normal();
+   let {x,y} = nvec;
+  // let dir = Math.atan2(y,x)+((cnt%2)?0.3:0.2)*Math.PI;
+   let dir = Math.atan2(y,x)+(0.2*(1+0.4*Math.random()))*Math.PI;
+   //let h = {p,dir,circle:mainCircle}
+   let h = {p,dir,circle:mainCircle}
+   froms.push(h);
+   cnt++;
   });
 
-rs.hits = hits;
+rs.froms = froms;
 
 
 let fc0 = .4;
@@ -67,7 +75,7 @@ rs.initProtos = function () {
   ecircleP.dimension =0;
   let lineP = this.lineP = linePP.instantiate();
   lineP.stroke = 'white';
-  lineP.stroke = 'transparent';
+ lineP.stroke = 'transparent';
   lineP['stroke-width'] = .1;
 }  
 

@@ -250,8 +250,8 @@ rs.pauseAnimation = function() {
 rs.updateStateOfSeg = function (n){
   let {stepsSoFar:ssf,segs,lines,part0tm,turnBlack} = this;
   let seg = segs[n];
-  if (ssf>-3) {
-    //debugger;
+  if (ssf>3) {
+    debugger;
   }
   if (!seg.active) {
     return;
@@ -454,9 +454,14 @@ rs.computePathPositions = function (n) {
   }
 }
 
+rs.addPathFrom = function (p,dir,circle) {
+  let hit = circle?this.hitCircumference(p,dir,circle):this.hitSide(p,dir);
+  let {toP,vec} =hit;
+  let params = {fromP:p,toP,dir,vec,circle};
+  this.addPathPair(params);
+}
 
-
-rs.scheduleForPoint= function (p,dir0,dir1,circle) {
+rs.scheduleToHitPoint= function (p,dir0,dir1,circle) {
  let {stepsSoFar:ssf,vel,schedule} = this;
  debugger;
  let rdir0 = dir0+Math.PI;
@@ -551,14 +556,14 @@ rs.saveAnimation = 1;
 rs.schedule = [];
 
 
-rs.addPointsToSchedule = function (pnts,circle) {
-  let ln = pnts.length;
-  for (let i=0;i<ln;i++) {
-    let p = pnts[i] 
-    //this.addPointToSchedule(p,Math.random()<0.5,itm);//i%2);
-    let ada =Math.PI;// Math.random()*2*Math.PI;//i%2?0:Math.PI;
-    this.scheduleForPoint(p,0+ada,0.2*Math.PI+ada,circle);
-  }
+rs.addHitToSchedulee = function (pnt,circle) {
+  let ada =Math.PI;// Math.random()*2*Math.PI;//i%2?0:Math.PI;
+  this.scheduleToHitPoint(p,0+ada,0.2*Math.PI+ada,circle);
+}
+
+rs.addHitToSchedule = function (pnt,dir0,dir1,circle) {
+  let ada =Math.PI;// Math.random()*2*Math.PI;//i%2?0:Math.PI;
+  this.scheduleToHitPoint(p,0+ada,0.2*Math.PI+ada,circle);
 }
 
 rs.randomPoints = function (n,fn) {
@@ -618,7 +623,7 @@ rs.pointsOnSeg = function (n,seg) {
   
 rs.initialize = function () {
   debugger;
-  let {d,schedule,backGroundColor} = this;
+  let {d,schedule,backGroundColor,froms,pointsToShow,circles,hits} = this;
   let bkc = backGroundColor?backGroundColor:'black';
  
  this.setBackgroundColor(bkc);
@@ -628,17 +633,40 @@ rs.initialize = function () {
   let pcircles = this.set('pcircles',arrayShape.mk());
   let icircles = this.set('icircles',arrayShape.mk());
   let ecircles = this.set('ecircles',arrayShape.mk());
+  let bcircles = this.set('bcircles',arrayShape.mk());
   this.segs = [];
-  let ipnt = Point.mk(0.5*d,0.25*d);
-  let pnts = this.pointsToShow;//pointsOnCircle(67,0.8*d);
+  //let ipnt = Point.mk(0.5*d,0.25*d);
  // let pnts = this.pointsOnCircle(7,0.8*d);
   //this.addPointToSchedule(ipnt);
+  this.pointsToShow = [];
   let crc = Circle.mk(Point.mk(0,0),0.7*d);
   let bc = this.bcircleP.instantiate();
   bc.dimension = 2*crc.radius;
   bc.show();
   this.set('bc',bc);
-  this.addPointsToSchedule(pnts,crc);
+  if (froms) {
+    froms.forEach((fr) => {
+      let {p,dir,circle} = fr;
+      this.addPathFrom(p,dir,circle);
+    });
+  }
+  if (hits) {
+    hits.forEach((h) => {
+      let {p,dir0,dir1,circle} = h;
+      this.pointsToShow.push(p);
+      this.scheduleToHitPoint(p,dir0,dir1,circle);
+    });
+  }
+  if (circles) {
+    circles.forEach((c) => {
+      let crc = this.bcircleP.instantiate();
+      bc.dimension = 2*c.radius;
+      bc.center = c.center;
+      bcircles.push(bc);
+    });
+  }
+  
+ // this.addPointsToSchedule(pnts,crc);
   //this.pointsToShow = pnts; 
   this.callIfDefined('afterInitialize');
 

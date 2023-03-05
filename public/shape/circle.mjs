@@ -29,6 +29,12 @@ rs.setDomAtts = function () {
   this.setDomAttribute('r',0.5*this.dimension);
   this.setDomAttribute('fill',this.fill);
   this.setDomAttribute('visibility',this.visibility);
+  if (this.center) {
+    let {x,y} = this.center;
+    this.setDomAttribute('cx',x);
+    this.setDomAttribute('cy',y);
+  }
+
 }
 
 rs.update =  function () {

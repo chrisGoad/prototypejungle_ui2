@@ -4,7 +4,7 @@ import {rs as generatorP} from '/generators/line_path_2.mjs';
 
 let rs = generatorP.instantiate();
 
-rs.setName('line_path_2_2');
+rs.setName('line_path_2_10');
 
  let ht = 100;
   let d = 0.5*ht;
@@ -67,7 +67,7 @@ rs.initProtos = function () {
   ecircleP.dimension =0;
   let lineP = this.lineP = linePP.instantiate();
   lineP.stroke = 'white';
-  lineP.stroke = 'transparent';
+  //lineP.stroke = 'transparent';
   lineP['stroke-width'] = .1;
 }  
 

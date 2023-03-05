@@ -78,6 +78,7 @@ rs.hitCircumference = function (p,dir,circle) {
  if (!circle) {
     debugger;
   }
+  debugger;
   let {center,radius} = circle;
   let vec = Point.mk(Math.cos(dir),Math.sin(dir));
  // let lvec = vec.times(radius*10);
@@ -103,7 +104,7 @@ rs.addPath = function (params) {
   let vdir = Point.mk(Math.cos(dir),Math.sin(dir));
   //let hs = this.hitSide(fromP,dir,fromSide);
   //let {toSide,toP,vec} =hs;
-  debugger;
+  //debugger;
   if (!toP) {
     return;
   }
@@ -169,6 +170,7 @@ rs.angleDiff = function (ia0,ia1) {
 rs.atCycleEnd = function (nm) {
  let {pstate,noNewPaths,stepsSoFar:ssf} = this;
    let {pspace,cstate} = pstate;
+   debugger;
   let cs = cstate[nm];
   let {dir,toP,line,seg,start} = cs;
   let ps = pspace[nm];
@@ -183,9 +185,9 @@ rs.atCycleEnd = function (nm) {
     numBounces = 0;
   }
   if (numBounces === 1) {
-    debugger;
+    //debugger;
   }
-  let {center} = circle?circle.center:Point.mk(0,0);
+  let center = circle?circle.center:Point.mk(0,0);
   
   let dirr = this.toTwoPI(dir+Math.PI)
   let vdirr = Point.mk(Math.cos(dirr),Math.sin(dirr));
@@ -195,8 +197,10 @@ rs.atCycleEnd = function (nm) {
   let dirc = Math.atan2(y,x);
   let vdirc = Point.mk(Math.cos(dirc),Math.sin(dirc));
   let dird = this.angleDiff(dirc,dirr);
-  //let ndir = dirc + dird;
-  let ndir = dirc - dird;
+  let ndir = dirc + dird;
+  //let ndir = dirc - dird;
+    console.log('dirdiff',(ndir - dir)/(Math.PI));
+
   let vndir = Point.mk(Math.cos(ndir),Math.sin(ndir));
  
   let hc = this.hitCircumference(toP,ndir,circle);
@@ -220,7 +224,7 @@ rs.atCycleEndd = function (nm) {
     numBounces = 0;
   }
   if (numBounces === 1) {
-    debugger;
+    //debugger;
   }
   let {center} = circle;
   let dirr = dir%(2*Math.PI);
@@ -254,7 +258,7 @@ rs.updateStateOfSeg = function (n){
   let {stepsSoFar:ssf,segs,lines,part0tm,turnBlack} = this;
   let seg = segs[n];
   if (ssf>3) {
-    debugger;
+   // debugger;
   }
   if (!seg.active) {
     return;
@@ -389,7 +393,7 @@ rs.placePcircles = function (ai) {
     crc.update();
   }
   if (cl > ail) {
-    debugger;
+    //debugger;
     for (let  k=ail;k<cl;k++) {
       let crc = icircles[k];
       crc.hide();
@@ -403,7 +407,7 @@ rs.placeIcircles = function (ai) {
  // let ai = this.allIntersections(segs);
   let cl = icircles.length;
   let ail = ai.length;
-  console.log('ail',ail);
+  //console.log('ail',ail);
   if (ail > cl) {
     let nn = ail-cl;
     for (let j=0;j<nn;j++) {
@@ -436,7 +440,7 @@ rs.placeAllCircles = function () {
 }
 
 
-rs.computePathPositions = function (n) {
+rs.computePathPositionss = function (n) {
  let {randomFactor:rfp,randomAngleFactor:rfa,theta} = this;
  debugger;
  let pp0 = [];
@@ -598,12 +602,13 @@ rs.randomRectPoints = function (n,fr) {
   return pnts;
 }
 
-rs.pointsOnCircle = function (n,rad,icenter) {
-  let center=icenter?icenter:Point.mk(0,0);
+rs.pointsOnCircle = function (crc,n) {
+  let {radius,center} = crc;
+  //let center=icenter?icenter:Point.mk(0,0);
   let pnts = [];
   for (let i=0;i<n;i++) {
     let a = (i/n)*2*Math.PI;
-    let p = center.plus(Point.mk(Math.cos(a)*rad,Math.sin(a)*rad));
+    let p = center.plus(Point.mk(Math.cos(a)*radius,Math.sin(a)*radius));
     pnts.push(p);
   }
   return pnts;
@@ -630,7 +635,23 @@ rs.scheduleHits = function (hits,collectPoints) {
       this.scheduleToHitPoint(p,dir0,dir1,circle);
     });
 }    
-  
+
+rs.showCircles  = function () {
+  let {circles,bcircleP,bcircles} = this;
+  if (!circles) {
+    return;
+  }
+  circles.forEach((c) => {
+    debugger;
+    let bc = this.bcircleP.instantiate();
+    bc.dimension = 2*c.radius;
+    bc.center = c.center;
+    
+    bcircles.push(bc);
+    bc.update();
+  });  
+}
+
 rs.initialize = function () {
   debugger;
   let {d,schedule,backGroundColor,froms,pointsToShow,circles,hits} = this;
@@ -669,14 +690,7 @@ rs.initialize = function () {
       this.scheduleToHitPoint(p,dir0,dir1,circle);
     }); 
   }*/
-  if (circles) {
-    circles.forEach((c) => {
-      let crc = this.bcircleP.instantiate();
-      bc.dimension = 2*c.radius;
-      bc.center = c.center;
-      bcircles.push(bc);
-    });
-  }
+  this.showCircles();
   
  // this.addPointsToSchedule(pnts,crc);
   //this.pointsToShow = pnts; 

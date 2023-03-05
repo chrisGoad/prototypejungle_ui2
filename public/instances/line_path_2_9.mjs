@@ -22,26 +22,35 @@ rs.setTopParams = function () {
 
 let fc = 0.8;
 
-let fromPoints =  rs.pointsOnCircle(60,0.7*d);
+//let fromPoints =  rs.pointsOnCircle(20,0.7*d);
 debugger;
-let mainCircle= Circle.mk(Point.mk(0,0),0.7*d);
+let mainCircle= Circle.mk(Point.mk(.2*d,.2*d),0.7*d);
+let centeredCircle= Circle.mk(Point.mk(0,0),0.7*d);
 
-let froms = [];
+rs.froms = [];
 let cnt = 0;
-fromPoints.forEach((p) => {
-   let ada = Math.PI;// Math.random()*2*Math.PI;
+rs.fromsForCircle = function (crc,n,sz,angle) {
+  let {d,froms} = this;
+  let {center} = crc;
+ // debugger;
+  let fromPoints =  rs.pointsOnCircle(crc,n);
+  fromPoints.forEach((ip) => {
+   let p = ip.difference(center);
    let nvec =p.normalize().normal();
    let {x,y} = nvec;
   // let dir = Math.atan2(y,x)+((cnt%2)?0.3:0.2)*Math.PI;
-   let dir = Math.atan2(y,x)+(0.2*(1+0.4*Math.random()))*Math.PI;
+   let dir = Math.atan2(y,x)+(angle*(1+0.0*Math.random()))*Math.PI;
+   //let dir = Math.atan2(y,x)+(0.4*(1+0.0*Math.random()))*Math.PI;
    //let h = {p,dir,circle:mainCircle}
-   let h = {p,dir,circle:mainCircle}
+   let h = {p:ip,dir,circle:mainCircle}
    froms.push(h);
-   cnt++;
+  // cnt++;
   });
+}
 
-rs.froms = froms;
+rs.fromsForCircle (mainCircle,6,0.7,0.4);
 
+rs.circles = [mainCircle,centeredCircle];
 
 let fc0 = .4;
 let fcc = 0.4;
@@ -62,7 +71,7 @@ rs.initProtos = function () {
   let bcircleP = this.bcircleP = circlePP.instantiate();
   bcircleP.stroke = 'white';
   bcircleP.fill = 'transparent';
-  bcircleP['stroke-width'] = .5;
+  bcircleP['stroke-width'] = .1;
   let pcircleP = this.pcircleP = circlePP.instantiate();
   pcircleP.stroke = 'transparent';
   //pcircleP.fill = 'transparent';
@@ -75,7 +84,7 @@ rs.initProtos = function () {
   ecircleP.dimension =0;
   let lineP = this.lineP = linePP.instantiate();
   lineP.stroke = 'white';
- lineP.stroke = 'transparent';
+// lineP.stroke = 'transparent';
   lineP['stroke-width'] = .1;
 }  
 

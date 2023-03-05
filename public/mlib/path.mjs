@@ -207,14 +207,14 @@ item.adjustSweepToNewStep = function (pstate,component,nstep) {
 
 item.sweepNextState = function (pspace,cstate,component) {
   let {stepsSoFar:ssf} = this;
-  debugger;
+  //debugger;
   if (component === 'spin') {
     debugger;
   }
   let pspc = pspace[component];
   let {sinusoidal,min,max,step,bounce,startDown,once,startAtStep:sas} = pspc;
   if (sas) {
-    console.log('sas',sas);
+    //console.log('sas',sas);
   }
   if (sas === 198) {
     debugger;

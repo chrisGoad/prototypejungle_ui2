@@ -3,7 +3,8 @@ import {rs as linePP} from '/shape/line.mjs';
 import {rs as generatorP} from '/generators/line_path_2.mjs';
 
 let rs = generatorP.instantiate();
-
+let ns=6*64;
+//rs.setName('line_path_2_9_'+ns);
 rs.setName('line_path_2_9');
 
  let ht = 100;
@@ -12,10 +13,10 @@ rs.setName('line_path_2_9');
  //let part0tm = 180;
 debugger;
 rs.setTopParams = function () {
-  let cycleTime = Math.floor(ht/vel)
+  //let cycleTime = Math.floor(ht/vel);
   this.setSides(d);
   let topParams = {ht,d,width:ht,height:ht,framePadding:.0*ht,frameStroke:'black',frameStrokeWidth:1,numPaths:6,theta:-0.2 *Math.PI,step:1,
-  cycleTime,part0tm:100000,numSteps:400,noNewPaths:8*cycleTime,lineLength:20,addPathInterval:30,fromOneSide:0,gap:0,saveAnimation:1	}
+  part0tm:100000,numSteps:ns,lineLength:20,addPathInterval:30,fromOneSide:0,gap:0,saveAnimation:1,chopOffBeginning:63	}
   Object.assign(this,topParams);
 }
 
@@ -23,13 +24,13 @@ let fc = 0.8;
 
 //let fromPoints =  rs.pointsOnCircle(20,0.7*d);
 debugger;
-let sz = 0.28*d;
+let sz = 0.33*d;
 let ps = .7*d;
 let circle0= Circle.mk(Point.mk(0,-ps),sz);
 let circle1= Circle.mk(Point.mk(-ps,0),sz);
 let circle2= Circle.mk(Point.mk(ps,0),sz);
 let circle3= Circle.mk(Point.mk(0,ps),sz);
-let circleC= Circle.mk(Point.mk(0,0),1.3*sz);
+let circleC= Circle.mk(Point.mk(0,0),sz);
 
 rs.froms = [];
 let cnt = 0;
@@ -57,14 +58,18 @@ aa = 0.35;//Cl
 aa = 0.34;//cl
 aa = 0.333333;//cl
 let bb = 2/5;
+aa=bb;
 //let bb = 0.33333;
 let vv = 0.5;
 rs.fromsForCircle (circle0,2,aa,vv);
 rs.fromsForCircle (circle1,3,aa,vv);
 rs.fromsForCircle (circle2,4,aa,vv);
 rs.fromsForCircle (circle3,5,aa,vv);
+//
 //rs.fromsForCircle (circleC,5,bb,0.5*vv*(65/50));
-rs.fromsForCircle (circleC,6,bb,1.0*vv*(65/50)*(55/50));
+rs.fromsForCircle (circleC,16,aa,vv);
+rs.fromsForCircle (circleC,17,aa,vv);
+//rs.fromsForCircle (circleC,6,bb,.5*vv*(65/50)*(55/50)*(76/50));
 //rs.fromsForCircle (circleC,17,bb,0.5*vv*(65/50)*(55/50));
 //rs.fromsForCircle (circleC,17,aa);
 //rs.fromsForCircle (circleC,42,0.4);
@@ -97,7 +102,7 @@ rs.initProtos = function () {
   let bcircleP = this.bcircleP = circlePP.instantiate();
   bcircleP.stroke = 'white';
   bcircleP.fill = 'transparent';
-  bcircleP['stroke-width'] = .1;
+  bcircleP['stroke-width'] = .3;
   let pcircleP = this.pcircleP = circlePP.instantiate();
   pcircleP.stroke = 'transparent';
   //pcircleP.fill = 'transparent';
@@ -111,7 +116,7 @@ rs.initProtos = function () {
   let lineP = this.lineP = linePP.instantiate();
   lineP.stroke = 'white';
 // lineP.stroke = 'transparent';
-  lineP['stroke-width'] = .1;
+  lineP['stroke-width'] = .3;
 }  
 
 rs.setTopParams();

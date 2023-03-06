@@ -177,13 +177,13 @@ rs.atCycleEnd = function (nm) {
  let {pstate,noNewPaths,stepsSoFar:ssf} = this;
    let {pspace,cstate} = pstate;
    debugger;
-  // return;
+  //return;
   let cs = cstate[nm];
   let {dir,toP,line,seg,start} = cs;
   let ps = pspace[nm];
   let {circle,numBounces,index,vel,oname} = ps;
   console.log('at cycle end',oname,' ',ssf,'numBounces',numBounces);
-
+  //return;
   if (!circle) {
     return;
   }

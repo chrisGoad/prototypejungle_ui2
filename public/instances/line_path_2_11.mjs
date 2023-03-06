@@ -4,8 +4,9 @@ import {rs as generatorP} from '/generators/line_path_2.mjs';
 
 let rs = generatorP.instantiate();
 let ns=6*64;
+let vr = 'b';
 //rs.setName('line_path_2_9_'+ns);
-rs.setName('line_path_2_9');
+rs.setName('line_path_2_11'+vr);
 
  let ht = 100;
   let d = 0.5*ht;
@@ -26,11 +27,15 @@ let fc = 0.8;
 debugger;
 let sz = 0.33*d;
 let ps = .7*d;
-let circle0= Circle.mk(Point.mk(0,-ps),sz);
-let circle1= Circle.mk(Point.mk(-ps,0),sz);
-let circle2= Circle.mk(Point.mk(ps,0),sz);
-let circle3= Circle.mk(Point.mk(0,ps),sz);
+let circle0= Circle.mk(Point.mk(-ps,-ps),sz);
+let circle1= Circle.mk(Point.mk(0,-ps),sz);
+let circle2= Circle.mk(Point.mk(ps,-ps),sz);
+let circle3= Circle.mk(Point.mk(-ps,0),sz);
 let circleC= Circle.mk(Point.mk(0,0),sz);
+let circle5= Circle.mk(Point.mk(ps,0),sz);
+let circle6= Circle.mk(Point.mk(-ps,ps),sz);
+let circle7= Circle.mk(Point.mk(0,ps),sz);
+let circle8= Circle.mk(Point.mk(ps,ps),sz);
 
 rs.froms = [];
 let cnt = 0;
@@ -61,11 +66,27 @@ let bb = 2/5;
 aa=bb;
 //let bb = 0.33333;
 let vv = 0.5;
-let idim = 0.016*ht
+let idim = 0.016*ht;
+if (vr==='a') {
+rs.fromsForCircle (circle0,3,aa,vv,idim);
+rs.fromsForCircle (circle8,3,aa,vv,idim);
+rs.fromsForCircle (circle1,2,aa,vv,idim);
+rs.fromsForCircle (circle7,2,aa,vv,idim);
+rs.fromsForCircle (circle2,4,aa,vv,idim);
+rs.fromsForCircle (circle6,4,aa,vv,idim);
+rs.fromsForCircle (circle3,5,aa,vv,idim);
+rs.fromsForCircle (circle5,5,aa,vv,idim);
+} else {
+
 rs.fromsForCircle (circle0,2,aa,vv,idim);
 rs.fromsForCircle (circle1,3,aa,vv,idim);
 rs.fromsForCircle (circle2,4,aa,vv,idim);
 rs.fromsForCircle (circle3,5,aa,vv,idim);
+rs.fromsForCircle (circle5,6,aa,vv,idim);
+rs.fromsForCircle (circle6,7,aa,vv,idim);
+rs.fromsForCircle (circle7,8,aa,vv,idim);
+rs.fromsForCircle (circle8,9,aa,vv,idim);
+}
 //
 //rs.fromsForCircle (circleC,5,bb,0.5*vv*(65/50));
 rs.fromsForCircle (circleC,16,aa,vv,0.3*idim);
@@ -81,7 +102,7 @@ rs.fromsForCircle (circleC,17,aa,vv,0.3*idim);
 //rs.fromsForCircle (circle3,7,0.4);
 //rs.fromsForCircle (mainCircle,6,0.7,1);
 
-rs.circles = [circle0,circle1,circle2,circle3,circleC];
+rs.circles = [circle0,circle1,circle2,circle3,circleC,circle5,circle6,circle7,circle8];
 
 let fc0 = .4;
 let fcc = 0.4;

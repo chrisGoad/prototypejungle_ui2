@@ -99,7 +99,7 @@ rs.addPath = function (params) {
   //let {fromSide,fromP,dir,name,startAtStep} = params;
  // let {fromSide,fromP,toSide,toP,dir,vec,name,startAtStep,circle,vel,oname} = params;
  
-  let {fromP,toP,dir,vec,name,index,startAtStep,circle,numBounces,vel,oname} = params;
+  let {fromP,toP,dir,vec,name,index,startAtStep,circle,numBounces,vel,oname,icircleDim} = params;
   if (!oname) {
     oname = name;
   }
@@ -114,7 +114,7 @@ rs.addPath = function (params) {
   }
   let dist = toP.distance(fromP);
  // pspace[name] ={kind:'sweep',step,min:0,max:dist/vel,interval:1,once:1,startAtStep,circle,numBounces,index,vel};
-  pspace[name] ={kind:'sweep',step,min:0,max:dist,interval:1,once:1,startAtStep,circle,numBounces,index,vel,oname};
+  pspace[name] ={kind:'sweep',step,min:0,max:dist,interval:1,once:1,startAtStep,circle,numBounces,index,vel,oname,icircleDim};
  // cstate[name] = {value:0,fromP,toP,fromSide,toSide,vec,dir};
   cstate[name] = {value:0,fromP,toP,vec,dir};
   //cstate[name] = {value:0,fromP,toP,vec,dir};
@@ -122,7 +122,7 @@ rs.addPath = function (params) {
 
 rs.addPathPair = function (params) {
   let {sides,ht,pstate,segs,lines,lineLength:ll,stepsSoFar:ssf,lineP} = this;
-  let {vel} = params;
+  let {vel,icircleDim} = params;
  //debugger;
   let delay = ll/vel;
   let sas0 = ssf;
@@ -143,6 +143,7 @@ rs.addPathPair = function (params) {
   this.addPath(params0);
   this.addPath(params1);
   let seg = LineSegment.mk(Point.mk(0,0),Point.mk(0,0));
+  seg.icircleDim = icircleDim;
   seg.active = 1;
   segs.push(seg);
   let line = lineP.instantiate().show();
@@ -181,7 +182,7 @@ rs.atCycleEnd = function (nm) {
   let cs = cstate[nm];
   let {dir,toP,line,seg,start} = cs;
   let ps = pspace[nm];
-  let {circle,numBounces,index,vel,oname} = ps;
+  let {circle,numBounces,index,vel,oname,icircleDim} = ps;
   console.log('at cycle end',oname,' ',ssf,'numBounces',numBounces);
   //return;
   if (!circle) {
@@ -214,7 +215,7 @@ rs.atCycleEnd = function (nm) {
  
   let hc = this.hitCircumference(toP,ndir,circle);
   let {toP:ntoP,vec:nvec} = hc;
-  let params = {fromP:toP,toP:ntoP,dir:ndir,vec:nvec,circle,numBounces:numBounces+1,vel,oname};
+  let params = {fromP:toP,toP:ntoP,dir:ndir,vec:nvec,circle,numBounces:numBounces+1,vel,oname,icircleDim};
   this.addPathPair(params);
 }
 
@@ -320,6 +321,7 @@ rs.allIntersections = function (segs) {
       let ints = segi.intersect(segj);
       if (ints&&(typeof ints === 'object')&& (!this.onSide(ints))) {
         let {x,y} = ints;
+        ints.icircleDim = segi.icircleDim;
         if (1 || (ints.length() < 0.81*(this.d))||(x<0)||(y<0)) {
           ai.push(ints);
         }
@@ -426,7 +428,9 @@ rs.placeIcircles = function (ai) {
   }
   for (let k=0;k<ail;k++) {
     let crc = icircles[k];
+    let idim = ai[k].icircleDim;
     crc.moveto(ai[k])
+    crc.dimension = idim;
     crc.show();
     crc.update();
   }
@@ -470,10 +474,10 @@ rs.computePathPositionss = function (n) {
   }
 }
 
-rs.addPathFrom = function (p,dir,circle,vel) {
+rs.addPathFrom = function (p,dir,circle,vel,icircleDim) {
   let hit = circle?this.hitCircumference(p,dir,circle):this.hitSide(p,dir);
   let {toP,vec} =hit;
-  let params = {fromP:p,toP,dir,vec,circle,vel};
+  let params = {fromP:p,toP,dir,vec,circle,vel,icircleDim};
   this.addPathPair(params);
 }
 
@@ -686,8 +690,8 @@ rs.initialize = function () {
   this.set('bc',bc);*/
   if (froms) {
     froms.forEach((fr) => {
-      let {p,dir,circle,vel} = fr;
-      this.addPathFrom(p,dir,circle,vel);
+      let {p,dir,circle,vel,icircleDim} = fr;
+      this.addPathFrom(p,dir,circle,vel,icircleDim);
     });
   }
   if (hits) {

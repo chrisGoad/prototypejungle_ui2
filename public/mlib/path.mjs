@@ -176,10 +176,12 @@ item.randomValueNextState = function (pspace,cstate,component) {
 }
 
 
-item.sinusoidVal = function (sv,ev,step,cstep) {
+//item.sinusoidVal = function (sv,ev,step,cstep) {
+item.sinusoidVal = function (sv,ev,vel,cstep) {
   let down = ev<sv;
   let delta = Math.abs(ev-sv);
-  let steps = delta/step;
+  //let steps = delta/step;
+  let steps = Math.ceil(delta/vel);
   
   let fr = cstep/steps;
   let nvl = down?sv - fr*delta:sv+fr*delta;
@@ -212,7 +214,7 @@ item.sweepNextState = function (pspace,cstate,component) {
     debugger;
   }
   let pspc = pspace[component];
-  let {sinusoidal,min,max,step,bounce,startDown,once,startAtStep:sas} = pspc;
+  let {sinusoidal,min,max,vel,bounce,startDown,once,startAtStep:sas} = pspc;
   if (sas) {
     //console.log('sas',sas);
   }
@@ -239,7 +241,8 @@ item.sweepNextState = function (pspace,cstate,component) {
     sv  = csc.sv = value;
     ev = csc.ev = down?min:max;
   }
-  let nvls = this.sinusoidVal(sv,ev,step,cstep);
+  //let nvls = this.sinusoidVal(sv,ev,step,cstep);
+  let nvls = this.sinusoidVal(sv,ev,vel,cstep);
   let {nosin,sin} = nvls;
  
   //console.log('nv',nv,'down',down,'sv',sv,'ev',ev,'step',step,'cstep',cstep);

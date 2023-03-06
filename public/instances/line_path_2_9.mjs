@@ -9,14 +9,13 @@ rs.setName('line_path_2_9');
  let ht = 100;
   let d = 0.5*ht;
   let vel = 1;
- let part0tm = 180;
- part0tm = 1500;
+ //let part0tm = 180;
 debugger;
 rs.setTopParams = function () {
   let cycleTime = Math.floor(ht/vel)
   this.setSides(d);
-  let topParams = {ht,d,width:ht,height:ht,framePadding:.0*ht,frameStroke:'white',frameStrokeWidth:1,numPaths:6,theta:-0.2 *Math.PI,vel,
-  cycleTime,part0tm,numSteps:2*part0tm,noNewPaths:8*cycleTime,lineLength:20,addPathInterval:30,fromOneSide:0,gap:0,saveAnimation:1	}
+  let topParams = {ht,d,width:ht,height:ht,framePadding:.0*ht,frameStroke:'black',frameStrokeWidth:1,numPaths:6,theta:-0.2 *Math.PI,step:1,
+  cycleTime,part0tm:100000,numSteps:400,noNewPaths:8*cycleTime,lineLength:20,addPathInterval:30,fromOneSide:0,gap:0,saveAnimation:1	}
   Object.assign(this,topParams);
 }
 
@@ -24,12 +23,17 @@ let fc = 0.8;
 
 //let fromPoints =  rs.pointsOnCircle(20,0.7*d);
 debugger;
-let mainCircle= Circle.mk(Point.mk(.2*d,.2*d),0.7*d);
-let centeredCircle= Circle.mk(Point.mk(0,0),0.7*d);
+let sz = 0.28*d;
+let ps = .7*d;
+let circle0= Circle.mk(Point.mk(0,-ps),sz);
+let circle1= Circle.mk(Point.mk(-ps,0),sz);
+let circle2= Circle.mk(Point.mk(ps,0),sz);
+let circle3= Circle.mk(Point.mk(0,ps),sz);
+let circleC= Circle.mk(Point.mk(0,0),1.3*sz);
 
 rs.froms = [];
 let cnt = 0;
-rs.fromsForCircle = function (crc,n,sz,angle) {
+rs.fromsForCircle = function (crc,n,angle,vel) {
   let {d,froms} = this;
   let {center} = crc;
  // debugger;
@@ -42,15 +46,36 @@ rs.fromsForCircle = function (crc,n,sz,angle) {
    let dir = Math.atan2(y,x)+(angle*(1+0.0*Math.random()))*Math.PI;
    //let dir = Math.atan2(y,x)+(0.4*(1+0.0*Math.random()))*Math.PI;
    //let h = {p,dir,circle:mainCircle}
-   let h = {p:ip,dir,circle:mainCircle}
+   let h = {p:ip,dir,circle:crc,vel}
    froms.push(h);
   // cnt++;
   });
 }
 
-rs.fromsForCircle (mainCircle,6,0.7,0.4);
+let aa = 0.25;
+aa = 0.35;//Cl
+aa = 0.34;//cl
+aa = 0.333333;//cl
+let bb = 2/5;
+//let bb = 0.33333;
+let vv = 0.5;
+rs.fromsForCircle (circle0,2,aa,vv);
+rs.fromsForCircle (circle1,3,aa,vv);
+rs.fromsForCircle (circle2,4,aa,vv);
+rs.fromsForCircle (circle3,5,aa,vv);
+//rs.fromsForCircle (circleC,5,bb,0.5*vv*(65/50));
+rs.fromsForCircle (circleC,6,bb,1.0*vv*(65/50)*(55/50));
+//rs.fromsForCircle (circleC,17,bb,0.5*vv*(65/50)*(55/50));
+//rs.fromsForCircle (circleC,17,aa);
+//rs.fromsForCircle (circleC,42,0.4);
+//rs.fromsForCircle (circleC,3,0.4);
+//rs.fromsForCircle (circleC,4,0.4);
+//rs.fromsForCircle (circleC,5,0.4);
+//rs.fromsForCircle (circleC,1,0.4);
+//rs.fromsForCircle (circle3,7,0.4);
+//rs.fromsForCircle (mainCircle,6,0.7,1);
 
-rs.circles = [mainCircle,centeredCircle];
+rs.circles = [circle0,circle1,circle2,circle3,circleC];
 
 let fc0 = .4;
 let fcc = 0.4;
@@ -68,6 +93,7 @@ rs.initProtos = function () {
   icircleP.fill = 'blue';
   icircleP['stroke-width'] = 0;
   icircleP.dimension =0.006*ht;
+  icircleP.dimension =0.008*ht;
   let bcircleP = this.bcircleP = circlePP.instantiate();
   bcircleP.stroke = 'white';
   bcircleP.fill = 'transparent';

@@ -1,7 +1,10 @@
 
 import {rs as generatorP} from '/generators/part2_0.mjs';
+import {rs as addPathInParts} from '/mlib/path_in_parts.mjs';
 
 let rs = generatorP.instantiate();
+
+addPathInParts(rs);
 
 rs.setName('part2_0_58');
 //rs.frameStroke = 'blue';
@@ -9,6 +12,7 @@ rs.framePadding = .2*(rs.width);
 let levelsToShow = 1;
 let levels = 9;
 levels = 6;
+levels = 2;
 //levels = 3;
 //topLevels = 6;
 rs.duration = 20;//duration of one path
@@ -66,6 +70,9 @@ rs.addPath = function (kind,n) {
 
 rs.pstate = {pspace,cstate:initState};
 
+rs.partVisible = function () {
+  return 1;
+}
 rs.partSplitParams = function (prt) {
  // debugger;
   let ln = prt.polygon.corners.length;
@@ -77,7 +84,10 @@ rs.partSplitParams = function (prt) {
   }
   let {pstate} = this;
   let {cstate} = pstate;
-  const vl = (nm) => cstate[nm].value;
+  const vl = (nm) =>{
+    let vl = cstate[nm].value;
+    return vl;
+  }
   //console.log('qpcs',qpc0,qpc1,qpc2,qpc3);
   let p;
   if (quad) {
@@ -97,8 +107,11 @@ rs.addToArray(visibles,1,20);
 
 let strokeWidths = rs.partParams.strokeWidths = [];
 rs.computeExponentials({dest:strokeWidths,n:20,root:0.4,factor:.7});
-
+// the same set of paths are reused at each turn of the cycle
 rs.updateState= function () {
+  debugger;
+  this.enterNewPart();
+  /*
   let {stepsSoFar:ssf,numSteps,pstate,duration:dur,pauseDuration:pd,SeqOb} = this;
   let {cstate,pspace} = pstate;
   let ns = this.numSteps;
@@ -115,19 +128,20 @@ rs.updateState= function () {
       let ivls = SeqOb[cycle];
       let fvls = SeqOb[cycle+1];
       let ivl = ivls[prop]
+      let fvl = fvls[prop]
       psc.min=ivl;
-      psc.max=fvls[prop];
+      psc.max=fvls;
       psc.done =0;
       let cs = cstate[prop];
       cs.value = ivl;
       cs.start = ssf;
       cs.done=0;
     });
-  }
+  }*/
   this.resetShapes();
 }
 
-rs.partVisible  = function (prt) {
+rs.partVisiblee  = function (prt) {
   //debugger;
   let w = prt.where;
   let ln = w.length;

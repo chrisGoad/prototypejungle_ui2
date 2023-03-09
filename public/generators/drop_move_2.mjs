@@ -174,15 +174,15 @@ rs.updateStateOf = function (n) {
 
   
 rs.updateState = function () {
-  let {nextLineN,shapes,pstate,rdrops,dropParams,drops,dropys,rcda,goingInFrames,cycleL} = this;
+  let {nextLineN,shapes,pstate,rdrops,dropParams,drops,dropys,rcda,goingInFrames,cycleL,stepsSoFar:ssf} = this;
   let {cstate} = pstate;
   // let spin = cstate.spin.value;
-  //debugger;
+  debugger;
   let ln = shapes.length;
   for (let i=0;i<ln;i++) {
     this.updateStateOf(i);
   }
-  let tm = cstate.time;
+  let tm = ssf;//cstate.time;
   this.goingIn = tm < goingInFrames;
  // if ((tm < 2*cycleL)||((tm>3.5*cycleL)&&(tm<4.2*cycleL))) {
   if ((tm < 2*cycleL)||((tm>3.5*cycleL)&&(tm<4.8*cycleL))) {

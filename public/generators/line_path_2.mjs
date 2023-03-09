@@ -615,13 +615,14 @@ rs.randomRectPoints = function (n,fr) {
   return pnts;
 }
 
-rs.pointsOnCircle = function (crc,n) {
+rs.pointsOnCircle = function (crc,n,xReflect) {
   let {radius,center} = crc;
   //let center=icenter?icenter:Point.mk(0,0);
   let pnts = [];
   for (let i=0;i<n;i++) {
     let a = (i/n)*2*Math.PI;
-    let p = center.plus(Point.mk(Math.cos(a)*radius,Math.sin(a)*radius));
+    let xfc = xReflect?-1:1;
+    let p = center.plus(Point.mk(xfc*Math.cos(a)*radius,Math.sin(a)*radius));
     pnts.push(p);
   }
   return pnts;

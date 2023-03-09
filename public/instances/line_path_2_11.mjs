@@ -16,16 +16,20 @@ debugger;
 rs.setTopParams = function () {
   //let cycleTime = Math.floor(ht/vel);
   this.setSides(d);
-  let topParams = {ht,d,width:ht,height:ht,framePadding:.0*ht,frameStroke:'black',frameStrokeWidth:1,numPaths:6,theta:-0.2 *Math.PI,step:1,
-  part0tm:100000,numSteps:ns,lineLength:20,addPathInterval:30,fromOneSide:0,gap:0,saveAnimation:1,chopOffBeginning:63	}
+  let topParams = {ht,d,width:ht,height:ht,framePadding:.1*ht,frameStroke:'rgb(2,2,2)',frameStrokeWidth:1,numPaths:6,theta:-0.2 *Math.PI,step:1,
+  part0tm:100000,numSteps:ns,lineLength:25,addPathInterval:30,fromOneSide:0,gap:0,saveAnimation:1,chopOffBeginning:63	}
+ // part0tm:100000,numSteps:ns,lineLength: d * .33 * 1.667,addPathInterval:30,fromOneSide:0,gap:0,saveAnimation:1,chopOffBeginning:63	}
   Object.assign(this,topParams);
 }
+
 
 let fc = 0.8;
 
 //let fromPoints =  rs.pointsOnCircle(20,0.7*d);
 debugger;
 let sz = 0.33*d;
+
+//sz = 0.44*d;
 let ps = .7*d;
 let circle0= Circle.mk(Point.mk(-ps,-ps),sz);
 let circle1= Circle.mk(Point.mk(0,-ps),sz);
@@ -39,11 +43,11 @@ let circle8= Circle.mk(Point.mk(ps,ps),sz);
 
 rs.froms = [];
 let cnt = 0;
-rs.fromsForCircle = function (crc,n,angle,vel,icircleDim) {
+rs.fromsForCircle = function (crc,n,angle,vel,icircleDim,xReflect) {
   let {d,froms} = this;
   let {center} = crc;
  // debugger;
-  let fromPoints =  rs.pointsOnCircle(crc,n);
+  let fromPoints =  rs.pointsOnCircle(crc,n,xReflect);
   fromPoints.forEach((ip) => {
    let p = ip.difference(center);
    let nvec =p.normalize().normal();
@@ -61,9 +65,10 @@ rs.fromsForCircle = function (crc,n,angle,vel,icircleDim) {
 let aa = 0.25;
 aa = 0.35;//Cl
 aa = 0.34;//cl
-aa = 0.333333;//cl
+aa = 0.433333;//cl
 let bb = 2/5;
 aa=bb;
+
 //let bb = 0.33333;
 let vv = 0.5;
 let idim = 0.016*ht;
@@ -78,14 +83,14 @@ rs.fromsForCircle (circle3,5,aa,vv,idim);
 rs.fromsForCircle (circle5,5,aa,vv,idim);
 } else {
 
-rs.fromsForCircle (circle0,2,aa,vv,idim);
-rs.fromsForCircle (circle1,3,aa,vv,idim);
-rs.fromsForCircle (circle2,4,aa,vv,idim);
-rs.fromsForCircle (circle3,5,aa,vv,idim);
-rs.fromsForCircle (circle5,6,aa,vv,idim);
-rs.fromsForCircle (circle6,7,aa,vv,idim);
-rs.fromsForCircle (circle7,8,aa,vv,idim);
-rs.fromsForCircle (circle8,9,aa,vv,idim);
+rs.fromsForCircle (circle0,1,aa,vv,idim);
+rs.fromsForCircle (circle1,2,aa,vv,idim);
+rs.fromsForCircle (circle2,1,aa,vv,idim,1);
+rs.fromsForCircle (circle3,4,aa,vv,idim);
+rs.fromsForCircle (circle5,4,aa,vv,idim,1);
+rs.fromsForCircle (circle6,5,aa,vv,idim);
+rs.fromsForCircle (circle7,3,aa,vv,idim);
+rs.fromsForCircle (circle8,5,aa,vv,idim,1);
 }
 //
 //rs.fromsForCircle (circleC,5,bb,0.5*vv*(65/50));

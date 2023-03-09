@@ -209,7 +209,9 @@ item.adjustSweepToNewStep = function (pstate,component,nstep) {
 
 item.sweepNextState = function (pspace,cstate,component) {
   let {stepsSoFar:ssf} = this;
-  //debugger;
+  if (ssf > 0) {
+    debugger;
+  }
   if (component === 'spin') {
     debugger;
   }

@@ -56,7 +56,17 @@ for (let i=0;i<2;i++) {
   rs.addPath('t',i);
 }
 debugger;
-rs.constructSeqOb();
+
+rs.buildSeqOb = function () {
+  let {pstate,numCycles} = this;
+  let {pspace} = pstate;
+  let props = Object.getOwnPropertyNames(pspace);
+  return this.randomSeqOb({props,lb:-0.4,ub:0.4,numCycles:numCycles-1});
+}
+
+
+rs.loopingSeqOb(rs.buildSeqOb);
+
 rs.updateState();
 
   

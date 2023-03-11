@@ -210,7 +210,7 @@ item.adjustSweepToNewStep = function (pstate,component,nstep) {
 item.sweepNextState = function (pspace,cstate,component) {
   let {stepsSoFar:ssf} = this;
   if (ssf > 0) {
-    debugger;
+  //  debugger;
   }
   if (component === 'spin') {
     debugger;
@@ -509,14 +509,14 @@ item.oneInterpolationStep = function () {
 
 }
 item.oneStep = function (one) {
- // debugger;
+  //debugger;
   if (this.paused) {
     return;
   }
   this.callIfDefined('initAudio');
   let ns = this.stepsSoFar;
        //console.log('ns',ns,'tns',this.numSteps);
-  this.stepsSoFar++;
+  //this.stepsSoFar++;
   if  (this.stepsSoFar >= (this.numSteps-this.chopOffEnd)) {
     if (this.numISteps) {
       debugger;
@@ -537,6 +537,8 @@ item.oneStep = function (one) {
     this.resetShapes();
   }
   this.timeStep(this.pstate);
+    this.stepsSoFar++;
+
   if (!one) {
     setTimeout(() => this.oneStep(),this.stepInterval);
   }

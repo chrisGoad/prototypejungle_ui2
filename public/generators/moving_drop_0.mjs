@@ -6,9 +6,10 @@ import {rs as addDropMethods} from '/mlib/drop.mjs';
 import {rs as addAnimateMethods} from '/mlib/animate0.mjs';
 
 let rs = basicP.instantiate();
-rs.numSteps = 50;
 addAnimateMethods(rs);
 addDropMethods(rs);
+rs.numSteps = 100;
+
 rs.saveAnimation =1;
 rs.noShapes =1;
 //rs.saveState = 0;
@@ -67,6 +68,7 @@ rs.generateDrop= function (p) {
   //debugger;
   let lft = (p.x < 0);
   let cSizes = [5,10];
+ // cSizes = [10,20];
   let rSizes = [500];
   const randomSize = (sizeArray) => {
     let ln = sizeArray.length;
@@ -102,22 +104,52 @@ rs.generateDrop= function (p) {
 rs.updateState = function () {
   let {stepsSoFar:ssf,numSteps,shapesC,bbw,blackBar,positions,drops} = this;
   let {shapes} = shapesC;
-  debugger;
+  //debugger;
   this.placeShapes();
-  let fr = ssf/numSteps;
+  let fr = (ssf/numSteps);
+  let efr = 1.5*fr;
+
   let x = (0.5-fr)*ht;
   let hht = 0.5*ht;
   let mhht = -hht;
   let bbleft = mhht;// - 0.5 * bbw;
   let bbright = hht;// + 0.5 * bbw;
   let bbdelta = bbright - bbleft;
-  let bbx = bbleft+fr*bbdelta;
+  let lft = efr <= 0.5;
+  let mid = (0.5 < efr) && (efr <= 1);
+  let rt = efr > 1;
+  let lftp = 0.25 * bbdelta;
+  let rtp = 0.75*bbdelta;
+ 
+  let din = efr*bbdelta;//distance in
+  let dtg = (1.5-efr)*bbdelta;
+  let cbbx,bbwd;// center bb, bb wd
+  if (lft) {
+    cbbx  = bbleft + 0.5*din;
+    bbwd = din;
+  } 
+  if (mid) {
+    cbbx = bbleft + lftp  +  (efr-0.5)*bbdelta;
+    bbwd = bbw;
+  }
+  if (rt) {
+    debugger;
+    cbbx = bbright - 0.5*dtg;
+    bbwd = dtg;
+  }	
+  /*let sepleft =  bbw;
+  let lde = din; //leading edge
+  let leftLeh= (din > sepleft);
+  let bbx = leftLeft bleft + 0.5*lde; //center of bbox
   let hbbw = 0.5*bbw;
-  blackBar.moveto(Point.mk(bbx,0));
-  let bwd = Math.min(bbw,2*Math.min(bbx-bbleft,bbright - bbx));
-  let hbwd = 0.5*bwd;
-  blackBar.width = bwd;
+ 
+  blackBar.moveto(Point.mk(cbbx,0));
+  let bwd = Math.min(bbw,2*Math.min(bbx-bbleft,bbright - bbx));*/
+  let hbbwd = 0.5*bbwd;
+  blackBar.width = bbwd;
   blackBar.update();
+    blackBar.moveto(Point.mk(cbbx,0));
+
   let ln = drops.length;
   for (let i=0;i<ln;i++) {
     let sh = shapes[i];
@@ -127,7 +159,7 @@ rs.updateState = function () {
       let trx = tr.x;
       let ax = x+trx;
 
-      if (((bbx - hbwd) <ax)&&(ax < (bbx+hbwd))) {
+      if (((cbbx - hbbwd) <ax)&&(ax < (cbbx+hbbwd))) {
         sh.fill = 'white';
       } else {
         sh.fill = 'black';
@@ -142,7 +174,6 @@ rs.updateState = function () {
    // debugger;
   };
   
-  debugger;
  
   let pos = Point.mk(x,0);
   shapesC.moveto(pos)

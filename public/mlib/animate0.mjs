@@ -16,14 +16,12 @@ item.chopOffEnd = 0; // in steps
 item.stepInterval = 40;
 
 item.oneStep = function (one) {
-  debugger;
   if (this.paused) {
     return;
   }
 
-  let ns = this.stepsSoFar;
+  let ns = this.stepsSoFar;	
        //console.log('ns',ns,'tns',this.numSteps);
-  this.stepsSoFar++;
   if  (this.stepsSoFar >= (this.numSteps-this.chopOffEnd)) {
     return;
   }
@@ -31,8 +29,11 @@ item.oneStep = function (one) {
     draw.saveFrame(ns-Math.max(this.chopOffBeginning+1,1));
   }
   this.updateState();
-  
-  setTimeout(() => this.oneStep(),this.stepInterval);
+    this.stepsSoFar++;
+
+ if (!one) {
+   setTimeout(() => this.oneStep(),this.stepInterval);
+ }
 }
 
 }  

@@ -52,9 +52,13 @@ rs.dropCenters = function () {
  }
   
 rs.generateDrops = function (params) {
-  let {shapes,drops,numRows,randomGridsForShapes,positions,saveState,pointFilter} = this;
-  if (!shapes) { 
-    shapes = this.set('shapes',arrayShape.mk());
+  let {shapesC,drops,numRows,randomGridsForShapes,positions,saveState,pointFilter,noShapes} = this;
+  let shapes;
+  if (!shapesC) { 
+    shapesC = this.set('shapesC',containerShape.mk());
+    shapes = shapesC.set('shapes',arrayShape.mk());
+  } else {
+    shapes = shapesC.shapes;
   }
   if (!drops) {
     drops = this.drops = [];
@@ -123,12 +127,16 @@ rs.generateDrops = function (params) {
     if (saveState) {
       positions.push(dpnt);
     }
-    let newShapes = drop.shapes; 
-    newShapes.forEach((s) => {
-      let sp = s.getTranslation();
-      s.moveto(dpnt.plus(sp));
-      shapes.push(s);
-    });
+    if (!noShapes) {
+        
+      let newShapes = drop.shapes;
+      
+      newShapes.forEach((s) => {
+        let sp = s.getTranslation();
+        s.moveto(dpnt.plus(sp));
+        shapes.push(s);
+      });
+    }
     tgs.forEach((g) => 
       {
       g.index = drops.length;

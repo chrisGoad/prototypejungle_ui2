@@ -14,9 +14,9 @@ rs.pstate = {pspace:{},cstate:{}}
 rs.arrayLen = 3;
 
 rs.numCycles = 20;
-rs.duration = 20;
-rs.pauseDuration = 10;
-rs.gridDim = 10;
+rs.duration = 10;
+rs.pauseDuration = 30;
+rs.gridDim = 20;
 
 rs.buildGrid = function () {
   let {gridDim:dim} = this;
@@ -59,7 +59,7 @@ rs.buildSeqOb = function () {
   let {pstate,numCycles,arrayLen} = this;
   let {pspace} = pstate;
   let props = Object.getOwnPropertyNames(pspace);
-  return this.randomSeqOb({props,ln:arrayLen,lb:1,ub:40,numCycles});
+  return this.randomSeqOb({props,ln:arrayLen,lb:1,ub:10,numCycles});
 }
 
 
@@ -91,15 +91,29 @@ rs.updateState = function () {
   let {pstate} = this;
   let {cstate} = pstate;
   //let props = Object.getOwnPropertyNames(cstate);
+  let cnt =0;
   names.forEach( (nm) => {
     let rnm = 'r'+nm;
     let gnm = 'g'+nm;
     let bnm = 'b'+nm;
     let wnm = 'w'+nm;
-    let hnm = 'h'+nm;
+        let hnm = 'h'+nm;
+
+    let wnm0 = 'w_0_0';
+    let hnm0 = 'h_0_0';
+    
+    let wnm1 = 'w_0_1';
+    let hnm1 = 'h_0_1';
     debugger;
-    let w = cstate[wnm].value;
-    let h = cstate[hnm].value;
+    cnt++;
+    let w,h;
+    if (cnt%2) {
+      w = cstate[wnm0].value;
+      h = cstate[hnm0].value;
+    } else {
+      w = cstate[wnm1].value;
+      h = cstate[hnm1].value;
+    }
  /*   let r = Math.floor(cstate[rnm].value);
     let g =  Math.floor(cstate[gnm].value);
     let b =  Math.floor(cstate[bnm].value);

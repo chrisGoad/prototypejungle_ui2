@@ -101,15 +101,8 @@ rs.generateDrop= function (p) {
   return {geometries:[geom],shapes:[shp]}
 }
 
-rs.updateState = function () {
-  let {stepsSoFar:ssf,numSteps,shapesC,bbw,blackBar,positions,drops} = this;
-  let {shapes} = shapesC;
-  //debugger;
-  this.placeShapes();
-  let fr = (ssf/numSteps);
-  let efr = 1.5*fr;
-
-  let x = (0.5-fr)*ht;
+rs.boxParams = function (efr) {
+  let {bbw} = this;
   let hht = 0.5*ht;
   let mhht = -hht;
   let bbleft = mhht;// - 0.5 * bbw;
@@ -136,15 +129,26 @@ rs.updateState = function () {
     debugger;
     cbbx = bbright - 0.5*dtg;
     bbwd = dtg;
-  }	
-  /*let sepleft =  bbw;
-  let lde = din; //leading edge
-  let leftLeh= (din > sepleft);
-  let bbx = leftLeft bleft + 0.5*lde; //center of bbox
-  let hbbw = 0.5*bbw;
+  }
+ return {pos:cbbx,width:bbwd}
+}
+
+
+rs.updateState = function () {
+  let {stepsSoFar:ssf,numSteps,shapesC,bbw,blackBar,positions,drops} = this;
+  let {shapes} = shapesC;
+  //debugger;
+  this.placeShapes();
+  let fr = (ssf/numSteps);
+  let efr = 1.5*fr;
+
+  let x = (0.5-fr)*ht;
+  let hht = 0.5*ht;
+  let mhht = -hht;
  
-  blackBar.moveto(Point.mk(cbbx,0));
-  let bwd = Math.min(bbw,2*Math.min(bbx-bbleft,bbright - bbx));*/
+  let bxp = this.boxParams(efr);
+  let cbbx = bxp.pos;
+  let bbwd = bxp.width;
   let hbbwd = 0.5*bbwd;
   blackBar.width = bbwd;
   blackBar.update();

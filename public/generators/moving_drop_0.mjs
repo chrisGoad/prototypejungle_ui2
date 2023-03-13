@@ -8,7 +8,7 @@ import {rs as addAnimateMethods} from '/mlib/animate0.mjs';
 let rs = basicP.instantiate();
 addAnimateMethods(rs);
 addDropMethods(rs);
-rs.numSteps = 100;
+rs.numSteps = 150;
 
 rs.saveAnimation =1;
 rs.noShapes =1;
@@ -16,7 +16,7 @@ rs.noShapes =1;
 
 rs.setName('moving_drop_0');
 let ht= 1000;
-let topParams = {width:ht,height:ht,framePadding:0.1*ht,frameStroke:'white',sqdim:0.14*ht,sqoff:0.14*ht,sqfill:'rgba(30,30,60)'}
+let topParams = {width:ht,height:ht,framePadding:0.1*ht,frameStroke:'rgb(2,2,2)',sqdim:0.14*ht,sqoff:0.14*ht,sqfill:'rgba(30,30,60)'}
 Object.assign(rs,topParams);
 
 //let dropRect = Rectangle.mkCentered(Point.mk(2*ht,ht));
@@ -91,7 +91,7 @@ rs.generateDrop= function (p) {
     geom.isSolid  = 1;
     shp = geom.toShape(lft?this.rectP:this.rectP2);
   } else {
-    geom = Circle.mk(0.5*sz);
+    geom = Circle.mk(0.25*sz);
     geom.isDisk =1;
    // shp = geom.toShape(lft?this.circleP2:this.circleP);
     shp = geom.toShape(this.circleP);
@@ -135,25 +135,30 @@ rs.boxParams = function (efr) {
 
 
 rs.updateState = function () {
-  let {stepsSoFar:ssf,numSteps,shapesC,bbw,blackBar,positions,drops} = this;
+  let {stepsSoFar:ssf,numSteps,shapesC,bbw,blackBar0,blackBar1,positions,drops} = this;
   let {shapes} = shapesC;
   //debugger;
   this.placeShapes();
   let fr = (ssf/numSteps);
-  let efr = 1.5*fr;
+  let fr1 = (ssf/numSteps+(2/3))%1;
+  let efr0 = 1.5*fr;
+  let efr1 = 1.5*fr1;
 
   let x = (0.5-fr)*ht;
   let hht = 0.5*ht;
   let mhht = -hht;
  
-  let bxp = this.boxParams(efr);
-  let cbbx = bxp.pos;
-  let bbwd = bxp.width;
-  let hbbwd = 0.5*bbwd;
-  blackBar.width = bbwd;
-  blackBar.update();
-    blackBar.moveto(Point.mk(cbbx,0));
-
+  let bx0p = this.boxParams(efr0);
+  let bx1p = this.boxParams(efr1);
+  //let cbb0x = bxp0.pos;
+  //let bb0wd = bxp0.width;
+  //let hbbwd0 = 0.5*bbwd;
+  blackBar0.width = bx0p.width;
+  blackBar0.update();
+    blackBar0.moveto(Point.mk(bx0p.pos,0));
+ blackBar1.width = bx1p.width;
+  blackBar1.update();
+    blackBar1.moveto(Point.mk(bx1p.pos,0));
   let ln = drops.length;
   for (let i=0;i<ln;i++) {
     let sh = shapes[i];
@@ -162,8 +167,11 @@ rs.updateState = function () {
       let tr= sh.getTranslation();
       let trx = tr.x;
       let ax = x+trx;
-
-      if (((cbbx - hbbwd) <ax)&&(ax < (cbbx+hbbwd))) {
+      let hbx0wd = 0.5*(bx0p.width);
+      let bx0pos = bx0p.pos;
+      let hbx1wd = 0.5*(bx1p.width);
+      let bx1pos = bx1p.pos;
+      if ((((bx0pos - hbx0wd) <ax)&&(ax < (bx0pos + hbx0wd))) || (((bx1pos - hbx1wd) <ax)&&(ax < (bx1pos + hbx1wd)))) {
         sh.fill = 'white';
       } else {
         sh.fill = 'black';
@@ -238,11 +246,15 @@ rs.initialize = function () {
   this.addFrame();
   //this.addRectangle({width:0.5*ht,height:ht,position:Point.mk(-0.25*ht,0),stroke_width:0,fill:'rgb(0,0,0)'});
   this.addRectangle({width:ht,height:ht,position:Point.mk(0,0),stroke_width:0,fill:'rgb(255,255,255)'});
-  let blackBar = this.rectP.instantiate();
+  let blackBar0 = this.rectP.instantiate();
+  let blackBar1 = this.rectP.instantiate();
   //blackBar.fill = 'yellow';
-  blackBar.width = bbw;
-  blackBar.height = ht;
-  this.set('blackBar',blackBar);
+  blackBar0.width = bbw;
+  blackBar0.height = ht;
+  this.set('blackBar0',blackBar0);
+   blackBar1.width = bbw;
+  blackBar1.height = ht;
+  this.set('blackBar1',blackBar1);
   this.generateDrops(dropParams);
   this.duplicateDrops();
   this.installShapes();

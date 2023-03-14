@@ -132,4 +132,3 @@ rs.updateState = function () {
 //rs.addToArray(strokeWidths,.1,levels);
 export {rs};
 
-

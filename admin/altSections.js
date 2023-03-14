@@ -50,6 +50,7 @@ sections:
  // [0,'quad_0_19','instances',1,'Quad 0 19',{likes:0,posted:0,category:'quad'}], 
  // [0,'part_0_19','instances',1,'Part 0 19',{likes:0,posted:0,category:'part'}], 
   [0,'moving_drop_0','generators',1,'moving drop 0',{likes:0,posted:0,category:'quad'}], 
+  [0,'step_ring_0','generators',1,'step ring 0',{likes:0,posted:0,category:'quad'}], 
   [0,'step_colors_0','instances',1,'step colors 0',{likes:0,posted:0,category:'quad'}], 
   [0,'timeline','generators',1,'timeline',{likes:0,posted:0,category:'quad'}], 
   [0,'philosophers_0','instances',1,'philosophers_0',{likes:0,posted:0,category:'quad'}], 

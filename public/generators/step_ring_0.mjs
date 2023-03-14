@@ -21,11 +21,11 @@ rs.arrayLen = 3;
 
 rs.numCycles = 20;
 rs.duration = 10;
-rs.pauseDuration = 30;
+rs.pauseDuration = 10;
 rs.gridDim = 20;
-rs.numSpokes = 5;
-rs.radiusArray = [10,20,30];
-rs.sepArray = [10,10,10];
+rs.numSpokes = 32;
+rs.radiusArray = [10,20,30,10,10,10];
+rs.sepArray = [15,10,10,10,10,10];
 
 rs.nthRingDist = function (n) { //to the outside of the  nth ring
   let {radiusArray,sepArray} = this;
@@ -41,9 +41,10 @@ rs.nthRingDist = function (n) { //to the outside of the  nth ring
 
 
 rs.addPath = function (nm) {
-  let {pstate} = this;
+  let {pstate,names} = this;
   let {pspace,cstate} = pstate;
   let dur = this.duration;
+  names.push(nm);
   pspace[nm] = {kind:'sweepFixedDur',dur,min:10,max:15};
   cstate[nm] = {value:0,start:0};
 };
@@ -52,11 +53,12 @@ rs.buildRings = function () {
   let {numSpokes,radiusArray,sepArray,circleP} = this;
   let circles = this.set('circles',arrayShape.mk());
   let rings = this.rings = [];
+  this.names =[];
   let nr = radiusArray.length;
   for (let i=0;i<nr;i++) {
     let ring = [];
-    let nm = 'r_'+i;
-    this.addPath(nm);
+    this.addPath('r_'+i);
+    this.addPath('s_'+i);
     rings.push(ring);
     for (let j=0;j<numSpokes;j++) {
       let crc = circleP.instantiate();
@@ -95,68 +97,44 @@ rs.initProtos = function () {
 	this.circleP['stroke-width'] = 0;
 } 
 
+      
+rs.buildSeqOb = function () {
+  let {pstate,numCycles,arrayLen} = this;
+  let {pspace} = pstate;
+  let props = Object.getOwnPropertyNames(pspace);
+  return this.randomSeqOb({props,ln:arrayLen,lb:5,ub:80,numCycles});
+}
+
 rs.initialize = function () {
    debugger;
 
    this.initProtos();
    this.buildRings();
    this.updateRings()
- //  this.loopingSeqOb(this.buildSeqOb);
+ this.loopingSeqOb(this.buildSeqOb);
 }
     
       
-      
-rs.buildSeqOb = function () {
-  let {pstate,numCycles,arrayLen} = this;
-  let {pspace} = pstate;
-  let props = Object.getOwnPropertyNames(pspace);
-  return this.randomSeqOb({props,ln:arrayLen,lb:1,ub:10,numCycles});
-}
 
 
 
 rs.updateState = function () {
-  let {stepsSoFar:ssf,names,grid}  = this;
+  let {stepsSoFar:ssf,names,radiusArray,sepArray}  = this;
   //debugger;
+  let nr = radiusArray.length;
   this.enterNewPart();
   let {pstate} = this;
   let {cstate} = pstate;
   //let props = Object.getOwnPropertyNames(cstate);
   let cnt =0;
-  names.forEach( (nm) => {
-    let rnm = 'r'+nm;
-    let gnm = 'g'+nm;
-    let bnm = 'b'+nm;
-    let wnm = 'w'+nm;
-        let hnm = 'h'+nm;
-
-    let wnm0 = 'w_0_0';
-    let hnm0 = 'h_0_0';
+  for (let i=0;i<nr;i++) {
+    let r = cstate['r_'+i].value;
+    let s = cstate['s_'+i].value;
+    radiusArray[i] = r;
+    //sepArray[i] = s;
+  }    
+  this.updateRings();
     
-    let wnm1 = 'w_0_1';
-    let hnm1 = 'h_0_1';
-    debugger;
-    cnt++;
-    let w,h;
-    if (cnt%2) {
-      w = cstate[wnm0].value;
-      h = cstate[hnm0].value;
-    } else {
-      w = cstate[wnm1].value;
-      h = cstate[hnm1].value;
-    }
- /*   let r = Math.floor(cstate[rnm].value);
-    let g =  Math.floor(cstate[gnm].value);
-    let b =  Math.floor(cstate[bnm].value);
-    let clr = `rgb(${r},${g},${b})`;*/
-    let sq = grid[nm];
-    sq.width = w;
-    sq.height = h;
-  //  sq.fill = clr;
-    sq.update();
-    
-  });
-
  }
 
   

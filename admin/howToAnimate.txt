@@ -163,7 +163,8 @@ c:\ffmpeg\bin\ffmpeg  -framerate 20 -i animations/line_path_2_11a_f%03d.jpg -s 5
 c:\ffmpeg\bin\ffmpeg  -framerate 20 -i animations/line_path_2_11b_f%03d.jpg -s 500x500  export/line_path_2_11b.gif
 c:\ffmpeg\bin\ffmpeg  -framerate 20 -i animations/reflected_path_0_4_f%03d.jpg -s 800x800  export/reflected_path_0_4.mp4
 c:\ffmpeg\bin\ffmpeg  -framerate 20 -i animations/part2_0_58b_f%03d.jpg -s 500x500  export/part2_0_58b.gif
-c:\ffmpeg\bin\ffmpeg  -framerate 15 -i animations/moving_drop_0_f%03d.jpg -s 500x500  export/moving_drop_0.gif
+c:\ffmpeg\bin\ffmpeg  -framerate 20 -i animations/moving_drop_0_f%03d.jpg -s 500x500  export/moving_drop_0.gif
+c:\ffmpeg\bin\ffmpeg  -framerate 20 -i animations/step_ring_0_f%03d.jpg -s 500x500  export/step_ring_0.gif
 
 
 

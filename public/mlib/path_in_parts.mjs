@@ -60,6 +60,7 @@ rs.loopingSeqOb = function (fn) {
   this.SeqOb = SeqOb;
   let cycleL = dur + pd;
   this.numSteps = (numCycles-1) * cycleL;
+  this.numSteps = numCycles * cycleL;
   this.cycleL = cycleL;
 }
 

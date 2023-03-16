@@ -20,13 +20,14 @@ rs.pstate = {pspace:{},cstate:{}}
 
 rs.arrayLen = 3;
 
-rs.numCycles = 3;
+rs.numCycles = 30;
 rs.duration = 30;
 rs.pauseDuration = 0;
 rs.gridDim = 20;
 rs.numSpokes = 32;
 rs.radiusArray = [10,20,30,10,10,10];
-rs.sepArray = [15,10,10,10,10,10];
+rs.radiusArray = [10,10];
+rs.sepArray = [15,15];
 
 rs.nthRingDist = function (n) { //to the outside of the  nth ring
   let {radiusArray,sepArray} = this;
@@ -46,7 +47,7 @@ rs.addPath = function (nm) {
   let {pspace,cstate} = pstate;
   let dur = this.duration;
   names.push(nm);
-  pspace[nm] = {kind:'sweepFixedDur',dur,min:10,max:15};
+  pspace[nm] = {kind:'sweepFixedDur',dur,min:.01,max:.02};
   cstate[nm] = {value:0,start:0};
 };
 
@@ -92,7 +93,8 @@ rs.regsegs = function (n) { //a polygon as an array of LineSegments
 
 
 rs.updateRings = function () {
-  let {numSpokes:ns,radiusArray,rings,projectTo} = this;
+  let {numSpokes:ns,radiusArray,rings,projectTo,cycle,cycleL,whereInCycle:wic} = this;
+  debugger;
   let nr = radiusArray.length;
   let deltaA = (2*Math.PI)/ns;
   for (let i=0;i<nr;i++) {
@@ -117,7 +119,14 @@ rs.updateRings = function () {
           }
         }
       }
-      let avec = vec.times(ln*d);
+      let fr = cycle%2?1-wic/cycleL:wic/cycleL; 
+      let fc = 1+  (ln-1)*fr;
+      //let fc = 1+  (ln-1)*fr;
+      if ((i===0)&&(j==3)&&(cycle<2)) {
+        console.log('cycle',cycle,'wic',wic,'ln',ln,'fr',fr,'fc',fc);
+      }
+     // let avec = vec.times((ln-1)*fc*d);
+      let avec = vec.times(fc*d);
       let crc = ring[j];
       crc.moveto(avec);
       crc.dimension = dim;
@@ -146,7 +155,7 @@ rs.buildSeqOb = function () {
 rs.initialize = function () {
    debugger;
    let sq = this.regsegs(4);
-   this.sq = sq;
+   this.projectTo = sq;
    this.initProtos();
    this.addFrame();
    this.buildRings();
@@ -160,8 +169,8 @@ rs.initialize = function () {
 
 rs.updateState = function () {
   let {stepsSoFar:ssf,names,radiusArray,sepArray,sq}  = this;
-  //debugger;
-  this.projectTo = (this.cycle)%2?undefined:sq;
+  debugger;
+  //this.projectTo = (this.cycle)%2?undefined:sq;
   let nr = radiusArray.length;
   this.enterNewPart();
   let {pstate} = this;

@@ -10,7 +10,7 @@ let rs = basicP.instantiate();
 addPathMethods(rs);
 addPathInParts(rs);
 
-let wd = 1500;
+let wd = 1700;
 rs.setName('step_ring_0');
 let topParams = {width:wd,height:wd,framePadding:.1*wd,frameStroke:'white',frameStrokeWidth:1,saveAnimation:1}
 Object.assign(rs,topParams);
@@ -20,17 +20,23 @@ rs.pstate = {pspace:{},cstate:{}}
 
 rs.arrayLen = 3;
 
-rs.numCycles = 30;
+rs.numCycles = 6;
 rs.duration = 30;
-rs.pauseDuration = 0;
+rs.pauseDuration = 10;
+
 rs.gridDim = 20;
-rs.numSpokes = 32;
+
+rs.numSpokes = 20;
+rs.polysides = 4;
 rs.radiusArray = [10,20,30,10,10,10];
-rs.radiusArray = [10,10];
-rs.sepArray = [15,15];
+//rs.radiusArray = [10,10];
+rs.radiusFactor = 1.2;
+rs.sepArray = [150,10,10,10,10,10];
+//rs.sepArray = [150,10];
 
 rs.nthRingDist = function (n) { //to the outside of the  nth ring
   let {radiusArray,sepArray} = this;
+  debugger;
   let dsf = 0;
   let r;
   for (let i=0;i<=n;i++) {
@@ -47,12 +53,13 @@ rs.addPath = function (nm) {
   let {pspace,cstate} = pstate;
   let dur = this.duration;
   names.push(nm);
-  pspace[nm] = {kind:'sweepFixedDur',dur,min:.01,max:.02};
+  pspace[nm] = {kind:'sweepFixedDur',dur,min:.01,max:.02,sinusoidal:1};// min and max are overridden in enterNewPart
   cstate[nm] = {value:0,start:0};
 };
 
 rs.buildRings = function () {
   let {numSpokes,radiusArray,sepArray,circleP} = this;
+  
   let circles = this.set('circles',arrayShape.mk());
   let rings = this.rings = [];
   this.names =[];
@@ -93,8 +100,8 @@ rs.regsegs = function (n) { //a polygon as an array of LineSegments
 
 
 rs.updateRings = function () {
-  let {numSpokes:ns,radiusArray,rings,projectTo,cycle,cycleL,whereInCycle:wic} = this;
-  debugger;
+  let {numSpokes:ns,radiusArray,rings,projectTo,cycle,cycleL,whereInCycle:wic,radiusFactor:rf} = this;
+ // debugger;
   let nr = radiusArray.length;
   let deltaA = (2*Math.PI)/ns;
   for (let i=0;i<nr;i++) {
@@ -114,7 +121,7 @@ rs.updateRings = function () {
           let ints = vecseg.intersect(pseg);
           if (ints&&(typeof ints === 'object')) {
             ln = ints.length();
-            debugger;
+            //debugger;
             break;
           }
         }
@@ -127,9 +134,16 @@ rs.updateRings = function () {
       }
      // let avec = vec.times((ln-1)*fc*d);
       let avec = vec.times(fc*d);
+      debugger;
+      let r=Math.floor(fr*255);
+      let b=Math.floor((1-fr)*255);
+      let clr = `rgba(${r},255,${b},0.5)`;
+       //       console.log('cycle',cycle,'wic',wic,'ln',ln,'fr',fr,'fc',fc,'clr',clr);
+
       let crc = ring[j];
+      crc.fill = clr;
       crc.moveto(avec);
-      crc.dimension = dim;
+      crc.dimension = rf*dim;
       crc.update();
     }
   }
@@ -150,11 +164,13 @@ rs.buildSeqOb = function () {
   let {pspace} = pstate;
   let props = Object.getOwnPropertyNames(pspace);
   return this.randomSeqOb({props,ln:arrayLen,lb:5,ub:80,numCycles});
+  //return this.randomSeqOb({props,ln:arrayLen,lb:40,ub:80,numCycles});
 }
 
 rs.initialize = function () {
    debugger;
-   let sq = this.regsegs(4);
+   this.initializeConstants();
+   let sq = this.regsegs(this.polysides);
    this.projectTo = sq;
    this.initProtos();
    this.addFrame();

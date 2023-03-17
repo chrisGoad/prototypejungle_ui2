@@ -210,7 +210,7 @@ item.adjustSweepToNewStep = function (pstate,component,nstep) {
 item.sweepNextState = function (pspace,cstate,component) {
   let {stepsSoFar:ssf} = this;
   if (ssf > 0) {
-  //  debugger;
+    debugger;
   }
   if (component === 'spin') {
     debugger;
@@ -302,7 +302,7 @@ item.sweepNextState = function (pspace,cstate,component) {
 
 
 item.sweepFixedDurNextState = function (pspace,cstate,component) {
-  //debugger;
+  debugger;
   let {stepsSoFar:ssf} = this;
   let pspc = pspace[component];
   let {min,max,dur} = pspc;
@@ -536,6 +536,7 @@ item.oneStep = function (one) {
   } else {
     this.resetShapes();
   }
+  debugger;
   this.timeStep(this.pstate);
     this.stepsSoFar++;
 

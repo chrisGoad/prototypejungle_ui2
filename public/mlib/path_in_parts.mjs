@@ -1,5 +1,8 @@
 const rs =function (rs) {
 
+rs.cycle = 0;
+rs.whereInCycle = 0;
+rs.stepsSoFar = 0;
 rs.randomObject = function (params) {
   let {lb,ub,props} = params;
   let delta = ub-lb;
@@ -64,6 +67,13 @@ rs.loopingSeqOb = function (fn) {
   this.cycleL = cycleL;
 }
 
+rs.initializeConstants = function () {
+  let {duration:dur,pauseDuration:pd} = this;
+  this.stepsSoFar = 0;
+  this.cycle = 0;
+  this.whereInCycle = 0;
+  this.cycleL = dur+pd;
+}
 rs.enterNewPart = function () {
   let {stepsSoFar:ssf,numSteps,pstate,duration:dur,pauseDuration:pd,SeqOb} = this;
   let {cstate,pspace} = pstate;

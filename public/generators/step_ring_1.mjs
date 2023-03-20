@@ -12,7 +12,7 @@ addPathMethods(rs);
 
 let wd = 300;
 rs.setName('step_ring_1');
-let topParams = {width:wd,height:wd,framePadding:.1*wd,frameStroke:'white',frameStrokeWidth:1,saveAnimation:1,numSteps:1000}
+let topParams = {width:wd,height:wd,framePadding:.1*wd,frameStroke:'white',frameStrokeWidth:1,saveAnimation:1,numSteps:90*3}
 Object.assign(rs,topParams);
 
 
@@ -32,7 +32,7 @@ rs.nvs = function (a,v,n) {
   }
 }
 
-rs.numSpokes = 50;
+rs.numSpokes = 60;
 rs.polysides = 3;
 rs.radiusArray = [10,20,30,10,10,10];
 let ra = rs.radiusArray = [];
@@ -47,11 +47,89 @@ rs.radiusFactor = 1.2;
 rs.sepArray = [10,10,10,20,20,35,128];
 rs.projectArray = [9,8,7,6,5,4,3];
 rs.projectArray  =[3,4,5,6,7,0];
+rs.projectArray  =[3,4,5,6,0,0];
 
 let spa =rs.spinArray = [];
 rs.nvs(spa,0,7);
-let spb = 0.5;
+let spb = (1/2.6179938779914944)*(360/318.0862561759605)*(2/2.2635369684181104);
 rs.spinSpeedArray = [spb*7,spb*6,spb*5,spb*4,spb*3,spb*2,spb];
+rs.spinSpeedArray = [spb*5.817764173314432,spb*5.235987755982989,spb*4.1887902047863905,spb*3.490658503988659,spb*2.4933275028490423,spb];
+rs.tfr = function (n) {
+  let {spinSpeedArray:ssa,projectArray:pa,degreeToRadian:d2r} = this;
+    let a = [];
+    let s = ssa[n];
+    let p =pa[n];
+    
+    let tr = (2*Math.PI)/(s*d2r);
+    let trs = tr/p; // time to symmetry
+    for (let i=1;i<10;i++) {
+      a.push(trs*i);
+    }
+    return a;
+ }
+ rs.degreeToRadian = Math.PI/180;
+
+ rs.printTimes = function () {
+   let {spinSpeedArray:ssa,degreeToRadian:d2r,numSpokes}= this;
+   let sqs =ssa[1];
+   console.log('step',sqs,sqs*d2r);
+   console.log('spb',spb);
+   let sps = 360/numSpokes;
+   console.log('spoke step',sps,sps*d2r);
+   let ln = this.radiusArray.length;
+   console.log('ln',ln);
+   for (let i=0;i<ln-1;i++) {
+   
+     let a = this.tfr(i);
+     console.log('i',i,'a',a);
+   }
+}
+
+  
+
+rs.printTimes();
+rs.nsir = [5,6,6,6,5];
+rs.nsir = [4,5,5,5,4];
+
+rs.computeSpeed = function (n) { 
+  let {projectArray:pa,nsir} = this;
+  let p = pa[n]
+  let ns = nsir[n];
+  let tr = (3.6*p)/ns;
+  let s = (2*Math.PI)/tr;
+  return s;
+}
+
+rs.checkSpeed = function (n) {
+  let {projectArray:pa,nsir} = this;
+    let p = pa[n]
+  let  s = this.computeSpeed(n);
+  let tr = (2*Math.PI/s);
+  let ts = tr/p;
+  let ns = nsir[n];
+  return ns*ts;
+}
+
+rs.printSpeeds = function () {
+   let ln = this.radiusArray.length;
+   for (let i=0;i<ln-1;i++) {
+     let a = this.computeSpeed(i);
+     console.log('i',i,'speeed',a/spb);
+   }
+}
+
+rs.printSpeeds();
+ 
+rs.checkSpeeds = function () {
+   let ln = this.radiusArray.length;
+   for (let i=0;i<ln-1;i++) {
+     let a = this.checkSpeed(i);
+     console.log('i',i,'check',a/spb);
+   }
+}
+
+rs.checkSpeeds();
+
 rs.nthRingDist = function (n) { //to the outside of the  nth ring
   let {radiusArray,sepArray} = this;
   let dsf = 0;
@@ -90,6 +168,10 @@ rs.buildRings = function () {
       let crc = circleP.instantiate();
       ring.push(crc);
       circles.push(crc);
+      if (i>4) {
+        crc.hide();
+        crc.update();
+      }
     }
   }
 }
@@ -131,7 +213,6 @@ rs.buildProjects = function (n) {
 }
 
 rs.ringPositions =[];
-rs.degreeToRadian = Math.PI/180;
 rs.updateRings = function () {
   let {spinArray,numSpokes:ns,radiusArray,rings,cycle,cycleL,whereInCycle:wic,radiusFactor:rf,projects,projectArray,ringPositions:rp,degreeToRadian:d2r} = this;
   debugger;

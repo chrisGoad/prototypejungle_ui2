@@ -17,6 +17,7 @@ rs.setTopParams = function () {
   let people = [{name:'Hume',birth:1711,death:1776,whichLine:0},{name:'Frege',birth:1848,death:1925,whichLine:1},
                 {name:'Kant',birth:1724,death:1804,whichLine:1},{name:'Fichte',birth:1762,death:1814,whichLine:1},
   ];
+  let eventTexts = [{color:'red',text:'Set Theory',whichLine:4}];
 
   //this.setSides(d);
   let topParams = {width:wd,height:ht,people,framePadding:.0*ht,frameStroke:'black',frameStrokeWidth:1,backGroundColor:'white',
@@ -74,12 +75,13 @@ rs.addPerson = function (params) {
   if (events) {
     events.forEach((e) => {
       debugger;
-      let ex= this.yearToX(e);
-      let ep = Point.mk(ex,lineY+10);
+      let {color,year} = e;
+      let ex= this.yearToX(year);
+      let ep = Point.mk(ex,lineY);//+10);
       let crc = circleP.instantiate();
-      //crc.fill = 'red';
+      crc.fill = color;
       //crc.dimension = 10;
-      lines.push(crc);
+      eventShapes.push(crc);
       crc.moveto(ep);
     });
   }
@@ -122,6 +124,34 @@ rs.computeTimeRange = function () {
 }
     
 
+rs.addEvent = function (event) {
+  let {textP,texts,eventShapes,lineSep,eventX,circleP} = this;
+  let {color,text,whichLine:wl,textSep} = event;
+  let txt = textP.instantiate();
+  let crc = circleP.instantiate();
+  crc.fill = color;
+  txt.text = text;
+  txt["font-size"] = 14;
+  texts.push(txt);
+  debugger;
+  eventShapes.push(crc);
+  let lineY = wl*lineSep;
+  let cpos = Point.mk(eventX,lineY);
+  //let pos = Point.mk(eventX+textSep+0.5*(txt.width),lineY);
+  let pos = Point.mk(eventX+textSep,lineY);
+  txt.moveto(pos);
+  crc.moveto(cpos);
+}
+
+rs.addEvents = function () {
+  let {eventTexts} = this;
+  if (!eventTexts) {
+    return;
+  }
+  eventTexts.forEach((e) => {
+    this.addEvent(e);
+  });
+}
 
   
   
@@ -158,6 +188,7 @@ rs.initialize = function () {
   
   this.addTitle();
   this.addPeople();
+  this.addEvents();
   this.callIfDefined('afterInitialize');
 
  

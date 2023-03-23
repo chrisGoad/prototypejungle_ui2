@@ -1,5 +1,6 @@
 import {rs as textPP} from '/shape/textOneLine.mjs';
 import {rs as linePP} from '/shape/line.mjs';
+import {rs as circlePP} from '/shape/circle.mjs';
 import {rs as basicP} from '/generators/basics.mjs';
 
 
@@ -24,7 +25,6 @@ rs.setTopParams = function () {
 }
 rs.setTopParams();
 rs.yearToX = function (y) {
-  debugger;
   let {minYear:miny,maxYear:maxy,width:w} = this;
   let fr = (y-miny)/(maxy-miny);
   let ws = 0.9*w;
@@ -44,8 +44,8 @@ rs.addTitle = function () {
   
   
 rs.addPerson = function (params) {
-  let {name,birth,death,whichLine:wl,skip,stillAlive} = params;
-  let {texts,textP,lines,lineP,lineSep} = this;
+  let {name,birth,death,whichLine:wl,skip,stillAlive,events} = params;
+  let {texts,textP,lines,lineP,circleP,lineSep,eventShapes} = this;
   let mlife = 0.5*(birth+death);
   let txt = textP.instantiate();
   txt.text = name;
@@ -71,6 +71,19 @@ rs.addPerson = function (params) {
     texts.push(td);
     td.moveto(dp);
   }
+  if (events) {
+    events.forEach((e) => {
+      debugger;
+      let ex= this.yearToX(e);
+      let ep = Point.mk(ex,lineY+10);
+      let crc = circleP.instantiate();
+      //crc.fill = 'red';
+      //crc.dimension = 10;
+      lines.push(crc);
+      crc.moveto(ep);
+    });
+  }
+       
   let line = lineP.instantiate();
   line.setEnds(e0,e1);
   lines.push(line);
@@ -97,6 +110,9 @@ rs.computeTimeRange = function () {
   let max = -10000;
   let min = 10000;
   people.forEach( (p) => {
+    if (p.skip) {
+      return;
+    }
     let {birth,death} = p;
     max = Math.max(death,max);
     min = Math.min(birth,min);
@@ -115,7 +131,10 @@ rs.initProtos = function () {
   let lineP = this.lineP = linePP.instantiate();
   lineP.stroke = 'black';
   lineP['stroke-width'] = 2;
-  
+   let circleP = this.circleP = circlePP.instantiate();
+  circleP.fill = 'black';
+  circleP.dimension = 10;
+  circleP['stroke-width'] = 0;
   let textP = this.textP = textPP.instantiate();
   
 }  
@@ -135,6 +154,8 @@ rs.initialize = function () {
   this.computeTimeRange();
   let lines = this.set('lines',arrayShape.mk());
   let texts = this.set('texts',arrayShape.mk());
+  this.set('eventShapes',arrayShape.mk());
+  
   this.addTitle();
   this.addPeople();
   this.callIfDefined('afterInitialize');

@@ -20,7 +20,7 @@ rs.setTopParams = function () {
   let eventTexts = [{color:'red',text:'Set Theory',whichLine:4}];
 
   //this.setSides(d);
-  let topParams = {width:wd,height:ht,people,framePadding:.0*ht,frameStroke:'black',frameStrokeWidth:1,backGroundColor:'white',
+  let topParams = {width:wd,height:ht,people,framePadding:.1*ht,frameStroke:'yellow',frameStrokeWidth:1,backGroundColor:'white',
   lineSep:40,lineLength:20}
   Object.assign(this,topParams);
 }
@@ -36,6 +36,9 @@ rs.yearToX = function (y) {
   
 rs.addTitle = function () {
   let {title,titlePos,textP,texts} = this;
+  if (!title) {
+    return;
+  }
   let txt = textP.instantiate();
   txt.text = title;
   txt["font-size"] = 14;
@@ -46,7 +49,7 @@ rs.addTitle = function () {
   
 rs.addPerson = function (params) {
   let {name,birth,death,whichLine:wl,skip,stillAlive,events} = params;
-  let {texts,textP,lines,lineP,circleP,lineSep,eventShapes} = this;
+  let {texts,textP,lines,lineP,circleP,lineSep,eventShapes,topLine} = this;
   let mlife = 0.5*(birth+death);
   let txt = textP.instantiate();
   txt.text = name;
@@ -55,7 +58,7 @@ rs.addPerson = function (params) {
   let bx = this.yearToX(birth);
   let dx = this.yearToX(death);
   let dateY = 10;
-  let lineY = wl*lineSep;
+  let lineY = topLine+wl*lineSep;
    let ty = lineY-10;
   let e0 = Point.mk(bx,lineY);
   let e1 = Point.mk(dx,lineY);
@@ -125,7 +128,7 @@ rs.computeTimeRange = function () {
     
 
 rs.addEvent = function (event) {
-  let {textP,texts,eventShapes,lineSep,eventX,circleP} = this;
+  let {textP,texts,eventShapes,lineSep,eventX,circleP,topLine} = this;
   let {color,text,whichLine:wl,textSep} = event;
   let txt = textP.instantiate();
   let crc = circleP.instantiate();
@@ -135,7 +138,7 @@ rs.addEvent = function (event) {
   texts.push(txt);
   debugger;
   eventShapes.push(crc);
-  let lineY = wl*lineSep;
+  let lineY = topLine + wl*lineSep;
   let cpos = Point.mk(eventX,lineY);
   //let pos = Point.mk(eventX+textSep+0.5*(txt.width),lineY);
   let pos = Point.mk(eventX+textSep,lineY);

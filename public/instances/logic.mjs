@@ -10,7 +10,7 @@ rs.setName('logic');
 
 rs.setTopParams = function () {
   let wd = 1000;
-  let ht = 0.7*wd;
+  let ht = 0.5*wd;
   let people = [{name:'Boole',birth:1815,death:1864,whichLine:-5,skip:0,events:[{color:'black',year:1847}]},
                 {name:'Cantor',birth:1845,death:1918,whichLine:-4,skip:0,events:[{color:'magenta',year:1874}]},
                 {name:'Frege',birth:1848,death:1925,whichLine:-3,skip:0,events:[{color:'cyan',year:1879}]},
@@ -21,16 +21,18 @@ rs.setTopParams = function () {
               {name:'Kripke',birth:1940,death:2022,whichLine:2,skip:1},
                
   ];
-    let eventTexts = [{color:'black',text:'Propositional Logic 1847',whichLine:2,textSep:95},
-                      {color:'magenta',text:'Set Theory 1874',whichLine:3,textSep:70},{color:'cyan',text:'Predicate Logic 1879',whichLine:4,textSep:85},
-                      {color:'green',text:"Russell's Paradox 1903, Principia Mathematica 1912 (with Whitehead)",whichLine:5,textSep:235},
-                      {color:'blue',text:"Axiomatic Set Theory 1922 (with Fraenkel)",whichLine:6,textSep:150},
-                      {color:'red',text:"Incompleteness Theorems 1930",whichLine:7,textSep:120}];
+  let evsl = -1; // eventStartLine
+  
+    let eventTexts = [{color:'black',text:'Propositional Logic 1847',whichLine:evsl+2,textSep:95},
+                      {color:'magenta',text:'Set Theory 1874',whichLine:evsl+3,textSep:70},{color:'cyan',text:'Predicate Logic 1879',whichLine:evsl+4,textSep:85},
+                      {color:'green',text:"Russell's Paradox 1903, Principia Mathematica 1912 (with Whitehead)",whichLine:evsl+5,textSep:235},
+                      {color:'blue',text:"Axiomatic Set Theory 1922 (with Fraenkel)",whichLine:evsl+6,textSep:150},
+                      {color:'red',text:"Incompleteness Theorems 1930",whichLine:evsl+7,textSep:120}];
 
   
   //this.setSides(d);
-  let topParams = {width:wd,height:ht,people,eventTexts,framePadding:.0*ht,frameStroke:'black',frameStrokeWidth:1,minYear:1500,maxYear:2000,backGroundColor:'white',
-  lineSep:40,lineLength:20,titlePos:Point.mk(0,-0.8*0.5*ht),title:'A Revolutionary Century for Logic',eventX:-0.4*wd}
+  let topParams = {width:wd,height:ht,people,eventTexts,framePadding:.0*ht,frameStroke:'white',frameStrokeWidth:1,minYear:1500,maxYear:2000,backGroundColor:'white',
+  lineSep:40,topLine:-30,lineLength:20,titlePos:Point.mk(0,-0.8*0.5*ht),titlee:'A Revolutionary Century for Logic',eventX:-0.4*wd}
   Object.assign(this,topParams);
 }
 rs.setTopParams();

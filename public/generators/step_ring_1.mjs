@@ -10,9 +10,10 @@ let rs = basicP.instantiate();
 addPathMethods(rs);
 //addPathInParts(rs);
 
-let wd = 300;
+//let wd = 300;
+let wd = 230;
 rs.setName('step_ring_1');
-let topParams = {width:wd,height:wd,framePadding:.1*wd,frameStroke:'white',frameStrokeWidth:1,saveAnimation:1,numSteps:90*3}
+let topParams = {width:wd,height:wd,framePadding:.0*wd,frameStroke:'white',frameStrokeWidth:1,saveAnimation:1,numSteps:90*3+1}
 Object.assign(rs,topParams);
 
 
@@ -37,8 +38,9 @@ rs.polysides = 3;
 rs.radiusArray = [10,20,30,10,10,10];
 let ra = rs.radiusArray = [];
 rs.nvs(ra,1,1);
+rs.nvs(ra,2,1);
 
-rs.nvs(ra,4,5);
+rs.nvs(ra,4,4);
 let sa = rs.sepArray = [];
 rs.nvs(sa,20,4);
 rs.nvs(sa,20,2);
